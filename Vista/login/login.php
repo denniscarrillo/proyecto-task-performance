@@ -33,6 +33,7 @@ require_once('../../Vista/login/validarDatosLogin.php');
             <input type="password" class="form-control" name="userPassword" placeholder="Contraseña">
             </div>
             <button type="submit" class="btn btn-primary" name="submit">Ingresar</button>
+            <label class="btn-cuenta">¿Aún no tienes cuenta? </label><a href = "registro.php">Regístrate</a>
             <div class="check-conteiner">
               <input type="checkbox" name="checkboxPassword">
               <label for="checkboxPassword">Recordar contraseña</label>

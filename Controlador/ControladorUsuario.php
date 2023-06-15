@@ -1,5 +1,6 @@
 <?php
     // require_once ("../../Modelo/Usuario.php");
+    
     class ControladorUsuario {
         
         public static function getUsuarios(){
@@ -25,6 +26,11 @@
                 $valido = true;
             }
             return $valido;
+        }
+
+        public function registro($nuevoUsuario){
+            $usuario = new Usuario();
+            $usuario->ingresarUsuarios($nuevoUsuario);
         }
 
     }

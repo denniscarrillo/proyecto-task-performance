@@ -8,6 +8,7 @@ body {
     background-color: #e28e5a;
     background: linear-gradient(85deg, #f3b85f 20%, #e65a14 80%);
 } 
+
 .ancho{
     min-height: inherit;
     display: flex;
@@ -18,20 +19,25 @@ body {
     position: relative;
 }
 form {
-    padding: 15px;
+    padding: 5px;
     background-color: white;
     height: min-content;
     width: max-content;
-    font-size: 20px;
+    font-size: 15px;
     border-radius:8px;
     box-shadow: 20px 20px 15px 0px #d05d24 ;
 }
 .btn {
     display: block;
-    margin: 0 auto;
-    width: 70%;
-    background-color: #da251c;
+    width: 40%;
+    height: 45px;
+    margin: 5px auto ;
+    background-color: rgb(75, 73, 73);
     border:none;
+    margin-bottom: 8px;
+    font-size: 25px;
+    font-family: Arial, Helvetica, sans-serif;
+    box-shadow: 5px 10px 10px 0px #909090 ;
 }
 .conteiner-icon{
     position: absolute;
@@ -41,7 +47,7 @@ form {
     transform: translateY(-25%);
 }
 .btn:hover{
-    background-color: rgb(75, 73, 73);
+    background-color: rgb(114, 110, 110);
     color: #ffffff;
  }
 .icon {
@@ -54,6 +60,7 @@ form {
 }
 .logo-empresa{
     margin-bottom: 30px;
+    text-align: center;
 }
 .form-label {
     margin-left: 10px;
@@ -69,37 +76,27 @@ form {
     text-align: center;
     font-size: 15px;
     text-transform: uppercase;
-    background-color: #ebbcbc;
-    color: red;
+    background-color: #96bc9f;
+    color: green;
 }
-.link-recuperacion {
-    display: block;
-    margin-top: 5px;
-    color: #ac4b4b;
-    font-size: 15px;
-    text-align: center;
-}
-.link-recuperacion:hover {
-    color: #0958a7;
-    font-size: 15px;
-}
-.check-conteiner {
+
+.input-container{
     display: flex;
-    justify-content: center;
 }
-.check-conteiner input {
+
+.form-grupo{
+    margin: 15px;
+    padding: 10px;
+    margin-bottom:0px;
+    padding-bottom: 0px;
+}
+
+.titulo-registro{
+    text-align: center;
+    background-color: #e65a14;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 30px;
     margin: 5px;
-}
-.check-conteiner label {
-    font-size: 15px;
-}
-
-.btn-cuenta{
-    font-size: 12px;
-    margin-left: 35px;
-}
-
-a{
-    font-size: 15px;
-    padding-left: 5px;
+    padding: 8px;
 }

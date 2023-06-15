@@ -3,18 +3,18 @@
 // require('../db/ConexionDB.php');
 
 class Usuario {
-    private $idUsuario;
-    #private $rtn;
-    private $usuario;
-    private $nombre;
-    #private $estado;
-    private $contrasenia;
+    // public $idUsuario;
+    public $rtn;
+    public $usuario;
+    public $nombre;
+    public $estado;
+    public $contrasenia;
     #private $fechaUltimaConexion;
     #private $preguntasContestadas;
     #private $fechaPrimerIngreso;
-    #private $correo;
-    #private $telefono;
-    #private $direccion;
+    public $correo;
+    public $telefono;
+    public $direccion;
     #private $idRol;
     #private $idCargo;
     #private $creadoPor;
@@ -23,7 +23,7 @@ class Usuario {
     public static function obtenerUsuarios(){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $listaUsuarios = $consulta->query("SELECT*FROM tlb_usuarios");
+        $listaUsuarios = $consulta->query("SELECT*FROM tbl_Usuario");
 
         $usuarios = array();
         $i = 0;
@@ -39,10 +39,42 @@ class Usuario {
         return $usuarios;
     }
 
+    // public static function ingresarUsuarios($idUsuario, $rtn, $usuario, $nombre, $estado, $contrasenia,$correo,$telefono,$direccion){
+    //     $conn = new Conexion();
+    //     $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+    //     $nuevoUsuario = $consulta->query("INSERT INTO tbl_Usuario (id_usuario, rtn_Usuario, usuario, nombre_Usuario, estado_Usuario, Contrasenia, 
+    //     correo_Electronico, telefono, direccion) VALUES('$idUsuario', '$rtn', '$usuario', '$nombre', '$estado', '$contrasenia','$correo','$telefono','$direccion')");
+    //     mysqli_close($consulta); #Cerramos la conexión.
+    // }
+
+    public function ingresarUsuarios($nuevoUsuario){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        // $idUsuario = $nuevoUsuario->idUsuario;
+        $rtn = $nuevoUsuario->rtn;
+        $usuario =$nuevoUsuario->usuario;
+        $nombre = $nuevoUsuario->nombre;
+        $estado = $nuevoUsuario->estado;
+        $contrasenia =$nuevoUsuario->contrasenia;
+        $correo =$nuevoUsuario->correo;
+        $telefono = $nuevoUsuario->telefono;
+        $direccion =$nuevoUsuario->direccion;
+    
+        $nuevoUsuario = $consulta->query("INSERT INTO tbl_Usuario (rtn_Usuario, usuario, nombre_Usuario, estado_Usuario, Contrasenia, correo_Electronico, telefono, direccion) VALUES('$rtn', '$usuario','$nombre', '$estado', '$contrasenia',
+        '$correo','$telefono','$direccion')");
+        
+        // $nuevoUsuario = $consulta->query("INSERT INTO tbl_Usuario VALUES($nuevoUsuario->$idUsuario, '$nuevoUsuario->$rtn', '$nuevoUsuario->$usuario', 
+        // '$nuevoUsuario->$nombre', '$nuevoUsuario->$estado', '$nuevoUsuario->$contrasenia','$nuevoUsuario->$correo','$nuevoUsuario->$telefono','$nuevoUsuario->$direccion')");
+        
+        // $nuevoUsuario = $consulta->query("INSERT INTO tbl_Usuario VALUES(". $nuevoUsuario->$idUsuario.", '". $nuevoUsuario->$rtn ."', '". $nuevoUsuario->$usuario."', 
+        // '". $nuevoUsuario->$nombre. "', '".$nuevoUsuario->$estado. "', '". $nuevoUsuario->$contrasenia. "','". $nuevoUsuario->$correo. "','" .$nuevoUsuario->$telefono. "','". $nuevoUsuario->$direccion. "')");
+        mysqli_close($consulta); #Cerramos la conexión.
+    }
+
     public static function buscarUsuario($userName, $userPassword){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $usuario = $consulta->query("SELECT * FROM tlb_usuarios WHERE usuario = '$userName' and contrasenia = '$userPassword' ");
+        $usuario = $consulta->query("SELECT * FROM tbl_Usuario WHERE usuario = '$userName' and contrasenia = '$userPassword' ");
         $existe = $usuario->num_rows;
         mysqli_close($consulta); #Cerramos la conexión.
         return $existe;
