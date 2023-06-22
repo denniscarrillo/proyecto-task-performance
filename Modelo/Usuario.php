@@ -51,17 +51,14 @@ class Usuario {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         // $idUsuario = $nuevoUsuario->idUsuario;
-        $rtn = $nuevoUsuario->rtn;
         $usuario =$nuevoUsuario->usuario;
         $nombre = $nuevoUsuario->nombre;
         $estado = $nuevoUsuario->estado;
         $contrasenia =$nuevoUsuario->contrasenia;
         $correo =$nuevoUsuario->correo;
-        $telefono = $nuevoUsuario->telefono;
-        $direccion =$nuevoUsuario->direccion;
     
-        $nuevoUsuario = $consulta->query("INSERT INTO tlb_usuarios (rtn_Usuario, usuario, nombre_Usuario, estado_Usuario, Contrasenia, correo_Electronico, telefono, direccion) VALUES('$rtn', '$usuario','$nombre', '$estado', '$contrasenia',
-        '$correo','$telefono','$direccion')");
+        $nuevoUsuario = $consulta->query("INSERT INTO tlb_usuarios (rtn_Usuario, usuario, nombre_Usuario, estado_Usuario, Contrasenia, correo_Electronico, telefono, direccion) VALUES('$usuario','$nombre', '$estado', '$contrasenia',
+        '$correo')");
         mysqli_close($consulta); #Cerramos la conexión.
     }
 
@@ -90,8 +87,8 @@ class Usuario {
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $resultado = $conexion->query("SELECT intentos_Fallidos FROM tbl_usuario WHERE usuario = '$usuario'");
         //Obtenemos el valor de Intentos que viene de la DB
-        $fila = $resultado->fetch_array(MYSQLI_NUM);
-        $fallidos = $fila[0]; 
+        $fila = $resultado->fetch_assoc();
+        $fallidos = $fila["intentos_Fallidos"]; 
         mysqli_close($conexion); #Cerramos la conexión.
         return $fallidos;
     }

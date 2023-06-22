@@ -15,7 +15,7 @@ require_once('../../Vista/login/validarRegistro.php');
 </head>
 <body class="container">
     <div class="ancho">
-        <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post">
+        <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" id="formRegis">
             <div class="logo-empresa">
                 <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="180px">
             </div>
@@ -24,51 +24,51 @@ require_once('../../Vista/login/validarRegistro.php');
             <div class = "form-grupo">
                 <!-- input para nombre -->
                 <div class="wrap-input mb-3">
-                    <label><strong>Nombre Completo</strong></label>
-                    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre">
+                    <label><b>Nombre Completo</b></label>
+                    <input type="text" class="form-control input" name="nombre" id="nombre" maxlength="30" placeholder="Nombre">
+                    <p class="mensaje"></p>
                 </div>
-                <!-- input para RTN del usuario -->
-                <div class="wrap-input mb-3">
-                    <label><strong>RTN usuario</strong></label>
-                    <input type="text" class="form-control" name="rtnUsuario" placeholder="RTN Usuario">
-                </div>
-                <!-- input para Contraseña -->
-                <div class="wrap-input mb-3">
-                    <label><strong>Contraseña</strong></label>
-                    <input type="text" class="form-control" name="contraseña" placeholder="Contraseña">
-                </div>
-            </div>
-            <div class = "form-grupo">
+                
                 <!-- input para usuario -->
                 <div class="wrap-input mb-3">
-                    <label><strong>Usuario</strong></label>
-                    <input type="text" class="form-control" name="usuario" placeholder="Usuario">
+                    <label><b>Usuario</b></label>
+                    <span class="conteiner-icon">
+                  <i class="icon fa-solid fa-user"></i>
+                </span>
+                    <input type="text" class="form-control input" name="usuario" id="usuario" maxlength="14" placeholder="Usuario">
+                    <p class="mensaje"></p>
                 </div>
-                <!-- input para telefono -->
+                <!-- input para correo electronico -->
                 <div class="wrap-input mb-3">
-                    <label><strong>Teléfono</strong></label>
-                    <input type="text" class="form-control" name="telefono" placeholder="Teléfono">
-                </div>
-                <!-- input para confirmación Contraseña -->
-                <div class="wrap-input mb-3">
-                    <label><strong>Confirmar contraseña</strong></label>
-                    <input type="text" class="form-control" name="confirmarContraseña" placeholder="Confirmar Contraseña">
+                    <label><b>Correo Electrónico</b></label>
+                    <input type="text" class="form-control input" name="correoElectronico" id="correo" maxlength="35" placeholder="Correo Electrónico">
+                    <p class="mensaje"></p>
                 </div>
             </div>
             <div class = "form-grupo">
-                <!-- input para correo electronico -->
-                <div class="wrap-input mb-3">
-                    <label><strong>Correo Electrónico</strong></label>
-                    <input type="text" class="form-control" name="correoElectronico" placeholder="Correo Electrónico">
+                <!-- input para Contraseña -->
+                <div class="wrap-input mb-3" id="grupo__password">
+                    <label><b>Contraseña</b></label>
+                    <span class="lock conteiner-icon">
+              <i class="icon type-lock fa-solid fa-lock"></i>
+              </span>
+                    <input type="password" class="form-control input" name="contraseña" id="password" maxlength="15" placeholder="Contraseña">
+                   <!--  <i class="form-control__validacion-estado fas fa-times-circle"></i> -->
+                    <p class="mensaje"></p>
                 </div>
-                <!-- input para direccion -->
-                <div class="wrap-input mb-3">
-                    <label><strong>Dirección</strong></label>
-                    <input type="text" class="form-control" name="direccion" placeholder="Dirección">
+                <!-- input para confirmación Contraseña -->
+                <div class="wrap-input mb-3" id="grupo__password2">
+                    <label><b>Confirmar contraseña</b></label>
+                    <span class="lock conteiner-icon">
+              <i class="icon type-lock fa-solid fa-lock"></i>
+              </span>
+                    <input type="password" class="form-control input" name="confirmarContraseña" id="password2" maxlength="15" placeholder="Confirmar Contraseña">
+                    <!-- <i class="form-control__validacion-estado fas fa-times-circle"></i> -->
+                    <p class="mensaje"></p>
                 </div>
             </div>
             </div>
-            <button type="submit" class="btn btn-primary" name="submit">Registrar</button>
+            <button type="submit" class="btn btn-primary" name="submit" id= "click">Registrar</button>
             <?php 
               if(!$mensaje==''){
                 echo '<h2 class="mensaje-error">'. $mensaje. '</h2>';
@@ -79,7 +79,7 @@ require_once('../../Vista/login/validarRegistro.php');
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-    <script src="../../Recursos/js/validacionesLogin.js"></script>
+    <script src="../../Recursos/js/validacionesRegistro.js"></script>
 </body>
 
 </html>
