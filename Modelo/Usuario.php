@@ -51,17 +51,14 @@ class Usuario {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         // $idUsuario = $nuevoUsuario->idUsuario;
-        $rtn = $nuevoUsuario->rtn;
         $usuario =$nuevoUsuario->usuario;
         $nombre = $nuevoUsuario->nombre;
         $estado = $nuevoUsuario->estado;
         $contrasenia =$nuevoUsuario->contrasenia;
         $correo =$nuevoUsuario->correo;
-        $telefono = $nuevoUsuario->telefono;
-        $direccion =$nuevoUsuario->direccion;
     
-        $nuevoUsuario = $consulta->query("INSERT INTO tbl_Usuario (rtn_Usuario, usuario, nombre_Usuario, estado_Usuario, Contrasenia, correo_Electronico, telefono, direccion) VALUES('$rtn', '$usuario','$nombre', '$estado', '$contrasenia',
-        '$correo','$telefono','$direccion')");
+        $nuevoUsuario = $consulta->query("INSERT INTO tbl_Usuario (usuario, nombre_Usuario, estado_Usuario, Contrasenia, correo_Electronico) VALUES('$usuario','$nombre', '$estado', '$contrasenia',
+        '$correo')");
         
         // $nuevoUsuario = $consulta->query("INSERT INTO tbl_Usuario VALUES($nuevoUsuario->$idUsuario, '$nuevoUsuario->$rtn', '$nuevoUsuario->$usuario', 
         // '$nuevoUsuario->$nombre', '$nuevoUsuario->$estado', '$nuevoUsuario->$contrasenia','$nuevoUsuario->$correo','$nuevoUsuario->$telefono','$nuevoUsuario->$direccion')");

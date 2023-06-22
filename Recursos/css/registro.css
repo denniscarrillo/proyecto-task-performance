@@ -19,7 +19,7 @@ body {
     position: relative;
 }
 form {
-    padding: 5px;
+    padding: 15px;
     background-color: white;
     height: min-content;
     width: max-content;
@@ -27,6 +27,11 @@ form {
     border-radius:8px;
     box-shadow: 20px 20px 15px 0px #d05d24 ;
 }
+/* .formulario__input-error {
+	font-size: 12px;
+	margin-bottom: 0;
+	display: none;
+} */
 .btn {
     display: block;
     width: 40%;
@@ -43,8 +48,9 @@ form {
     position: absolute;
     left: 0;
     /* Para centrar icono */
-    height: 50%;
-    transform: translateY(-25%);
+    top: 20px;
+    height: 13%;
+    transform: translateY(-60%);
 }
 .btn:hover{
     background-color: rgb(114, 110, 110);
@@ -52,7 +58,7 @@ form {
  }
 .icon {
     display: block;
-    margin: 10px;
+    margin: 15px;
     font-size: 25px;
 }
 .lock{
@@ -90,6 +96,15 @@ form {
     margin-bottom:0px;
     padding-bottom: 0px;
 }
+/* .form-control__Validacion-estado {
+	position: absolute;
+	right: 10px;
+	bottom: 15px;
+	z-index: 100;
+	font-size: 16px;
+	opacity: 0;
+
+} */
 
 .titulo-registro{
     text-align: center;
@@ -100,3 +115,27 @@ form {
     margin: 5px;
     padding: 8px;
 }
+.mensaje {
+    position: absolute;
+    color: red;
+    font-size: 12px;
+}
+.mensaje_error {
+    box-shadow: 0 0 0 .15rem rgba(225, 94, 62, 0.676);
+    border-color: red;
+}
+.mensaje_error:focus {
+    box-shadow: 0 0 0 .25rem rgba(226, 73, 35, 0.455);
+    border-color: red;
+}
+/* ----- -----  Estilos para Validacion ----- ----- */
+/* .form-control-correcto .form-control__Validacion-estado {
+	color: #1ed12d;
+	opacity: 1;
+}
+.form-control-incorrecto .form-control__Validacion-estado {
+	color: #bb2929;
+	opacity: 1;
+} */
+
+
