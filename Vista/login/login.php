@@ -14,23 +14,25 @@ require_once('../../Vista/login/validarDatosLogin.php');
 </head>
 <body>
     <div class="ancho">
-        <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post">
+        <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" id="formLogin">
             <div class="logo-empresa">
                 <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="150px">
             </div>
             <div class="wrap-input mb-3">
-                <!-- <label for="userName" class="form-label">Nombre de usuario</label> -->
-                <span class="conteiner-icon">
-                  <i class="icon fa-solid fa-user"></i>
-                </span>
-                <input type="text" class="form-control" name="userName" id="userName" placeholder="Usuario">
+              <!-- <label for="userName" class="form-label">Nombre de usuario</label> -->
+              <span class="conteiner-icon">
+                <i class="icon fa-solid fa-user"></i>
+              </span>
+              <input type="text" class="form-control" id="user" name="userName" id="userName"  maxlength="15" placeholder="Usuario">
+              <p class="mensaje"></p>
             </div>
             <div class="wrap-input mb-3">
               <!-- <label for="password" class="form-label"> Contraseña </label> -->
               <span class="lock conteiner-icon">
               <i class="icon type-lock fa-solid fa-lock"></i>
               </span>
-            <input type="password" class="form-control" name="userPassword" placeholder="Contraseña">
+              <input type="password" class="form-control" id="userPassword" name="userPassword" maxlength="20" placeholder="Contraseña">
+              <p class="mensaje"></p>
             </div>
             <button type="submit" class="btn btn-primary" name="submit">Ingresar</button>
             <label class="btn-cuenta">¿Aún no tienes cuenta? </label><a href = "registro.php">Regístrate</a>
@@ -40,7 +42,7 @@ require_once('../../Vista/login/validarDatosLogin.php');
             </div>
             <a href="" class="link-recuperacion">¿Olvidaste tu usuario y/o contraseña?</a>
             <?php 
-              if(!$mensaje==''){
+              if(!$mensaje == ''){
                 echo '<h2 class="mensaje-error">'. $mensaje. '</h2>';
               }
             ?>
@@ -50,5 +52,4 @@ require_once('../../Vista/login/validarDatosLogin.php');
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
     <script src="../../Recursos/js/validacionesLogin.js"></script>
 </body>
-
 </html>

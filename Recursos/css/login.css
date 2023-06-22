@@ -16,6 +16,7 @@ body {
 }
 .wrap-input {
     position: relative;
+    margin-bottom: 2rem !important;
 }
 form {
     padding: 15px;
@@ -93,13 +94,24 @@ form {
 .check-conteiner label {
     font-size: 15px;
 }
-
 .btn-cuenta{
     font-size: 12px;
     margin-left: 35px;
 }
-
 a{
     font-size: 15px;
     padding-left: 5px;
+}
+.mensaje {
+    position: absolute;
+    color: red;
+    font-size: 12px;
+}
+.mensaje_error {
+    box-shadow: 0 0 0 .15rem rgba(225, 94, 62, 0.676);
+    border-color: red;
+}
+.mensaje_error:focus {
+    box-shadow: 0 0 0 .25rem rgba(226, 73, 35, 0.455);
+    border-color: red;
 }
