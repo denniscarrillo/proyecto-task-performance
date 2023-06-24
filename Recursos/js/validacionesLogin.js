@@ -2,7 +2,6 @@
 //  Cambiar tipo del candado para mostrar/ocultar contraseña
 let iconClass = document.querySelector('.type-lock');
 let icon_candado = document.querySelector('.lock');
-
 icon_candado.addEventListener('click', function() { 
     if(this.nextElementSibling.type === "password") {
         this.nextElementSibling.type = "text";
@@ -14,19 +13,16 @@ icon_candado.addEventListener('click', function() {
         iconClass.classList.add('fa-lock');
     }
 });
-
 /* VALIDACIONES FORMULARIO LOGIN */
 //objeto con expresiones regulares para los inptus
 const validaciones = {
     // user: /^[a-zA-Z0-9\_\-]{4,16}$/,
     password: /^(?=.*\d)(?=.*[a-z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/
 }
-
 // CAMPOS VACIOS
 const $form = document.getElementById('formLogin');
-const $user = document.getElementById('user');
+const $user = document.getElementById('userName');
 const $password = document.getElementById('userPassword');
-
 //Cuando se quiera enviar el formulario de login, primero se validaran si los inputs no estan vacios
 $form.addEventListener('submit', e => {   
     if ($user.value.trim() === ''){
@@ -63,19 +59,21 @@ $user.addEventListener('focusout', () => {
     let usuarioMayus = $user.value.toUpperCase();
     $user.value = usuarioMayus;
 });
-
 // NO PERMITIR ESPACIOS
 $user.addEventListener('keyup', e => {
     validarEspacios(e, $user);
+    //Validación con jQuery inputlimiter
+    $("#userName").inputlimiter({
+        limit: 15,
+    });
 });
 $password.addEventListener('keyup', e => {
     validarEspacios(e, $password);
 });
 
-// $password.addEventListener('focusout', e => {
-//     validarPassword(e, $password);
-// });
-
+$password.addEventListener('focusout', e => {
+    validarPassword(e, $password);
+});
 //NO PERMITIR ESPACIOS
 const validarEspacios = (input, elemento) => {
     let mensaje;

@@ -1,104 +1,104 @@
 <?php
 
-// require('../db/ConexionDB.php');
-
 class Usuario {
-    // public $idUsuario;
+    public $idUsuario;
     public $rtn;
     public $usuario;
     public $nombre;
-    public $estado;
+    public $idEstado;
     public $contrasenia;
-    #private $fechaUltimaConexion;
-    #private $preguntasContestadas;
-    #private $fechaPrimerIngreso;
+    public $fechaUltimaConexion;
+    public $preguntasContestadas;
+    public $IngresoUsuario;
     public $correo;
     public $telefono;
     public $direccion;
-    #private $idRol;
-    #private $idCargo;
-    #private $creadoPor;
-    #private $reseteoClave;
+    public $idRol;
+    public $idCargo;
+    public $creadoPor;
+    public $reseteoClave;
 
-    public static function obtenerUsuarios(){
+    //Método para obtener todos los usuarios que existen.
+    public static function obtenerTodosLosUsuarios(){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $listaUsuarios = $consulta->query("SELECT * FROM tbl_usuario");
-
+        $listaUsuarios = 
+            $consulta->query("SELECT u.usuario, u.nombre_Usuario, u.contrasenia, 
+                u.correo_Electronico, e.descripcion, r.rol
+                FROM tbl_ms_usuario AS u
+                INNER JOIN tbl_estado_usuario AS e ON u.id_Estado_Usuario = e.id_Estado_Usuario 
+                INNER JOIN tbl_ms_roles AS r ON u.id_Rol = r.id_Rol;
+            ");
         $usuarios = array();
-        $i = 0;
-
+        //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
         while($fila = $listaUsuarios->fetch_assoc()){
-            $usuarios[$i][0] = $fila["id_usuario"];
-            $usuarios[$i][1] = $fila["usuario"]; 
-            $usuarios[$i][2] = $fila["nombre"];
-            $usuarios[$i][3] = $fila["contrasenia"];    
-            $i++;
+            $usuarios [] = [
+                'usuario' => $fila["usuario"],
+                'nombreUsuario'=> $fila["nombre_Usuario"],
+                'contrasenia' => $fila["contrasenia"],
+                'correo' => $fila["correo_Electronico"],
+                'idEstado' => $fila["descripcion"],
+                'idRol' => $fila["rol"]
+            ];
         }
         mysqli_close($consulta); #Cerramos la conexión.
         return $usuarios;
     }
-
-    // public static function ingresarUsuarios($idUsuario, $rtn, $usuario, $nombre, $estado, $contrasenia,$correo,$telefono,$direccion){
-    //     $conn = new Conexion();
-    //     $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-    //     $nuevoUsuario = $consulta->query("INSERT INTO tbl_Usuario (id_usuario, rtn_Usuario, usuario, nombre_Usuario, estado_Usuario, Contrasenia, 
-    //     correo_Electronico, telefono, direccion) VALUES('$idUsuario', '$rtn', '$usuario', '$nombre', '$estado', '$contrasenia','$correo','$telefono','$direccion')");
-    //     mysqli_close($consulta); #Cerramos la conexión.
-    // }
-
-    public function ingresarUsuarios($nuevoUsuario){
+    //Método para crear nuevo usuario desde Autoregistro.
+    public static function registroNuevoUsuario($nuevoUsuario){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        // $idUsuario = $nuevoUsuario->idUsuario;
         $usuario =$nuevoUsuario->usuario;
         $nombre = $nuevoUsuario->nombre;
         $estado = $nuevoUsuario->estado;
         $contrasenia =$nuevoUsuario->contrasenia;
         $correo =$nuevoUsuario->correo;
-    
-        $nuevoUsuario = $consulta->query("INSERT INTO tlb_usuarios (rtn_Usuario, usuario, nombre_Usuario, estado_Usuario, Contrasenia, correo_Electronico, telefono, direccion) VALUES('$usuario','$nombre', '$estado', '$contrasenia',
-        '$correo')");
+        $nuevoUsuario = $consulta->query("INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico) 
+                        VALUES ('$usuario','$nombre', '$estado', '$contrasenia', '$correo')");
         mysqli_close($consulta); #Cerramos la conexión.
     }
-
-    public static function buscarUsuario($userName, $userPassword){
+    //Hace la búsqueda del usuario en login para saber si es válido
+    public static function existeUsuario($userName, $userPassword){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $usuario = $consulta->query("SELECT * FROM tbl_usuario WHERE usuario = '$userName' and contrasenia = '$userPassword' ");
+        $usuario = $consulta->query("SELECT * FROM tbl_MS_Usuario WHERE usuario = '$userName' and contrasenia = '$userPassword' ");
         $existe = $usuario->num_rows;
         mysqli_close($consulta); #Cerramos la conexión.
-        return $existe;
+        return $existe; //Si se encuentra un usuario válido/existente retorna un entero mayor a 0.
     }
     //Obtener intentos permitidos de la tabla parámetro
-    public static function intentosValidos(){
+    public static function intentosPermitidos(){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $resultado = $conexion->query("SELECT Valor  FROM tbl_parametro WHERE Parametro = 'ADMIN INTENTOS'");
+        $resultado = $conexion->query("SELECT valor  FROM tbl_MS_Parametro WHERE parametro = 'ADMIN INTENTOS'");
         //Obtenemos el valor de Intentos que viene de la DB
         $fila = $resultado->fetch_assoc();
-        $intentos = $fila["Valor"]; 
+        $intentos = $fila["valor"]; 
         mysqli_close($conexion); #Cerramos la conexión.
         return $intentos;
     }
     //Obtener número de intentos falllidos del usuario en el login.
     public static function intentosInvalidos($usuario){
+        $intentosFallidos = null;
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $resultado = $conexion->query("SELECT intentos_Fallidos FROM tbl_usuario WHERE usuario = '$usuario'");
-        //Obtenemos el valor de Intentos que viene de la DB
-        $fila = $resultado->fetch_assoc();
-        $fallidos = $fila["intentos_Fallidos"]; 
+        $existeUsuario = $conexion->query("SELECT usuario FROM tbl_MS_Usuario WHERE usuario = '$usuario'");
+        if($existeUsuario){
+            $resultado = $conexion->query("SELECT intentos_fallidos FROM tbl_MS_Usuario WHERE usuario = '$usuario'");
+            //Obtenemos el valor de Intentos que viene de la DB
+            $fila = $resultado->fetch_array();
+            $intentosFallidos = $fila["intentos_fallidos"]; 
+        } 
         mysqli_close($conexion); #Cerramos la conexión.
-        return $fallidos;
+        return $intentosFallidos;
     }
     public static function bloquearUsuario($intentosMax, $intentosFallidos, $user){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $estadoUser = false;
         if($intentosFallidos > $intentosMax){
-            $nuevoEstado = "Bloqueado";
-            $estadoUser = $conexion->query("UPDATE `tbl_usuario` SET `estado_Usuario`= '$nuevoEstado' WHERE `usuario` = '$user'");
+            $nuevoEstado = 4;
+            $estadoUser = $conexion->query("UPDATE tbl_MS_Usuario SET `id_Estado_Usuario`= '$nuevoEstado' WHERE `usuario` = '$user'");
         }
         mysqli_close($conexion); #Cerramos la conexión.
         return $estadoUser;
@@ -107,9 +107,19 @@ class Usuario {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $incremento = ($intentosFallidos + 1);
-        $conexion->query("UPDATE `tbl_usuario` SET `intentos_Fallidos` = '$incremento' WHERE `usuario` = '$usuario'");
+        $conexion->query("UPDATE tbl_MS_Usuario SET `intentos_fallidos` = '$incremento' WHERE `usuario` = '$usuario'");
         mysqli_close($conexion); #Cerramos la conexión.
         return $incremento;
     }
-
+    //Obtener cantidad de preguntas desde el parámetro.
+    public static function parametroPreguntas(){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $paramPreguntas = $consulta->query("SELECT valor FROM tbl_Parametro WHERE Parametro = 'ADMIN PREGUNTAS'");
+        $row = $paramPreguntas->fetch_assoc();
+        $cantPreguntas = $row["valor"];
+        mysqli_close($consulta); #Cerramos la conexión.
+        return $cantPreguntas;
+    }
+    
 } #Fin de la clase
