@@ -10,12 +10,12 @@
         // $nuevoUsuario->idUsuario = 1;
         $nuevoUsuario->usuario = $_POST["usuario"];
         $nuevoUsuario->nombre = $_POST["nombre"];
-        $nuevoUsuario->estado = "Nuevo";
+        $nuevoUsuario->idEstado= 1;
         $nuevoUsuario->contrasenia = $_POST["contraseña"];
-        $nuevoUsuario->correo = $_POST["correoElectronico"];
+        $nuevoUsuario->correo = $_POST["correoElectronico"]; 
 
         $cUsuario = new ControladorUsuario();
-        $cUsuario->registro($nuevoUsuario);
+        $cUsuario->registroUsuario($nuevoUsuario);
         $mensaje = "Registro éxitoso";
 
         

@@ -50,11 +50,11 @@ class Usuario {
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $usuario =$nuevoUsuario->usuario;
         $nombre = $nuevoUsuario->nombre;
-        $estado = $nuevoUsuario->estado;
+        $idEstado = $nuevoUsuario->idEstado;
         $contrasenia =$nuevoUsuario->contrasenia;
         $correo =$nuevoUsuario->correo;
         $nuevoUsuario = $consulta->query("INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico) 
-                        VALUES ('$usuario','$nombre', '$estado', '$contrasenia', '$correo')");
+                        VALUES ('$usuario','$nombre', '$idEstado', '$contrasenia', '$correo')");
         mysqli_close($consulta); #Cerramos la conexión.
     }
     //Hace la búsqueda del usuario en login para saber si es válido
@@ -108,8 +108,11 @@ class Usuario {
     public static function aumentarIntentosFallidos($usuario, $intentosFallidos){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $incremento = 0;
+        if($intentosFallidos<=3){
         $incremento = ($intentosFallidos + 1);
         $conexion->query("UPDATE tbl_MS_Usuario SET `intentos_fallidos` = '$incremento' WHERE `usuario` = '$usuario'");
+        }
         mysqli_close($conexion); #Cerramos la conexión.
         return $incremento;
     }
@@ -138,5 +141,4 @@ class Usuario {
         $estadoBloqueado = $fila["id_Estado_Usuario"];
         return $estadoBloqueado;
     }
-    
 } #Fin de la clase

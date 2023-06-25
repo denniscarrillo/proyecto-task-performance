@@ -64,11 +64,14 @@ $user.addEventListener('keyup', e => {
     validarEspacios(e, $user);
     //Validación con jQuery inputlimiter
     $("#userName").inputlimiter({
-        limit: 15,
+        limit: 15
     });
 });
 $password.addEventListener('keyup', e => {
     validarEspacios(e, $password);
+    $("#userPassword").inputlimiter({
+        limit: 20
+    });
 });
 
 // $password.addEventListener('focusout', e => {

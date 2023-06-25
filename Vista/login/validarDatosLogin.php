@@ -16,7 +16,7 @@
             $existeUsuario = ControladorUsuario::login($_POST["userName"], $_POST["userPassword"]);
             if($existeUsuario){
                 $estadoBloqueado = ControladorUsuario::estadoUsuario($_POST["userName"]);
-                if($estadoBloqueado == 4){
+                if($estadoBloqueado == ($intentosMax +1)){
                     $mensaje = 'Usuario bloqueado';
                 } else {
                     if($intentosFallidos > 0){
@@ -29,12 +29,12 @@
                     $mensaje = 'Usuario no existe';
                 } else {
                     $incremento = ControladorUsuario::incrementarIntentos($_POST["userName"], $intentosFallidos);
-                    $nuevoEstado = Usuario::bloquearUsuario($intentosMax, $incremento, $_POST["userName"]);   
-                    if($nuevoEstado){
+                    $nuevoEstado = Usuario::bloquearUsuario($intentosMax, $incremento, $_POST["userName"]); 
+                    if($nuevoEstado == true || $intentosFallidos == ($intentosMax + 1)){
                         $mensaje = 'Usuario bloqueado';
                     }  else {
                         $mensaje = 'Usuario y/o Contraseña invalidos - Intentos: '. $incremento;
-                    }
+                    }  
                 }
             }
         }
