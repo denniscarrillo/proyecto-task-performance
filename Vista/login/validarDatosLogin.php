@@ -9,14 +9,22 @@
     $intentosMax = intval(ControladorUsuario::intentosLogin());
 
     if(isset($_POST["submit"])){
+        $intentosFallidos = ControladorUsuario::intentosFallidos($_POST["userName"]);
         if(empty($_POST["userName"]) or empty($_POST["userPassword"])){
             $mensaje = 'Debe llenar ambos campos';
         } else {
-            $usuario = ControladorUsuario::login($_POST["userName"], $_POST["userPassword"]);
-            if($usuario){
-                header('location: ../index.php');
+            $existeUsuario = ControladorUsuario::login($_POST["userName"], $_POST["userPassword"]);
+            if($existeUsuario){
+                $estadoBloqueado = ControladorUsuario::estadoUsuario($_POST["userName"]);
+                if($estadoBloqueado == 4){
+                    $mensaje = 'Usuario bloqueado';
+                } else {
+                    if($intentosFallidos > 0){
+                        ControladorUsuario::resetearIntentos($_POST["userName"]);
+                    }
+                    header('location: ../crud/gestionUsuario.php');
+                }
             } else {
-                $intentosFallidos = ControladorUsuario::intentosFallidos($_POST["userName"]);
                 if ($intentosFallidos == null){
                     $mensaje = 'Usuario no existe';
                 } else {

@@ -86,8 +86,10 @@ class Usuario {
         if($existeUsuario){
             $resultado = $conexion->query("SELECT intentos_fallidos FROM tbl_MS_Usuario WHERE usuario = '$usuario'");
             //Obtenemos el valor de Intentos que viene de la DB
-            $fila = $resultado->fetch_array();
-            $intentosFallidos = $fila["intentos_fallidos"]; 
+            $fila = $resultado->fetch_assoc();
+            if(isset($fila["intentos_fallidos"])){
+                $intentosFallidos = $fila["intentos_fallidos"]; 
+            } 
         } 
         mysqli_close($conexion); #Cerramos la conexión.
         return $intentosFallidos;
@@ -120,6 +122,21 @@ class Usuario {
         $cantPreguntas = $row["valor"];
         mysqli_close($consulta); #Cerramos la conexión.
         return $cantPreguntas;
+    }
+    public static function resetearIntentosFallidos($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $resetear = 0;
+        $conexion->query("UPDATE tbl_MS_Usuario SET `intentos_fallidos` = '$resetear' WHERE `usuario` = '$usuario'");
+        mysqli_close($conexion); #Cerramos la conexión.
+    }
+    public static function obtenerEstadoUsuario($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $consultaEstado = $conexion->query("SELECT id_Estado_Usuario FROM tbl_MS_Usuario WHERE usuario = '$usuario'");
+        $fila = $consultaEstado->fetch_assoc(); 
+        $estadoBloqueado = $fila["id_Estado_Usuario"];
+        return $estadoBloqueado;
     }
     
 } #Fin de la clase

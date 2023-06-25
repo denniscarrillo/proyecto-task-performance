@@ -1,4 +1,13 @@
 .btn-Acciones{
-    margin: 5px;
-    background-color: aquamarine;
+    background-color: rgb(109, 179, 156);
+    margin: 1rem;
+    margin-left: 0;
+}
+
+.table-conteiner{
+    width: 80%;
+    margin: 40px auto;
+}
+h1{
+    text-align: center;
 }

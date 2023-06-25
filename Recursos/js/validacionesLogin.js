@@ -71,9 +71,9 @@ $password.addEventListener('keyup', e => {
     validarEspacios(e, $password);
 });
 
-$password.addEventListener('focusout', e => {
-    validarPassword(e, $password);
-});
+// $password.addEventListener('focusout', e => {
+//     validarPassword(e, $password);
+// });
 //NO PERMITIR ESPACIOS
 const validarEspacios = (input, elemento) => {
     let mensaje;

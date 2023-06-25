@@ -6,21 +6,21 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
-    <title>Prueba</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+  <link href="../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
+  <title> Prueba </title>
 </head>
-<body>
+<body class="conteiner">
   <H1>Gestión de Usuarios</H1>
-  <div style="text-align: center;">
-    <button class="btn-Acciones">Nuevo Usuario</button>
+  <div class="table-conteiner">
+  <div>
+    <button class="btn-Acciones"> Nuevo Usuario </button>
   </div>
-  <div style="width: 90%; display: flex; justify-content: center; align-items:center;">
-    <table class="table" id="table" width ="80%">
+    <table class="table" id="table">
       <thead>
       <tr>
           <th scope="col"> USUARIO </th>
@@ -39,11 +39,9 @@
           echo '<tr>';
           foreach($user as $col){
             echo '<td>' .$col.'</td>';
-            
           }
           echo '<td><button class="btn-Acciones">Editar</button><button class="btn-Acciones">Eliminar</button></td>';
           echo '</tr>';
-
         }
       ?>
       </tbody>

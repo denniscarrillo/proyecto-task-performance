@@ -32,4 +32,10 @@
         public static function cantidadPreguntas(){
             return Usuario::parametroPreguntas();
         }
+        public static function resetearIntentos($usuario) {
+            Usuario::resetearIntentosFallidos($usuario);
+        }
+        public static function estadoUsuario ($usuario){
+            return Usuario::obtenerEstadoUsuario($usuario);
+        }
     }
