@@ -120,7 +120,7 @@ class Usuario {
     public static function parametroPreguntas(){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $paramPreguntas = $consulta->query("SELECT valor FROM tbl_Parametro WHERE Parametro = 'ADMIN PREGUNTAS'");
+        $paramPreguntas = $consulta->query("SELECT valor FROM tbl_MS_Parametro WHERE Parametro = 'ADMIN PREGUNTAS'");
         $row = $paramPreguntas->fetch_assoc();
         $cantPreguntas = $row["valor"];
         mysqli_close($consulta); #Cerramos la conexión.
@@ -134,11 +134,21 @@ class Usuario {
         mysqli_close($conexion); #Cerramos la conexión.
     }
     public static function obtenerEstadoUsuario($usuario){
+        $estadoBloqueado = null;
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $consultaEstado = $conexion->query("SELECT id_Estado_Usuario FROM tbl_MS_Usuario WHERE usuario = '$usuario'");
         $fila = $consultaEstado->fetch_assoc(); 
-        $estadoBloqueado = $fila["id_Estado_Usuario"];
+        if(isset($fila["id_Estado_Usuario"])){
+            $estadoBloqueado = $fila["id_Estado_Usuario"];
+        }
         return $estadoBloqueado;
+    }
+    public static function guardarPreguntas($usuario, $preguntas){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        foreach($preguntas as $pregunta){
+            $guardarPregunta = $conexion->query("INSERT INTO tbl_ms_preguntas (pregunta, Creado_Por) VALUES ('$pregunta','$usuario');");
+        }
     }
 } #Fin de la clase

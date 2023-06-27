@@ -1,5 +1,5 @@
 <?php
-require_once('../../Vista/login/validarDatosLogin.php');
+  require_once('validarDatosLogin.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">

@@ -38,4 +38,7 @@
         public static function estadoUsuario ($usuario){
             return Usuario::obtenerEstadoUsuario($usuario);
         }
+        public static function almacenarPreguntas ($preguntas, $usuario){
+            Usuario::guardarPreguntas($preguntas, $usuario);
+        }
     }
