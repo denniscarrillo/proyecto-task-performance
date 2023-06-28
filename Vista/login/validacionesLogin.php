@@ -9,7 +9,7 @@
     $estadoUsuario = null;
     $intentosMax = intval(ControladorUsuario::intentosLogin());
     if(isset($_POST["submit"])){
-        // session_start();
+        session_start();
         $_SESSION['usuario'] = null;
         // session_destroy();
         $nombreUsuario = $_POST["userName"];
@@ -20,7 +20,7 @@
         } else {
             $existeUsuario = ControladorUsuario::login($_POST["userName"], $_POST["userPassword"]);
             if($existeUsuario){
-                $_SESSION['usuario'] = $_POST["userName"];
+                $_SESSION['usuario'] = $nombreUsuario;
                 switch($estadoUsuario){
                     case 1:
                         if($intentosFallidos > 0){
@@ -56,4 +56,3 @@
             }
         }
     }
-    require_once("validarPreguntas.php");

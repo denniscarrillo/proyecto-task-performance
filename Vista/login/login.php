@@ -1,5 +1,5 @@
 <?php
-  require_once('validarDatosLogin.php');
+  require_once('validacionesLogin.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">

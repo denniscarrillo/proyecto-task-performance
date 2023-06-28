@@ -2,9 +2,8 @@
     require_once ("../../db/Conexion.php");
     require_once ("../../Modelo/Usuario.php");
     require_once("../../Controlador/ControladorUsuario.php");
-    require_once("validarDatosLogin.php");
 
-    // session_start();
+    // $user = '';
     // if(isset($_SESSION['usuario'])){
     //     $user = $_SESSION['usuario'];
     // }
@@ -17,6 +16,10 @@
             $pregunta = $pregunta1. $pregunta2; //Concatenamos el name de los inputs
             $preguntasUsuario[$i] = $_POST[$pregunta]; 
         }
-        ControladorUsuario::almacenarPreguntas($preguntasUsuario, $user);
+        session_start();
+        $user = $_SESSION['usuario'];
+        ControladorUsuario::almacenarPreguntas($user, $preguntasUsuario);
+        // session_unset();
+        // session_destroy();
     }
-    // session_destroy();
+    
