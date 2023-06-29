@@ -2,6 +2,7 @@
   require_once ('../../db/Conexion.php');
   require_once ('../../Modelo/Usuario.php');
   require_once ('../../Controlador/ControladorUsuario.php');
+  require_once ('modalNuevoUsuario.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -18,7 +19,7 @@
   <H1>Gestión de Usuarios</H1>
   <div class="table-conteiner">
   <div>
-    <button class="btn-Acciones"> Nuevo Usuario </button>
+    <a href="#" class="btn-Acciones btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNuevoUsuario"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
   </div>
     <table class="table" id="table">
       <thead>
@@ -40,7 +41,7 @@
           foreach($user as $col){
             echo '<td>' .$col.'</td>';
           }
-          echo '<td><button class="btn-Acciones">Editar</button><button class="btn-Acciones">Eliminar</button></td>';
+          echo '<td><button class="btn-Acciones">Detalles</button><button class="btn-Acciones">Editar</button><button class="btn-Acciones Eliminar">Eliminar</button></td>';
           echo '</tr>';
         }
       ?>

@@ -1,5 +1,5 @@
 <?php
-    require_once('../../Vista/login/validarPreguntas.php');
+    require_once('../../Vista/login/validarRespuestas.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -21,11 +21,13 @@
                 <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="150px">
             </div>
             <?php
-                for ($i = 0; $i < $cantPreguntas; $i++) { 
+                $i=0;
+                foreach($preguntas as $pregunta)  { 
                     echo '<div class="input-conteiner">';
-                    echo '<label class="inputs">Pregunta '.($i+1).'</label>';
-                    echo '<input type="text" name="pregunta'.$i .'" class="form-control">';
+                    echo '<label class="inputs"> '.$pregunta['pregunta'].'</label>';
+                    echo '<input type="text" name="respuesta'.$i .'" class="form-control">';
                     echo '</div>';
+                    $i++;
                 }
             ?>
             <button type="submit" class="btn btn-primary" name="submit">Continuar</button>

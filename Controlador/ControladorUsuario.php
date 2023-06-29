@@ -41,4 +41,14 @@
         public static function almacenarPreguntas ($preguntas, $usuario){
             Usuario::guardarPreguntas($preguntas, $usuario);
         }
+
+        public static function obtenerPreguntasUsuario($usuario){
+            return Usuario::obtenerPreguntasUsuario($usuario);
+        }
+        public static function guardarRespuestas($usuario, $idPreguntas, $respuestas){
+            Usuario::guardarRespuestasUsuario($usuario, $idPreguntas, $respuestas);
+        }
+        public static function obtenerEstadoUsuario(){
+            return Usuario::obEstadoUsuario();
+        }
     }

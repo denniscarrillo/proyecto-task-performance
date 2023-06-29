@@ -142,6 +142,7 @@ class Usuario {
         if(isset($fila["id_Estado_Usuario"])){
             $estadoBloqueado = $fila["id_Estado_Usuario"];
         }
+        mysqli_close($conexion); #Cerramos la conexión.
         return $estadoBloqueado;
     }
     public static function guardarPreguntas($usuario, $preguntas){
@@ -150,5 +151,56 @@ class Usuario {
         foreach($preguntas as $pregunta){
             $guardarPregunta = $conexion->query("INSERT INTO tbl_ms_preguntas (pregunta, Creado_Por) VALUES ('$pregunta','$usuario');");
         }
+        mysqli_close($conexion); #Cerramos la conexión.
     }
+
+    public static function obtenerPreguntasUsuario($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $preguntasUsuario = $conexion->query("SELECT id_pregunta, pregunta FROM tbl_ms_preguntas WHERE Creado_Por = '$usuario'");
+        $preguntas = array();
+        while($fila = $preguntasUsuario->fetch_assoc()){
+            $preguntas [] = [
+                'id_pregunta' => $fila["id_pregunta"],
+                'pregunta' => $fila["pregunta"]
+            ];
+        }
+        mysqli_close($conexion); #Cerramos la conexión.
+        return $preguntas;
+    }
+
+    public static function guardarRespuestasUsuario($usuario, $idPreguntas, $respuestas){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $consultaIdUsuario = $conexion->query("SELECT id_usuario FROM tbl_ms_usuario WHERE usuario = '$usuario'");
+        $fila = $consultaIdUsuario->fetch_assoc();
+        $idUsuario = $fila["id_usuario"];
+        $i = 0;
+        foreach($idPreguntas as $idPregunta){
+            $idP = $idPregunta;
+            $respuesta = $respuestas[$i];
+            $guardarRespuesta = $conexion->query("INSERT INTO tbl_MS_Preguntas_X_Usuario (id_pregunta, id_usuario, respuesta)
+             VALUES ('$idP','$idUsuario','$respuesta');");
+             $i++;
+        }
+        mysqli_close($conexion); #Cerramos la conexión.
+    }
+
+    public static function obEstadoUsuario(){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $obtenerEstado = $conexion->query("SELECT id_Estado_Usuario, descripcion FROM tbl_estado_usuario;");
+        $estados = array();
+        while($fila = $obtenerEstado->fetch_assoc()){
+            $estados [] = [
+                'id_Estado_Usuario' => $fila["id_Estado_Usuario"],
+                'descripcion' => $fila["descripcion"]
+            ];
+        }
+        mysqli_close($conexion); #Cerramos la conexión.
+        return $estados;
+
+    }
+
+
 } #Fin de la clase

@@ -18,7 +18,7 @@
         if(empty($_POST["userName"]) or empty($_POST["userPassword"])){
             $mensaje = 'Debe llenar ambos campos';
         } else {
-            $existeUsuario = ControladorUsuario::login($_POST["userName"], $_POST["userPassword"]);
+            $existeUsuario = ControladorUsuario::login($_POST["userName"], md5($_POST["userPassword"]));
             if($existeUsuario){
                 $_SESSION['usuario'] = $nombreUsuario;
                 switch($estadoUsuario){

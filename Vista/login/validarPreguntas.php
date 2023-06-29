@@ -3,10 +3,6 @@
     require_once ("../../Modelo/Usuario.php");
     require_once("../../Controlador/ControladorUsuario.php");
 
-    // $user = '';
-    // if(isset($_SESSION['usuario'])){
-    //     $user = $_SESSION['usuario'];
-    // }
     $cantPreguntas = ControladorUsuario::cantidadPreguntas();
     $preguntasUsuario = array();
     $pregunta1 = "pregunta";
@@ -19,7 +15,6 @@
         session_start();
         $user = $_SESSION['usuario'];
         ControladorUsuario::almacenarPreguntas($user, $preguntasUsuario);
-        // session_unset();
-        // session_destroy();
+        header ('location: respuestasPreguntas.php');
     }
     
