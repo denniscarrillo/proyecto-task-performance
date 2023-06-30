@@ -2,7 +2,6 @@
   require_once ('../../db/Conexion.php');
   require_once ('../../Modelo/Usuario.php');
   require_once ('../../Controlador/ControladorUsuario.php');
-  require_once ('modalNuevoUsuario.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -21,7 +20,7 @@
   <div>
     <a href="#" class="btn-Acciones btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNuevoUsuario"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
   </div>
-    <table class="table" id="table">
+    <table class="table" id="table-Usuarios">
       <thead>
       <tr>
           <th scope="col"> USUARIO </th>
@@ -30,27 +29,17 @@
           <th scope="col"> CORREO </th>
           <th scope="col"> ESTADO </th>
           <th scope="col"> ROL </th>
-          <th scope="col"> ACCIONES </th>
+          <!-- <th scope="col"> ACCIONES </th> -->
       </tr>    
       </thead>
       <tbody class="table-group-divider">
-      <?php
-        $usuarios = ControladorUsuario::getUsuarios();
-        foreach($usuarios as $user){
-          echo '<tr>';
-          foreach($user as $col){
-            echo '<td>' .$col.'</td>';
-          }
-          echo '<td><button class="btn-Acciones">Detalles</button><button class="btn-Acciones">Editar</button><button class="btn-Acciones Eliminar">Eliminar</button></td>';
-          echo '</tr>';
-        }
-      ?>
+      
       </tbody>
   </table>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" ></script>
 <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script src= "../../Recursos/js/librerias/dataTable.js"></script>
+<script src= "../../Recursos/js/dataTable.js"></script>
 </body>
 </html>

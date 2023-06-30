@@ -37,8 +37,8 @@ class Usuario {
                 'nombreUsuario'=> $fila["nombre_Usuario"],
                 'contrasenia' => $fila["contrasenia"],
                 'correo' => $fila["correo_Electronico"],
-                'idEstado' => $fila["descripcion"],
-                'idRol' => $fila["rol"]
+                'Estado' => $fila["descripcion"],
+                'Rol' => $fila["rol"]
             ];
         }
         mysqli_close($consulta); #Cerramos la conexión.
