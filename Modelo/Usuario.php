@@ -51,10 +51,11 @@ class Usuario {
         $usuario =$nuevoUsuario->usuario;
         $nombre = $nuevoUsuario->nombre;
         $idEstado = $nuevoUsuario->idEstado;
+        $idRol = $nuevoUsuario->idRol;
         $contrasenia =$nuevoUsuario->contrasenia;
         $correo =$nuevoUsuario->correo;
-        $nuevoUsuario = $consulta->query("INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico) 
-                        VALUES ('$usuario','$nombre', '$idEstado', '$contrasenia', '$correo')");
+        $nuevoUsuario = $consulta->query("INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico, id_Rol) 
+                        VALUES ('$usuario','$nombre', '$idEstado', '$contrasenia', '$correo','$idRol')");
         mysqli_close($consulta); #Cerramos la conexión.
     }
     //Hace la búsqueda del usuario en login para saber si es válido

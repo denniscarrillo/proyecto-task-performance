@@ -2,9 +2,7 @@
     class ControladorUsuario {
         
         public static function getUsuarios(){
-            // require_once('Modelo/Usuario.php');
-            $Usuarios = Usuario::obtenerTodosLosUsuarios();
-            return $Usuarios; 
+            return Usuario::obtenerTodosLosUsuarios();
         }
         public static function login($usuario, $contrasenia){
             $valido = false;
@@ -14,7 +12,7 @@
             }
             return $valido;
         }
-        public function registroUsuario($nuevoUsuario){
+        public static function registroUsuario($nuevoUsuario){
             return Usuario::registroNuevoUsuario($nuevoUsuario);
         }
         public static function intentosLogin(){
