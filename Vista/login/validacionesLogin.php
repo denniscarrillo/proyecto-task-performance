@@ -15,6 +15,7 @@
         $nombreUsuario = $_POST["userName"];
         $intentosFallidos = ControladorUsuario::intentosFallidos($_POST["userName"]);
         $estadoUsuario = ControladorUsuario::estadoUsuario($_POST["userName"]);
+        $rolUsuario = ControladorUsuario::obRolUsuario($_POST["userName"]);
         if(empty($_POST["userName"]) or empty($_POST["userPassword"])){
             $mensaje = 'Debe llenar ambos campos';
         } else {
@@ -32,7 +33,12 @@
                         if($intentosFallidos > 0){
                             ControladorUsuario::resetearIntentos($_POST["userName"]);
                         }
-                        header('location: ../crud/usuario/gestionUsuario.php');
+                        if($rolUsuario == 2){
+                            header('location: ../crud/usuario/gestionUsuario.php');
+                        }else{
+                            header('location: ../index.php');
+                        }
+                        
                      break; 
                     case 3:
                      $mensaje = 'Usuario Inactivo';

@@ -55,6 +55,9 @@
         public static function editarUsuario($nuevoUsuario){
             Usuario::editarUsuario($nuevoUsuario);
         }
+        public static function obRolUsuario($usuario){
+            return Usuario::obtenerRolUsuario($usuario);
+        }
         public static function getPreguntas(){
             $Preguntas = Usuario::obtenerPreguntas();
             return $Preguntas; 

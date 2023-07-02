@@ -232,6 +232,19 @@ class Usuario {
         $nuevoUsuario = $conexion->query("UPDATE tbl_ms_usuario SET usuario='$usuario', nombre_usuario='$nombre', id_Estado_Usuario='$idEstado', contrasenia='$contrasenia', correo_Electronico='$correo', id_Rol='$idRol' WHERE id_Usuario='$idUsuario' ");
         mysqli_close($conexion); #Cerramos la conexión.
     }
+    public static function obtenerRolUsuario($usuario){
+        $rolUsuario = null;
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $consultaRol = $conexion->query("SELECT id_Rol FROM tbl_MS_Usuario WHERE usuario = '$usuario'");
+        $fila = $consultaRol->fetch_assoc(); 
+        if(isset($fila["id_Rol"])){
+            $rolUsuario = $fila["id_Rol"];
+        }
+        mysqli_close($conexion); #Cerramos la conexión.
+        
+        return intval($rolUsuario);
+    }
     public static function obtenerPreguntas(){//método para obtener preguntas
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); 
