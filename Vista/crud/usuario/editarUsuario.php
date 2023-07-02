@@ -4,13 +4,12 @@
     require_once("../../../Controlador/ControladorUsuario.php");
 
     $nuevoUsuario = new Usuario();
-    $nuevoUsuario->nombre = $_POST['nombre'];
+    $nuevoUsuario->idUsuario = $_POST['idUsuario'];
     $nuevoUsuario->usuario = $_POST['usuario'];
+    $nuevoUsuario->nombre = $_POST['nombre'];
     $nuevoUsuario->contrasenia = md5($_POST['contrasenia']);
     $nuevoUsuario->correo = $_POST['correo'];
     $nuevoUsuario->idRol = $_POST['idRol'];
     $nuevoUsuario->idEstado = $_POST['idEstado'];
 
-    ControladorUsuario::registroUsuario($nuevoUsuario);
-
-?>
+    ControladorUsuario::editarUsuario($nuevoUsuario);

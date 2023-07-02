@@ -32,7 +32,7 @@
                         if($intentosFallidos > 0){
                             ControladorUsuario::resetearIntentos($_POST["userName"]);
                         }
-                        header('location: ../crud/gestionUsuario.php');
+                        header('location: ../crud/usuario/gestionUsuario.php');
                      break; 
                     case 3:
                      $mensaje = 'Usuario Inactivo';

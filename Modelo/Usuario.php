@@ -23,7 +23,7 @@ class Usuario {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $listaUsuarios = 
-            $consulta->query("SELECT u.usuario, u.nombre_Usuario, u.contrasenia, 
+            $consulta->query("SELECT u.id_Usuario, u.usuario, u.nombre_Usuario, u.contrasenia, 
                 u.correo_Electronico, e.descripcion, r.rol
                 FROM tbl_ms_usuario AS u
                 INNER JOIN tbl_estado_usuario AS e ON u.id_Estado_Usuario = e.id_Estado_Usuario 
@@ -33,6 +33,7 @@ class Usuario {
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
         while($fila = $listaUsuarios->fetch_assoc()){
             $usuarios [] = [
+                'IdUsuario' => $fila["id_Usuario"],
                 'usuario' => $fila["usuario"],
                 'nombreUsuario'=> $fila["nombre_Usuario"],
                 'contrasenia' => $fila["contrasenia"],
@@ -202,6 +203,31 @@ class Usuario {
         return $estados;
 
     }
-
+    public static function eliminarUsuario($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $consultaIdUsuario= $conexion->query("SELECT id_Usuario FROM tbl_ms_usuario WHERE usuario = '$usuario'");
+        $fila = $consultaIdUsuario->fetch_assoc();
+        $idUsuario = $fila['id_Usuario'];
+        $conexion->query( "DELETE FROM tbl_ms_usuario WHERE id_Usuario = $idUsuario;");
+        mysqli_close($conexion); #Cerramos la conexión.
+    }
+    public static function editarUsuario($nuevoUsuario){
+        $idUsuario = $nuevoUsuario->idUsuario;
+        $usuario =$nuevoUsuario->usuario;
+        $nombre = $nuevoUsuario->nombre;
+        $idEstado = $nuevoUsuario->idEstado;
+        $idRol = $nuevoUsuario->idRol;
+        $contrasenia =$nuevoUsuario->contrasenia;
+        $correo =$nuevoUsuario->correo;
+        
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $nuevoUsuario = $conexion->query("UPDATE tbl_ms_usuario SET usuario='$usuario', nombre_usuario='$nombre', id_Estado_Usuario='$idEstado', contrasenia='$contrasenia', correo_Electronico='$correo', id_Rol='$idRol' WHERE id_Usuario='$idUsuario' ");
+        mysqli_close($conexion); #Cerramos la conexión.
+    }
 
 } #Fin de la clase
+
+
+

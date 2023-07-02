@@ -10,7 +10,7 @@
 h1{
     text-align: center;
 }
-#form-usuario {
+#form-usuario, #form-Edit-Usuario {
     display: flex;
     padding: 2rem;
     padding-bottom: 3rem;

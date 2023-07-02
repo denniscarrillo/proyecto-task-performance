@@ -49,4 +49,10 @@
         public static function obtenerEstadoUsuario(){
             return Usuario::obEstadoUsuario();
         }
+        public static function eliminarUsuario($usuario){
+            Usuario::eliminarUsuario($usuario);
+        }
+        public static function editarUsuario($nuevoUsuario){
+        Usuario::editarUsuario($nuevoUsuario);
+        }
     }
