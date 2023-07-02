@@ -1,11 +1,5 @@
 <?php
-    // session_start();
-    // $usuario = $_SESSION['usuario'];
     require_once('../../Vista/login/validarPreguntas.php');
-    // // $usuario = '';
-    // // if(isset($_SESSION['usuario'])){
-    //     $usuario = $_SESSION['usuario'];
-    // // }
 ?>
 <!DOCTYPE html>
 <html lang="es">
