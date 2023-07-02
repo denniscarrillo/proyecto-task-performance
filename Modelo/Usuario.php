@@ -61,12 +61,18 @@ class Usuario {
     }
     //Hace la búsqueda del usuario en login para saber si es válido
     public static function existeUsuario($userName, $userPassword){
+        $passwordValida = false;
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $usuario = $consulta->query("SELECT * FROM tbl_MS_Usuario WHERE usuario = '$userName' and contrasenia = '$userPassword' ");
+        $usuario = $consulta->query("SELECT contrasenia FROM tbl_MS_Usuario WHERE usuario = '$userName'");
         $existe = $usuario->num_rows;
+        if ($existe > 0) {
+            $user = $usuario->fetch_assoc();
+            $Password = $user['contrasenia'];
+            $passwordValida = password_verify($userPassword, $Password);
+        }
         mysqli_close($consulta); #Cerramos la conexión.
-        return $existe; //Si se encuentra un usuario válido/existente retorna un entero mayor a 0.
+        return $passwordValida; //Si se encuentra un usuario válido/existente retorna un entero mayor a 0.
     }
     //Obtener intentos permitidos de la tabla parámetro
     public static function intentosPermitidos(){
@@ -112,8 +118,8 @@ class Usuario {
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $incremento = 0;
         if($intentosFallidos<=3){
-        $incremento = ($intentosFallidos + 1);
-        $conexion->query("UPDATE tbl_MS_Usuario SET `intentos_fallidos` = '$incremento' WHERE `usuario` = '$usuario'");
+            $incremento = ($intentosFallidos + 1);
+            $conexion->query("UPDATE tbl_MS_Usuario SET `intentos_fallidos` = '$incremento' WHERE `usuario` = '$usuario'");
         }
         mysqli_close($conexion); #Cerramos la conexión.
         return $incremento;

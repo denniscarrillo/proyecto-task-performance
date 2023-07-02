@@ -9,12 +9,11 @@
         $nuevoUsuario = new Usuario();
         $nuevoUsuario->usuario = $_POST["usuario"];
         $nuevoUsuario->nombre = $_POST["nombre"];
-        $nuevoUsuario->idEstado= 1;
-        $nuevoUsuario->contrasenia = md5(($_POST["contraseña"]));
+        $nuevoUsuario->idEstado= 1; 
+        $nuevoUsuario->contrasenia = password_hash($_POST["contraseña"], PASSWORD_DEFAULT);
         $nuevoUsuario->correo = $_POST["correoElectronico"]; 
-        $nuevoUsuario->idRol = $_POST["idRol"]; 
+        $nuevoUsuario->idRol = 1; 
         
-        $cUsuario = new ControladorUsuario();
-        $cUsuario->registroUsuario($nuevoUsuario);
+        ControladorUsuario::registroUsuario($nuevoUsuario);
         $mensaje = "Registro éxitoso";
     }

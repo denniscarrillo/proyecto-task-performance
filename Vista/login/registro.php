@@ -39,7 +39,7 @@ require_once('../../Vista/login/validarRegistro.php');
                 <!-- input para correo electronico -->
                 <div class="wrap-input mb-3">
                     <label><b>Correo Electrónico</b></label>
-                    <input type="text" class="form-control input" name="correoElectronico" id="correo" maxlength="35" placeholder="Correo Electrónico">
+                    <input type="email" class="form-control input" name="correoElectronico" id="correo" maxlength="35" placeholder="Correo Electrónico">
                     <p class="mensaje"></p>
                 </div>
             </div>
