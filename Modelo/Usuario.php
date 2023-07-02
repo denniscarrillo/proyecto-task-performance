@@ -232,6 +232,26 @@ class Usuario {
         $nuevoUsuario = $conexion->query("UPDATE tbl_ms_usuario SET usuario='$usuario', nombre_usuario='$nombre', id_Estado_Usuario='$idEstado', contrasenia='$contrasenia', correo_Electronico='$correo', id_Rol='$idRol' WHERE id_Usuario='$idUsuario' ");
         mysqli_close($conexion); #Cerramos la conexión.
     }
+    public static function obtenerPreguntas(){//método para obtener preguntas
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); 
+        $listaPreguntas = 
+            $consulta->query("SELECT p.pregunta
+                FROM tbl_MS_preguntas AS p
+                INNER JOIN tbl_MS_Usuario AS u ON p.id_Usuario = u.id_Usuario 
+                INNER JOIN tbl_MS_Preguntas_x_Usuario AS r ON p.id_Pregunta = r.id_Pregunta;
+            ");
+        $preguntas = array();
+        //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
+        while($fila = $listaPreguntas->fetch_assoc()){
+            $preguntas [] = [
+                'pregunta' => $fila["pregunta"]
+            ];
+        }
+        mysqli_close($consulta); #Cerramos la conexión.
+        return $preguntas;
+    }
+
 
 } #Fin de la clase
 
