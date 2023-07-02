@@ -53,6 +53,9 @@
             Usuario::eliminarUsuario($usuario);
         }
         public static function editarUsuario($nuevoUsuario){
-        Usuario::editarUsuario($nuevoUsuario);
+            Usuario::editarUsuario($nuevoUsuario);
+        }
+        public static function obRolUsuario($usuario){
+            return Usuario::obtenerRolUsuario($usuario);
         }
     }

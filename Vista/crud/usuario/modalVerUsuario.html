@@ -1,0 +1,63 @@
+<div class="modal fade" id="modalVerUsuario" tabindex="-1" aria-labelledby="verModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="verModalLabel">Reporte Usuario</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" id="form-Ver-usuario">
+                    <div class="grupo-form">
+                        <div class="mb-3">
+                            <label for="rtn" class="form-label">Rtn:</label>
+                            <input type="text" name="rtn" id="ver_rtn" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre:</label>
+                            <input type="text" name="nombre" id="ver_nombre" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="usuario" class="form-label">Usuario:</label>
+                            <input type="text" name="usuario" id="ver_usuario" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña:</label>
+                            <input type="password" name="password" id="ver_password" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="telefono" class="form-label">Teléfono:</label>
+                            <input type="text" name="telefono" id="ver_telefono" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="grupo-form">
+                        <div class="mb-3">
+                            <label for="direccion" class="form-label">Dirección:</label>
+                            <input type="text" name="direccion" id="ver_direccion" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="correo" class="form-label">Correo Electrónico:</label>
+                            <input type="email" name="correo" id="ver_correo" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rol" class="form-label">Rol:</label>
+                            <select name="rol" id="ver_rol" class="form-control" required>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="estado" class="form-label">Estado:</label>
+                            <select name="estado" id="ver_estado" class="form-control" required>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="intentos_f" class="form-label">Intentos Fallidos:</label>
+                            <input type="text" name="intentos_f" id="ver_intentos_f" class="form-control" required>
+                    </div>
+                    <div class="btn-guardar">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
