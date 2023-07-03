@@ -58,11 +58,15 @@
         public static function obRolUsuario($usuario){
             return Usuario::obtenerRolUsuario($usuario);
         }
-        public static function getPreguntas(){
-            $Preguntas = Usuario::obtenerPreguntas();
+        public static function getPreguntas($usuario){
+            $Preguntas = Usuario::obtenerPreguntas($usuario);
             return $Preguntas; 
         }
         public static function existeUsuario($userName){
             return Usuario::validarUsuario($userName); 
         }
+        public static function obtenerRespuesta($idPregunta){
+            return Usuario::obtenerRespuestaPregunta($idPregunta); 
+        }
+        
     }
