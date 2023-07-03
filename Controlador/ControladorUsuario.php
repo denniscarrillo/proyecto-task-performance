@@ -68,5 +68,7 @@
         public static function obtenerRespuesta($idPregunta){
             return Usuario::obtenerRespuestaPregunta($idPregunta); 
         }
-        
+        public static function obCorreoUsuario($usuario){
+            return Usuario::correoUsuario($usuario);
+        } 
     }

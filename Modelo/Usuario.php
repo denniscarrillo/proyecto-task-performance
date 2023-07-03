@@ -281,6 +281,23 @@ class Usuario {
         return $res; 
     }
 
+    public static function correoUsuario($usuario){
+        $correo = '';
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
+        $usuario = $consulta->query("SELECT correo_Electronico FROM tbl_MS_Usuario WHERE usuario = '$usuario'");
+        $existe = $usuario->num_rows;
+        if($existe > 0){
+            $fila = $usuario->fetch_assoc();
+            $correo = $fila['correo_Electronico'];
+        }
+        mysqli_close($consulta); #Cerrar la conexión.
+        return $correo;
+    }
+    public static function guardarToken($user, $token){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
+    }
 } #Fin de la clase
 
 

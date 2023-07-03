@@ -27,6 +27,7 @@ form {
     border-radius:8px;
     box-shadow: 20px 20px 15px 0px #d05d24 ;
 }
+
 .btn {
     display: block;
     margin: 0 auto;
@@ -108,7 +109,7 @@ a{
     font-size: 12px;
 }
 .mensaje_error {
-    box-shadow: 0 0 0 .15rem rgba(225, 94, 62, 0.676);
+    box-shadow: 0 0 0 .15rem #e15e3eac;
     border-color: red;
 }
 .mensaje_error:focus {
@@ -120,4 +121,7 @@ a{
 */
 #userPassword::-ms-reveal {
     display: none;
+}
+.margin-b {
+    margin-bottom: 0.2rem;
 }

@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="ancho">
-        <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" id="formLogin">
+        <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post" id="formLogin">
             <div class="logo-empresa">
                 <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="150px">
             </div>
@@ -39,7 +39,7 @@
               <input type="checkbox" name="checkboxPassword">
               <label for="checkboxPassword">Recordar contraseña</label>
             </div> -->
-            <a href= "recuperarcontrasena.php">¿Olvidaste tu usuario y/o contraseña?</a>
+            <a href= "v_recuperarContrasena.html">¿Olvidaste tu usuario y/o contraseña?</a>
             <?php 
               if(!$mensaje == ''){
                 echo '<h2 class="mensaje-error">'. $mensaje. '</h2>';
