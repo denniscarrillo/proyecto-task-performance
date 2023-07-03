@@ -297,6 +297,13 @@ class Usuario {
     public static function guardarToken($user, $token){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
+        $usuario = $consulta->query("SELECT id_Usuario FROM tbl_MS_Usuario WHERE usuario = '$user'");
+        $fila = $usuario->fetch_assoc();
+        $idUsuario = $fila['id_Usuario'];
+        $resultado = $consulta->query ("INSERT INTO tbl_token (id_usuario, Token)
+                    VALUES ('$idUsuario','$token')");
+        mysqli_close($consulta); #Cerrar la conexión.           
+        return $resultado;
     }
 } #Fin de la clase
 
