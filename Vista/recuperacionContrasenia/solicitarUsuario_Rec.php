@@ -1,5 +1,6 @@
 <?php
     require_once("validacionesRecuperacion.php");
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -13,7 +14,14 @@
 </head>
 <body class="container">
     <div class="ancho">
-        <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>" method="POST" id="formcorreo">
+        <?php
+            // if($opcion == 'correo'){
+            //     echo '<form action="solicitarUsuario_Rec.php" method="POST" id="formcorreo">';
+            // } else {
+            //     echo '<form action="../recuperacionContrasenia/preguntasResponder.php" method="POST" id="formcorreo">';
+            // }
+        ?>
+            <form action="preguntasResponder.php" method="POST" id="formcorreo">
             <div class="logo-empresa">
                 <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="180px">
             </div>
@@ -37,6 +45,11 @@
                 ?>
                 <a href="v_recuperarContrasena.html" class="btn btn-primary btn-block" style="margin-top: 0.8rem; background-color: #f68e3e;">Regresar</a>
             </div>
+            <?php
+            if($mensaje != ''){
+                echo '<p>'.$mensaje.'</p>';
+            }
+            ?>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>

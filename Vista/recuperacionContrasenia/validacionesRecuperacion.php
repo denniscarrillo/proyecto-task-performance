@@ -7,6 +7,7 @@
     $opcion = '';
     $user = '';
     $existe = '';
+    $mensaje = '';
     if(isset($_POST['radioOption'])){
         $opcion = $_POST['radioOption'];
     }
@@ -16,13 +17,19 @@
             $existe = ControladorUsuario::obCorreoUsuario($user);
             if($existe != ''){
                 //Generamos el token
-                $bytes = random_bytes(16);
-                $token = bin2hex($bytes);
-                //Almacenar token en la base de datos correspondiente al usuario
-                
+                // $bytes = random_bytes(16);
+                // $token = bin2hex($bytes);
+                $token = random_int(1000, 9999);
 
-                $correo = $existe;
-                $mensaje = enviarCorreo($correo, $token);
+                //Almacenar token en la base de datos correspondiente al usuario
+                $almacenado = ControladorUsuario::almacenarToken($user, $token);
+                if($almacenado){
+                    $correo = $existe;
+                    $mensaje = enviarCorreo($correo, $token);
+                    header("location:v_SolicitarToken.php");
+                }
+            } else {
+                $mensaje = "No existe el usuario";
             }
-        }
+        } 
     }
