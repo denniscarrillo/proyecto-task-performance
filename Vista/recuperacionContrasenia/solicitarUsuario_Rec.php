@@ -21,7 +21,7 @@
             //     echo '<form action="../recuperacionContrasenia/preguntasResponder.php" method="POST" id="formcorreo">';
             // }
         ?>
-            <form action="preguntasResponder.php" method="POST" id="formcorreo">
+            <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>" method="POST" id="formcorreo">
             <div class="logo-empresa">
                 <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="180px">
             </div>
