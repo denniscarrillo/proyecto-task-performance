@@ -265,6 +265,15 @@ class Usuario {
         return $preguntas;
     }
 
+    public static function validarUsuario($userName){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
+        $usuario = $consulta->query("SELECT id_Usuario FROM tbl_MS_Usuario WHERE usuario = '$userName'");
+        $existe = $usuario->num_rows;
+        mysqli_close($consulta); #Cerrar la conexión.
+        return $existe; //Si se encuentra un usuario válido/existente retorna un entero mayor a 0.
+    }
+
 
 } #Fin de la clase
 

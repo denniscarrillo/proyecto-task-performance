@@ -62,4 +62,7 @@
             $Preguntas = Usuario::obtenerPreguntas();
             return $Preguntas; 
         }
+        public static function existeUsuario($userName){
+            return Usuario::validarUsuario($userName); 
+        }
     }

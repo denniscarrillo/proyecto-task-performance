@@ -39,7 +39,7 @@
               <input type="checkbox" name="checkboxPassword">
               <label for="checkboxPassword">Recordar contraseña</label>
             </div> -->
-            <a href="" class="link-recuperacion">¿Olvidaste tu usuario y/o contraseña?</a>
+            <a href= "recuperarcontrasena.php">¿Olvidaste tu usuario y/o contraseña?</a>
             <?php 
               if(!$mensaje == ''){
                 echo '<h2 class="mensaje-error">'. $mensaje. '</h2>';

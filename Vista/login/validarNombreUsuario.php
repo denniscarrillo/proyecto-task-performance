@@ -10,8 +10,8 @@
         if(empty($_POST["userName"])){
             $mensaje = 'Debe llenar el campo Usuario';
         } else {
-            $usuario = ControladorUsuario::loginUsuario($_POST["userName"]);
-            if($usuario){
+            $usuario = ControladorUsuario::existeUsuario($_POST["userName"]);
+            if($usuario >0){
                 header('location: ../login/preguntasResponder.php');
             } else {
                 $mensaje = 'Usuario inválido';

@@ -1,5 +1,5 @@
 <?php
-require_once('../../Vista/login/validarNombreUsuario.php');
+require_once('validarNombreUsuario.php');
 ?>
 <!DOCTYPE html>
 

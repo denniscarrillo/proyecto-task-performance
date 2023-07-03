@@ -44,7 +44,7 @@ require_once('../../Vista/login/validarNombreUsuario.php');
                 Pregunta de Seguridad : <br />
 
                 <?php
-        $preguntas = ControladorPreguntas::getPreguntas();
+        $preguntas = ControladorUsuario::getPreguntas();
         foreach($preguntas as $pregunta){
           
           foreach($pregunta as $col){
