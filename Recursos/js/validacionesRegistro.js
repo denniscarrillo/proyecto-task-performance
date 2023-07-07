@@ -17,8 +17,8 @@ icon_candado.addEventListener('click', function() {
 //objeto con expresiones regulares para los inptus
 const expresiones = {
 	usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
-	nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
-	password: /^(?=.*\d)(?=.*[a-z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/, // 8 a 15 digitos.
+	nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, 
+    password : /^(?=.*\d)(?=.*[a-z])(?=.*[^a-zA-Z0-9])(?!.*\s)(?=.*[!@#\$%\^&\*]).{8,15}$/,// Letras y espacios, pueden llevar acentos.
 	correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
 }
 // CAMPOS VACIOS
@@ -98,10 +98,15 @@ $form.addEventListener('submit', e => {
         e.preventDefault();
     }
 });
-// USUARIO EN MAYUSCULAS
+// INPUTS TEXTOS EN MAYUSCULAS
 $usuario.addEventListener('focusout', () => {
     let usuarioMayus = $usuario.value.toUpperCase();
     $usuario.value = usuarioMayus;
+});
+
+$nombre.addEventListener('focusout', () =>{
+    let nombreMayus = $nombre.value.toUpperCase();
+    $nombre.value = nombreMayus;
 });
 
 // NO PERMITIR ESPACIOS
@@ -144,6 +149,115 @@ const campos = {
 	
 	
 }
+
+//Validacion para que contraseña y confirmacion de contraseña coincidan
+$password2.addEventListener('focusout',() =>{
+    let mensaje = '';
+    let div = '';
+    if($password.value != $password2.value){
+        div = $password2.parentElement 
+        mensaje = div.querySelector('p');
+        mensaje.innerText = '*Las Contraseñas no coinciden';
+        $password2.classList.add('mensaje_error');
+    } 
+    else {
+        $password2.classList.remove('mensaje_error');
+        mensaje.innerText = '';
+    }
+});
+
+//Validacion en la cual no deje hacer submit hasta que las dos contraseñas coincidan
+
+$form.addEventListener('submit', e =>{
+    let mensaje = '';
+    let div = '';
+    if($password.value != $password2.value){
+        div = $password2.parentElement 
+        mensaje = div.querySelector('p');
+        mensaje.innerText = '*Las Contraseñas no coinciden';
+        $password2.classList.add('mensaje_error');
+    } 
+    else {
+        $password2.classList.remove('mensaje_error');
+        mensaje.innerText = '';
+    }
+    if ($password.value != $password2.value) {
+        e.preventDefault();
+    }
+});
+
+
+// Validar que la contraseña lleve caracteres especiales, mayusculas y minusculas
+/* $password.addEventListener('focusout',() =>{
+    let password = /^(?=.*\d)(?=.*[a-z])(?=.*[^a-zA-Z0-9])(?!.*\s)(?=.*[!@#\$%\^&\*]).{8,15}$/; // 8 a 15 digitos.
+    let mensaje = '';
+    let div = '';
+    if(password.test.match($password)){
+        div = $password.parentElement 
+        mensaje = div.querySelector('p');
+        mensaje.innerText = '*Debe ingresar Mayusculas, minusculas, numeros y caracteres especiales';
+        $password.classList.add('mensaje_error');
+    } 
+    else {
+        $password.classList.remove('mensaje_error');
+        mensaje.innerText = '';
+    }
+    }); */
+    $password.addEventListener('focusout', () => {
+        validarConstraseniaSeg($password);
+    });
+    //Para validar que la contraseña sea segura
+    let validarConstraseniaSeg = (elemento) =>{
+        let mensaje = '';
+        /* let cadena = elemento.value */
+         //expresion que tiene que llevar caracteres especiales, mayusculas y numeros
+        if (elemento.value.match(password)){ //Evaluamos expresion vs la cadena
+            mensaje = elemento.parentElement.querySelector('p');
+            mensaje.innerText = '*Debe ingresar Mayusculas, minusculas, numeros y caracteres especiales';
+            elemento.classList.add('mensaje_error');
+        } else {
+            elemento.classList.remove('mensaje_error');
+            mensaje.innerText = '';
+        }
+    };
+
+
+    $usuario.addEventListener('focusout', () => {
+    let usuario = $usuario.value;
+    let mensaje='';
+    // let mensaje = $usuario.parentElement.querySelector('p').innerText='EVENTO '+usuario;
+        $.ajax({
+            url: "../../../Vista/login/validarRegistro.php",
+            type: "POST",
+            datatype: "JSON",
+            data: {
+             nuevoUsuario: usuario
+            },
+            success:function(data) {
+                if(data[0].usuario > 0){
+                  mensaje = $usuario.parentElement.querySelector('p')
+                  mensaje.innerText = '*Este usuario ya existe';
+                  $usuario.classList.add('mensaje_error');
+                }
+                else{
+                    mensaje.innerText = '';
+                    $usuario.classList.remove('mensaje_error');
+                }
+            }
+          });
+    })
+/* //<script type = "text/javascript">
+$(document).ready(function(){
+    $('body').blind('cut copy paste', function(e){
+    e.preventDefault();
+})
+$("body").on("formRegis", function(e){
+    return false;
+})
+})
+</script> */
+
+
 
 
 /* const validarRegistro = (e) => {
