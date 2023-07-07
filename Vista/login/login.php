@@ -1,6 +1,7 @@
 <?php
   require_once('validacionesLogin.php');
 ?>
+<!-- pattern="[A-Za-z0-9!?-]{8,12}"  -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,8 +15,8 @@
 <body>
     <div class="ancho">
         <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post" id="formLogin">
-            <div class="logo-empresa">
-                <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="150px">
+            <div class="logo-empresa"  style="text-align: center">
+                <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="250px";">
             </div>
             <div class="wrap-input mb-3">
               <!-- <label for="userName" class="form-label">Nombre de usuario</label> -->
@@ -33,7 +34,7 @@
               <input type="password" class="form-control" id="userPassword" name="userPassword" maxlength="20" placeholder="Contraseña">
               <p class="mensaje"></p>
             </div>
-            <button type="submit" class="btn btn-primary" name="submit">Ingresar</button>
+            <button type="submit" class="btn btn-primary" name="submit" id="btn-submit">Ingresar</button>
             <label class="btn-cuenta">¿Aún no tienes cuenta? </label><a href = "registro.php">Regístrate</a>
             <!-- <div class="check-conteiner">
               <input type="checkbox" name="checkboxPassword">
