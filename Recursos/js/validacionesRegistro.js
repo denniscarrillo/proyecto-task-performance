@@ -12,13 +12,14 @@ icon_candado.addEventListener('click', function() {
         iconClass.classList.add('fa-lock');
     }
 });
-
+//(?=.*[^a-zA-Z])
+//^(?=.*[A-Z])(?=.*[^A-Z(.)\1]))
 /* VALIDACIONES FORMULARIO REGISTRO */
 //objeto con expresiones regulares para los inptus
 const expresiones = {
-	usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
-	nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, 
-    password : /^(?=.*\d)(?=.*[a-z])(?=.*[^a-zA-Z0-9])(?!.*\s)(?=.*[!@#\$%\^&\*]).{8,15}$/,// Letras y espacios, pueden llevar acentos.
+	usuario: /^(?=.*(.)\1)/, // no permite escribir que se repida mas de dos veces un caracter
+	nombre: /^(?=.*[^a-zA-Z\s])/, 
+    password : /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,15}$/,
 	correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
 }
 // CAMPOS VACIOS
@@ -151,7 +152,7 @@ const campos = {
 }
 
 //Validacion para que contraseña y confirmacion de contraseña coincidan
-$password2.addEventListener('focusout',() =>{
+$password2.addEventListener('keyup',() =>{
     let mensaje = '';
     let div = '';
     if($password.value != $password2.value){
@@ -185,42 +186,71 @@ $form.addEventListener('submit', e =>{
         e.preventDefault();
     }
 });
-
-
-// Validar que la contraseña lleve caracteres especiales, mayusculas y minusculas
-/* $password.addEventListener('focusout',() =>{
-    let password = /^(?=.*\d)(?=.*[a-z])(?=.*[^a-zA-Z0-9])(?!.*\s)(?=.*[!@#\$%\^&\*]).{8,15}$/; // 8 a 15 digitos.
+//Validacion en la cual no deje hacer submit hasta que la contraseña sea robusta
+$form.addEventListener('submit', e =>{
     let mensaje = '';
-    let div = '';
-    if(password.test.match($password)){
-        div = $password.parentElement 
-        mensaje = div.querySelector('p');
-        mensaje.innerText = '*Debe ingresar Mayusculas, minusculas, numeros y caracteres especiales';
+    let input = $password.value;
+    if(!expresiones.password.test(input)){
+        mensaje = $password.parentElement.querySelector('p');
+        mensaje.innerText = '*Mínimo 8 caracteres, una mayúscula, minúscula, número y caracter especial.';
         $password.classList.add('mensaje_error');
     } 
     else {
+        mensaje = $password.parentElement.querySelector('p');
         $password.classList.remove('mensaje_error');
         mensaje.innerText = '';
     }
-    }); */
-    $password.addEventListener('focusout', () => {
-        validarConstraseniaSeg($password);
+    if (!expresiones.password.test(input)) {
+        e.preventDefault();
+    }
+});
+
+    //llama a la funcion para validar la contraseña segura
+    $password.addEventListener('keyup', () => {
+        validarPassword($password);
     });
     //Para validar que la contraseña sea segura
-    let validarConstraseniaSeg = (elemento) =>{
+    const validarPassword = elemento => {
         let mensaje = '';
-        /* let cadena = elemento.value */
-         //expresion que tiene que llevar caracteres especiales, mayusculas y numeros
-        if (elemento.value.match(password)){ //Evaluamos expresion vs la cadena
+        let input = elemento.value;
+        if (!expresiones.password.test(input)){
             mensaje = elemento.parentElement.querySelector('p');
-            mensaje.innerText = '*Debe ingresar Mayusculas, minusculas, numeros y caracteres especiales';
+            mensaje.innerText = '*Mínimo 8 caracteres, una mayúscula, minúscula, número y caracter especial.';
             elemento.classList.add('mensaje_error');
         } else {
-            elemento.classList.remove('mensaje_error');
             mensaje.innerText = '';
+            elemento.classList.remove('mensaje_error');
         }
-    };
+    }
+    $usuario.addEventListener('keyup', () => {
+        limitedeCaracteres($usuario);
+    });
+    const limitedeCaracteres = elemento => {
+        let mensaje = elemento.parentElement.querySelector('p');
+        let input = elemento.value;
+        if (expresiones.usuario.test(input)){
+            mensaje.innerText = '*No debe colocar tres caracteres seguidos.';
+            elemento.classList.add('mensaje_error');
+        } else {
+            mensaje.innerText = '';
+            elemento.classList.remove('mensaje_error');
+        }
+    }
 
+    $nombre.addEventListener('keyup', () => {
+        soloLetras($nombre);
+    });
+    const soloLetras= elemento => {
+        let mensaje = elemento.parentElement.querySelector('p');
+        let input = elemento.value;
+        if (expresiones.nombre.test(input)){
+            mensaje.innerText = '*Solo se permiten letras.';
+            elemento.classList.add('mensaje_error');
+        } else {
+            mensaje.innerText = '';
+                elemento.classList.remove('mensaje_error');
+        }
+    }
 
     $usuario.addEventListener('focusout', () => {
     let usuario = $usuario.value;
@@ -246,102 +276,3 @@ $form.addEventListener('submit', e =>{
             }
           });
     })
-/* //<script type = "text/javascript">
-$(document).ready(function(){
-    $('body').blind('cut copy paste', function(e){
-    e.preventDefault();
-})
-$("body").on("formRegis", function(e){
-    return false;
-})
-})
-</script> */
-
-
-
-
-/* const validarRegistro = (e) => {
-	switch (e.target.name) {
-		case "nombre":
-			validarCampo(expresiones.nombre, e.target, 'nombre');
-		break;
-		case "usuario":
-			validarCampo(expresiones.usuario, e.target, 'usuario');
-		break;
-        case "CorreoElectronico":
-			validarCampo(expresiones.correo, e.target, 'CorreoElectronico');
-		break;
-		case "contraseña":
-			validarCampo(expresiones.contrasenia, e.target, 'contraseña');
-			validarPassword2();
-		break;
-		case "confirtmarContraseña":
-			validarPassword2();
-		break;
-	}
-}
- */
-/* const validarCampo = (expresion, input, campo) => {
-	if(expresion.test(input.value)){
-		document.getElementById(`grupo__${campo}`).classList.remove('form-control-incorrecto');
-		document.getElementById(`grupo__${campo}`).classList.add('form-control-correcto');
-		document.querySelector(`#grupo__${campo} i`).classList.add('fa-check-circle');
-		document.querySelector(`#grupo__${campo} i`).classList.remove('fa-times-circle');
-		campos[campo] = true;
-	} else {
-		document.getElementById(`grupo__${campo}`).classList.add('form-control-incorrecto');
-		document.getElementById(`grupo__${campo}`).classList.remove('form-control-correcto');
-		document.querySelector(`#grupo__${campo} i`).classList.add('fa-times-circle');
-		document.querySelector(`#grupo__${campo} i`).classList.remove('fa-check-circle');
-		campos[campo] = false;
-	}
-} */
-
-   /*  inputs.forEach((input) = () => {
-	input.addEventListener('keyup', validarRegistro);
-	input.addEventListener('blur', validarRegistro);
-	}); */
-	/* 
-	
-		if(campos.usuario && campos.nombre && campos.password && campos.correo && campos.telefono && terminos.checked ){
-			formulario.reset();
-	
-			document.getElementById('formulario__mensaje-exito').classList.add('formulario__mensaje-exito-activo');
-			setTimeout(() => {
-				document.getElementById('formulario__mensaje-exito').classList.remove('formulario__mensaje-exito-activo');
-			}, 5000);
-	
-			document.querySelectorAll('.formulario__grupo-correcto').forEach((icono) => {
-				icono.classList.remove('formulario__grupo-correcto');
-			});
-		} else {
-			document.getElementById('formulario__mensaje').classList.add('formulario__mensaje-activo');
-		}
-	}); */
-	/* const validarPassword2 = () => {
-		const inputPassword1 = document.getElementById('password');
-		const inputPassword2 = document.getElementById('password2');
-	
-		if(inputPassword1.value !== inputPassword2.value){
-			document.getElementById(`grupo__password2`).classList.add('form-control-incorrecto');
-			document.getElementById(`grupo__password2`).classList.remove('form-control-correcto');
-			document.querySelector(`#grupo__password2 i`).classList.add('fa-times-circle');
-			document.querySelector(`#grupo__password2 i`).classList.remove('fa-check-circle');
-			expresiones['password'] = false;
-		} else {
-			document.getElementById(`grupo__password2`).classList.remove('form-control-incorrecto');
-			document.getElementById(`grupo__password2`).classList.add('form-control-correcto');
-			document.querySelector(`#grupo__password2 i`).classList.remove('fa-times-circle');
-			document.querySelector(`#grupo__password2 i`).classList.add('fa-check-circle');
-			expresiones['password'] = true;
-		}
-	} 
-
-	if(campos.usuario && campos.nombre && campos.password && campos.correo){
-		formRegis.reset();
-
-
-		document.querySelectorAll('.form-control-correcto').forEach((icono) => {
-			icono.classList.remove('form-control-correcto');
-		});
-	} */

@@ -53,6 +53,7 @@ require_once('../../Vista/login/validarRegistro.php');
                     <input type="password" class="form-control input" name="contraseña" id="password" maxlength="15" placeholder="Contraseña">
                    <!--  <i class="form-control__validacion-estado fas fa-times-circle"></i> -->
                     <p class="mensaje"></p>
+                    <br>
                 </div>
                 <!-- input para confirmación Contraseña -->
                 <div class="wrap-input mb-3" id="grupo__password2">
