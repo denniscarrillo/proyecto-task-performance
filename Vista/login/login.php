@@ -19,7 +19,6 @@
                 <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="250px";">
             </div>
             <div class="wrap-input mb-3">
-              <!-- <label for="userName" class="form-label">Nombre de usuario</label> -->
               <span class="conteiner-icon">
                 <i class="icon fa-solid fa-user"></i>
               </span>
@@ -27,7 +26,6 @@
               <p class="mensaje"></p>
             </div>
             <div class="wrap-input mb-3">
-              <!-- <label for="password" class="form-label"> Contraseña </label> -->
               <span class="lock conteiner-icon">
               <i class="icon type-lock fa-solid fa-lock"></i>
               </span>
@@ -52,6 +50,6 @@
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
     <script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
     <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-    <script src="../../Recursos/js/validacionesLogin.js"></script>
+    <script src="../../Recursos/js/validacionesLogin.js" type="module"></script>
 </body>
 </html>
