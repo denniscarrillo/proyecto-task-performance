@@ -1,5 +1,11 @@
 import * as funciones from './funcionesValidaciones.js';
 
+//Objeto con expresiones regulares para los inptus
+const validaciones = {
+    user: /^(?=.*[^a-zA-Z\s])/, //Solo letras
+    password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,15}$/
+}
+
 //VARIABLES GLOBALES
 let estadoEspacioUser, estadoEspacioPassword, estadoLetras, estadoContrasenia;
 
@@ -68,6 +74,6 @@ $password.addEventListener('keyup', () => {
 $password.addEventListener('focusout',() => {
     //Mientras no se haya cumplido la validación de espacios no se ejecutara la de validar Password
     if(estadoEspacioPassword){
-        estadoEspacioPassword = funciones.validarPassword($password);
+        estadoEspacioPassword = funciones.validarPassword($password, validaciones.password);
     }
 });

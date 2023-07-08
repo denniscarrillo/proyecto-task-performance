@@ -1,10 +1,4 @@
-// export let estadoEspacioUser;
 
-//Objeto con expresiones regulares para los inptus
-const validaciones = {
-    user: /^(?=.*[^a-zA-Z\s])/, //Solo letras
-    password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,15}$/
-}
 //Validar que haya espacios entre palabras
 export const validarEspacios = elemento => {
     let mensaje = elemento.parentElement.querySelector('p');
@@ -25,11 +19,11 @@ export const validarEspacios = elemento => {
 };
 
 // VALIDAR QUE SE CUMPLAN LAS REGLAS MÍNIMAS PARA LA CONTRASEÑA
-export const validarPassword = elemento => {
+export const validarPassword = (elemento, objetoRegex) => {
     let mensaje = elemento.parentElement.querySelector('p');
     let estado;
     let input = elemento.value;
-    if (!validaciones.password.test(input)){
+    if (!objetoRegex.test(input)){
         mensaje.innerText = '*Mínimo 8 caracteres, una mayúscula, minúscula, número y caracter especial.';
         elemento.classList.add('mensaje_error');
         estado =  false;
@@ -40,11 +34,11 @@ export const validarPassword = elemento => {
     }
     return estado;
 }
-export const validarSoloLetrasUser = elemento => {
+export const validarSoloLetrasUser = (elemento, objetoRegex) => {
     let mensaje = elemento.parentElement.querySelector('p');
     let estado;
     let input = elemento.value;
-    if (validaciones.user.test(input)){
+    if (objetoRegex.test(input)){
         mensaje.innerText = '*Solo se permiten letras.';
         elemento.classList.add('mensaje_error');
         estado = false;
