@@ -1,3 +1,4 @@
+
 <div class="modal fade" id="modalEditarUsuario" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -19,10 +20,12 @@
                         <div class="mb-3">
                             <label for="usuario" class="form-label">Usuario:</label>
                             <input type="text" name="usuario" id="E_usuario" class="form-control" disabled required>
+                            <p class="mensaje"></p>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Contraseña:</label>
                             <input type="text" name="password" id="E_password" class="form-control" disabled required>
+                            <p class="mensaje"></p>
                         </div>
                     </div>
                     <div class="grupo-form">
@@ -50,3 +53,4 @@
         </div>
     </div>
 </div>
+<script src="../../../Recursos/js/validacionesModalEditarUsuario.js"></script>
