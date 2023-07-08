@@ -1,6 +1,5 @@
 <?php
     require_once("validacionesRecuperacion.php");
-
 ?>
 <!DOCTYPE html>
 <html lang="es">

@@ -308,7 +308,16 @@ class Usuario {
         mysqli_close($consulta); #Cerrar la conexión.           
         return $resultado;
     }
+
+    public static function usuarioExistente($usuario){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
+        $user =  $consulta->query("SELECT usuario FROM tbl_MS_Usuario WHERE usuario = '$usuario'");
+        $existe = $user->num_rows;
+        mysqli_close($consulta); #Cerrar la conexión.
+        return $existe;
 } #Fin de la clase
 
 
 
+};

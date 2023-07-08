@@ -74,4 +74,7 @@
         public static function almacenarToken($user, $token){
             return Usuario::guardarToken($user, $token);
         }
+        public static function registro($usuario){
+            return Usuario::usuarioExistente($usuario);
+        }
     }

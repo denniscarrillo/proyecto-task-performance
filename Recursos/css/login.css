@@ -9,10 +9,10 @@ body {
     background: linear-gradient(85deg, #f3b85f 20%, #e65a14 80%);
 } 
 .ancho{
-    min-height: inherit;
+    height: 100vh;
     display: flex;
     justify-content:center; /*Alineacion en horizontal*/
-    align-items:center; /*Alineacion en vertical*/
+    align-items:center;  /*Alineacion en vertical*/
 }
 .wrap-input {
     position: relative;
@@ -22,7 +22,8 @@ form {
     padding: 15px;
     background-color: white;
     height: min-content;
-    width: max-content;
+    /* width: 30%; */
+    width: fit-content;
     font-size: 20px;
     border-radius:8px;
     box-shadow: 20px 20px 15px 0px #d05d24 ;
