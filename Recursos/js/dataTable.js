@@ -30,7 +30,7 @@ $('#btn_nuevoRegistro').click(function () {
   //Petición para obtener roles
   obtenerRoles('#rol');
   //Petición para obtener estado de usuario
-  // obtenerEstadoUsuario('#estado');
+  obtenerEstadoUsuario('#estado');
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");	 
 });
@@ -105,14 +105,14 @@ $(document).on("click", "#btn_editar", function(){
   let idUsuario = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		            
   nombre = fila.find('td:eq(2)').text(),
   usuario = fila.find('td:eq(1)').text(),
-  contrasenia = fila.find('td:eq(3)').text(),
-  correo = fila.find('td:eq(4)').text()
+  // contrasenia = fila.find('td:eq(3)').text(),
+  correo = fila.find('td:eq(3)').text()
   estado = fila.find('td:eq(5)').text(),
   rol = fila.find('td:eq(6)').text();
   $("#E_IdUsuario").val(idUsuario);
   $("#E_nombre").val(nombre);
   $("#E_usuario").val(usuario);
-  $("#E_password").val(contrasenia);
+  // $("#E_password").val(contrasenia);
   $("#E_correo").val(correo);
   $("#E_estado").val(obtenerEstadoUsuario('#E_estado'));
   $("#E_rol").val(obtenerRoles('#E_rol'));
@@ -127,9 +127,9 @@ $('#form-Edit-Usuario').submit(function (e) {
    let nombre = $('#E_nombre').val(),
    idUser =  $('#E_IdUsuario').val(),
    usuario = $('#E_usuario').val(),
-   password = $('#E_password').val(),
+  //  password = $('#E_password').val(),
    correo = $('#E_correo').val(),
-   rol = $('E_estado').val()
+   rol = document.getElementById('E_rol').value;
    estado = document.getElementById('E_estado').value;
    $.ajax({
      url: "../../../Vista/crud/usuario/editarUsuario.php",
@@ -139,7 +139,7 @@ $('#form-Edit-Usuario').submit(function (e) {
       idUsuario: idUser,
       nombre: nombre,
       usuario: usuario,
-      contrasenia: password,
+      // contrasenia: password,
       correo: correo,
       idRol: rol,
       idEstado: estado

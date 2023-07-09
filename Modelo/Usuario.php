@@ -23,7 +23,7 @@ class Usuario {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $listaUsuarios = 
-            $consulta->query("SELECT u.id_Usuario, u.usuario, u.nombre_Usuario, 
+            $consulta->query("SELECT u.id_Usuario, u.usuario, u.nombre_Usuario,
                 u.correo_Electronico, e.descripcion, r.rol
                 FROM tbl_ms_usuario AS u
                 INNER JOIN tbl_estado_usuario AS e ON u.id_Estado_Usuario = e.id_Estado_Usuario 
@@ -227,12 +227,12 @@ class Usuario {
         $nombre = $nuevoUsuario->nombre;
         $idEstado = $nuevoUsuario->idEstado;
         $idRol = $nuevoUsuario->idRol;
-        $contrasenia =$nuevoUsuario->contrasenia;
+        // $contrasenia =$nuevoUsuario->contrasenia;
         $correo =$nuevoUsuario->correo;
         
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $nuevoUsuario = $conexion->query("UPDATE tbl_ms_usuario SET usuario='$usuario', nombre_usuario='$nombre', id_Estado_Usuario='$idEstado', contrasenia='$contrasenia', correo_Electronico='$correo', id_Rol='$idRol' WHERE id_Usuario='$idUsuario' ");
+        $nuevoUsuario = $conexion->query("UPDATE tbl_ms_usuario SET usuario='$usuario', nombre_usuario='$nombre', id_Estado_Usuario='$idEstado', correo_Electronico='$correo', id_Rol='$idRol' WHERE id_Usuario='$idUsuario' ");
         mysqli_close($conexion); #Cerramos la conexión.
     }
     public static function obtenerRolUsuario($usuario){

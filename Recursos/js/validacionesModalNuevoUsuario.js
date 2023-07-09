@@ -1,3 +1,10 @@
+//objeto con expresiones regulares para los inptus
+const validaciones = {
+    // (?=.*[A-Z])(?!.*\s)
+    usuario: /^(?=.*[A-Z])/,
+    password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,15}$/
+}
+
 const $nombreUsuario = document.getElementById('nombre');
 const $usuario = document.getElementById('usuario');
 const $contrasenia = document.getElementById('password');
@@ -60,24 +67,20 @@ $confirmarContrasenia.addEventListener('focusout',() =>{
     }
 })
 
-//VALIDAR LA CONTRASEÑA SEGURA
-// const expresiones ={
-//     password : /^(?=.\d)(?=.[a-z])(?=.[A-Z])(?=.[^a-zA-Z0-9]).{8,15}$/
-// }
+// VALIDAR QUE SE CUMPLAN LAS REGLAS MÍNIMAS PARA LA CONTRASEÑA
+$contrasenia.addEventListener('focusout',() => {
+    validarPassword($contrasenia);
+});
 
-// $contrasenia.addEventListener('focusout',() =>{
-//     validarContrasenia($contrasenia);
-// })
-
-// const validarContrasenia = elemento =>{
-//     let mensaje ='';
-//     let input = elemento.value;
-//     if(!expresiones.password.test(input)){
-//         mensaje = elemento.parentElement.querySelector('p');
-//         mensaje.innerText = '*Mínimo 8 caracteres, una mayúscula, minúscula, número y caracter especial.';
-//         elemento.classList.add('mensaje_error');
-//     } else {
-//         mensaje.innerText = '';
-//         elemento.classList.remove('mensaje_error');
-//     }
-// }
+const validarPassword = elemento => {
+    let mensaje = '';
+    let input = elemento.value;
+    if (!validaciones.contrasenia.test(input)){
+        mensaje = elemento.parentElement.querySelector('p');
+        mensaje.innerText = '*Mínimo 8 caracteres, una mayúscula, minúscula, número y caracter especial.';
+        elemento.classList.add('mensaje_error');
+    } else {
+        mensaje.innerText = '';
+        elemento.classList.remove('mensaje_error');
+    }
+}

@@ -30,7 +30,7 @@ function enviarCorreoNuevoUsuario($destinario, $usuario, $contrasenia){
         $mail->Body    = 
         '<div>
             <h2>Se le notifica que ha sido creada su cuenta con éxito</h2>
-            <h1>Ahora puede iniciar sesión en login</h1>
+            <h1>Ahora puede iniciar sesión</h1>
             <p><b> Usuario:'.$usuario.'</b></p>
             <p><b> Contraseña:'.$contrasenia.'</b></p>
         </div>';

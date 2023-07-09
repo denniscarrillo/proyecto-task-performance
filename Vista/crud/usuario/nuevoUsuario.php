@@ -9,7 +9,7 @@
     $nuevoUsuario->usuario = $_POST['usuario'];
     $nuevoUsuario->contrasenia = password_hash($_POST['contrasenia'], PASSWORD_DEFAULT);
     $nuevoUsuario->correo = $_POST['correo'];
-    $nuevoUsuario->idRol = $_POST['rol'];
+    $nuevoUsuario->idRol = $_POST['idRol'];
     $nuevoUsuario->idEstado = 1;
 
     ControladorUsuario::registroUsuario($nuevoUsuario);
