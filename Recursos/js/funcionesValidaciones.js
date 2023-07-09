@@ -17,7 +17,6 @@ export const validarEspacios = elemento => {
     }
     return estado;
 };
-
 // VALIDAR QUE SE CUMPLAN LAS REGLAS MÍNIMAS PARA LA CONTRASEÑA
 export const validarPassword = (elemento, objetoRegex) => {
     let mensaje = elemento.parentElement.querySelector('p');
@@ -94,3 +93,8 @@ export const limiteMismoCaracter = (elemento, objetoRegex) => {
     }
     return estado;
 }
+// export const noCopiar = elemento => {
+//     let body = elemento.bind('cut copy paste', function(event){
+//         event.PreventDefault();
+//     });
+// }

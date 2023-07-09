@@ -12,11 +12,11 @@
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1862/1862358.png">
     <title>Iniciar sesión</title>
 </head>
-<body>
+<body id="body">
     <div class="ancho">
         <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post" id="formLogin">
             <div class="logo-empresa"  style="text-align: center">
-                <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="250px";">
+                <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="250px">
             </div>
             <div class="wrap-input mb-3">
               <span class="conteiner-icon">
@@ -29,7 +29,7 @@
               <span class="lock conteiner-icon">
               <i class="icon type-lock fa-solid fa-lock"></i>
               </span>
-              <input type="password" class="form-control" id="userPassword" name="userPassword" maxlength="20" placeholder="Contraseña">
+              <input type="password" class="form-control" id="userPassword" name="userPassword" maxlength="20" placeholder="Contraseña" >
               <p class="mensaje"></p>
             </div>
             <button type="submit" class="btn btn-primary" name="submit" id="btn-submit">Ingresar</button>
