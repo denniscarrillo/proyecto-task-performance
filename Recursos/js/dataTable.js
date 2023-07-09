@@ -5,11 +5,13 @@ $(document).ready(function () {
       "url": "../../../Vista/crud/usuario/obtenerUsuarios.php",
       "dataSrc": ""
     },
+    "language":{
+      "url":"//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+    },
     "columns": [
       { "data": "IdUsuario"},
       { "data": "usuario" },
       { "data": "nombreUsuario" },
-      { "data": "contrasenia" },
       { "data": "correo" },
       { "data": "Estado" },
       { "data": "Rol" },
@@ -41,7 +43,7 @@ $('#form-usuario').submit(function (e) {
      let password = $('#password').val();
      let correo = $('#correo').val();
      let rol = document.getElementById('rol').value;
-     let estado = document.getElementById('estado').value;
+    //  let estado = document.getElementById('estado').value;
      $.ajax({
        url: "../../../Vista/crud/usuario/nuevoUsuario.php",
        type: "POST",
@@ -51,22 +53,20 @@ $('#form-usuario').submit(function (e) {
          usuario: usuario,
          contrasenia: password,
          correo: correo,
-         idRol: rol,
-         idEstado: estado
+         idRol: rol
+        //  idEstado: estado
        },
        success: function () {
-         tablaUsuarios.ajax.reload(null, false);
+         //Mostrar mensaje de exito
+         Swal.fire(
+          'Registrado!',
+          'Se le ha enviado un correo al usuario!',
+          'success',
+        )
+        tablaUsuarios.ajax.reload(null, false);
        }
      });
     $('#modalNuevoUsuario').modal('hide');
-  //Mostrar mensaje de exito
-  Swal.fire({
-    position: 'center',
-    icon: 'success',
-    title: 'Registrado!',
-    showConfirmButton: false,
-    timer: 2000
-  })
 });
 //Eliminar usuario
 $(document).on("click", "#btn_eliminar", function() {
@@ -105,14 +105,14 @@ $(document).on("click", "#btn_editar", function(){
   let idUsuario = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		            
   nombre = fila.find('td:eq(2)').text(),
   usuario = fila.find('td:eq(1)').text(),
-  contrasenia = fila.find('td:eq(3)').text(),
-  correo = fila.find('td:eq(4)').text(),
+  // contrasenia = fila.find('td:eq(3)').text(),
+  correo = fila.find('td:eq(3)').text()
   estado = fila.find('td:eq(5)').text(),
   rol = fila.find('td:eq(6)').text();
   $("#E_IdUsuario").val(idUsuario);
   $("#E_nombre").val(nombre);
   $("#E_usuario").val(usuario);
-  $("#E_password").val(contrasenia);
+  // $("#E_password").val(contrasenia);
   $("#E_correo").val(correo);
   $("#E_estado").val(obtenerEstadoUsuario('#E_estado'));
   $("#E_rol").val(obtenerRoles('#E_rol'));
@@ -127,9 +127,9 @@ $('#form-Edit-Usuario').submit(function (e) {
    let nombre = $('#E_nombre').val(),
    idUser =  $('#E_IdUsuario').val(),
    usuario = $('#E_usuario').val(),
-   password = $('#E_password').val(),
+  //  password = $('#E_password').val(),
    correo = $('#E_correo').val(),
-   rol = document.getElementById('E_rol').value,
+   rol = document.getElementById('E_rol').value;
    estado = document.getElementById('E_estado').value;
    $.ajax({
      url: "../../../Vista/crud/usuario/editarUsuario.php",
@@ -139,7 +139,7 @@ $('#form-Edit-Usuario').submit(function (e) {
       idUsuario: idUser,
       nombre: nombre,
       usuario: usuario,
-      contrasenia: password,
+      // contrasenia: password,
       correo: correo,
       idRol: rol,
       idEstado: estado

@@ -23,7 +23,7 @@ class Usuario {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $listaUsuarios = 
-            $consulta->query("SELECT u.id_Usuario, u.usuario, u.nombre_Usuario, u.contrasenia, 
+            $consulta->query("SELECT u.id_Usuario, u.usuario, u.nombre_Usuario,
                 u.correo_Electronico, e.descripcion, r.rol
                 FROM tbl_ms_usuario AS u
                 INNER JOIN tbl_estado_usuario AS e ON u.id_Estado_Usuario = e.id_Estado_Usuario 
@@ -36,7 +36,6 @@ class Usuario {
                 'IdUsuario' => $fila["id_Usuario"],
                 'usuario' => $fila["usuario"],
                 'nombreUsuario'=> $fila["nombre_Usuario"],
-                'contrasenia' => $fila["contrasenia"],
                 'correo' => $fila["correo_Electronico"],
                 'Estado' => $fila["descripcion"],
                 'Rol' => $fila["rol"]
@@ -58,6 +57,7 @@ class Usuario {
         $nuevoUsuario = $consulta->query("INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico, id_Rol) 
                         VALUES ('$usuario','$nombre', '$idEstado', '$contrasenia', '$correo','$idRol')");
         mysqli_close($consulta); #Cerramos la conexión.
+        return $nuevoUsuario;
     }
     //Hace la búsqueda del usuario en login para saber si es válido
     public static function existeUsuario($userName, $userPassword){
@@ -76,12 +76,15 @@ class Usuario {
     }
     //Obtener intentos permitidos de la tabla parámetro
     public static function intentosPermitidos(){
+        $intentos = null;
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $resultado = $conexion->query("SELECT valor  FROM tbl_MS_Parametro WHERE parametro = 'ADMIN INTENTOS'");
         //Obtenemos el valor de Intentos que viene de la DB
         $fila = $resultado->fetch_assoc();
-        $intentos = $fila["valor"]; 
+        if(isset($fila["valor"])){
+            $intentos = $fila["valor"];
+        }
         mysqli_close($conexion); #Cerramos la conexión.
         return $intentos;
     }
@@ -224,12 +227,12 @@ class Usuario {
         $nombre = $nuevoUsuario->nombre;
         $idEstado = $nuevoUsuario->idEstado;
         $idRol = $nuevoUsuario->idRol;
-        $contrasenia =$nuevoUsuario->contrasenia;
+        // $contrasenia =$nuevoUsuario->contrasenia;
         $correo =$nuevoUsuario->correo;
         
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $nuevoUsuario = $conexion->query("UPDATE tbl_ms_usuario SET usuario='$usuario', nombre_usuario='$nombre', id_Estado_Usuario='$idEstado', contrasenia='$contrasenia', correo_Electronico='$correo', id_Rol='$idRol' WHERE id_Usuario='$idUsuario' ");
+        $nuevoUsuario = $conexion->query("UPDATE tbl_ms_usuario SET usuario='$usuario', nombre_usuario='$nombre', id_Estado_Usuario='$idEstado', correo_Electronico='$correo', id_Rol='$idRol' WHERE id_Usuario='$idUsuario' ");
         mysqli_close($conexion); #Cerramos la conexión.
     }
     public static function obtenerRolUsuario($usuario){
