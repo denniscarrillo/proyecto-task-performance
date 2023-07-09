@@ -17,7 +17,7 @@
     <div class="ancho">
     <?php 
      $usuario = '';
-        echo '<h1 class="titulo-bienvenida">Bienvenido '.$user.' por primera vez al sistema</h1>';
+        echo '<h1 class="titulo-bienvenida">Bienvenido '.$user.'!</h1>';
     ?>
         <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post">
             <div class="logo-empresa">

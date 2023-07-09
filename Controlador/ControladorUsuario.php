@@ -39,7 +39,6 @@
         public static function almacenarPreguntas ($preguntas, $usuario){
             Usuario::guardarPreguntas($preguntas, $usuario);
         }
-
         public static function obtenerPreguntasUsuario(){
             return Usuario::obtenerPreguntasUsuario();
         }
@@ -85,5 +84,15 @@
         }
         public static function cambiarEstado($usuario){
             Usuario::cambiarEstadoNuevo($usuario);
-        }        
+        } 
+        public static function respaldarContrasenia($usuario){
+            return Usuario::respaldarContraseniaAnterior($usuario);
+        } 
+        public static function actualizarContrasenia($usuario, $contrasenia){
+            return Usuario::actualizaRContrasenia($usuario, $contrasenia);
+        }    
+        public static function origenNuevoUsuario($usuario){
+            return Usuario::origenNuevoUsuario($usuario);
+        }   
+
     }

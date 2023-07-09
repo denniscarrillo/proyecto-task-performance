@@ -44,6 +44,6 @@
 <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
 <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src= "../../../Recursos/js/dataTable.js"></script>
-<script src= "../../../Recursos/js/validacionesIndex.js"></script>
+<!-- <script src= "../../../Recursos/js/validacionesIndex.js"></script> -->
 </body>
 </html>

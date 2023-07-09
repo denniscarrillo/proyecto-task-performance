@@ -16,7 +16,6 @@
         $intentosFallidos = ControladorUsuario::intentosFallidos($_POST["userName"]);
         $estadoUsuario = ControladorUsuario::estadoUsuario($_POST["userName"]);
         $rolUsuario = ControladorUsuario::obRolUsuario($_POST["userName"]);
-
         if(empty($_POST["userName"]) or empty($_POST["userPassword"])){
             $mensaje = 'Debe llenar ambos campos';
         } else {
@@ -32,7 +31,7 @@
                     };
                 }
             } else {
-                if($rolUsuario == 1){
+                if($rolUsuario == 1 && $estadoUsuario != 1){
                     $mensaje = 'Contacte con su administrador, no tiene rol asignado!';
                 } else {
                     $existeUsuario = ControladorUsuario::login($_POST["userName"], $_POST["userPassword"]);

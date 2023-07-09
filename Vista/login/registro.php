@@ -69,11 +69,11 @@ require_once('../../Vista/login/validarRegistro.php');
             </div>
             <button type="submit" class="btn btn-primary" name="submit" id= "click">Registrar</button>
             <?php 
-              if(!$mensaje==''){
-                echo '<h2 class="mensaje-error">'. $mensaje. '</h2>';
-              }
+            //   if(!$mensaje==''){
+            //     echo '<h2 class="mensaje-error">'. $mensaje. '</h2>';
+            //   }
             ?>
-            <label>¿Ya tienes cuenta? </label><a href = "login.php">Inicia sesión</a>
+            <label>¿Ya tienes cuenta?</label><a href = "login.php">Inicia sesión</a>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>

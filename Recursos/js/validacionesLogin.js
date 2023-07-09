@@ -21,7 +21,7 @@ const $password = document.getElementById('userPassword');
 const $btnSubmit = document.getElementById('btn-submit');
 //  Cambiar tipo del candado para mostrar/ocultar contraseña
 let iconClass = document.querySelector('.type-lock');
-let icon_candado = document.querySelecto('.lock');
+let icon_candado = document.querySelector('.lock');
 //No permitir copiar, pegar y dar click derecho.
 $(document).ready(function(){
     $('body').bind('cut copy paste', function(e){

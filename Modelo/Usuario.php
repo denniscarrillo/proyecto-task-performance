@@ -52,10 +52,13 @@ class Usuario {
         $nombre = $nuevoUsuario->nombre;
         $idEstado = $nuevoUsuario->idEstado;
         $idRol = $nuevoUsuario->idRol;
-        $contrasenia =$nuevoUsuario->contrasenia;
-        $correo =$nuevoUsuario->correo;
-        $nuevoUsuario = $consulta->query("INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico, id_Rol) 
-                        VALUES ('$usuario','$nombre', '$idEstado', '$contrasenia', '$correo','$idRol')");
+        $contrasenia = $nuevoUsuario->contrasenia;
+        $correo = $nuevoUsuario->correo;
+        $creadoPor = $nuevoUsuario->creadoPor;
+        $cantPreguntasContestadas = $nuevoUsuario->preguntasContestadas;
+        $nuevoUsuario = $consulta->query("INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico, 
+                                        id_Rol, preguntas_Contestadas, Creado_Por) 
+                        VALUES ('$usuario','$nombre', '$idEstado', '$contrasenia', '$correo','$idRol', '$cantPreguntasContestadas', '$creadoPor' )");
         mysqli_close($consulta); #Cerramos la conexión.
         return $nuevoUsuario;
     }
@@ -190,7 +193,7 @@ class Usuario {
             VALUES ('$idPregunta','$idUsuario','$respuesta');");
         mysqli_close($conexion); #Cerramos la conexión.
     }
-
+    //===================== METODO REPETIDO, REVISAR==========================
     public static function obEstadoUsuario(){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
@@ -206,6 +209,7 @@ class Usuario {
         return $estados;
 
     }
+    // ========================================================================
     public static function eliminarUsuario($usuario){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
@@ -331,5 +335,40 @@ class Usuario {
         $consulta->query("UPDATE tbl_MS_Usuario  SET `id_Estado_Usuario`= 2 WHERE `usuario` = '$usuario';");
         mysqli_close($consulta); #Cerramos la conexión.
     }
-
+    //Obtener contraseña actual y guardar en tbl_MS_historial_Contraseña
+    public static function respaldarContraseniaAnterior($usuario){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
+        $usuario = $consulta->query("SELECT id_Usuario, contrasenia FROM tbl_MS_Usuario WHERE usuario = '$usuario'");
+        $existe = $usuario->fetch_assoc();
+        $idUser = $existe['id_Usuario'];
+        $contraseniaActual = $existe['contrasenia'];
+        //Guardamos contraseña
+       $guardar = $consulta->query("INSERT INTO tbl_ms_hist_contrasenia (id_Usuario, contrasenia) VALUES ('$idUser','$contraseniaActual');");
+        mysqli_close($consulta); #Cerrar la conexión.
+        return $guardar; //Si se guardo retorna true.
+    }
+    public static function actualizaRContrasenia($usuario, $contrasenia){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
+        $actualizar = $consulta->query("UPDATE tbl_MS_Usuario  SET `contrasenia`= '$contrasenia' WHERE `usuario` = '$usuario';");
+        mysqli_close($consulta); #Cerrar la conexión.
+        return $actualizar;
+    }
+    public static function origenNuevoUsuario($usuario){
+        $creado = null;
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
+        $obtCreadoPor = $consulta->query("SELECT Creado_Por FROM tbl_MS_Usuario WHERE usuario = '$usuario';");
+        $fila = $obtCreadoPor->fetch_assoc();
+        $user = $fila['Creado_Por'];
+        if($usuario == $user){
+           $creado = true;
+        }else {
+            $creado = false;
+        }
+        mysqli_close($consulta); #Cerramos la conexión.
+        return $creado;
+    }
+    
 };#Fin de la clase
