@@ -1,6 +1,3 @@
-<?php
-  //require_once('../../../Vista/index.php');
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
