@@ -106,6 +106,7 @@ a{
 }
 .mensaje {
     position: absolute;
+    margin-top: 3px;
     color: red;
     font-size: 12px;
 }

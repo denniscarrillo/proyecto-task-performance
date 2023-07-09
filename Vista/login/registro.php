@@ -53,6 +53,7 @@ require_once('../../Vista/login/validarRegistro.php');
                     <input type="password" class="form-control input" name="contraseña" id="password" maxlength="15" placeholder="Contraseña">
                    <!--  <i class="form-control__validacion-estado fas fa-times-circle"></i> -->
                     <p class="mensaje"></p>
+                    <br>
                 </div>
                 <!-- input para confirmación Contraseña -->
                 <div class="wrap-input mb-3" id="grupo__password2">
@@ -78,7 +79,7 @@ require_once('../../Vista/login/validarRegistro.php');
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
     <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
-    <script src="../../Recursos/js/validacionesRegistro.js"></script>
+    <script src="../../Recursos/js/validacionesRegistro.js" type="module"></script>
 </body>
 
 </html>

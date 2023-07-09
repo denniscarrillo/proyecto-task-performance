@@ -1,4 +1,18 @@
+import * as funciones from './funcionesValidaciones.js';
 
+//Objeto con expresiones regulares para los inptus
+const validaciones = {
+    user: /^(?=.*[^a-zA-Z\s])/, //Solo letras
+    password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,15}$/
+}
+
+//VARIABLES GLOBALES
+let estadoEspacioUser, estadoEspacioPassword, estadoLetras, estadoContrasenia;
+
+const $form = document.getElementById('formLogin');
+const $user = document.getElementById('userName');
+const $password = document.getElementById('userPassword');
+const $btnSubmit = document.getElementById('btn-submit');
 //  Cambiar tipo del candado para mostrar/ocultar contraseña
 let iconClass = document.querySelector('.type-lock');
 let icon_candado = document.querySelector('.lock');
@@ -13,101 +27,53 @@ icon_candado.addEventListener('click', function() {
         iconClass.classList.add('fa-lock');
     }
 });
-/* VALIDACIONES FORMULARIO LOGIN */
-//objeto con expresiones regulares para los inptus
-const validaciones = {
-    // (?=.*[A-Z])(?!.*\s)
-    user: /^(?=.*[A-Z])/,
-    password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,15}$/
-}
-// CAMPOS VACIOS
-const $form = document.getElementById('formLogin');
-const $user = document.getElementById('userName');
-const $password = document.getElementById('userPassword');
-const $btnSubmit = document.getElementById('btn-submit');
-//Cuando se quiera enviar el formulario de login, primero se validaran si los inputs no estan vacios
+/* ---------------- VALIDACIONES FORMULARIO LOGIN ----------------------*/
+/* 
+    Antes de enviar datos del formulario, se comprobara que todas  
+    las validaciones se hayan cumplido.
+*/
 $form.addEventListener('submit', e => {   
-    if ($user.value.trim() === ''){
-        let div = $user.parentElement 
-        let mensaje = div.querySelector('p');
-        mensaje.innerText = '*Campo vacio';
-        $user.classList.add('mensaje_error');
-    } 
-    else {
-        let div = $user.parentElement 
-        let mensaje = div.querySelector('p');
-        $user.classList.remove('mensaje_error');
-        mensaje.innerText = '';
-    }
-    if ($password.value.trim() === '') {
-        let div = $password.parentElement 
-        let mensaje = div.querySelector('p');
-        mensaje.innerText = '*Campo vacio';
-        $password.classList.add('mensaje_error');
-    } 
-    else {
-        let div = $password.parentElement 
-        let mensaje = div.querySelector('p');
-        $password.classList.remove('mensaje_error');
-        mensaje.innerText = '';
-    }
-    if ($user.value.trim() === '' || $password.value.trim() === '') {
+    //Validamos que algún campo no esté vacío.
+    let estadoInputUser =  funciones.validarCampoVacio($user);
+    let estadoInputPassword = funciones.validarCampoVacio($password);
+    // Comprobamos que todas las validaciones se hayan cumplido 
+    if (estadoInputUser == false || estadoInputPassword == false){
         e.preventDefault();
+        if(estadoEspacioUser == false || estadoEspacioPassword == false){ 
+            funciones.validarEspacios($password);
+            funciones.validarEspacios($user); 
+            funciones.validarSoloLetrasUser($user);
+            funciones.validarPassword($password);
+        }    
     }
 });
-
-// USUARIO EN MAYUSCULAS
+// Convierte usuario en mayúsuculas antes de enviar.
 $user.addEventListener('focusout', () => {
+    if(estadoEspacioUser){
+        funciones.validarSoloLetrasUser($user);
+    }
     let usuarioMayus = $user.value.toUpperCase();
     $user.value = usuarioMayus;
 });
-//VALIDAR ESPACIOS
+//Evento que llama a la función que valida espacios entre caracteres.
 $user.addEventListener('keyup', () => {
-    validarEspacios($user)
+    estadoEspacioUser = funciones.validarEspacios($user);
     //Validación con jQuery inputlimiter
     $("#userName").inputlimiter({
         limit: 15
     });
 });
+//Evento que llama a la función que valida espacios entre caracteres.
 $password.addEventListener('keyup', () => {
-    validarEspacios($password);
+    estadoEspacioPassword = funciones.validarEspacios($password);
     $("#userPassword").inputlimiter({
         limit: 20
     });
 });
-
+////Evento que llama a la función para validar que la contraseña sea robusta.
 $password.addEventListener('focusout',() => {
-    validarPassword($password);
+    //Mientras no se haya cumplido la validación de espacios no se ejecutara la de validar Password
+    if(estadoEspacioPassword){
+        estadoEspacioPassword = funciones.validarPassword($password, validaciones.password);
+    }
 });
-//NO PERMITIR ESPACIOS
-const validarEspacios = elemento => {
-    let mensaje, estado = true;
-    let input = elemento.value;
-    let regex = /\s/g; //Expresión literal para saber si existen espacios en la cadena
-    if (regex.test(input.trim())){ //Evaluamos expresion vs la cadena
-        //Si existen especios mostramos mensaje de error
-        mensaje = elemento.parentElement.querySelector('p');
-        mensaje.innerText = '*No se permiten espacios';
-        elemento.classList.add('mensaje_error');
-        estado = false;
-    } else {
-        mensaje = elemento.parentElement.querySelector('p');
-        elemento.classList.remove('mensaje_error');
-        mensaje.innerText = '';
-    }
-    return estado;
-};
-// VALIDAR QUE SE CUMPLAN LAS REGLAS MÍNIMAS PARA LA CONTRASEÑA
-const validarPassword = elemento => {
-    let mensaje = '';
-    let input = elemento.value;
-    if (!validaciones.password.test(input)){
-        mensaje = elemento.parentElement.querySelector('p');
-        mensaje.innerText = '*Mínimo 8 caracteres, una mayúscula, minúscula, número y caracter especial.';
-        elemento.classList.add('mensaje_error');
-    } else {
-        mensaje.innerText = '';
-        elemento.classList.remove('mensaje_error');
-    }
-}
-

@@ -27,10 +27,10 @@ $(document).ready(function () {
 });
 
 $('#btn_nuevoRegistro').click(function () {
-  //Petición para obtener roles
+  // //Petición para obtener roles
   obtenerRoles('#rol');
   //Petición para obtener estado de usuario
-  obtenerEstadoUsuario('#estado');
+  // obtenerEstadoUsuario('#estado');
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");	 
 });
