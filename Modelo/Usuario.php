@@ -54,8 +54,9 @@ class Usuario {
         $idRol = $nuevoUsuario->idRol;
         $contrasenia =$nuevoUsuario->contrasenia;
         $correo =$nuevoUsuario->correo;
-        $nuevoUsuario = $consulta->query("INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico, id_Rol) 
-                        VALUES ('$usuario','$nombre', '$idEstado', '$contrasenia', '$correo','$idRol')");
+        $preguntasContestadas = 0;
+        $nuevoUsuario = $consulta->query("INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico, id_Rol, preguntas_Contestadas) 
+                        VALUES ('$usuario','$nombre', '$idEstado', '$contrasenia', '$correo','$idRol', '$preguntasContestadas')");
         mysqli_close($consulta); #Cerramos la conexión.
         return $nuevoUsuario;
     }
@@ -129,11 +130,14 @@ class Usuario {
     }
     //Obtener cantidad de preguntas desde el parámetro.
     public static function parametroPreguntas(){
+        $cantPreguntas=0;
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $paramPreguntas = $consulta->query("SELECT valor FROM tbl_MS_Parametro WHERE Parametro = 'ADMIN PREGUNTAS'");
         $row = $paramPreguntas->fetch_assoc();
-        $cantPreguntas = $row["valor"];
+        if(isset($row["valor"])){
+            $cantPreguntas = $row["valor"];
+        }
         mysqli_close($consulta); #Cerramos la conexión.
         return $cantPreguntas;
     }
