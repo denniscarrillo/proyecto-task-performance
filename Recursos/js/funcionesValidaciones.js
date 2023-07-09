@@ -34,7 +34,7 @@ export const validarPassword = (elemento, objetoRegex) => {
     }
     return estado;
 }
-export const validarSoloLetrasUser = (elemento, objetoRegex) => {
+export const validarSoloLetras = (elemento, objetoRegex) => {
     let mensaje = elemento.parentElement.querySelector('p');
     let estado;
     let input = elemento.value;
@@ -60,6 +60,36 @@ export const validarCampoVacio = elemento => {
     } else {
         elemento.classList.remove('mensaje_error');
         mensaje.innerText = '';
+        estado = true;
+    }
+    return estado;
+}
+export const validarCoincidirPassword = (password, password2) => {
+    let estado;
+    let mensaje = password2.parentElement.querySelector('p');
+    if(password.value != password2.value){
+        mensaje.innerText = '*Las Contraseñas no coinciden';
+        password2.classList.add('mensaje_error');
+        estado = false;
+        } 
+    else {
+        password2.classList.remove('mensaje_error');
+        mensaje.innerText = '';
+        estado = true;
+    }
+    return estado;
+}
+export const limiteMismoCaracter = (elemento, objetoRegex) => {
+    let estado;
+    let mensaje = elemento.parentElement.querySelector('p');
+    let input = elemento.value;
+    if (objetoRegex.test(input)){
+        mensaje.innerText = '*No debe colocar el mismo caracter +3 veces seguidas.';
+        elemento.classList.add('mensaje_error');
+        estado = false;
+    } else {
+        mensaje.innerText = '';
+        elemento.classList.remove('mensaje_error');
         estado = true;
     }
     return estado;
