@@ -54,7 +54,6 @@ $('#form-usuario').submit(function (e) {
          contrasenia: password,
          correo: correo,
          idRol: rol
-        //  idEstado: estado
        },
        success: function () {
          //Mostrar mensaje de exito

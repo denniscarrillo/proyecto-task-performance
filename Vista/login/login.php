@@ -1,7 +1,6 @@
 <?php
   require_once('validacionesLogin.php');
 ?>
-<!-- pattern="[A-Za-z0-9!?-]{8,12}"  -->
 <!DOCTYPE html>
 <html lang="es">
 <head>

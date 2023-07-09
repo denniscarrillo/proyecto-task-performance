@@ -23,8 +23,13 @@
             if($contestadas == $cantPreguntasParametro){
                 //Cambiar estado del usuario nuevo a Activo
                 ControladorUsuario::cambiarEstado($user);
-                header ('location: login.php');
-                session_destroy();  
+                $origen = ControladorUsuario::origenNuevoUsuario($user);
+                if($origen){
+                    header ('location: login.php');
+                    session_destroy();
+                } else {
+                    header ('location: ../recuperacionContrasenia/v_nuevaContrasenia.php');
+                }
             }
         } 
     }

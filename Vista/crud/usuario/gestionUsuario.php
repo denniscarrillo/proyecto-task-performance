@@ -46,6 +46,6 @@
 <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src= "../../../Recursos/js/dataTable.js"></script>
 <script src="../../../Recursos/js/validacionesModalNuevoUsuario.js"  type="module"></script>
-<!-- <script src= "../../../Recursos/js/validacionesIndex.js"></script> -->
+<!-- <!-- <script src= "../../../Recursos/js/validacionesIndex.js"></script> --> -->
 </body>
 </html>

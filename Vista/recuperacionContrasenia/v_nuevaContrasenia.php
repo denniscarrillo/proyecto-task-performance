@@ -1,5 +1,5 @@
 <?php
-  //require_once('validacionesLogin.php');
+  require_once('validacionesNuevaContrasenia.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -10,7 +10,7 @@
     <link href="../../Recursos/css/login.css" rel="stylesheet" >
     <link href="../../Recursos/css/nuevaContrasenia.css" rel="stylesheet" >
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1862/1862358.png">
-    <title>Nueva coontraseña</title>
+    <title>Nueva contraseña</title>
 </head>
 <body id="body">
     <div class="ancho">
@@ -21,14 +21,14 @@
             <h1 class="titulo">Configura tu nueva contraseña</h1>
             <div class="wrap-input mb-3">
             <span class="lock conteiner-icon">
-                <i class="icon type-lock fa-solid fa-lock"></i>
+                <i class="icon type-lock fa-solid fa-lock" id="lok1"></i>
             </span>
-              <input type="password" class="form-control" name="password" id="confirmPassword" placeholder="Nueva contraseña">
+              <input type="password" class="form-control" name="password" id="password" placeholder="Nueva contraseña">
               <p class="mensaje"></p>
             </div>
             <div class="wrap-input mb-3">
               <span class="lock1 conteiner-icon">
-                <i class="icon type-lock fa-solid fa-lock"></i>
+                <i class="icon type-lock fa-solid fa-lock" id="lok2"></i>
               </span>
               <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirmar contraseña" >
               <p class="mensaje"></p>
@@ -36,9 +36,9 @@
             <button type="submit" class="btn btn-primary" name="submit" id="btn-submit">Cambiar</button>
 
             <?php 
-            //   if(!$mensaje == ''){
-            //     echo '<h2 class="mensaje-error">'. $mensaje. '</h2>';
-            //   }
+              if(!$mensaje == ''){
+                echo '<h2 class="mensaje-error" style="margin-top: 8px;">'. $mensaje. '</h2>';
+              }
             ?>
         </form>
     </div>
@@ -46,7 +46,7 @@
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
     <script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
     <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-    <script src="../../Recursos/js/validacionesLogin.js" type="module"></script>
+    <!-- <script src="../../Recursos/js/validacionesLogin.js" type="module"></script> -->
     <script src="../../Recursos/js/validacionesNuevaContrasenia.js"></script>
 </body>
 </html>
