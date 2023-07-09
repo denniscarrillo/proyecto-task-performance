@@ -3,23 +3,30 @@
     require_once ("../../Modelo/Usuario.php");
     require_once("../../Controlador/ControladorUsuario.php");
 
+    $user = '';
     session_start();
-    $user = $_SESSION['usuario'];
-    $preguntas = ControladorUsuario::obtenerPreguntasUsuario($user);
-    $idPreguntas = array();
-    $cantPreguntas = count($preguntas);
+    if (isset($_SESSION['usuario'])) {
+        $user = $_SESSION['usuario'];
+    }
+    $preguntas = ControladorUsuario::obtenerPreguntasUsuario();
+    $cantPreguntasParametro = ControladorUsuario::cantidadPreguntas();
+    $preguntasContestadasUsuario =  ControladorUsuario::cantPreguntasContestadas($user);
     $respuestasUsuario = array();
-    $respuesta1 = 'respuesta';
+
     if (isset($_POST['submit'])){
-        for($i=0; $i < $cantPreguntas; $i++){
-            $respuesta2 = strval($i);
-            $respuesta = $respuesta1. $respuesta2; //Concatenamos el name de los inputs
-            $respuestasUsuario[$i] = $_POST[$respuesta]; 
-            $idPreguntas[$i] = $preguntas[$i]['id_pregunta'];
-        }
-        ControladorUsuario::guardarRespuestas($user, $idPreguntas, $respuestasUsuario);
-        session_destroy();
-        header ('location: login.php');
+        if($preguntasContestadasUsuario < $cantPreguntasParametro){
+            $idPregunta = $_POST['id_pregunta'];
+            $respuestaUsuario = $_POST['respuesta']; 
+            ControladorUsuario::guardarRespuestas($user, $idPregunta, $respuestaUsuario);
+            ControladorUsuario::incrementarPregContestadas($user, $preguntasContestadasUsuario);
+            $contestadas = $preguntasContestadasUsuario + 1;
+            if($contestadas == $cantPreguntasParametro){
+                //Cambiar estado del usuario nuevo a Activo
+                ControladorUsuario::cambiarEstado($user);
+                header ('location: login.php');
+                session_destroy();  
+            }
+        } 
     }
 
     

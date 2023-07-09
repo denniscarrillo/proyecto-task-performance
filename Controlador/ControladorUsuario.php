@@ -40,8 +40,8 @@
             Usuario::guardarPreguntas($preguntas, $usuario);
         }
 
-        public static function obtenerPreguntasUsuario($usuario){
-            return Usuario::obtenerPreguntasUsuario($usuario);
+        public static function obtenerPreguntasUsuario(){
+            return Usuario::obtenerPreguntasUsuario();
         }
         public static function guardarRespuestas($usuario, $idPreguntas, $respuestas){
             Usuario::guardarRespuestasUsuario($usuario, $idPreguntas, $respuestas);
@@ -77,4 +77,13 @@
         public static function registro($usuario){
             return Usuario::usuarioExistente($usuario);
         }
+        public static function cantPreguntasContestadas($usuario){
+            return Usuario::obtenerCantPreguntasContestadas($usuario);
+        }
+        public static function incrementarPregContestadas($usuario,$cantActual){
+            Usuario::incrementarPreguntasContestadas($usuario, $cantActual);
+        }
+        public static function cambiarEstado($usuario){
+            Usuario::cambiarEstadoNuevo($usuario);
+        }        
     }

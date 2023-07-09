@@ -145,30 +145,30 @@ class Usuario {
         mysqli_close($conexion); #Cerramos la conexión.
     }
     public static function obtenerEstadoUsuario($usuario){
-        $estadoBloqueado = null;
+        $estado = null;
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $consultaEstado = $conexion->query("SELECT id_Estado_Usuario FROM tbl_MS_Usuario WHERE usuario = '$usuario'");
         $fila = $consultaEstado->fetch_assoc(); 
         if(isset($fila["id_Estado_Usuario"])){
-            $estadoBloqueado = $fila["id_Estado_Usuario"];
+            $estado = $fila["id_Estado_Usuario"];
         }
         mysqli_close($conexion); #Cerramos la conexión.
-        return $estadoBloqueado;
+        return $estado;
     }
     public static function guardarPreguntas($usuario, $preguntas){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         foreach($preguntas as $pregunta){
-            $guardarPregunta = $conexion->query("INSERT INTO tbl_ms_preguntas (pregunta, Creado_Por) VALUES ('$pregunta','$usuario');");
+            $conexion->query("INSERT INTO tbl_ms_preguntas (pregunta, Creado_Por) VALUES ('$pregunta','$usuario');");
         }
         mysqli_close($conexion); #Cerramos la conexión.
     }
 
-    public static function obtenerPreguntasUsuario($usuario){
+    public static function obtenerPreguntasUsuario(){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $preguntasUsuario = $conexion->query("SELECT id_pregunta, pregunta FROM tbl_ms_preguntas WHERE Creado_Por = '$usuario'");
+        $preguntasUsuario = $conexion->query("SELECT id_pregunta, pregunta FROM tbl_ms_preguntas;");
         $preguntas = array();
         while($fila = $preguntasUsuario->fetch_assoc()){
             $preguntas [] = [
@@ -180,20 +180,14 @@ class Usuario {
         return $preguntas;
     }
 
-    public static function guardarRespuestasUsuario($usuario, $idPreguntas, $respuestas){
+    public static function guardarRespuestasUsuario($usuario, $idPregunta, $respuesta){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $consultaIdUsuario = $conexion->query("SELECT id_usuario FROM tbl_ms_usuario WHERE usuario = '$usuario'");
         $fila = $consultaIdUsuario->fetch_assoc();
         $idUsuario = $fila["id_usuario"];
-        $i = 0;
-        foreach($idPreguntas as $idPregunta){
-            $idP = $idPregunta;
-            $respuesta = $respuestas[$i];
-            $guardarRespuesta = $conexion->query("INSERT INTO tbl_MS_Preguntas_X_Usuario (id_pregunta, id_usuario, respuesta)
-             VALUES ('$idP','$idUsuario','$respuesta');");
-             $i++;
-        }
+        $conexion->query("INSERT INTO tbl_MS_Preguntas_X_Usuario (id_pregunta, id_usuario, respuesta)
+            VALUES ('$idPregunta','$idUsuario','$respuesta');");
         mysqli_close($conexion); #Cerramos la conexión.
     }
 
@@ -263,7 +257,6 @@ class Usuario {
         mysqli_close($consulta); #Cerramos la conexión.
         return $preguntas;
     }
-
     public static function validarUsuario($userName){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
@@ -272,8 +265,6 @@ class Usuario {
         mysqli_close($consulta); #Cerrar la conexión.
         return $existe; //Si se encuentra un usuario válido/existente retorna un entero mayor a 0.
     }
-
-
     public static function obtenerRespuestaPregunta($idPregunta){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
@@ -283,7 +274,6 @@ class Usuario {
         mysqli_close($consulta); #Cerrar la conexión.
         return $res; 
     }
-
     public static function correoUsuario($usuario){
         $correo = '';
         $conn = new Conexion();
@@ -308,7 +298,6 @@ class Usuario {
         mysqli_close($consulta); #Cerrar la conexión.           
         return $resultado;
     }
-
     public static function usuarioExistente($usuario){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
@@ -316,8 +305,31 @@ class Usuario {
         $existe = $user->num_rows;
         mysqli_close($consulta); #Cerrar la conexión.
         return $existe;
-} #Fin de la clase
+    } 
+    public static function obtenerCantPreguntasContestadas($usuario){
+        $cantPreguntas = '';
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
+        $userCantPreguntas =  $consulta->query("SELECT preguntas_Contestadas FROM tbl_MS_Usuario WHERE usuario = '$usuario';");
+        $row = $userCantPreguntas->fetch_assoc();
+        if(isset($row["preguntas_Contestadas"])){
+            $cantPreguntas = $row["preguntas_Contestadas"];
+        }
+        mysqli_close($consulta); #Cerramos la conexión.
+        return $cantPreguntas;
+    }
+    public static function incrementarPreguntasContestadas($usuario, $valorActual){
+        $incremento = $valorActual+1;
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
+        $consulta->query("UPDATE tbl_MS_Usuario  SET `preguntas_Contestadas`= '$incremento' WHERE `usuario` = '$usuario';");
+        mysqli_close($consulta); #Cerramos la conexión.
+    }
+    public static function cambiarEstadoNuevo($usuario){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
+        $consulta->query("UPDATE tbl_MS_Usuario  SET `id_Estado_Usuario`= 2 WHERE `usuario` = '$usuario';");
+        mysqli_close($consulta); #Cerramos la conexión.
+    }
 
-
-
-};
+};#Fin de la clase

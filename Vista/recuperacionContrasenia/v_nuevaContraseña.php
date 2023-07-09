@@ -1,7 +1,6 @@
 <?php
-  require_once('validacionesLogin.php');
+  //require_once('validacionesLogin.php');
 ?>
-<!-- pattern="[A-Za-z0-9!?-]{8,12}"  -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,8 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link href="../../Recursos/css/login.css" rel="stylesheet" >
+    <link href="../../Recursos/css/nuevaContrasenia.css" rel="stylesheet" >
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1862/1862358.png">
-    <title>Iniciar sesión</title>
+    <title>Nueva coontraseña</title>
 </head>
 <body id="body">
     <div class="ancho">
@@ -18,27 +18,27 @@
             <div class="logo-empresa"  style="text-align: center">
                 <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="250px">
             </div>
+            <h1 class="titulo">Configura tu nueva contraseña</h1>
             <div class="wrap-input mb-3">
-              <span class="conteiner-icon">
-                <i class="icon fa-solid fa-user"></i>
-              </span>
-              <input type="text" class="form-control" name="userName" id="userName" placeholder="Usuario">
+            <span class="lock conteiner-icon">
+                <i class="icon type-lock fa-solid fa-lock"></i>
+            </span>
+              <input type="password" class="form-control" name="password" id="confirmPassword" placeholder="Nueva contraseña">
               <p class="mensaje"></p>
             </div>
             <div class="wrap-input mb-3">
-              <span class="lock conteiner-icon">
-              <i class="icon type-lock fa-solid fa-lock"></i>
+              <span class="lock1 conteiner-icon">
+                <i class="icon type-lock fa-solid fa-lock"></i>
               </span>
-              <input type="password" class="form-control" id="userPassword" name="userPassword" maxlength="20" placeholder="Contraseña" >
+              <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirmar contraseña" >
               <p class="mensaje"></p>
             </div>
-            <button type="submit" class="btn btn-primary" name="submit" id="btn-submit">Ingresar</button>
-            <label class="btn-cuenta">¿Aún no tienes cuenta? </label><a href = "registro.php">Regístrate</a>
-            <a href="../recuperacionContrasenia/v_recuperarContrasena.html">¿Olvidaste tu usuario y/o contraseña?</a>
+            <button type="submit" class="btn btn-primary" name="submit" id="btn-submit">Cambiar</button>
+
             <?php 
-              if(!$mensaje == ''){
-                echo '<h2 class="mensaje-error">'. $mensaje. '</h2>';
-              }
+            //   if(!$mensaje == ''){
+            //     echo '<h2 class="mensaje-error">'. $mensaje. '</h2>';
+            //   }
             ?>
         </form>
     </div>
@@ -47,5 +47,6 @@
     <script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
     <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
     <script src="../../Recursos/js/validacionesLogin.js" type="module"></script>
+    <script src="../../Recursos/js/validacionesNuevaContrasenia.js"></script>
 </body>
 </html>

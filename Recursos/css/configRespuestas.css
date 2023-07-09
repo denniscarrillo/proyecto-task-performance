@@ -3,25 +3,24 @@
 }
 form { 
     margin-top: 2rem;
+    padding: 2rem;
 }
-.form-control{
-    display: inline;
-}
-.inputs{
-    display: inline;
-    margin:2px;
-    padding-right: 8px;
-}
-
 .titulo-bienvenida{
     text-align: center;
     color: white;
     font-weight: 800;
-    font-size: 4rem;
+    font-size: 3rem;
 }
-
 .titulo-bienvenida2{
     text-align: center;
     color: rgb(70, 67, 67);
-    font-weight: 700;
+    font-weight: 500;
+    font-size: 1rem;
+}
+.input {
+    margin-bottom: 1rem;
+}
+.select-preguntas {
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
 }
