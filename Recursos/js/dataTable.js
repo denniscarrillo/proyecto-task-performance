@@ -1,4 +1,5 @@
 import {estadoValidado as validado } from './validacionesModalNuevoUsuario.js';
+import {estadoValidado as valido } from './validacionesModalEditarUsuario.js';
 
 let tablaUsuarios = '';
 $(document).ready(function () {
@@ -134,7 +135,7 @@ $('#form-Edit-Usuario').submit(function (e) {
    correo = $('#E_correo').val(),
    rol = document.getElementById('E_rol').value,
    estado = document.getElementById('E_estado').value;
-   if(validado){
+   if(valido){
     $.ajax({
       url: "../../../Vista/crud/usuario/editarUsuario.php",
       type: "POST",
