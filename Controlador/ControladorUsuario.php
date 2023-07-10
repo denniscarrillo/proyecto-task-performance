@@ -96,5 +96,7 @@
         public static function validarTokenUsuario($usuario, $tokenUsuario){
             return Usuario::validarToken($usuario, $tokenUsuario);
         }
-
+        public static function obtenerIdUsuario($usuario){
+            Usuario::obtenerIdUsuario($usuario);
+        }
     }
