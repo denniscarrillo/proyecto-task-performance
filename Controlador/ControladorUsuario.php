@@ -97,6 +97,6 @@
             return Usuario::validarToken($usuario, $tokenUsuario);
         }
         public static function obtenerIdUsuario($usuario){
-            Usuario::obtenerIdUsuario($usuario);
+            return Usuario::obtenerIdUsuario($usuario);
         }
     }

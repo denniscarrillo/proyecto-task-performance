@@ -11,7 +11,7 @@
             //Recibir objeto y obtener parametros
             $conn = new Conexion();
             $consulta = $conn->abrirConexionDB();
-            $ejecutarSQL = "INSERT INTO tbl_bitacora (`fecha`, `id_Usuario`, `id_Objeto`, `accion`, `descripcion`) 
+            $ejecutarSQL = "INSERT INTO tbl_ms_bitacora (`fecha`, `id_Usuario`, `id_Objeto`, `accion`, `descripcion`) 
             VALUES('$datosEvento->fecha','$datosEvento->idUsuario','$datosEvento->idObjeto','$datosEvento->accion','$datosEvento->descripcion')";
             $consulta->query($ejecutarSQL);
             mysqli_close($consulta); #Cerramos la conexión.
@@ -29,7 +29,7 @@
 
         public static function acciones_Evento(){
             $acciones = array();
-            $acciones[] = [
+            $acciones = [
                 'Insert' => 'Creacion',
                 'Update' => 'Actualizacion',
                 'Delete' => 'Eliminacion',

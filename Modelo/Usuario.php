@@ -398,8 +398,8 @@ class Usuario {
         $conexion = $conn->abrirConexionDB();
         $resultado= $conexion->query("SELECT id_Usuario FROM tbl_ms_usuario WHERE usuario = '$usuario'");
         $fila = $resultado->fetch_assoc();
-        $idUsuario = $fila['id_Usuario'];
+        $id = $fila['id_Usuario'];
         mysqli_close($conexion); #Cerramos la conexión.
-        return $idUsuario;
+        return $id;
     }
 }#Fin de la clase
