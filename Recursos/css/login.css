@@ -9,28 +9,30 @@ body {
     background: linear-gradient(85deg, #f3b85f 20%, #e65a14 80%);
 } 
 .ancho{
-    min-height: inherit;
+    height: 100vh;
     display: flex;
     justify-content:center; /*Alineacion en horizontal*/
-    align-items:center; /*Alineacion en vertical*/
+    align-items:center;  /*Alineacion en vertical*/
 }
 .wrap-input {
     position: relative;
+    margin-bottom: 2rem !important;
 }
 form {
-    padding: 15px;
+    padding: 20px;
     background-color: white;
     height: min-content;
-    width: max-content;
+    /* width: 30%; */
+    width: fit-content;
     font-size: 20px;
     border-radius:8px;
     box-shadow: 20px 20px 15px 0px #d05d24 ;
 }
+
 .btn {
     display: block;
     margin: 0 auto;
     width: 70%;
-    margin: 10px auto ;
     background-color: #da251c;
     border:none;
 }
@@ -93,4 +95,35 @@ form {
 }
 .check-conteiner label {
     font-size: 15px;
+}
+.btn-cuenta{
+    font-size: 12px;
+    margin-left: 35px;
+}
+a{
+    font-size: 15px;
+    padding-left: 5px;
+}
+.mensaje {
+    position: absolute;
+    margin-top: 3px;
+    color: red;
+    font-size: 12px;
+}
+.mensaje_error {
+    box-shadow: 0 0 0 .15rem #e15e3eac;
+    border-color: red;
+}
+.mensaje_error:focus {
+    box-shadow: 0 0 0 .25rem rgba(226, 73, 35, 0.455);
+    border-color: red;
+}
+/* Estilo para quitar el ojo por defecto que pone el input password. 
+    Pseudoelemento
+*/
+#userPassword::-ms-reveal {
+    display: none;
+}
+.margin-b {
+    margin-bottom: 0.2rem;
 }

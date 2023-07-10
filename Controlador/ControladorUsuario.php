@@ -1,31 +1,101 @@
 <?php
-    // require_once ("../../Modelo/Usuario.php");
     class ControladorUsuario {
         
         public static function getUsuarios(){
-            require_once('Modelo/Usuario.php');
-            $Usuarios = Usuario::obtenerUsuarios();
-            return $Usuarios; 
+            return Usuario::obtenerTodosLosUsuarios();
         }
-
-        // public static function login($usuario, $contrasenia){
-        //     $Usuarios = Usuario::obtenerUsuarios();
-        //     for($i = 0; $i < count($Usuarios); $i++){
-        //         if($Usuarios[$i][1]==$usuario && $Usuarios[$i][3]==$contrasenia){
-        //             $valido = true;
-        //         }
-        //     }
-        //     return $valido;
-        // }
-
         public static function login($usuario, $contrasenia){
             $valido = false;
-            $usuario = Usuario::buscarUsuario($usuario, $contrasenia);
+            $usuario = Usuario::existeUsuario($usuario, $contrasenia);
             if($usuario > 0){
                 $valido = true;
             }
             return $valido;
         }
+        public static function registroUsuario($nuevoUsuario){
+            return Usuario::registroNuevoUsuario($nuevoUsuario);
+        }
+        public static function intentosLogin(){
+            return  Usuario::intentosPermitidos();
+        }
+        public static function bloquearUsuario($max, $intentos, $user){
+            return Usuario::bloquearUsuario($max, $intentos, $user);
+        }
+        public static function intentosFallidos($usuario){
+            return Usuario::intentosInvalidos($usuario);
+        }
+        public static function incrementarIntentos($usuario, $intentosFallidos){
+            return Usuario::aumentarIntentosFallidos($usuario, $intentosFallidos);
+        }
+        public static function cantidadPreguntas(){
+            return Usuario::parametroPreguntas();
+        }
+        public static function resetearIntentos($usuario) {
+            Usuario::resetearIntentosFallidos($usuario);
+        }
+        public static function estadoUsuario ($usuario){
+            return Usuario::obtenerEstadoUsuario($usuario);
+        }
+        public static function almacenarPreguntas ($preguntas, $usuario){
+            Usuario::guardarPreguntas($preguntas, $usuario);
+        }
+        public static function obtenerPreguntasUsuario(){
+            return Usuario::obtenerPreguntasUsuario();
+        }
+        public static function guardarRespuestas($usuario, $idPreguntas, $respuestas){
+            Usuario::guardarRespuestasUsuario($usuario, $idPreguntas, $respuestas);
+        }
+        public static function obtenerEstadoUsuario(){
+            return Usuario::obEstadoUsuario();
+        }
+        public static function eliminarUsuario($usuario){
+            Usuario::eliminarUsuario($usuario);
+        }
+        public static function editarUsuario($nuevoUsuario){
+            Usuario::editarUsuario($nuevoUsuario);
+        }
+        public static function obRolUsuario($usuario){
+            return Usuario::obtenerRolUsuario($usuario);
+        }
+        public static function getPreguntas(){
+            $Preguntas = Usuario::obtenerPreguntas();
+            return $Preguntas; 
+        }
+        public static function existeUsuario($userName){
+            return Usuario::validarUsuario($userName); 
+        }
+        public static function obtenerRespuesta($idPregunta){
+            return Usuario::obtenerRespuestaPregunta($idPregunta); 
+        }
+        public static function obCorreoUsuario($usuario){
+            return Usuario::correoUsuario($usuario);
+        } 
+        public static function almacenarToken($user, $token){
+            return Usuario::guardarToken($user, $token);
+        }
+        public static function registro($usuario){
+            return Usuario::usuarioExistente($usuario);
+        }
+        public static function cantPreguntasContestadas($usuario){
+            return Usuario::obtenerCantPreguntasContestadas($usuario);
+        }
+        public static function incrementarPregContestadas($usuario,$cantActual){
+            Usuario::incrementarPreguntasContestadas($usuario, $cantActual);
+        }
+        public static function cambiarEstado($usuario){
+            Usuario::cambiarEstadoNuevo($usuario);
+        } 
+        public static function respaldarContrasenia($usuario){
+            return Usuario::respaldarContraseniaAnterior($usuario);
+        } 
+        public static function actualizarContrasenia($usuario, $contrasenia){
+            return Usuario::actualizaRContrasenia($usuario, $contrasenia);
+        }    
+        public static function origenNuevoUsuario($usuario){
+            return Usuario::origenNuevoUsuario($usuario);
+        }   
+        public static function validarTokenUsuario($usuario, $tokenUsuario){
+            return Usuario::validarToken($usuario, $tokenUsuario);
+        }
 
     }
-?>
