@@ -44,8 +44,9 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
 <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
 <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script src= "../../../Recursos/js/dataTable.js"></script>
+<script src= "../../../Recursos/js/dataTable.js" type="module"></script>
+<script src= "../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
 <script src="../../../Recursos/js/validacionesModalNuevoUsuario.js"  type="module"></script>
-<!-- <!-- <script src= "../../../Recursos/js/validacionesIndex.js"></script> --> -->
+<script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script>
 </body>
 </html>

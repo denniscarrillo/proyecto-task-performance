@@ -223,17 +223,15 @@ class Usuario {
         mysqli_close($conexion); #Cerramos la conexión.
     }
     public static function editarUsuario($nuevoUsuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
         $idUsuario = $nuevoUsuario->idUsuario;
         $usuario =$nuevoUsuario->usuario;
         $nombre = $nuevoUsuario->nombre;
+        $correo =$nuevoUsuario->correo;
         $idEstado = $nuevoUsuario->idEstado;
         $idRol = $nuevoUsuario->idRol;
-        // $contrasenia =$nuevoUsuario->contrasenia;
-        $correo =$nuevoUsuario->correo;
-        
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB();
-        $nuevoUsuario = $conexion->query("UPDATE tbl_ms_usuario SET usuario='$usuario', nombre_usuario='$nombre', id_Estado_Usuario='$idEstado', correo_Electronico='$correo', id_Rol='$idRol' WHERE id_Usuario='$idUsuario' ");
+        $nuevoUsuario = $conexion->query("UPDATE tbl_ms_usuario SET usuario='$usuario', nombre_usuario='$nombre', correo_Electronico='$correo', id_Estado_Usuario='$idEstado', id_Rol='$idRol' WHERE id_Usuario='$idUsuario' ");
         mysqli_close($conexion); #Cerramos la conexión.
     }
     public static function obtenerRolUsuario($usuario){
