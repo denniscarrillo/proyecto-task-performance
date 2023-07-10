@@ -8,7 +8,7 @@
         $idPregunta = $_POST["pregunta"];
         $respuestaC = ControladorUsuario::obtenerRespuesta($idPregunta);
         if($respuesta == $respuestaC){
-            header('location: reset.php');
+            header('location: v_nuevaContrasenia.php');
         } else {
             $mensaje = 'Respuesta no válida';
         }
