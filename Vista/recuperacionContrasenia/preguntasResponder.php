@@ -1,12 +1,11 @@
 <?php
 require_once('verificarUsuarioPreguntas.php');
 $preguntas = '';
-// if(!isset($_POST["Respuesta"])){
-// }
+
 session_start(); //Reanudar sesion
 if (isset($_SESSION['usuario'])) {
   $usuario = $_SESSION['usuario'];
-  $preguntas = ControladorUsuario::getPreguntas();
+  $preguntas = ControladorUsuario::getPreguntas($usuario);
 }
 ?>
 <!DOCTYPE html>
@@ -49,7 +48,7 @@ if (isset($_SESSION['usuario'])) {
           ?>
         </h3>
         <button type="submit" class="btn" name="submit">Responder</button>
-        <a href="login.php" class="btn btn-cancelar">Cancelar</a>
+        <a href="../login/login.php" class="btn btn-cancelar">Cancelar</a>
       </div>
   </div>
   </div>
