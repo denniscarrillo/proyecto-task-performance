@@ -247,10 +247,10 @@ class Usuario {
         
         return intval($rolUsuario);
     }
-    public static function obtenerPreguntas($usuario){//método para obtener preguntas
+    public static function obtenerPreguntas(){//método para obtener preguntas
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); 
-        $listaPreguntas =  $consulta->query("SELECT id_Pregunta, pregunta FROM tbl_MS_preguntas WHERE Creado_Por = '$usuario'");
+        $listaPreguntas =  $consulta->query("SELECT id_Pregunta, pregunta FROM tbl_MS_preguntas");
         $preguntas = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
         while($fila = $listaPreguntas->fetch_assoc()){
@@ -370,6 +370,22 @@ class Usuario {
         }
         mysqli_close($consulta); #Cerramos la conexión.
         return $creado;
+    }
+    public static function validarToken($usuario, $tokenUsuario){
+        $existe = false;
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
+        $user =  $consulta->query("SELECT id_Usuario FROM tbl_MS_Usuario WHERE usuario = '$usuario'");
+        $fila = $user->fetch_assoc();
+        $idUser = $fila['id_Usuario'];
+        $validar = $consulta->query("SELECT token FROM tbl_token WHERE id_usuario='$idUser'");
+        while($row = $validar->fetch_assoc()){
+            if($tokenUsuario == $row['token']){
+                $existe = true;
+                break;
+            }
+        }
+        return $existe;
     }
     
 };#Fin de la clase

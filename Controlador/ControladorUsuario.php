@@ -57,8 +57,8 @@
         public static function obRolUsuario($usuario){
             return Usuario::obtenerRolUsuario($usuario);
         }
-        public static function getPreguntas($usuario){
-            $Preguntas = Usuario::obtenerPreguntas($usuario);
+        public static function getPreguntas(){
+            $Preguntas = Usuario::obtenerPreguntas();
             return $Preguntas; 
         }
         public static function existeUsuario($userName){
@@ -94,5 +94,8 @@
         public static function origenNuevoUsuario($usuario){
             return Usuario::origenNuevoUsuario($usuario);
         }   
+        public static function validarTokenUsuario($usuario, $tokenUsuario){
+            return Usuario::validarToken($usuario, $tokenUsuario);
+        }
 
     }

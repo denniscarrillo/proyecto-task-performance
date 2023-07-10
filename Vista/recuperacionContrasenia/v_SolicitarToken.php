@@ -1,5 +1,5 @@
 <?php
- require_once('verificartoken.php');
+ require_once('verificarToken.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
