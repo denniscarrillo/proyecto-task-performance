@@ -1,6 +1,9 @@
 .ancho {
     flex-direction: column;
 }
+.logo-empresa{
+    text-align: center;
+}
 form { 
     margin-top: 2rem;
     padding: 2rem;
