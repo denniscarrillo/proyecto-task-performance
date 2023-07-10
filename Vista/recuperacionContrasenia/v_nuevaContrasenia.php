@@ -34,6 +34,7 @@
               <p class="mensaje"></p>
             </div>
             <button type="submit" class="btn btn-primary" name="submit" id="btn-submit">Cambiar</button>
+            <a href="../login/login.php" class="btn btn-cancelar">Cancelar</a>
 
             <?php 
               if(!$mensaje == ''){

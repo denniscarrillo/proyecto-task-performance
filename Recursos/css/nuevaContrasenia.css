@@ -9,3 +9,13 @@
 #confirmPassword::-ms-reveal {
     display: none;
 }
+
+.btn {
+    margin: 0.6rem auto;
+    color: white;
+    font-weight: 500;
+    font-size: 15px;
+}
+.btn-cancelar {
+    background-color: #e36b21;
+}
