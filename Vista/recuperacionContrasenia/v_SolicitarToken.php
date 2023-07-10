@@ -1,5 +1,5 @@
 <?php
-    
+ require_once('verificarToken.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -13,7 +13,7 @@
 </head>
 <body class="container">
     <div class="ancho">
-        <form action="" method="POST" id="formcorreo">
+        <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>" method="POST" id="formcorreo">
             <div class="logo-empresa">
                 <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="180px">
             </div>
@@ -24,10 +24,14 @@
                         <i class="icon fa-sharp fa-solid fa-key" style="color: #ee7a1b;"></i>
                         <!-- <i class="icon fa-solid fa-lock-keyhole"></i> -->
                     </span>
-                    <input type="text" class="form-control" id="token" name="token" placeholder="token">
+                    <input type="text" class="form-control" id="token" maxlength="4" required="" pattern="[0-9]+" name="token" placeholder="token">
+                    
                 </div>
                 <button type="submit" class="btn btn-primary btn-block" name="submit">Validar</button>
                 <a href="v_recuperarContrasena.html" class="btn btn-primary btn-block" style="margin-top: 0.8rem; background-color: #f68e3e;">Cancelar</a>
+                <?php 
+                echo '<p>'.$mensaje.'</p>'
+                ?>
             </div>
         </form>
     </div>

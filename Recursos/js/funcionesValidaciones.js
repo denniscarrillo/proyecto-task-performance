@@ -67,7 +67,7 @@ export const validarCoincidirPassword = (password, password2) => {
     let estado;
     let mensaje = password2.parentElement.querySelector('p');
     if(password.value != password2.value){
-        mensaje.innerText = '*Las Contraseñas no coinciden';
+        mensaje.innerText = '*Las Contraseña no coincide';
         password2.classList.add('mensaje_error');
         estado = false;
         } 
@@ -93,8 +93,18 @@ export const limiteMismoCaracter = (elemento, objetoRegex) => {
     }
     return estado;
 }
-// export const noCopiar = elemento => {
-//     let body = elemento.bind('cut copy paste', function(event){
-//         event.PreventDefault();
-//     });
-// }
+export const validarCorreo = (elemento, objetoRegex) => {
+    let estado;
+    let mensaje = elemento.parentElement.querySelector('p');
+    let correo = elemento.value;
+    if (!objetoRegex.test(correo)){
+        mensaje.innerText = '*Correo no válido, verifiquélo';
+        elemento.classList.add('mensaje_error');
+        estado = false;
+    } else {
+        mensaje.innerText = '';
+        elemento.classList.remove('mensaje_error');
+        estado = true;
+    }
+    return estado;
+}

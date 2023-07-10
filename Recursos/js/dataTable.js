@@ -1,3 +1,6 @@
+import {estadoValidado as validado } from './validacionesModalNuevoUsuario.js';
+import {estadoValidado as valido } from './validacionesModalEditarUsuario.js';
+
 let tablaUsuarios = '';
 $(document).ready(function () {
   tablaUsuarios = $('#table-Usuarios').DataTable({
@@ -30,7 +33,7 @@ $('#btn_nuevoRegistro').click(function () {
   // //Petición para obtener roles
   obtenerRoles('#rol');
   //Petición para obtener estado de usuario
-  // obtenerEstadoUsuario('#estado');
+  obtenerEstadoUsuario('#estado');
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");	 
 });
@@ -44,33 +47,35 @@ $('#form-usuario').submit(function (e) {
      let correo = $('#correo').val();
      let rol = document.getElementById('rol').value;
     //  let estado = document.getElementById('estado').value;
-     $.ajax({
-       url: "../../../Vista/crud/usuario/nuevoUsuario.php",
-       type: "POST",
-       datatype: "JSON",
-       data: {
-         nombre: nombre,
-         usuario: usuario,
-         contrasenia: password,
-         correo: correo,
-         idRol: rol
-        //  idEstado: estado
-       },
-       success: function () {
-         //Mostrar mensaje de exito
-         Swal.fire(
-          'Registrado!',
-          'Se le ha enviado un correo al usuario!',
-          'success',
-        )
-        tablaUsuarios.ajax.reload(null, false);
-       }
-     });
-    $('#modalNuevoUsuario').modal('hide');
+    if(validado){
+      $.ajax({
+        url: "../../../Vista/crud/usuario/nuevoUsuario.php",
+        type: "POST",
+        datatype: "JSON",
+        data: {
+          nombre: nombre,
+          usuario: usuario,
+          contrasenia: password,
+          correo: correo,
+          idRol: rol
+        },
+        success: function () {
+          //Mostrar mensaje de exito
+          Swal.fire(
+           'Registrado!',
+           'Se le ha enviado un correo al usuario!',
+           'success',
+         )
+         tablaUsuarios.ajax.reload(null, false);
+        }
+      });
+     $('#modalNuevoUsuario').modal('hide');
+    } 
 });
+
 //Eliminar usuario
 $(document).on("click", "#btn_eliminar", function() {
-  fila = $(this);        
+  let fila = $(this);        
     let usuario = $(this).closest('tr').find('td:eq(1)').text();		    
     Swal.fire({
       title: 'Estas seguro de eliminar a '+usuario+'?',
@@ -101,12 +106,12 @@ $(document).on("click", "#btn_eliminar", function() {
 });
 
 $(document).on("click", "#btn_editar", function(){		        
-  fila = $(this).closest("tr");	        
-  let idUsuario = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		            
+  let fila = $(this).closest("tr"),	        
+  idUsuario = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		            
   nombre = fila.find('td:eq(2)').text(),
   usuario = fila.find('td:eq(1)').text(),
   // contrasenia = fila.find('td:eq(3)').text(),
-  correo = fila.find('td:eq(3)').text()
+  correo = fila.find('td:eq(3)').text(),
   estado = fila.find('td:eq(5)').text(),
   rol = fila.find('td:eq(6)').text();
   $("#E_IdUsuario").val(idUsuario);
@@ -127,36 +132,34 @@ $('#form-Edit-Usuario').submit(function (e) {
    let nombre = $('#E_nombre').val(),
    idUser =  $('#E_IdUsuario').val(),
    usuario = $('#E_usuario').val(),
-  //  password = $('#E_password').val(),
    correo = $('#E_correo').val(),
-   rol = document.getElementById('E_rol').value;
+   rol = document.getElementById('E_rol').value,
    estado = document.getElementById('E_estado').value;
-   $.ajax({
-     url: "../../../Vista/crud/usuario/editarUsuario.php",
-     type: "POST",
-     datatype: "JSON",
-     data: {
-      idUsuario: idUser,
-      nombre: nombre,
-      usuario: usuario,
-      // contrasenia: password,
-      correo: correo,
-      idRol: rol,
-      idEstado: estado
-     },
-     success: function () {
-        tablaUsuarios.ajax.reload(null, false);
-     }
-   });
-  $('#modalEditarUsuario').modal('hide');
-  //Mostrar mensaje de exito
-  Swal.fire({
-    position: 'center',
-    icon: 'success',
-    title: 'Actualizado!',
-    showConfirmButton: false,
-    timer: 2000
-  });
+   if(valido){
+    $.ajax({
+      url: "../../../Vista/crud/usuario/editarUsuario.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {
+       idUsuario: idUser,
+       nombre: nombre,
+       usuario: usuario,
+       correo: correo,
+       idRol: rol,
+       idEstado: estado
+      },
+      success: function () {
+        //Mostrar mensaje de exito
+        Swal.fire(
+          'Actualizado!',
+          'El usuario ha sido modificado!',
+          'success',
+        )
+         tablaUsuarios.ajax.reload(null, false);
+      }
+    });
+    $('#modalEditarUsuario').modal('hide');
+   }
 });
 
 let obtenerRoles = function (idElemento) {
@@ -168,7 +171,7 @@ let obtenerRoles = function (idElemento) {
     success: function (data) {
       let valores = '<option value="">Seleccionar...</option>';
       //Recorremos el arreglo de roles que nos devuelve la peticion
-      for (i = 0; i < data.length; i++) {
+      for (let i = 0; i < data.length; i++) {
         valores += '<option value="' + data[i].id_Rol + '">' + data[i].rol + '</option>';
         $(idElemento).html(valores);
       }
@@ -184,7 +187,7 @@ let obtenerEstadoUsuario = function (idElemento){
       success: function (data) {
         let valores = '<option value="">Seleccionar...</option>';
         //Recorremos el arreglo de roles que nos devuelve la peticion
-        for (i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.length; i++) {
           valores += '<option value="' + data[i].id_Estado_Usuario + '">' + data[i].descripcion + '</option>';
           $(idElemento).html(valores);
         }

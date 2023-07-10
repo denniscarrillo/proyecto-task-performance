@@ -13,13 +13,6 @@
 </head>
 <body class="container">
     <div class="ancho">
-        <?php
-            // if($opcion == 'correo'){
-            //     echo '<form action="solicitarUsuario_Rec.php" method="POST" id="formcorreo">';
-            // } else {
-            //     echo '<form action="../recuperacionContrasenia/preguntasResponder.php" method="POST" id="formcorreo">';
-            // }
-        ?>
             <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>" method="POST" id="formcorreo">
             <div class="logo-empresa">
                 <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="180px">
@@ -30,7 +23,7 @@
                     <span class="conteiner-icon">
                         <i class="icon fa-solid fa-user"></i>
                     </span>
-                    <input type="text" class="form-control" id="user" name="userName" maxlength="20" placeholder="Usuario">
+                    <input input type="text"  style="text-transform:uppercase" class="form-control" id="user" required="" name="userName" maxlength="15" placeholder="Usuario">
                 </div>
             </div>
             <div class="wrap-input">
@@ -53,6 +46,5 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-
 </body>
 </html>
