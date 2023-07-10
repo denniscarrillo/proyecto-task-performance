@@ -11,3 +11,7 @@
     box-shadow: 0 0 0 .25rem rgba(226, 73, 35, 0.455);
     border-color: red;
 }
+.wrap-input {
+    position: relative;
+    margin-bottom: 2rem !important;
+}
