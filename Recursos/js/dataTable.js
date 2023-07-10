@@ -92,15 +92,25 @@ $(document).on("click", "#btn_eliminar", function() {
           type: "POST",
           datatype:"json",    
           data:  { usuario: usuario},    
-          success: function() {
-              tablaUsuarios.row(fila.parents('tr')).remove().draw();                  
-           }
+          success: function(data) {
+            // let estadoEliminado = data[0].estadoEliminado;
+            // console.log(data);
+            // if(estadoEliminado == 'eliminado'){
+              tablaUsuarios.row(fila.parents('tr')).remove().draw();
+              Swal.fire(
+                'Eliminado!',
+                'El usuario ha sido eliminado.',
+                'success'
+              )  
+            // } else {
+            //   Swal.fire(
+            //     'Lo sentimos!',
+            //     'El usuario no puede ser eliminado.',
+            //     'error'
+            //   );
+            // }           
+          }
           }); //Fin del AJAX
-        Swal.fire(
-          'Eliminado!',
-          'El usuario ha sido eliminado.',
-          'success'
-        )
       }
     });                
 });

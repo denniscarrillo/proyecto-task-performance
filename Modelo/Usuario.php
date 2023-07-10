@@ -219,8 +219,10 @@ class Usuario {
         $consultaIdUsuario= $conexion->query("SELECT id_Usuario FROM tbl_ms_usuario WHERE usuario = '$usuario'");
         $fila = $consultaIdUsuario->fetch_assoc();
         $idUsuario = $fila['id_Usuario'];
-        $conexion->query( "DELETE FROM tbl_ms_usuario WHERE id_Usuario = $idUsuario;");
+        //Eliminamos el usuario
+        $estadoEliminado = $conexion->query("DELETE FROM tbl_ms_usuario WHERE id_Usuario = $idUsuario;");
         mysqli_close($conexion); #Cerramos la conexión.
+        return $estadoEliminado;
     }
     public static function editarUsuario($nuevoUsuario){
         $conn = new Conexion();
