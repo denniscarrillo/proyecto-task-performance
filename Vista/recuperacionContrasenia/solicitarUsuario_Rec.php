@@ -28,12 +28,20 @@
             </div>
             <div class="wrap-input">
                 <?php
-                    if($opcion == 'correo'){
-                        $texto = 'Enviar correo';
-                    } else {
-                        $texto = 'Continuar';
+                    $opcion = '';
+                    if(isset($_SESSION['metodo']) || isset($_POST['radioOption'])){
+                        if(isset($_SESSION['metodo'])){
+                            $opcion = $_SESSION['metodo'];
+                        }else if(isset($_POST['radioOption'])){
+                            $opcion = $_POST['radioOption'];
+                        }
+                        if($opcion == 'correo'){
+                            $texto = 'Enviar correo';
+                        } else {
+                            $texto = 'Continuar';
+                        }
                     }
-                    echo '<button type="submit" class="btn btn-primary btn-block" name="submit">'.$texto.'</button>';
+                    echo '<button type="submit" class="btn btn-primary btn-block" name="submit">'.$texto.'</button>';            
                 ?>
                 <a href="v_recuperarContrasena.html" class="btn btn-primary btn-block" style="margin-top: 0.8rem; background-color: #f68e3e;">Regresar</a>
             </div>
