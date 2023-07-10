@@ -9,8 +9,12 @@ let estadoValidacionesEspacio = {
 }
 let estadoLetrasRepetidas = {
     estadoLetrasRepetidasUsuario: true,
-    estadoLetrasRepetidasNombre: true
-
+    estadoLetrasRepetidasNombre: true,
+    estadoPassword: true
+}
+let estadoSoloLetras = {
+    estadoLetrasUsuario: true,
+    estadoLetrasNombre: true,
 }
 
 let iconClass = document.querySelector('.type-lock');
@@ -50,14 +54,37 @@ $form.addEventListener('submit', e => {
     let estadoInputPassword = funciones.validarCampoVacio($password);
     let estadoInputPassword2 = funciones.validarCampoVacio($password2);
     let estadoInputCorreo = funciones.validarCampoVacio($correo);
+
     if (estadoInputUsuario == false || estadoInputPassword == false || estadoInputNombre == false
         || estadoInputPassword2 == false || estadoInputCorreo == false){
         e.preventDefault();
-        }
-    if ($usuario.value.trim() === '' || $nombre.value.trim() === '' || $password.value.trim() === '' || $correo.value.trim() === '' ) {
-        e.preventDefault();
     }
-});
+        else{
+            if(estadoValidacionesEspacio.estadoEspaciousuario == false || estadoValidacionesEspacio.estadoEspacioPassword == false || 
+                estadoValidacionesEspacio.estadoEspacioPassword2 == false || estadoValidacionesEspacio.estadoEspacioCorreo == false){ 
+                e.preventDefault();
+                estadoValidacionesEspacio.estadoEspacioUsuario = funciones.validarEspacios($usuario);
+                estadoValidacionesEspacio.estadoEspacioCorreo = funciones.validarEspacios($correo);
+                estadoValidacionesEspacio.estadoEspacioPassword = funciones.validarEspacios($password); 
+                estadoValidacionesEspacio.estadoEspacioPassword2 = funciones.validarEspacios($password2); 
+                    } else {
+                        if(estadoLetrasRepetidas.estadoLetrasRepetidasNombre == false || estadoLetrasRepetidas.estadoPassword == false ||
+                            estadoLetrasRepetidas.estadoLetrasRepetidasUsuario == false){
+                            e.preventDefault();
+                            estadoLetrasRepetidas.estadoLetrasRepetidasNombre = funciones.limiteMismoCaracter($nombre, expresiones.usuario);
+                            estadoLetrasRepetidas.estadoLetrasRepetidasUsuario = funciones.limiteMismoCaracter($usuario, expresiones.usuario);
+                            estadoLetrasRepetidas.estadoPassword = funciones.validarPassword($password, expresiones.password);
+                        }
+                         else{
+                            if (estadoSoloLetras.estadoLetrasUsuario == false || estadoSoloLetras.estadoLetrasNombre == false) {
+                                e.preventDefault();
+                                estadoSoloLetras.estadoLetrasUsuario = funciones.validarSoloLetras($usuario, expresiones.user);
+                                estadoSoloLetras.estadoLetrasNombre = funciones.validarSoloLetras($nombre, expresiones.nombre);
+                            }
+                         }
+                    }
+            }
+    });
 // INPUTS TEXTOS EN MAYUSCULAS y //Solo permite letras
 $usuario.addEventListener('focusout', () => {
     //console.log(estadoLetrasRepetidas.estadoLetrasRepetidasUsuario);
@@ -83,12 +110,18 @@ $nombre.addEventListener('keyup', ()=>{
 // NO PERMITIR ESPACIOS
 $usuario.addEventListener('keyup', () => {
     estadoValidacionesEspacio.estadoEspacioUsuario = funciones.validarEspacios($usuario);
+    $("#usuario").inputlimiter({
+        limit: 15
+    });
 });
 $correo.addEventListener('keyup', () => {
     funciones.validarEspacios($correo);
 });
 $password.addEventListener('keyup', () => {
-    estadoValidacionesEspacio.estadoEspaciopPassword = funciones.validarEspacios($password);
+    estadoValidacionesEspacio.estadoEspacioPassword = funciones.validarEspacios($password);
+    $("#password").inputlimiter({
+        limit: 20
+    });
 });
 $password2.addEventListener('keyup', () => {
     funciones.validarEspacios($password2);
@@ -135,7 +168,7 @@ $form.addEventListener('submit', e =>{
     if (!expresiones.password.test(input)) {
         e.preventDefault();
     }
-});
+}); 
 
     //llama a la funcion para validar la contraseña segura
     $password.addEventListener('focusout', () => {
@@ -144,7 +177,7 @@ $form.addEventListener('submit', e =>{
         }
         
     });
-    //Para validar que la contraseña sea segura
+    //Para validar que el Usuario no coloque mas de tres veces un mismo caracter y para que no permita espacios
     $usuario.addEventListener('keyup', () => {
         estadoLetrasRepetidas.estadoLetrasRepetidasUsuario = funciones.limiteMismoCaracter($usuario, expresiones.usuario);
     });
