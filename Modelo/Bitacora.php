@@ -1,5 +1,4 @@
 <?php
-
     class Bitacora {
         public $idBitacora;
         public $fecha;
@@ -7,24 +6,36 @@
         public $accion;
         public $idObjeto;
         public $descripcion;
-
-public static function bitacoraUsuario(){
-    $conn = new Conexion();
-    $consulta = $conn->abrirConexionDB();
-    $verUsuario = $consulta->query("SELECT b.id_Usuario, b.Usuario * FROM tbl_MS_Usuario As b
-    INNER JOIN tbl_MS_Bitacora AS i ON b.id_Usuario = i.id_Usuario ");
-
-$bitacora = array();
-//Recorremos la consulta y obtenemos los registros en un arreglo asociativo
-while($fila = $verUsuario->fetch_assoc()){
-    $bitacora [] = [
-        'IdBitacora' => $fila["id_Bitacora"],
-        'idUsuario' => $fila["id_Usuario"],
-        'descripcion'=> $fila["Usuario"],
-    ];
-}
-mysqli_close($consulta); #Cerramos la conexión.
-return $bitacora;
-
-}
-};
+        //Método de captura los eventos y los almacena en la tabla bitacora.
+        public static function EVENT_BITACORA($datosEvento){
+            //Recibir objeto y obtener parametros
+            $conn = new Conexion();
+            $consulta = $conn->abrirConexionDB();
+            $ejecutarSQL = "INSERT INTO tbl_ms_bitacora (`fecha`, `id_Usuario`, `id_Objeto`, `accion`, `descripcion`) 
+            VALUES('$datosEvento->fecha','$datosEvento->idUsuario','$datosEvento->idObjeto','$datosEvento->accion','$datosEvento->descripcion')";
+            $consulta->query($ejecutarSQL);
+            mysqli_close($consulta); #Cerramos la conexión.
+        }
+        //Método que recibe un objeto y devuelve su id.
+        public static function obtener_Id_Objeto($objeto){
+            $conn = new Conexion();
+            $consulta = $conn->abrirConexionDB();
+            $resultado = $consulta->query("SELECT id_Objeto FROM tbl_ms_objetos WHERE objeto = '$objeto'");
+            $fila = $resultado->fetch_assoc();
+            $idObjeto = $fila['id_Objeto'];
+            mysqli_close($consulta); #Cerramos la conexión.
+            return $idObjeto;
+        }
+        public static function acciones_Evento(){
+            $acciones = [
+                'Insert' => 'Creacion',
+                'Update' => 'Actualizacion',
+                'Delete' => 'Eliminacion',
+                'Login'  => 'Iniciar Sesion',
+                'Logout'  => 'Cerrar Session',
+                'income'  => 'Ingreso',
+                'Exit' => 'Salio'
+            ];
+            return $acciones;
+        }
+    }

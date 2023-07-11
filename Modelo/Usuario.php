@@ -219,8 +219,10 @@ class Usuario {
         $consultaIdUsuario= $conexion->query("SELECT id_Usuario FROM tbl_ms_usuario WHERE usuario = '$usuario'");
         $fila = $consultaIdUsuario->fetch_assoc();
         $idUsuario = $fila['id_Usuario'];
-        $conexion->query( "DELETE FROM tbl_ms_usuario WHERE id_Usuario = $idUsuario;");
+        //Eliminamos el usuario
+        $estadoEliminado = $conexion->query("DELETE FROM tbl_ms_usuario WHERE id_Usuario = $idUsuario;");
         mysqli_close($conexion); #Cerramos la conexión.
+        return $estadoEliminado;
     }
     public static function editarUsuario($nuevoUsuario){
         $conn = new Conexion();
@@ -306,6 +308,7 @@ class Usuario {
         mysqli_close($consulta); #Cerrar la conexión.           
         return $resultado;
     }
+    //Nos dice si existe o no un usuario
     public static function usuarioExistente($usuario){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
@@ -388,7 +391,17 @@ class Usuario {
                 break;
             }
         }
+        mysqli_close($consulta); #Cerramos la conexión.
         return $existe;
     }
-    
-};#Fin de la clase
+    //Recibe un usuario y devuelve un id de usuario.
+    public static function obtenerIdUsuario($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $resultado= $conexion->query("SELECT id_Usuario FROM tbl_ms_usuario WHERE usuario = '$usuario'");
+        $fila = $resultado->fetch_assoc();
+        $id = $fila['id_Usuario'];
+        mysqli_close($conexion); #Cerramos la conexión.
+        return $id;
+    }
+}#Fin de la clase

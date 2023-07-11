@@ -1,17 +1,16 @@
 <?php
     require_once ("../../db/Conexion.php");
     require_once ("../../Modelo/Usuario.php");
+    require_once ("../../Modelo/Bitacora.php");
     require_once("../../Controlador/ControladorUsuario.php");
-    
-    $nombreUsuario = null;
+    require_once("../../Controlador/ControladorBitacora.php");
+
     $mensaje = null;
     $usuario = false;
     $nuevoEstado = false;
     $estadoUsuario = null;
     $intentosMax = intval(ControladorUsuario::intentosLogin());
     if(isset($_POST["submit"])){
-        session_start();
-        $_SESSION['usuario'] = null;
         $nombreUsuario = $_POST["userName"];
         $intentosFallidos = ControladorUsuario::intentosFallidos($_POST["userName"]);
         $estadoUsuario = ControladorUsuario::estadoUsuario($_POST["userName"]);
@@ -36,7 +35,19 @@
                 } else {
                     $existeUsuario = ControladorUsuario::login($_POST["userName"], $_POST["userPassword"]);
                     if($existeUsuario){
+                        session_start();
                         $_SESSION['usuario'] = $nombreUsuario;
+                        /* ========================= Capturar evento inicio sesión. =============================*/
+                        $newBitacora = new Bitacora();
+                        $accion = ControladorBitacora::accion_Evento();
+                        date_default_timezone_set('America/Tegucigalpa');
+                        $newBitacora->fecha = date("Y-m-d h:i:s"); 
+                        $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('login.php');
+                        $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+                        $newBitacora->accion = $accion['Login'];
+                        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' ingreso al sistema exitosamente';
+                        ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+                        /* =======================================================================================*/
                         switch($estadoUsuario){
                             case 1: {
                                 if($intentosFallidos > 0){
@@ -49,21 +60,9 @@
                                 if($intentosFallidos > 0){
                                     ControladorUsuario::resetearIntentos($_POST["userName"]);
                                 }
-                                switch($rolUsuario){
-                                    case 2: { //Rol de administrador
-                                        header('location: ../crud/usuario/gestionUsuario.php');
-                                        break;
-                                    }
-                                    case 3: {
-                                        header('location: ../index.php');
-                                        break;
-                                    }
-                                    case 4: {
-                                        header('location: ../index.php');
-                                        break;
-                                    }
+                                if($rolUsuario > 1 && $rolUsuario < 5){
+                                    header('location: ../index.php');
                                 }
-                                break;
                             } 
                         }
                     } else {
