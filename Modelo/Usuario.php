@@ -249,10 +249,13 @@ class Usuario {
         
         return intval($rolUsuario);
     }
-    public static function obtenerPreguntas(){//método para obtener preguntas
+    public static function obtenerPreguntas($usuario){//método para obtener preguntas
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); 
-        $listaPreguntas =  $consulta->query("SELECT id_Pregunta, pregunta FROM tbl_MS_preguntas");
+        $listaPreguntas =  $consulta->query("SELECT p.id_Pregunta, p.pregunta
+            FROM  tbl_ms_preguntas_x_usuario AS pu
+            INNER JOIN tbl_ms_preguntas AS p ON p.id_Pregunta = pu.id_Pregunta
+            INNER JOIN tbl_ms_usuario AS u ON pu.id_Usuario = u.id_Usuario WHERE u.usuario = '$usuario'");
         $preguntas = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
         while($fila = $listaPreguntas->fetch_assoc()){
@@ -305,6 +308,7 @@ class Usuario {
         mysqli_close($consulta); #Cerrar la conexión.           
         return $resultado;
     }
+    //Nos dice si existe o no un usuario
     public static function usuarioExistente($usuario){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
@@ -387,7 +391,17 @@ class Usuario {
                 break;
             }
         }
+        mysqli_close($consulta); #Cerramos la conexión.
         return $existe;
     }
-    
-};#Fin de la clase
+    //Recibe un usuario y devuelve un id de usuario.
+    public static function obtenerIdUsuario($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $resultado= $conexion->query("SELECT id_Usuario FROM tbl_ms_usuario WHERE usuario = '$usuario'");
+        $fila = $resultado->fetch_assoc();
+        $id = $fila['id_Usuario'];
+        mysqli_close($conexion); #Cerramos la conexión.
+        return $id;
+    }
+}#Fin de la clase

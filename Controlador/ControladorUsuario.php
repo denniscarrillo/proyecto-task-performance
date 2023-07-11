@@ -57,9 +57,8 @@
         public static function obRolUsuario($usuario){
             return Usuario::obtenerRolUsuario($usuario);
         }
-        public static function getPreguntas(){
-            $Preguntas = Usuario::obtenerPreguntas();
-            return $Preguntas; 
+        public static function getPreguntas($usuario){
+            return Usuario::obtenerPreguntas($usuario); 
         }
         public static function existeUsuario($userName){
             return Usuario::validarUsuario($userName); 
@@ -73,7 +72,7 @@
         public static function almacenarToken($user, $token){
             return Usuario::guardarToken($user, $token);
         }
-        public static function registro($usuario){
+        public static function usuarioExiste($usuario){
             return Usuario::usuarioExistente($usuario);
         }
         public static function cantPreguntasContestadas($usuario){
@@ -97,5 +96,7 @@
         public static function validarTokenUsuario($usuario, $tokenUsuario){
             return Usuario::validarToken($usuario, $tokenUsuario);
         }
-
+        public static function obtenerIdUsuario($usuario){
+            return Usuario::obtenerIdUsuario($usuario);
+        }
     }
