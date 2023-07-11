@@ -38,8 +38,9 @@
                         session_start();
                         $_SESSION['usuario'] = $nombreUsuario;
                         /* ========================= Capturar evento inicio sesión. =============================*/
-                        $accion = ControladorBitacora::accion_Evento();
                         $newBitacora = new Bitacora();
+                        $accion = ControladorBitacora::accion_Evento();
+                        date_default_timezone_set('America/Tegucigalpa');
                         $newBitacora->fecha = date("Y-m-d h:i:s"); 
                         $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('login.php');
                         $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
@@ -59,21 +60,9 @@
                                 if($intentosFallidos > 0){
                                     ControladorUsuario::resetearIntentos($_POST["userName"]);
                                 }
-                                switch($rolUsuario){
-                                    case 2: { //Rol de administrador
-                                        header('location: ../crud/usuario/gestionUsuario.php');
-                                        break;
-                                    }
-                                    case 3: {
-                                        header('location: ../index.php');
-                                        break;
-                                    }
-                                    case 4: {
-                                        header('location: ../index.php');
-                                        break;
-                                    }
+                                if($rolUsuario > 1 && $rolUsuario < 5){
+                                    header('location: ../index.php');
                                 }
-                                break;
                             } 
                         }
                     } else {

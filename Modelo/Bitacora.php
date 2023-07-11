@@ -16,7 +16,7 @@
             $consulta->query($ejecutarSQL);
             mysqli_close($consulta); #Cerramos la conexión.
         }
-        //Método que obtiene el id de un objeto
+        //Método que recibe un objeto y devuelve su id.
         public static function obtener_Id_Objeto($objeto){
             $conn = new Conexion();
             $consulta = $conn->abrirConexionDB();
@@ -26,9 +26,7 @@
             mysqli_close($consulta); #Cerramos la conexión.
             return $idObjeto;
         }
-
         public static function acciones_Evento(){
-            $acciones = array();
             $acciones = [
                 'Insert' => 'Creacion',
                 'Update' => 'Actualizacion',
