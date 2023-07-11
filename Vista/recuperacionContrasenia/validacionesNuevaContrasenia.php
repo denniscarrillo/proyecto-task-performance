@@ -5,7 +5,7 @@
   $mensaje = '';
   if (isset($_POST['submit'])){
     $password = $_POST['password'];
-    $password1 = $_POST['confirmPassword'];
+    $password1 = $_POST['password2'];
     session_start(); //Reanudamos sesion
     if(isset($_SESSION['usuario'])){
         $user = $_SESSION['usuario'];

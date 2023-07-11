@@ -181,6 +181,35 @@ $form.addEventListener('submit', e =>{
     $usuario.addEventListener('keyup', () => {
         estadoLetrasRepetidas.estadoLetrasRepetidasUsuario = funciones.limiteMismoCaracter($usuario, expresiones.usuario);
     });
+$form.addEventListener('submit', e => {
+        let mensaje = $usuario.parentElement.querySelector('p');
+        let input = $usuario.value;
+        if (expresiones.user.test(input)){
+            mensaje.innerText = '*Solo se permiten letras.';
+            $usuario.classList.add('mensaje_error');
+        } else {
+            mensaje.innerText = '';
+            $usuario.classList.remove('mensaje_error');
+        }
+        if (expresiones.user.test(input)) {
+            e.preventDefault();
+        }
+        
+});
+$form.addEventListener('submit', e => {
+    let mensaje = $nombre.parentElement.querySelector('p');
+    let input = $nombre.value;
+    if (expresiones.nombre.test(input)){
+        mensaje.innerText = '*Solo se permiten letras.';
+        $nombre.classList.add('mensaje_error');
+    } else {
+        mensaje.innerText = '';
+        $nombre.classList.remove('mensaje_error');
+    }
+    if (expresiones.nombre.test(input)) {
+        e.preventDefault();
+    }
+});
     /* $usuario.addEventListener('focusout', () => {
     let usuario = $usuario.value;
     let mensaje = $usuario.parentElement.querySelector('p');

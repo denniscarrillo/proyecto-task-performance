@@ -14,7 +14,7 @@
 </head>
 <body id="body">
     <div class="ancho">
-        <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post" id="formLogin">
+        <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post" id="formContrasenia">
             <div class="logo-empresa"  style="text-align: center">
                 <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="250px">
             </div>
@@ -30,7 +30,7 @@
               <span class="lock1 conteiner-icon">
                 <i class="icon type-lock fa-solid fa-lock" id="lok2"></i>
               </span>
-              <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirmar contraseña" >
+              <input type="password" class="form-control" id="password2" name="password2" placeholder="Confirmar contraseña" >
               <p class="mensaje"></p>
             </div>
             <button type="submit" class="btn btn-primary" name="submit" id="btn-submit">Cambiar</button>
@@ -48,6 +48,6 @@
     <script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
     <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
     <!-- <script src="../../Recursos/js/validacionesLogin.js" type="module"></script> -->
-    <script src="../../Recursos/js/validacionesNuevaContrasenia.js"></script>
+    <script src="../../Recursos/js/validacionesNuevaContrasenia.js" type ="module"></script>
 </body>
 </html>

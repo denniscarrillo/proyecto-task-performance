@@ -26,11 +26,18 @@ function enviarCorreo($destinario, $token){
         $mail->addAddress($destinario);                             //Add a recipient
         //Content
         $mail->isHTML(true);                                        //Set email format to HTML
-        $mail->Subject = 'Has iniciado el proceso de recuperación de contraseña';
+        $mail->Subject = 'Hola!';
         $mail->Body    = 
         '<div>
-            <h2>Este es tu token de recuperacion</h2>
+        <h1> Ha iniciado el metodo de recuperacion de contrasenia </h1>
+        <p> Hola, usted ha solicitado un cambio de contrasenia, le hemos enviado un token, copielo y peguelo en el siguiente formulario. </p> <br>
+            <h2>Este es su token de recuperacion</h2>
             <p><b>'.$token.'</b></p>
+            <br>
+        <p> Este token solo sera valido dentro de las proximas 24 hrs. </p>
+        <br>
+        <p> Saludos, </p>
+        <p> Cocina y Equipos </p>
         </div>';
         // $mail->AltBody = 'Si funcionó!';
         $mail->send();
