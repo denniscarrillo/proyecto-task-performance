@@ -38,6 +38,17 @@
           } else {
             $mensaje = 'Deben coincidir ambas contraseñas!';
           }
+          /* ========================= Evento Cambiar Contraseña. ======================*/
+          $newBitacora = new Bitacora();
+          $accion = ControladorBitacora::accion_Evento();
+          date_default_timezone_set('America/Tegucigalpa');
+          $newBitacora->fecha = date("Y-m-d h:i:s"); 
+          $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('v_nuevaContrasenia.php');
+          $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+          $newBitacora->accion = $accion['Insert'];
+          $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' cambio su contraseña';
+          ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+          /* =======================================================================================*/
       }
     }
   }
