@@ -39,7 +39,7 @@ const expresiones = {
 
 const $form = document.getElementById('formContrasenia');
 const $password = document.getElementById('password');
-const $password2= document.getElementById('password2');
+const $password2= document.getElementById('confirmPassword');
 
 $form.addEventListener('submit', e => {  
     let estadoInputPassword = funciones.validarCampoVacio($password);

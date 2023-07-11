@@ -6,7 +6,7 @@
 #password::-ms-reveal {
     display: none;
 }
-#password2::-ms-reveal {
+#confirmPassword::-ms-reveal {
     display: none;
 }
 

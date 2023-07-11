@@ -30,7 +30,7 @@
               <span class="lock1 conteiner-icon">
                 <i class="icon type-lock fa-solid fa-lock" id="lok2"></i>
               </span>
-              <input type="password" class="form-control" id="password2" name="password2" placeholder="Confirmar contraseña" >
+              <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirmar contraseña" >
               <p class="mensaje"></p>
             </div>
             <button type="submit" class="btn btn-primary" name="submit" id="btn-submit">Cambiar</button>
