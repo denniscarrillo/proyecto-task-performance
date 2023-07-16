@@ -31,15 +31,15 @@ function enviarCorreo($destinario, $token){
         '<div>
         <h1> Ha iniciado el metodo de recuperacion de contrasenia </h1>
         <p> Hola, usted ha solicitado un cambio de contrasenia, le hemos enviado un token, copielo y peguelo en el siguiente formulario. </p> <br>
-            <h2>Este es su token de recuperacion</h2>
-            <p><b>'.$token.'</b></p>
+            <h2 style="text-align: center;>Este es su token de recuperacion</h2>
+            <p style="text-align: center; font-size: 25px;"><b>'.$token.'</b></p>
             <br>
         <p> Este token solo sera valido dentro de las proximas 24 hrs. </p>
         <br>
         <p> Saludos, </p>
         <p> Cocina y Equipos </p>
         </div>';
-        // $mail->AltBody = 'Si funcionó!';
+        $mail->CharSet = 'UTF-8'; // Setear UTF-8 para caracteres especiales
         $mail->send();
         $confirmacion = 'Se te ha enviado un token, verifica tu correo electrónico';
     } catch (Exception $e) {
