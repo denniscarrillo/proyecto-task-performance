@@ -26,7 +26,6 @@ require_once('../../Vista/login/validarRegistro.php');
                     <input type="text" class="form-control input" name="nombre" id="nombre" maxlength="30" placeholder="Nombre">
                     <p class="mensaje"></p>
                 </div>
-                
                 <!-- input para usuario -->
                 <div class="wrap-input mb-3">
                     <label><b>Usuario</b></label>
