@@ -43,6 +43,8 @@ if (isset($_SESSION['usuario'])) {
         $urlIndex = 'index.php';
         $urlGestion = './crud/usuario/gestionUsuario.php';
         $urlTarea = './rendimiento/v_tarea.php';
+        $urlSolicitud = './crud/solicitud/gestionSolicitud.php';
+        $urlComision = './crud/comision/gestionComision.php';
         require_once 'layout/sidebar.php';
         ?>
       </div>

@@ -6,8 +6,10 @@
       </a>
     </span>
   </div>
-  <div class="flex-log
-    <a href="<?php echo $urlIndex; ?>" style="text-decoration: none;"><span class="logo_name" >Cocinas&Equipos</span></a>
+  <div class="flex-log">
+    <a href="<?php echo $urlIndex; ?>" style="text-decoration: none;">
+    <span class="logo_name" >Cocinas&Equipos</span>
+  </a>
   </div>
   <span class="flex-log">
     <i class="bx bx-lock-alt" id="lock-icon" title="Unlock Sidebar"></i>
@@ -27,13 +29,13 @@
           </a>
         </li>
         <li class="item">
-          <a href="#" class="link flex">
+          <a href="<?php echo $urlSolicitud; ?>" class="link flex">
             <i class='bx bx-store-alt'></i>
             <span>Solicitud</span>
           </a>
         </li>
         <li class="item">
-          <a href="#" class="link flex">
+          <a href="<?php echo $urlComision; ?>" class="link flex">
             <i class='bx bx-store-alt'></i>
             <span>Comisión</span>
           </a>

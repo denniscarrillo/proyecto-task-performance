@@ -45,16 +45,17 @@ if (isset($_SESSION['usuario'])) {
   <div class="conteiner">
     <div class="row">
       <div class="columna1 col-2">
-        <?php       
+        <?php
         $urlIndex = '../../index.php';
-        $urlGestion = './crud/usuario/gestionUsuario.php';
+        $urlGestion = 'gestionUsuario.php';
         $urlTarea = '../../rendimiento/v_tarea.php';
+        $urlSolicitud = '../solicitud/gestionSolicitud.php';
+        $urlComision = '../comision/gestionComision.php';
         require_once '../../layout/sidebar.php';
         ?>
       </div>
-
       <div class="columna2 col-10">
-      <H1>Gestión de Usuarios</H1>
+        <H1>Gestión de Usuarios</H1>
         <div class="table-conteiner">
           <div>
             <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoUsuario"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
@@ -75,8 +76,7 @@ if (isset($_SESSION['usuario'])) {
             </tbody>
           </table>
         </div>
-      </div>
-      
+      </div> <!-- Fin de la columna -->
     </div>
   </div>
   <?php
@@ -95,4 +95,5 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/boostrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
 </body>
+
 </html>

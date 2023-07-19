@@ -23,6 +23,8 @@
           $urlIndex = '../index.php';
           $urlGestion = '../crud/usuario/gestionUsuario.php';
           $urlTarea = 'v_tarea.php';
+          $urlSolicitud = '../crud/solicitud/gestionSolicitud.php';
+          $urlComision = '../crud/comision/gestionComision.php';
           require_once '../layout/sidebar.php';
         ?>
       </div>
