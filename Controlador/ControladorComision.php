@@ -2,7 +2,7 @@
     class ControladorComision {
         
         public static function getComision(){
-            return Usuario::obtenerTodasLasComision();
+            return Comision::obtenerTodasLasComisiones();
         }
 
     }

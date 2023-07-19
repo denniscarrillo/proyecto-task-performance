@@ -1,11 +1,11 @@
-import {estadoValidado as validado } from './validacionesModalNuevoUsuario.js';
+/* import {estadoValidado as validado } from './validacionesModalNuevoUsuario.js';
 import {estadoValidado as valido } from './validacionesModalEditarUsuario.js';
-
+ */
 let tablaComision = '';
 $(document).ready(function () {
   tablaComision = $('#table-Comision').DataTable({
     "ajax": {
-      "url": "../../../Vista/crud/usuario/obtenerComision.php",
+      "url": "../../../Vista/crud/comision/obtenerComision.php",
       "dataSrc": ""
     },
     "language":{

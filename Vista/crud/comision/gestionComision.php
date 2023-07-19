@@ -1,16 +1,16 @@
 <?php
   require_once ("../../../db/Conexion.php");
-  require_once ("../../../Modelo/Usuario.php");
+/*   require_once ("../../../Modelo/Usuario.php"); */
   require_once ("../../../Modelo/Comision.php");
-  require_once ("../../../Modelo/Bitacora.php");
-  require_once("../../../Controlador/ControladorUsuario.php");
-  require_once("../../../Controlador/ControladorComision.php");
-  require_once("../../../Controlador/ControladorBitacora.php");
+  /* require_once ("../../../Modelo/Bitacora.php"); */
+  /* require_once ("../../../Controlador/ControladorUsuario.php"); */
+  require_once ("../../../Controlador/ControladorComision.php");
+  /* require_once ("../../../Controlador/ControladorBitacora.php"); */
 
-  session_start(); //Reanudamos la sesion
+  /* session_start(); //Reanudamos la sesion
   if(isset($_SESSION['usuario'])){
     /* ====================== Evento ingreso a mantenimiento de usuario. =====================*/
-    $newBitacora = new Bitacora();
+    /* $newBitacora = new Bitacora();
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
     $newBitacora->fecha = date("Y-m-d h:i:s"); 
@@ -18,9 +18,9 @@
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['income'];
     $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' ingreso a mantenimiento usuario';
-    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora); */
     /* =======================================================================================*/
-  }
+  /* } */
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -66,9 +66,9 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
 <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
 <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script src= "../../../Recursos/js/dataTable.js" type="module"></script>
+<script src= "../../../Recursos/js/dataTableComision.js" type="module"></script>
 <script src= "../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-<script src="../../../Recursos/js/validacionesModalNuevoUsuario.js"  type="module"></script>
-<script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script>
+<!-- <script src="../../../Recursos/js/validacionesModalNuevoUsuario.js"  type="module"></script>
+<script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script> -->
 </body>
 </html>
