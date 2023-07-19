@@ -6,7 +6,7 @@ class Comision {
     public $idPorcentaje;
     public $comisionTotal;
 
-    public static function obtenerTodasLasComision(){
+    public static function obtenerTodasLasComisiones(){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $listaComision = 
@@ -21,8 +21,8 @@ class Comision {
         while($fila = $listaComision->fetch_assoc()){
             $Comision [] = [
                 'IdComision' => $fila["id_Comision"],
-                'Venta' => $fila["id_Venta"],
-                'Porcentaje'=> $fila["id_Porcentaje"],
+                'Venta' => $fila["total_Venta"],
+                'Porcentaje'=> $fila["valor_Porcentaje"],
                 'ComisionTotal' => $fila["comision_TotalVenta"],
             ];
         }
