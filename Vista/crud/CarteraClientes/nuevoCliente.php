@@ -10,7 +10,6 @@
     if(isset($_SESSION['cliente'])){
         $user = $_SESSION['cliente'];
         $nuevoCliente = new CarteraClientes();
-        $nuevoCliente->idCarteraCliente = $_POST['idCarteraCliente'];
         $nuevoCliente->nombre = $_POST['nombre'];
         $nuevoCliente->rtn = $_POST['rtn'];
         $nuevoCliente->telefono = $_POST['telefono'];

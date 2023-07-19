@@ -39,15 +39,14 @@ class CarteraClientes{
     //Método para crear nuevo usuario desde Autoregistro.
     public static function registroNuevoCliente($nuevoCliente){
     $conn = new Conexion();
-    $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-    $idCarteraCliente =$nuevoCliente->idCarteraCliente;
+    $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB
     $nombre =$nuevoCliente->nombre;
     $rtn = $nuevoCliente->rtn;
     $telefono = $nuevoCliente->telefono;
     $correo = $nuevoCliente->correo;
     $estadoContacto = $nuevoCliente->estadoContacto;
-    $nuevoCliente = $consulta->query("INSERT INTO tbl_CarteraCliente(id_CarteraCliente,nombre_Cliente,rtn_Cliente,telefono,correo,estado_Contacto)
-                   VALUES ('$idCarteraCliente','$nombre', '$rtn', '$telefono', '$correo','$estado_contacto')");
+    $nuevoCliente = $consulta->query("INSERT INTO tbl_CarteraCliente(nombre_Cliente,rtn_Cliente,telefono,correo,estado_Contacto)
+                   VALUES ('$nombre', '$rtn', '$telefono', '$correo','$estado_contacto')");
     mysqli_close($consulta); #Cerramos la conexión.
     return $nuevoCliente;
     }
