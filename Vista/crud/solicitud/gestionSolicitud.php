@@ -48,6 +48,9 @@ require_once("../../../Controlador/ControladorSolicitud.php");
         $urlTarea = '../../rendimiento/v_tarea.php';
         $urlSolicitud = '../solicitud/gestionSolicitud.php';
         $urlComision = '../comision/gestionComision.php';
+        $urlVenta = '../venta/gestionVenta.php';
+        $urlCliente = '../cliente/gestionCliente.php';
+        $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
         require_once '../../layout/sidebar.php';
         ?>
       </div>

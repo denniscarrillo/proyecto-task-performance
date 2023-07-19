@@ -53,15 +53,21 @@
           <span class="line"></span>
         </div>
         <li class="item">
-          <a href="#" class="link flex">
+          <a href="<?php echo $urlVenta ; ?>" class="link flex">
             <i class="bx bxs-magic-wand"></i>
             <span>Ventas</span>
           </a>
         </li>
         <li class="item">
-          <a href="#" class="link flex">
+          <a href="<?php echo $urlCliente; ?>" class="link flex">
             <i class="bx bx-folder"></i>
             <span>Clientes</span>
+          </a>
+        </li>
+        <li class="item">
+          <a href="<?php echo $urlCarteraCliente; ?>" class="link flex">
+            <i class="bx bx-folder"></i>
+            <span>Cartera clientes</span>
           </a>
         </li>
       </ul>

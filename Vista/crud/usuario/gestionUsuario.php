@@ -29,11 +29,11 @@ if (isset($_SESSION['usuario'])) {
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
   <!-- Boostrap5 -->
   <link href='../../../Recursos/boostrap5/bootstrap.min.css' rel='stylesheet'>
+  <!-- Boxicons CSS -->
+  <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <!-- DataTables -->
   <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
-  <!-- Boxicons CSS -->
-  <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <!-- Estilos personalizados -->
   <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
@@ -51,6 +51,9 @@ if (isset($_SESSION['usuario'])) {
         $urlTarea = '../../rendimiento/v_tarea.php';
         $urlSolicitud = '../solicitud/gestionSolicitud.php';
         $urlComision = '../comision/gestionComision.php';
+        $urlVenta = '../venta/gestionVenta.php';
+        $urlCliente ='./cliente/gestionCliente.php';
+        $urlCarteraCliente = './carteraCliente/gestionCarteraClientes.php';
         require_once '../../layout/sidebar.php';
         ?>
       </div>

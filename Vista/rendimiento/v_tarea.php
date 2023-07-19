@@ -25,6 +25,7 @@
           $urlTarea = 'v_tarea.php';
           $urlSolicitud = '../crud/solicitud/gestionSolicitud.php';
           $urlComision = '../crud/comision/gestionComision.php';
+          $urlVenta = '../crud/venta/gestionVenta.php';
           require_once '../layout/sidebar.php';
         ?>
       </div>
