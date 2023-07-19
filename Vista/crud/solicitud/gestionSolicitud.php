@@ -41,7 +41,7 @@
     <table class="table" id="table-Solicitudes">
       <thead>
       <tr>
-          <th scope="col"> ID_SOLICITUD </th>
+          <th scope="col"> ID </th>
           <th scope="col"> FECHA ENVIO </th>
           <th scope="col"> DESCRIPCION </th>
           <th scope="col"> CORREO </th>

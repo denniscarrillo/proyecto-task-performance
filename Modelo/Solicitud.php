@@ -48,6 +48,24 @@ class Solicitud {
         return $solicitudes;
     }
     
+
+    public static function crearNuevaSolicitud($nuevaSolicitud){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $idEstado = $nuevaSolicitud->idEstado;
+        $idTipoServicio = $nuevaSolicitud->idTipoServicio;
+        $idUsuario = $nuevaSolicitud->idUsuario;
+        $idCliente = $nuevaSolicitud->idCliente;
+        $fechaEnvio = $nuevaSolicitud->fechaEnvio;
+        $descripcion = $nuevaSolicitud->descripcion;
+        $correo = $nuevaSolicitud->correo;
+        $ubicacion = $nuevaSolicitud->ubicacion;
+        $nuevaSolicitud = $consulta->query("INSERT INTO tbl_solicitud(id_Usuario, id_EstadoSolicitud, id_TipoServicio, id_Cliente, fecha_Envio, descripcion, correo, ubicacion) 
+        VALUES ($idEstado, $idTipoServicio, $idUsuario, $idCliente, $fechaEnvio, $descripcion, $correo, $ubicacion)");
+        mysqli_close($consulta); #Cerramos la conexión.
+        return $nuevaSolicitud;
+    }
+    
 }
 
     
