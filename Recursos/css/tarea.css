@@ -1,0 +1,56 @@
+.encabezado {
+    min-height: fit-content;
+  }
+  h2, p{
+    text-align: center;
+  }
+  .conteiner_col{
+    gap: 8px;
+    flex-flow: nowrap;
+  }
+  .title-task{
+    display: flex;
+    /* align-content: center; */
+    justify-content: center;
+    gap: 4px;
+    font-weight: 600;
+    background-color: #e9e1e1;
+    /* padding: 6px; */
+    margin-bottom: 8px;
+  }
+  .circle-count{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgb(250, 246, 42);
+    height: 30px;
+    width: 30px;
+    /* text-align: center; */
+  }
+  .container_llamada{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    gap: 1.5rem;
+    overflow: auto;
+    /* margin-top: 4rem; */
+    width: fit-content;
+    height: 50%;
+    /* border: 2px grey ; */
+  }
+  .card_task{
+    height: fit-content;
+    width: 15rem;
+    margin: 0;
+    background-color: #baeeee;
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+  }
+  .btn_nuevaTarea{
+    border:none;
+    padding: 5px;
+    margin-bottom: 8px;
+  }

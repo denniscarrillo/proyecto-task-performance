@@ -1,11 +1,13 @@
 <nav class="sidebar locked">
   <div class="logo_items flex-log">
     <span class="nav_image">
-      <a href="../index.php"><img src="../../Recursos/imagenes/Logo-E&C.png" alt="logo_img" height="80px"/></a>
+      <a href="<?php echo $urlIndex; ?>">
+        <img src="../../Recursos/imagenes/Logo-E&C.png" alt="logo_img" height="80px">
+      </a>
     </span>
   </div>
-  <div class="flex-log">
-    <a href="../../index.php" style="text-decoration: none;"><span class="logo_name" >Cocinas&Equipos</span></a>
+  <div class="flex-log
+    <a href="<?php echo $urlIndex; ?>" style="text-decoration: none;"><span class="logo_name" >Cocinas&Equipos</span></a>
   </div>
   <span class="flex-log">
     <i class="bx bx-lock-alt" id="lock-icon" title="Unlock Sidebar"></i>
@@ -15,67 +17,61 @@
     <div class="menu_items">
       <ul class="menu_item">
         <div class="menu_title flex align">
-          <span class="title">Dashboard</span>
+          <span class="title">Modúlos</span>
           <span class="line"></span>
         </div>
         <li class="item">
-          <a href="#" class="link flex">
+          <a href="<?php echo $urlTarea; ?>" class="link flex">
             <i class='bx bx-task'></i>
-            <span>Tareas</span>
+            <span>Rendimiento</span>
           </a>
         </li>
         <li class="item">
           <a href="#" class="link flex">
             <i class='bx bx-store-alt'></i>
-            <span>Ventas</span>
+            <span>Solicitud</span>
           </a>
         </li>
         <li class="item">
           <a href="#" class="link flex">
+            <i class='bx bx-store-alt'></i>
+            <span>Comisión</span>
+          </a>
+        </li>
+        <!-- <li class="item">
+          <a href="#" class="link flex">
             <i class='bx bx-bar-chart-alt-2'></i>
             <span>Rendimiento</span>
           </a>
-        </li>
-        <li class="item">
-          <a href="../Vista/crud/usuario/gestionUsuario.php" class="link flex">
-            <i class='bx bxs-user-badge'></i>
-            <span>Usuarios</span>
-          </a>
-        </li>
+        </li> -->
       </ul>
       <ul class="menu_item">
         <div class="menu_title flex">
-          <span class="title">Editor</span>
+          <span class="title">Consulta</span>
           <span class="line"></span>
         </div>
         <li class="item">
           <a href="#" class="link flex">
             <i class="bx bxs-magic-wand"></i>
-            <span>Magic Build</span>
+            <span>Ventas</span>
           </a>
         </li>
         <li class="item">
           <a href="#" class="link flex">
             <i class="bx bx-folder"></i>
-            <span>New Projects</span>
-          </a>
-        </li>
-        <li class="item">
-          <a href="#" class="link flex">
-            <i class="bx bx-cloud-upload"></i>
-            <span>Upload New</span>
+            <span>Clientes</span>
           </a>
         </li>
       </ul>
       <ul class="menu_item">
         <div class="menu_title flex">
-          <span class="title">Setting</span>
+          <span class="title">Mantenimiento</span>
           <span class="line"></span>
         </div>
         <li class="item">
-          <a href="#" class="link flex">
-            <i class="bx bx-flag"></i>
-            <span>Notice Board</span>
+          <a href="<?php echo $urlGestion; ?>" class="link flex">
+            <i class='bx bxs-user-badge'></i>
+            <span>Usuarios</span>
           </a>
         </li>
         <li class="item">

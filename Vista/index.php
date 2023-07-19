@@ -40,7 +40,10 @@ if (isset($_SESSION['usuario'])) {
       <!-- Menu lateral principal -->
       <div class="sb-conteiner col-2">
         <?php
-        require_once 'layout/sidebar.html';
+        $urlIndex = 'index.php';
+        $urlGestion = './crud/usuario/gestionUsuario.php';
+        $urlTarea = './rendimiento/v_tarea.php';
+        require_once 'layout/sidebar.php';
         ?>
       </div>
       <div class="content col-10">

@@ -7,8 +7,8 @@ class Tarea {
         public $titulo;
         public $idCliente;
         public $idUsuario;
-        public $adjuntoFinalizacion;
         public $fechaInicio;
+        public $adjuntoFinalizacion;
         public $fechaFinalizacion;
         public $chatComentario;
         public $idClasificacionLead;
@@ -22,17 +22,32 @@ class Tarea {
         public $Modificado_Por;
         public $Fecha_Modificacion;
 
-        //METODOS DE LA CLASE
-        public static function obtenerTareas($user){
+        // Obtener todas las tareas que le pertenecen a un usuario.
+        public static function obtenerTareas($idUser, $filtroTarea){
+            $tareasUsuario = null;
             try {
+                $tareasUsuario = array();
                 $con = new Conexion();
                 $abrirConexion = $con->abrirConexionDB();
-                $resultado = $abrirConexion->query('SELECT titulo, fecha_Inicio FROM tbl_Tarea');
-
-
+                $resultado = $abrirConexion->query("SELECT t.titulo, t.fecha_Inicio, e.descripcion FROM tbl_Tarea AS t
+                INNER JOIN tbl_estadoavance AS e ON t.id_EstadoAvance = e.id_EstadoAvance
+                WHERE t.id_Usuario = $idUser;");
+                //Recorremos el resultado de tareas y almacenamos en el arreglo.
+                while($fila = $resultado->fetch_assoc()){
+                    if($fila['descripcion'] == $filtroTarea){
+                        $tareasUsuario [] = [
+                            'tituloTarea' => $fila['titulo'],
+                            'fechaInicio' => $fila['fecha_Inicio'],
+                            'tipoTarea' => $fila['descripcion']
+                        ];
+                    }
+                }
             } catch (Exception $e) {
-                $mensaje = 'Error SQL:'. $e;
+                $tareasUsuario = 'Error SQL:'. $e;
             }
+            mysqli_close($abrirConexion); //Cerrar conexion
+            return $tareasUsuario;
         }
+
 
 }

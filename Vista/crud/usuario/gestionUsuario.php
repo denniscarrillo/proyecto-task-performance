@@ -45,8 +45,11 @@ if (isset($_SESSION['usuario'])) {
   <div class="conteiner">
     <div class="row">
       <div class="columna1 col-2">
-        <?php
-          require_once '../../layout/sidebar.html';
+        <?php       
+        $urlIndex = '../../index.php';
+        $urlGestion = './crud/usuario/gestionUsuario.php';
+        $urlTarea = '../../rendimiento/v_tarea.php';
+        require_once '../../layout/sidebar.php';
         ?>
       </div>
 
