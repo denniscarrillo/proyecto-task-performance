@@ -10,12 +10,11 @@ $(document).ready(function () {
     },
     "columns": [
       { "data": "idCliente"},
-      { "data": "nombre" },
-      { "data": "rtn" },
-      { "data": "telefono" },
-      { "data": "correo" },
-      { "data": "descripcion" }
+      { "data": "nombre"},
+      { "data": "rtn"},
+      { "data": "telefono"},
+      { "data": "correo"},
+      { "data": "descripcion"}
     ]
   });
-
 });

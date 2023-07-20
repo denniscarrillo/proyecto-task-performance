@@ -26,6 +26,8 @@
           $urlSolicitud = '../crud/solicitud/gestionSolicitud.php';
           $urlComision = '../crud/comision/gestionComision.php';
           $urlVenta = '../crud/venta/gestionVenta.php';
+          $urlCliente = '../crud/cliente/gestionCliente.php';
+          $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
           require_once '../layout/sidebar.php';
         ?>
       </div>

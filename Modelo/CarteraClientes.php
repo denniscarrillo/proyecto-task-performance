@@ -22,7 +22,7 @@ class CarteraClientes{
         $carteraClientes = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
         while($fila = $listaCarteraClientes->fetch_assoc()){
-            $carteraclientes [] = [
+            $carteraClientes [] = [
                 'idcarteraCliente' => $fila["id_CarteraCliente"],
                 'nombre'=> $fila["nombre_Cliente"],
                 'rtn' => $fila["rtn_Cliente"],
@@ -32,7 +32,7 @@ class CarteraClientes{
             ];
         }
         mysqli_close($consulta); #Cerramos la conexión.
-        return $carteraclientes;
+        return $carteraClientes;
     }
 
 
@@ -45,8 +45,8 @@ class CarteraClientes{
     $telefono = $nuevoCliente->telefono;
     $correo = $nuevoCliente->correo;
     $estadoContacto = $nuevoCliente->estadoContacto;
-    $nuevoCliente = $consulta->query("INSERT INTO tbl_CarteraCliente(nombre_Cliente,rtn_Cliente,telefono,correo,estado_Contacto)
-                   VALUES ('$nombre', '$rtn', '$telefono', '$correo','$estado_contacto')");
+    $nuevoCliente = $consulta->query("INSERT INTO tbl_CarteraCliente (nombre_Cliente,rtn_Cliente,telefono,correo,estado_Contacto)
+                   VALUES ('$nombre', '$rtn', '$telefono', '$correo','$estadoContacto')");
     mysqli_close($consulta); #Cerramos la conexión.
     return $nuevoCliente;
     }

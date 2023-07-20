@@ -2,7 +2,7 @@ let tablaCarteraClientes = '';
 $(document).ready(function () {
   tablaCarteraClientes = $('#table-CarteraClientes').DataTable({
     "ajax": {
-      "url": "../../../Vista/crud/CarteraClientes/obtenerCarteraClientes.php",
+      "url": "../../../Vista/crud/carteraCliente/obtenerCarteraClientes.php",
       "dataSrc": ""
     },
     "language":{
@@ -10,11 +10,11 @@ $(document).ready(function () {
     },
     "columns": [
       { "data": "idcarteraCliente"},
-      { "data": "nombre" },
-      { "data": "rtn" },
-      { "data": "telefono" },
-      { "data": "correo" },
-      { "data": "estadoContacto" }
+      { "data": "nombre"},
+      { "data": "rtn"},
+      { "data": "telefono"},
+      { "data": "correo"},
+      { "data": "estadoContacto"}
     ]
   });
 
