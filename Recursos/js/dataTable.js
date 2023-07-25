@@ -18,8 +18,7 @@ $(document).ready(function () {
       { "data": "correo" },
       { "data": "Estado" },
       { "data": "Rol" },
-      {
-        "defaultContent":
+      {"defaultContent":
           '<div><button class="btns btn" id="btn_ver"><i class="fa-solid fa-eye"></i></button>' +
           '<button class="btns btn" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>' +
           '<button class="btns btn" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button></div>'
