@@ -4,5 +4,12 @@
         public static function getComision(){
             return Comision::obtenerTodasLasComisiones();
         }
+        public static function registroComision(){
+            return Comision::registroNuevaComision();
+        }
+        public static function obComision(){
+            return Comision:: obtenercomision();
+        }
+
 
     }
