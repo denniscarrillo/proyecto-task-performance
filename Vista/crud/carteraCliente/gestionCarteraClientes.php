@@ -71,7 +71,8 @@ session_start(); //Reanudamos la sesion
                 <th scope="col"> RTN </th>
                 <th scope="col"> TELEFONO </th>
                 <th scope="col"> CORREO </th>
-                <th scope="col"> ESTADO DE CLIENTE </th>
+                <th scope="col"> ESTADO CONTACTO </th>
+                <th scope="col"> ACCIONES </th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -82,7 +83,7 @@ session_start(); //Reanudamos la sesion
     </div>
   </div>
   <?php
-  // require_once('./modalNuevoCliente.html');
+  require_once('modalNuevoCliente.html');
   //require('modalEditarUsuario.html');
   ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>

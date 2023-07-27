@@ -61,9 +61,6 @@ session_start(); //Reanudamos la sesion
       <div class="columna2 col-10">
         <H1>Gestión de Clientes</H1>
         <div class="table-conteiner">
-          <div>
-            <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoCliente"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
-          </div>
           <table class="table" id="table-VistaClientes">
             <thead>
               <tr>
