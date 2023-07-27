@@ -23,7 +23,7 @@ class Tarea {
         public $Fecha_Modificacion;
 
         // Obtener todas las tareas que le pertenecen a un usuario.
-        public static function obtenerTareas($idUser, $filtroTarea){
+        public static function obtenerTareas($idUser){
             $tareasUsuario = null;
             try {
                 $tareasUsuario = array();
@@ -34,13 +34,11 @@ class Tarea {
                 WHERE t.id_Usuario = $idUser;");
                 //Recorremos el resultado de tareas y almacenamos en el arreglo.
                 while($fila = $resultado->fetch_assoc()){
-                    if($fila['descripcion'] == $filtroTarea){
-                        $tareasUsuario [] = [
-                            'tituloTarea' => $fila['titulo'],
-                            'fechaInicio' => $fila['fecha_Inicio'],
-                            'tipoTarea' => $fila['descripcion']
-                        ];
-                    }
+                    $tareasUsuario [] = [
+                        'tipoTarea' => $fila['descripcion'],
+                        'tituloTarea' => $fila['titulo'],
+                        'fechaInicio' => $fila['fecha_Inicio'],
+                    ];
                 }
             } catch (Exception $e) {
                 $tareasUsuario = 'Error SQL:'. $e;
@@ -49,5 +47,18 @@ class Tarea {
             return $tareasUsuario;
         }
 
+        public static function nuevaTarea ($tarea){
+            try {
+                $conn = new Conexion();
+                $abrirConexion= $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+                $insert = "INSERT INTO `tbl_tarea` (`id_Usuario`, `id_EstadoAvance`, `titulo`, `fecha_Inicio`, `Creado_Por`, `Fecha_Creacion`) 
+                            VALUES ('$tarea->idUsuario', '$tarea->idEstadoAvance','$tarea->titulo', 
+                                    '$tarea->fechaInicio', '$tarea->Creado_Por', '$tarea->fechaInicio');";
+                $abrirConexion->query($insert);
+            } catch (Exception $e) {
+                echo 'Error SQL:'. $e;
+            }
+            mysqli_close($abrirConexion); //Cerrar conexion
+        }
 
 }
