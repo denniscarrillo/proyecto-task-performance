@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../../Recursos/boostrap5/bootstrap.min.css">
   <link rel="stylesheet" href="../../Recursos/css/layout/sidebar.css">
   <link rel="stylesheet" href="../../Recursos/css/tarea.css">
+  <link rel="stylesheet" href="../../Recursos/css/modalEditarTarea.css">
   <title>Tareas</title>
 </head>
 <body>
@@ -45,7 +46,6 @@
             <div class="container_tarea" id="conteiner-llamada">
               <!-- Aqui van las tareas llamadas -->
             </div>
-
           </div>
           <!-- Leads -->
           <div class="col-3" id="columna-leads">
@@ -85,6 +85,9 @@
       </div>
     </div>
   </div>
+  <?php
+  require('modalEditarTarea.html');
+  ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="../../Recursos/boostrap5/bootstrap.min.js "></script>
   <script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>

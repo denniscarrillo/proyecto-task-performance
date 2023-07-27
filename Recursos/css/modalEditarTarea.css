@@ -1,0 +1,25 @@
+#modal-dialog{
+    width: fit-content;
+    margin: 0 auto;
+}
+.modal-content{
+    width: fit-content;
+    margin: 0 auto;
+}
+.modal-header{
+    background-color: #ef904d;
+}
+.modal-title {
+    color: white;
+}
+.btn-close{
+    color: white;
+}
+#group-inputs{
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+.grupo-form{
+    width: 20rem;
+}

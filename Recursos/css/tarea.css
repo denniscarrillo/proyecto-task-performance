@@ -43,7 +43,7 @@
     gap: 1rem;
     overflow: auto;
     height: 22.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
   .card_task{
     height: fit-content;
@@ -114,15 +114,18 @@
   .conteiner-icons-task {
     display: flex;
     justify-content: flex-end;
-    background: #f5ddcc;
+    background: #eee5e4;;
     padding: 0.3rem;
   }
   /*Estilos para iconos de la tareas*/
-  .fa-solid{
+  .fa-solid-btn{
     font-size: 1.5rem;
-    color: #e47f37;
+    color: #e33026;
     margin-left: 0.5rem;
   }
   .conteiner-text-task{
     padding: 0.4rem;
+  }
+  .conteiner-text-task > p{
+    margin: 0.1rem;
   }

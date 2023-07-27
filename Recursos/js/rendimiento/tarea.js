@@ -85,8 +85,10 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
                 <p>${tareas.fechaInicio}</p>
               </div>
               <div class="conteiner-icons-task">
-                <i class="fa-solid fa-pen-to-square"></i>
-                <i class="fa-solid fa-tag"></i>
+              <div>
+                <a href="#" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalEditarTarea"><i class="fa-solid-btn fa-solid fa-pen-to-square"></i></a>
+              </div>
+              <i class="fa-solid-btn fa-solid fa-tag"></i>
               </div>
             </div>`;
             $elemento.innerHTML = tarea;
