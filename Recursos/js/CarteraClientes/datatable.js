@@ -78,16 +78,10 @@ let obtenerContactoCliente = function (idElemento) {
     type: 'GET',
     dataType: 'JSON',
     success: function (data) {
-      let objContacto = JSON.parse(data);
-      console.log(objContacto);
       let valores = '<option value="">Seleccionar...</option>';
-      //Recorremos el arreglo de estados que nos devuelve la peticion
-      objContacto.forEach(elemento => {
-        valores = '<option value="'+elemento.id_estadoContacto+'">'+elemento.contacto_Cliente+'</option>';
-      });
-      // for (let i = 0; i < data.length; i++) {
-      //   valores += '<option value="' + objContacto[i].id_estadoContacto + '">' + objContacto[i].contacto_Cliente + '</option>';
-      // }
+      for (let i = 0; i < data.length; i++) {
+        valores += '<option value="' + data[i].id_estadoContacto + '">' + data[i].contacto_Cliente +'</option>';
+      }
       $(idElemento).html(valores);
     }
   });
