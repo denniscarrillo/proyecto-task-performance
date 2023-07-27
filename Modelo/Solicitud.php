@@ -5,12 +5,12 @@ class Solicitud {
     public $idEstadoSolicitud;
     public $idTipoServicio;
     public $idUsuario;
-    public $fecha_Envio;
+    public $fechaEnvio;
     public $idCliente;
     public $correo;
     public $descripcion;
     public $ubicacion;
-    public $tituloMensaje;
+    public $titulo;
     public $creado_Por;
     public $fecha_Creacion;
     public $modificado_Por;
@@ -52,20 +52,64 @@ class Solicitud {
     public static function crearNuevaSolicitud($nuevaSolicitud){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $idEstado = $nuevaSolicitud->idEstado;
-        $idTipoServicio = $nuevaSolicitud->idTipoServicio;
         $idUsuario = $nuevaSolicitud->idUsuario;
+        $idEstadoSolicitud = $nuevaSolicitud->idEstadoSolicitud;
+        $idTipoServicio = $nuevaSolicitud->idTipoServicio;
         $idCliente = $nuevaSolicitud->idCliente;
         $fechaEnvio = $nuevaSolicitud->fechaEnvio;
-        $descripcion = $nuevaSolicitud->descripcion;
+        $titulo = $nuevaSolicitud->titulo;
         $correo = $nuevaSolicitud->correo;
+        $descripcion = $nuevaSolicitud->descripcion;
         $ubicacion = $nuevaSolicitud->ubicacion;
-        $nuevaSolicitud = $consulta->query("INSERT INTO tbl_solicitud(id_Usuario, id_EstadoSolicitud, id_TipoServicio, id_Cliente, fecha_Envio, descripcion, correo, ubicacion) 
-        VALUES ($idEstado, $idTipoServicio, $idUsuario, $idCliente, $fechaEnvio, $descripcion, $correo, $ubicacion)");
+        $nuevaSolicitud = $consulta->query("INSERT INTO tbl_solicitud(id_Usuario, id_EstadoSolicitud, id_TipoServicio, id_Cliente, fecha_Envio, titulo_Mensaje, descripcion, correo, ubicacion) 
+        VALUES ($idUsuario, $idEstadoSolicitud, $idTipoServicio, $idCliente, $fechaEnvio, $titulo,  $correo, $descripcion, $ubicacion)");
         mysqli_close($consulta); #Cerramos la conexión.
         return $nuevaSolicitud;
     }
-    
-}
 
-    
+    public static function obtenerEstadoSolicitud(){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $obtenerEstado = $conexion->query("SELECT id_EstadoSolicitud, estadoSolicitud FROM tbl_estadoSolicitud;");
+        $estados = array();
+        while($fila = $obtenerEstado->fetch_assoc()){
+            $estados [] = [
+                'id_EstadoSolicitud' => $fila["id_EstadoSolicitud"],
+                'estadoSolicitud' => $fila["estadoSolicitud"]
+            ];
+        }
+        mysqli_close($conexion); #Cerramos la conexión.
+        return $estados;
+    }
+
+    public static function obtenerTipoServicio(){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $obtenerTipoServicio = $conexion->query("SELECT id_TipoServicio, servicio_Tecnico FROM tbl_tipoServicio;");
+        $servicios = array();
+        while($fila = $obtenerTipoServicio->fetch_assoc()){
+            $servicios [] = [
+                'id_TipoServicio' => $fila["id_TipoServicio"],
+                'servicio_Tecnico' => $fila["servicio_Tecnico"]
+            ];
+        }
+        mysqli_close($conexion); #Cerramos la conexión.
+        return $servicios;
+    }
+
+    public static function editarSolicitud($modificarSolicitud){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $usuario = $modificarSolicitud->usuario;
+        $idEstadoSolicitud = $modificarSolicitud->idEstadoSolicitud;
+        $idTipoServicio = $modificarSolicitud->idTipoServicio;
+        $cliente = $$modificarSolicitud->idCliente;
+        $tituloMensaje = $$modificarSolicitud->titulo;
+        $fechaEnvio = $$modificarSolicitud->fechaEnvio;
+        $descripcion = $$modificarSolicitud->descripcion;
+        $correo = $$modificarSolicitud->correo;
+        $ubicacion = $$modificarSolicitud->ubicacion;
+        $modificarSolicitud = $conexion->query("UPDATE tbl_solicitud SET id_Usuario = '$usuario', id_EstadoSolicitud= '$idEstadoSolicitud', id_TipoServicio=$idTipoServicio, id_Cliente = $cliente, fecha_Envio = $fechaEnvio, titulo_Mensaje = $tituloMensaje, correo ='$correo', descripcion = $descripcion,  ubicacion = $ubicacion WHERE id_Usuario='$idUsuario' ");
+        mysqli_close($conexion); #Cerramos la conexión.
+    }
+}
