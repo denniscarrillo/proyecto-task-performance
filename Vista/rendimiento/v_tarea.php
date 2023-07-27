@@ -38,10 +38,10 @@
           <!-- LLamadas -->
           <div class="col-3" id="columna-llamadas">
             <div class="title-task">
-              <p id="tarea">Llamada</p>
+              <p class="title-task-label">Llamada</p>
               <p class="circle-count" id="circle-count-llamadas"></p>
             </div>
-            <button type="button" class="btn_nuevaTarea" id="btn-NuevaLLamada">+ Nueva llamada</button>
+            <button type="button" class="btn_nuevaTarea btn btn-primary" id="btn-NuevaLLamada">+ Nueva llamada</button>
             <div class="container_tarea" id="conteiner-llamada">
               <!-- Aqui van las tareas llamadas -->
             </div>
@@ -50,10 +50,10 @@
           <!-- Leads -->
           <div class="col-3" id="columna-leads">
             <div class="title-task">
-              <p>Lead</p>
+              <p class="title-task-label">Lead</p>
               <p class="circle-count" id="circle-count-leads"></p>
             </div>
-            <button type="button" class="btn_nuevaTarea" id= "btn-NuevoLead">+ Nuevo lead</button>
+            <button type="button" class="btn_nuevaTarea btn btn-primary" id= "btn-NuevoLead">+ Nuevo lead</button>
             <div class="container_tarea" id="conteiner-lead">
               <!-- Aqui van las tareas leads -->
             </div>
@@ -61,10 +61,10 @@
           <!-- Cotizaciones -->
           <div class="col-3" id="columna-cotizaciones">
             <div class="title-task">
-              <p>Cotización</p>
+              <p class="title-task-label">Cotización</p>
               <p class="circle-count" id="circle-count-cotizaciones"></p>
             </div>
-            <button type="button" class="btn_nuevaTarea" id= "btn-NuevaCotizacion">+ Nueva Cotizacion</button>
+            <button type="button" class="btn_nuevaTarea btn btn-primary" id= "btn-NuevaCotizacion">+ Nueva Cotizacion</button>
             <div class="container_tarea" id="conteiner-cotizacion" >
               <!-- Aqui van las tareas leads -->
             </div>
@@ -73,10 +73,10 @@
           <!-- Venta -->
           <div class="col-3" id="columna-ventas"> 
             <div class="title-task">
-              <p>Venta</p>
+              <p class="title-task-label">Venta</p>
               <p class="circle-count" id="circle-count-ventas"></p>
             </div> 
-            <button type="button" class="btn_nuevaTarea" id= "btn-NuevaVenta">+ Nueva Venta</button>
+            <button type="button" class="btn_nuevaTarea btn btn-primary" id= "btn-NuevaVenta">+ Nueva Venta</button>
             <div class="container_tarea" id="conteiner-venta">
             <!-- Aqui van las tareas leads -->
             </div>
@@ -85,6 +85,7 @@
       </div>
     </div>
   </div>
+  <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="../../Recursos/boostrap5/bootstrap.min.js "></script>
   <script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../Recursos/js/index.js"></script>

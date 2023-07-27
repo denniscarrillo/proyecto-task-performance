@@ -47,7 +47,7 @@ session_start(); //Reanudamos la sesion
       <div class="columna1 col-2">
         <?php
         $urlIndex = '../../index.php';
-        $urlGestion = 'gestionUsuario.php';
+        $urlGestion = '../usuario/gestionUsuario.php';
         $urlTarea = '../../rendimiento/v_tarea.php';
         $urlSolicitud = '../solicitud/gestionSolicitud.php';
         $urlComision = '../comision/gestionComision.php';

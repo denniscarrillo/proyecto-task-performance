@@ -53,7 +53,7 @@ if (isset($_SESSION['usuario'])) {
         $urlComision = '../comision/gestionComision.php';
         $urlVenta = '../venta/gestionVenta.php';
         $urlCliente ='./cliente/gestionCliente.php';
-        $urlCarteraCliente = './carteraCliente/gestionCarteraClientes.php';
+        $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
         require_once '../../layout/sidebar.php';
         ?>
       </div>
