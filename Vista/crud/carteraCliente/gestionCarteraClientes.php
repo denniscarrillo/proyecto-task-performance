@@ -83,7 +83,7 @@ session_start(); //Reanudamos la sesion
     </div>
   </div>
   <?php
-  //require_once('modalNuevoCliente.html');
+  require_once('modalNuevoCliente.html');
   //require('modalEditarUsuario.html');
   ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>

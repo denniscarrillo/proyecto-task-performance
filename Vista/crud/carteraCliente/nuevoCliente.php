@@ -12,12 +12,11 @@
     if(isset($_SESSION['usuario'])){
         $user = $_SESSION['usuario'];
         $nuevoCliente = new CarteraClientes();
-        $nuevoCliente->idcarteraCliente = $_POST['idcarteraCliente'];
         $nuevoCliente->nombre = $_POST['nombre'];
         $nuevoCliente->rtn = $_POST['rtn'];
         $nuevoCliente->telefono = $_POST['telefono'];
         $nuevoCliente->correo = $_POST['correo'];
-        $nuevoCliente->estadoContacto = $_POST['estadoContacto'];
+        $nuevoCliente->idestadoContacto = $_POST['idestadoContacto'];
         $nuevoCliente->creadoPor = $user;
         ControladorCarteraClientes::registroNuevoCliente($nuevoCliente);
         //enviarCorreoNuevoUsuario($nuevoUsuario->correo, $nuevoUsuario->usuario, $_POST['contrasenia']);

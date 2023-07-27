@@ -37,21 +37,35 @@ class CarteraClientes{
     }
 
 
-    // //Método para crear nuevo cliente
-    // public static function registroNuevoCliente($nuevoCliente){
-    // $conn = new Conexion();
-    // $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB
-    // $idcarteraCliente = $nuevoCliente->idcarteraCliente;
-    // $nombre = $nuevoCliente->nombre;
-    // $rtn = $nuevoCliente->rtn;
-    // $telefono = $nuevoCliente->telefono;
-    // $correo = $nuevoCliente->correo;
-    // $estadoContacto = $nuevoCliente->estadoContacto;
-    // $nuevoCliente = $consulta->query("INSERT INTO tbl_CarteraCliente(id_CarteraCliente,nombre_Cliente,rtn_Cliente,telefono,correo,estado_Contacto)
-    //                VALUES ('$idcarteraCliente','$nombre', '$rtn', '$telefono', '$correo','$estadoContacto');");
-    // mysqli_close($consulta); #Cerramos la conexión.
-    // return $nuevoCliente;
-    // }
+    //Método para crear nuevo cliente
+    public static function registroNuevoCliente($nuevoCliente){
+    $conn = new Conexion();
+    $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB
+    $nombre = $nuevoCliente->nombre;
+    $rtn = $nuevoCliente->rtn;
+    $telefono = $nuevoCliente->telefono;
+    $correo = $nuevoCliente->correo;
+    $idestadoContacto = $nuevoCliente->idestadoContacto;
+    $nuevoCliente = $consulta->query("INSERT INTO tbl_CarteraCliente(nombre_Cliente,rtn_Cliente,telefono,correo,id_estadoContacto)
+                   VALUES ('$nombre', '$rtn', '$telefono', '$correo','$idestadoContacto');");
+    mysqli_close($consulta); #Cerramos la conexión.
+    return $nuevoCliente;
+    }
+
+    public static function obtenerContactoCliente(){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $obtenerContacto = $conexion->query("SELECT id_estadoContacto, contacto_Cliente FROM tbl_contactocliente;");
+        $contactoCliente = array();
+        while($fila = $obtenerContacto->fetch_assoc()){
+            $contactoCliente [] = [
+                'id_estadoContacto' => $fila["id_estadoContacto"],
+                'contacto_Cliente' => $fila["contacto_Cliente"]
+            ];
+        }
+        mysqli_close($conexion); #Cerramos la conexión.
+        return $contactoCliente;
+    }
 
 
 
@@ -67,20 +81,7 @@ class CarteraClientes{
     //     return $estadoEliminado;
     // }
 
-    // public static function obtenerContactoCliente(){
-    //     $conn = new Conexion();
-    //     $conexion = $conn->abrirConexionDB();
-    //     $obtenerContacto = $conexion->query("SELECT id_estadoContacto,contacto_Cliente FROM tbl_contactocliente;");
-    //     $contactoCliente = array();
-    //     while($fila = $obtenerContacto->fetch_assoc()){
-    //         $contactoCliente [] = [
-    //             'id_estadoContacto' => $fila["id_estadoContacto"],
-    //             'contacto_Cliente' => $fila["contacto_Cliente"]
-    //         ];
-    //     }
-    //     mysqli_close($conexion); #Cerramos la conexión.
-    //     return $contactoCliente;
-    // }
+    
 
 }#Fin de la clase
 
