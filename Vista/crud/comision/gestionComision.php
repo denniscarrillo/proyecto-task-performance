@@ -52,10 +52,12 @@ require_once("../../Vista/crud/comision/obtenerComision.php");
       <div class="columna1 col-2">
         <?php
         $urlIndex = '../../index.php';
-        $urlGestion = '../usuario/gestionComision.php';
+
+        $urlGestion = '../usuario/gestionUsuario.php';
         $urlTarea = '../../rendimiento/v_tarea.php';
         $urlSolicitud = '../solicitud/gestionSolicitud.php';
-        $urlComision = '../comision/gestionComision.php';
+        $urlComision = '../../comisiones/v_comision.php';
+        $urlCrudComision = '../gestionComision.php';
         $urlVenta = '../venta/gestionVenta.php';
         $urlCliente ='./cliente/gestionCliente.php';
         $urlCarteraCliente = './carteraCliente/gestionCarteraClientes.php';

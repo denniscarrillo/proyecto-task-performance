@@ -1,6 +1,5 @@
 <?php
 require_once("validacionesComision.php");
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -12,7 +11,7 @@ require_once("validacionesComision.php");
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
   <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
-   <!-- Boostrap5 -->
+  <!-- Boostrap5 -->
   <link href='../../../Recursos/boostrap5/bootstrap.min.css' rel='stylesheet'>
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
@@ -22,20 +21,19 @@ require_once("validacionesComision.php");
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
   <title> Comision </title>
 </head>
-
 <body>
   <div class="conteiner">
     <div class="row">
       <div class="columna1 col-2">
         <?php
-        $urlIndex = '../../index.php';
-        $urlGestion = '../usuario/gestionComision.php';
-        $urlTarea = '../../rendimiento/v_tarea.php';
-        $urlSolicitud = '../solicitud/gestionSolicitud.php';
-        $urlComision = '../comision/gestionComision.php';
-        $urlVenta = '../venta/gestionVenta.php';
-        $urlCliente ='./cliente/gestionCliente.php';
-        $urlCarteraCliente = './carteraCliente/gestionCarteraClientes.php';
+        $urlIndex = '../index.php';
+        $urlGestion = '../crud/usuario/gestionUsuario.php';
+        $urlTarea = '../rendimiento/v_tarea.php';
+        $urlSolicitud = '../crud/solicitud/gestionSolicitud.php';
+        $urlComision = 'v_comision.php';
+        $urlVenta = '../crud/venta/gestionVenta.php';
+        $urlCliente = '../crud/cliente/gestionCliente.php';
+        $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
         require_once '../layout/sidebar.php';
         ?>
       </div>
@@ -43,7 +41,7 @@ require_once("validacionesComision.php");
         <H1>Comisiones</H1>
         <div class="table-conteiner">
           <div>
-            <a href>
+            <a href="#" class="btn_nuevoRegistro btn btn-primary" data-bs-toggle="modal" data-bs-target="#nuevaComision"><i class="fa-solid fa-circle-plus"></i> Generar comisión</a>
           </div>
           <table class="table" id="table-Comision">
             <thead>
@@ -63,8 +61,7 @@ require_once("validacionesComision.php");
     </div>
   </div>
   <?php
-  // require('modalNuevaComision.html');
-  /* require('modalEditarComision.html'); */
+    require('modalFiltroVenta.html');
   ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
