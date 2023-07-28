@@ -5,7 +5,10 @@ require_once("../../../Modelo/Comision.php");
 /* require_once ("../../../Modelo/Bitacora.php"); */
 /* require_once ("../../../Controlador/ControladorUsuario.php"); */
 require_once("../../../Controlador/ControladorComision.php");
+require_once("../../Vista/crud/comision/obtenerComision.php");
+
 /* require_once ("../../../Controlador/ControladorBitacora.php"); */
+
 
 /* session_start(); //Reanudamos la sesion
   if(isset($_SESSION['usuario'])){
