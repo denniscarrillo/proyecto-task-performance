@@ -1,9 +1,8 @@
-import * as funciones from './funcionesValidaciones.js';
+import * as funciones from '../funcionesValidaciones.js';
 export let estadoValidado = false;
 //Objeto con expresiones regulares para los inptus
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
-    password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,15}$/,
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/
 }
 //VARIABLES GLOBALES
@@ -61,11 +60,12 @@ $form.addEventListener('submit', e => {
             } else {
                 if(estadoCorreo == false || estadoSelect == false){
                     e.preventDefault();
-                    estadoCorreo = funciones.validarCorreo($mail, validaciones.$mail);
+                    estadoCorreo = funciones.validarCorreo($mail, validaciones.correo);
                     estadoSelect = funciones.validarCampoVacio($statusSolicitud);
                     estadoSelect = funciones.validarCampoVacio($typeSolicitud);
                 } else {
                     estadoValidado = true; // 
+                    console.log(estadoValidado); //
                 }
             }
         }
@@ -89,7 +89,7 @@ $user.addEventListener('keyup', () => {
 
 
 $mail.addEventListener('keyup', ()=>{
-    estadoCorreo = funciones.validarCorreo($mail, validaciones.$mail);
+    estadoCorreo = funciones.validarCorreo($mail, validaciones.correo);
 });
 $statusSolicitud.addEventListener('change', ()=>{
     estadoSelect = funciones.validarCampoVacio($statusSolicitud);

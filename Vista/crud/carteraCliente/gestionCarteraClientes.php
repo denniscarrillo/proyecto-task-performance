@@ -95,7 +95,7 @@ session_start(); //Reanudamos la sesion
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/boostrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
-  <!--<script src="../../../Recursos/js/validacionesModalNuevoUsuario.js"  type="module"></script>-->
+  <script src="../../../Recursos/js/CarteraClientes/validacionesModalNuevoCliente.js"  type="module"></script>
   <!--<script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script>-->
 </body>
 

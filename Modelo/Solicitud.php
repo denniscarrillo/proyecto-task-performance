@@ -100,6 +100,7 @@ class Solicitud {
     public static function editarSolicitud($modificarSolicitud){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
+        $idSolicitud = $modificarSolicitud->idSolicitud;
         $usuario = $modificarSolicitud->usuario;
         $idEstadoSolicitud = $modificarSolicitud->idEstadoSolicitud;
         $idTipoServicio = $modificarSolicitud->idTipoServicio;
@@ -109,7 +110,7 @@ class Solicitud {
         $descripcion = $$modificarSolicitud->descripcion;
         $correo = $$modificarSolicitud->correo;
         $ubicacion = $$modificarSolicitud->ubicacion;
-        $modificarSolicitud = $conexion->query("UPDATE tbl_solicitud SET id_Usuario = '$usuario', id_EstadoSolicitud= '$idEstadoSolicitud', id_TipoServicio=$idTipoServicio, id_Cliente = $cliente, fecha_Envio = $fechaEnvio, titulo_Mensaje = $tituloMensaje, correo ='$correo', descripcion = $descripcion,  ubicacion = $ubicacion WHERE id_Usuario='$idUsuario' ");
+        $modificarSolicitud = $conexion->query("UPDATE tbl_solicitud SET id_Usuario = '$usuario', id_EstadoSolicitud= '$idEstadoSolicitud', id_TipoServicio=$idTipoServicio, id_Cliente = $cliente, fecha_Envio = $fechaEnvio, titulo_Mensaje = $tituloMensaje, correo ='$correo', descripcion = $descripcion,  ubicacion = $ubicacion WHERE id_Solicitud='$idSolicitud' ");
         mysqli_close($conexion); #Cerramos la conexión.
     }
 }

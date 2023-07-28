@@ -1,3 +1,4 @@
+import {estadoValidado as validado } from './ValidacionesModalNuevoCliente.js';
 let tablaCarteraClientes = '';
 $(document).ready(function () {
   tablaCarteraClientes = $('#table-CarteraClientes').DataTable({
