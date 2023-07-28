@@ -63,7 +63,7 @@ $('#form-solicitud').submit(function (e) {
         type: "POST",
         datatype: "JSON",
         data: {
-          idUsuario: usuario,
+          /* idUsuario: usuario, */
           idEstadoSolicitud: idEstadoSolicitud,
           idTipoServicio: idTipoServicio,
           idCliente: cliente,

@@ -17,8 +17,8 @@
         $nuevoCliente->telefono = $_POST['telefono'];
         $nuevoCliente->correo = $_POST['correo'];
         $nuevoCliente->idestadoContacto = $_POST['idestadoContacto'];
-        $nuevoCliente->creadoPor = $user;
-        ControladorCarteraClientes::registroNuevoCliente($nuevoCliente);
+        $nuevoCliente->CreadoPor = $user;
+        ControladorCarteraClientes::registroCliente($nuevoCliente);
         //enviarCorreoNuevoUsuario($nuevoUsuario->correo, $nuevoUsuario->usuario, $_POST['contrasenia']);
         /* ========================= Evento Creacion nuevo Usuario. ======================*/
         //$newBitacora = new Bitacora();

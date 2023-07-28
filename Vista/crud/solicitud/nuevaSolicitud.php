@@ -3,13 +3,15 @@
     require_once ("../../../Modelo/Solicitud.php");
     require_once ("../../../Modelo/Bitacora.php");
     require_once("../../../Controlador/ControladorSolicitud.php");
+    require_once ("../../../Modelo/Usuario.php");
+    require_once("../../../Controlador/ControladorUsuario.php");
     require_once("../../../Controlador/ControladorBitacora.php");
     $user = '';
     session_start(); //Reanudamos session
     if(isset($_SESSION['usuario'])){
         $user = $_SESSION['usuario'];
         $nuevaSolicitud = new Solicitud();
-        $nuevaSolicitud->idUsuario = $_POST['usuario'];
+        $nuevaSolicitud->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
         $nuevaSolicitud->idEstadoSolicitud = $_POST['idEstadoSolicitud'];
         $nuevaSolicitud->idTipoServicio = $_POST['idTipoServicio'];
         $nuevaSolicitud->idCliente = $_POST['cliente'];
