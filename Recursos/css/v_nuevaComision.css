@@ -2,3 +2,15 @@
     margin: 0 auto;
     width: 30rem;
 }
+.conteiner-id-venta{
+    position: relative;
+}
+.btn-call-modal {
+    position: absolute;
+    right: 3px;
+    bottom: 3px;
+    height: 2rem;
+    width: 9rem;
+    margin: 0;
+    padding: 2px 8px;
+}

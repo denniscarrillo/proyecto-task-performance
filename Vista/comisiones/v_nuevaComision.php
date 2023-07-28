@@ -1,7 +1,6 @@
 <?php
   require_once('validacionesComision.php');
 ?> 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -21,17 +20,17 @@
 <div class="conteiner">
   <div class="row gx-0">
     <div class="col-2">
-      <?php
-      $urlIndex = '../../index.php';
-      $urlGestion = '../usuario/gestionComision.php';
-      $urlTarea = '../../rendimiento/v_tarea.php';
-      $urlSolicitud = '../solicitud/gestionSolicitud.php';
-      $urlComision = '../comision/gestionComision.php';
-      $urlVenta = '../venta/gestionVenta.php';
-      $urlCliente ='./cliente/gestionCliente.php';
-      $urlCarteraCliente = './carteraCliente/gestionCarteraClientes.php';
-      require_once '../layout/sidebar.php';
-      ?>
+    <?php
+        $urlIndex = '../index.php';
+        $urlGestion = '../crud/usuario/gestionUsuario.php';
+        $urlTarea = '../rendimiento/v_tarea.php';
+        $urlSolicitud = '../crud/solicitud/gestionSolicitud.php';
+        $urlComision = 'v_comision.php';
+        $urlVenta = '../crud/venta/gestionVenta.php';
+        $urlCliente = '../crud/cliente/gestionCliente.php';
+        $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
+        require_once '../layout/sidebar.php';
+        ?>
     </div>
     <div class="col-10">
     </div>
@@ -43,25 +42,32 @@
                 <input type="date" class="form-control">
             </div>
             <div>
-                <label>Comision</label>
-                <input type="text" class="form-control">
+                <label>ID comision</label>
+                <input type="text" class="form-control"> 
             </div>
-            <div>
-                <label>Id de la venta</label>
+            <div class="conteiner-id-venta">
+                <label>ID venta</label>
                 <input type="text" class="form-control">
+                <button type="button" class="btn-call-modal btn btn-primary" data-bs-toggle="modal" data-bs-target="#filtroVenta">
+                  Seleccionar...
+                </button>
             </div>
             <div>
                 <label>Monto</label>
                 <input type="text" class="form-control">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nuevaComision">
-                Buscar
-                </button>
+                                
                 <!-- <button type="button" id="Buscar" class="btn btn-primary">Buscar</button> -->
             </div>
             <div>
                 <label>Porcentaje</label>
-                <input type="text" class="form-control">
+                <select name="porcentajeComision" class="form-control">
+                  <?php
+                  foreach($porcentajes as $porcentaje){
+                     echo '<option value="'.$porcentaje['idPorcentaje'].'">'.$porcentaje['porcentaje'].'</option>';   
+                  } 
+                 
+                  ?>
+                </select>
             </div>
             <div>
                 <label>Vendedores</label>
@@ -81,6 +87,8 @@
   require_once 'modalVentas.html';
   ?>
   <script src="../../Recursos/boostrap5/bootstrap.min.js"></script>
-  <script src="../../../Recursos/js/index.js"></script>
+  <script src="../../Recursos/jQuery-3.7.0.min.js"></script>
+  <script src="../../Recursos/js/index.js"></script>
+  <script src="../../Recursos/js/comision/validacionesComision.js"></script>
 </body>
 </html>

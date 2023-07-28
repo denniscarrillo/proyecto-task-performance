@@ -7,8 +7,8 @@
         public static function registroComision(){
             return Comision::registroNuevaComision();
         }
-        public static function obComision(){
-            return Comision:: obtenercomision();
+        public static function traerPorcentajesComision(){
+            return Comision::obtenerPorcentajesComision();
         }
 
 

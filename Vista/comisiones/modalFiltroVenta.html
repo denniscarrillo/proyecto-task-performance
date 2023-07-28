@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="nuevaComision" tabindex="-1" aria-labelledby="v_nuevaComision" aria-hidden="true">
+<div class="modal fade" id="filtroVenta" tabindex="-1" aria-labelledby="v_nuevaComision" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -10,21 +10,21 @@
         <!--  contenido interno del modal -->
         <form>
           <div>
-            <label>Fecha de inicio</label>
-            <input type="date" class="form-control">
+            <label>Desde</label>
+            <input type="date" class="form-control" id="fecha-desde" >
             <!-- <button type="button" id="Fechainicio" class="btn btn-primary">Buscar</button> -->
             <!-- <button type="button" id="Buscar" class="btn btn-primary">Buscar</button> -->
           </div>
           <br>
           <div>
-            <label>Fecha de final</label>
-            <input type="date" class="form-control">
+            <label>Hasta</label>
+            <input type="date" class="form-control" id="fecha-hasta">
             <!-- <button type="button" id="Fechafinal" class="btn btn-primary">Buscar</button> -->
             <!-- <button type="button" id="Buscar" class="btn btn-primary">Buscar</button> -->
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-primary">Filtrar ventas</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="btn-filtro">Filtrar ventas</button>
           </div>
         </form>
       </div>

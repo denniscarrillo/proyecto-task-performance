@@ -41,8 +41,11 @@ require_once("validacionesComision.php");
         <H1>Comisiones</H1>
         <div class="table-conteiner">
           <div>
-            <a href="#" class="btn_nuevoRegistro btn btn-primary" data-bs-toggle="modal" data-bs-target="#nuevaComision"><i class="fa-solid fa-circle-plus"></i> Generar comisión</a>
+            <a href="v_nuevaComision.php" class="btn_nuevoRegistro btn btn-primary"><i class="fa-solid fa-circle-plus"></i> Generar comisión</a>
           </div>
+          <!-- <div>
+            <a href="#" class="btn_nuevoRegistro btn btn-primary" data-bs-toggle="modal" data-bs-target="#nuevaComision"><i class="fa-solid fa-circle-plus"></i> Generar comisión</a>
+          </div> -->
           <table class="table" id="table-Comision">
             <thead>
               <tr>
@@ -67,12 +70,10 @@ require_once("validacionesComision.php");
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-  <script src="../../Recursos/js/dataTableComision.js" type="module"></script>
+  <script src="../../Recursos/js/comision/dataTableComision.js" type="module"></script>
   <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../Recursos/boostrap5/bootstrap.min.js"></script>
   <script src="../../Recursos/js/index.js"></script>
-  <!-- <script src="../../../Recursos/js/validacionesModalNuevoUsuario.js"  type="module"></script>
-<script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script> -->
 </body>
 
 </html>

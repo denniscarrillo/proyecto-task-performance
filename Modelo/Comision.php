@@ -53,19 +53,20 @@ class Comision
  
     }
 
-    public static function obtenerComision($obtenerVenta){
+    public static function obtenerPorcentajesComision(){
         $conn = new Conexion();
-        $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $listaVentas = $consulta->query("SELECT id_Venta FROM tbl_vista_venta ORDER BY id_Venta desc");
-        $venta = array();
-    
-        // Aquí falta recorrer los resultados y almacenarlos en el array $venta
-        while ($fila = $listaVentas->fetch_assoc()) {
-            $venta[] = $fila['id_Venta'];
+        $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $listaPorcentajes = $conexion->query("SELECT id_Porcentaje, valor_Porcentaje FROM tbl_porcentaje WHERE estado_Porcentaje = 'Activo'");
+        $porcentajes = array();
+        while ($fila = $listaPorcentajes->fetch_assoc()) {
+            $porcentajes[] = [
+            'idPorcentaje' => $fila['id_Porcentaje'],
+            'porcentaje' => $fila['valor_Porcentaje']
+            ];
         }
     
-        mysqli_close($consulta); #Cerramos la conexión.
-        return $venta;
+        mysqli_close($conexion); #Cerramos la conexión.
+        return $porcentajes;
     }
 }
 

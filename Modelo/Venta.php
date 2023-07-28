@@ -42,5 +42,29 @@ class Venta {
         mysqli_close($consulta); #Cerramos la conexión.
         return $ventas;
     }
+    public static function obtenerVentasPorFechas($fechaDesde, $fechaHasta){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $select = "SELECT v.id_Venta, v.fecha_Emision, c.nombre_Cliente, v.total_Descuento, v.subtotal_Venta, v.total_Venta, v.estado_Venta
+                    FROM tbl_vista_cliente AS c
+                    INNER JOIN tbl_vista_venta AS v ON c.id_Cliente = v. id_Cliente
+                    WHERE fecha_Emision BETWEEN $fechaDesde AND $fechaHasta";
+        $listaVentas =  $conexion->query($select);
+        $ventas = array();
+        //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
+        while($fila = $listaVentas->fetch_assoc()){
+            $ventas [] = [
+                'idventa' => $fila["id_Venta"],
+                'fechaEmision' => $fila["fecha_Emision"],
+                'nombreCliente'=> $fila["nombre_Cliente"],
+                'totalDescuento'=> $fila["total_Descuento"],
+                'subtotalVenta' => $fila["subtotal_Venta"],   
+                'totalVenta' => $fila["total_Venta"],   
+                'estadoVenta' => $fila["estado_Venta"]         
+            ];
+        }
+        mysqli_close($consulta); #Cerramos la conexión.
+        return $ventas;
+    }
 
 }#Fin de la clase
