@@ -40,12 +40,6 @@
             <span>Comisión</span>
           </a>
         </li>
-        <!-- <li class="item">
-          <a href="#" class="link flex">
-            <i class='bx bx-bar-chart-alt-2'></i>
-            <span>Rendimiento</span>
-          </a>
-        </li> -->
       </ul>
       <ul class="menu_item">
         <div class="menu_title flex">
@@ -83,11 +77,17 @@
           </a>
         </li>
         <li class="item">
-          <a href="#" class="link flex">
-            <i class="bx bx-cog"></i>
-            <span>Setting</span>
+          <a href="<?php echo$urlCrudComision; ?>" class="link flex">
+            <i class='bx bxs-user-badge'></i>
+            <span>Comisiones</span>
           </a>
         </li>
+        <!-- <li class="item">
+          <a href="" class="link flex">
+            <i class='bx bxs-user-badge'></i>
+            <span>Settings</span>
+          </a>
+        </li> -->
       </ul>
     </div>
   </div>

@@ -35,13 +35,14 @@ require_once("../../../Controlador/ControladorBitacora.php");
     <div class="columna1 col-2">
       <?php
       $urlIndex = '../../index.php';
-      $urlGestion = 'gestionUsuario.php';
+      $urlGestion = '../usuario/gestionUsuario.php';
       $urlTarea = '../../rendimiento/v_tarea.php';
       $urlSolicitud = '../solicitud/gestionSolicitud.php';
-      $urlComision = '../comision/gestionComision.php';
+      $urlComision = '../../comisiones/v_comision.php';
+      $urlCrudComision = '../comision/gestionComision.php';
       $urlVenta = '../venta/gestionVenta.php';
-      $urlCliente = './cliente/gestionCliente.php';
-      $urlCarteraCliente = './carteraCliente/gestionCarteraClientes.php';
+      $urlCliente = '../cliente/gestionCliente.php';
+      $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
       require_once '../../layout/sidebar.php';
       ?>
     </div>

@@ -51,7 +51,8 @@ session_start(); //Reanudamos la sesion
         $urlGestion = '../usuario/gestionUsuario.php';
         $urlTarea = '../../rendimiento/v_tarea.php';
         $urlSolicitud = '../solicitud/gestionSolicitud.php';
-        $urlComision = '../comision/gestionComision.php';
+        $urlComision = '../../comisiones/v_comision.php';
+        $urlCrudComision = '../comision/gestionComision.php';
         $urlVenta = '../venta/gestionVenta.php';
         $urlCliente = 'gestionCliente.php';
         $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';

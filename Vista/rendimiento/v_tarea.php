@@ -24,7 +24,8 @@
           $urlGestion = '../crud/usuario/gestionUsuario.php';
           $urlTarea = 'v_tarea.php';
           $urlSolicitud = '../crud/solicitud/gestionSolicitud.php';
-          $urlComision = '../crud/comision/gestionComision.php';
+          $urlComision = '../comisiones/v_comision.php';
+          $urlCrudComision = '../crud/comision/gestionComision.php';
           $urlVenta = '../crud/venta/gestionVenta.php';
           $urlCliente = '../crud/cliente/gestionCliente.php';
           $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';

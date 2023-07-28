@@ -44,10 +44,11 @@ if (isset($_SESSION['usuario'])) {
         $urlGestion = './crud/usuario/gestionUsuario.php';
         $urlTarea = './rendimiento/v_tarea.php';
         $urlSolicitud = './crud/solicitud/gestionSolicitud.php';
-        $urlComision = './crud/comision/gestionComision.php';
+        $urlComision = './comisiones/v_comision.php';
         $urlVenta = './crud/venta/gestionVenta.php';
         $urlCliente ='./crud/cliente/gestionCliente.php';
         $urlCarteraCliente = './crud/carteraCliente/gestionCarteraClientes.php';
+        $urlCrudComision = './crud/comision/gestionComision.php';
         require_once 'layout/sidebar.php';
         ?>
       </div>
