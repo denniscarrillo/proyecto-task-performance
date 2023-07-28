@@ -153,7 +153,6 @@ let guardarTarea = ($btnGuardar, $tarea, $actualizarTarea, $elementoPadre, $elem
         datatype: "JSON",
         data: objTarea,
         success: function () {
-
         }
       });
       /*
