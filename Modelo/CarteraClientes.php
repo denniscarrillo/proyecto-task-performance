@@ -69,17 +69,17 @@ class CarteraClientes{
 
 
 
-    // public static function eliminarCliente($nombre){
-    //     $conn = new Conexion();
-    //     $conexion = $conn->abrirConexionDB();
-    //     $consultaId= $conexion->query("SELECT id_CarteraCliente FROM tbl_CarteraCliente WHERE nombre_Cliente = '$nombre'");
-    //     $fila = $consultaIdCliente->fetch_assoc();
-    //     $idcarteraCliente = $fila['id_CarteraCliente'];
-    //     //Eliminamos el cliente
-    //     $estadoEliminado = $conexion->query("DELETE FROM tbl_CarteraCliente WHERE id_CarteraCliente = $idcarteraCliente;");
-    //     mysqli_close($conexion); #Cerramos la conexión.
-    //     return $estadoEliminado;
-    // }
+     public static function eliminarCliente($nombre){
+         $conn = new Conexion();
+         $conexion = $conn->abrirConexionDB();
+         $consultaId= $conexion->query("SELECT id_CarteraCliente FROM tbl_CarteraCliente WHERE nombre_Cliente = '$nombre'");
+         $fila = $consultaId->fetch_assoc();
+         $idcarteraCliente = $fila['id_CarteraCliente'];
+         //Eliminamos el cliente
+         $estadoEliminado = $conexion->query("DELETE FROM tbl_CarteraCliente WHERE id_CarteraCliente = $idcarteraCliente;");
+         mysqli_close($conexion); #Cerramos la conexión.
+         return $estadoEliminado;
+     }
 
     
 

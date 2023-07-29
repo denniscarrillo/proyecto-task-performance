@@ -9,7 +9,7 @@
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1862/1862358.png">
-  <link rel="stylesheet" href="../../Recursos/boostrap5/bootstrap.min.css">
+  <link rel="stylesheet" href="../../Recursos/bootstrap5/bootstrap.min.css">
   <link rel="stylesheet" href="../../Recursos/css/layout/sidebar.css">
   <link rel="stylesheet" href="../../Recursos/css/tarea.css">
   <link rel="stylesheet" href="../../Recursos/css/modalEditarTarea.css">
@@ -90,7 +90,7 @@
   require('modalEditarTarea.html');
   ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-  <script src="../../Recursos/boostrap5/bootstrap.min.js "></script>
+  <script src="../../Recursos/bootstrap5/bootstrap.min.js "></script>
   <script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../Recursos/js/index.js"></script>
   <script src="../../Recursos/js/rendimiento/tarea.js"></script>
