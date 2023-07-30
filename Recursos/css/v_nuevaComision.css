@@ -40,18 +40,6 @@
 .col-height{
     height: 100vh;
 }
-/* .dataTables_info{
-    margin-top: 0.3rem;
-}
-.pagination{
-    margin: 0 auto;
-    justify-content: end;
-}
-label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-} */
 .fa-solid-icon{
     font-size: 25px;
     transition: color 0.1s ease 0.1s;
@@ -78,9 +66,12 @@ button:focus{
 }
 .title-form{
     text-align: center;
-    /* background-color: #383839fa; */
     color: #4b4949;
     border-radius: 0.2rem;
     box-shadow: 0px 2px 2px 2px #d2d0cfb6;
     padding: 0.3rem;
+}
+#table-ventas td{
+    min-width: 7rem;
+    max-width: 8rem;
 }

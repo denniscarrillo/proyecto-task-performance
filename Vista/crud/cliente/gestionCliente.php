@@ -66,11 +66,10 @@ session_start(); //Reanudamos la sesion
             <thead>
               <tr>
                 <th scope="col"> ID </th>
-                <th scope="col"> NOMBRE </th>
-                <th scope="col"> RTN </th>
+                <th scope="col"> CLIENTE </th>
+                <th scope="col"> RTN/DNI </th>
                 <th scope="col"> TELEFONO </th>
-                <th scope="col"> CORREO </th>
-                <th scope="col"> TIPO CLIENTE </th>
+                <th scope="col"> DIRECCION </th>
               </tr>
             </thead>
             <tbody class="table-group-divider">

@@ -37,12 +37,12 @@ require_once('validacionesComision.php');
           <h1 class="title-form">Comisión</h1>
           <div class="form-element">
             <label>Fecha de ingreso</label>
-            <input type="date" class="form-control">
+            <input type="date"  class="form-control" id="fecha-comision">
           </div>
-          <div class="form-element">
+          <!-- <div class="form-element">
             <label>ID comision</label>
             <input type="text" class="form-control">
-          </div>
+          </div> -->
           <div class="conteiner-id-venta form-element"">
             <label>ID venta</label>
             <input type="text" class="form-control" id="id-venta">
@@ -52,7 +52,7 @@ require_once('validacionesComision.php');
           </div>
           <div class="form-element">
             <label>Monto</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" id="monto-total">
           </div>
           <div class="form-element">
             <label>Porcentaje</label>

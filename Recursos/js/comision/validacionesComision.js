@@ -1,6 +1,17 @@
 let $btnFiltrar = document.getElementById('btn-filtro');
 let $btnCerrarModalVentas = document.getElementById('btn-close-modal-ventas');
 let $tablaVentas = '';
+
+$(document).ready(function () {
+  let  now = new Date().toISOString().split('T')[0];
+  document.getElementById('fecha-comision').setAttribute('value', now);
+  document.getElementById('fecha-comision').setAttribute('disabled', 'true');
+  document.getElementById('id-venta').setAttribute('disabled', 'true');
+  document.getElementById('monto-total').setAttribute('disabled', 'true');
+});
+
+
+
 $btnFiltrar.addEventListener('click', function () {
   let $fechaDesde = document.getElementById('fecha-desde');
   let $fechaHasta = document.getElementById('fecha-hasta');
@@ -29,15 +40,15 @@ let iniciarDataTable = function (fechaDesde, fechaHasta) {
     language: {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
     },
-    // data: objVentas,
     columns: [
-      { data: 'idventa' },
+      { data: 'numFactura' },
       { data: 'fechaEmision' },
+      { data: 'codCliente' },
       { data: 'nombreCliente' },
-      { data: 'subTotalVenta' },
-      { data: 'totalDescuento' },
+      { data: 'rtnCliente' },
+      { data: 'totalBruto' },
+      { data: 'totalImpuesto' },
       { data: 'totalVenta' },
-      { data: 'estadoVenta' },
       {
         defaultContent:
           '<button class="btns btn" id="btn_seleccionar"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>'
@@ -47,25 +58,12 @@ let iniciarDataTable = function (fechaDesde, fechaHasta) {
   $('#modalfiltroVenta').modal('hide');
   $('#modalVentas').modal('show');
 
-  $(document).on("click", "#btn_seleccionar", function() {
+  $(document).on("click", "#btn_seleccionar", function () {
     let fila = $(this).closest("tr");
-    let idVenta = fila.find('td:eq(0)').text()//capturo el ID	
+    let idVenta = fila.find('td:eq(0)').text();//captura el ID DE LA FACTURA	
+    let montoVenta = fila.find('td:eq(7)').text(); //captura el MONTO TOTAL DE LA FACTURA
     document.getElementById('id-venta').value = idVenta;
-    console.log(idVenta);
+    document.getElementById('monto-total').value = montoVenta;
     $('#modalVentas').modal('hide');
   });
-
-  
-  // let $btnID = document.getElementById('btn_seleccionar');
-  // obtenerIdVenta($btnID);
 }
-
-// let obtenerIdVenta = function () {
-//   $('#btn_seleccionar').click(function () {
-//     let fila = $(this).closest("tr");
-//     let idVenta = fila.find('td:eq(0)').text()//capturo el ID	
-//     document.getElementById('id-venta').value = idVenta;
-//     console.log(idVenta);
-//     $('#modalVentas').modal('hide');
-//   });
-// }
