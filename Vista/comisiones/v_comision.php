@@ -12,7 +12,7 @@ require_once("validacionesComision.php");
   <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
   <!-- Boostrap5 -->
-  <link href='../../../Recursos/boostrap5/bootstrap.min.css' rel='stylesheet'>
+  <link href='../../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
@@ -72,7 +72,7 @@ require_once("validacionesComision.php");
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script src="../../Recursos/js/comision/dataTableComision.js" type="module"></script>
   <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-  <script src="../../Recursos/boostrap5/bootstrap.min.js"></script>
+  <script src="../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../Recursos/js/index.js"></script>
 </body>
 

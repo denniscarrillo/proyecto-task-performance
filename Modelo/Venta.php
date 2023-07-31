@@ -1,42 +1,35 @@
 <?php
 class Venta {
-    public $idVenta;
-    public $fehaEmision;
-    public $idCliente;
-    public $idUsuario;
-    public $totalDescuento;
-    public $subtotal;
-    public $importeExonerado;
-    public $importeExcento;
-    public $isv;
-    public $totalImpuesto;
-    public $totalVenta;
-    public $estadoVenta;
+    public $numFactura;
+    public $CodCliente;
+    public $NombreCliente;
+    public $Cif;
+    public $Fecha;
+    public $TotalBruto;
+    public $TotalImpuesto;
+    public $TotalNeto;
     
   //Método para obtener todas las ventas que existen.
     public static function obtenertodaslasventas(){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $listaVentas = 
-            $consulta->query("SELECT v.id_Venta, v.fecha_Emision,c.nombre_cliente,u.nombre_Usuario,v.total_Descuento,
-            v.subtotal_Venta,v.total_Impuesto,v.total_Venta,v.estado_Venta 
-                FROM tbl_vista_venta AS v
-                INNER JOIN tbl_vista_cliente AS c ON v.id_Cliente = c.id_Cliente
-                INNER JOIN tbl_ms_usuario AS u ON v.id_Usuario = u.id_Usuario;
-                ");
+            $consulta->query("SELECT v.NUMFACTURA, v.CODCLIENTE, c.NOMBRECLIENTE, c.CIF, v.FECHA, v.TOTALBRUTO, v.TOTALIMPUESTO, v.TOTALNETO
+            FROM view_clientes AS c
+            INNER JOIN View_facturasventa AS v ON c.CODCLIENTE = v.CODCLIENTE;
+            ");
         $ventas = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
         while($fila = $listaVentas->fetch_assoc()){
             $ventas [] = [
-                'idventa' => $fila["id_Venta"],
-                'fechaEmision' => $fila["fecha_Emision"],
-                'nombreCliente'=> $fila["nombre_cliente"],
-                'nombreUsuario' => $fila["nombre_Usuario"],
-                'totalDescuento'=> $fila["total_Descuento"],
-                'subtotalVenta' => $fila["subtotal_Venta"],
-                'totalImpuesto' => $fila["total_Impuesto"],     
-                'totalVenta' => $fila["total_Venta"],   
-                'estadoVenta' => $fila["estado_Venta"]         
+                'NumFactura' => $fila["NUMFACUTURA"],
+                'CodCliente' => $fila["CODCLIENTE"],
+                'NombreCliente'=> $fila["NOMBRECLIENTE"],
+                'rtnCliente' => $fila["CIF"],
+                'fechaEmision'=> $fila["FECHA"],
+                'totalBruto' => $fila["TOTALBRUTO"],
+                'totalImpuesto' => $fila["TOTALIMPUESTO"],     
+                'totalVenta' => $fila["TOTALNETO"]    
             ];
         }
         mysqli_close($consulta); #Cerramos la conexión.
@@ -45,25 +38,26 @@ class Venta {
     public static function obtenerVentasPorFechas($fechaDesde, $fechaHasta){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $select = "SELECT v.id_Venta, v.fecha_Emision, c.nombre_Cliente, v.total_Descuento, v.subtotal_Venta, v.total_Venta, v.estado_Venta
-                    FROM tbl_vista_cliente AS c
-                    INNER JOIN tbl_vista_venta AS v ON c.id_Cliente = v. id_Cliente
-                    WHERE fecha_Emision BETWEEN $fechaDesde AND $fechaHasta";
+        $select = "SELECT v.NUMFACTURA, v.CODCLIENTE, c.NOMBRECLIENTE, c.CIF, v.FECHA, v.TOTALBRUTO, v.TOTALIMPUESTO, v.TOTALNETO
+                    FROM view_clientes AS c
+                    INNER JOIN View_facturasventa AS v ON c.CODCLIENTE = v.CODCLIENTE
+                    WHERE v.FECHA BETWEEN '$fechaDesde' AND '$fechaHasta';";
         $listaVentas =  $conexion->query($select);
         $ventas = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
         while($fila = $listaVentas->fetch_assoc()){
             $ventas [] = [
-                'idventa' => $fila["id_Venta"],
-                'fechaEmision' => $fila["fecha_Emision"],
-                'nombreCliente'=> $fila["nombre_Cliente"],
-                'totalDescuento'=> $fila["total_Descuento"],
-                'subtotalVenta' => $fila["subtotal_Venta"],   
-                'totalVenta' => $fila["total_Venta"],   
-                'estadoVenta' => $fila["estado_Venta"]         
+                'numFactura' => $fila["NUMFACTURA"],
+                'codCliente'=> $fila["CODCLIENTE"],
+                'nombreCliente'=> $fila["NOMBRECLIENTE"],
+                'rtnCliente'=> $fila["CIF"],
+                'fechaEmision' => $fila["FECHA"],
+                'totalBruto'=> $fila["TOTALBRUTO"],
+                'totalImpuesto' => $fila["TOTALIMPUESTO"],   
+                'totalVenta' => $fila["TOTALNETO"]       
             ];
         }
-        mysqli_close($consulta); #Cerramos la conexión.
+        mysqli_close($conexion); #Cerramos la conexión.
         return $ventas;
     }
 

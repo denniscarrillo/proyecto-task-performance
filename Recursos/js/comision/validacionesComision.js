@@ -1,55 +1,69 @@
 let $btnFiltrar = document.getElementById('btn-filtro');
-let tablaVentas = null;
-$btnFiltrar.addEventListener('click', function(){
-    let $fechaDesde = document.getElementById('fecha-desde');
-    let $fechaHasta = document.getElementById('fecha-hasta');
-    enviarFechas($fechaDesde.value, $fechaHasta.value);
-    // console.log('Desde: '+$fechaDesde.value+' Hasta: '+$fechaHasta.value);
+let $btnCerrarModalVentas = document.getElementById('btn-close-modal-ventas');
+let $tablaVentas = '';
+
+$(document).ready(function () {
+  let  now = new Date().toISOString().split('T')[0];
+  document.getElementById('fecha-comision').setAttribute('value', now);
+  document.getElementById('fecha-comision').setAttribute('disabled', 'true');
+  document.getElementById('id-venta').setAttribute('disabled', 'true');
+  document.getElementById('monto-total').setAttribute('disabled', 'true');
 });
 
-let enviarFechas = function(fechaDesde, fechaHasta){
-    let fechas = {
+
+
+$btnFiltrar.addEventListener('click', function () {
+  let $fechaDesde = document.getElementById('fecha-desde');
+  let $fechaHasta = document.getElementById('fecha-hasta');
+  iniciarDataTable($fechaDesde.value, $fechaHasta.value);
+  $btnCerrarModalVentas.addEventListener('click', function () {
+    $tablaVentas.rows().remove().draw();
+  });
+});
+//Iniciar dataTable y carga las ventas filtradas segun el rango de fechas
+let iniciarDataTable = function (fechaDesde, fechaHasta) {
+  if (document.querySelector('.dataTables_info') !== null) {
+    $tablaVentas.destroy();
+  }
+  //DataTable
+  $tablaVentas = $('#table-ventas').DataTable({
+    ajax: {
+      url: "../../../Vista/comisiones/obtenerVentasFiltradas.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {
         fecha_Desde: fechaDesde,
         fecha_Hasta: fechaHasta
-    }
-    tablaVentas = $('#table-ventas').DataTable({
-        "ajax": {
-          "url": "../../../Vista/comisiones/obtenerVentasFiltradas.php",
-          "dataSrc": ""
-        },
-        "language":{
-          "url":"//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
-        },
-        "columns": [
-          { "data": "idventa"},
-          { "data": "'fechaEmision" },
-          { "data": "nombreCliente" },
-          { "data": "subtotalVenta" },
-          { "data": "totalDescuento" },
-          { "data": "totalVenta" },
-          { "data": "estadoVenta"},
-          {"defaultContent":
-              '<div><button class="btns btn" id="btn_ver"><i class="fa-solid fa-eye"></i></button></div>'
-          }
-        ]
-      });
-      $('#modalVentas').modal('show');
+      },
+      dataSrc: ""
+    },
+    language: {
+      url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+    },
+    columns: [
+      { data: 'numFactura' },
+      { data: 'fechaEmision' },
+      { data: 'codCliente' },
+      { data: 'nombreCliente' },
+      { data: 'rtnCliente' },
+      { data: 'totalBruto' },
+      { data: 'totalImpuesto' },
+      { data: 'totalVenta' },
+      {
+        defaultContent:
+          '<button class="btns btn" id="btn_seleccionar"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>'
+      }
+    ]
+  });
+  $('#modalfiltroVenta').modal('hide');
+  $('#modalVentas').modal('show');
 
-    // $.ajax({
-    //     url: "../../../Vista/comisiones/obtenerVentasFiltradas.php",
-    //     type: "POST",
-    //     datatype: "JSON",
-    //     data: fechas,
-    //     success: function(data) {
-    //         let objVentas = JSON.parse(data);
-
-    //         // 'idventa' => $fila["id_Venta"],
-    //         // 'fechaEmision' => $fila["fecha_Emision"],
-    //         // 'nombreCliente'=> $fila["nombre_Cliente"],
-    //         // 'totalDescuento'=> $fila["total_Descuento"],
-    //         // 'subtotalVenta' => $fila["subtotal_Venta"],   
-    //         // 'totalVenta' => $fila["total_Venta"],   
-    //         // 'estadoVenta' => $fila["estado_Venta"]  
-    //     }
-    // });
+  $(document).on("click", "#btn_seleccionar", function () {
+    let fila = $(this).closest("tr");
+    let idVenta = fila.find('td:eq(0)').text();//captura el ID DE LA FACTURA	
+    let montoVenta = fila.find('td:eq(7)').text(); //captura el MONTO TOTAL DE LA FACTURA
+    document.getElementById('id-venta').value = idVenta;
+    document.getElementById('monto-total').value = montoVenta;
+    $('#modalVentas').modal('hide');
+  });
 }

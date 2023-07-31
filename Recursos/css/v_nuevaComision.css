@@ -1,6 +1,12 @@
 .form-conteiner {
     margin: 0 auto;
+    margin-top: 3rem;
     width: 30rem;
+    height: fit-content;
+    background-color: #eef0f126;
+    padding: 2rem;
+    border-radius: 0.7rem;
+    box-shadow: 0px 10px 15px 2px #a5a4a3b6 ;
 }
 .conteiner-id-venta{
     position: relative;
@@ -13,4 +19,59 @@
     width: 9rem;
     margin: 0;
     padding: 2px 8px;
+}
+.modal-active{
+    --bs-modal-width: fit-content;
+}
+/* .modal-ventas{
+
+} */
+#table-ventas_wrapper .row{
+    min-height: -moz-fit-content;
+    min-height: fit-content;
+    align-content: space-between;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.row-conteiner{
+    margin: 0;
+    min-height: 100vh;
+}
+.col-height{
+    height: 100vh;
+}
+.fa-solid-icon{
+    font-size: 25px;
+    transition: color 0.1s ease 0.1s;
+}
+.fa-solid-icon:hover{
+    color: #1289d8;
+}
+button:focus{
+    border: none;
+}
+.form-element{
+    margin-bottom: 1rem;
+}
+.form-element-btns{
+    text-align: center;
+    margin-top: 2rem;
+}
+.conteiner-vendedores{
+    min-height: 3rem;
+    width: inherit;
+    height: fit-content;
+    border-radius: 0.2rem;
+    background-color: #ebf1f6b1;
+}
+.title-form{
+    text-align: center;
+    color: #4b4949;
+    border-radius: 0.2rem;
+    box-shadow: 0px 2px 2px 2px #d2d0cfb6;
+    padding: 0.3rem;
+}
+#table-ventas td{
+    min-width: 7rem;
+    max-width: 8rem;
 }

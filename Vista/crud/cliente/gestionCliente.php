@@ -32,7 +32,7 @@ session_start(); //Reanudamos la sesion
   <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
   <!-- Boostrap5 -->
-  <link href='../../../Recursos/boostrap5/bootstrap.min.css' rel='stylesheet'>
+  <link href='../../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
@@ -66,11 +66,10 @@ session_start(); //Reanudamos la sesion
             <thead>
               <tr>
                 <th scope="col"> ID </th>
-                <th scope="col"> NOMBRE </th>
-                <th scope="col"> RTN </th>
+                <th scope="col"> CLIENTE </th>
+                <th scope="col"> RTN/DNI </th>
                 <th scope="col"> TELEFONO </th>
-                <th scope="col"> CORREO </th>
-                <th scope="col"> TIPO CLIENTE </th>
+                <th scope="col"> DIRECCION </th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -80,20 +79,15 @@ session_start(); //Reanudamos la sesion
       </div>
     </div>
   </div>
-  <?php
-  // require('modalNuevoCliente.html');
-  //require('modalEditarUsuario.html');
-  ?>
+ 
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script src="../../../Recursos/js/VistaClientes/dataTable.js" type="module"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-  <script src="../../../Recursos/boostrap5/bootstrap.min.js"></script>
+  <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
-  <!--<script src="../../../Recursos/js/validacionesModalNuevoUsuario.js"  type="module"></script>-->
-  <!--<script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script>-->
 </body>
 
 </html>
