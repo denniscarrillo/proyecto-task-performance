@@ -72,6 +72,9 @@ session_start(); //Reanudamos la sesion
                 <th scope="col"> DIRECCION </th>
               </tr>
             </thead>
+            <div class ="text-left mb-2">
+            <a href="../../fpdf/ReporteClientes.php" target="_blank" class="btn btn-success" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
+            </div>
             <tbody class="table-group-divider">
             </tbody>
           </table>
