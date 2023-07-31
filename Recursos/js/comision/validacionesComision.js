@@ -9,9 +9,6 @@ $(document).ready(function () {
   document.getElementById('id-venta').setAttribute('disabled', 'true');
   document.getElementById('monto-total').setAttribute('disabled', 'true');
 });
-
-
-
 $btnFiltrar.addEventListener('click', function () {
   let $fechaDesde = document.getElementById('fecha-desde');
   let $fechaHasta = document.getElementById('fecha-hasta');

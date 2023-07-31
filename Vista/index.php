@@ -27,16 +27,17 @@ if (isset($_SESSION['usuario'])) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1862/1862358.png">
-  <link href='../Recursos/boostrap5/bootstrap.min.css' rel='stylesheet'>
+  <link href='../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <link href='../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+  <link href='../Recursos/css/index.css' rel='stylesheet'>
   <title>Dashboard</title>
 </head>
 
 <body>
   <div class="conteiner">
-    <div class="row gx-0">
+    <div class="row gx-0 row-conteiner">
       <!-- Menu lateral principal -->
       <div class="sb-conteiner col-2">
         <?php
@@ -46,19 +47,25 @@ if (isset($_SESSION['usuario'])) {
         $urlSolicitud = './crud/solicitud/gestionSolicitud.php';
         $urlComision = './comisiones/v_comision.php';
         $urlVenta = './crud/venta/gestionVenta.php';
-        $urlCliente ='./crud/cliente/gestionCliente.php';
+        $urlCliente = './crud/cliente/gestionCliente.php';
         $urlCarteraCliente = './crud/carteraCliente/gestionCarteraClientes.php';
         $urlCrudComision = './crud/comision/gestionComision.php';
         require_once 'layout/sidebar.php';
         ?>
       </div>
       <div class="content col-10">
-        <div class="cards">
+        <div class="cards-conteiner">
+          <a href="./crud/comision/gestionComision.php" class="link-cards">Comision</a>
+          <a href="" class="link-cards">Daniela</a>
+          <a href="" class="link-cards">Daniela</a>
+          <a href="" class="link-cards">Daniela</a>
+          <a href="" class="link-cards">Daniela</a>
         </div>
       </div>
     </div>
   </div>
-  <script src="../Recursos/boostrap5/bootstrap.min.js"></script>
+  <script src="../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../Recursos/js/index.js"></script>
 </body>
+
 </html>
