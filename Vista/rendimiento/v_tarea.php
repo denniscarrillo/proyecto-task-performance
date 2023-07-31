@@ -66,7 +66,7 @@
               <p class="circle-count" id="circle-count-cotizaciones"></p>
             </div>
             <button type="button" class="btn_nuevaTarea btn btn-primary" id= "btn-NuevaCotizacion">+ Nueva Cotizacion</button>
-            <div class="container_tarea" id="conteiner-cotizacion" >
+            <div class="container_tarea" id="conteiner-cotizacion">
               <!-- Aqui van las tareas leads -->
             </div>
             <!-- <button>+ Nueva Tarea</button> -->

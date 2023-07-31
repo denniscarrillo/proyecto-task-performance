@@ -7,4 +7,7 @@ class ControladorTarea {
     public static function insertarNuevaTarea($tarea){
         Tarea::nuevaTarea($tarea); 
     }
+    public static function obtenerestadoClienteTarea($rtnCliente){
+        return Tarea::obtenerestadoClienteTarea($rtnCliente); 
+    }
 }

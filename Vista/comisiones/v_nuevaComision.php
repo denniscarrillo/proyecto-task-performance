@@ -3,6 +3,7 @@ require_once('validacionesComision.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,7 @@ require_once('validacionesComision.php');
   <link href="../../Recursos/css/v_nuevaComision.css" rel="stylesheet">
   <link href='../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
 </head>
+
 <body>
   <div class="conteiner">
     <div class="row gx-0 row-conteiner">
@@ -34,18 +36,23 @@ require_once('validacionesComision.php');
       </div>
       <div class="col-10 form-conteiner">
         <form>
-          <h1 class="title-form">Comisión</h1>
+          <div class="title-form">
+            <div class="img-content">
+              <img class="img" src="https://cdn-icons-png.flaticon.com/512/2953/2953536.png" height="50px">
+            </div>
+            <h2 class="text-title-form">Nueva comisión</h2>
+          </div>
           <div class="form-element">
             <label>Fecha de ingreso</label>
-            <input type="date"  class="form-control" id="fecha-comision">
+            <input type="date" class="form-control" id="fecha-comision">
           </div>
           <!-- <div class="form-element">
             <label>ID comision</label>
             <input type="text" class="form-control">
           </div> -->
           <div class="conteiner-id-venta form-element"">
-            <label>ID venta</label>
-            <input type="text" class="form-control" id="id-venta">
+            <label>Venta N°</label>
+            <input type=" text" class="form-control" id="id-venta">
             <button type="button" class="btn-call-modal btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalfiltroVenta">
               Seleccionar...
             </button>
@@ -56,6 +63,7 @@ require_once('validacionesComision.php');
           </div>
           <div class="form-element">
             <label>Porcentaje</label>
+            <label id="mensaje-tipo-cliente"></label>
             <select name="porcentajeComision" class="form-control">
               <?php
               foreach ($porcentajes as $porcentaje) {
@@ -89,4 +97,5 @@ require_once('validacionesComision.php');
   <script src="../../Recursos/js/comision/validacionesComision.js"></script>
   <script src="../../Recursos/js/index.js"></script>
 </body>
+
 </html>

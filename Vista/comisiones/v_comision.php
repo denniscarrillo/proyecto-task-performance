@@ -3,7 +3,6 @@ require_once("validacionesComision.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -50,7 +49,8 @@ require_once("validacionesComision.php");
             <thead>
               <tr>
                 <th scope="col"> ID COMISION </th>
-                <th scope="col"> VENTA </th>
+                <th scope="col"> FACTURA </th>
+                <th scope="col"> TOTAL VENTA </th>
                 <th scope="col"> PORCENTAJE </th>
                 <th scope="col"> COMISION TOTAL </th>
                 <th scope="col"> ACCIONES </th>
