@@ -17,7 +17,7 @@ class Cliente {
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
         while($fila = $listaClientes->fetch_assoc()){
             $clientes [] = [
-                'codCliente' => $fila["id_Cliente"],
+                'codCliente' => $fila["CODCLIENTE"],
                 'nombreCliente'=> $fila["NOMBRECLIENTE"],
                 'rtnCliente'=> $fila["CIF"],
                 'telefono'=> $fila["TELEFONO1"],
