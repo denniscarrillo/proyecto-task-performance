@@ -27,10 +27,13 @@ if (isset($_SESSION['usuario'])) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1862/1862358.png">
+    <!-- Boostrap5 -->
   <link href='../Recursos/boostrap5/bootstrap.min.css' rel='stylesheet'>
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <link href='../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+<!--   para el index.css
+ -->  <link href='../Recursos/css/index.css' rel='stylesheet'>
   <title>Dashboard</title>
 </head>
 
@@ -50,14 +53,52 @@ if (isset($_SESSION['usuario'])) {
         $urlCarteraCliente = './crud/carteraCliente/gestionCarteraClientes.php';
         $urlCrudComision = './crud/comision/gestionComision.php';
         require_once 'layout/sidebar.php';
+        
         ?>
       </div>
+
       <div class="content col-10">
-        <div class="cards">
-        </div>
+              <?php
+              require_once 'layout/navbar.php';
+              ?>
+
+                        <!-- Page Heading -->
+                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                         <h1 class="h1 mb-0 text-gray-800">Bienvenido usuario.</h1>  
+                         </div>
+                            <div>
+                              <a href="/Vista/crud/venta/gestionVenta.php" class="btn_Venta btn btn-primary"><i class="bi bi-receipt"></i> Ventas...</a>
+                            </div>
+                            <br>
+
+                            <div>
+                              <a href="" class="btn_Rendimiento btn btn-primary"><i class="bi bi-clipboard-data-fill"></i> Rendimiento...</a>
+                            </div>
+                            <br>
+
+                            <div>
+                              <a href="/Vista/comisiones/v_comision.php" class="btn_Comisiones btn btn-primary"><i class="bi bi-currency-dollar"></i> Comisiones...</a>
+                            </div>
+                            <br>
+                            
+                            <div>
+                              <a href="/Vista/crud/cliente/gestionCliente.php" class="btn_Clientes btn btn-primary"><i class="bi bi-files-alt"></i> Clientes...</a>
+                            </div>
+                            <br>
+                            <div>
+                              <a href="" class="btn_Mantenimiento btn btn-primary"><i class="fa-solid fa-helicopter"></i> Mantenimiento...</a>
+                            </div>
+                       </div>           
+         </div>
+       </div>
       </div>
-    </div>
   </div>
+</div> 
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="../Recursos/boostrap5/bootstrap.min.js"></script>
   <script src="../Recursos/js/index.js"></script>
 </body>

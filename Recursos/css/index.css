@@ -1,0 +1,81 @@
+.btn_Venta {
+    background-color: #fa2c2c; /* Cambiar a tu color deseado */
+    max-width: 300px;
+    width: 100%;
+    border: 1px solid #aaa;
+    outline: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-size: 25px; /* Ajusta el tamaño de fuente según tu preferencia */
+    padding: 50px 32px; /* Ajusta el padding según tu preferencia (arriba/abajo, izquierda/derecha) */
+    margin-left: 10px;
+    position: absolute;
+    bottom: 25rem;
+    left: 17%;
+   /*  right:30%; */
+  }
+  
+  .btn_Rendimiento {
+    background-color: #fa2c2c; /* Cambiar a tu color deseado */
+    max-width: 300px;
+    width: 100%;
+    border: 1px solid #aaa;
+    outline: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-size: 25px; /* Ajusta el tamaño de fuente según tu preferencia */
+    padding: 50px 32px; /* Ajusta el padding según tu preferencia (arriba/abajo, izquierda/derecha) */
+    margin-left: 10px;
+    position: absolute;
+    bottom: 25rem;
+    left: 40%;
+  }
+  
+  .btn_Comisiones {
+    background-color: #fa2c2c; /* Cambiar a tu color deseado */
+    max-width: 300px;
+    width: 100%;
+    border: 1px solid #aaa;
+    outline: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-size: 25px; /* Ajusta el tamaño de fuente según tu preferencia */
+    padding: 50px 32px; /* Ajusta el padding según tu preferencia (arriba/abajo, izquierda/derecha) */
+    margin-left: 10px;
+    position: absolute;
+    bottom: 25rem;
+    left: 63%;
+  }
+  
+  .btn_Clientes {
+    background-color: #fa2c2c; /* Cambiar a tu color deseado */
+    max-width: 300px;
+    width: 100%;
+    border: 1px solid #aaa;
+    outline: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-size: 25px; /* Ajusta el tamaño de fuente según tu preferencia */
+    padding: 50px 32px; /* Ajusta el padding según tu preferencia (arriba/abajo, izquierda/derecha) */
+    margin-left: 10px;
+    position: absolute;
+    bottom: 15.5rem;
+    left: 40%;
+  }
+  
+  .btn_Mantenimiento {
+    background-color: #fa2c2c; /* Cambiar a tu color deseado */
+    max-width: 300px;
+    width: 100%;
+    border: 1px solid #aaa;
+    outline: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-size: 25px; /* Ajusta el tamaño de fuente según tu preferencia */
+    padding: 50px 32px; /* Ajusta el padding según tu preferencia (arriba/abajo, izquierda/derecha) */
+    margin-left: 10px;
+    position: absolute;
+    bottom: 15.5rem;
+    left: 17%;
+  }
+  

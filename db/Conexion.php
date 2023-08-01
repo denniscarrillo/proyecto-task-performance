@@ -4,7 +4,7 @@
     private $hostName = 'localhost';
     private $dbName = 'COCINAS_Y_EQUIPOS';
     private $userName = 'root';
-    private $password = 'Reyesalvares10@';
+    private $password = '';
     // private $password = 'Proyectxforce2023';
 
     #Abrir conexión al servidor de MySQL
