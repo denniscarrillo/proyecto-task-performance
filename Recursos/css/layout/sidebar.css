@@ -80,7 +80,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* margin-top: 40px; */
+  margin-top: 40px; 
   overflow-y: auto;
   height: calc(100% - 82px);
 }
@@ -168,7 +168,7 @@ body {
   color: #333;
 }
 
-/* Navbar */
+Navbar
 .navbar {
   max-width: 500px;
   width: 100%;
@@ -177,7 +177,7 @@ body {
   left: 60%;
   transform: translateX(-50%);
   background: #fff;
-  padding: 10px 20px;
+  padding: 1px 20px;
   border-radius: 0 0 8px 8px;
   justify-content: space-between;
 }
@@ -234,3 +234,4 @@ body {
     display: block;
   }
 }
+

@@ -38,9 +38,10 @@ require_once("validacionesComision.php");
       </div>
       <div class="columna2 col-10">
         <H1>Comisiones</H1>
-        <div class="table-conteiner">
+        <div class= "table-conteiner">
           <div>
             <a href="v_nuevaComision.php" class="btn_nuevoRegistro btn btn-primary"><i class="fa-solid fa-circle-plus"></i> Generar comisión</a>
+            <a href="" class="btn_nuevoRegistro btn btn-primary"><i class="fas fa-file-pdf"></i>Generar Reportes</a>
           </div>
           <!-- <div>
             <a href="#" class="btn_nuevoRegistro btn btn-primary" data-bs-toggle="modal" data-bs-target="#nuevaComision"><i class="fa-solid fa-circle-plus"></i> Generar comisión</a>
