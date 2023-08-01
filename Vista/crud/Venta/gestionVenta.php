@@ -1,7 +1,7 @@
 <?php
 require_once("../../../db/Conexion.php");
-require_once("../../../Modelo/Ventas.php");
-require_once("../../../Controlador/ControladorVentas.php");
+require_once("../../../Modelo/Venta.php");
+require_once("../../../Controlador/ControladorVenta.php");
 session_start(); //Reanudamos la sesion
 
 
@@ -32,7 +32,7 @@ session_start(); //Reanudamos la sesion
   <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
   <!-- Boostrap5 -->
-  <link href='../../../Recursos/boostrap5/bootstrap.min.css' rel='stylesheet'>
+  <link href='../../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
@@ -65,15 +65,15 @@ session_start(); //Reanudamos la sesion
           <table class="table" id="table-Ventas">
             <thead>
               <tr>
-                <th scope="col"> ID </th>
-                <th scope="col"> FECHA DE EMISION </th>
-                <th scope="col"> NOMBRE CLIENTE </th>
-                <th scope="col"> NOMBRE USUARIO </th>
-                <th scope="col"> TOTAL DESCUENTO </th>
-                <th scope="col"> SUBTOTAL </th>
-                <th scope="col"> TOTAL IMPUESTO </th>
-                <th scope="col"> TOTAL VENTA </th>
-                <th scope="col"> ESTADO VENTA </th>
+                <th scope="col"> N° </th>
+                <th scope="col"> FECHA </th>
+                <th scope="col"> COD_CLIENTE </th>
+                <th scope="col"> CLIENTE</th>
+                <th scope="col"> RTN/DNI</th>
+                <th scope="col"> TOTAL BRUTO </th>
+                <th scope="col"> IMPUESTO </th>
+                <th scope="col"> TOTAL </th>
+                <th scope="col"> ACCIONES </th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -94,6 +94,7 @@ session_start(); //Reanudamos la sesion
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script src="../../../Recursos/js/Ventas/datatable.js" type="module"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
+  <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <!--<script src="../../../Recursos/js/validacionesModalNuevoUsuario.js"  type="module"></script>-->
   <!--<script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script>-->
 </body>

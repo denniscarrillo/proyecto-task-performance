@@ -39,7 +39,7 @@ if (isset($_SESSION['usuario'])) {
 
 <body>
   <div class="conteiner">
-    <div class="row gx-0">
+    <div class="row gx-0 row-conteiner">
       <!-- Menu lateral principal -->
       <div class="sb-conteiner col-2">
         <?php
@@ -49,7 +49,7 @@ if (isset($_SESSION['usuario'])) {
         $urlSolicitud = './crud/solicitud/gestionSolicitud.php';
         $urlComision = './comisiones/v_comision.php';
         $urlVenta = './crud/venta/gestionVenta.php';
-        $urlCliente ='./crud/cliente/gestionCliente.php';
+        $urlCliente = './crud/cliente/gestionCliente.php';
         $urlCarteraCliente = './crud/carteraCliente/gestionCarteraClientes.php';
         $urlCrudComision = './crud/comision/gestionComision.php';
         require_once 'layout/sidebar.php';
@@ -102,4 +102,5 @@ if (isset($_SESSION['usuario'])) {
   <script src="../Recursos/boostrap5/bootstrap.min.js"></script>
   <script src="../Recursos/js/index.js"></script>
 </body>
+
 </html>

@@ -9,12 +9,11 @@ $(document).ready(function () {
       "url":"//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
     },
     "columns": [
-      { "data": "idCliente"},
-      { "data": "nombre"},
-      { "data": "rtn"},
+      { "data": "codCliente"},
+      { "data": "nombreCliente"},
+      { "data": "rtnCliente"},
       { "data": "telefono"},
-      { "data": "correo"},
-      { "data": "descripcion"}
+      { "data": "direccion"}
     ]
   });
 });

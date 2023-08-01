@@ -5,7 +5,7 @@
 
     if(isset($_POST['nombre_cliente'])){
         $nombre = $_POST['nombre_Cliente'];
-        $estadoEliminado = ControladorCarteraClientes::eliminarCliente($nombre);
+        $estadoEliminado = ControladorCarteraClientes::eliminacionCliente($nombre);
         $data = array();
         if($estadoEliminado == false) {
             $data []= [

@@ -13,9 +13,9 @@
             return CarteraClientes::obtenerContactoCliente();
         }
 
-        //public static function eliminarCliente($nombre){
-         //   return CarteraClientes::eliminarCliente($nombre);
-       // }
+        public static function eliminacionCliente($nombre){
+            return CarteraClientes::eliminarCliente($nombre);
+       }
     }
 
     

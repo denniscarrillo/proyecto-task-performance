@@ -15,7 +15,7 @@ require_once("../../../Controlador/ControladorBitacora.php");
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
   <!-- Boostrap5 -->
-  <link href='../../../Recursos/boostrap5/bootstrap.min.css' rel='stylesheet'>
+  <link href='../../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <!-- DataTables -->
@@ -85,7 +85,7 @@ require_once("../../../Controlador/ControladorBitacora.php");
   <script src="../../../Recursos/js/solicitud/dataTable.js" type="module"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/js/solicitud/validacionesModalNuevaSolicitud.js" type="module"></script>
-  <script src="../../../Recursos/boostrap5/bootstrap.min.js"></script>
+  <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
 </body>
 

@@ -30,9 +30,9 @@ body {
   top: 0;
   left: 0;
   height: 100vh;
-  width: 228px;
-  background: #d85813; 
-  background: linear-gradient(120deg, #bcb9b5 30%, #9e8d83 80%); 
+  width: 240px;
+  /* background: #d85813; */
+  /* background: linear-gradient(120deg, #bcb9b5 30%, #9e8d83 80%); */
   background: linear-gradient(120deg, #f3b85f 20%, #e65a14 80%);
   padding: 15px 10px;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);

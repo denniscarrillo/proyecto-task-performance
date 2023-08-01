@@ -79,7 +79,7 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
       objData.forEach(tareas => {
         if (tareas.tipoTarea == tipoTarea) {
           tarea +=
-            `<div class="card_task">
+            `<div class="card_task" draggable="true">
               <div class="conteiner-text-task">
                 <p>${tareas.tituloTarea}</p>
                 <p>${tareas.fechaInicio}</p>
@@ -153,7 +153,6 @@ let guardarTarea = ($btnGuardar, $tarea, $actualizarTarea, $elementoPadre, $elem
         datatype: "JSON",
         data: objTarea,
         success: function () {
-
         }
       });
       /*
