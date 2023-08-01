@@ -11,20 +11,19 @@ class Comision
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $listaComision = 
-            $consulta->query("SELECT co.id_Comision, v.total_Venta, po.valor_Porcentaje,
-            co.comision_TotalVenta
+            $consulta->query("SELECT co.id_Comision, co.id_Venta, v.TOTALNETO, po.valor_Porcentaje, co.comision_TotalVenta
             FROM tbl_comision AS co
-            INNER JOIN tbl_vista_venta AS v ON co.id_Venta = v.id_Venta
-            INNER JOIN  tbl_porcentaje AS po ON co.id_Porcentaje = po.id_Porcentaje;
-            ");
+            INNER JOIN view_facturasventa AS v ON co.id_Venta = v.NUMFACTURA
+            INNER JOIN  tbl_porcentaje AS po ON co.id_Porcentaje = po.id_Porcentaje;");
         $Comision = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
         while($fila = $listaComision->fetch_assoc()){
             $Comision [] = [
-                'IdComision' => $fila["id_Comision"],
-                'Venta' => $fila["total_Venta"],
-                'Porcentaje'=> $fila["valor_Porcentaje"],
-                'ComisionTotal' => $fila["comision_TotalVenta"],
+                'idComision' => $fila["id_Comision"],
+                'factura' => $fila["id_Venta"],
+                'totalVenta'=> $fila["TOTALNETO"],
+                'porcentaje' => $fila["valor_Porcentaje"],
+                'comisionTotal' => $fila["comision_TotalVenta"]
             ];
         }
         mysqli_close($consulta); #Cerramos la conexión.

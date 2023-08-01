@@ -65,13 +65,40 @@ button:focus{
     background-color: #ebf1f6b1;
 }
 .title-form{
-    text-align: center;
-    color: #4b4949;
+    display: flex;
+    align-items: center;
+    background-color: rgb(242, 244, 246);
+    margin-bottom: 1rem;
+    padding: 0.7rem;
     border-radius: 0.2rem;
-    box-shadow: 0px 2px 2px 2px #d2d0cfb6;
-    padding: 0.3rem;
+}
+.text-title-form{
+    margin-bottom: 0;
+    text-align: right;
+    font-size: 2rem;
+    color: #0E6251;
+}
+.img-content{
+   box-shadow: 0px 2px 2px 2px #d2d0cfb6;
+   padding: 0.3rem;
+   border-radius: 4px;
+}
+.text-title-form::before{
+    display: inline-block;
+    content: '|';
+    font-size: 2rem;
+    margin-right: 0.2rem;
+    margin-left: 0.5rem;
+    color: #ab7710;
 }
 #table-ventas td{
     min-width: 7rem;
     max-width: 8rem;
+}
+.mensaje-tipo-cliente{
+    color: rgb(22, 150, 22);
+    background-color: #c6f1b4;
+    padding: 0.2rem;
+    float: right;
+    margin-bottom: 0.5rem;
 }

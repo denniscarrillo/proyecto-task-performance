@@ -3,7 +3,7 @@ let $btnCerrarModalVentas = document.getElementById('btn-close-modal-ventas');
 let $tablaVentas = '';
 
 $(document).ready(function () {
-  let  now = new Date().toISOString().split('T')[0];
+  let now = new Date().toISOString().split('T')[0];
   document.getElementById('fecha-comision').setAttribute('value', now);
   document.getElementById('fecha-comision').setAttribute('disabled', 'true');
   document.getElementById('id-venta').setAttribute('disabled', 'true');
@@ -54,13 +54,33 @@ let iniciarDataTable = function (fechaDesde, fechaHasta) {
   });
   $('#modalfiltroVenta').modal('hide');
   $('#modalVentas').modal('show');
+}
+$(document).on("click", "#btn_seleccionar", function () {
+  let fila = $(this).closest("tr");
+  let idVenta = fila.find('td:eq(0)').text();//captura el ID DE LA FACTURA	
+  let rtnClienteVenta = fila.find('td:eq(4)').text();
+  let montoVenta = fila.find('td:eq(7)').text(); //captura el MONTO TOTAL DE LA FACTURA
+  document.getElementById('id-venta').value = idVenta;
+  document.getElementById('monto-total').value = montoVenta;
+  estadoClienteTarea(rtnClienteVenta);
+  console.log(montoVenta);
+  $('#modalVentas').modal('hide');
+});
 
-  $(document).on("click", "#btn_seleccionar", function () {
-    let fila = $(this).closest("tr");
-    let idVenta = fila.find('td:eq(0)').text();//captura el ID DE LA FACTURA	
-    let montoVenta = fila.find('td:eq(7)').text(); //captura el MONTO TOTAL DE LA FACTURA
-    document.getElementById('id-venta').value = idVenta;
-    document.getElementById('monto-total').value = montoVenta;
-    $('#modalVentas').modal('hide');
-  });
+let estadoClienteTarea = (rtnCliente) => {
+  $.ajax({
+    url: "../../../Vista/comisiones/obtenerEstadoClienteTarea.php",
+    type: "POST",
+    datatype: "JSON",
+    data: {
+      rtnCliente: rtnCliente
+    },
+    success: function (estadoCliente) {
+      let objEstadoCliente = JSON.parse(estadoCliente);
+      document.getElementById('mensaje-tipo-cliente').innerText = 'Estado cliente: ' + objEstadoCliente[0].estadoClienteTarea;
+      document.getElementById('mensaje-tipo-cliente').classList.add('mensaje-tipo-cliente');
+
+
+    }
+  }); //Fin AJAX
 }
