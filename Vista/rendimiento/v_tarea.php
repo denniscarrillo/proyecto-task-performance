@@ -44,7 +44,7 @@
               <p class="circle-count" id="circle-count-llamadas"></p>
             </div>
             <button type="button" class="btn_nuevaTarea btn btn-primary" id="btn-NuevaLLamada">+ Nueva llamada</button>
-            <div class="container_tarea" id="conteiner-llamada">
+            <div class="container_tarea dragged-conteiner" id="conteiner-llamada">
               <!-- Aqui van las tareas llamadas -->
             </div>
           </div>
@@ -55,7 +55,7 @@
               <p class="circle-count" id="circle-count-leads"></p>
             </div>
             <button type="button" class="btn_nuevaTarea btn btn-primary" id= "btn-NuevoLead">+ Nuevo lead</button>
-            <div class="container_tarea" id="conteiner-lead">
+            <div class="container_tarea dragged-conteiner" id="conteiner-lead">
               <!-- Aqui van las tareas leads -->
             </div>
           </div>
@@ -66,7 +66,7 @@
               <p class="circle-count" id="circle-count-cotizaciones"></p>
             </div>
             <button type="button" class="btn_nuevaTarea btn btn-primary" id= "btn-NuevaCotizacion">+ Nueva Cotizacion</button>
-            <div class="container_tarea" id="conteiner-cotizacion">
+            <div class="container_tarea dragged-conteiner" id="conteiner-cotizacion">
               <!-- Aqui van las tareas leads -->
             </div>
             <!-- <button>+ Nueva Tarea</button> -->
@@ -78,7 +78,7 @@
               <p class="circle-count" id="circle-count-ventas"></p>
             </div> 
             <button type="button" class="btn_nuevaTarea btn btn-primary" id= "btn-NuevaVenta">+ Nueva Venta</button>
-            <div class="container_tarea" id="conteiner-venta">
+            <div class="container_tarea dragged-conteiner" id="conteiner-venta">
             <!-- Aqui van las tareas leads -->
             </div>
           </div>
@@ -92,6 +92,7 @@
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="../../Recursos/bootstrap5/bootstrap.min.js "></script>
   <script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
+  <script src="../../Recursos/js/librerias/Sortable.min.js"></script>
   <script src="../../Recursos/js/index.js"></script>
   <script src="../../Recursos/js/rendimiento/tarea.js"></script>
 </body>

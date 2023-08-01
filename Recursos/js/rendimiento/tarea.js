@@ -1,4 +1,3 @@
-
 //Elementos HTML seleccionados a traves de su atributo ID
 let $contenedorLlamada = document.getElementById('conteiner-llamada');
 let $contadorLlamadas = document.getElementById('circle-count-llamadas');
@@ -8,7 +7,6 @@ let $contenedorCotizaciones = document.getElementById('conteiner-cotizacion');
 let $contadorCotizaciones = document.getElementById('circle-count-cotizaciones');
 let $contenedorVentas = document.getElementById('conteiner-venta');
 let $contadorVentas = document.getElementById('circle-count-ventas');
-
 let $columnaLlamadas = document.getElementById('columna-llamadas');
 let $columnaLeads = document.getElementById('columna-leads');
 let $columnaCotizaciones = document.getElementById('columna-cotizaciones');
@@ -20,6 +18,24 @@ $(document).ready(function () {
   obtenerTareas($contenedorLeads, $contadorLeads, 'Lead');
   obtenerTareas($contenedorCotizaciones, $contadorCotizaciones, 'Cotizacion');
   obtenerTareas($contenedorVentas, $contadorVentas, 'Venta');
+
+  new Sortable(document.getElementById('conteiner-llamada'), {
+    group: 'shared', // set both lists to same group
+    animation: 150
+  });
+  new Sortable(document.getElementById('conteiner-lead'), { 
+    group: 'shared',
+    animation: 150
+  });
+  new Sortable(document.getElementById('conteiner-cotizacion'), {
+    group: 'shared',
+    animation: 150
+  });
+  new Sortable(document.getElementById('conteiner-venta'), {
+    group: 'shared',
+    animation: 150
+  });
+
 });
 //Evento
 $('#btn-NuevaLLamada').click(function () {
@@ -79,7 +95,7 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
       objData.forEach(tareas => {
         if (tareas.tipoTarea == tipoTarea) {
           tarea +=
-            `<div class="card_task" draggable="true">
+            `<div class="card_task dragged-element" draggable="true">
               <div class="conteiner-text-task">
                 <p>${tareas.tituloTarea}</p>
                 <p>${tareas.fechaInicio}</p>
@@ -91,7 +107,7 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
               <i class="fa-solid-btn fa-solid fa-tag"></i>
               </div>
             </div>`;
-            $elemento.innerHTML = tarea;
+          $elemento.innerHTML = tarea;
           count++;
         }
       });
@@ -184,3 +200,56 @@ let guardarTarea = ($btnGuardar, $tarea, $actualizarTarea, $elementoPadre, $elem
     }
   });
 }
+
+
+//Arrastrar y soltar (Tareas)
+// const dragElements = document.querySelectorAll(".dragged-element");
+// const dragConteiners = document.querySelectorAll(".dragged-conteiner");
+// let draggableTodo = null;
+
+// dragElements.forEach((dragElement) => {
+//   dragElement.addEventListener("dragstart", dragStart);
+//   dragElement.addEventListener("dragend", dragEnd);
+// });
+
+// function dragStart() {
+//   draggableTodo = this;
+//   setTimeout(() => {
+//     this.style.display = "none";
+//   }, 0);
+//   console.log("dragStart");
+// }
+
+// function dragEnd() {
+//   draggableTodo = null;
+//   setTimeout(() => {
+//     this.style.display = "block";
+//   }, 0);
+//   console.log("dragEnd");
+// }
+
+// dragConteiners.forEach((dragConteiner) => {
+//   dragConteiner.addEventListener("dragover", dragOver);
+//   dragConteiner.addEventListener("dragenter", dragEnter);
+//   dragConteiner.addEventListener("dragleave", dragLeave);
+//   dragConteiner.addEventListener("drop", dragDrop);
+// });
+// function dragOver(e) {
+//   e.preventDefault();
+//   console.log("dragOver");
+// }
+// function dragEnter() {
+//   this.style.border = "2px dashed #ccc";
+//   console.log("dragEnter");
+// }
+
+// function dragLeave() {
+//   this.style.border = "none";
+//   console.log("dragLeave");
+// }
+
+// function dragDrop() {
+//   this.style.border = "none";
+//   this.appendChild(draggableTodo);
+//   console.log("dropped");
+// }
