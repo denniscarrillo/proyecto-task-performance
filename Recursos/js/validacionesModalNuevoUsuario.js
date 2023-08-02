@@ -86,6 +86,8 @@ $form.addEventListener('submit', e => {
         }
     }
 });
+
+
 $name.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
     $("#nombre").inputlimiter({

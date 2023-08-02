@@ -8,7 +8,7 @@
     session_start(); //Reanudamos session
     if(isset($_SESSION['usuario'])){
         $nuevoUsuario = new Usuario();
-        $nuevoUsuario->idUsuario = $_POST['idUsuario'];
+        $nuevoUsuario->idUsuario = $_POST['idUsuario'];//aquí va la variable de inicio de 
         $nuevoUsuario->usuario = $_POST['usuario'];
         $nuevoUsuario->nombre = $_POST['nombre'];
         $nuevoUsuario->correo = $_POST['correo'];
