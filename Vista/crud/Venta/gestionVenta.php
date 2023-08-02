@@ -1,7 +1,7 @@
 <?php
 require_once("../../../db/Conexion.php");
-require_once("../../../Modelo/Ventas.php");
-require_once("../../../Controlador/ControladorVentas.php");
+require_once("../../../Modelo/Venta.php");
+require_once("../../../Controlador/ControladorVenta.php");
 session_start(); //Reanudamos la sesion
 
 
@@ -65,15 +65,15 @@ session_start(); //Reanudamos la sesion
           <table class="table" id="table-Ventas">
             <thead>
               <tr>
-                <th scope="col"> ID </th>
-                <th scope="col"> FECHA DE EMISION </th>
-                <th scope="col"> NOMBRE CLIENTE </th>
-                <th scope="col"> NOMBRE USUARIO </th>
-                <th scope="col"> TOTAL DESCUENTO </th>
-                <th scope="col"> SUBTOTAL </th>
-                <th scope="col"> TOTAL IMPUESTO </th>
-                <th scope="col"> TOTAL VENTA </th>
-                <th scope="col"> ESTADO VENTA </th>
+                <th scope="col"> N° </th>
+                <th scope="col"> FECHA </th>
+                <th scope="col"> COD_CLIENTE </th>
+                <th scope="col"> CLIENTE</th>
+                <th scope="col"> RTN/DNI</th>
+                <th scope="col"> TOTAL BRUTO </th>
+                <th scope="col"> IMPUESTO </th>
+                <th scope="col"> TOTAL </th>
+                <th scope="col"> ACCIONES </th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
