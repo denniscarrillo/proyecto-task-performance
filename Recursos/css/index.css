@@ -1,81 +1,158 @@
 .btn_Venta {
-    background-color: #fa2c2c; /* Cambiar a tu color deseado */
+    display: inline-block;
+    background-color: #e65a14;
     max-width: 300px;
-    width: 100%;
-    border: 1px solid #aaa;
+    color: #f7f7f7;
+    border: 3px solid #aaa;
     outline: none;
     border-radius: 8px;
-    font-size: 18px;
-    font-size: 25px; /* Ajusta el tamaño de fuente según tu preferencia */
-    padding: 50px 32px; /* Ajusta el padding según tu preferencia (arriba/abajo, izquierda/derecha) */
-    margin-left: 10px;
+    font-size: 24px; /* Ajusta el tamaño de fuente según tu preferencia */
+    margin-left: 25px;
     position: absolute;
-    bottom: 25rem;
+    bottom: 15rem;
     left: 17%;
-   /*  right:30%; */
+    right:30%;
+    padding: 70px 44px;
+    text-decoration: none;
+    text-align: center; /* Centrar el texto horizontalmente */
   }
   
   .btn_Rendimiento {
-    background-color: #fa2c2c; /* Cambiar a tu color deseado */
+    display: inline-block;
+    background-color: #e65a14;
     max-width: 300px;
-    width: 100%;
-    border: 1px solid #aaa;
+    color: #f7f7f7;
+    border: 3px solid #aaa;
     outline: none;
     border-radius: 8px;
-    font-size: 18px;
-    font-size: 25px; /* Ajusta el tamaño de fuente según tu preferencia */
-    padding: 50px 32px; /* Ajusta el padding según tu preferencia (arriba/abajo, izquierda/derecha) */
-    margin-left: 10px;
+    font-size: 24px; /* Ajusta el tamaño de fuente según tu preferencia */
+    margin-left: 335px; /* Ajusta de direccion derecha */
     position: absolute;
-    bottom: 25rem;
-    left: 40%;
+    bottom: 15rem;
+    left: 17%;
+    right:30%;
+    padding: 70px 44px;
+    text-decoration: none;
+    text-align: center; /* Centrar el texto horizontalmente */
+    
   }
   
   .btn_Comisiones {
-    background-color: #fa2c2c; /* Cambiar a tu color deseado */
+    display: inline-block;
+    background-color: #e65a14;
     max-width: 300px;
-    width: 100%;
-    border: 1px solid #aaa;
+    color: #f7f7f7;
+    border: 3px solid #aaa;
     outline: none;
     border-radius: 8px;
-    font-size: 18px;
-    font-size: 25px; /* Ajusta el tamaño de fuente según tu preferencia */
-    padding: 50px 32px; /* Ajusta el padding según tu preferencia (arriba/abajo, izquierda/derecha) */
-    margin-left: 10px;
+    font-size: 24px;
+    margin-left: 25px; /* Ajusta este valor para mover el botón hacia la derecha */
+    top: 450px;
     position: absolute;
-    bottom: 25rem;
-    left: 63%;
+    bottom: 15rem;
+    left: 17%;
+    right: 30%;
+    padding: 70px 44px;
+    text-decoration: none;
+    text-align: center; /* Centrar el texto horizontalmente */
+    display: flex; /* Utiliza flexbox para centrar el contenido */
+    justify-content: center; /* Centra horizontalmente el contenido del botón */
+    align-items: center; /* Centra verticalmente el contenido del botón */
+    line-height: 300px; /* Ajusta este valor para centrar verticalmente el texto */
   }
   
   .btn_Clientes {
-    background-color: #fa2c2c; /* Cambiar a tu color deseado */
+    display: inline-block;
+    background-color: #e65a14;
     max-width: 300px;
-    width: 100%;
-    border: 1px solid #aaa;
+    color: #f7f7f7;
+    border: 3px solid #aaa;
     outline: none;
     border-radius: 8px;
-    font-size: 18px;
-    font-size: 25px; /* Ajusta el tamaño de fuente según tu preferencia */
-    padding: 50px 32px; /* Ajusta el padding según tu preferencia (arriba/abajo, izquierda/derecha) */
-    margin-left: 10px;
+    font-size: 24px;
+    margin-left: 334px; /* Ajusta este valor para mover el botón hacia la derecha */
+    top: 450px;
     position: absolute;
-    bottom: 15.5rem;
-    left: 40%;
+    bottom: 15rem;
+    left: 17%;
+    right: 30%;
+    padding: 70px 44px;
+    text-decoration: none;
+    text-align: center; /* Centrar el texto horizontalmente */
+    display: flex; /* Utiliza flexbox para centrar el contenido */
+    justify-content: center; /* Centra horizontalmente el contenido del botón */
+    align-items: center; /* Centra verticalmente el contenido del botón */
+    line-height: 300px; /* Ajusta este valor para centrar verticalmente el texto */
   }
   
   .btn_Mantenimiento {
-    background-color: #fa2c2c; /* Cambiar a tu color deseado */
+    display: inline-block;
+    background-color: #e65a14;
     max-width: 300px;
-    width: 100%;
-    border: 1px solid #aaa;
+    color: #f7f7f7;
+    border: 3px solid #aaa;
     outline: none;
     border-radius: 8px;
-    font-size: 18px;
-    font-size: 25px; /* Ajusta el tamaño de fuente según tu preferencia */
-    padding: 50px 32px; /* Ajusta el padding según tu preferencia (arriba/abajo, izquierda/derecha) */
-    margin-left: 10px;
+    font-size: 24px; /* Ajusta el tamaño de fuente según tu preferencia */
+    margin-left: 334px; /* Ajusta este valor para mover el botón hacia la derecha */
+    top: 640px;
     position: absolute;
-    bottom: 15.5rem;
-    left: 17%;
-  }
+    bottom: 15rem;
+    left: 5%;
+    right: 30%;
+    padding: 80px 54px;
+    text-decoration: none;
+    text-align: center; /* Centrar el texto horizontalmente */
+    display: flex; /* Utiliza flexbox para centrar el contenido */
+    justify-content: center; /* Centra horizontalmente el contenido del botón */
+    align-items: center; /* Centra verticalmente el contenido del botón */
+    line-height: 300px; /* Ajusta este valor para centrar verticalmente el texto */
+}
   
+/* Estilos para el contenedor */
+.container {
+  width: 80%; /* Ancho del contenedor */
+  max-width: 600px; /* Ancho máximo del contenedor (opcional) */
+  margin: 0 auto; /* Centrar el contenedor horizontalmente */
+  padding: 20px; /* Espaciado interno del contenedor */
+  border: 1px solid #ccc; /* Borde del contenedor */
+  background-color: #f0f0f0; /* Color de fondo del contenedor */
+  font-family: "Roboto", sans-serif;
+}
+
+/* Estilos para el título h1 */
+.container h1 {
+  font-size: 32px; /* Tamaño de fuente del título */
+  margin-bottom: 10px; /* Espaciado inferior del título */
+  padding-left: 25px; /* Agregar 20 píxeles de espacio a la izquierda del texto del título */
+  line-height: 1; /* Ajustar la altura de línea del título */
+}
+
+/* Estilos para el párrafo p */
+.container p {
+  font-size: 18px; /* Tamaño de fuente del párrafo */
+  margin-bottom: 0; /* Eliminar espaciado inferior del párrafo */
+  padding-left: 25px; /* Agregar 10 píxeles de espacio a la izquierda del texto del párrafo */
+  line-height: 1; /* Ajustar la altura de línea del párrafo */
+}
+
+
+/* Estilos para el navbar */
+.navbar {
+    background-color: #c41b1b; /* Cambia el color de fondo del navbar */
+    color: #333; /* Cambia el color del texto en el navbar */
+    font-size: 18px; /* Cambia el tamaño de fuente del texto en el navbar */
+    margin-left: 15px;
+    
+}
+
+.btn_Mantenimiento .icon {
+  margin-right: 10px; /* Ajusta el margen entre el icono y el texto */
+}
+
+.img-fluid {
+  margin-top: -70px; /* Ajusta el valor negativo según cuánto deseas que se mueva hacia arriba */
+  margin-left: 20px; /* Ajusta el valor positivo según cuánto deseas que se mueva hacia la derecha */
+
+}
+
