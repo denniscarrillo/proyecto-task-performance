@@ -58,6 +58,10 @@ button:focus{
     margin-top: 2rem;
 }
 .conteiner-vendedores{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
     min-height: 3rem;
     width: inherit;
     height: fit-content;
@@ -101,4 +105,15 @@ button:focus{
     padding: 0.2rem;
     float: right;
     margin-bottom: 0.5rem;
+}
+
+.vendedores{
+    padding: 0.4rem;
+    background-color: rgb(171, 227, 208);
+    margin: 0.4rem;
+    margin-right:0.8rem;
+    border-radius: 4px;
+    font-weight: 600;
+    display: inline-block;
+    
 }

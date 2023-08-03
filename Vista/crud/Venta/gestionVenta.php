@@ -66,16 +66,19 @@ session_start(); //Reanudamos la sesion
             <thead>
               <tr>
                 <th scope="col"> N° </th>
-                <th scope="col"> FECHA </th>
                 <th scope="col"> COD_CLIENTE </th>
                 <th scope="col"> CLIENTE</th>
                 <th scope="col"> RTN/DNI</th>
+                <th scope="col"> FECHA </th>
                 <th scope="col"> TOTAL BRUTO </th>
                 <th scope="col"> IMPUESTO </th>
                 <th scope="col"> TOTAL </th>
                 <th scope="col"> ACCIONES </th>
               </tr>
             </thead>
+            <div class ="text-left mb-2">
+            <a href="../../fpdf/ReporteVentas.php" target="_blank" class="btn btn-success" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
+            </div>
             <tbody class="table-group-divider">
             </tbody>
           </table>

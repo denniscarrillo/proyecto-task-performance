@@ -64,7 +64,8 @@ require_once('validacionesComision.php');
           <div class="form-element">
             <label>Porcentaje</label>
             <label id="mensaje-tipo-cliente"></label>
-            <select name="porcentajeComision" class="form-control">
+            <select name="porcentajeComision" class="form-control" id="porcentaje-comision">
+              <option value="0">Seleccionar...</option>
               <?php
               foreach ($porcentajes as $porcentaje) {
                 echo '<option value="' . $porcentaje['idPorcentaje'] . '">' . $porcentaje['porcentaje'] . '</option>';
@@ -73,12 +74,16 @@ require_once('validacionesComision.php');
             </select>
           </div>
           <div class="form-element">
+            <label>Comisión venta</label>
+            <input type="text" class="form-control" id="comision-total">
+          </div>
+          <div class="form-element">
             <label>Vendedores:</label>
             <div class="conteiner-vendedores" id="conteiner-vendedores">
             </div>
           </div>
           <div class="form-element-btns">
-            <button type="button" class="btn btn-primary">Guardar</button>
+            <button type="button" class="btn btn-primary" id="btn-guardar-comision">Guardar</button>
             <button type="button" class="btn btn-secondary">Cancelar</button>
           </div>
         </form>

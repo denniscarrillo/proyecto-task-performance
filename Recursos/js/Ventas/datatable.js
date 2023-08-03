@@ -10,13 +10,17 @@ $(document).ready(function () {
     },
     "columns": [
       { "data": "numFactura"},
-      { "data": 'fechaEmision' },
       { "data": 'codCliente' },
       { "data": 'nombreCliente' },
       { "data": 'rtnCliente' },
+      { "data": 'fechaEmision' },
       { "data": 'totalBruto' },
       { "data": 'totalImpuesto'},
-      { "data": 'totalVenta' },
+      { "data": 'totalNeto' },
+      {
+        "defaultContent":
+          '<div><button class="btns btn" id="btn_ver"><i class="fa-solid fa-file-pdf"></i></button>'
+      }
     ]
   });
 

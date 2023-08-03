@@ -8,6 +8,6 @@ class ControladorTarea {
         Tarea::nuevaTarea($tarea); 
     }
     public static function obtenerestadoClienteTarea($rtnCliente){
-        return Tarea::obtenerestadoClienteTarea($rtnCliente); 
+        return Tarea::clienteExistente($rtnCliente); 
     }
 }
