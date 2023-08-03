@@ -1,6 +1,6 @@
 
-import { estadoValidado as validado } from './validacionesModalNuevaSolicitud.js';/*
-import {estadoValidado as valido } from './validacionesModalEditarSolicitud.js';*/
+import { estadoValidado as validado } from './validacionesModalNuevaSolicitud.js';
+import {estadoValidado as valido } from './validacionesModalEditarSolicitud.js';
 
 let tablaSolicitudes = '';
 $(document).ready(function () {
@@ -129,7 +129,6 @@ $(document).on("click", "#btn_editar", function () {
     descripcion = fila.find('td:eq(2)').text(),
     correo = fila.find('td:eq(3)').text(),
     ubicacion = fila.find('td:eq(4)').text(),
-
     idEstadoSolicitud = fila.find('td:eq(5)').text(),
     idTipoServicio = fila.find('td:eq(6)').text(),
     cliente = fila.find('td:eq(7)').text(),
@@ -158,8 +157,8 @@ $('#form-Edit-Solicitud').submit(function (e) {
     correo = $('#E_correo').val(),
     ubicacion = $('#E_ubicacion').val(),
     estadoSolicitud = document.getElementById('E_idEstadoSolicitud').value,
-    tipoServicio = document.getElementById('E_idTipoServicio').value;
-    usuario = $('#E_usuario').val();
+    tipoServicio = document.getElementById('E_idTipoServicio').value,
+    usuario = $('#E_idUsuario').val(),
     cliente = $('#E_cliente').val();
   if (valido) {
     $.ajax({
@@ -174,8 +173,8 @@ $('#form-Edit-Solicitud').submit(function (e) {
         ubicacion: ubicacion,
         idEstadoSolicitud: estadoSolicitud,
         idTipoServicio: tipoServicio,
-        cliente: cliente,
-        usuario: usuario
+        idCliente: cliente,
+        idUsuario: usuario
       },
       success: function () {
         //Mostrar mensaje de exito

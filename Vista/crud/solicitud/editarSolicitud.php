@@ -17,8 +17,8 @@
         $editarSolicitud->ubicacion = $_POST['ubicacion'];
         $editarSolicitud->idEstadoSolicitud = $_POST['idEstadoSolicitud'];
         $editarSolicitud->idTipoServicio = $_POST['idTipoServicio'];
-        $editarSolicitud->idCliente = $_POST['cliente'];
-        $editarSolicitud->idUsuario = $_POST['usuario'];
+        $editarSolicitud->idCliente = $_POST['idCliente'];
+        $editarSolicitud->idUsuario = $_POST['idUsuario'];
         ControladorSolicitud::editarSolicitud($editarSolicitud);
         /* ========================= Evento Editar. ======================
         $newBitacora = new Bitacora();
