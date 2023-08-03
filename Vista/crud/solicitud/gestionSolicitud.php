@@ -1,9 +1,11 @@
 <?php
 require_once("../../../db/Conexion.php");
 require_once("../../../Modelo/Solicitud.php");
+require_once("../../../Modelo/Usuario.php");
 require_once("../../../Modelo/Bitacora.php");
 require_once("../../../Controlador/ControladorSolicitud.php");
 require_once("../../../Controlador/ControladorBitacora.php");
+require_once("../../../Controlador/ControladorUsuario.php");
 
 ?>
 <!DOCTYPE html>
@@ -67,6 +69,9 @@ require_once("../../../Controlador/ControladorBitacora.php");
             <th scope="col"> ACCIONES </th>
           </tr>
         </thead>
+        <div class ="text-left mb-2">
+            <a href="../../fpdf/ReporteSolicitudes.php" target="_blank" class="btn btn-success" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
+            </div>
         <tbody class="table-group-divider">
         </tbody>
       </table>
@@ -76,6 +81,7 @@ require_once("../../../Controlador/ControladorBitacora.php");
   </div>
   <?php
   require('modalNuevaSolicitud.html');
+  require('modalEditarSolicitud.html');
   ?>
   
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
@@ -85,6 +91,7 @@ require_once("../../../Controlador/ControladorBitacora.php");
   <script src="../../../Recursos/js/solicitud/dataTable.js" type="module"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/js/solicitud/validacionesModalNuevaSolicitud.js" type="module"></script>
+  <script src="../../../Recursos/js/solicitud/validacionesModalEditarSolicitud.js" type="module"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
 </body>

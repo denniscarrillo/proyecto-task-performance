@@ -61,10 +61,10 @@ class Solicitud {
         $correo = $nuevaSolicitud->correo;
         $descripcion = $nuevaSolicitud->descripcion;
         $ubicacion = $nuevaSolicitud->ubicacion;
-        $nuevaSolicitud = $consulta->query("INSERT INTO tbl_solicitud(id_Usuario, id_EstadoSolicitud, id_TipoServicio, id_Cliente, fecha_Envio, titulo_Mensaje, descripcion, correo, ubicacion) 
-        VALUES ($idUsuario, $idEstadoSolicitud, $idTipoServicio, $idCliente, $fechaEnvio, $titulo,  $correo, $descripcion, $ubicacion)");
+        $nuevaSolicitud = $consulta->query("INSERT INTO tbl_solicitud (id_Usuario, id_EstadoSolicitud, id_TipoServicio, id_Cliente, fecha_Envio, titulo_Mensaje, correo, descripcion, ubicacion) 
+        VALUES ('$idUsuario', '$idEstadoSolicitud', '$idTipoServicio', '$idCliente', '$fechaEnvio', '$titulo', '$correo', '$descripcion', '$ubicacion' )");
         mysqli_close($consulta); #Cerramos la conexión.
-        return $nuevaSolicitud;
+        /*return $nuevaSolicitud;*/
     }
 
     public static function obtenerEstadoSolicitud(){
@@ -97,20 +97,48 @@ class Solicitud {
         return $servicios;
     }
 
-    public static function editarSolicitud($modificarSolicitud){
+    public static function editarSolicitud($editarSolicitud){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $idSolicitud = $modificarSolicitud->idSolicitud;
-        $usuario = $modificarSolicitud->usuario;
-        $idEstadoSolicitud = $modificarSolicitud->idEstadoSolicitud;
-        $idTipoServicio = $modificarSolicitud->idTipoServicio;
-        $cliente = $$modificarSolicitud->idCliente;
-        $tituloMensaje = $$modificarSolicitud->titulo;
-        $fechaEnvio = $$modificarSolicitud->fechaEnvio;
-        $descripcion = $$modificarSolicitud->descripcion;
-        $correo = $$modificarSolicitud->correo;
-        $ubicacion = $$modificarSolicitud->ubicacion;
-        $modificarSolicitud = $conexion->query("UPDATE tbl_solicitud SET id_Usuario = '$usuario', id_EstadoSolicitud= '$idEstadoSolicitud', id_TipoServicio=$idTipoServicio, id_Cliente = $cliente, fecha_Envio = $fechaEnvio, titulo_Mensaje = $tituloMensaje, correo ='$correo', descripcion = $descripcion,  ubicacion = $ubicacion WHERE id_Solicitud='$idSolicitud' ");
+        $idSolicitud = $editarSolicitud->idSolicitud;
+        $usuario = $editarSolicitud->usuario;
+        $idEstadoSolicitud = $editarSolicitud->idEstadoSolicitud;
+        $idTipoServicio = $editarSolicitud->idTipoServicio;
+        $cliente = $editarSolicitud->idCliente;
+        /*$tituloMensaje = $editarSolicitud->titulo;*/
+        $fechaEnvio = $editarSolicitud->fechaEnvio;
+        $descripcion = $editarSolicitud->descripcion;
+        $correo = $editarSolicitud->correo;
+        $ubicacion = $editarSolicitud->ubicacion;
+        $editarSolicitud = $conexion->query("UPDATE tbl_solicitud SET id_Usuario = '$usuario', id_EstadoSolicitud = '$idEstadoSolicitud', id_TipoServicio='$idTipoServicio', id_Cliente = '$cliente', fecha_Envio = '$fechaEnvio', correo ='$correo', descripcion = '$descripcion',  ubicacion = '$ubicacion' WHERE id_Solicitud='$idSolicitud' ");
         mysqli_close($conexion); #Cerramos la conexión.
+    }
+
+    public static function obtenerCliente(){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $clientesSolicitud = $conexion->query("SELECT id_Cliente, nombre_Cliente FROM tbl_vista_cliente;");
+        $clientes = array();
+        while($fila = $clientesSolicitud->fetch_assoc()){
+            $clientes [] = [
+                'id_Cliente' => $fila["id_Cliente"],
+                'nombre_Cliente' => $fila["nombre_Cliente"]
+            ];
+        }
+        mysqli_close($conexion); #Cerramos la conexión.
+        return $clientes;
+    }
+
+
+    public static function eliminarSolicitud($solicitud){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $consultaIdSolicitud= $conexion->query("SELECT id_Solicitud FROM tbl_solicitud WHERE descripcion = '$solicitud'");
+        $fila = $consultaIdSolicitud->fetch_assoc();
+        $idSolicitud = $fila['id_Solicitud'];
+        //Eliminamos la solicitud
+        $estadoEliminado = $conexion->query("DELETE FROM tbl_solicitud WHERE id_Solicitud = $idSolicitud;");
+        mysqli_close($conexion); #Cerramos la conexión.
+        return $estadoEliminado;
     }
 }

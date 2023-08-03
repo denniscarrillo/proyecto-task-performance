@@ -61,36 +61,6 @@ if (isset($_SESSION['usuario'])) {
               <?php
               require_once 'layout/navbar.php';
               ?>
-
-                        <!-- Page Heading -->
-                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                         <h1 class="h1 mb-0 text-gray-800">Bienvenido usuario.</h1>  
-                         </div>
-                            <div>
-                              <a href="/Vista/crud/venta/gestionVenta.php" class="btn_Venta btn btn-primary"><i class="bi bi-receipt"></i> Ventas...</a>
-                            </div>
-                            <br>
-
-                            <div>
-                              <a href="" class="btn_Rendimiento btn btn-primary"><i class="bi bi-clipboard-data-fill"></i> Rendimiento...</a>
-                            </div>
-                            <br>
-
-                            <div>
-                              <a href="/Vista/comisiones/v_comision.php" class="btn_Comisiones btn btn-primary"><i class="bi bi-currency-dollar"></i> Comisiones...</a>
-                            </div>
-                            <br>
-                            
-                            <div>
-                              <a href="/Vista/crud/cliente/gestionCliente.php" class="btn_Clientes btn btn-primary"><i class="bi bi-files-alt"></i> Clientes...</a>
-                            </div>
-                            <br>
-                            <div>
-                              <a href="" class="btn_Mantenimiento btn btn-primary"><i class="fa-solid fa-helicopter"></i> Mantenimiento...</a>
-                            </div>
-                       </div>           
-         </div>
-       </div>
       </div>
   </div>
 </div> 

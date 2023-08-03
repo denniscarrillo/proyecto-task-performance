@@ -170,6 +170,7 @@ $('#form-Edit-Usuario').submit(function (e) {
    }
 });
 
+
 let obtenerRoles = function (idElemento) {
   //Petición para obtener roles
   $.ajax({

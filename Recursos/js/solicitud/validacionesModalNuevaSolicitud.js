@@ -19,7 +19,6 @@ let estadoCorreo = true;
 
 const $form = document.getElementById('form-solicitud');
 const $user = document.getElementById('usuario');
-const $statusSolicitud = document.getElementById('idEstadoSolicitud');
 const $typeSolicitud = document.getElementById('idTipoServicio');
 const $client = document.getElementById('cliente');
 const $title = document.getElementById('tituloMensaje');
@@ -37,16 +36,15 @@ const $address = document.getElementById('ubicacion');
 $form.addEventListener('submit', e => {   
     //Validamos que algún campo no esté vacío.
     let estadoInputUser =  funciones.validarCampoVacio($user);
-    let estadoInputStatus = funciones.validarCampoVacio($statusSolicitud);
     let estadoInputType = funciones.validarCampoVacio($typeSolicitud);
     let estadoInputClient = funciones.validarCampoVacio($client);
     let estadoInputTitle = funciones.validarCampoVacio($title);
     let estadoInputSendDate = funciones.validarCampoVacio($sendDate);
-    let estadoInputDescription = funciones.validarCampoVacio($description);
     let estadoInputCorreo = funciones.validarCampoVacio($mail);
+    let estadoInputDescription = funciones.validarCampoVacio($description);
     let estadoInputUbicacion = funciones.validarCampoVacio($address);
     // Comprobamos que todas las validaciones se hayan cumplido 
-    if (estadoInputUser  == false || estadoInputStatus == false || 
+    if (estadoInputUser  == false || 
         estadoInputType == false || estadoInputClient == false || estadoInputTitle == false || estadoInputSendDate == false || estadoInputDescription == false || estadoInputCorreo == false || estadoInputUbicacion == false) {
         e.preventDefault();
     } else {
@@ -61,7 +59,7 @@ $form.addEventListener('submit', e => {
                 if(estadoCorreo == false || estadoSelect == false){
                     e.preventDefault();
                     estadoCorreo = funciones.validarCorreo($mail, validaciones.correo);
-                    estadoSelect = funciones.validarCampoVacio($statusSolicitud);
+                    
                     estadoSelect = funciones.validarCampoVacio($typeSolicitud);
                 } else {
                     estadoValidado = true; // 
@@ -91,10 +89,7 @@ $user.addEventListener('keyup', () => {
 $mail.addEventListener('keyup', ()=>{
     estadoCorreo = funciones.validarCorreo($mail, validaciones.correo);
 });
-$statusSolicitud.addEventListener('change', ()=>{
-    estadoSelect = funciones.validarCampoVacio($statusSolicitud);
-    
-});
+
 
 $typeSolicitud.addEventListener('change', ()=>{
     estadoSelect = funciones.validarCampoVacio($typeSolicitud);

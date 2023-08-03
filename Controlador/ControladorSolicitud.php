@@ -6,7 +6,7 @@
         }
 
         public static function crearSolicitud($nuevaSolicitud){
-            return Solicitud::crearNuevaSolicitud($nuevaSolicitud);
+            Solicitud::crearNuevaSolicitud($nuevaSolicitud);
         }
 
         
@@ -17,6 +17,23 @@
         public static function obtenerEstadoSolicitud(){
             return Solicitud::obtenerEstadoSolicitud();
         }
+
+        public static function obtenerIdUsuario(){
+            return Usuario::obtenerIdUsuario();
+        }
+
+        public static function obtenerCliente(){
+            return Solicitud::obtenerCliente();
+        }
+
+        public static function editarSolicitud($editarSolicitud){
+            Solicitud::editarSolicitud($editarSolicitud);
+        }
+
+        public static function eliminarSolicitud($solicitud){
+            return Solicitud::eliminarSolicitud($solicitud);
+        }
+
     }
     
 

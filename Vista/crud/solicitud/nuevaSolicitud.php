@@ -11,17 +11,17 @@
     if(isset($_SESSION['usuario'])){
         $user = $_SESSION['usuario'];
         $nuevaSolicitud = new Solicitud();
-        $nuevaSolicitud->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-        $nuevaSolicitud->idEstadoSolicitud = $_POST['idEstadoSolicitud'];
+        $nuevaSolicitud->idUsuario = $_POST['idUsuario'];
+        $nuevaSolicitud->idEstadoSolicitud = 1;
         $nuevaSolicitud->idTipoServicio = $_POST['idTipoServicio'];
-        $nuevaSolicitud->idCliente = $_POST['cliente'];
+        $nuevaSolicitud->idCliente = $_POST['idCliente'];
         $nuevaSolicitud->fechaEnvio = $_POST['fechaEnvio'];
-        $nuevaSolicitud->titulo = $_POST['tituloMensaje'];
+        $nuevaSolicitud->titulo = $_POST['titulo'];
         $nuevaSolicitud->correo = $_POST['correo'];
         $nuevaSolicitud->descripcion = $_POST['descripcion'];
         $nuevaSolicitud->ubicacion = $_POST['ubicacion'];
         ControladorSolicitud::crearSolicitud($nuevaSolicitud);
-        /* ========================= Evento Creacion nueva solicitud. ======================*/
+        /* ========================= Evento Creacion nueva solicitud. ======================
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();
         date_default_timezone_set('America/Tegucigalpa');
@@ -31,6 +31,6 @@
         $newBitacora->accion = $accion['Insert'];
         $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' creó solicitud '.$_POST['tituloMensaje'];
         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-        /*=======================================================================================*/
+        =======================================================================================*/
     }
 ?>
