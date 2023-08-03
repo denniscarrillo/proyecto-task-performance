@@ -1,0 +1,52 @@
+<div class="modal fade" id="modalEditarCliente" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="editarModalLabel">Editar Cliente</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" id="form-Edit-Cliente">
+                    <div class="grupo-form">
+                        <div class="mb-3" hidden="true">
+                            <label for="idcarteraCliente" class="form-label">ID:</label>
+                            <input type="text" name="idcarteraCliente" id="E_carteraCliente" class="form-control">
+                        </div>
+                        <div class="mb-3" >
+                            <label for="nombre" class="form-label">Nombre:</label>
+                            <input type="text" name="nombre" id="E_nombre" class="form-control">
+                            <p class="mensaje"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rtn" class="form-label">RTN:</label>
+                            <input type="text" name="rtn" id="E_rtn" class="form-control">
+                            <p class="mensaje"></p>
+                        </div>
+                    </div>
+                    <div class="grupo-form">
+                        <div class="mb-3">
+                            <label for="telefono" class="form-label">Telefono:</label>
+                            <input type="text" name="telefono" id="E_telefono" class="form-control">
+                            <p class="mensaje"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="correo" class="form-label">Correo Electrónico:</label>
+                            <input type="text" name="correo" id="E_correo" class="form-control">
+                            <p class="mensaje"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="estadoContacto" class="form-label">Estado Contacto:</label>
+                            <select name="text" id=E_estado class="form-control"> 
+                            </select>
+                            <p class="mensaje"></p>
+                        </div>
+                    </div>
+                    <div class="btn-guardar">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
