@@ -17,6 +17,7 @@ $(document).ready(function () {
       { "data": "totalVenta" },
       { "data": "porcentaje" },
       { "data": "comisionTotal" },
+      { "data": "fechaComision" },
       {
         "defaultContent":
           '<div><button class="btns btn" id="btn_ver"><i class="fa-solid fa-eye"></i></button>' +

@@ -59,6 +59,12 @@
           </a>
         </li>
         <li class="item">
+          <a href="<?php echo$urlComisionVendedor; ?>" class="link flex">
+            <i class='bx bx-folder'></i>
+            <span>Comisiones Vendedor</span>
+          </a>
+        </li>
+        <li class="item">
           <a href="<?php echo $urlCarteraCliente; ?>" class="link flex">
             <i class="bx bx-folder"></i>
             <span>Cartera clientes</span>

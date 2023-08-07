@@ -105,13 +105,13 @@ $pdf->SetDrawColor(163, 163, 163); //colorBorde
 $ventas = ControladorVenta::getVentas();
 foreach ($ventas as $venta) {
    $pdf->Cell(10, 10, mb_convert_encoding($venta['numFactura'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-    $pdf->Cell(25, 10, mb_convert_encoding($venta['codCliente'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(25, 10, mb_convert_encoding($venta['codCliente'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Cell(40, 10, mb_convert_encoding($venta['nombreCliente'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Cell(30, 10, mb_convert_encoding($venta['rtnCliente'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Cell(30, 10, mb_convert_encoding($venta['fechaEmision'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Cell(25, 10, mb_convert_encoding($venta['totalBruto'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Cell(25, 10, mb_convert_encoding($venta['totalImpuesto'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-    $pdf->Cell(25, 10, mb_convert_encoding($venta['totalNeto'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(25, 10, mb_convert_encoding($venta['totalNeto'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Ln(10);
    
 }

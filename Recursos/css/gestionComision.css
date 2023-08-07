@@ -9,6 +9,10 @@
 }
 h1{
     text-align: center;
+    color: rgb(9, 107, 107);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 3rem;
+    
 }
 #form-comision, #form-Edit-Comision {
     display: flex;
@@ -32,8 +36,22 @@ h1{
     margin-bottom: 1rem;
     padding: 0.3rem;
     font-size: 1.2rem;
-    background-color: rgb(86, 174, 86);
-    border-color: greenyellow;
+    background-color: rgb(6, 113, 212);
+    border-color: rgb(47, 210, 255);
+}
+.btn_Pdf {
+    margin-bottom: 1rem;
+    padding: 0.3rem;
+    font-size: 1.2rem;
+    background-color: rgb(153, 37, 5);
+    border-color: rgb(255, 78, 47);
+}
+.btn_Excel {
+    margin-bottom: 1rem;
+    padding: 0.3rem;
+    font-size: 1.2rem;
+    background-color: rgb(10, 147, 0);
+    border-color: rgb(90, 206, 109);
 }
 .btns{
     margin-right: 0.6rem;
@@ -47,6 +65,6 @@ h1{
 #btn_editar{
     background-color: rgb(45, 111, 203);
 }
-#btn_eliminar{
+/* #btn_eliminar{
     background-color: rgba(255, 0, 0, 0.855);
-}
+} */

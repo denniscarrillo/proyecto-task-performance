@@ -35,7 +35,7 @@ require_once('validacionesComision.php');
         ?>
       </div>
       <div class="col-10 form-conteiner">
-        <form>
+        <form action="" method="post" id="form-Comision">
           <div class="title-form">
             <div class="img-content">
               <img class="img" src="https://cdn-icons-png.flaticon.com/512/2953/2953536.png" height="50px">
@@ -83,7 +83,7 @@ require_once('validacionesComision.php');
             </div>
           </div>
           <div class="form-element-btns">
-            <button type="button" class="btn btn-primary" id="btn-guardar-comision">Guardar</button>
+            <button type="submit" class="btn btn-primary" id="btn-guardar-comision">Guardar</button>
             <button type="button" class="btn btn-secondary">Cancelar</button>
           </div>
         </form>
@@ -95,6 +95,7 @@ require_once('validacionesComision.php');
   require_once 'modalVentas.html';
   ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
   <script src="../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
