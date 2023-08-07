@@ -35,7 +35,7 @@ require_once('validacionesComision.php');
         ?>
       </div>
       <div class="col-10 form-conteiner">
-        <form>
+        <form action="" method="post" id="form-Comision">
           <div class="title-form">
             <div class="img-content">
               <img class="img" src="https://cdn-icons-png.flaticon.com/512/2953/2953536.png" height="50px">
@@ -50,7 +50,7 @@ require_once('validacionesComision.php');
             <label>ID comision</label>
             <input type="text" class="form-control">
           </div> -->
-          <div class="conteiner-id-venta form-element"">
+          <div class="conteiner-id-venta form-element">
             <label>Venta N°</label>
             <input type=" text" class="form-control" id="id-venta">
             <button type="button" class="btn-call-modal btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalfiltroVenta">
@@ -64,7 +64,8 @@ require_once('validacionesComision.php');
           <div class="form-element">
             <label>Porcentaje</label>
             <label id="mensaje-tipo-cliente"></label>
-            <select name="porcentajeComision" class="form-control">
+            <select name="porcentajeComision" class="form-control" id="porcentaje-comision">
+              <option value="0">Seleccionar...</option>
               <?php
               foreach ($porcentajes as $porcentaje) {
                 echo '<option value="' . $porcentaje['idPorcentaje'] . '">' . $porcentaje['porcentaje'] . '</option>';
@@ -73,12 +74,16 @@ require_once('validacionesComision.php');
             </select>
           </div>
           <div class="form-element">
+            <label>Comisión venta</label>
+            <input type="text" class="form-control" id="comision-total">
+          </div>
+          <div class="form-element">
             <label>Vendedores:</label>
             <div class="conteiner-vendedores" id="conteiner-vendedores">
             </div>
           </div>
           <div class="form-element-btns">
-            <button type="button" class="btn btn-primary">Guardar</button>
+            <button type="submit" class="btn btn-primary" id="btn-guardar-comision">Guardar</button>
             <button type="button" class="btn btn-secondary">Cancelar</button>
           </div>
         </form>
@@ -90,6 +95,7 @@ require_once('validacionesComision.php');
   require_once 'modalVentas.html';
   ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
   <script src="../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>

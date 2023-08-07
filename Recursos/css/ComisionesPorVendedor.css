@@ -8,7 +8,7 @@
     border-radius: 0.7rem;
     box-shadow: 0px 10px 15px 2px #a5a4a3b6 ;
 }
-.conteiner-id-venta{
+.conteiner-id-comision{
     position: relative;
 }
 .btn-call-modal {
@@ -17,16 +17,17 @@
     bottom: 3px;
     height: 2rem;
     width: 9rem;
-    margin: 0;
+    margin-top: 0.5rem;
     padding: 2px 8px;
 }
 .modal-active{
     --bs-modal-width: fit-content;
 }
-/* .modal-ventas{
-
+/* .modal-comisiones{
+    width: 100%;
 } */
-#table-ventas_wrapper .row{
+
+#table-comisionesVendedor_wrapper .row{
     min-height: -moz-fit-content;
     min-height: fit-content;
     align-content: space-between;
@@ -40,33 +41,20 @@
 .col-height{
     height: 100vh;
 }
-.fa-solid-icon{
+.fa-file-pdf{
     font-size: 25px;
     transition: color 0.1s ease 0.1s;
+    right: 3px;
 }
-.fa-solid-icon:hover{
-    color: #1289d8;
+.fa-file-pdf:hover{
+    color: #12d86e;
 }
 button:focus{
     border: none;
 }
-.form-element{
-    margin-bottom: 1rem;
-}
 .form-element-btns{
     text-align: center;
     margin-top: 2rem;
-}
-.conteiner-vendedores{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    min-height: 3rem;
-    width: inherit;
-    height: fit-content;
-    border-radius: 0.2rem;
-    background-color: #ebf1f6b1;
 }
 .title-form{
     display: flex;
@@ -95,24 +83,7 @@ button:focus{
     margin-left: 0.5rem;
     color: #ab7710;
 }
-#table-ventas td{
+#table-comisionesVendedor td{
     min-width: 7rem;
     max-width: 8rem;
-}
-.mensaje-tipo-cliente{
-    color: rgb(22, 150, 22);
-    background-color: #c6f1b4;
-    padding: 0.2rem;
-    float: right;
-    margin-bottom: 0.5rem;
-}
-.vendedores{
-    padding: 0.4rem;
-    background-color: rgb(171, 227, 208);
-    margin: 0.4rem;
-    margin-right:0.8rem;
-    border-radius: 4px;
-    font-weight: 600;
-    display: inline-block;
-    
 }

@@ -1,7 +1,7 @@
 <?php
    require_once ("../../../db/Conexion.php");
-   require_once ("../../../Modelo/Ventas.php");
-   require_once("../../../Controlador/ControladorVentas.php");
+   require_once ("../../../Modelo/Venta.php");
+   require_once("../../../Controlador/ControladorVenta.php");
    
    $data = ControladorVenta::getVentas();
 

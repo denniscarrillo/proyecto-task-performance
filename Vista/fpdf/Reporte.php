@@ -1,15 +1,11 @@
 <?php
 
-require('./fpdf.php');
-require_once("../../db/Conexion.php");
-require_once("../../Modelo/Venta.php");
-require_once("../../Controlador/ControladorVenta.php");
-
-class PDF extends FPDF
+/* header("Location: ./ReporteVenta.php"); */
+class REPORTE extends FPDF
 {
 
    // Cabecera de página
-   function Header()
+   public function Header()
    {
       //include '../../recursos/Recurso_conexion_bd.php';//llamamos a la conexion BD
 
@@ -45,7 +41,7 @@ class PDF extends FPDF
       /* TITULO DE LA TABLA */
       //color
      /*  $this->SetMargins(10, 10, 10); */
-     $this->SetMargins(40, 15, 10);
+      $this->SetMargins(40, 15, 10);
       $this->SetTextColor(205, 92, 92);
       $this->Cell(1); // mover a la derecha
       $this->SetFont('Arial', 'B', 15);
@@ -71,7 +67,7 @@ class PDF extends FPDF
    }
 
    // Pie de página
-   function Footer()
+   public function Footer()
    {
       $this->SetY(-15); // Posición: a 1,5 cm del final
       $this->SetFont('Arial', 'I', 8); //tipo fuente, negrita(B-I-U-BIU), tamañoTexto
@@ -84,38 +80,3 @@ class PDF extends FPDF
       $this->Cell(450, 10, mb_convert_encoding($hoy, 'windows-1252', 'UTF-8'), 0, 0, 'C'); // pie de pagina(fecha de pagina)
    }
 }
-
-//include '../../recursos/Recurso_conexion_bd.php';
-//require '../../funciones/CortarCadena.php';
-/* CONSULTA INFORMACION DEL HOSPEDAJE */
-//$consulta_info = $conexion->query(" select *from hotel ");
-//$dato_info = $consulta_info->fetch_object();
-
-$pdf = new PDF();
-$pdf->AddPage('Landscape'); /* aqui entran dos para parametros (horientazion,tamaño)V->portrait H->landscape tamaño (A3.A4.A5.letter.legal) */
-$pdf->AliasNbPages(); //muestra la pagina / y total de paginas
-$pdf->SetAutoPageBreak(true, 25); //margen de pie de pagina
-
-$i = 0;
-$pdf->SetFont('Arial', '', 8);
-$pdf->SetDrawColor(163, 163, 163); //colorBorde
-
-
-/*$consulta_reporte_alquiler = $conexion->query("  ");*/
-$ventas = ControladorVenta::getVentas();
-foreach ($ventas as $venta) {
-   $pdf->Cell(10, 10, mb_convert_encoding($venta['numFactura'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(25, 10, mb_convert_encoding($venta['codCliente'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(40, 10, mb_convert_encoding($venta['nombreCliente'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(30, 10, mb_convert_encoding($venta['rtnCliente'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(30, 10, mb_convert_encoding($venta['fechaEmision'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(25, 10, mb_convert_encoding($venta['totalBruto'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(25, 10, mb_convert_encoding($venta['totalImpuesto'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(25, 10, mb_convert_encoding($venta['totalNeto'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Ln(10);
-   
-}
-/* TABLA */
-
-
-$pdf->Output('Ventas.pdf', 'I');//nombreDescarga, Visor(I->visualizar - D->descargar)
