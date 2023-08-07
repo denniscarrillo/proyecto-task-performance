@@ -7,14 +7,15 @@
     outline: none;
     border-radius: 8px;
     font-size: 24px; /* Ajusta el tamaño de fuente según tu preferencia */
-    margin-left: 25px;
+    margin-left: 65px;
     position: absolute;
-    bottom: 15rem;
+    bottom: 23rem;
     left: 17%;
     right:30%;
-    padding: 70px 44px;
+    padding: 40px 40px;
     text-decoration: none;
     text-align: center; /* Centrar el texto horizontalmente */
+    
   }
   
   .btn_Rendimiento {
@@ -26,12 +27,12 @@
     outline: none;
     border-radius: 8px;
     font-size: 24px; /* Ajusta el tamaño de fuente según tu preferencia */
-    margin-left: 335px; /* Ajusta de direccion derecha */
+    margin-left: 400px; /* Ajusta de direccion derecha */
     position: absolute;
-    bottom: 15rem;
+    bottom: 23rem;
     left: 17%;
     right:30%;
-    padding: 70px 44px;
+    padding: 40px 40px;
     text-decoration: none;
     text-align: center; /* Centrar el texto horizontalmente */
     
@@ -46,13 +47,13 @@
     outline: none;
     border-radius: 8px;
     font-size: 24px;
-    margin-left: 25px; /* Ajusta este valor para mover el botón hacia la derecha */
-    top: 450px;
+    margin-left: 65px; /* Ajusta este valor para mover el botón hacia la derecha */
+    top: 300px;
     position: absolute;
-    bottom: 15rem;
+    bottom: 20rem;
     left: 17%;
     right: 30%;
-    padding: 70px 44px;
+    padding: 60px 44px;
     text-decoration: none;
     text-align: center; /* Centrar el texto horizontalmente */
     display: flex; /* Utiliza flexbox para centrar el contenido */
@@ -70,13 +71,13 @@
     outline: none;
     border-radius: 8px;
     font-size: 24px;
-    margin-left: 334px; /* Ajusta este valor para mover el botón hacia la derecha */
-    top: 450px;
+    margin-left: 400px; /* Ajusta este valor para mover el botón hacia la derecha */
+    top: 300px;
     position: absolute;
-    bottom: 15rem;
+    bottom: 20rem;
     left: 17%;
     right: 30%;
-    padding: 70px 44px;
+    padding: 60px 44px;
     text-decoration: none;
     text-align: center; /* Centrar el texto horizontalmente */
     display: flex; /* Utiliza flexbox para centrar el contenido */
@@ -94,13 +95,13 @@
     outline: none;
     border-radius: 8px;
     font-size: 24px; /* Ajusta el tamaño de fuente según tu preferencia */
-    margin-left: 334px; /* Ajusta este valor para mover el botón hacia la derecha */
-    top: 640px;
+    margin-left: 400px; /* Ajusta este valor para mover el botón hacia la derecha */
+    top: 450px;
     position: absolute;
     bottom: 15rem;
     left: 5%;
     right: 30%;
-    padding: 80px 54px;
+    padding: 60px 54px;
     text-decoration: none;
     text-align: center; /* Centrar el texto horizontalmente */
     display: flex; /* Utiliza flexbox para centrar el contenido */
@@ -108,51 +109,147 @@
     align-items: center; /* Centra verticalmente el contenido del botón */
     line-height: 300px; /* Ajusta este valor para centrar verticalmente el texto */
 }
+
+.button_web {
+  display: inline-block;
+  background-color: #007bff00;
+  color: #000000;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  margin-left: 250px; /* Ajusta este valor según tus necesidades */
+  margin-top: -390px; /* Ajusta este valor según tus necesidades */
+  text-decoration: none;
+  top: 1000px;
+  position: absolute;
+}
+
+.button_fc {
+  display: inline-block;
+  background-color: #007bff00;
+  color: #000000;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  margin-left: 650px; /* Ajusta este valor según tus necesidades */
+  margin-top: -390px; /* Ajusta este valor según tus necesidades */
+  text-decoration: none;
+  top: 1000px;
+  position: absolute;
+  
+}
+
+.button_ig {
+  display: inline-block;
+  background-color: #007bff00;
+  color: #000000;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  margin-left: 1100px; /* Ajusta este valor según tus necesidades */
+  margin-top: -390px; /* Ajusta este valor según tus necesidades */
+  text-decoration: none;
+  top: 1000px;
+  position: absolute;
+  
+}
   
 /* Estilos para el contenedor */
 .container {
-  width: 80%; /* Ancho del contenedor */
+  width: 100%; /* Ancho del contenedor */
   max-width: 600px; /* Ancho máximo del contenedor (opcional) */
-  margin: 0 auto; /* Centrar el contenedor horizontalmente */
+  margin: 0% auto; /* Centrar el contenedor horizontalmente */
   padding: 20px; /* Espaciado interno del contenedor */
-  border: 1px solid #ccc; /* Borde del contenedor */
-  background-color: #f0f0f0; /* Color de fondo del contenedor */
-  font-family: "Roboto", sans-serif;
+
+
 }
 
 /* Estilos para el título h1 */
 .container h1 {
   font-size: 32px; /* Tamaño de fuente del título */
   margin-bottom: 10px; /* Espaciado inferior del título */
-  padding-left: 25px; /* Agregar 20 píxeles de espacio a la izquierda del texto del título */
+  padding-left: 55px; /* Agregar 20 píxeles de espacio a la izquierda del texto del título */
   line-height: 1; /* Ajustar la altura de línea del título */
+  margin-right: 60px; /* Ajusta el valor según la cantidad de desplazamiento deseado */
 }
 
 /* Estilos para el párrafo p */
 .container p {
   font-size: 18px; /* Tamaño de fuente del párrafo */
   margin-bottom: 0; /* Eliminar espaciado inferior del párrafo */
-  padding-left: 25px; /* Agregar 10 píxeles de espacio a la izquierda del texto del párrafo */
+  padding-left: 55px; /* Agregar 10 píxeles de espacio a la izquierda del texto del párrafo */
   line-height: 1; /* Ajustar la altura de línea del párrafo */
+  margin-right: 60px; /* Ajusta el valor según la cantidad de desplazamiento deseado */
+
 }
 
-
-/* Estilos para el navbar */
+/* Estilos generales para el nav */
 .navbar {
-    background-color: #c41b1b; /* Cambia el color de fondo del navbar */
-    color: #333; /* Cambia el color del texto en el navbar */
-    font-size: 18px; /* Cambia el tamaño de fuente del texto en el navbar */
-    margin-left: 15px;
-    
+  background: linear-gradient(85deg, #f3b85f 20%, #e65a14 80%);
+  background-color: #e28e5a;
+  font-size: px; /* Cambia el tamaño de fuente del texto en el navbar */
+  padding: 10px; /* Agrega espacio interno al navbar */
+  margin-right: -20px;
+  margin-left: 15px;
+  display:flex;
+  position:relative;
 }
 
-.btn_Mantenimiento .icon {
-  margin-right: 10px; /* Ajusta el margen entre el icono y el texto */
+
+.navbar-brand {
+  /* Estilos para el logotipo o texto de la marca en el navbar */
+  color: #fff; /* Color del logotipo o texto de la marca */
+  font-size: 24px; /* Tamaño de fuente del logotipo o texto de la marca */
+  display:flex;
+}
+
+/* Estilos para el menú desplegable */
+.dropdown {
+  position: relative;
+  left: -25%;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 8px 16px;
+  color: #333;
+  text-decoration: none;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+.dropdown-item i {
+  margin-right: 10px; /* Espacio entre el ícono y el texto en el menú desplegable */
+  
+}
+
+/* Estilos para el menú desplegable cuando está abierto */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: -55%;
+  display: none;
+  min-width: 150px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
 }
 
 .img-fluid {
-  margin-top: -70px; /* Ajusta el valor negativo según cuánto deseas que se mueva hacia arriba */
-  margin-left: 20px; /* Ajusta el valor positivo según cuánto deseas que se mueva hacia la derecha */
+  margin-top: 5px; /* Ajusta el valor negativo según cuánto deseas que se mueva hacia arriba */
+  margin-left: 19px; /* Ajusta el valor positivo según cuánto deseas que se mueva hacia la derecha */
+  object-fit: cover;
+  width: 1200px;
+  height: 600px;
+  overflow: hidden; /* Recorta el contenido que excede los límites del contenedor */
 
 }
-

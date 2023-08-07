@@ -128,8 +128,68 @@ let $selectPorcentaje = document.getElementById("porcentaje-comision");
 $selectPorcentaje.addEventListener("change", function () {
  
   let $porcentaje = $selectPorcentaje.value;
-  console.log($porcentaje);
   let $totalVenta = document.getElementById("monto-total").value;
   obtenerComisionTotal($porcentaje, $totalVenta);
 });
-/* let $btnGuardarComision = document.getElementById('btn-guardar-comision'); */
+
+$('#form-Comision').submit(function () { //evita el comportambiento normal del submit, es decir, recarga total de la página
+  let fechaComision = document.getElementById('fecha-comision').value;
+  let idVenta = document.getElementById('id-venta').value;
+  let montoTotal = document.getElementById('monto-total').value;
+  let porcentaje = document.getElementById('porcentaje-comision').value;
+  let comisionTotal = document.getElementById('comision-total').value;
+  
+  $.ajax({
+    url: "../../../Vista/comisiones/insertarNuevaComision.php",
+    type: "POST",
+    datatype: "JSON",
+    data: {
+      fechaComision: fechaComision,
+      idVenta: idVenta,
+      montoTotal: montoTotal,
+      idPorcentaje: porcentaje,
+      comisionTotal: comisionTotal
+    },
+    success: function () {
+      Swal.fire(
+        'Registrado!',
+        'Se ha registrado la comision!',
+        'success',
+      )
+    }
+});
+});
+/* let $btnGuardarComision = document.getElementById('btn-guardar-comision');
+  $btnGuardarComision.addEventListener('click', function(){
+  let $idVenta = document.getElementById('monto-total').value;
+   let $idVendedor = document.getElementById('conteiner-vendedores').value; 
+  let $porcentaje = document.getElementById('porcentaje-comision').value;
+  let $comision = document.getElementById('comision-total').value;
+  let $fechaComision = document.getElementById('fecha-comision').value;
+  guardarComision($idVenta, $porcentaje, $comision, $fechaComision);
+}
+); */
+
+//crear comision
+/*let guardarComision = ($idVenta, $idVendedor, $porcentaje, $comision, $fechaComision) => {
+  $.ajax({
+
+url: "../../../Vista/comisiones/guardarComision.php",
+    type: "POST",
+    datatype: "JSON",
+    data: {
+      idVenta: $idVenta,
+      idVendedor: $idVendedor,
+      porcentaje: $porcentaje,
+      comision: $comision,
+      fechaComision: $fechaComision
+    },
+    success: function () {
+      Swal.fire(
+        'Registrado!',
+        'Se ha registrado la comision!',
+        'success',
+      )
+    },
+  }); //Fin AJAX
+ */

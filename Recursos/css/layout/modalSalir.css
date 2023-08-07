@@ -1,0 +1,77 @@
+/* Estilos generales del modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 5px;
+    max-width: 400px;
+  }
+  
+  .modal-header {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .modal-title {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .btn-close {
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .btn-close:hover {
+    color: red;
+  }
+  
+ /*  .modal-body { */
+    /* Estilos para el contenido del cuerpo del modal (opcional) */
+/*   } */
+  
+  .modal-footer {
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    text-align: right;
+  }
+  
+  .modal-footer a {
+    margin-left: 10px;
+  }
+  
+  /* Estilo para los botones dentro del modal */
+  .btn {
+    display: inline-block;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+  }
+  

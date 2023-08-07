@@ -9,6 +9,7 @@ if (isset($_POST['totalVenta'])) {
         if ($porcentaje['idPorcentaje'] == $_POST['porcentaje']) {
             $porcentaje = $porcentaje['porcentaje'];
             $comision = ControladorComision::calcularComisionTotal(floatval($porcentaje), floatval($_POST['totalVenta']));
+           /*  $dividirComision = ControladorComision::divisionDeComisiones(floatval($comision[0]['comision']), $_POST['vendedores']); */
             print json_encode($comision, JSON_UNESCAPED_UNICODE);
         }
 

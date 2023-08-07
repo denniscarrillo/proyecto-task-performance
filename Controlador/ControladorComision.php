@@ -19,4 +19,17 @@
         public static function calcularComisionTotal($porcentaje, $totalVenta){
             return Comision::calcularComision($porcentaje, $totalVenta);
         }
+        public static function guardarComisionVendedor($comision, $idComision, $vendedores, $user, $fechaComision){
+            Comision::dividirComisionVendedores($comision, $idComision, $vendedores, $user, $fechaComision);
+        }
+        public static function actualizarComision($idComision, $idVenta, $idPorcentaje, $comisionTotal, $user, $fechaComision){
+            return Comision::editarComision($idComision, $idVenta, $idPorcentaje, $comisionTotal, $user, $fechaComision);
+        }
+
+        public static function traerComisionesPorVendedor(){
+            return Comision::obtenerComisionesPorVendedor();
+        }
+        public static function obtenerSumaComisionesVendedores($fechaDesde, $fechaHasta){
+            return Comision::sumarComisionesVendedor($fechaDesde, $fechaHasta);
+        }
     }
