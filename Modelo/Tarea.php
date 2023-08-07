@@ -120,7 +120,7 @@ class Tarea
         }
         mysqli_close($abrirConexion); //Cerrar conexion
     }
-    /* public static function obtenerVendedoresTarea()
+    public static function obtenerVendedoresTarea()
     {
         try {
             $vendedores = array();
