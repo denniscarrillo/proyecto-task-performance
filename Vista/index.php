@@ -52,8 +52,7 @@ if (isset($_SESSION['usuario'])) {
         $urlCliente = './crud/cliente/gestionCliente.php';
         $urlCarteraCliente = './crud/carteraCliente/gestionCarteraClientes.php';
         $urlCrudComision = './crud/comision/gestionComision.php';
-        require_once 'layout/sidebar.php';
-        
+        require_once 'layout/sidebar.php';  
         ?>
       </div>
 
@@ -61,7 +60,38 @@ if (isset($_SESSION['usuario'])) {
               <?php
               require_once 'layout/navbar.php';
               ?>
-      </div>
+      </div>          
+  <div>
+   <a class="btn_Venta" href="/Vista/crud/venta/gestionVenta.php"><i class="fa-solid fa-cash-register"></i> Ventas...</a>
+ </div>
+  <br>
+
+  <div>
+    <a class="btn_Rendimiento" href="#"><i class="fa-solid fa-square-poll-vertical"></i> Rendimiento...</a>
+  </div>
+  <br>
+
+  <div>
+   <a class="btn_Comisiones" href="/Vista/comisiones/v_comision.php"><i class="fa-solid fa-money-bill"></i>   Comisiones...</a>
+  </div>
+  <br>
+
+  <div>
+ <a class="btn_Clientes" href="/Vista/crud/cliente/gestionCliente.php"><i class="fa-solid fa-user-group"></i> Clientes...</a>
+  </div>
+  <br>
+
+  <div>
+<a class="btn_Mantenimiento" href="#"><i class="fa-solid fa-screwdriver-wrench"></i> Mantenimiento...</a>
+ </div>
+<br>
+
+<!-- para el boton de busqueda de la empresa -->
+<div class="contenedor">
+<a class="button_web" href="https://cocinasyequipos.com" target="_blank" ><i class="fa-solid fa-globe"></i> Cocinas y Equipos...</a>
+<a class="button_fc" href="https://web.facebook.com/cyehn" target="_blank"> <i class="fa-brands fa-facebook"></i> Página de Facebook...</a>
+<a class="button_ig" href="https://www.instagram.com/cocinasyequiposhn/" target="_blank"> <i class="fa-brands fa-instagram"></i> Página de Instagram...</a>
+</div>
   </div>
 </div> 
 
