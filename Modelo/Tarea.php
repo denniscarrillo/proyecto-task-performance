@@ -31,13 +31,15 @@ class Tarea
             $tareasUsuario = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $resultado = $abrirConexion->query("SELECT t.titulo, t.fecha_Inicio, e.descripcion  FROM tbl_vendedores_tarea AS vt
+            $resultado = $abrirConexion->query("SELECT t.id_Tarea, t.id_EstadoAvance, t.titulo, t.fecha_Inicio, e.descripcion  FROM tbl_vendedores_tarea AS vt
             INNER JOIN tbl_tarea AS t ON t.id_Tarea = vt.id_Tarea
             INNER JOIN tbl_estadoavance AS e ON t.id_EstadoAvance = e.id_EstadoAvance
             WHERE vt.id_usuario_vendedor = '$idUser';");
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
             while ($fila = $resultado->fetch_assoc()) {
                 $tareasUsuario[] = [
+                    'id' => $fila['id_Tarea'],
+                    'idEstadoAvance' => $fila['id_EstadoAvance'],
                     'tipoTarea' => $fila['descripcion'],
                     'tituloTarea' => $fila['titulo'],
                     'fechaInicio' => $fila['fecha_Inicio'],
@@ -61,10 +63,6 @@ class Tarea
                                     '$tarea->fechaInicio', '$tarea->Creado_Por', '$tarea->fechaInicio')"; 
             $ejecutar_insert = mysqli_query($abrirConexion, $insert);
             $idTarea = mysqli_insert_id($abrirConexion);
-            /* $abrirConexion->query($insert); */
-            /* $insert = "SELECT LAST_INSERT_ID() AS 'idTarea';"; */
-            /* $idTarea =  $abrirConexion->query($insert)->fetch_assoc()['LAST_INSERT_ID()']; */
-            //Obtener el id de la tarea recien creada.
             $insertUsuarioTarea = "INSERT INTO `tbl_vendedores_tarea` (`id_Tarea`, `id_usuario_vendedor`) 
                                     VALUES ('$idTarea', '$tarea->idUsuario');";
             $ejecutar_insert = mysqli_query($abrirConexion, $insertUsuarioTarea);
@@ -138,6 +136,121 @@ class Tarea
             }
             return $vendedores;
         } catch (Exception $e) {
+            echo 'Error SQL:' . $e;
+        }
+        mysqli_close($abrirConexion); //Cerrar conexion
+    }
+    public static function obtenerArticulos(){
+        try{
+            $articulos = array();
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $select = "SELECT * FROM view_articulos";
+            $listaArticulos = $abrirConexion->query($select);
+            while($fila = $listaArticulos->fetch_assoc()){
+                $articulos[] = [
+                    'codArticulo' => $fila['CODARTICULO'],
+                    'articulo' => $fila['ARTICULO'],
+                    'detalleArticulo' =>$fila['DETALLE'],
+                    'marcaArticulo' =>$fila['MARCA']
+                ];
+            }
+            return $articulos;
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
+        mysqli_close($abrirConexion); //Cerrar conexion
+    }
+    public static function obtenerEstadosTarea(){
+        try{
+            $estadosTarea = array();
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $select = "SELECT * FROM tbl_estadoavance";
+            $listaEstados = $abrirConexion->query($select);
+            while($fila = $listaEstados->fetch_assoc()){
+                $estadosTarea[] = [
+                   'idEstado' => $fila['id_EstadoAvance'],
+                   'estado' => $fila['descripcion'] 
+                ];
+            }
+            return $estadosTarea;
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
+        mysqli_close($abrirConexion); //Cerrar conexion
+    }
+    public static function validarTipoCliente($rtn){
+        try{
+            $existeRtn = false;
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $selectCliente = "SELECT CIF FROM view_clientes WHERE CIF = '$rtn'";
+            $selectTarea = "SELECT id_EstadoAvance, RTN_Cliente FROM tbl_Tarea WHERE id_EstadoAvance = 4 AND RTN_Cliente = '$rtn'";
+            $rtnCliente = $abrirConexion->query($selectCliente);
+            $rtnTarea = $abrirConexion->query($selectTarea);
+            if($rtnCliente->num_rows > 0 || $rtnTarea->num_rows > 0){
+                $existeRtn = true;
+            }
+            return $existeRtn;
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
+        mysqli_close($abrirConexion); //Cerrar conexion
+    }
+    public static function obtenerClientes(){
+        try{
+            $clientes = array();
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $select = "SELECT CODCLIENTE, NOMBRECLIENTE, CIF, TELEFONO1, DIRECCION1 FROM view_clientes";
+            $listaClientes = $abrirConexion->query($select);
+            while($fila = $listaClientes->fetch_assoc()){
+                $clientes[] = [
+                    'codCliente' => $fila['CODCLIENTE'],
+                    'nombre' => $fila['NOMBRECLIENTE'],
+                    'rtn' =>$fila['CIF'],
+                    'telefono' =>$fila['TELEFONO1'],
+                    'direccion' =>$fila['DIRECCION1']
+                ];
+            }
+            return $clientes;
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
+        mysqli_close($abrirConexion); //Cerrar conexion
+    }
+    public static function agregarVendedoresTarea($idTarea, $idVendedores){
+        try {
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            foreach($idVendedores as $idVendedor){
+                $id= $idVendedor['idUsuario'];
+                $insertUsuarioTarea = "INSERT INTO `tbl_vendedores_tarea` (`id_Tarea`, `id_usuario_vendedor`) 
+                                    VALUES ('$idTarea', '$id');";
+                $ejecutar_insert = mysqli_query($abrirConexion, $insertUsuarioTarea);
+            }
+        } catch (Exception $e) {
+            echo 'Error SQL:' . $e;
+        }
+        mysqli_close($abrirConexion); //Cerrar conexion
+    }
+    public static function obtenerVendedores(){
+        try{
+            $vendedores = array();
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $select = "SELECT id_Usuario, usuario, nombre_Usuario FROM tbl_ms_usuario WHERE id_Rol = 4;";
+            $listaVendedores = $abrirConexion->query($select);
+            while($fila = $listaVendedores->fetch_assoc()){
+                $vendedores[] = [
+                    'id' => $fila['id_Usuario'],
+                    'usuario' => $fila['usuario'],
+                    'nombre' =>$fila['nombre_Usuario']
+                ];
+            }
+            return $vendedores;
+        }catch(Exception $e){
             echo 'Error SQL:' . $e;
         }
         mysqli_close($abrirConexion); //Cerrar conexion

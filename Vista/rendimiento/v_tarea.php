@@ -86,12 +86,19 @@
       </div>
     </div>
   </div>
+  <div id="modals-container">
   <?php
-  require('modalEditarTarea.html');
+    require_once('modalVendedores.html');
+    require_once('modalEditarTarea.html');
+    // require_once('modalClientes.html');
+    require_once('modalArticulos.html');
   ?>
+  </div>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="../../Recursos/bootstrap5/bootstrap.min.js "></script>
   <script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
+  <script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
   <script src="../../Recursos/js/librerias/Sortable.min.js"></script>
   <script src="../../Recursos/js/index.js"></script>
   <script src="../../Recursos/js/rendimiento/tarea.js"></script>

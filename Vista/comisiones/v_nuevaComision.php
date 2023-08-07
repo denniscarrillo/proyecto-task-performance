@@ -50,7 +50,7 @@ require_once('validacionesComision.php');
             <label>ID comision</label>
             <input type="text" class="form-control">
           </div> -->
-          <div class="conteiner-id-venta form-element"">
+          <div class="conteiner-id-venta form-element">
             <label>Venta N°</label>
             <input type=" text" class="form-control" id="id-venta">
             <button type="button" class="btn-call-modal btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalfiltroVenta">

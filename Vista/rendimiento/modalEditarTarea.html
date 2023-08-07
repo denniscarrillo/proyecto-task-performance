@@ -1,48 +1,111 @@
-<div class="modal fade" id="modalEditarTarea" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+<!-- Moda-Editar-Tarea -->
+<div class="modal fade" id="modalEditarTarea" data-bs-backdrop="static" tabindex="-10" aria-labelledby="editarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="editarModalLabel">Actualizar tarea</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div style="display: flex; align-items: center;">
+                    <h1 class="modal-title fs-5" id="editarModalLabel">N° Tarea</h1>
+                    <p id="id-Tarea"></p>
+                </div>
+                <button type="button" class="btn-close" id="btn-cerrar-modal" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form action="" method="post" id="form-Edit-Tarea">
+                    <div class="encabezado-tarea">
+                        <div class="mb-3">
+                            <label class="text-cliente">Tipo cliente:</label>
+                            <input type="radio" name="radioOption" id="cliente-existente" class="radio" value="Existente"><label
+                                for="cliente-existente" class="radio-label form-label">Existente</label>
+                            <input type="radio" name="radioOption" id="cliente-nuevo" class="radio" value="Nuevo" checked><label
+                                for="cliente-nuevo" class="radio-label form-label">Nuevo</label> 
+                        </div>
+                        <div class="mb-3">
+                            <label for="estadotarea" class="form-label">Estado: </label>
+                            <select id="estados-tarea" class="form-control">
+                                <!-- Opciones estados de tarea -->
+                            </select>
+                            <p class="mensaje"></p>
+                        </div>
+                    </div>
                     <div id="group-inputs">
                         <!-- Columna 1 -->
                         <div class="grupo-form">
-                            <div class="mb-3" hidden="true">
-                                <label for="nombre" class="form-label">ID:</label>
-                                <input type="text" name="nombre" id="E_IdUsuario" class="form-control" required>
+                            <div class="mb-3" id="container-rtn-cliente">
+                                <label for="nombre" class="form-label">RTN:</label><p id="mensaje"></p>
+                                <input type="text" name="nombre" id="rnt-cliente" class="form-control">
+                                <!-- Aqui va el boton del filtro de clientes -->
                             </div>
                             <div class="mb-3">
-                                <label for="nombre" class="form-label">RTN:</label>
-                                <input type="text" name="nombre" id="E_nombre" class="form-control">
+                                <label for="nombre" class="form-label">Nombre Cliente:</label>
+                                <input type="text" name="nombre" id="nombre-cliente" class="form-control">
                                 <p class="mensaje"></p>
                             </div>
                             <div class="mb-3">
-                                <label for="nombre" class="form-label">N# Identificion: </label>
-                                <input type="text" name="nombre" id="E_nombre" class="form-control">
+                                <label for="telefono" class="form-label">Teléfono: </label>
+                                <input type="text" name="telefono" id="telefono-cliente" class="form-control">
+                                <p class="mensaje"></p>
+                            </div>
+                            <div class="mb-3" id="container-correo">
+                                <label for="correo" class="form-label">Correo Electrónico: </label>
+                                <input type="email" name="correo" id="correo-cliente" class="form-control">
                                 <p class="mensaje"></p>
                             </div>
                         </div>
-                        <!-- Columna 1 -->
+                        <!-- Columna 2 -->
                         <div class="grupo-form">
-                            <div class="mb-3" hidden="true">
-                                <label for="nombre" class="form-label">ID:</label>
-                                <input type="text" name="nombre" id="E_IdUsuario" class="form-control" required>
+                            <div class="mb-3">
+                                <label for="direccion" class="form-label">Dirección: </label>
+                                <input type="text" name="direccion" id="direccion-cliente" class="form-control">
+                                <p class="mensaje"></p>
+                            </div>
+                            <div class="mb-3" id="container-clasificacion-lead" hidden="true">
+                                <label for="clasificacionlead" class="form-label">Clasificación Lead: </label>
+                                <input type="text" name="clasificacionlead" id="clasificacionlead"
+                                    class="form-control">
+                                <p class="mensaje"></p>
+                            </div>
+                            <div class="mb-3" hidden="true" id="container-origen-lead">
+                                <label for="origenlead" class="form-label" >Origen Lead: </label>
+                                <input type="text" name="origenlead" id="origenlead" class="form-control">
+                                <p class="mensaje"></p>
                             </div>
                             <div class="mb-3">
-                                <label for="nombre" class="form-label">Nombre:</label>
-                                <input type="text" name="nombre" id="E_nombre" class="form-control">
+                                <label for="rubrocomercial" class="form-label">Rubro Comercial: </label>
+                                <input type="text" name="rubrocomercial" id="rubrocomercial" class="form-control">
+                                <p class="mensaje"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label for="razonsocial" class="form-label">Razón Social: </label>
+                                <input type="text" name="razonsocial" id="razonsocial" class="form-control">
                                 <p class="mensaje"></p>
                             </div>
                         </div>
                     </div>
+                    <div class="table-conteiner">
+                        <div class="mb-3 conteiner-id-articulo">
+                            <p class="titulo-articulo">Artículos Interés</p>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#modalArticulos" id="btn-articulos">
+                                Seleccionar... <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
+                            </button>
+                        </div>
+                        <table id="table-articulos" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Artículo</th>
+                                    <th scope="col">Marca</th>
+                                </tr>
+                            </thead>
+                            <tbody id="list-articulos" class="table-group-divider">
+                                <!-- Articulos de interes -->
+                            </tbody>
+                        </table>
+                    </div>
                     <!-- Botones -->
                     <div class="btn-guardar">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i>
-                            Guardar</button>
+                        <button type="button" id="btn-cerrar2" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i>Guardar</button>
                     </div>
                 </form>
             </div>
