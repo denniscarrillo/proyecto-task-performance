@@ -15,8 +15,12 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <!-- Enstilo css (si es necesario) -->
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="ruta/al/archivo.css">
   <!--  Tipos de letra -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+
+  <link href="../../../Recursos/css/modalSalir.css" rel="stylesheet">
+  <link href='../../../Recursos/css/layout/modalSalir.css' rel='stylesheet'>
 </head>
 
 <body>
@@ -24,50 +28,38 @@
   <div class="container-fluid">
     <a class="navbar-brand"></a>
     <form class="d-flex">
-      <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-      <button class="btn btn-success" type="submit">Buscar</button>
+      <!-- Menú desplegable - Información del usuario -->
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+          Perfil
+        </button>
+        <div class="dropdown-menu" aria-labelledby="userMenu">
+          <!-- <a class="dropdown-item" href="#">
+            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+            Ajustes
+          </a> -->
+          <a class="dropdown-item" href="#">
+           <!--  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+            Logotipo de actividad
+          </a> -->
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="../../Vista/layout/modalSalir.php" data-toggle="modal" data-target="#logoutModal">
+            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>Cerrar Sesión
+          </a>
+        </div>
+      </div>
     </form>
   </div>
 </nav>
 
   <!-- Page Heading -->
-  </iv>
     <span class="container">
       <h1>Bienvenido.</h1>
-      <p>Sistema cosinas y equipos.</p>
+      <p>Sistema Cocinas y Equipos.</p>
     </span>
-  </div>
+  
 <!-- para cargar la imagen -->
-  <img src="../../Recursos/imagenes/cocina.jpg" class="img-fluid" alt="imagien">
+  <img src="../../Recursos/imagenes/cocina.jpg" class="img-fluid" alt="imagen">
 
-  <div>
-   <a class="btn_Venta" href="/Vista/crud/venta/gestionVenta.php"><i class="fa-solid fa-cash-register"></i> Ventas...</a>
- </div>
-  <br>
-
-  <div>
-    <a class="btn_Rendimiento" href="#"><i class="fa-solid fa-square-poll-vertical"></i> Rendimiento...</a>
-  </div>
-  <br>
-
-  <div>
-   <a class="btn_Comisiones" href="/Vista/comisiones/v_comision.php"><i class="fa-solid fa-money-bill"></i>
-   Comisiones...</a>
-  </div>
-  <br>
-
-  <div>
- <a class="btn_Clientes" href="/Vista/crud/cliente/gestionCliente.php"><i class="fa-solid fa-user-group"></i>
-      Clientes...</a>
-  </div>
-  <br>
-
-  <div>
-<a class="btn_Mantenimiento" href="#" class="btn_Mantenimiento btn btn-danger"><i class="fa-solid fa-screwdriver-wrench"></i> Mantenimiento...</a>
- </div>
-<br>
-
-  <!-- Enlace a Font Awesome (si es necesario) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
-</body>
 </html>
