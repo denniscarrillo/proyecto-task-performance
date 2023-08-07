@@ -13,8 +13,12 @@
             return CarteraClientes::obtenerContactoCliente();
         }
 
-        public static function eliminacionCliente($nombre){
-            return CarteraClientes::eliminarCliente($nombre);
+        public static function editarCliente($nuevoCliente){
+            CarteraClientes::editarCliente($nuevoCliente);
+        }
+
+        public static function eliminarCliente($nombre){
+          return CarteraClientes::eliminarCliente($nombre);
        }
     }
 

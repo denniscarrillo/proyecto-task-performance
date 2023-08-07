@@ -76,6 +76,9 @@ session_start(); //Reanudamos la sesion
                 <th scope="col"> ACCIONES </th>
               </tr>
             </thead>
+            <div class ="text-left mb-2">
+            <a href="../../fpdf/ReporteCarteraClientes.php" target="_blank" class="btn btn-success" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
+            </div>
             <tbody class="table-group-divider">
             </tbody>
           </table>
@@ -85,7 +88,7 @@ session_start(); //Reanudamos la sesion
   </div>
   <?php
   require_once('modalNuevoCliente.html');
-  //require('modalEditarUsuario.html');
+  require('modalEditarCliente.html');
   ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
@@ -96,7 +99,7 @@ session_start(); //Reanudamos la sesion
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
   <script src="../../../Recursos/js/CarteraClientes/validacionesModalNuevoCliente.js"  type="module"></script>
-  <!--<script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script>-->
+  <script src="../../../Recursos/js/validacionesModalEditarCliente.js" type="module"></script>
 </body>
 
 </html>

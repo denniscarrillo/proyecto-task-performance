@@ -93,6 +93,7 @@ export const limiteMismoCaracter = (elemento, objetoRegex) => {
     }
     return estado;
 }
+
 export const validarCorreo = (elemento, objetoRegex) => {
     let estado;
     let mensaje = elemento.parentElement.querySelector('p');
@@ -108,3 +109,24 @@ export const validarCorreo = (elemento, objetoRegex) => {
     }
     return estado;
 }
+
+export const validarSoloNumeros = (elemento, objetoRegex) => {
+    let mensaje = elemento.parentElement.querySelector('p');
+    let estado;
+    let input = elemento.value;
+    if (!objetoRegex.test(input)){
+        mensaje.innerText = '*Solo se permiten Numeros.';
+        elemento.classList.add('mensaje_error');
+        estado = false;
+    } else {
+        mensaje.innerText = '';
+        elemento.classList.remove('mensaje_error');
+        estado = true;        
+    }
+    return estado;
+}
+
+    
+
+
+
