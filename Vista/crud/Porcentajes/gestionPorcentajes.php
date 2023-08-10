@@ -1,7 +1,7 @@
 <?php
 require_once("../../../db/Conexion.php");
-require_once("../../../Modelo/VistaClientes.php");
-require_once("../../../Controlador/ControladorVistaClientes.php");
+require_once("../../../Modelo/Porcentajes.php");
+require_once("../../../Controlador/ControladorPorcentajes.php");
 session_start(); //Reanudamos la sesion
 
 
@@ -54,28 +54,31 @@ session_start(); //Reanudamos la sesion
         $urlComision = '../../comisiones/v_comision.php';
         $urlCrudComision = '../comision/gestionComision.php';
         $urlVenta = '../venta/gestionVenta.php';
-        $urlCliente = 'gestionCliente.php';
+        $urlCliente = '../gestionCliente.php';
         $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
-        $urlPorcentaje = '../Porcentajes/gestionPorcentajes.php';
+        $urlPorcentaje = 'gestionPorcentajes.php';
         require_once '../../layout/sidebar.php';
         ?>
       </div>
       <div class="columna2 col-10">
-        <H1>Gestión de Clientes</H1>
+        <H1>Gestión de Porcentajes</H1>
         <div class="table-conteiner">
-          <table class="table" id="table-VistaClientes">
+        <div>
+            <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoCliente"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
+          </div>
+          <table class="table" id="table-Porcentajes">
             <thead>
               <tr>
-                <th scope="col"> ID </th>
-                <th scope="col"> CLIENTE </th>
-                <th scope="col"> RTN/DNI </th>
-                <th scope="col"> TELEFONO </th>
-                <th scope="col"> DIRECCION </th>
+                <th scope="col"> ID PORCENTAJE</th>
+                <th scope="col"> VALOR DE PORCENTAJE </th>
+                <th scope="col"> DESCRIPCION </th>
+                <th scope="col"> ESTADO DE PORCENTAJE </th>
+                <th scope="col"> ACCIONES </th>
               </tr>
             </thead>
-            <div class ="text-left mb-2">
+            <!-- <div class ="text-left mb-2">
             <a href="../../fpdf/ReporteClientes.php" target="_blank" class="btn btn-success" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
-            </div>
+            </div> -->
             <tbody class="table-group-divider">
             </tbody>
           </table>
@@ -88,7 +91,7 @@ session_start(); //Reanudamos la sesion
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-  <script src="../../../Recursos/js/VistaClientes/dataTable.js" type="module"></script>
+  <script src="../../../Recursos/js/Porcentajes/datatable.js" type="module"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>

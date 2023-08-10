@@ -83,6 +83,18 @@
           </a>
         </li>
         <li class="item">
+          <a href="<?php echo $urlPorcentaje; ?>" class="link flex">
+            <i class="bx bx-folder"></i>
+            <span>Porcentajes</span>
+          </a>
+        </li>
+        <li class="item">
+          <a href="<?php echo $urlMetricas; ?>" class="link flex">
+            <i class='bx bx-list-ul'></i>
+            <span>Metricas</span>
+          </a>
+        </li>
+        <li class="item">
           <a href="<?php echo$urlCrudComision; ?>" class="link flex">
             <i class='bx bxs-user-badge'></i>
             <span>Comisiones</span>

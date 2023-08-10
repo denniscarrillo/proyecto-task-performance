@@ -56,6 +56,7 @@ session_start(); //Reanudamos la sesion
         $urlVenta = 'gestionVenta.php';
         $urlCliente = '../cliente/gestionCliente.php';
         $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
+        $urlPorcentaje = '../Porcentajes/gestionPorcentajes.php';
         require_once '../../layout/sidebar.php';
         ?>
       </div>

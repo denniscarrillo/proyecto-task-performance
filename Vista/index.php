@@ -52,6 +52,7 @@ if (isset($_SESSION['usuario'])) {
         $urlCliente = './crud/cliente/gestionCliente.php';
         $urlCarteraCliente = './crud/carteraCliente/gestionCarteraClientes.php';
         $urlCrudComision = './crud/comision/gestionComision.php';
+        $urlPorcentaje = './crud/Porcentajes/gestionPorcentajes.php';
         require_once 'layout/sidebar.php';  
         ?>
       </div>
