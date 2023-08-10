@@ -5,9 +5,9 @@
             return Porcentajes::obtenerPorcentajes();
         }
 
-        // public static function registroCliente($nuevoCliente){
-        //     return CarteraClientes::registroNuevoCliente($nuevoCliente);
-        // }
+        public static function registroNuevoPorcentaje($nuevoPorcentaje){
+            return Porcentajes::registroNuevoPorcentaje($nuevoPorcentaje);
+        }
 
         // public static function estadoContactoCliente(){
         //     return CarteraClientes::obtenerContactoCliente();

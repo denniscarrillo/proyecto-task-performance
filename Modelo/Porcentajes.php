@@ -26,4 +26,17 @@ class Porcentajes {
         mysqli_close($consulta); #Cerramos la conexión.
         return $Porcent;
     }
+
+    //Método para crear nuevo registro
+    public static function registroNuevoPorcentaje($nuevoPorcentaje){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB
+        $valorPorcentaje = $nuevoPorcentaje->valorPorcentaje;
+        $descripcionPorcentaje = $nuevoPorcentaje->descripcionPorcentaje;
+        $estadoPorcentaje = $nuevoPorcentaje->estadoPorcentaje;
+        $nuevoPorcentaje = $consulta->query("INSERT INTO tbl_Porcentaje(valor_Porcentaje,descripcion,estado_Porcentaje)
+                       VALUES ('$valorPorcentaje', '$descripcionPorcentaje', '$estadoPorcentaje');");
+        mysqli_close($consulta); #Cerramos la conexión.
+        return $nuevoPorcentaje;
+        }
 }
