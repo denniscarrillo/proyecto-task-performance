@@ -1,7 +1,7 @@
 <?php
 require_once("../../../db/Conexion.php");
-require_once("../../../Modelo/VistaClientes.php");
-require_once("../../../Controlador/ControladorVistaClientes.php");
+require_once("../../../Modelo/Metricas.php");
+require_once("../../../Controlador/ControladorMetricas.php");
 session_start(); //Reanudamos la sesion
 
 
@@ -31,7 +31,6 @@ session_start(); //Reanudamos la sesion
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
   <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
-  <!-- Boostrap5 -->
   <link href='../../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
@@ -54,28 +53,30 @@ session_start(); //Reanudamos la sesion
         $urlComision = '../../comisiones/v_comision.php';
         $urlCrudComision = '../comision/gestionComision.php';
         $urlVenta = '../venta/gestionVenta.php';
-        $urlCliente = 'gestionCliente.php';
+        $urlCliente = '../cliente/gestionCliente.php';
         $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
         $urlPorcentaje = '../Porcentajes/gestionPorcentajes.php';
-        $urlMetricas = '../Metricas/gestionMetricas.php';
+        $urlMetricas = 'gestionMetricas.php';
         require_once '../../layout/sidebar.php';
         ?>
       </div>
       <div class="columna2 col-10">
-        <H1>Gestión de Clientes</H1>
+        <H1>Gestión de Metricas</H1>
         <div class="table-conteiner">
-          <table class="table" id="table-VistaClientes">
+          <div>
+            <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevaMetrica"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
+          </div>
+          <table class="table" id="table-Metricas">
             <thead>
               <tr>
-                <th scope="col"> ID </th>
-                <th scope="col"> CLIENTE </th>
-                <th scope="col"> RTN/DNI </th>
-                <th scope="col"> TELEFONO </th>
-                <th scope="col"> DIRECCION </th>
+                <th scope="col"> ID METRICA </th>
+                <th scope="col"> DESCRIPCION </th>
+                <th scope="col"> META </th>
+                <th scope="col"> ACCIONES </th>
               </tr>
             </thead>
             <div class ="text-left mb-2">
-            <a href="../../fpdf/ReporteClientes.php" target="_blank" class="btn btn-success" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
+            <a href="../../fpdf/ReporteCarteraClientes.php" target="_blank" class="btn btn-success" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
             </div>
             <tbody class="table-group-divider">
             </tbody>
@@ -84,15 +85,20 @@ session_start(); //Reanudamos la sesion
       </div>
     </div>
   </div>
- 
+  <?php
+//   require_once('modalNuevoCliente.html');
+//   require('modalEditarCliente.html');
+  ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-  <script src="../../../Recursos/js/VistaClientes/dataTable.js" type="module"></script>
+  <script src="../../../Recursos/js/Metricas/datatable.js" type="module"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
+  <!-- <script src="../../../Recursos/js/CarteraClientes/validacionesModalNuevoCliente.js"  type="module"></script>
+  <script src="../../../Recursos/js/CarteraClientes/validacionesModalEditarCliente.js" type="module"></script> -->
 </body>
 
 </html>

@@ -54,9 +54,10 @@ session_start(); //Reanudamos la sesion
         $urlComision = '../../comisiones/v_comision.php';
         $urlCrudComision = '../comision/gestionComision.php';
         $urlVenta = '../venta/gestionVenta.php';
-        $urlCliente = '../gestionCliente.php';
+        $urlCliente = '../cliente/gestionCliente.php';
         $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
         $urlPorcentaje = 'gestionPorcentajes.php';
+        $urlMetricas = '../Metricas/gestionMetricas.php';
         require_once '../../layout/sidebar.php';
         ?>
       </div>
