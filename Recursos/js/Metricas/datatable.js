@@ -1,5 +1,5 @@
  import {estadoValidado as validado } from './validacionesModalNuevaMetrica.js';
-// import {estadoValidado as valido } from './ValidacionesModalEditarCliente.js';
+ import {estadoValidado as valido } from './validacionesModalEditarMetrica.js';
 
 let tablaMetricas = '';
 $(document).ready(function () {
@@ -79,102 +79,88 @@ let obtenerEstadoAvance = function (idElemento) {
     }
   });
 }
+$(document).on("click", "#btn_editar", function(){		        
+  let fila = $(this).closest("tr"),	        
+  idMetrica = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		            
+  idEstadoAvance = fila.find('td:eq(1)').text(),
+  meta = fila.find('td:eq(2)').text();
+  $("#E_idMetrica").val(idMetrica);
+  $("#E_descripcion").val(obtenerEstadoAvance('#E_descripcion'));
+  $("#E_meta").val(meta);
+  $(".modal-header").css("background-color", "#007bff");
+  $(".modal-header").css("color", "white");	
+  $('#modalEditarMetrica').modal('show');		   
+});
 
-// //Editar Cliente
-// $(document).on("click", "#btn_editar", function(){		        
-//   let fila = $(this).closest("tr"),	        
-//   idcarteraCliente = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		            
-//   nombre = fila.find('td:eq(1)').text(),
-//   rtn = fila.find('td:eq(2)').text(),
-//   telefono = fila.find('td:eq(3)').text(),
-//   correo = fila.find('td:eq(4)').text(),
-//   idestadoContacto = fila.find('td:eq(5)').text();
-//   $("#E_carteraCliente").val(idcarteraCliente);
-//   $("#E_nombre").val(nombre);
-//   $("#E_rtn").val(rtn);
-//   $("#E_telefono").val(telefono);
-//   $("#E_correo").val(correo);
-//   $("#E_estado").val(obtenerContactoCliente('#E_estado'));
-//   $(".modal-header").css("background-color", "#007bff");
-//   $(".modal-header").css("color", "white");	
-//   $('#modalEditarCliente').modal('show');		   
-// });
-
-// $('#form-Edit-Cliente').submit(function (e) {
-//   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
-//    //Obtener datos del nuevo Cliente
-//    let 
-//    idcarteraCliente = $('#E_carteraCliente').val(),
-//    nombre = $('#E_nombre').val(),
-//    rtn =  $('#E_rtn').val(),
-//    telefono = $('#E_telefono').val(),
-//    correo = $('#E_correo').val(),
-//    idestadoContacto = document.getElementById('E_estado').value;
-//    if(valido){
-//     $.ajax({
-//       url: "../../../Vista/crud/carteraCliente/editarCliente.php",
-//       type: "POST",
-//       datatype: "JSON",
-//       data: {
-//        idcarteraCliente: idcarteraCliente,
-//        nombre: nombre,
-//        rtn: rtn,
-//        telefono: telefono,
-//        correo: correo,
-//        idestadoContacto: idestadoContacto
-//       },
-//       success: function () {
-//         //Mostrar mensaje de exito
-//         Swal.fire(
-//           'Actualizado!',
-//           'El cliente ha sido modificado!',
-//           'success',
-//         )
-//          tablaCarteraClientes.ajax.reload(null, false);
-//       }
-//     });
-//     $('#modalEditarCliente').modal('hide');
-//    }
-// });
-
-// //Eliminar Cliente
-// $(document).on("click", "#btn_eliminar", function() {
-//   let fila = $(this);        
-//     let nombre = $(this).closest('tr').find('td:eq(1)').text();		    
-//     Swal.fire({
-//       title: 'Estas seguro de eliminar a '+nombre+'?',
-//       text: "No podras revertir esto!",
-//       icon: 'warning',
-//       showCancelButton: true,
-//       confirmButtonColor: '#3085d6',
-//       cancelButtonColor: '#d33',
-//       confirmButtonText: 'Si, borralo!'
-//     }).then((result) => {
-//       if (result.isConfirmed) {      
-//         $.ajax({
-//           url: "../../../Vista/crud/carteraCliente/eliminarCliente.php",
-//           type: "POST",
-//           datatype:"json",    
-//           data:  { nombre: nombre},    
-//           success: function(data) {
-//             // let estadoEliminado = data[0].estadoEliminado;
-//             // console.log(data);
-//             // if(estadoEliminado == 'eliminado'){
-//               tablaCarteraClientes.row(fila.parents('tr')).remove().draw();
-//               Swal.fire(
-//                 'Eliminado!',
-//                 'El Cliente ha sido eliminado.',
-//                 'success'
-//               )  
-//             // } else {
-//             //   Swal.fire(
-//             //     'Lo sentimos!',
-//             //     'El usuario no puede ser eliminado.',
-//             //     'error'
-//             //   );
-//             // }           
-//           }
-//           }); //Fin del AJAX
-//         }
-//       });                
-//   });
+$('#form-Edit-Metrica').submit(function (e) {
+  e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
+   //Obtener datos del nuevo Cliente
+   let 
+   idMetrica = $('#E_idMetrica').val(),
+   idEstadoAvance = document.getElementById('E_descripcion').value;
+   meta =  $('#E_meta').val();
+   
+   if(valido){
+    $.ajax({
+      url: "../../../Vista/crud/Metricas/editarMetricas.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {
+       idMetrica: idMetrica,
+       idEstadoAvance: idEstadoAvance,
+       meta: meta
+      },
+      success: function () {
+        //Mostrar mensaje de exito
+        Swal.fire(
+          'Actualizado!',
+          'La metrica ha sido modificada!',
+          'success',
+        )
+         tablaMetricas.ajax.reload(null, false);
+      }
+    });
+    $('#modalEditarMetrica').modal('hide');
+   }
+});
+// /* // //Eliminar Cliente
+$(document).on("click", "#btn_eliminar", function() {
+  let fila = $(this);        
+    let idMetrica = $(this).closest('tr').find('td:eq(1)').text();		    
+    Swal.fire({
+      title: 'Estas seguro de eliminar a '+idMetrica+'?',
+      text: "No podras revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, borralo!'
+    }).then((result) => {
+      if (result.isConfirmed) {      
+        $.ajax({
+          url: "../../../Vista/crud/Metricas/eliminarMetrica.php",
+          type: "POST",
+          datatype:"json",    
+          data:  { idMetrica: idMetrica},    
+          success: function(data) {
+            // let estadoEliminado = data[0].estadoEliminado;
+            // console.log(data);
+            // if(estadoEliminado == 'eliminado'){
+              tablaMetricas.row(fila.parents('tr')).remove().draw();
+              Swal.fire(
+                'Eliminado!',
+                'La metricas ha sido eliminado.',
+                'success'
+              )  
+            // } else {
+            //   Swal.fire(
+            //     'Lo sentimos!',
+            //     'El usuario no puede ser eliminado.',
+            //     'error'
+            //   );
+            // }           
+          }
+          }); //Fin del AJAX
+        }
+      });                
+  }); 

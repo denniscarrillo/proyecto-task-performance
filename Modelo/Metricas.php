@@ -55,30 +55,27 @@ class Metricas{
 
 
 
-    // public static function editarCliente($nuevoCliente){
-    //     $conn = new Conexion();
-    //     $conexion = $conn->abrirConexionDB();
-    //     $idcarteraCliente = $nuevoCliente->idcarteraCliente;
-    //     $nombre =$nuevoCliente->nombre;
-    //     $rtn = $nuevoCliente->rtn;
-    //     $telefono =$nuevoCliente->telefono;
-    //     $correo = $nuevoCliente->correo;
-    //     $idestadoContacto = $nuevoCliente->idestadoContacto;
-    //     $nuevoCliente = $conexion->query("UPDATE tbl_carteracliente SET nombre_cliente='$nombre', rtn_Cliente='$rtn',telefono='$telefono',correo='$correo', id_estadoContacto='$idestadoContacto' WHERE id_CarteraCliente='$idcarteraCliente';");
-    //     mysqli_close($conexion); #Cerramos la conexión.
-    // }
+    public static function editarMetrica($nuevaMetrica){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $idMetrica = $nuevaMetrica->idMetrica;
+        $idEstadoAvance =$nuevaMetrica->idEstadoAvance;
+        $meta = $nuevaMetrica->meta;
+        $nuevaMetrica = $conexion->query("UPDATE tbl_metrica SET id_EstadoAvance='$idEstadoAvance', meta='$meta' WHERE id_Metrica='$idMetrica';");
+        mysqli_close($conexion); #Cerramos la conexión.
+    }
 
-    // public static function eliminarCliente($nombre){
-    //     $conn = new Conexion();
-    //     $conexion = $conn->abrirConexionDB();
-    //     $consultaidCliente= $conexion->query("SELECT id_CarteraCliente FROM tbl_CarteraCliente WHERE nombre_Cliente = '$nombre'");
-    //     $fila = $consultaidCliente->fetch_assoc();
-    //     $idcarteraCliente = $fila['id_CarteraCliente'];
-    //     //Eliminamos el cliente
-    //     $estadoEliminado = $conexion->query("DELETE FROM tbl_CarteraCliente WHERE id_CarteraCliente = $idcarteraCliente;");
-    //     mysqli_close($conexion); #Cerramos la conexión.
-    //     return $estadoEliminado;
-    // }
+    public static function eliminarMetrica($idMetrica){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $consultaidMetrica= $conexion->query("SELECT id_Metrica FROM tbl_metrica WHERE id_EstadoAvance = '$idMetrica'");
+        $fila = $consultaidMetrica->fetch_assoc();
+        $idMetrica = $fila['id_Metrica'];
+        //Eliminamos el cliente
+        $estadoEliminado = $conexion->query("DELETE FROM tbl_Metrica WHERE id_Metrica = $idMetrica;");
+        mysqli_close($conexion); #Cerramos la conexión.
+        return $estadoEliminado;
+    }
 
     
 

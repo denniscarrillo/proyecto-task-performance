@@ -13,11 +13,11 @@
             return Metricas::obtenerEstadoAvance();
         }
 
-    //     public static function editarCliente($nuevoCliente){
-    //         CarteraClientes::editarCliente($nuevoCliente);
-    //     }
+        public static function editarMetrica($nuevaMetrica){
+            Metricas::editarMetrica($nuevaMetrica);
+        }
 
-    //     public static function eliminarCliente($nombre){
-    //       return CarteraClientes::eliminarCliente($nombre);
-    //    }
+        public static function eliminarMetrica($idMetrica){
+          return Metricas::eliminarMetrica($idMetrica);
+       }
     }

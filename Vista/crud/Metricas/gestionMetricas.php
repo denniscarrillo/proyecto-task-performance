@@ -87,7 +87,7 @@ session_start(); //Reanudamos la sesion
   </div>
   <?php
 require_once('modalNuevaMetrica.html');
-//   require('modalEditarCliente.html');
+require('modalEditarMetrica.html');
   ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
@@ -98,7 +98,7 @@ require_once('modalNuevaMetrica.html');
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
   <script src="../../../Recursos/js/Metricas/validacionesModalNuevaMetrica.js"  type="module"></script>
-  <!-- <script src="../../../Recursos/js/CarteraClientes/validacionesModalEditarCliente.js" type="module"></script> -->
+  <script src="../../../Recursos/js/Metricas/validacionesModalEditarMetrica.js" type="module"></script>
 </body>
 
 </html>
