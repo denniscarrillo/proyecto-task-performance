@@ -30,6 +30,7 @@ require_once("validacionesComision.php");
         $urlTarea = '../rendimiento/v_tarea.php';
         $urlSolicitud = '../crud/solicitud/gestionSolicitud.php';
         $urlComision = 'v_comision.php';
+        $urlComisionVendedor = '../crud/ComisionesVendedores/ComisionesVendedores.php';
         $urlVenta = '../crud/venta/gestionVenta.php';
         $urlCliente = '../crud/cliente/gestionCliente.php';
         $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';

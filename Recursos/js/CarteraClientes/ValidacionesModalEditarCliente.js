@@ -10,18 +10,18 @@ const validaciones = {
 let estadoSoloLetras = {
     estadoLetrasName: true,
 }
+
 let estadoSoloNumeros = {
     estadoNumerosRtn: true,
 }
-
 let estadoSelect = true;
 let estadoCorreo = true;
 
-const $form = document.getElementById('form-CarteraClientes');
-const $name = document.getElementById('nombre');
-const $rtn = document.getElementById('rtn');
-const $correo = document.getElementById('correo');
-const $estadoContacto = document.getElementById('estadoContacto');
+const $form = document.getElementById('form-Edit-Cliente');
+const $name = document.getElementById('E_nombre');
+const $rtn = document.getElementById('E_rtn');
+const $correo = document.getElementById('E_correo');
+const $estadoContacto = document.getElementById('E_estado');
 
 /* ---------------- VALIDACIONES FORMULARIO GESTION NUEVO USUARIO ----------------------*/
 /* 
@@ -62,18 +62,14 @@ $form.addEventListener('submit', e => {
 });
 $name.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
-    $("#nombre").inputlimiter({
+    $("#E_nombre").inputlimiter({
         limit: 50
     });
-});
-$name.addEventListener('focusout', ()=>{
-    let usuarioMayus = $name.value.toUpperCase();
-    $name.value = usuarioMayus;
 });
 
 $rtn.addEventListener('keyup', ()=>{
     estadoSoloNumeros.estadoNumerosRtn = funciones.validarSoloNumeros($rtn, validaciones.soloNumeros);
-    $("#rtn").inputlimiter({
+    $("#E_rtn").inputlimiter({
         limit: 14
     });
 });

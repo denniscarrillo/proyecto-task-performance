@@ -136,7 +136,7 @@ class Comision
             $consulta->query("SELECT vt.id_Comision_Por_Vendedor, vt.id_usuario_vendedor, u.Usuario, vt.total_Comision, vt.Fecha_Creacion
             FROM tbl_ms_usuario AS u
             INNER JOIN tbl_comision_por_vendedor AS vt ON u.id_Usuario = vt.id_usuario_vendedor;");
-        $ComisionesVendedores = array();
+        $ComisionVendedor = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
         while ($fila = $listaComision->fetch_assoc()) {
             $ComisionVendedor[] = [

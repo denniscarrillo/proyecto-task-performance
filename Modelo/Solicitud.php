@@ -22,11 +22,11 @@ class Solicitud {
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $listaSolicitudes = 
             $consulta->query("SELECT s.id_Solicitud, s.fecha_Envio, s.descripcion,
-            s.correo, s.ubicacion, e.estadoSolicitud, t.servicio_Tecnico, c.nombre_Cliente, u.usuario
+            s.correo, s.ubicacion, e.estadoSolicitud, t.servicio_Tecnico, c.NOMBRECLIENTE, u.usuario
             FROM tbl_solicitud AS s
             INNER JOIN tbl_estadosolicitud AS e ON s.id_EstadoSolicitud = e.id_EstadoSolicitud
             INNER JOIN tbl_tiposervicio AS t ON s.id_tipoServicio = t.id_tipoServicio
-            INNER JOIN tbl_vista_cliente AS c ON s.id_Cliente = c.id_Cliente
+            INNER JOIN View_Clientes AS c ON s.id_Cliente = c.CODCLIENTE
             INNER JOIN tbl_ms_usuario AS u ON s.id_Usuario = u.id_Usuario;
             ");
         $solicitudes = array();
@@ -40,7 +40,7 @@ class Solicitud {
                 'Ubicacion' => $fila["ubicacion"],
                 'EstadoSolicitud' => $fila["estadoSolicitud"],
                 'ServicioTecnico' => $fila["servicio_Tecnico"],
-                'NombreCliente' => $fila["nombre_Cliente"],
+                'NombreCliente' => $fila["NOMBRECLIENTE"],
                 'Usuario' => $fila["usuario"],
             ];
         }
