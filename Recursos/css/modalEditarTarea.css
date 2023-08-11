@@ -45,6 +45,21 @@
     padding: 0.4rem;
     position: relative;
 }
+.conteiner-form{
+    margin-top: 1rem;
+}
+.cant-producto, .id-producto{
+    padding: 2px;
+    padding-left: 4px;
+    width: 6rem;
+    border: 1px dotted grey;
+    outline: none;
+}
+
+.id-producto{
+    border: none;
+    font-size: 18px;
+}
 .btn-call-modal {
     position: absolute;
     right: 3px;

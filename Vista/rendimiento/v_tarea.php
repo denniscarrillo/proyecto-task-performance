@@ -91,9 +91,6 @@
   <div id="modals-container">
   <?php
     require_once('modalVendedores.html');
-    require_once('modalEditarTarea.html');
-    // require_once('modalClientes.html');
-    require_once('modalArticulos.html');
   ?>
   </div>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
