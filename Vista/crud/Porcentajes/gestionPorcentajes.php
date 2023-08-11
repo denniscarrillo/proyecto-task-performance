@@ -64,7 +64,7 @@ session_start(); //Reanudamos la sesion
         <H1>Gestión de Porcentajes</H1>
         <div class="table-conteiner">
         <div>
-            <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoCliente"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
+            <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoPorcentaje"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
           </div>
           <table class="table" id="table-Porcentajes">
             <thead>
@@ -86,6 +86,10 @@ session_start(); //Reanudamos la sesion
       </div>
     </div>
   </div>
+  <?php
+  require('modalNuevoPorcentaje.html');
+  //require('modalEditarUsuario.html');
+  ?>
  
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
@@ -93,6 +97,7 @@ session_start(); //Reanudamos la sesion
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script src="../../../Recursos/js/Porcentajes/datatable.js" type="module"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
+  <script src="../../../Recursos/js/Porcentajes/ValidacionesModalNuevoPorcentaje.js"  type="module"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
 </body>

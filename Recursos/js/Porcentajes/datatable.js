@@ -1,3 +1,5 @@
+import {estadoValidado as validado } from './ValidacionesModalNuevoPorcentaje.js';
+
 let tablaPorcentajes = '';
 $(document).ready(function () {
   tablaPorcentajes = $('#table-Porcentajes').DataTable({
