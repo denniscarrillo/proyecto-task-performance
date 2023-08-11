@@ -255,4 +255,86 @@ class Tarea
         }
         mysqli_close($abrirConexion); //Cerrar conexion
     }
+    public static function editarTarea($idTarea, $tipoTarea, $datosTarea){
+        try{
+            //Variables
+            $rtn = ''; $estadoCliente = ''; $idClasificacionLead = '';
+            $idOrigen = ''; $razon = ''; $rubro = ''; 
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            if($tipoTarea == '2'){
+                foreach($datosTarea as $dato){
+                    $rtn = $dato['rtn']; $estadoCliente = $dato['tipoCliente']; $idClasificacionLead = $dato['clasificacionLead'];
+                    $idOrigen = $dato['origenLead']; $razon = $dato['razon']; $rubro = $dato['rubro']; 
+                    //Actualizamos los datos de la tarea
+                    $update = "UPDATE tbl_tarea SET `RTN_Cliente` = '$rtn', `estado_Cliente_Tarea` = '$estadoCliente', 
+                    `id_ClasificacionLead` = '$idClasificacionLead', `id_OrigenLead` = $idOrigen, `rubro_Comercial` = '$rubro', `razon_Social` ='$razon'
+                    WHERE `id_Tarea` = '$idTarea';";
+                    $abrirConexion->query($update);
+                }
+            }else{
+                foreach($datosTarea as $dato){
+                    $rtn = $dato['rtn']; $estadoCliente = $dato['tipoCliente']; $razon = $dato['razon']; $rubro = $dato['rubro']; 
+                    //Actualizamos los datos de la tarea
+                    $update = "UPDATE tbl_tarea SET `RTN_Cliente` = '$rtn', `estado_Cliente_Tarea` = '$estadoCliente', 
+                    `rubro_Comercial` = '$razon', `razon_Social` ='$rubro'
+                    WHERE `id_Tarea` = '$idTarea';";
+                    $abrirConexion->query($update);
+                }
+            }
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
+        mysqli_close($abrirConexion); //Cerrar conexion
+    }
+    public static function obtenerClasificacionLead() {
+        try{
+            $clasificacion = array();
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $resultado = $abrirConexion->query("SELECT `id_ClasificacionLead`, `descripcion` FROM `tbl_ClasificacionLead`;");
+            //Recorremos el resultado de tareas y almacenamos en el arreglo.
+            while ($fila = $resultado->fetch_assoc()) {
+                $clasificacion[] = [
+                    'id' => $fila['id_ClasificacionLead'],
+                    'clasificacion' => $fila['descripcion']
+                ];
+            }
+            return $clasificacion;
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
+        mysqli_close($abrirConexion); //Cerrar conexion
+    }
+    public static function obtenerOrigenLead() {
+        try{
+            $origen = array();
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $resultado = $abrirConexion->query("SELECT `id_OrigenLead`, `descripcion` FROM `tbl_OrigenLead`;");
+            //Recorremos el resultado de tareas y almacenamos en el arreglo.
+            while ($fila = $resultado->fetch_assoc()) {
+                $origen[] = [
+                    'id' => $fila['id_OrigenLead'],
+                    'origen' => $fila['descripcion']
+                ];
+            }
+            return $origen;
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
+        mysqli_close($abrirConexion); //Cerrar conexion
+    }
+    public static function agregarNuevoCliente($nombre, $rtn, $telefono, $correo, $direccion){
+        try {
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $insertNuevoCliente = "INSERT INTO `tbl_CarteraCliente` (`nombre_Cliente`, `rtn_Cliente`, `telefono`, `correo`, `direccion`) 
+            VALUES('$nombre', '$rtn', '$telefono', '$correo', '$direccion');";
+            mysqli_query($abrirConexion, $insertNuevoCliente);
+        } catch (Exception $e) {
+            echo 'Error SQL:' . $e;
+        }
+        mysqli_close($abrirConexion); //Cerrar conexion
+    }
 }

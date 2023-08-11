@@ -28,4 +28,16 @@ class ControladorTarea {
     public static function obtenerVendedoresTarea(){
         return Tarea::obtenerVendedores();
     }
+    public static function obtenerClasificacionLead(){
+        return Tarea::obtenerClasificacionLead();
+    }
+    public static function obtenerOrigenLead(){
+        return Tarea::obtenerOrigenLead();
+    }
+    public static function actualizarTarea($idTarea, $tipoTarea, $datosTarea){
+        Tarea::editarTarea($idTarea, $tipoTarea, $datosTarea);
+    }
+    public static function insertarNuevoCliente($nombre, $rtn, $telefono, $correo, $direccion){
+        Tarea::agregarNuevoCliente($nombre, $rtn, $telefono, $correo, $direccion);
+    }
 }
