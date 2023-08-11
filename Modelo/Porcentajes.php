@@ -38,5 +38,18 @@ class Porcentajes {
                        VALUES ('$valorPorcentaje', '$descripcionPorcentaje', '$estadoPorcentaje');");
         mysqli_close($consulta); #Cerramos la conexión.
         return $nuevoPorcentaje;
-        }
+    }
+
+    public static function editarPorcentaje($nuevoPorcentaje){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $idPorcentaje = $nuevoPorcentaje->idPorcentaje;
+        $valorPorcentaje = $nuevoPorcentaje->valorPorcentaje;
+        $descripcionPorcentaje =$nuevoPorcentaje->descripcionPorcentaje;
+        $estadoPorcentaje = $nuevoPorcentaje->estadoPorcentaje;
+        $nuevoPorcentaje = $conexion->query("UPDATE tbl_porcentaje SET valor_Porcentaje='$valorPorcentaje', descripcion='$descripcionPorcentaje',estado_Porcentaje='$estadoPorcentaje' WHERE id_Porcentaje='$idPorcentaje';");
+        mysqli_close($conexion); #Cerramos la conexión.
+    }
+
+
 }

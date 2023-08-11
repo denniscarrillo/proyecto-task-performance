@@ -88,7 +88,7 @@ session_start(); //Reanudamos la sesion
   </div>
   <?php
   require('modalNuevoPorcentaje.html');
-  //require('modalEditarUsuario.html');
+  require('modalEditarPorcentaje.html');
   ?>
  
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
@@ -98,6 +98,7 @@ session_start(); //Reanudamos la sesion
   <script src="../../../Recursos/js/Porcentajes/datatable.js" type="module"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/js/Porcentajes/ValidacionesModalNuevoPorcentaje.js"  type="module"></script>
+  <script src="../../../Recursos/js/Porcentajes/ValidacionesModalEditarPorcentaje.js" type="module"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
 </body>

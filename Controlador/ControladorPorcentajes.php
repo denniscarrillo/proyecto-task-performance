@@ -9,13 +9,9 @@
             return Porcentajes::registroNuevoPorcentaje($nuevoPorcentaje);
         }
 
-        // public static function estadoContactoCliente(){
-        //     return CarteraClientes::obtenerContactoCliente();
-        // }
-
-        // public static function editarCliente($nuevoCliente){
-        //     CarteraClientes::editarCliente($nuevoCliente);
-        // }
+        public static function editarPorcentaje($nuevoPorcentaje){
+            Porcentajes::editarPorcentaje($nuevoPorcentaje);
+        }
 
         
     }
