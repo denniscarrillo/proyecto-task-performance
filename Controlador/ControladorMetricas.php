@@ -5,13 +5,13 @@
             return Metricas::obtenerMetricas();
         }
 
-    //     public static function registroCliente($nuevoCliente){
-    //         return CarteraClientes::registroNuevoCliente($nuevoCliente);
-    //     }
+        public static function registroNuevaMetrica($nuevaMetrica){
+            return Metricas::registroNuevaMetrica($nuevaMetrica);
+        }
 
-    //     public static function estadoContactoCliente(){
-    //         return CarteraClientes::obtenerContactoCliente();
-    //     }
+        public static function EstadoAvance(){
+            return Metricas::obtenerEstadoAvance();
+        }
 
     //     public static function editarCliente($nuevoCliente){
     //         CarteraClientes::editarCliente($nuevoCliente);

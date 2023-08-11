@@ -86,7 +86,7 @@ session_start(); //Reanudamos la sesion
     </div>
   </div>
   <?php
-//   require_once('modalNuevoCliente.html');
+require_once('modalNuevaMetrica.html');
 //   require('modalEditarCliente.html');
   ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
@@ -97,8 +97,8 @@ session_start(); //Reanudamos la sesion
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
-  <!-- <script src="../../../Recursos/js/CarteraClientes/validacionesModalNuevoCliente.js"  type="module"></script>
-  <script src="../../../Recursos/js/CarteraClientes/validacionesModalEditarCliente.js" type="module"></script> -->
+  <script src="../../../Recursos/js/Metricas/validacionesModalNuevaMetrica.js"  type="module"></script>
+  <!-- <script src="../../../Recursos/js/CarteraClientes/validacionesModalEditarCliente.js" type="module"></script> -->
 </body>
 
 </html>
