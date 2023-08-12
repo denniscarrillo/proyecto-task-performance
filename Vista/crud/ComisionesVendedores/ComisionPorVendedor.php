@@ -30,7 +30,9 @@
         $urlComisionVendedor = '../ComisionesVendedores.php';
         $urlVenta = '../crud/venta/gestionVenta.php';
         $urlCliente = '../crud/cliente/gestionCliente.php';
-        $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
+        $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
+        $urlPorcentaje = '../Porcentajes/gestionPorcentajes.php';
+        $urlMetricas = '../crud/Metricas/gestionMetricas.php';
         require_once '../../layout/sidebar.php';
         ?>
       </div>

@@ -54,10 +54,15 @@ if (isset($_SESSION['usuario'])) {
         $urlCliente = './crud/cliente/gestionCliente.php';
         $urlCarteraCliente = './crud/carteraCliente/gestionCarteraClientes.php';
         $urlCrudComision = './crud/comision/gestionComision.php';
+<<<<<<< HEAD
         $urlRoles = '../../../Vista/crud/rol/gestionRol.php';
         $urlPreguntas = '../../../Vista/crud/pregunta/gestionPregunta.php';
         $urlBitacoras = '../../../Vista/crud/bitacora/gestionBitacora.php';
         
+=======
+        $urlPorcentaje = './crud/Porcentajes/gestionPorcentajes.php';
+        $urlMetricas = './crud/Metricas/gestionMetricas.php';
+>>>>>>> 6646340ca87ea9a7b3880dd863aea6728a023207
         require_once 'layout/sidebar.php';  
         ?>
       </div>

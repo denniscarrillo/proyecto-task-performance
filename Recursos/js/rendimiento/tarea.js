@@ -39,28 +39,28 @@ $(document).ready(function () {
 
 });
 
-let $rtn = document.getElementById('rnt-cliente');
-$rtn.addEventListener('focusout', function () {
-  $.ajax({
-    url: "../../../Vista/rendimiento/validarTipoCliente.php",
-    type: "POST",
-    datatype: "JSON",
-    data: {
-      rtnCliente: $rtn.value
-    },
-    success: function (cliente) {
-      let $mensaje = document.getElementById('mensaje');
-      let $objCliente = JSON.parse(cliente);
-      if ($objCliente[0].estado == 'true') {
-        $mensaje.innerText = 'Cliente existente'
-        $mensaje.classList.add('mensaje-existe-cliente');
-      } else {
-        $mensaje.innerText = '';
-        $mensaje.classList.remove('mensaje-existe-cliente');
-      }
-    }
-  }); //Fin AJAX
-});
+// let $rtn = document.getElementById('rnt-cliente');
+// $rtn.addEventListener('focusout', function () {
+//   $.ajax({
+//     url: "../../../Vista/rendimiento/validarTipoCliente.php",
+//     type: "POST",
+//     datatype: "JSON",
+//     data: {
+//       rtnCliente: $rtn.value
+//     },
+//     success: function (cliente) {
+//       let $mensaje = document.getElementById('mensaje');
+//       let $objCliente = JSON.parse(cliente);
+//       if ($objCliente[0].estado == 'true') {
+//         $mensaje.innerText = 'Cliente existente'
+//         $mensaje.classList.add('mensaje-existe-cliente');
+//       } else {
+//         $mensaje.innerText = '';
+//         $mensaje.classList.remove('mensaje-existe-cliente');
+//       }
+//     }
+//   }); //Fin AJAX
+// });
 //Evento
 $('#btn-NuevaLLamada').click(function () {
   //Nos crea y muestra el pequeño formulario para la nueva tarea llamada
@@ -129,7 +129,7 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
                 <a href="#" class="btn-editar btn-vendedores" data-bs-toggle="modal" data-bs-target="#modalVendedores" id="${tarea.id}-${tarea.idEstadoAvance}"><i class="fa-solid-btn fa-solid fa-user-plus"></i></a>
               </div>
               <div>
-                <a href="#" class="btn-editar" id="${tarea.id}-${tarea.idEstadoAvance}" data-bs-toggle="modal" data-bs-target="#modalEditarTarea"><i class="fa-solid-btn fa-solid fa-pen-to-square"></i></a>
+                <a href="../../../Vista/rendimiento/v_editarTarea.php?idTarea=${tarea.id}&estado=${tarea.idEstadoAvance}" class="btn-editar"><i class="fa-solid-btn fa-solid fa-pen-to-square"></i></a>
               </div>
               <i class="fa-solid-btn fa-solid fa-tag"></i>
               </div>
@@ -142,14 +142,13 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
       //Si no hay tareas del tipo buscado el contador se mantiene en cero y se indica en el HTML
       (count == 0) ? $contador.innerText = '0' : $contador.innerText = count;
       //Añade evento click a todos los botones de las tareas, que trea los estados tareas.
-      document.querySelectorAll('.btn-editar').forEach((btnEditar) => {
-        btnEditar.addEventListener('click', (e) => {
-          obtenerEstadosTarea(document.getElementById('estados-tarea'), btnEditar);
-        });
-      });
+      // document.querySelectorAll('.btn-editar').forEach((btnEditar) => {
+      //   btnEditar.addEventListener('click', (e) => {
+      //     obtenerEstadosTarea(document.getElementById('estados-tarea'), btnEditar);
+      //   });
+      // });
     }
   });
-  // id="btn_nuevoRegistro" 
 }
 let crearNuevaTarea = ($contenedor, $idConteinerForm, $idForm, $placeholder, $tarea) => {
   // Validamos si no existe el formulrio para nueva tarea, solo entonces se agrega.
@@ -233,279 +232,4 @@ let guardarTarea = ($btnGuardar, $tarea, $actualizarTarea, $elementoPadre, $elem
       } //Fin de los casos
     }
   });
-}
-// CARGAR LOS ARTICULOS A AGREGAR A LA TAREA
-$('#btn-articulos').click(() => {
-  if (document.getElementById('table-Articulos_wrapper') == null) {
-    $('#table-Articulos').DataTable({
-      "ajax": {
-        "url": "../../../Vista/articulos/obtenerArticulos.php",
-        "dataSrc": ""
-      },
-      "language": {
-        "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
-      },
-      "columns": [
-        { "data": "codArticulo" },
-        { "data": 'articulo' },
-        { "data": 'detalleArticulo' },
-        { "data": 'marcaArticulo' },
-        {
-          "defaultContent":
-            '<div><button class="btns btn" id="btn_select-article"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>'
-        }
-      ]
-    });
-  }
-});
-$(document).on('click', '#btn_select-article', function () {
-  selectArticulos(this);
-});
-$(document).on("click", "#btn_select-cliente", function () {
-  let fila = $(this).closest("tr");
-  let nombreCliente = fila.find("td:eq(1)").text();
-  let rtnCliente = fila.find("td:eq(2)").text();
-  let telefonoCliente = fila.find("td:eq(3)").text();
-  let direccionCliente = fila.find("td:eq(4)").text();
-  let nombre = document.getElementById("nombre-cliente");
-  let rtn = document.getElementById("rnt-cliente");
-  let telefono = document.getElementById("telefono-cliente");
-  let direccion = document.getElementById("direccion-cliente");
-
-  //Setear datos del cliente
-  nombre.value = nombreCliente;
-  rtn.value = rtnCliente;
-  telefono.value = telefonoCliente;
-  direccion.value = direccionCliente;
-  //Deshabilitar elementos
-  nombre.setAttribute('disabled', 'true');
-  rtn.setAttribute('disabled', 'true');
-  telefono.setAttribute('disabled', 'true');
-  direccion.setAttribute('disabled', 'true');
-
-  $("#modalClientes").modal("hide");
-  $("#modalEditarTarea").modal("show");
-});
-//Evento al boton "Agregar"
-$('#btn_agregar').click(function () {
-  agregarArticulos();
-  $('#modalArticulos').modal('hide');
-  $('#modalEditarTarea').modal('show');
-});
-let selectArticulos = function ($elementoHtml) {
-  $elementoHtml.classList.toggle('select-articulo');
-}
-let agregarArticulos = function () {
-  let $Articulos = [];
-  let productosSeleccionados = document.querySelectorAll('.select-articulo');
-  productosSeleccionados.forEach(function (producto) {
-    if (producto.classList.contains('select-articulo')) {
-      let $idArticulo = $(producto).closest('tr').find('td:eq(0)').text();
-      let $nombreArticulo = $(producto).closest('tr').find('td:eq(1)').text();
-      let $marca = $(producto).closest('tr').find('td:eq(3)').text();
-      let $articulo = {
-        id: $idArticulo,
-        nombre: $nombreArticulo,
-        marca: $marca
-      }
-      $Articulos.push($articulo);
-    }
-  });
-  carritoArticulos($Articulos);
-}
-let carritoArticulos = ($productos) => {
-  let productos = '';
-  let $tableArticulos = document.getElementById('list-articulos');
-  $productos.forEach((producto) => {
-    productos += `
-    <tr>
-      <td>${producto.id}</td>
-      <td>${producto.nombre}</td>
-      <td>${producto.marca}</td>
-    </tr>
-  `
-  });
-  $tableArticulos.innerHTML = productos;
-}
-let obtenerEstadosTarea = ($elemento, $btn) => {
-  $.ajax({
-    url: "../../../Vista/rendimiento/obtenerEstadosTarea.php",
-    type: "GET",
-    datatype: "JSON",
-    success: function (tareas) {
-      let objTareas = JSON.parse(tareas); //Convertimos JSON a objeto javascript
-      let estadosTarea = '<option value="" disabled>Seleccionar...</option>';
-      //Recorremo arreglo de objetos con un forEach para mostrar tareas
-      objTareas.forEach(tarea => {
-        estadosTarea += `
-          <option value="${tarea.idEstado}">${tarea.estado}</option>
-        `;
-      });
-      $elemento.innerHTML = estadosTarea;
-      let idTareaEstado = $btn.getAttribute('id').split('-');
-      //Setear tipo de tarea
-      for (var i = 0; i < $elemento.length; i++) {
-        var option = $elemento[i];
-        if (idTareaEstado[1] == option.value) {
-          option.setAttribute('selected', 'true');
-          //Si el estado es Lead se mostraran los campos origenLead y clasificacionLead
-          if (option.value == 2) {
-            document.getElementById('container-clasificacion-lead').removeAttribute('hidden');
-            document.getElementById('container-origen-lead').removeAttribute('hidden');
-          } else {
-            document.getElementById('container-clasificacion-lead').setAttribute('hidden', 'true');
-            document.getElementById('container-origen-lead').setAttribute('hidden', 'true');
-          }
-        }
-      }
-      document.getElementById('id-Tarea').innerText = idTareaEstado[0];
-    }
-  }); //Fin AJAX
-}
-/* ============= EVENTOS DE TIPO DE CLIENTE Y BOTON PARA BUSCAR EL CLIENTE, EN CASO SEA EXISTENTE ================== */
-//Si el tipo de cliente es existen se crea y muestra un boton para buscar el cliente
-document.getElementById('cliente-existente').addEventListener('change', function () {
-  limpiarForm();
-  let $containerRTN = document.getElementById('container-rtn-cliente');
-  if (document.getElementById('btn-clientes') == null) {
-    let $btnBuscar = document.createElement('div')
-    $btnBuscar.classList.add('btn-buscar-cliente');
-    $btnBuscar.innerHTML = `
-    <button type="button" class="btn btn-primary" id="btn-clientes" data-bs-toggle="modal" data-bs-target="#modalClientes">
-      Buscar <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
-    </button>
-    `;
-    $containerRTN.appendChild($btnBuscar);
-  }
-  let correo = document.getElementById('container-correo');
-  correo.setAttribute('hidden', 'true');
-});
-//Cuando el cliente es nuevo se oculta el buscador de existir.
-document.getElementById('cliente-nuevo').addEventListener('change', function () {
-  let $containerRTN = document.getElementById('container-rtn-cliente');
-  let $btnBuscarCliente = document.querySelector('.btn-buscar-cliente');
-  if ($btnBuscarCliente) {
-    $containerRTN.removeChild($btnBuscarCliente);
-    if (document.getElementById('rnt-cliente').value != '') {
-      limpiarForm();
-    }
-  }
-  let correo = document.getElementById('container-correo');
-  correo.removeAttribute('hidden');
-});
-$(document).on('click', '#btn-clientes', function () {
-  obtenerClientes();
-});
-let obtenerClientes = function () {
-  if (document.getElementById('table-Cliente_wrapper') == null) {
-    $('#table-Cliente').DataTable({
-      "ajax": {
-        "url": "../../../Vista/rendimiento/obtenerClientes.php",
-        "dataSrc": ""
-      },
-      "language": {
-        "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
-      },
-      "columns": [
-        { "data": "codCliente" },
-        { "data": 'nombre' },
-        { "data": 'rtn' },
-        { "data": 'telefono' },
-        { "data": 'direccion' },
-        {
-          "defaultContent":
-            '<div><button class="btns btn" id="btn_select-cliente"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>'
-        }
-      ]
-    });
-  }
-}
-document.getElementById('btn-cerrar-modal').addEventListener('click', () => {
-  limpiarForm();
-});
-document.getElementById('btn-cerrar2').addEventListener('click', () => {
-  limpiarForm();
-});
-let limpiarForm = () => {
-  let rtn = document.getElementById('rnt-cliente'),
-    nombre = document.getElementById('nombre-cliente'),
-    telefono = document.getElementById('telefono-cliente'),
-    correo = document.getElementById('correo-cliente'),
-    direccion = document.getElementById('direccion-cliente'),
-    rubro = document.getElementById('rubrocomercial'),
-    razon = document.getElementById('razonsocial'),
-    clasificacion = document.getElementById('clasificacionlead'),
-    origen = document.getElementById('origenlead');
-  //Vaciar campos
-  if (rtn.value != '') {
-    rtn.value = '';
-    nombre.value = '';
-    telefono.value = '';
-    correo.value = '';
-    direccion.value = '';
-    rubro.value = '';
-    razon.value = '';
-    clasificacion.value = '';
-    origen.value = '';
-  }
-  if (rtn.getAttribute('disabled')) {
-    rtn.removeAttribute('disabled');
-    nombre.removeAttribute('disabled');
-    telefono.removeAttribute('disabled');
-    direccion.removeAttribute('disabled');
-  }
-}
-$(document).on('click', '.btn-vendedores', function () {
-  obtenerVendedores();
-});
-let obtenerVendedores = function () {
-  if (document.getElementById('table-Vendedores_wrapper') == null) {
-    $('#table-Vendedores').DataTable({
-      "ajax": {
-        "url": "../../../Vista/rendimiento/obtenerVendedores.php",
-        "dataSrc": ""
-      },
-      "language": {
-        "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
-      },
-      "columns": [
-        { "data": 'id' },
-        { "data": 'usuario' },
-        { "data": 'nombre' },
-        {
-          "defaultContent":
-            '<div><button class="btns btn" id="btn_select-Vendedores"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>'
-        }
-      ]
-    });
-  }
-}
-$(document).on('click', '#btn_select-Vendedores', function () {
-  $(this).classList.toggle('select-vendedor');
-});
-let agregarVendedores = function($id_Tarea) {
-  let $Vendedores = [];
-  let vendedoresSeleccionados = document.querySelectorAll('.select-vendedor');
-  vendedoresSeleccionados.forEach(function (vendedor) {
-    if (vendedor.classList.contains('select-vendedor')) {
-      let $idVendedor = $(vendedor).closest('tr').find('td:eq(0)').text();
-      let $vendedor = {
-        id: $idVendedor
-      }
-      $Vendedores.push($vendedor);
-    }
-  });
-  let $idTarea = {
-    idTarea: $id_Tarea
-  }
-  $Vendedores.push($idTarea);
-  //AJAX para almacenar vendedores en la base de datos
-  $.ajax({
-    url: "../../../Vista/rendimiento/agregarVendedoresTarea.php",
-    type: "POST",
-    datatype: "JSON",
-    data: $Vendedores,
-    success: function () {
-    }
-  }); //Fin AJAX
 }

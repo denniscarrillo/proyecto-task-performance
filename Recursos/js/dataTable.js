@@ -204,8 +204,4 @@ let obtenerEstadoUsuario = function (idElemento){
       }
     });
 }
- 
-// EMARTINEZ	Estefani Martinez	Unah@123	daniela.martinez@unah.hn	Bloqueado	Predeterminado
-// JASPER	Jasper Reyes	Unah@123	jasper.reyes@unah.hn	Bloqueado	Tecnico
-// ANDREA	Andrea Garrido	Unah@432	andreag2020@unah.hn	Nuevo	Predeterminado
 
