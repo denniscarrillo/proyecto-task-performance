@@ -45,6 +45,8 @@ require_once("../../../Controlador/ControladorUsuario.php");
       $urlVenta = '../venta/gestionVenta.php';
       $urlCliente = '../cliente/gestionCliente.php';
       $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
+      $urlPorcentaje = '../Porcentajes/gestionPorcentajes.php';
+      $urlMetricas = '../Metricas/gestionMetricas.php';
       require_once '../../layout/sidebar.php';
       ?>
     </div>

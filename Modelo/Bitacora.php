@@ -38,4 +38,24 @@
             ];
             return $acciones;
         }
+
+        public static function obtenerBitacorasUsuario(){
+            $conn = new Conexion();
+            $consulta = $conn->abrirConexionDB();
+            $obtenerBitacoras = $consulta->query("SELECT id_Bitacora, fecha, id_Usuario, id_Objeto, accion, descripcion FROM tbl_ms_bitacora");
+            $bitacoras = array();
+            while($fila = $obtenerBitacoras->fetch_assoc()){
+                $bitacoras [] = [
+                    'id_Bitacora' => $fila["id_Bitacora"],
+                    'fecha' => $fila["fecha"],
+                    'id_Usuario' => $fila["id_Usuario"],
+                    'id_Objeto' => $fila["id_Objeto"],
+                    'accion' => $fila["accion"],
+                    'descripcion' => $fila["descripcion"],
+                    
+                ];
+            }
+            mysqli_close($consulta); #Cerramos la conexión.
+            return $bitacoras;
+        } 
     }

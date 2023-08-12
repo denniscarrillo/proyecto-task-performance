@@ -26,7 +26,7 @@ const $estado = document.getElementById('E_estado');
     Antes de enviar datos del formulario, se comprobara que todas  
     las validaciones se hayan cumplido.
 */
-$form.addEventListener('submit', e => {   
+$form.addEventListener('submit', e => {
     //Validamos que algún campo no esté vacío.
     let estadoInputNombre = funciones.validarCampoVacio($name);
     let estadoInputCorreo = funciones.validarCampoVacio($correo);

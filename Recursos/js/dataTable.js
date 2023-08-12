@@ -35,6 +35,7 @@ $('#btn_nuevoRegistro').click(function () {
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");	 
 });
+
 //Crear nuevo usuario
 $('#form-usuario').submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
