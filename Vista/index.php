@@ -23,6 +23,7 @@ if (isset($_SESSION['usuario'])) {
 <html lang="es">
 
 <head>
+  
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,6 +35,7 @@ if (isset($_SESSION['usuario'])) {
   <link href='../Recursos/css/layout/sidebar.css' rel='stylesheet'>
 <!--   para el index.css
  -->  <link href='../Recursos/css/index.css' rel='stylesheet'>
+ 
   <title>Dashboard</title>
 </head>
 
@@ -52,6 +54,10 @@ if (isset($_SESSION['usuario'])) {
         $urlCliente = './crud/cliente/gestionCliente.php';
         $urlCarteraCliente = './crud/carteraCliente/gestionCarteraClientes.php';
         $urlCrudComision = './crud/comision/gestionComision.php';
+        $urlRoles = '../../../Vista/crud/rol/gestionRol.php';
+        $urlPreguntas = '../../../Vista/crud/pregunta/gestionPregunta.php';
+        $urlBitacoras = '../../../Vista/crud/bitacora/gestionBitacora.php';
+        
         require_once 'layout/sidebar.php';  
         ?>
       </div>
