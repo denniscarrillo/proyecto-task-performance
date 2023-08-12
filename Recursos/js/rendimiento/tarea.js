@@ -38,29 +38,6 @@ $(document).ready(function () {
   });
 
 });
-
-// let $rtn = document.getElementById('rnt-cliente');
-// $rtn.addEventListener('focusout', function () {
-//   $.ajax({
-//     url: "../../../Vista/rendimiento/validarTipoCliente.php",
-//     type: "POST",
-//     datatype: "JSON",
-//     data: {
-//       rtnCliente: $rtn.value
-//     },
-//     success: function (cliente) {
-//       let $mensaje = document.getElementById('mensaje');
-//       let $objCliente = JSON.parse(cliente);
-//       if ($objCliente[0].estado == 'true') {
-//         $mensaje.innerText = 'Cliente existente'
-//         $mensaje.classList.add('mensaje-existe-cliente');
-//       } else {
-//         $mensaje.innerText = '';
-//         $mensaje.classList.remove('mensaje-existe-cliente');
-//       }
-//     }
-//   }); //Fin AJAX
-// });
 //Evento
 $('#btn-NuevaLLamada').click(function () {
   //Nos crea y muestra el pequeño formulario para la nueva tarea llamada
@@ -129,7 +106,7 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
                 <a href="#" class="btn-editar btn-vendedores" data-bs-toggle="modal" data-bs-target="#modalVendedores" id="${tarea.id}-${tarea.idEstadoAvance}"><i class="fa-solid-btn fa-solid fa-user-plus"></i></a>
               </div>
               <div>
-                <a href="../../../Vista/rendimiento/v_editarTarea.php?idTarea=${tarea.id}&estado=${tarea.idEstadoAvance}" class="btn-editar"><i class="fa-solid-btn fa-solid fa-pen-to-square"></i></a>
+                <a href="../../../Vista/rendimiento/v_editarTarea.php?idTarea=${tarea.id}&estadoTarea=${tarea.idEstadoAvance}" class="btn-editar"><i class="fa-solid-btn fa-solid fa-pen-to-square"></i></a>
               </div>
               <i class="fa-solid-btn fa-solid fa-tag"></i>
               </div>

@@ -182,17 +182,27 @@ class Tarea
     }
     public static function validarTipoCliente($rtn){
         try{
-            $existeRtn = false;
+            $estadoCliente = null;
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $selectCliente = "SELECT CIF FROM view_clientes WHERE CIF = '$rtn'";
-            $selectTarea = "SELECT id_EstadoAvance, RTN_Cliente FROM tbl_Tarea WHERE id_EstadoAvance = 4 AND RTN_Cliente = '$rtn'";
-            $rtnCliente = $abrirConexion->query($selectCliente);
-            $rtnTarea = $abrirConexion->query($selectTarea);
-            if($rtnCliente->num_rows > 0 || $rtnTarea->num_rows > 0){
-                $existeRtn = true;
+            $selectCliente = "SELECT CODCLIENTE FROM view_clientes WHERE CIF = '$rtn'";
+            $consulta = $abrirConexion->query($selectCliente);  
+            if($consulta->num_rows > 0){
+                $arrCodCiente = $consulta->fetch_assoc();
+                $codCliente = $arrCodCiente['CODCLIENTE'];
+                $selectFacturas = "SELECT count(NUMFACTURA) AS CANT FROM view_facturasventa WHERE CODCLIENTE = '$codCliente'";
+                $consulta= $abrirConexion->query($selectFacturas);
+                $cantFacturas = $consulta->fetch_assoc();
+                $facturas = intval($cantFacturas['CANT']);
+                if($facturas > 1){
+                    $estadoCliente = true;
+                }else{
+                    $estadoCliente = false;
+                } 
+            }else{
+                $estadoCliente = false;
             }
-            return $existeRtn;
+            return $estadoCliente;
         }catch(Exception $e){
             echo 'Error SQL:' . $e;
         }
@@ -263,24 +273,33 @@ class Tarea
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             if($tipoTarea == '2'){
-                foreach($datosTarea as $dato){
-                    $rtn = $dato['rtn']; $estadoCliente = $dato['tipoCliente']; $idClasificacionLead = $dato['clasificacionLead'];
-                    $idOrigen = $dato['origenLead']; $razon = $dato['razon']; $rubro = $dato['rubro']; 
-                    //Actualizamos los datos de la tarea
-                    $update = "UPDATE tbl_tarea SET `RTN_Cliente` = '$rtn', `estado_Cliente_Tarea` = '$estadoCliente', 
-                    `id_ClasificacionLead` = '$idClasificacionLead', `id_OrigenLead` = $idOrigen, `rubro_Comercial` = '$rubro', `razon_Social` ='$razon'
-                    WHERE `id_Tarea` = '$idTarea';";
-                    $abrirConexion->query($update);
-                }
+                $rtn = $datosTarea['rtn']; $estadoCliente = $datosTarea['tipoCliente']; $idClasificacionLead = $datosTarea['clasificacionLead'];
+                $idOrigen = $datosTarea['origenLead']; $razon = $datosTarea['razon']; $rubro = $datosTarea['rubro']; 
+                //Actualizamos los datos de la tarea
+                $update = "UPDATE tbl_tarea SET `RTN_Cliente` = '$rtn', `estado_Cliente_Tarea` = '$estadoCliente', 
+                `id_ClasificacionLead` = '$idClasificacionLead', `id_OrigenLead` = $idOrigen, `rubro_Comercial` = '$rubro', `razon_Social` ='$razon'
+                WHERE `id_Tarea` = '$idTarea';";
+                $abrirConexion->query($update);
             }else{
-                foreach($datosTarea as $dato){
-                    $rtn = $dato['rtn']; $estadoCliente = $dato['tipoCliente']; $razon = $dato['razon']; $rubro = $dato['rubro']; 
-                    //Actualizamos los datos de la tarea
-                    $update = "UPDATE tbl_tarea SET `RTN_Cliente` = '$rtn', `estado_Cliente_Tarea` = '$estadoCliente', 
-                    `rubro_Comercial` = '$razon', `razon_Social` ='$rubro'
-                    WHERE `id_Tarea` = '$idTarea';";
-                    $abrirConexion->query($update);
-                }
+                $rtn = $datosTarea['rtn']; $estadoCliente = $datosTarea['tipoCliente']; $razon = $datosTarea ['razon']; $rubro = $datosTarea['rubro']; 
+                //Actualizamos los datos de la tarea
+                $update = "UPDATE tbl_tarea SET `RTN_Cliente` = '$rtn', `estado_Cliente_Tarea` = '$estadoCliente', 
+                `rubro_Comercial` = '$rubro', `razon_Social` ='$razon' WHERE `id_Tarea` = '$idTarea'";
+                $abrirConexion->query($update);
+            }
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
+        mysqli_close($abrirConexion); //Cerrar conexion
+    }
+    public static function guardarProductosInteres($idTarea, $arrayProductos){
+        try{
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            foreach($arrayProductos as $producto){
+                
+                $insert = "";
+                $abrirConexion->query($insert);  
             }
         }catch(Exception $e){
             echo 'Error SQL:' . $e;
