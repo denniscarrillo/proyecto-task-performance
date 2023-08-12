@@ -169,6 +169,6 @@
   <script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
   <script src="../../Recursos/js/rendimiento/v_editarTarea.js"></script>
+  <script src="../../Recursos/js/rendimiento/validacionesEditarTarea.js" ></script>
 </body>
-
 </html>
