@@ -31,7 +31,7 @@
 				$urlVenta = '../crud/venta/gestionVenta.php';
 				$urlCliente = '../crud/cliente/gestionCliente.php';
 				$urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
-				require_once '../layout/sidebar.php';
+				// require_once '../layout/sidebar.php';
 				?>
 			</div>
 			<div class="columna2 col-10">
@@ -44,11 +44,12 @@
 								<input type="radio" name="radioOption" id="cliente-nuevo" class="radio" value="Nuevo" checked><label for="cliente-nuevo" class="radio-label form-label">Nuevo</label>
 							</div>
 							<div class="mb-3">
-								<label id="<?php echo $_GET['estado']; ?>" class="id-tarea" hidden="true" >estadoTarea</label>
-								<label for="estadotarea" class="form-label">Estado: </label>
-								<select id="estados-tarea" class="form-control " name="estadoTarea" disabled>
+								<label id="<?php echo $_GET['estadoTarea']; ?>" class="id-tarea" hidden="true"></label>
+								<input type="text" value="<?php echo $_GET['idTarea'];?>" id="id-Tarea" class="id-tarea" name="idTarea" hidden="true">
+
+								<label for="estados-tarea" class="form-label"> Estado: </label>
+								<select name="estadoTarea" id="estados-tarea" class="form-control">
 									<!-- Opciones estados de tarea -->
-									<option value="">Seleccionar...</option>
 									<?php
 										foreach($estadosTarea as $estado){
 											echo '<option value="'.$estado['idEstado'].'">'.$estado['estado'].'</option>';
@@ -62,9 +63,9 @@
 							<!-- Columna 1 -->
 							<div class="grupo-form">
 								<div class="mb-3" id="container-rtn-cliente">
-									<label for="nombre" class="form-label">RTN:</label>
+									<label for="rnt-cliente" class="form-label">RTN:</label>
 									<p id="mensaje"></p>
-									<input type="text" name="rtn" id="rnt-cliente" class="form-control">
+									<input type="text" name="rtnCliente" id="rnt-cliente" class="form-control">
 									<!-- Aqui va el boton del filtro de clientes -->
 								</div>
 								<div class="mb-3">
@@ -151,8 +152,8 @@
 						</div>
 						<!-- Botones -->
 						<div class="btn-guardar">
-							<a href="./v_tarea.php" ><button type="button" id="btn-cerrar2" class="btn btn-secondary">Cancelar</button></a>
-							<button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk" name="actualizarTarea"></i>Guardar</button>
+							<a href="./v_tarea.php"><button type="button" id="btn-cerrar2" class="btn btn-secondary">Cancelar</button></a>
+							<button type="submit" id="btn-guardar" class="btn btn-primary" name="actualizarTarea"><i class="fa-solid fa-floppy-disk"></i>Guardar</button>
 						</div>
 					</form>
 				</div>

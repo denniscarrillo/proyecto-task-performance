@@ -55,6 +55,8 @@ session_start(); //Reanudamos la sesion
         $urlVenta = '../venta/gestionVenta.php';
         $urlCliente = '../cliente/gestionCliente.php';
         $urlCarteraCliente = 'gestionCarteraClientes.php';
+        $urlPorcentaje = '../Porcentajes/gestionPorcentajes.php';
+        $urlMetricas = '../Metricas/gestionMetricas.php';
         require_once '../../layout/sidebar.php';
         ?>
       </div>
@@ -99,7 +101,7 @@ session_start(); //Reanudamos la sesion
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
   <script src="../../../Recursos/js/CarteraClientes/validacionesModalNuevoCliente.js"  type="module"></script>
-  <script src="../../../Recursos/js/validacionesModalEditarCliente.js" type="module"></script>
+  <script src="../../../Recursos/js/CarteraClientes/validacionesModalEditarCliente.js" type="module"></script>
 </body>
 
 </html>

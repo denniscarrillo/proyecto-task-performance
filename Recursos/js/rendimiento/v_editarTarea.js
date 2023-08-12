@@ -1,6 +1,19 @@
 $(document).ready(function(){
     setEstadoTarea();
 });
+// document.getElementById('btn-guardar').addEventListener('submit', function(e){
+//   // let $idTask = $('#id-Tarea').val();
+//   // enviarProductosInteres($idTask );
+//   e.preventDefault();
+//   console.log(e);
+//   alert('HOLA DANIELA');
+// });
+$('#btn-guardar').submit(function (e) {
+    alert('HOLA DANIELA');
+    e.preventDefault();
+    console.log(e);
+    console.log('HOLA DANIELA');
+});
 // CARGAR LOS ARTICULOS A AGREGAR A LA TAREA
 $('#btn-articulos').click(() => {
     if (document.getElementById('table-Articulos_wrapper') == null) {
@@ -46,7 +59,7 @@ $('#btn-articulos').click(() => {
     direccion.value = direccionCliente;
     //Deshabilitar elementos
     nombre.setAttribute('disabled', 'true');
-    rtn.setAttribute('disabled', 'true');
+    // rtn.setAttribute('disabled', 'true');
     telefono.setAttribute('disabled', 'true');
     direccion.setAttribute('disabled', 'true');
   
@@ -99,7 +112,6 @@ $('#btn-articulos').click(() => {
       idProducto.setAttribute('disabled', 'true');
     });
   }
-
   let setEstadoTarea = function(){
     let $select = document.getElementById('estados-tarea');
     let idTareaEstado = document.querySelector('.id-tarea');
@@ -178,6 +190,29 @@ let obtenerClientes = function () {
     });
   }
 }
+let $rtn = document.getElementById('rnt-cliente');
+$rtn.addEventListener('focusout', function () {
+  $.ajax({
+    url: "../../../Vista/rendimiento/validarTipoCliente.php",
+    type: "POST",
+    datatype: "JSON",
+    data: {
+      rtnCliente: $rtn.value
+    },
+    success: function (cliente) {
+      let $mensaje = document.getElementById('mensaje');
+      let $objCliente = JSON.parse(cliente);
+      console.log(cliente)
+      if ($objCliente.estado == 'true') {
+        $mensaje.innerText = 'Cliente existente'
+        $mensaje.classList.add('mensaje-existe-cliente');
+      } else {
+        $mensaje.innerText = '';
+        $mensaje.classList.remove('mensaje-existe-cliente');
+      }
+    }
+  }); //Fin AJAX
+});
 // document.getElementById('btn-cerrar-modal').addEventListener('click', () => {
 //   limpiarForm();
 // });
@@ -207,7 +242,7 @@ let limpiarForm = () => {
     origen.value = '';
   }
   if (rtn.getAttribute('disabled')) {
-    rtn.removeAttribute('disabled');
+    // rtn.removeAttribute('disabled');
     nombre.removeAttribute('disabled');
     telefono.removeAttribute('disabled');
     direccion.removeAttribute('disabled');
@@ -258,15 +293,41 @@ let agregarVendedores = function($id_Tarea) {
   }
   $Vendedores.push($idTarea);
   //AJAX para almacenar vendedores en la base de datos
-  $.ajax({
-    url: "../../../Vista/rendimiento/agregarVendedoresTarea.php",
-    type: "POST",
-    datatype: "JSON",
-    data: $Vendedores,
-    success: function () {
-    }
-  }); //Fin AJAX
+  // $.ajax({
+  //   url: "../../../Vista/rendimiento/agregarVendedoresTarea.php",
+  //   type: "POST",
+  //   datatype: "JSON",
+  //   data: $Vendedores,
+  //   success: function () {
+  //   }
+  // }); //Fin AJAX
 }
-let enviarProductosInteres = () => {
-  
+let enviarProductosInteres = ($idTarea) => {
+  let $idProductos = document.querySelectorAll('.id-producto');
+  let $cantProducto = document.querySelectorAll('cant-producto');
+  let productos = [];
+  $idProductos.forEach(id => {
+    $cantProducto.forEach(cant => {
+    if(id.value == cant.getAttribute('id')){
+      let objProducto = {
+        id: id.value,
+        cant: cant.value
+      }
+      productos.push(objProducto);
+    }
+    });
+    //AJAX para almacenar los productos y su cantidad
+    $.ajax({
+      url: "../../../Vista/rendimiento/almacenarProductosTarea.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {
+        idTarea: $idTarea,
+        productos: productos
+      },
+      success: function () {
+        console.log(productos);
+      }
+    });//Fin AJAX
+  });
 }

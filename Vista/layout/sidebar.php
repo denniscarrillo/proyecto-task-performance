@@ -71,19 +71,54 @@
           </a>
         </li>
       </ul>
+
       <ul class="menu_item">
         <div class="menu_title flex">
           <span class="title">Mantenimiento</span>
           <span class="line"></span>
         </div>
+
         <li class="item">
           <a href="<?php echo $urlGestion; ?>" class="link flex">
             <i class='bx bxs-user-badge'></i>
             <span>Usuarios</span>
           </a>
+          <li class="item">
+          <a href="<?php echo $urlRoles; ?>" class="link flex">
+            <i class="bx bx-folder"></i>
+            <span>Roles</span>
+          </a>
+        </li>
+        <li class="item">
+<<<<<<< HEAD
+          <a href="<?php echo $urlPreguntas; ?>" class="link flex">
+            <i class="bx bx-folder"></i>
+            <span>Preguntas</span>
+          </a>
+        </li>
+        <li class="item">
+          <a href="<?php echo $urlBitacoras; ?>" class="link flex">
+            <i class="bx bx-folder"></i>
+            <span>Bitacoras</span>
+          </a>
+        </li>
+        <li class="item">
+          <a href="<?php echo $urlCrudComision; ?>" class="link flex">
+=======
+          <a href="<?php echo $urlPorcentaje; ?>" class="link flex">
+            <i class="bx bx-folder"></i>
+            <span>Porcentajes</span>
+          </a>
+        </li>
+        <li class="item">
+          <a href="<?php echo $urlMetricas; ?>" class="link flex">
+            <i class='bx bx-list-ul'></i>
+            <span>Metricas</span>
+          </a>
         </li>
         <li class="item">
           <a href="<?php echo$urlCrudComision; ?>" class="link flex">
+>>>>>>> 6646340ca87ea9a7b3880dd863aea6728a023207
             <i class='bx bxs-user-badge'></i>
             <span>Comisiones</span>
           </a>

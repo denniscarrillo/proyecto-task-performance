@@ -33,7 +33,7 @@ let iconClass = document.querySelector('.type-lock');
 let icon_candado = document.querySelector('.lock');
 
 //Ocultar o mostrar contrasenia
-icon_candado.addEventListener('click', function() { 
+icon_candado.addEventListener('click', function() {
     if(this.nextElementSibling.type === "password"){
         this.nextElementSibling.type = "text";
         iconClass.classList.remove('fa-lock');

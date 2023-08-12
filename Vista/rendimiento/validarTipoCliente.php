@@ -8,11 +8,11 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
     $existe = array();
     $cliente = ControladorTarea::validarRtnCliente($_POST['rtnCliente']);
     if($cliente){
-        $existe [] = [
+        $existe = [
             'estado' => 'true'
         ];  
     } else {
-        $existe [] = [
+        $existe = [
             'estado' => 'false'
         ]; 
     }
