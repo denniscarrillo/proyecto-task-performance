@@ -47,7 +47,7 @@ class PDF extends FPDF
       $this->SetTextColor(205, 92, 92);
       $this->Cell(1); // mover a la derecha
       $this->SetFont('Arial', 'B', 15);
-      $this->Cell(65, 10, mb_convert_encoding('REPORTE DE COMISION   ', 'windows-1252', 'UTF-8'), 0, 2, 'L', 0);
+      $this->Cell(65, 10, mb_convert_encoding('REPORTE DE COMISIÓN   ', 'windows-1252', 'UTF-8'), 0, 2, 'L', 0);
       $this->Ln(7);
 
       /* CAMPOS DE LA TABLA */
@@ -56,11 +56,13 @@ class PDF extends FPDF
       $this->SetTextColor(255, 255, 255); //colorTexto
       $this->SetDrawColor(163, 163, 163); //colorBorde
       $this->SetFont('Arial', 'B', 11);
-      $this->Cell(18, 10, mb_convert_encoding('ID','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(40, 10, mb_convert_encoding('FACTURA','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(40, 10, mb_convert_encoding('TOTAL DE LA VENTA','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(25, 10, mb_convert_encoding('PORCENTAJE','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(70, 10, mb_convert_encoding('COMISION TOTAL','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(15, 10, mb_convert_encoding('ID','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(30, 10, mb_convert_encoding('FACTURA','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(30, 10, mb_convert_encoding('VENTA TOTAL','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(30, 10, mb_convert_encoding('PORCENTAJE','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(35, 10, mb_convert_encoding('COMISIÓN TOTAL','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(25, 10, mb_convert_encoding('ESTADO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(30, 10, mb_convert_encoding('FECHA','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
       $this->Ln(10);
    }
 
@@ -96,12 +98,14 @@ $pdf->SetDrawColor(163, 163, 163); //colorBorde
 
 /*$consulta_reporte_alquiler = $conexion->query("  ");*/
 $Comision = ControladorComision::getComision();
-foreach ($Comision as $Comision) {
-   $pdf->Cell(18, 10, mb_convert_encoding($Comision['idComision'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(40, 10, mb_convert_encoding($Comision['factura'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(40, 10, mb_convert_encoding($Comision['totalVenta'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(25, 10, mb_convert_encoding($Comision['porcentaje'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(70, 10, mb_convert_encoding($Comision['comisionTotal'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+foreach ($Comision as $Comisiones) {
+   $pdf->Cell(15, 10, mb_convert_encoding($Comisiones['idComision'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(30, 10, mb_convert_encoding($Comisiones['factura'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(30, 10, mb_convert_encoding($Comisiones['totalVenta'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(30, 10, mb_convert_encoding($Comisiones['porcentaje'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(35, 10, mb_convert_encoding($Comisiones['comisionTotal'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(25, 10, mb_convert_encoding($Comisiones['estadoComisionar'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(30, 10, mb_convert_encoding($Comisiones['fechaComision'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Ln(10);
 }
 /* TABLA */

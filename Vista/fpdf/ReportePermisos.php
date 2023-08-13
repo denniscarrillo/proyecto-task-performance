@@ -2,8 +2,8 @@
 
 require('./fpdf.php');
 require_once("../../db/Conexion.php");
-require_once("../../Modelo/Pregunta.php");
-require_once("../../Controlador/ControladorPregunta.php");
+require_once("../../Modelo/Permiso.php");
+require_once("../../Controlador/ControladorPermiso.php");
 
 class PDF extends FPDF
 {
@@ -47,7 +47,7 @@ class PDF extends FPDF
       $this->SetTextColor(205, 92, 92);
       $this->Cell(1); // mover a la derecha
       $this->SetFont('Arial', 'B', 15);
-      $this->Cell(65, 10, mb_convert_encoding('REPORTE DE PREGUNTAS ', 'windows-1252', 'UTF-8'), 0, 2, 'L', 0);
+      $this->Cell(65, 10, mb_convert_encoding('REPORTE DE PERMISOS ', 'windows-1252', 'UTF-8'), 0, 2, 'L', 0);
       $this->Ln(7);
 
       /* CAMPOS DE LA TABLA */
@@ -56,8 +56,12 @@ class PDF extends FPDF
       $this->SetTextColor(255, 255, 255); //colorTexto
       $this->SetDrawColor(163, 163, 163); //colorBorde
       $this->SetFont('Arial', 'B', 11);
-      $this->Cell(18, 10, mb_convert_encoding('ID','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(120, 10, mb_convert_encoding('PREGUNTA','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(50, 10, mb_convert_encoding('ROL','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(40, 10, mb_convert_encoding('OBJETO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(27, 10, mb_convert_encoding('CONSULTAR','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(25, 10, mb_convert_encoding('INSERTAR','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(27, 10, mb_convert_encoding('ACTUALIZAR','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(23, 10, mb_convert_encoding('ELIMINAR','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
       $this->Ln(10);
    }
 
@@ -92,13 +96,17 @@ $pdf->SetFont('Arial', '', 12);
 $pdf->SetDrawColor(163, 163, 163); //colorBorde
 
 /*$consulta_reporte_alquiler = $conexion->query("  ");*/
-$preguntas = ControladorPregunta::preguntasUsuario();
-foreach ($preguntas as $pregunta) {
-   $pdf->Cell(18, 10, mb_convert_encoding($pregunta['id_Pregunta'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(120, 10, mb_convert_encoding($pregunta['pregunta'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
- 
+$permisos = ControladorPermiso::obtenerPermisosSistema();
+foreach ($permisos as $permiso) {
+   $pdf->Cell(50, 10, mb_convert_encoding($permiso['rolUsuario'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(40, 10, mb_convert_encoding($permiso['objetoSistema'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(27, 10, mb_convert_encoding($permiso['consultar'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(25, 10, mb_convert_encoding($permiso['insertar'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(27, 10, mb_convert_encoding($permiso['actualizar'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(23, 10, mb_convert_encoding($permiso['eliminar'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Ln(10);
 }
 /* TABLA */
 
-$pdf->Output('Preguntas.pdf', 'I');//nombreDescarga, Visor(I->visualizar - D->descargar)
+
+$pdf->Output('Permisos.pdf', 'I');//nombreDescarga, Visor(I->visualizar - D->descargar)

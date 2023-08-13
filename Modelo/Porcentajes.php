@@ -6,6 +6,8 @@ class Porcentajes {
     public $descripcionPorcentaje;
     public $estadoPorcentaje;
 
+    public $CreadoPor;
+
     //Método para obtener todos los usuarios que existen.
     public static function obtenerPorcentajes(){
         $conn = new Conexion();

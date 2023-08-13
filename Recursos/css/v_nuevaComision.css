@@ -116,3 +116,17 @@ button:focus{
     display: inline-block;
     
 }
+.mensaje-estado{
+    color: rgb(209, 11, 11);
+    background-color: #f58282;
+    padding: 0.2rem;
+    float: right;
+    margin-bottom: 0.5rem;
+}
+.mensaje-estado-activo{
+    color: #035d10;
+    background-color: rgb(145, 227, 115);
+    padding: 0.2rem;
+    float: rigth;
+    margin-bottom: 0.5rem;
+}
