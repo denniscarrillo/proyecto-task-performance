@@ -193,7 +193,7 @@ $rtn.addEventListener('focusout', function () {
     success: function (cliente) {
       let $mensaje = document.getElementById('mensaje');
       let $objCliente = JSON.parse(cliente);
-      console.log(cliente)
+      // console.log(cliente)
       if ($objCliente.estado == 'true') {
         $mensaje.innerText = 'Cliente existente'
         $mensaje.classList.add('mensaje-existe-cliente');

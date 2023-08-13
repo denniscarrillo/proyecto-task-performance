@@ -1,258 +1,78 @@
-.btn_Venta {
-    display: inline-block;
-    background-color: #e65a14;
-    max-width: 300px;
-    color: #f7f7f7;
-    border: 3px solid #aaa;
-    outline: none;
-    border-radius: 8px;
-    font-size: 24px; /* Ajusta el tamaño de fuente según tu preferencia */
-    margin-left: 65px;
-    position: absolute;
-    bottom: 23rem;
-    left: 17%;
-    right:30%;
-    padding: 40px 40px;
-    text-decoration: none;
-    text-align: center; /* Centrar el texto horizontalmente */
-    
-  }
-  
-  .btn_Rendimiento {
-    display: inline-block;
-    background-color: #e65a14;
-    max-width: 300px;
-    color: #f7f7f7;
-    border: 3px solid #aaa;
-    outline: none;
-    border-radius: 8px;
-    font-size: 24px; /* Ajusta el tamaño de fuente según tu preferencia */
-    margin-left: 400px; /* Ajusta de direccion derecha */
-    position: absolute;
-    bottom: 23rem;
-    left: 17%;
-    right:30%;
-    padding: 40px 40px;
-    text-decoration: none;
-    text-align: center; /* Centrar el texto horizontalmente */
-    
-  }
-  
-  .btn_Comisiones {
-    display: inline-block;
-    background-color: #e65a14;
-    max-width: 300px;
-    color: #f7f7f7;
-    border: 3px solid #aaa;
-    outline: none;
-    border-radius: 8px;
-    font-size: 24px;
-    margin-left: 65px; /* Ajusta este valor para mover el botón hacia la derecha */
-    top: 300px;
-    position: absolute;
-    bottom: 20rem;
-    left: 17%;
-    right: 30%;
-    padding: 60px 44px;
-    text-decoration: none;
-    text-align: center; /* Centrar el texto horizontalmente */
-    display: flex; /* Utiliza flexbox para centrar el contenido */
-    justify-content: center; /* Centra horizontalmente el contenido del botón */
-    align-items: center; /* Centra verticalmente el contenido del botón */
-    line-height: 300px; /* Ajusta este valor para centrar verticalmente el texto */
-  }
-  
-  .btn_Clientes {
-    display: inline-block;
-    background-color: #e65a14;
-    max-width: 300px;
-    color: #f7f7f7;
-    border: 3px solid #aaa;
-    outline: none;
-    border-radius: 8px;
-    font-size: 24px;
-    margin-left: 400px; /* Ajusta este valor para mover el botón hacia la derecha */
-    top: 300px;
-    position: absolute;
-    bottom: 20rem;
-    left: 17%;
-    right: 30%;
-    padding: 60px 44px;
-    text-decoration: none;
-    text-align: center; /* Centrar el texto horizontalmente */
-    display: flex; /* Utiliza flexbox para centrar el contenido */
-    justify-content: center; /* Centra horizontalmente el contenido del botón */
-    align-items: center; /* Centra verticalmente el contenido del botón */
-    line-height: 300px; /* Ajusta este valor para centrar verticalmente el texto */
-  }
-  
-  .btn_Mantenimiento {
-    display: inline-block;
-    background-color: #e65a14;
-    max-width: 300px;
-    color: #f7f7f7;
-    border: 3px solid #aaa;
-    outline: none;
-    border-radius: 8px;
-    font-size: 24px; /* Ajusta el tamaño de fuente según tu preferencia */
-    margin-left: 400px; /* Ajusta este valor para mover el botón hacia la derecha */
-    top: 450px;
-    position: absolute;
-    bottom: 15rem;
-    left: 5%;
-    right: 30%;
-    padding: 60px 54px;
-    text-decoration: none;
-    text-align: center; /* Centrar el texto horizontalmente */
-    display: flex; /* Utiliza flexbox para centrar el contenido */
-    justify-content: center; /* Centra horizontalmente el contenido del botón */
-    align-items: center; /* Centra verticalmente el contenido del botón */
-    line-height: 300px; /* Ajusta este valor para centrar verticalmente el texto */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  /* border: 2px solid #6f9a0c; */
 }
-
-.button_web {
-  display: inline-block;
-  background-color: #007bff00;
-  color: #000000;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  margin-left: 250px; /* Ajusta este valor según tus necesidades */
-  margin-top: -390px; /* Ajusta este valor según tus necesidades */
+.conteiner-global{
+  display: flex;
+  align-items: stretch;
+  min-height: 100vh;
+}
+.navbar-conteiner{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 8rem;
+  background-color: #dd742e;
+  margin-bottom: auto;
+  font-size: 2rem;
+  color: whitesmoke;
+}
+.sidebar-conteiner{
+  min-height: 100vh;
+  width: fit-content;
+}
+.conteiner-main{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: #f0ede9;
+  max-height: 100vh;
+  overflow-y: auto; /*Aplicar scroll vertical automaticamente*/
+}
+.main{
+  display: flex;
+  justify-content: center;
+  height: fit-content;
+}
+.conteiner-link{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  height: 100%;
+  max-width: 80%;
+  padding: 2rem;
+}
+.card-link{
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
+  align-items: center;
+  width: 15rem;
+  height: 10rem;
+  border-radius: 0.2rem;
+  background-color: #fa4d13;
   text-decoration: none;
-  top: 1000px;
-  position: absolute;
+  color: aliceblue;
+  font-size: 1.2rem;
+  /* Estilos de sombre */
+  -webkit-box-shadow: -4px 0px 10px 2px rgba(158,156,158,1);
+  -moz-box-shadow: -4px 0px 10px 2px rgba(158,156,158,1);
+  box-shadow: -4px 0px 10px 2px rgba(158,156,158,1);
 }
-
-.button_fc {
-  display: inline-block;
-  background-color: #007bff00;
-  color: #000000;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  margin-left: 650px; /* Ajusta este valor según tus necesidades */
-  margin-top: -390px; /* Ajusta este valor según tus necesidades */
-  text-decoration: none;
-  top: 1000px;
-  position: absolute;
-  
-}
-
-.button_ig {
-  display: inline-block;
-  background-color: #007bff00;
-  color: #000000;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  margin-left: 1100px; /* Ajusta este valor según tus necesidades */
-  margin-top: -390px; /* Ajusta este valor según tus necesidades */
-  text-decoration: none;
-  top: 1000px;
-  position: absolute;
-  
-}
-  
-/* Estilos para el contenedor */
-.container {
-  width: 100%; /* Ancho del contenedor */
-  max-width: 1200px; /* Ancho máximo del contenedor (opcional) */
-  margin: 0% auto; /* Centrar el contenedor horizontalmente */
-  padding: 20px; /* Espaciado interno del contenedor */
-
-
-}
-
-/* Estilos para el título h1 */
-.container h1 {
-  font-size: 32px; /* Tamaño de fuente del título */
-  margin-bottom: 10px; /* Espaciado inferior del título */
-  padding-left: 55px; /* Agregar 20 píxeles de espacio a la izquierda del texto del título */
-  line-height: 1; /* Ajustar la altura de línea del título */
-  margin-right: 60px; /* Ajusta el valor según la cantidad de desplazamiento deseado */
-}
-
-/* Estilos para el párrafo p */
-.container p {
-  font-size: 18px; /* Tamaño de fuente del párrafo */
-  margin-bottom: 0; /* Eliminar espaciado inferior del párrafo */
-  padding-left: 55px; /* Agregar 10 píxeles de espacio a la izquierda del texto del párrafo */
-  line-height: 1; /* Ajustar la altura de línea del párrafo */
-  margin-right: 60px; /* Ajusta el valor según la cantidad de desplazamiento deseado */
-
-}
-
-/* Estilos generales para el nav */
-.navbar {
-  background: linear-gradient(85deg, #f3b85f 20%, #e65a14 80%);
-  background-color: #e28e5a;
-  font-size: px; /* Cambia el tamaño de fuente del texto en el navbar */
-  padding: 10px; /* Agrega espacio interno al navbar */
-  margin-right: -20px;
-  margin-left: 15px;
-  display:flex;
-  position:relative;
-  max-width: 1200px;
-}
-
-
-.navbar-brand {
-  /* Estilos para el logotipo o texto de la marca en el navbar */
-  color: #fff; /* Color del logotipo o texto de la marca */
-  font-size: 24px; /* Tamaño de fuente del logotipo o texto de la marca */
-  display:flex;
-  max-width: 1200px;
-}
-
-/* Estilos para el menú desplegable */
-.dropdown {
-  position: relative;
-  left: -25%;
-}
-
-.dropdown-item {
-  display: block;
-  padding: 8px 16px;
-  color: #333;
-  text-decoration: none;
-}
-
-.dropdown-item:hover {
-  background-color: #f1f1f1;
-  color: #333;
-}
-
-.dropdown-item i {
-  margin-right: 10px; /* Espacio entre el ícono y el texto en el menú desplegable */
-  
-}
-
-/* Estilos para el menú desplegable cuando está abierto */
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: -55%;
-  display: none;
-  min-width: 150px;
-  padding: 10px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.dropdown:hover .dropdown-menu {
-  max-width: 1200px;
-  display: block;
-}
-
-.img-fluid {
-  margin-top: 5px; /* Ajusta el valor negativo según cuánto deseas que se mueva hacia arriba */
-  margin-left: 19px; /* Ajusta el valor positivo según cuánto deseas que se mueva hacia la derecha */
-  object-fit: cover;
-  width: 1200px;
-  height: 600px;
-  overflow: hidden; /* Recorta el contenido que excede los límites del contenedor */
-
+.footer-conteiner{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+  min-height: 8rem;
+  background-color: #706d6d;
+  margin-bottom: 0;
+  font-size: 2rem;
+  color: whitesmoke;
 }
