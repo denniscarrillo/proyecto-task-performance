@@ -6,13 +6,13 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-body {
+/* body {
   min-height: 100vh;
   background: #fff;
-}   
-.row{
+}    */
+/* .row{
     min-height: 100vh;
-}
+} */
 /* Pre css */
 .flex {
   display: flex;
@@ -26,21 +26,14 @@ body {
 }
 /* Sidebar */
 .sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
+  /* top: 0; */
+  /* left: 0; */
   height: 100vh;
-  width: 240px;
-  /* background: #d85813; */
-  /* background: linear-gradient(120deg, #bcb9b5 30%, #9e8d83 80%); */
-  background: linear-gradient(120deg, #f3b85f 20%, #e65a14 80%);
+  width: 250px;
+  background: linear-gradient(180deg, #eda63a 20%, #fa4d13 50%);
   padding: 15px 10px;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
-  transition: all 0.4s ease;
+  transition: all 0.6s ease;
 }
-/* .sb-conteiner {
-
-} */
 .sidebar.close {
   width: calc(55px + 20px);
 }
@@ -81,11 +74,21 @@ body {
   flex-direction: column;
   justify-content: space-between;
   margin-top: 40px; 
+  /* flex: 1 1 auto;
   overflow-y: auto;
-  height: calc(100% - 82px);
+  min-height: 0px; */
+  /* max-height: 85vh;
+  overflow-y: scroll; */
+  /* height: calc(100% - 80px); */
+}
+.menu_items{
+  flex: 1 1;
+  height: 80%;
+  max-height: calc(100vh - 250px);
+  overflow-y: scroll;
 }
 /* Ocultar scroll de navegacion */
-.menu_container::-webkit-scrollbar {
+.menu_items::-webkit-scrollbar {
   display: none;
 }
 .menu_title {
@@ -96,7 +99,7 @@ body {
 .menu_title .title {
     color: #30302f;
     margin-left: 15px;
-    transition: all 0.3s ease;
+    transition: all 0.1s ease;
 }
 .sidebar.close .title {
   opacity: 0;
@@ -116,7 +119,6 @@ body {
 }
 .sidebar.close .line {
   opacity: 1;
-
 }
 .menu_item{
     padding-left: 0;
@@ -163,12 +165,12 @@ body {
   font-size: 18px;
   color: #333;
 }
-.sidebar_profile .email {
+/* .sidebar_profile .email {
   font-size: 15px;
   color: #333;
-}
+} */
 
-Navbar
+/* Navbar
 .navbar {
   max-width: 500px;
   width: 100%;
@@ -180,7 +182,7 @@ Navbar
   padding: 1px 20px;
   border-radius: 0 0 8px 8px;
   justify-content: space-between;
-}
+} */
 #sidebar-open {
   font-size: 30px;
   color: #333;
@@ -188,7 +190,7 @@ Navbar
   margin-right: 20px;
   display: none;
 }
-.search_box {
+/* .search_box {
   height: 46px;
   max-width: 500px;
   width: 100%;
@@ -203,7 +205,7 @@ Navbar
   height: 40px;
   width: 40px;
   margin-left: 20px;
-}
+} */
 
 /* Responsive */
 @media screen and (max-width: 1100px) {
