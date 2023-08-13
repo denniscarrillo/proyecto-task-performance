@@ -71,7 +71,6 @@ $(document).ready(function () {
      let idRol = $('#E_idRol').val(),
      rol =  $('#E_rol').val(),
      descripcion = $('#E_descripcion').val();
-     console.log(rol);
      if(valido){
       $.ajax({
         url: "../../../Vista/crud/rol/editarRol.php",

@@ -2,7 +2,7 @@
 require_once("../../../db/Conexion.php");
 require_once("../../../Modelo/Metricas.php");
 require_once("../../../Controlador/ControladorMetricas.php");
-session_start(); //Reanudamos la sesion
+// session_start(); //Reanudamos la sesion
 
 // if(isset($_SESSION['usuario'])){
 //   /* ====================== Evento ingreso a mantenimiento de usuario. =====================*/
@@ -38,7 +38,6 @@ session_start(); //Reanudamos la sesion
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
   <title> Prueba </title>
 </head>
-
 <body>
   <div class="conteiner">
     <div class="row">
@@ -62,14 +61,13 @@ session_start(); //Reanudamos la sesion
         <H1>Gestión de Metricas</H1>
         <div class="table-conteiner">
           <div>
-            <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevaMetrica"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
             <a href="../../fpdf/ReporteMetrica.php" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
           </div>
           <table class="table" id="table-Metricas">
             <thead>
               <tr>
-                <th scope="col"> ID METRICA </th>
-                <th scope="col"> DESCRIPCION </th>
+                <th scope="col"> ID </th>
+                <th scope="col"> METRICA </th>
                 <th scope="col"> META </th>
                 <th scope="col"> ACCIONES </th>
               </tr>
@@ -82,8 +80,7 @@ session_start(); //Reanudamos la sesion
     </div>
   </div>
   <?php
-require_once('modalNuevaMetrica.html');
-require('modalEditarMetrica.html');
+  require('./modalEditarMetrica.html');
   ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
@@ -93,8 +90,6 @@ require('modalEditarMetrica.html');
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
-  <script src="../../../Recursos/js/Metricas/validacionesModalNuevaMetrica.js"  type="module"></script>
   <script src="../../../Recursos/js/Metricas/validacionesModalEditarMetrica.js" type="module"></script>
 </body>
-
 </html>
