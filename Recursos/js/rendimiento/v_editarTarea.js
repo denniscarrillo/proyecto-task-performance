@@ -1,19 +1,19 @@
 $(document).ready(function(){
     setEstadoTarea();
 });
-// document.getElementById('btn-guardar').addEventListener('submit', function(e){
-//   // let $idTask = $('#id-Tarea').val();
-//   // enviarProductosInteres($idTask );
-//   e.preventDefault();
-//   console.log(e);
-//   alert('HOLA DANIELA');
-// });
-$('#btn-guardar').submit(function (e) {
-    alert('HOLA DANIELA');
-    e.preventDefault();
-    console.log(e);
-    console.log('HOLA DANIELA');
+document.getElementById('btn-guardar').addEventListener('Click', function(e){
+  // let $idTask = $('#id-Tarea').val();
+  // enviarProductosInteres($idTask );
+  e.preventDefault();
+  console.log(e);
+  alert('HOLA DANIELA');
 });
+// $('#btn-guardar').submit(function (e) {
+//     alert('HOLA DANIELA');
+//     e.preventDefault();
+//     console.log(e);
+//     console.log('HOLA DANIELA');
+// });
 // CARGAR LOS ARTICULOS A AGREGAR A LA TAREA
 $('#btn-articulos').click(() => {
     if (document.getElementById('table-Articulos_wrapper') == null) {
