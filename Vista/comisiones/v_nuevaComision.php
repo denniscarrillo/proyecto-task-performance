@@ -1,5 +1,6 @@
 <?php
 require_once('validacionesComision.php');
+require_once('obtenerEstadoComision.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -56,6 +57,10 @@ require_once('validacionesComision.php');
             <button type="button" class="btn-call-modal btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalfiltroVenta">
               Seleccionar...
             </button>
+          </div>
+          <div class="form-element">
+            <label>Estado Comision:</label>
+            <label id="mensaje-estado"></label>
           </div>
           <div class="form-element">
             <label>Monto</label>

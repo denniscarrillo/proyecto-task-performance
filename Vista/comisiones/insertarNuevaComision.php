@@ -13,13 +13,14 @@ if(isset($_POST['idVenta']) || isset($_POST['idComision'])){
     $nuevaComision->idVenta = intval($_POST['idVenta']);
     $nuevaComision->idPorcentaje = intval($_POST['idPorcentaje']);
     $nuevaComision->comisionTotal = floatval($_POST['comisionTotal']);
+    $nuevaComision->estadoComision = 'Activa';
     $nuevaComision->creadoPor = $user;
     $nuevaComision->fechaComision = $_POST['fechaComision'];
     $idTarea = ControladorComision::traerIdTarea(intval($_POST['idVenta']));
     $vendedores = ControladorComision::traerVendedores($idTarea);
     
     $idComision = ControladorComision::registroComision($nuevaComision);
-    ControladorComision::guardarComisionVendedor(floatval($_POST['comisionTotal']), $idComision, $vendedores, $user, $_POST['fechaComision']);
+    ControladorComision::guardarComisionVendedor(floatval($_POST['comisionTotal']), $idComision, $vendedores, $estadoComision, $user, $_POST['fechaComision']);
     $IdComision[] = [
         'idComision' => $idComision
     ];

@@ -1,63 +1,121 @@
-<div class="modal fade" id="modalEditarSolicitud" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="editarModalLabel">Editar totalComision</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div
+  class="modal fade"
+  id="modalEditarComision"
+  tabindex="-1"
+  aria-labelledby="editarModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="editarModalLabel">Editar Comisión</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post" id="form-Edit-Comision">
+          <div class="grupo-form">
+            <div class="mb-3">
+              <label for="comision" class="form-label">ID Comisión:</label>
+              <input
+                type="text"
+                name="idComision"
+                id="idComision_E"
+                class="form-control"
+                required
+                disabled
+              />
             </div>
-            <div class="modal-body">
-                <form action="" method="post" id="form-Edit-Comision">
-                        <div class="mb-3">
-                            <label for="descripcion" class="form-label">Numero de Factura:</label>
-                            <input type="text" name="descripcion" id="idVenta_E" class="form-control">
-                            <p class="mensaje"></p>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="correo" class="form-label">Total Venta:</label>
-                            <input type="text" name="correo" id="monto_E" class="form-control">
-                            <p class="mensaje"></p>
-                        </div>
-
-                        <div class="mb-3">
-                            <label>Porcentaje</label>
-                            <label id="mensaje-tipo-cliente"></label>
-                        <select name="porcentajeComision" class="form-control" id="porcentaje-comision_E">
-                        <option value="0">Seleccionar...</option>
-                            <?php
-                            foreach ($porcentajes as $porcentaje) {
-                                echo '<option value="' . $porcentaje['idPorcentaje'] . '">' . $porcentaje['porcentaje'] . '</option>';
-                            }
-                            ?>
-            </select>
-                            <p class="mensaje"></p>
-                        </div>
-                    </div>
-                    <div class="grupo-form">
-                        
-                        <div class="mb-3">
-                            <label for="totalComision" class="form-label">Comision Total:</label>
-                            <input type="text" name="totalComision" id="totalComsion_E" class="form-control">
-                            <p class="mensaje"></p>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="fecha" class="form-label">Fecha:</label>
-                            <input type="text" name="fecha" id="fecha_E" class="form-control">
-                            <p class="mensaje"></p>
-                        </div>
-                        <div class="mb-3">
-                            <label for="usuario" class="form-label">Usuario:</label>
-                            <input type="text" name="usuario" id="E_idUsuario" class="form-control">
-                            <p class="mensaje"></p>
-                        </div>
-                    </div>
-                    <div class="btn-guardar">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
-                    </div>
-                </form>
+            <div class="mb-3">
+              <label for="descripcion" class="form-label"
+                >Numero de Venta:</label
+              >
+              <input
+                type="text"
+                name="idVenta_E"
+                id="idVenta_E"
+                class="form-control"
+                disabled
+              />
+              <p class="mensaje"></p>
             </div>
-        </div>
+
+            <div class="mb-3">
+              <label for="monto" class="form-label">Total Venta: </label>
+              <input
+                type="text"
+                name="monto"
+                id="monto_E"
+                class="form-control"
+                disabled
+              />
+              <p class="mensaje"></p>
+            </div>
+          </div>
+          <div class="grupo-form">
+            <div class="mb-3">
+                <label for="porcentaje" class="form-label">Porcentaje: </label>
+                <input
+                type="text"
+                name="porcentaje-comision_E"
+                id="porcentaje-comision_E"
+                class="form-control"
+                disabled
+              />
+                <p class="mensaje"></p>
+              </div>
+            <div class="mb-3">
+              <label for="totalComision" class="form-label"
+                >Comisión Total:</label
+              >
+              <input
+                type="text"
+                name="totalComision_E"
+                id="totalComsion_E"
+                class="form-control"
+                disabled
+              />
+              <p class="mensaje"></p>
+            </div>
+            <div class="mb-3">
+              <label for="estadoComision" class="form-label">Estado: </label>
+              <select
+                name="estadoComision_E"
+                class="form-control"
+                id="estadoComision_E"
+              ></select>
+              <p class="mensaje"></p>
+            </div>
+            <div class="mb-3">
+              <label for="fecha" class="form-label">Fecha:</label>
+              <input
+                type="text"
+                name="fecha_E"
+                id="fecha_E"
+                class="form-control"
+                disabled
+              />
+              <p class="mensaje"></p>
+            </div>
+          </div>
+          <div class="btn-guardar">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fa-solid fa-floppy-disk"></i> Guardar
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>

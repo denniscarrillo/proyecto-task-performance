@@ -64,7 +64,19 @@ $(document).on("click", "#btn_seleccionar", function () {
   document.getElementById("id-venta").value = idVenta;
   document.getElementById("monto-total").value = montoVenta;
   estadoClienteTarea(rtnClienteVenta);
-  mostrarVendedores(idVenta);
+  mostrarVendedores(idVenta); 
+  obtenerEstadoComision(idVenta);
+  if(document.querySelector(".mensaje-estado") !== null){
+    document.getElementById("btn-guardar-comision").disabled = false;
+  }else{
+    document.getElementById("btn-guardar-comision").disabled = true;
+    
+  };
+  /* if (document.querySelector(".mensaje-estado") !== true) {
+    document.getElementById("btn-guardar-comision").disabled = false;
+  } else if (document.querySelector(".mensaje-estado") !== false) {  
+    document.getElementById("btn-guardar-comision").disabled = true;
+  }; */
   /* console.log(montoVenta); */
   $("#modalVentas").modal("hide");
 });
@@ -159,6 +171,35 @@ $('#form-Comision').submit(function () { //evita el comportambiento normal del s
     }
 });
 });
+
+let obtenerEstadoComision = ($estadoVenta) => {
+  $.ajax({
+    url: "../../../Vista/comisiones/obtenerEstadoComision.php",
+    type: "POST",
+    datatype: "JSON",
+    data: {
+      idVenta: $estadoVenta
+    },
+    success: function (estadoComision) {
+      let objEstadoVenta = JSON.parse(estadoComision);
+      let estadoVenta = objEstadoVenta[0].estado;
+      //condicion donde valida si la comision ya esta registrada 
+      if (estadoVenta.length > 0) {
+        document.getElementById("mensaje-estado").innerText =
+          "Factura ya comisionada"
+        document.getElementById("mensaje-estado").classList.add("mensaje-estado");
+        console.log(estadoVenta);
+      } else {
+      document.getElementById("mensaje-estado").innerText =
+        "Factura sin comisionar"
+      document.getElementById("mensaje-estado").classList.remove("mensaje-estado");
+      document.getElementById("mensaje-estado").classList.add("mensaje-estado-activo");
+      console.log(estadoVenta);
+      }
+      console.log(objEstadoVenta);   
+    },
+  });
+ } //Fin AJAX
 /* let $btnGuardarComision = document.getElementById('btn-guardar-comision');
   $btnGuardarComision.addEventListener('click', function(){
   let $idVenta = document.getElementById('monto-total').value;
