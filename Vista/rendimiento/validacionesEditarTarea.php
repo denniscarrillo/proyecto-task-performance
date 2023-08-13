@@ -38,6 +38,7 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
                 ControladorTarea::actualizarTarea($id_Tarea, $tipo_Tarea, $tarea);
                 ControladorTarea::insertarNuevoCliente($nombre, $rtn, $telefono, $correo, $direccion);
                 // header('location: ./v_tarea.php');
+                header('refresh:2;url=./almacenarProductosTarea.php');
             }
         }else {
             $tarea = [
@@ -55,6 +56,7 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
             if(count($tarea) > 0 || count($cliente) > 0){
                 ControladorTarea::actualizarTarea($id_Tarea, $tipo_Tarea, $tarea);
                 // header('location: ./v_tarea.php');
+                header('refresh:2;url=./almacenarProductosTarea.php');
             }
         }
     }

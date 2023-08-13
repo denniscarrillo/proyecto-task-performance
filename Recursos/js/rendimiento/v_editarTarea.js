@@ -1,18 +1,9 @@
 $(document).ready(function(){
     setEstadoTarea();
 });
-// document.getElementById('btn-guardar').addEventListener('submit', function(e){
-//   // let $idTask = $('#id-Tarea').val();
-//   // enviarProductosInteres($idTask );
-//   e.preventDefault();
-//   console.log(e);
-//   alert('HOLA DANIELA');
-// });
-$('#btn-guardar').submit(function (e) {
-    alert('HOLA DANIELA');
-    e.preventDefault();
-    console.log(e);
-    console.log('HOLA DANIELA');
+document.getElementById('form-Edit-Tarea').addEventListener('submit', function(e){
+  let $idTask = $('#id-Tarea').val();
+  enviarProductosInteres($idTask );
 });
 // CARGAR LOS ARTICULOS A AGREGAR A LA TAREA
 $('#btn-articulos').click(() => {
@@ -304,30 +295,31 @@ let agregarVendedores = function($id_Tarea) {
 }
 let enviarProductosInteres = ($idTarea) => {
   let $idProductos = document.querySelectorAll('.id-producto');
-  let $cantProducto = document.querySelectorAll('cant-producto');
+  let $cantProducto = document.querySelectorAll('.cant-producto');
   let productos = [];
   $idProductos.forEach(id => {
     $cantProducto.forEach(cant => {
-    if(id.value == cant.getAttribute('id')){
-      let objProducto = {
-        id: id.value,
-        cant: cant.value
+      if(id.value == cant.getAttribute('id')){
+        let objProducto = {
+          id: id.value,
+          cant: cant.value
+        }
+        productos.push(objProducto);
       }
-      productos.push(objProducto);
-    }
     });
-    //AJAX para almacenar los productos y su cantidad
-    $.ajax({
-      url: "../../../Vista/rendimiento/almacenarProductosTarea.php",
-      type: "POST",
-      datatype: "JSON",
-      data: {
-        idTarea: $idTarea,
-        productos: productos
-      },
-      success: function () {
-        console.log(productos);
-      }
-    });//Fin AJAX
   });
+  //AJAX para almacenar los productos y su cantidad
+  $.ajax({
+    url: "../../../Vista/rendimiento/almacenarProductosTarea.php",
+    type: "POST",
+    datatype: "JSON",
+    data: {
+      idTarea: $idTarea,
+      productos: productos
+    },
+    success: function () {
+      console.log(productos);
+      console.log($idTarea);
+    }
+  });//Fin AJAX
 }

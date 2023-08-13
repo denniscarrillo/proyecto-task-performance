@@ -4,8 +4,7 @@
     private $hostName = 'localhost';
     private $dbName = 'COCINAS_Y_EQUIPOS';
     private $userName = 'root';
-    private $password = 'Proyectxforce2023';
-    // private $password = 'Proyectxforce2023';
+    private $password = '';
 
     #Abrir conexión al servidor de MySQL
     public function abrirConexionDB(){
