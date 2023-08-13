@@ -64,7 +64,19 @@ $(document).on("click", "#btn_seleccionar", function () {
   document.getElementById("id-venta").value = idVenta;
   document.getElementById("monto-total").value = montoVenta;
   estadoClienteTarea(rtnClienteVenta);
-  mostrarVendedores(idVenta);
+  mostrarVendedores(idVenta); 
+  obtenerEstadoComision(idVenta);
+  /* if(document.querySelector(".mensaje-estado") !== null){
+    document.getElementById("btn-guardar-comision").disabled = false;
+  }else{
+    document.getElementById("btn-guardar-comision").disabled = true;
+    
+  }; */
+  /* if (document.querySelector(".mensaje-estado") !== true) {
+    document.getElementById("btn-guardar-comision").disabled = false;
+  } else if (document.querySelector(".mensaje-estado") !== false) {  
+    document.getElementById("btn-guardar-comision").disabled = true;
+  }; */
   /* console.log(montoVenta); */
   $("#modalVentas").modal("hide");
 });
@@ -132,13 +144,26 @@ $selectPorcentaje.addEventListener("change", function () {
   obtenerComisionTotal($porcentaje, $totalVenta);
 });
 
-$('#form-Comision').submit(function () { //evita el comportambiento normal del submit, es decir, recarga total de la página
+$('#form-Comision').submit(function (e) { //evita el comportambiento normal del submit, es decir, recarga total de la página
+  if(document.getElementById("mensaje").classList.contains("mensaje-estado")){
+    e.preventDefault();
+      Swal.fire(
+        'Error!',
+        'Factura ya comisionada!',
+        'error',
+      )
+  }else{
+    guardarNuevaComision();
+  }
+  
+});
+
+let guardarNuevaComision = function(){
   let fechaComision = document.getElementById('fecha-comision').value;
   let idVenta = document.getElementById('id-venta').value;
   let montoTotal = document.getElementById('monto-total').value;
   let porcentaje = document.getElementById('porcentaje-comision').value;
   let comisionTotal = document.getElementById('comision-total').value;
-  
   $.ajax({
     url: "../../../Vista/comisiones/insertarNuevaComision.php",
     type: "POST",
@@ -158,7 +183,31 @@ $('#form-Comision').submit(function () { //evita el comportambiento normal del s
       )
     }
 });
-});
+}
+
+let obtenerEstadoComision = ($idVenta) => {
+  $.ajax({
+    url: "../../../Vista/comisiones/obtenerEstadoComision.php",
+    type: "POST",
+    datatype: "JSON",
+    data: {
+      idVenta: $idVenta
+    },
+    success: function (idVenta) {
+      let $mensajeEstado = document.getElementById("mensaje");
+      let $objEstadoVenta = JSON.parse(idVenta);
+      //condicion donde valida si la comision ya esta registrada 
+
+      if ($objEstadoVenta.estado == 'true') {
+        $mensajeEstado.innerText = 'Facura ya comisionada'
+        $mensajeEstado.classList.add('mensaje-estado');
+      } else{
+        $mensajeEstado.innerText = ''
+        $mensajeEstado.classList.remove('mensaje-estado');
+      }
+    }
+  });
+ } //Fin AJAX
 /* let $btnGuardarComision = document.getElementById('btn-guardar-comision');
   $btnGuardarComision.addEventListener('click', function(){
   let $idVenta = document.getElementById('monto-total').value;

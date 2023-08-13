@@ -15,7 +15,7 @@ class Venta {
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $listaVentas = 
             $consulta->query("SELECT v.NUMFACTURA, v.CODCLIENTE, c.NOMBRECLIENTE, c.CIF, v.FECHA, v.TOTALBRUTO, v.TOTALIMPUESTO, v.TOTALNETO
-            FROM View_Clientes AS c
+            FROM view_Clientes AS c
             INNER JOIN View_FACTURASVENTA AS v ON c.CODCLIENTE = v.CODCLIENTE;
             ");
         $ventas = array();

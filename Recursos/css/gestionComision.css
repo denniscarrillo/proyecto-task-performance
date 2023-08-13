@@ -65,6 +65,49 @@ h1{
 #btn_editar{
     background-color: rgb(45, 111, 203);
 }
+.filtro-fecha{
+    content: inherit;
+    display: flex;
+    margin: 0.5rem;
+    margin-left: -2rem;
+    padding: 1rem;
+    font-size: 1.2rem;
+    background-color: rgb(255, 255, 255);
+}
+.filtro-fecha input{
+    margin: 0.5rem;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    width: auto;
+    border-color: rgb(9, 107, 107);
+}
+.filtro-fecha label{
+    margin: 0.5rem;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    width: auto;
+    border-color: rgb(9, 107, 107);
+}
+.filtro-fecha button{
+    margin: 0.5rem;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    width: 5rem;
+    background-color: rgb(9, 107, 107);
+}
+.mensaje {
+    position: absolute;
+    color: red;
+    font-size: 12px;
+}
+.mensaje_error {
+    box-shadow: 0 0 0 .15rem #e15e3eac;
+    border-color: red;
+}
+.mensaje_error:focus {
+    box-shadow: 0 0 0 .25rem rgba(226, 73, 35, 0.455);
+    border-color: red;
+}
 /* #btn_eliminar{
     background-color: rgba(255, 0, 0, 0.855);
 } */

@@ -11,12 +11,11 @@ require_once("validacionesComision.php");
   <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
   <!-- Boostrap5 -->
-  <link href='../../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
+  <link href='../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-  <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
-  <link href="../../../Recursos/css/modalNuevaComision.css" rel="stylesheet">
-  <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+  <link href="../../Recursos/css/gestionComision.css" rel="stylesheet" />
+  <link href='../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
   <title> Comision </title>
 </head>
@@ -42,9 +41,17 @@ require_once("validacionesComision.php");
       <div class="columna2 col-10">
         <H1>Comisiones</H1>
         <div class= "table-conteiner">
+          <div class="filtros">
+            <div class="filtro-fecha">
+              <label for="fechaDesde">Fecha desde:</label>
+              <input type="date" id="fechaDesdef" name="fechaDesdef" class="form-control">
+              <label for="fechaHasta">Fecha hasta:</label>
+              <input type="date" id="fechaHastaf" name="fechaHastaf" class="form-control">
+              <button type="button" class="btn btn-primary" id="btnFiltrar">Filtrar</button>
+            </div>
           <div>
             <a href="v_nuevaComision.php" class="btn_nuevoRegistro btn btn-primary"><i class="fa-solid fa-circle-plus"></i> Generar comisión</a>
-            <a href="" class="btn_Pdf btn btn-primary"><i class="fas fa-file-pdf"></i> Generar Reportes</a>
+            <a href="../fpdf/ReporteComision.php" class="btn_Pdf btn btn-primary"><i class="fas fa-file-pdf"></i> Generar Reportes</a>
             <a href="ReporteComisionExcel.php" class="btn_Excel btn btn-primary "><i class="fa-solid fa-file-excel fa-sm"></i> Generar Excel</a>
           </div>
           <!-- <div>
@@ -57,7 +64,9 @@ require_once("validacionesComision.php");
                 <th scope="col"> FACTURA </th>
                 <th scope="col"> TOTAL VENTA </th>
                 <th scope="col"> PORCENTAJE </th>
+                <ht scope="col"> ESTADO </th>
                 <th scope="col"> COMISION TOTAL </th>
+                <th scope="col"> ESTADO </th>
                 <th scope="col"> FECHA </th>
                 <th scope="col"> ACCIONES </th>
               </tr>
@@ -71,12 +80,14 @@ require_once("validacionesComision.php");
   </div>
   <?php
     require('modalFiltroVenta.html');
+    require('modalEditarComision.html');
   ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
-  <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
+  <script src="../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script src="../../Recursos/js/comision/dataTableComision.js" type="module"></script>
+  <script src="../../Recursos/js/comision/validacionesEditarComision.js" type="module"></script>
   <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../Recursos/js/index.js"></script>

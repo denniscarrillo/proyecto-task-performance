@@ -5,6 +5,12 @@ document.getElementById('form-Edit-Tarea').addEventListener('submit', function(e
   let $idTask = $('#id-Tarea').val();
   enviarProductosInteres($idTask );
 });
+// $('#btn-guardar').submit(function (e) {
+//     alert('HOLA DANIELA');
+//     e.preventDefault();
+//     console.log(e);
+//     console.log('HOLA DANIELA');
+// });
 // CARGAR LOS ARTICULOS A AGREGAR A LA TAREA
 $('#btn-articulos').click(() => {
     if (document.getElementById('table-Articulos_wrapper') == null) {
