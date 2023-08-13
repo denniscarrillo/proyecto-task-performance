@@ -4,8 +4,6 @@ require_once("../../../Modelo/Metricas.php");
 require_once("../../../Controlador/ControladorMetricas.php");
 session_start(); //Reanudamos la sesion
 
-
-
 // if(isset($_SESSION['usuario'])){
 //   /* ====================== Evento ingreso a mantenimiento de usuario. =====================*/
 //   $newBitacora = new Bitacora();

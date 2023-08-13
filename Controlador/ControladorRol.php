@@ -13,13 +13,13 @@ class ControladorRol {
     public static function rolesUsuario(){
         return Rol::obtenerRolesUsuario();
     }
-    public static function registroRol($nuevoRol){
+    public static function ingresarNuevoRol($nuevoRol){
         return Rol::registroRol($nuevoRol);
     }
     public static function eliminarRol($id_Rol){
         return Rol::eliminarRol($id_Rol);
     }
-    public static function editarRol($nuevoRol){
+    public static function editarRolUsuario($nuevoRol){
        return Rol::editarRol($nuevoRol);
     }
 

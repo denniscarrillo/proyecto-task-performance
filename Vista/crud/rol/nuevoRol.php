@@ -1,17 +1,17 @@
 <?php
     require_once ("../../../db/Conexion.php");
+    require_once ("../../../Modelo/Usuario.php");
     require_once ("../../../Modelo/Rol.php");
-/*     require_once ("../../../Modelo/Bitacora.php"); */
+    require_once("../../../Controlador/ControladorUsuario.php");
     require_once("../../../Controlador/ControladorRol.php");
-/*     require_once("../../../Controlador/ControladorBitacora.php"); */
-    $rol = '';
-    session_start(); //Reanudamos session
-    if(isset($_SESSION['id_Rol'])){
-        $rol = $_SESSION['id_Rol'];
+    // $user = '';
+    // session_start(); //Reanudamos session
+    // if(isset($_SESSION['usuario'])){
+    //     $user = $_SESSION['usuario'];
         $nuevoRol = new Rol();
-        $nuevoRol->rol = $_POST['rol'];
-        $nuevoRol->descripcion = $_POST['descripcion'];
-        ControladorRol::registroRol($nuevoRol);
+        $nuevoRol->rol = $_POST['rolUsuario'];
+        $nuevoRol->descripcion = $_POST['descripcionRol'];
+        ControladorRol::ingresarNuevoRol($nuevoRol);
         /* ========================= Evento Creacion nuevo Usuario. ======================*/
 /*         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();
@@ -23,5 +23,5 @@
         $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' creo usuario '.$_POST['usuario'];
         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora); */
         /* =======================================================================================*/
-    }
+    // }
 ?>
