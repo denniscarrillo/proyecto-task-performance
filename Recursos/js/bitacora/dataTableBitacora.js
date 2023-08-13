@@ -11,8 +11,8 @@ $(document).ready(function () {
     "columns": [
       { "data": "id_Bitacora"},
       { "data": 'fecha' },
-      { "data": 'id_Usuario' },
-      { "data": 'id_Objeto' },
+      { "data": 'Usuario' },
+      { "data": 'Objeto' },
       { "data": 'accion' },
       { "data": 'descripcion' },
       

@@ -42,14 +42,16 @@
         public static function obtenerBitacorasUsuario(){
             $conn = new Conexion();
             $consulta = $conn->abrirConexionDB();
-            $obtenerBitacoras = $consulta->query("SELECT id_Bitacora, fecha, id_Usuario, id_Objeto, accion, descripcion FROM tbl_ms_bitacora");
+            $obtenerBitacoras = $consulta->query("SELECT B.id_Bitacora, B.fecha, u.usuario, o.objeto, B.accion, B.descripcion FROM tbl_ms_bitacora AS B
+            INNER JOIN tbl_ms_Usuario AS u ON u.id_Usuario = B.id_Usuario
+            INNER JOIN tbl_ms_objetos AS o ON o.id_Objeto = B.id_Objeto;");
             $bitacoras = array();
             while($fila = $obtenerBitacoras->fetch_assoc()){
                 $bitacoras [] = [
                     'id_Bitacora' => $fila["id_Bitacora"],
                     'fecha' => $fila["fecha"],
-                    'id_Usuario' => $fila["id_Usuario"],
-                    'id_Objeto' => $fila["id_Objeto"],
+                    'Usuario' => $fila["usuario"],
+                    'Objeto' => $fila["objeto"],
                     'accion' => $fila["accion"],
                     'descripcion' => $fila["descripcion"],
                     

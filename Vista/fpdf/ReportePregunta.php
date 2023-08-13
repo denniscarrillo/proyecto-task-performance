@@ -56,8 +56,8 @@ class PDF extends FPDF
       $this->SetTextColor(255, 255, 255); //colorTexto
       $this->SetDrawColor(163, 163, 163); //colorBorde
       $this->SetFont('Arial', 'B', 11);
-      $this->Cell(30, 10, mb_convert_encoding('ID_PREGUNTA','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(80, 10, mb_convert_encoding('PREGUNTA','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(18, 10, mb_convert_encoding('ID','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(120, 10, mb_convert_encoding('PREGUNTA','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
       $this->Ln(10);
    }
 
@@ -94,8 +94,8 @@ $pdf->SetDrawColor(163, 163, 163); //colorBorde
 /*$consulta_reporte_alquiler = $conexion->query("  ");*/
 $preguntas = ControladorPregunta::preguntasUsuario();
 foreach ($preguntas as $pregunta) {
-   $pdf->Cell(30, 10, mb_convert_encoding($pregunta['id_Pregunta'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(80, 10, mb_convert_encoding($pregunta['pregunta'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(18, 10, mb_convert_encoding($pregunta['id_Pregunta'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(120, 10, mb_convert_encoding($pregunta['pregunta'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
  
    $pdf->Ln(10);
 }

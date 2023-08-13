@@ -68,8 +68,8 @@ session_start(); //Reanudamos la sesion
               <tr>
                 <th scope="col"> N° </th>
                 <th scope="col"> FECHA </th>
-                <th scope="col"> ID USUARIO </th>
-                <th scope="col"> ID OBJETO </th>
+                <th scope="col"> USUARIO </th>
+                <th scope="col"> OBJETO </th>
                 <th scope="col"> ACCION </th>
                 <th scope="col"> DESCRIPCION </th>
                 <th ></th>
@@ -94,7 +94,7 @@ session_start(); //Reanudamos la sesion
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-  <script src="../../../Vista/crud/bitacora/dataTableBitacora.js" type="module"></script>
+  <script src="../../../Recursos/js/bitacora/dataTableBitacora.js" type="module"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <!--<script src="../../../Recursos/js/validacionesModalNuevoUsuario.js"  type="module"></script>-->
