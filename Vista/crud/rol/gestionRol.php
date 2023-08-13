@@ -20,26 +20,27 @@ session_start(); //Reanudamos la sesion
 
 ?>
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
-  <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
   <!-- Boostrap5 -->
   <link href='../../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <!-- DataTables -->
+  <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+  <!-- <link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
+  <!-- Estilos personalizados -->
   <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
-  <link href="../../../Recursos/css/modalNuevoRol.css" rel="stylesheet">
+  <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
-  <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
-  <title> Rol </title>
+  <title> Prueba </title>
 </head>
-
 <body>
   <div class="conteiner">
     <div class="row">
@@ -84,19 +85,19 @@ session_start(); //Reanudamos la sesion
     </div>
   </div>
   <?php
-  require('modalNuevoRol.html');
-  //require('modalEditarRol.html');
+  require('modalEditarRol.html');
+  require('./modalNuevoRol.html');
   ?>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
-  <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
-  <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-  <script src="../../../Vista/crud/rol/dataTableRol.js" type="module"></script>
+  <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
+  <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
+  <!-- Scripts propios -->
+  <script src="../../../Recursos/js/rol/dataTableRol.js" type="module"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
+  <script src="../../../Recursos/js/rol/validacionesModalNuevoRol.js"  type="module"></script>
+  <!-- <script src="../../../Recursos/js/rol/validacionesModalEditarRol.js"  type="module"></script> -->
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
-  <script src="../../../Vista/crud/rol/validacionesModalNuevoRol.js"  type="module"></script>
-  <!--<script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script>-->
+  <script src="../../../Recursos/js/index.js"></script>
 </body>
-
 </html>
