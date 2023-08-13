@@ -1,4 +1,4 @@
-import {estadoValidado as valido } from './validacionesEditarComision.js';
+/* import {estadoValidado as valido } from './validacionesEditarComision.js'; */
 
 let tablaComision = "";
 $(document).ready(function () {
@@ -42,7 +42,7 @@ $(document).on("click", "#btn_editar", function(){
   $("#monto_E").val(monto);
   $("#porcentaje-comision_E").val(porcentaje);
   $("#totalComsion_E").val(comisionTotal);
-  $("#estadoComision_E").val(obtenerEstadoComision("#estadoComision_E"));
+  /* $("#estadoComision_E").val(estadoComisionar); */
   $("#fecha_E").val(fechaComision);
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-title").css("color", "white");
@@ -53,27 +53,17 @@ $(document).on("click", "#btn_editar", function(){
 $("#form-Edit-Comision").submit(function (e) {
   e.preventDefault();
   let idComision = $("#idComision_E").val();
-  let idVenta = $("#idVenta_E").val();
-  let montoTotal = $("#monto_E").val();
-  let porcentaje = $("#porcentaje-comision_E").val();
-  let comisionTotal = $("#totalComsion_E").val();
   let estadoComision = document.getElementById("estadoComision_E").value;
-  let fechaComision = $("#fecha_E").val();
-  if(valido){
   $.ajax({
     url: "../../../Vista/comisiones/EditarComision.php",
     type: "POST",
     datatype: "JSON",
     data: {
       idComision: idComision,
-      idVenta: idVenta,
-      montoTotal: montoTotal,
-      idPorcentaje: porcentaje,
-      comisionTotal: comisionTotal,
-      estadoComision: estadoComision,
-      fechaComision: fechaComision,
+      estadoComision: estadoComision
     },
-    success: function () {
+    success: function (data) {
+      console.log(data);
       Swal.fire(
         'Actualizado!',
         'La comisión ha sido modificado!',
@@ -83,11 +73,14 @@ $("#form-Edit-Comision").submit(function (e) {
     },
   }); //Fin AJAX
       $("#modalEditarComision").modal("hide");
-    }
+});
+document.getElementById("btnCerrar").addEventListener("click", function () {
+  let idComision = $("#idComision_E").val();
+  let estadoComision = document.getElementById("estadoComision_E").value;
+  console.log('idComision: '+idComision+' estadoComision: '+estadoComision);
 });
 
-
-let obtenerEstadoComision = function (idElemento) {
+/* let obtenerEstadoComision = function (idElemento) {
   //Petición para obtener los estados de las comisiones
   $.ajax({
     url: "../../../Vista/comisiones/traerEstadoComision.php",
@@ -102,7 +95,7 @@ let obtenerEstadoComision = function (idElemento) {
       }
     },
   });
-};
+}; */
 
 /* let obtenerComisionTotal = ($porcentaje, $totalVenta) => {
   $.ajax({

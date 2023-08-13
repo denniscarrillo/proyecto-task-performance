@@ -9,7 +9,11 @@ class Comision
     public $estadoComision;
     public $creadoPor;
 
+    public $ModificadoPor;
+
     public $fechaComision;
+
+    public $fechaModificacion;
 
     public static function obtenerTodasLasComisiones()
     {
@@ -43,7 +47,7 @@ class Comision
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         // Preparamos la insercion en la base de datos
-        $nuevaComision = $consulta->query("INSERT INTO `tbl_comision` (`id_Venta`, `id_Porcentaje`, 
+        $consulta->query("INSERT INTO `tbl_comision` (`id_Venta`, `id_Porcentaje`, 
         `comision_TotalVenta`, `estadoComision`, `Creado_Por`, `Fecha_Creacion`)  
         VALUES ('$nuevaComision->idVenta','$nuevaComision->idPorcentaje','$nuevaComision->comisionTotal', '$nuevaComision->estadoComision', '$nuevaComision->creadoPor', '$nuevaComision->fechaComision')");
         $idComision = mysqli_insert_id($consulta);
@@ -104,31 +108,35 @@ class Comision
         return $comision;
 
     }
-    public static function dividirComisionVendedores($comisionVenta, $idComision, $vendedores, $estadoComision, $user, $fechaComision)
+    public static function dividirComisionVendedores($comisionVenta, $idComision, $vendedores, $user, $fechaComision)
     {
         $conn = new Conexion();
         $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         
+        $estadoComisionVendedor = 'Activa';
         $comisionVendedor = $comisionVenta / count($vendedores);
         foreach ($vendedores as $vendedor) {
         $idVendedor = $vendedor['idVendedor'];
         $insert = "INSERT INTO `tbl_comision_por_vendedor`(`id_Comision`, `id_usuario_vendedor`, `total_Comision`, `estadoComisionVendedor`, `Creado_Por`, `Fecha_Creacion`) 
-        VALUES ('$idComision', '$idVendedor', '$comisionVendedor', '$estadoComision', '$user', '$fechaComision');";
+        VALUES ('$idComision', '$idVendedor', '$comisionVendedor', '$estadoComisionVendedor', '$user', '$fechaComision');";
     
         $abrirConexion->query($insert);
         }
         mysqli_close($abrirConexion); #Cerramos la conexión.
     }
 
-  /*   public static function editarComision($idComision, $idVenta, $idPorcentaje, $comisionTotal, $user, $fechaComision)
-    {
+    public static function actualizarEstadoComisionVendedor($comision){
         $conn = new Conexion();
-        $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $editarComision = $abrirConexion->query("UPDATE `tbl_comision` SET `id_Venta`='$idVenta',`id_Porcentaje`='$idPorcentaje',
-        `comision_TotalVenta`='$comisionTotal',`Creado_Por`='$user',`Fecha_Creacion`='$fechaComision' WHERE id_Comision = '$idComision';");
-        mysqli_close($abrirConexion); #Cerramos la conexión.
-        return $editarComision;
-    } */
+        $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $selectVendedores = $conexion->query("SELECT id_usuario_vendedor FROM tbl_comision_por_vendedor WHERE id_Comision = '$comision->idComision';");
+        for ($i = 0; $i < $selectVendedores->num_rows; $i++){
+            $id = $selectVendedores->fetch_assoc();
+            $idVendedor = $id['id_usuario_vendedor'];
+            $conexion->query("UPDATE tbl_comision_por_vendedor SET estadoComisionVendedor = '$comision->estadoComision', 
+        Modificado_Por = '$comision->ModificadoPor', Fecha_Modificacion = '$comision->fechaModificacion' WHERE id_usuario_vendedor = '$idVendedor';");
+        }
+        mysqli_close($conexion); #Cerramos la conexión.
+    }
     public static function obtenerComisionesPorVendedor()
     {
         $conn = new Conexion();
@@ -210,18 +218,11 @@ class Comision
     public static function editarComision ($nuevaComision) {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $idComision = $nuevaComision->idComision;
-        $idVenta = $nuevaComision->idVenta;
-        $idPorcentaje = $nuevaComision->idPorcentaje;
-        $comisionTotal = $nuevaComision->comisionTotal;
-        $estadoComision = $nuevaComision->estadoComision;
-        $user = $nuevaComision->creadoPor;
-        $fechaComision = $nuevaComision->fechaComision;
-        $nuevaComision = $consulta->query("UPDATE tbl_comision SET id_Venta ='$idVenta', id_Porcentaje='$idPorcentaje',
-        comision_TotalVenta ='$comisionTotal', estadoComision = '$estadoComision', Creado_Por ='$user', Fecha_Creacion ='$fechaComision' WHERE id_Comision = '$idComision';");
+        $consulta->query("UPDATE tbl_comision SET estadoComision = '$nuevaComision->estadoComision', Modificado_Por ='$nuevaComision->ModificadoPor', 
+        Fecha_Creacion ='$nuevaComision->fechaModificacion' WHERE id_Comision = '$nuevaComision->idComision';");
         mysqli_close($consulta); #Cerramos la conexión.
     }
-    public static function obteniendoEstadoComision(){
+    /* public static function obteniendoEstadoComision(){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $estadoComisionar = $consulta->query("SELECT estadoComision FROM tbl_comision;
@@ -236,7 +237,7 @@ class Comision
         mysqli_close($consulta); #Cerramos la conexión.
         return $estadoComision;
 
-    }
+    } */
 }
     //convertir la fecha de comision totalm por vendedor en texto
 

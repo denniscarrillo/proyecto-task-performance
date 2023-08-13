@@ -62,6 +62,7 @@ require_once('obtenerEstadoComision.php');
           <div class="form-element">
             <label>Estado Comision:</label>
             <label id="mensaje-estado"></label>
+            <p class="mensaje" id= "mensaje"></p>
           </div>
           <div class="form-element">
             <label>Monto</label>

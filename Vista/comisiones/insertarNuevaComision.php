@@ -20,9 +20,9 @@ if(isset($_POST['idVenta']) || isset($_POST['idComision'])){
     $vendedores = ControladorComision::traerVendedores($idTarea);
     
     $idComision = ControladorComision::registroComision($nuevaComision);
-    ControladorComision::guardarComisionVendedor(floatval($_POST['comisionTotal']), $idComision, $vendedores, $estadoComision, $user, $_POST['fechaComision']);
-    $IdComision[] = [
+    ControladorComision::guardarComisionVendedor(floatval($_POST['comisionTotal']), $idComision, $vendedores, $user, $_POST['fechaComision']);
+    /* $IdComision[] = [
         'idComision' => $idComision
     ];
-    print json_encode($IdComision, JSON_UNESCAPED_UNICODE);
+    print json_encode($IdComision, JSON_UNESCAPED_UNICODE); */
 }

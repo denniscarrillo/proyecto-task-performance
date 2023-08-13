@@ -4,12 +4,13 @@ require_once ("../../Modelo/Comision.php");
 require_once("../../Controlador/ControladorComision.php");
 if(isset ($_POST['idVenta'])){
 $estadoComision = ControladorComision::traerEstadoComision($_POST['idVenta']);
+$estadoVenta = array();
 if($estadoComision == true){
-    $estadoVenta[] = [
+    $estadoVenta = [
         "estado" => "true"
     ];
 }else{
-    $estadoVenta[] = [
+    $estadoVenta = [
         "estado" => "false"
     ];
 }
