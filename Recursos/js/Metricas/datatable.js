@@ -17,8 +17,7 @@ $(document).ready(function () {
       { "data": "meta"},
       {
         "defaultContent":
-        '<div><button class="btns btn" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>' +
-        '<button class="btns btn" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button></div>'
+        '<div><button class="btns btn" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>' 
       }
     ]
   });

@@ -1,25 +1,24 @@
 <?php
 require_once("../../../db/Conexion.php");
 require_once("../../../Modelo/Rol.php");
+// require_once("../../../Modelo/Bitacora.php");
 require_once("../../../Controlador/ControladorRol.php");
-session_start(); //Reanudamos la sesion
-
-// if(isset($_SESSION['usuario'])){
+// require_once("../../../Controlador/ControladorBitacora.php");
+// session_start(); //Reanudamos la sesion
+// if (isset($_SESSION['usuario'])) {
 //   /* ====================== Evento ingreso a mantenimiento de usuario. =====================*/
 //   $newBitacora = new Bitacora();
 //   $accion = ControladorBitacora::accion_Evento();
-//  date_default_timezone_set('America/Tegucigalpa');
-//   $newBitacora->fecha = date("Y-m-d h:i:s"); 
-//   $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionUsuario.php');
+//   date_default_timezone_set('America/Tegucigalpa');
+//   $newBitacora->fecha = date("Y-m-d h:i:s");
+//   $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
 //   $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
 //   $newBitacora->accion = $accion['income'];
-//   $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' ingreso a mantenimiento usuario';
+//   $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingreso a mantenimiento usuario';
 //   ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
 //   /* =======================================================================================*/
 // }
-
 ?>
-<!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -39,54 +38,53 @@ session_start(); //Reanudamos la sesion
   <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
-  <title> Prueba </title>
+  <title> Rol </title>
 </head>
+
 <body>
   <div class="conteiner">
     <div class="row">
       <div class="columna1 col-2">
         <?php
         $urlIndex = '../../index.php';
-        $urlGestion = '../usuario/gestionUsuario.php';
+        $urlGestion = 'gestionUsuario.php';
         $urlTarea = '../../rendimiento/v_tarea.php';
         $urlSolicitud = '../solicitud/gestionSolicitud.php';
         $urlComision = '../../comisiones/v_comision.php';
         $urlCrudComision = '../comision/gestionComision.php';
-        $urlVenta = 'gestionVenta.php';
-        $urlCliente = '../cliente/gestionCliente.php';
+        $urlVenta = '../venta/gestionVenta.php';
+        $urlCliente ='./cliente/gestionCliente.php';
         $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
-        $urlRoles = '../../../Vista/crud/rol/gestionRol.php';
-        
+        $urlPorcentaje = '../Porcentajes/gestionPorcentajes.php';
+        $urlMetricas = '../Metricas/gestionMetricas.php';
         require_once '../../layout/sidebar.php';
         ?>
       </div>
       <div class="columna2 col-10">
         <H1>Gestión de Roles</H1>
         <div class="table-conteiner">
-        <div>
-        <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoRol"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
-        <a href="../../fpdf/ReporteRol.php" target="_blank" class="btn btn-success" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>    
+          <div>
+            <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoRol"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
           </div>
           <table class="table" id="table-Rol">
             <thead>
               <tr>
-                <th scope="col"> N° </th>
+                <th scope="col"> ID </th>
                 <th scope="col"> ROL </th>
                 <th scope="col"> DESCRIPCION </th>
                 <th scope="col"> ACCIONES </th>
               </tr>
             </thead>
-
             <tbody class="table-group-divider">
             </tbody>
           </table>
         </div>
-      </div>
+      </div> <!-- Fin de la columna -->
     </div>
   </div>
   <?php
+  require('modalNuevoRol.html');
   require('modalEditarRol.html');
-  require('./modalNuevoRol.html');
   ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
@@ -95,9 +93,10 @@ session_start(); //Reanudamos la sesion
   <!-- Scripts propios -->
   <script src="../../../Recursos/js/rol/dataTableRol.js" type="module"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-  <script src="../../../Recursos/js/rol/validacionesModalNuevoRol.js"  type="module"></script>
-  <!-- <script src="../../../Recursos/js/rol/validacionesModalEditarRol.js"  type="module"></script> -->
+  <script src="../../../Recursos/js/rol/validacionesModalNuevoRol.js" type="module"></script>
+  <script src="../../../Recursos/js/rol/validacionesModalEditarRol.js" type="module"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
 </body>
+
 </html>

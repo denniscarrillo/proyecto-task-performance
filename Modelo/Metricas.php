@@ -3,7 +3,6 @@ class Metricas{
     public $idMetrica;
     public $idEstadoAvance;
     public $meta;
-    public $creadoPor;
         
   //Método para obtener todos los clientes que existen.
     public static function obtenerMetricas(){
