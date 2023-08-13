@@ -31,7 +31,7 @@
 				$urlVenta = '../crud/venta/gestionVenta.php';
 				$urlCliente = '../crud/cliente/gestionCliente.php';
 				$urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
-				// require_once '../layout/sidebar.php';
+				require_once '../layout/sidebar.php';
 				?>
 			</div>
 			<div class="columna2 col-10">
