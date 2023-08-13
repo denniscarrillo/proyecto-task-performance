@@ -9,5 +9,9 @@
         public static function accion_Evento(){
             return Bitacora::acciones_Evento();
          }
+
+        public static function bitacorasUsuario(){
+            return Bitacora::obtenerBitacorasUsuario();
+        }
         
     }

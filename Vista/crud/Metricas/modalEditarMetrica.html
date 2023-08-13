@@ -1,0 +1,35 @@
+<div class="modal fade" id="modalEditarMetrica" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="editarModalLabel"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" id="form-Edit-Metrica">
+                    <div class="grupo-form">
+                        <div class="mb-3" hidden="true">
+                            <label for="idMetrica" class="form-label">Id Metrica:</label>
+                            <input type="text" name="idMetrica" id="E_idMetrica" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripcion:</label>
+                            <select name="text" id="E_descripcion" class="form-control"> 
+                            </select>
+                            <p class="mensaje"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="meta" class="form-label">Meta:</label>
+                            <input type="text" name="meta" id="E_meta" class="form-control">
+                            <p class="mensaje"></p>
+                        </div>
+                    </div>
+                    <div class="btn-guardar">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

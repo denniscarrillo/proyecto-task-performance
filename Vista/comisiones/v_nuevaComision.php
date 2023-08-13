@@ -32,6 +32,7 @@ require_once('obtenerEstadoComision.php');
         $urlVenta = '../crud/venta/gestionVenta.php';
         $urlCliente = '../crud/cliente/gestionCliente.php';
         $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
+        $urlPorcentaje = '../crud/Porcentajes/gestionPorcentajes.php';
         require_once '../layout/sidebar.php';
         ?>
       </div>

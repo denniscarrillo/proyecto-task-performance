@@ -182,17 +182,27 @@ class Tarea
     }
     public static function validarTipoCliente($rtn){
         try{
-            $existeRtn = false;
+            $estadoCliente = null;
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $selectCliente = "SELECT CIF FROM view_clientes WHERE CIF = '$rtn'";
-            $selectTarea = "SELECT id_EstadoAvance, RTN_Cliente FROM tbl_Tarea WHERE id_EstadoAvance = 4 AND RTN_Cliente = '$rtn'";
-            $rtnCliente = $abrirConexion->query($selectCliente);
-            $rtnTarea = $abrirConexion->query($selectTarea);
-            if($rtnCliente->num_rows > 0 || $rtnTarea->num_rows > 0){
-                $existeRtn = true;
+            $selectCliente = "SELECT CODCLIENTE FROM view_clientes WHERE CIF = '$rtn'";
+            $consulta = $abrirConexion->query($selectCliente);  
+            if($consulta->num_rows > 0){
+                $arrCodCiente = $consulta->fetch_assoc();
+                $codCliente = $arrCodCiente['CODCLIENTE'];
+                $selectFacturas = "SELECT count(NUMFACTURA) AS CANT FROM view_facturasventa WHERE CODCLIENTE = '$codCliente'";
+                $consulta= $abrirConexion->query($selectFacturas);
+                $cantFacturas = $consulta->fetch_assoc();
+                $facturas = intval($cantFacturas['CANT']);
+                if($facturas > 1){
+                    $estadoCliente = true;
+                }else{
+                    $estadoCliente = false;
+                } 
+            }else{
+                $estadoCliente = false;
             }
-            return $existeRtn;
+            return $estadoCliente;
         }catch(Exception $e){
             echo 'Error SQL:' . $e;
         }
@@ -251,6 +261,97 @@ class Tarea
             }
             return $vendedores;
         }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
+        mysqli_close($abrirConexion); //Cerrar conexion
+    }
+    public static function editarTarea($idTarea, $tipoTarea, $datosTarea){
+        try{
+            //Variables
+            $rtn = ''; $estadoCliente = ''; $idClasificacionLead = '';
+            $idOrigen = ''; $razon = ''; $rubro = ''; 
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            if($tipoTarea == '2'){
+                $rtn = $datosTarea['rtn']; $estadoCliente = $datosTarea['tipoCliente']; $idClasificacionLead = $datosTarea['clasificacionLead'];
+                $idOrigen = $datosTarea['origenLead']; $razon = $datosTarea['razon']; $rubro = $datosTarea['rubro']; 
+                //Actualizamos los datos de la tarea
+                $update = "UPDATE tbl_tarea SET `RTN_Cliente` = '$rtn', `estado_Cliente_Tarea` = '$estadoCliente', 
+                `id_ClasificacionLead` = '$idClasificacionLead', `id_OrigenLead` = $idOrigen, `rubro_Comercial` = '$rubro', `razon_Social` ='$razon'
+                WHERE `id_Tarea` = '$idTarea';";
+                $abrirConexion->query($update);
+            }else{
+                $rtn = $datosTarea['rtn']; $estadoCliente = $datosTarea['tipoCliente']; $razon = $datosTarea ['razon']; $rubro = $datosTarea['rubro']; 
+                //Actualizamos los datos de la tarea
+                $update = "UPDATE tbl_tarea SET `RTN_Cliente` = '$rtn', `estado_Cliente_Tarea` = '$estadoCliente', 
+                `rubro_Comercial` = '$rubro', `razon_Social` ='$razon' WHERE `id_Tarea` = '$idTarea'";
+                $abrirConexion->query($update);
+            }
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
+        mysqli_close($abrirConexion); //Cerrar conexion
+    }
+    public static function guardarProductosInteres($idTarea, $arrayProductos){
+        try{
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            foreach($arrayProductos as $producto){
+                
+                $insert = "";
+                $abrirConexion->query($insert);  
+            }
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
+        mysqli_close($abrirConexion); //Cerrar conexion
+    }
+    public static function obtenerClasificacionLead() {
+        try{
+            $clasificacion = array();
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $resultado = $abrirConexion->query("SELECT `id_ClasificacionLead`, `descripcion` FROM `tbl_ClasificacionLead`;");
+            //Recorremos el resultado de tareas y almacenamos en el arreglo.
+            while ($fila = $resultado->fetch_assoc()) {
+                $clasificacion[] = [
+                    'id' => $fila['id_ClasificacionLead'],
+                    'clasificacion' => $fila['descripcion']
+                ];
+            }
+            return $clasificacion;
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
+        mysqli_close($abrirConexion); //Cerrar conexion
+    }
+    public static function obtenerOrigenLead() {
+        try{
+            $origen = array();
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $resultado = $abrirConexion->query("SELECT `id_OrigenLead`, `descripcion` FROM `tbl_OrigenLead`;");
+            //Recorremos el resultado de tareas y almacenamos en el arreglo.
+            while ($fila = $resultado->fetch_assoc()) {
+                $origen[] = [
+                    'id' => $fila['id_OrigenLead'],
+                    'origen' => $fila['descripcion']
+                ];
+            }
+            return $origen;
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
+        mysqli_close($abrirConexion); //Cerrar conexion
+    }
+    public static function agregarNuevoCliente($nombre, $rtn, $telefono, $correo, $direccion){
+        try {
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $insertNuevoCliente = "INSERT INTO `tbl_CarteraCliente` (`nombre_Cliente`, `rtn_Cliente`, `telefono`, `correo`, `direccion`) 
+            VALUES('$nombre', '$rtn', '$telefono', '$correo', '$direccion');";
+            mysqli_query($abrirConexion, $insertNuevoCliente);
+        } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
         mysqli_close($abrirConexion); //Cerrar conexion

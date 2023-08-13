@@ -29,6 +29,8 @@
           $urlVenta = '../crud/venta/gestionVenta.php';
           $urlCliente = '../crud/cliente/gestionCliente.php';
           $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
+          $urlPorcentaje = '../crud/Porcentajes/gestionPorcentajes.php';
+          $urlMetricas = '../crud/Metricas/gestionMetricas.php';
           require_once '../layout/sidebar.php';
         ?>
       </div>
@@ -88,10 +90,7 @@
   </div>
   <div id="modals-container">
   <?php
-    // require_once('modalVendedores.html');
-    require_once('modalEditarTarea.html');
-    require_once('modalClientes.html');
-    require_once('modalArticulos.html');
+    require_once('modalVendedores.html');
   ?>
   </div>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>

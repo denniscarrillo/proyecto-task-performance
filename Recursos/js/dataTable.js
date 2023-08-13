@@ -35,6 +35,7 @@ $('#btn_nuevoRegistro').click(function () {
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");	 
 });
+
 //Crear nuevo usuario
 $('#form-usuario').submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
@@ -203,8 +204,4 @@ let obtenerEstadoUsuario = function (idElemento){
       }
     });
 }
- 
-// EMARTINEZ	Estefani Martinez	Unah@123	daniela.martinez@unah.hn	Bloqueado	Predeterminado
-// JASPER	Jasper Reyes	Unah@123	jasper.reyes@unah.hn	Bloqueado	Tecnico
-// ANDREA	Andrea Garrido	Unah@432	andreag2020@unah.hn	Nuevo	Predeterminado
 
