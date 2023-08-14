@@ -21,7 +21,6 @@ if (isset($_SESSION['usuario'])) {
         ControladorComision::actualizarComision($nuevaComision);
 
         ControladorComision::editarEstadoComisionVendedor($nuevaComision);
-        
         /* ========================= Evento Editar Comision. ======================*/
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();
@@ -33,10 +32,10 @@ if (isset($_SESSION['usuario'])) {
         $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' modificó una comision ';
         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     }
-    $data = [
-        'user' => 'Respuesta'
-    ];
-    print json_encode($data, JSON_UNESCAPED_UNICODE);
+    // $data = [
+    //     'user' => 'Respuesta'
+    // ];
+    // print json_encode($data, JSON_UNESCAPED_UNICODE);
 }
 /* else {
     header('Location: ../login/login.php');

@@ -76,6 +76,7 @@ require_once("../../../Controlador/ControladorComision.php");
                 <th scope="col"> ID COMISION VENDEDOR</th>
                 <th scope="col"> ID VENDEDOR </th>
                 <th scope="col"> VENDEDOR </th>
+                <th scope="col"> ESTADO  </th>
                 <th scope="col"> COMISION TOTAL </th>
                 <th scope="col"> FECHA </th>
               </tr>

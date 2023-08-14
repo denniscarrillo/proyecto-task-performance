@@ -38,6 +38,6 @@
             return Comision::obtenerEstadoComision($idVenta);
         } 
         public static function editarEstadoComisionVendedor($comision){
-            Comision::actualizarEstadoComisionVendedor($comision);
+            return Comision::actualizarEstadoComisionVendedor($comision);
         }
     }
