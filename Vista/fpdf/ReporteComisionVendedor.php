@@ -95,7 +95,7 @@ $pdf->SetFont('Arial', '', 12);
 $pdf->SetDrawColor(163, 163, 163); //colorBorde
 
 /*$consulta_reporte_alquiler = $conexion->query("  ");*/
-$totalComision = ControladorComision::obtenerSumaComisionesVendedores('2023-08-10', '2023-08-13');
+$totalComision = ControladorComision::obtenerSumaComisionesVendedores('2023-08-13', '2023-08-15');
 foreach ($totalComision as $Comisiones) {
    $pdf->Cell(30, 10, mb_convert_encoding($Comisiones['idVendedor'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Cell(40, 10, mb_convert_encoding($Comisiones['nombreVendedor'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
