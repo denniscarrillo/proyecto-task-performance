@@ -16,11 +16,7 @@ $(document).ready(function () {
       { "data": 'fechaEmision' },
       { "data": 'totalBruto' },
       { "data": 'totalImpuesto'},
-      { "data": 'totalNeto' },
-      {
-        "defaultContent":
-          '<div> <a href = "../../../Vista/fpdf/Reporte_Venta.php"> <button class="btns btn" id="btn_ver"><i class="fa-solid fa-file-pdf"></i></button> </a> </div>'
-      }
+      { "data": 'totalNeto' }
     ]
   });
 

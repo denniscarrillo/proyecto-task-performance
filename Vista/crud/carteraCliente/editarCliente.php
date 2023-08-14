@@ -8,15 +8,15 @@
     // require_once("../../../Controlador/ControladorBitacora.php");
     
 
-    session_start(); //Reanudamos session
-    if(isset($_SESSION['usuario'])){
+    // session_start(); //Reanudamos session
+    // if(isset($_SESSION['usuario'])){
         $nuevoCliente = new CarteraClientes();
-        $nuevoCliente->idcarteraCliente = $_POST['idcarteraCliente'];
+        $nuevoCliente->idcarteraCliente = $_POST['id'];
         $nuevoCliente->nombre = $_POST['nombre'];
         $nuevoCliente->rtn = $_POST['rtn'];
         $nuevoCliente->telefono = $_POST['telefono'];
         $nuevoCliente->correo= $_POST['correo'];
-        $nuevoCliente->idestadoContacto = $_POST['idestadoContacto'];
+        $nuevoCliente->direccion = $_POST['direccion'];
         ControladorCarteraClientes::editarCliente($nuevoCliente);
         /* ========================= Evento Editar Usuario. ======================*/
         // $newBitacora = new Bitacora();
@@ -29,4 +29,4 @@
         // $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' modificó el usuario '.$_POST['usuario'];
         // ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
         // /* =======================================================================================*/
-    }
+    // }

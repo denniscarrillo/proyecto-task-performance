@@ -3,25 +3,22 @@ export let estadoValidado = false;
 //Objeto con expresiones regulares para los inptus
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
-    correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
-    soloNumeros: /^[0-9]*$/
+    correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/
+    // soloNumeros: /^[0-9]*$/
 }
 //VARIABLES GLOBALES
 let estadoSoloLetras = {
-    estadoLetrasName: true,
-}
-let estadoSoloNumeros = {
-    estadoNumerosRtn: true,
+    estadoLetrasName: true
 }
 
-let estadoSelect = true;
 let estadoCorreo = true;
 
-const $form = document.getElementById('form-CarteraClientes');
+const $form = document.getElementById('form-carteraCliente');
 const $name = document.getElementById('nombre');
 const $rtn = document.getElementById('rtn');
+const $telefono = document.getElementById('telefono');
 const $correo = document.getElementById('correo');
-const $estadoContacto = document.getElementById('estadoContacto');
+const $direccion = document.getElementById('direccion');
 
 /* ---------------- VALIDACIONES FORMULARIO GESTION NUEVO USUARIO ----------------------*/
 /* 
@@ -32,28 +29,23 @@ $form.addEventListener('submit', e => {
     //Validamos que algún campo no esté vacío.
     let estadoInputNombre = funciones.validarCampoVacio($name);
     let estadoInputRtn = funciones.validarCampoVacio($rtn);
+    let estadoInputTelefono = funciones.validarCampoVacio($telefono)
     let estadoInputCorreo = funciones.validarCampoVacio($correo);
-    let estadoInputeEstado = funciones.validarCampoVacio($estadoContacto);
+    let estadoInputDireccion = funciones.validarCampoVacio($direccion);
     // Comprobamos que todas las validaciones se hayan cumplido 
-    if (estadoInputNombre == false || estadoInputRtn == false || estadoInputCorreo == false || estadoInputeEstado == false) {
+    if (estadoInputNombre == false || estadoInputRtn == false || estadoInputTelefono ==false || 
+        estadoInputCorreo == false || estadoInputDireccion == false) {
         e.preventDefault();
     } else {
             if(estadoSoloLetras.estadoLetrasName == false){
                 e.preventDefault();
                 estadoSoloLetras.estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);           
             } else{
-                if(estadoSoloNumeros.estadoNumerosRtn == false){
+                if(estadoCorreo == false){
                     e.preventDefault();
-                    estadoSoloNumeros.estadoNumerosRtn = funciones.validarSoloNumeros($rtn, validaciones.soloNumeros);
+                    estadoCorreo = funciones.validarCorreo($correo, validaciones.correo);
                 } else {
-                    if(estadoCorreo == false || estadoSelect == false){
-                        e.preventDefault();
-                        estadoCorreo = funciones.validarCorreo($correo, validaciones.correo);
-                        estadoSelect = funciones.validarCampoVacio($estadoContacto);
-                    } else {
-                        estadoValidado = true;
-                        console.log(estadoValidado); // 
-                    }
+                    estadoValidado = true;
                 }
             
             }       
@@ -71,16 +63,6 @@ $name.addEventListener('focusout', ()=>{
     $name.value = usuarioMayus;
 });
 
-$rtn.addEventListener('keyup', ()=>{
-    estadoSoloNumeros.estadoNumerosRtn = funciones.validarSoloNumeros($rtn, validaciones.soloNumeros);
-    $("#rtn").inputlimiter({
-        limit: 14
-    });
-});
-
 $correo.addEventListener('keyup', ()=>{
     estadoCorreo = funciones.validarCorreo($correo, validaciones.correo);
-});
-$estadoContacto.addEventListener('change', ()=>{
-    estadoSelect = funciones.validarCampoVacio($estadoContacto);
 });

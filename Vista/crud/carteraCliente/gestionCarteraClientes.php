@@ -69,12 +69,12 @@ session_start(); //Reanudamos la sesion
           <table class="table" id="table-CarteraClientes">
             <thead>
               <tr>
-                <th scope="col"> ID CLIENTE </th>
+                <th scope="col"> ID </th>
                 <th scope="col"> NOMBRE </th>
                 <th scope="col"> RTN </th>
                 <th scope="col"> TELEFONO </th>
                 <th scope="col"> CORREO </th>
-                <th scope="col"> ESTADO CONTACTO </th>
+                <th scope="col"> DIRECCION </th>
                 <th scope="col"> ACCIONES </th>
               </tr>
             </thead>
@@ -90,7 +90,7 @@ session_start(); //Reanudamos la sesion
   </div>
   <?php
   require_once('modalNuevoCliente.html');
-  require('modalEditarCliente.html');
+  require_once('modalEditarCliente.html');
   ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>

@@ -75,7 +75,6 @@ session_start(); //Reanudamos la sesion
                 <th scope="col"> TOTAL BRUTO </th>
                 <th scope="col"> IMPUESTO </th>
                 <th scope="col"> TOTAL </th>
-                <th scope="col"> ACCIONES </th>
               </tr>
             </thead>
             <div class ="text-left mb-2">

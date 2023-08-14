@@ -3,80 +3,59 @@ export let estadoValidado = false;
 //Objeto con expresiones regulares para los inptus
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
-    correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
-    soloNumeros: /^[0-9]*$/
+    correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/
 }
 //VARIABLES GLOBALES
-let estadoSoloLetras = {
-    estadoLetrasName: true,
-}
-
-let estadoSoloNumeros = {
-    estadoNumerosRtn: true,
-}
-let estadoSelect = true;
+let estadoLetrasName = true;
 let estadoCorreo = true;
 
-const $form = document.getElementById('form-Edit-Cliente');
-const $name = document.getElementById('E_nombre');
-const $rtn = document.getElementById('E_rtn');
-const $correo = document.getElementById('E_correo');
-const $estadoContacto = document.getElementById('E_estado');
+const $form = document.getElementById('form-editar-carteraCliente');
+const $name = document.getElementById('E_Nombre');
+const $rtn = document.getElementById('E_Rtn');
+const $telefono = document.getElementById('E_Telefono');
+const $correo = document.getElementById('E_Correo');
+const $direccion = document.getElementById('E_Direccion');
 
 /* ---------------- VALIDACIONES FORMULARIO GESTION NUEVO USUARIO ----------------------*/
 /* 
     Antes de enviar datos del formulario, se comprobara que todas  
     las validaciones se hayan cumplido.
 */
-$form.addEventListener('submit', e => {   
+$form.addEventListener('submit', e => {
     //Validamos que algún campo no esté vacío.
     let estadoInputNombre = funciones.validarCampoVacio($name);
     let estadoInputRtn = funciones.validarCampoVacio($rtn);
+    let estadoInputTelefono = funciones.validarCampoVacio($telefono);
     let estadoInputCorreo = funciones.validarCampoVacio($correo);
-    let estadoInputeEstado = funciones.validarCampoVacio($estadoContacto);
+    let estadoInputDireccion = funciones.validarCampoVacio($direccion);
     // Comprobamos que todas las validaciones se hayan cumplido 
-    if (estadoInputNombre == false || estadoInputRtn == false || estadoInputCorreo == false || estadoInputeEstado == false) {
+    if (estadoInputNombre == false || estadoInputRtn ==false || estadoInputTelefono == false ||
+        estadoInputCorreo == false || estadoInputDireccion == false) {
         e.preventDefault();
     } else {
-            if(estadoSoloLetras.estadoLetrasName == false){
+        if(estadoLetrasName == false){
+            e.preventDefault();
+            estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
+        } else {
+            if(estadoCorreo == false){
                 e.preventDefault();
-                estadoSoloLetras.estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);           
-            } else{
-                if(estadoSoloNumeros.estadoNumerosRtn == false){
-                    e.preventDefault();
-                    estadoSoloNumeros.estadoNumerosRtn = funciones.validarSoloNumeros($rtn, validaciones.soloNumeros);
-                } else {
-                    if(estadoCorreo == false || estadoSelect == false){
-                        e.preventDefault();
-                        estadoCorreo = funciones.validarCorreo($correo, validaciones.correo);
-                        estadoSelect = funciones.validarCampoVacio($estadoContacto);
-                    } else {
-                        estadoValidado = true;
-                        console.log(estadoValidado); // 
-                    }
-                }
-            
-            }       
-            
+                estadoCorreo = funciones.validarCorreo($correo, validaciones.correo);
+            } else {
+                estadoValidado = true; // 
+            }
         }
+    }
 });
 $name.addEventListener('keyup', ()=>{
-    estadoSoloLetras.estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
-    $("#E_nombre").inputlimiter({
+    estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
+    $("E_nombre").inputlimiter({
         limit: 50
     });
 });
-
-$rtn.addEventListener('keyup', ()=>{
-    estadoSoloNumeros.estadoNumerosRtn = funciones.validarSoloNumeros($rtn, validaciones.soloNumeros);
-    $("#E_rtn").inputlimiter({
-        limit: 14
-    });
+$name.addEventListener('focusout', ()=>{
+    let usuarioMayus = $name.value.toUpperCase();
+    $name.value = usuarioMayus;
 });
-
 $correo.addEventListener('keyup', ()=>{
     estadoCorreo = funciones.validarCorreo($correo, validaciones.correo);
-});
-$estadoContacto.addEventListener('change', ()=>{
-    estadoSelect = funciones.validarCampoVacio($estadoContacto);
 });
