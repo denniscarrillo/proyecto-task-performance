@@ -61,8 +61,7 @@ class PDF extends FPDF
       $this->Cell(35, 10, mb_convert_encoding('RTN','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
       $this->Cell(35, 10, mb_convert_encoding('TELEFONO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
       $this->Cell(65, 10, mb_convert_encoding('CORREO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(50, 10, mb_convert_encoding('ESTADO CONTACTO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-
+      $this->Cell(55, 10, mb_convert_encoding('DIRECCION','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
       $this->Ln(10);
    }
 
@@ -104,8 +103,7 @@ foreach ($carteraClientes as $cartera) {
    $pdf->Cell(35, 10, mb_convert_encoding($cartera['rtn'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Cell(35, 10, mb_convert_encoding($cartera['telefono'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Cell(65, 10, mb_convert_encoding($cartera['correo'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(50, 10, mb_convert_encoding($cartera['estadoContacto'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   
+   $pdf->Cell(55, 10, mb_convert_encoding($cartera['direccion'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Ln(10);
 }
 /* TABLA */

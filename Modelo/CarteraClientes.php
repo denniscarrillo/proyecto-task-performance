@@ -16,18 +16,17 @@ class CarteraClientes{
     public static function obtenerCarteraClientes(){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB();
-        $obtenerCarteraCliente = $consulta->query("SELECT id_CarteraCliente, nombre_Cliente, rtn_Cliente, telefono, correo, direccion, estado_Contacto
+        $obtenerCarteraCliente = $consulta->query("SELECT id_CarteraCliente, nombre_Cliente, rtn_Cliente, telefono, correo, direccion
         FROM tbl_CarteraCliente;");
         $carteraCliente = array();
         while($fila = $obtenerCarteraCliente->fetch_assoc()){
             $carteraCliente [] = [
-                'id' => $fila["id_CarteraCliente"],
+                'idcarteraCliente' => $fila["id_CarteraCliente"],
                 'nombre' => $fila["nombre_Cliente"],
                 'rtn' => $fila["rtn_Cliente"],
                 'telefono' => $fila["telefono"],
                 'correo' => $fila["correo"],
-                'direccion' => $fila["direccion"],
-                'estado' => $fila["estado_Contacto"]
+                'direccion' => $fila["direccion"]
             ];
         }
         mysqli_close($consulta); #Cerramos la conexión.
