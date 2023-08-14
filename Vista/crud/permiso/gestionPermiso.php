@@ -39,7 +39,7 @@ session_start(); //Reanudamos la sesion
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
-  <title> Prueba </title>
+  <title> Permisos </title>
 </head>
 
 <body>
@@ -101,8 +101,8 @@ session_start(); //Reanudamos la sesion
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script src="../../../Recursos/js/permiso/dataTablePermisos.js" type="module"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-  <!-- <script src="../../../Recursos/js/Porcentajes/ValidacionesModalNuevoPorcentaje.js"  type="module"></script>
-  <script src="../../../Recursos/js/Porcentajes/ValidacionesModalEditarPorcentaje.js" type="module"></script> -->
+  <script src="../../../Recursos/js/permiso/ValidacionesModalNuevoPermiso.js"  type="module"></script>
+  <!-- <script src="../../../Recursos/js/Porcentajes/ValidacionesModalEditarPorcentaje.js" type="module"></script>  -->
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
 </body>

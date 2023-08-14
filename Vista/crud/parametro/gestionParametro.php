@@ -39,7 +39,7 @@ session_start(); //Reanudamos la sesion
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
-  <title> Prueba </title>
+  <title> Parametros </title>
 </head>
 
 <body>
@@ -64,11 +64,9 @@ session_start(); //Reanudamos la sesion
       <div class="columna2 col-10">
         <H1>Gestión de Parámetros</H1>
         <div class="table-conteiner">
-        <a href=".." class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
-        <div>
             <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoPorcentaje"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
             <a href="../../fpdf/ReporteParametros.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
-          </div>
+        </div>
           <table class="table" id="table-Parametro">
             <thead>
               <tr>

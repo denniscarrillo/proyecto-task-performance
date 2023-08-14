@@ -39,7 +39,7 @@ session_start(); //Reanudamos la sesion
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
-  <title> Prueba </title>
+  <title> Articulos </title>
 </head>
 
 <body>
@@ -65,7 +65,7 @@ session_start(); //Reanudamos la sesion
         <H1>Gestión de Articulos</H1>
         <div class="table-conteiner">
         <div>
-        <a href="../" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
+        <a href="../../fpdf/ReporteArticulo.php" class="btn_Pdf btn btn-primary" target="_blank"  id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
           </div>
           <table class="table" id="table-Articulos">
             <thead>

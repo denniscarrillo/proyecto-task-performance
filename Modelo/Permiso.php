@@ -62,4 +62,22 @@ class Permiso
         mysqli_close($abrirConexion); //Cerrar conexion
         return $objetos;
     }
+    public static function registroPermiso($nuevoPermiso) {
+        try {
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $rol=$nuevoPermiso->idRol;
+            $objeto=$nuevoPermiso->idObjeto;
+            $consultar=$nuevoPermiso->permisoConsultar;
+            $insertar=$nuevoPermiso->PermisoInsercion;
+            $actualizar=$nuevoPermiso->PermisoActualizacion;
+            $eliminar=$nuevoPermiso->PermisoEliminacion;
+            $insert = "INSERT INTO tbl_ms_permisos (id_Rol, id_Objeto, permiso_Consultar, permiso_Insercion, 
+            permiso_Actualizacion, permiso_Eliminacion) VALUES ('$rol', '$objeto', '$consultar', '$insertar', '$actualizar', '$eliminar');";
+            $ejecutar_insert = mysqli_query($abrirConexion, $insert);
+        } catch (Exception $e) {
+            echo 'Error SQL:' . $e;
+        }
+        mysqli_close($abrirConexion); //Cerrar conexion
+    }
 }
