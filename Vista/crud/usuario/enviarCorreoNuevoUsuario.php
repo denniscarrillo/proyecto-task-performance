@@ -35,6 +35,7 @@ function enviarCorreoNuevoUsuario($destinario, $usuario, $contrasenia){
             <p><b> Contraseña:'.$contrasenia.'</b></p>
         </div>';
         // $mail->AltBody = 'Si funcionó!';
+        $mail->CharSet = 'UTF-8'; // Setear UTF-8 para caracteres especiales
         $mail->send();
         $confirmacion = 'El usuario debe verificar su correo electrónico';
     } catch (Exception $e) {

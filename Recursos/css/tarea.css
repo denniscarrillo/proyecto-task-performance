@@ -101,6 +101,9 @@ p {
   background-color: #f5f1ef;
   border-radius: 0.2rem;
   border: 1px double #d4cdcd;
+  /* -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.08);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.08); */
+  box-shadow: 4px 2px 5px 0px rgba(0,0,0,0.08);
   /*box-shadow: 10px 10px 5px 0px #cc7245 ; */
 }
 .btn_nuevaTarea {
@@ -195,10 +198,19 @@ p {
 .fa-solid-icon:hover {
   color: #1289d8;
 }
-.select-articulo, .select-cliente{
+.select-articulo, .select-cliente, .select-vendedor{
   color: #1289d8;
 }
 #btn_agregar {
   display: block;
   margin: 0 auto;
 }
+.card_task.seleccionado{
+  transform: scale(1.02) rotate(-1deg);
+  box-shadow: 0px 0px 10px rgba(245, 140, 69, 0.658);
+  /* background-color: rgba(245, 140, 69, 0.635); */
+}
+.card_task.drag{
+  opacity: 0;
+}
+

@@ -235,10 +235,10 @@ class Tarea
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             foreach($idVendedores as $idVendedor){
-                $id= $idVendedor['idUsuario'];
+                $id= $idVendedor['idVendedor'];
                 $insertUsuarioTarea = "INSERT INTO `tbl_vendedores_tarea` (`id_Tarea`, `id_usuario_vendedor`) 
                                     VALUES ('$idTarea', '$id');";
-                $ejecutar_insert = mysqli_query($abrirConexion, $insertUsuarioTarea);
+                 mysqli_query($abrirConexion, $insertUsuarioTarea);
             }
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
@@ -292,14 +292,16 @@ class Tarea
         }
         mysqli_close($abrirConexion); //Cerrar conexion
     }
-    public static function guardarProductosInteres($idTarea, $arrayProductos){
+    public static function guardarProductosInteres($idTarea, $productos, $CreadoPor, $fechaCreacion){
         try{
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            foreach($arrayProductos as $producto){
-                
-                $insert = "";
-                $abrirConexion->query($insert);  
+            foreach($productos as $producto){
+                $idProducto = $producto['idProducto'];
+                $cantProd = $producto['CantProducto'];
+                $insert = "INSERT INTO `tbl_productointeres` (`id_Tarea`, `id_Articulo`, `cantidad`, `Creado_Por`, `Fecha_Creacion`) 
+                VALUES ('$idTarea', '$idProducto', '$cantProd', '$CreadoPor', '$fechaCreacion');";
+                $abrirConexion->query($insert); 
             }
         }catch(Exception $e){
             echo 'Error SQL:' . $e;

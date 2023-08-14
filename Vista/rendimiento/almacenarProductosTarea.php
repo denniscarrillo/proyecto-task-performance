@@ -2,12 +2,22 @@
 require_once('../../db/Conexion.php');
 require_once('../../Modelo/Tarea.php');
 require_once('../../Controlador/ControladorTarea.php');
-// header('location: ./almacenarProductosTarea.php');
 session_start(); //Reanudamos sesion
 if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
-    $productos = json_decode($_POST['productos'], true, 4);
-    $idTarea = $_POST['idTarea'];
-    var_dump($productos);
-    echo $productos;
-    // ControladorTarea::guardarProductosInteres($idTarea, $productos);
+    //Datos auditoria
+    $CreadoPor = $_SESSION['usuario'];
+    date_default_timezone_set('America/Tegucigalpa');
+    $fechaCreacion = date("Y-m-d");
+    $idTarea = $_POST['idTarea']; //Id de la tarea
+    //Obtenemos el JSON y lo parseamos a ARRAY ASOCIATIVO
+    $productos = json_decode($_POST['productos'], true);
+    $productosTarea = array();
+    for($i=0; $i < count($productos); $i++){
+        $productosTarea [] = [
+            'idProducto'=> $productos[$i]['id'],
+            'CantProducto'=> $productos[$i]['cant'],
+        ];
+    }
+    //var_dump($productosTarea);
+    ControladorTarea::almacenarProductosInteres($idTarea, $productosTarea, $CreadoPor, $fechaCreacion);
 }

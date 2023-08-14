@@ -12,6 +12,7 @@ let $columnaLeads = document.getElementById('columna-leads');
 let $columnaCotizaciones = document.getElementById('columna-cotizaciones');
 let $columnaVentas = document.getElementById('columna-ventas');
 let $ArticulosInteres = [];
+let $idTarea = '';
 
 //Una vez este cargado el documento o pagina web se va a ejecutar lo que esta dentro
 $(document).ready(function () {
@@ -19,24 +20,52 @@ $(document).ready(function () {
   obtenerTareas($contenedorLeads, $contadorLeads, 'Lead');
   obtenerTareas($contenedorCotizaciones, $contadorCotizaciones, 'Cotizacion');
   obtenerTareas($contenedorVentas, $contadorVentas, 'Venta');
+  obtenerVendedores();
 
   new Sortable(document.getElementById('conteiner-llamada'), {
     group: 'shared', // set both lists to same group
-    animation: 150
+    animation: 200,
+    easing: "cubic-bezier(1, 0, 0, 1)",
+    chosenClass: 'seleccionado',
+    dragClass: 'drag',
+    onEnd: () => {
+      actualizarContadores();
+      // $('#modalVendedores').modal('show');
+    }
   });
   new Sortable(document.getElementById('conteiner-lead'), {
     group: 'shared',
-    animation: 150
+    animation: 200,
+    easing: "cubic-bezier(1, 0, 0, 1)",
+    chosenClass: 'seleccionado',
+    dragClass: 'drag',
+    onEnd: () => {
+      actualizarContadores();
+      // $('#modalVendedores').modal('show');
+    }
   });
   new Sortable(document.getElementById('conteiner-cotizacion'), {
     group: 'shared',
-    animation: 150
+    animation: 200,
+    easing: "cubic-bezier(1, 0, 0, 1)",
+    chosenClass: 'seleccionado',
+    dragClass: 'drag',
+    onEnd: () => {
+      actualizarContadores();
+      // $('#modalVendedores').modal('show');
+    }
   });
   new Sortable(document.getElementById('conteiner-venta'), {
     group: 'shared',
-    animation: 150
+    animation: 200,
+    easing: "cubic-bezier(1, 0, 0, 1)",
+    chosenClass: 'seleccionado',
+    dragClass: 'drag',
+    onEnd: () => {
+      actualizarContadores();
+      // $('#modalVendedores').modal('show');
+    }
   });
-
 });
 //Evento
 $('#btn-NuevaLLamada').click(function () {
@@ -103,7 +132,7 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
               </div>
               <div class="conteiner-icons-task">
               <div>
-                <a href="#" class="btn-editar btn-vendedores" data-bs-toggle="modal" data-bs-target="#modalVendedores" id="${tarea.id}-${tarea.idEstadoAvance}"><i class="fa-solid-btn fa-solid fa-user-plus"></i></a>
+                <a href="#" class="btn-vendedor btn-vendedores" data-bs-toggle="modal" data-bs-target="#modalVendedores" id="${tarea.id}"><i class="fa-solid-btn fa-solid fa-user-plus"></i></a>
               </div>
               <div>
                 <a href="../../../Vista/rendimiento/v_editarTarea.php?idTarea=${tarea.id}&estadoTarea=${tarea.idEstadoAvance}" class="btn-editar"><i class="fa-solid-btn fa-solid fa-pen-to-square"></i></a>
@@ -118,12 +147,6 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
       });
       //Si no hay tareas del tipo buscado el contador se mantiene en cero y se indica en el HTML
       (count == 0) ? $contador.innerText = '0' : $contador.innerText = count;
-      //Añade evento click a todos los botones de las tareas, que trea los estados tareas.
-      // document.querySelectorAll('.btn-editar').forEach((btnEditar) => {
-      //   btnEditar.addEventListener('click', (e) => {
-      //     obtenerEstadosTarea(document.getElementById('estados-tarea'), btnEditar);
-      //   });
-      // });
     }
   });
 }
@@ -209,4 +232,90 @@ let guardarTarea = ($btnGuardar, $tarea, $actualizarTarea, $elementoPadre, $elem
       } //Fin de los casos
     }
   });
+}
+let obtenerVendedores = function () {
+  if (document.getElementById('table-Vendedores_wrapper') == null) {
+    $('#table-Vendedores').DataTable({
+      "ajax": {
+        "url": "../../../Vista/rendimiento/obtenerVendedores.php",
+        "dataSrc": ""
+      },
+      "language": {
+        "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+      },
+      "columns": [
+        { "data": 'id' },
+        { "data": 'usuario' },
+        { "data": 'nombre' },
+        {
+          "defaultContent":
+            '<div><button class="btns btn btn_select-Vendedores"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>'
+        }
+      ]
+    });
+  }
+}
+$(document).on('click', '.btn_select-Vendedores', function () {
+  selectVendedores(this);
+});
+$(document).on('click', '.btn-vendedor', function () {
+  $idTarea = this.getAttribute('id'); //Obtenemos el id de la tara que se le van a agregar los vendedores
+});
+$(document).on('click', '#btn_agregarVendedores', function () {
+  //Tiendiendo los vendedores y el idTarea enviamos los datos al servidor
+  agregarVendedores($idTarea);
+});
+let selectVendedores = function ($elementoHtml) {
+  $elementoHtml.classList.toggle('select-vendedor');
+}
+//Guardamos los vendedores que se desean agregar a una tarea
+let agregarVendedores = function ($id_Tarea) {
+  let $Vendedores = [];
+  let vendedoresSeleccionados = document.querySelectorAll('.select-vendedor');
+  vendedoresSeleccionados.forEach(function (vendedor) {
+    if (vendedor.classList.contains('select-vendedor')) {
+      let $idVendedor = $(vendedor).closest('tr').find('td:eq(0)').text();
+      let $vendedor = {
+        idVendedor: $idVendedor
+      }
+      $Vendedores.push($vendedor);
+    }
+  });
+  console.log($Vendedores);
+  //AJAX para almacenar vendedores en la base de datos
+  $.ajax({
+    url: "../../../Vista/rendimiento/agregarVendedoresTarea.php",
+    type: "POST",
+    datatype: "JSON",
+    data: {
+      "idTarea": $id_Tarea,
+      "vendedores": JSON.stringify($Vendedores)
+    },
+    success: function (res) {
+      $('#modalVendedores').modal('hide');
+      Swal.fire(
+        'Exito!',
+        'Los vendedores han sido agregados',
+        'success',
+      )
+    }
+  }); //Fin AJAX
+}
+let actualizarContadores = () => {
+  //Actualizar contador llamadas
+  let contLlamadas = document.getElementById('circle-count-llamadas'); //Contado de llamadas
+  divPadre = document.getElementById('conteiner-llamada');
+  contLlamadas.textContent = divPadre.querySelectorAll('.card_task').length;
+  //Actualizar contador Leads
+  let contLeads = document.getElementById('circle-count-leads'); //Contado de llamadas
+  divPadre = document.getElementById('conteiner-lead');
+  contLeads.textContent = divPadre.querySelectorAll('.card_task').length;
+  //Actualizar contador cotizaciones
+  let contCotz = document.getElementById('circle-count-cotizaciones'); //Contado de llamadas
+  divPadre = document.getElementById('conteiner-cotizacion');
+  contCotz.textContent = divPadre.querySelectorAll('.card_task').length;
+  //Actualizar contador ventas
+  let contVentas = document.getElementById('circle-count-ventas'); //Contado de llamadas
+  divPadre = document.getElementById('conteiner-venta');
+  contVentas.textContent = divPadre.querySelectorAll('.card_task').length;
 }
