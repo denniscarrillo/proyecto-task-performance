@@ -52,7 +52,7 @@ require_once("validacionesComision.php");
           <div>
             <a href="v_nuevaComision.php" class="btn_nuevoRegistro btn btn-primary"><i class="fa-solid fa-circle-plus"></i> Generar comisión</a>
             <a href="../fpdf/ReporteComision.php" class="btn_Pdf btn btn-primary"><i class="fas fa-file-pdf"></i> Generar Reportes</a>
-            <a href="ReporteComisionExcel.php" class="btn_Excel btn btn-primary "><i class="fa-solid fa-file-excel fa-sm"></i> Generar Excel</a>
+            <a href="ReporteComisionExcel.php" target="_blank" class="btn_Excel btn btn-primary "><i class="fa-solid fa-file-excel fa-sm"></i> Generar Excel</a>
           </div>
           <!-- <div>
             <a href="#" class="btn_nuevoRegistro btn btn-primary" data-bs-toggle="modal" data-bs-target="#nuevaComision"><i class="fa-solid fa-circle-plus"></i> Generar comisión</a>

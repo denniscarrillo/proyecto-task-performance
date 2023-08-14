@@ -12,6 +12,7 @@
   <link href="../../../Recursos/bootstrap5/dataTables.bootstrap5.min.css" rel="stylesheet">
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
   <link href="../../../Recursos/css/ComisionesPorVendedor.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
 </head>

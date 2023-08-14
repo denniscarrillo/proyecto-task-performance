@@ -21,6 +21,7 @@ class Articulo
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
             $resultado = $abrirConexion->query("SELECT CODARTICULO, ARTICULO, DETALLE, MARCA FROM view_articulos;");
+            $articulo = array();
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
             while ($fila = $resultado->fetch_assoc()) {
                 $articulo[] = [

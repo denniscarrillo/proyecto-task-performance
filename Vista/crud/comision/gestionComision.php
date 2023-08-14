@@ -41,7 +41,7 @@ require_once("../../../Controlador/ControladorComision.php");
   <!-- <link href="../../../Recursos/css/modalNuevaComision.css" rel="stylesheet"> -->
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
-  <title> Comision </title>
+  <title> Gestion Comision </title>
 </head>
 <body>
   <div class="conteiner">
@@ -66,17 +66,20 @@ require_once("../../../Controlador/ControladorComision.php");
       <div class="columna2 col-10">
         <H1>Gestión de Comisión</H1>
         <div class="table-conteiner">
-          <div>
-            <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevaComision"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
+        <div>
+            <a href="../../fpdf/ReporteComision.php" class="btn_Pdf btn btn-primary"><i class="fas fa-file-pdf"></i> Generar Reportes</a>
           </div>
           <table class="table" id="table-Comision">
             <thead>
               <tr>
-                <th scope="col"> ID COMISION </th>
+               <th scope="col"> ID COMISION </th>
                 <th scope="col"> FACTURA </th>
                 <th scope="col"> TOTAL VENTA </th>
                 <th scope="col"> PORCENTAJE </th>
+                <ht scope="col"> ESTADO </th>
                 <th scope="col"> COMISION TOTAL </th>
+                <th scope="col"> ESTADO </th>
+                <th scope="col"> FECHA </th>
                 <th scope="col"> ACCIONES </th>
               </tr>
             </thead>
@@ -87,10 +90,6 @@ require_once("../../../Controlador/ControladorComision.php");
       </div>
     </div>
   </div>
-  <?php
-  require('modalNuevaComision.html');
-  /* require('modalEditarComision.html'); */
-  ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>

@@ -2,8 +2,8 @@
 
 require('./fpdf.php');
 require_once("../../db/Conexion.php");
-require_once("../../Modelo/Bitacora.php");
-require_once("../../Controlador/ControladorBitacora.php");
+require_once("../../Modelo/Usuario.php");
+require_once("../../Controlador/ControladorUsuario.php");
 
 class PDF extends FPDF
 {
@@ -20,7 +20,7 @@ class PDF extends FPDF
       $this->Cell(45); // Movernos a la derecha
       $this->SetTextColor(0, 0, 0); //color
       //creamos una celda o fila
-      $this->Cell(180, 15, mb_convert_encoding('EQUIPOS Y COCINAS', 'UTF-8'), 0, 2, 'C', 0); // AnchoCelda,AltoCelda,titulo,borde(1-0),saltoLinea(1-0),posicion(L-C-R),ColorFondo(1-0)
+      $this->Cell(150, 15, mb_convert_encoding('EQUIPOS Y COCINAS', 'UTF-8'), 0, 2, 'C', 0); // AnchoCelda,AltoCelda,titulo,borde(1-0),saltoLinea(1-0),posicion(L-C-R),ColorFondo(1-0)
       $this->Ln(3); // Salto de línea
       $this->SetTextColor(103); //color
 
@@ -47,7 +47,7 @@ class PDF extends FPDF
       $this->SetTextColor(205, 92, 92);
       $this->Cell(1); // mover a la derecha
       $this->SetFont('Arial', 'B', 20);
-      $this->Cell(65, 10, mb_convert_encoding('REPORTE DE BITACORAS ', 'windows-1252', 'UTF-8'), 0, 2, 'L', 0);
+      $this->Cell(65, 10, mb_convert_encoding('REPORTE DE USUARIOS ', 'windows-1252', 'UTF-8'), 0, 2, 'L', 0);
       $this->Ln(7);
 
       /* CAMPOS DE LA TABLA */
@@ -56,12 +56,12 @@ class PDF extends FPDF
       $this->SetTextColor(255, 255, 255); //colorTexto
       $this->SetDrawColor(163, 163, 163); //colorBorde
       $this->SetFont('Arial', 'B', 11);
-      $this->Cell(10, 10, mb_convert_encoding('ID','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(43, 10, mb_convert_encoding('FECHA','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(35, 10, mb_convert_encoding('USUARIO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(40, 10, mb_convert_encoding('OBJETO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(30, 10, mb_convert_encoding('ACCION','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(123, 10, mb_convert_encoding('DESCRIPCION','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(15, 10, mb_convert_encoding('ID','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(40, 10, mb_convert_encoding('USUARIO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(70, 10, mb_convert_encoding('NOMBRE','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(75, 10, mb_convert_encoding('CORREO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(30, 10, mb_convert_encoding('ESTADO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(30, 10, mb_convert_encoding('ROL','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
       $this->Ln(10);
    }
 
@@ -76,7 +76,7 @@ class PDF extends FPDF
       $this->SetFont('Arial', 'I', 8); //tipo fuente, cursiva, tamañoTexto
       date_default_timezone_set('America/Tegucigalpa');
       $hoy = date('d/m/Y');
-      $this->Cell(350, 10, mb_convert_encoding($hoy, 'windows-1252', 'UTF-8'), 0, 0, 'C'); // pie de pagina(fecha de pagina)
+      $this->Cell(515, 10, mb_convert_encoding($hoy, 'windows-1252', 'UTF-8'), 0, 0, 'C'); // pie de pagina(fecha de pagina)
    }
 }
 
@@ -96,18 +96,17 @@ $pdf->SetFont('Arial', '', 12);
 $pdf->SetDrawColor(163, 163, 163); //colorBorde
 
 /*$consulta_reporte_alquiler = $conexion->query("  ");*/
-$bitacoras = ControladorBitacora::bitacorasUsuario();
-foreach ($bitacoras as $bitacora) {
-   $pdf->Cell(10, 10, mb_convert_encoding($bitacora['id_Bitacora'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(43, 10, mb_convert_encoding($bitacora['fecha'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(35, 10, mb_convert_encoding($bitacora['Usuario'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(40, 10, mb_convert_encoding($bitacora['Objeto'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(30, 10, mb_convert_encoding($bitacora['accion'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(123, 10, mb_convert_encoding($bitacora['descripcion'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-
- 
+$usuarios = ControladorUsuario::getUsuarios();
+foreach ($usuarios as $usuario) {
+   $pdf->Cell(15, 10, mb_convert_encoding($usuario['IdUsuario'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(40, 10, mb_convert_encoding($usuario['usuario'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(70, 10, mb_convert_encoding($usuario['nombreUsuario'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(75, 10, mb_convert_encoding($usuario['correo'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(30, 10, mb_convert_encoding($usuario['Estado'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(30, 10, mb_convert_encoding($usuario['Rol'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Ln(10);
 }
 /* TABLA */
 
-$pdf->Output('Bitacoras.pdf', 'I');//nombreDescarga, Visor(I->visualizar - D->descargar)
+
+$pdf->Output('Usuarios.pdf', 'I');//nombreDescarga, Visor(I->visualizar - D->descargar)

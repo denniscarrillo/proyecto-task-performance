@@ -39,7 +39,7 @@ session_start(); //Reanudamos la sesion
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
-  <title> Prueba </title>
+  <title> Parametros </title>
 </head>
 
 <body>

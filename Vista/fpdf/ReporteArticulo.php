@@ -1,9 +1,8 @@
 <?php
-
 require('./fpdf.php');
 require_once("../../db/Conexion.php");
-require_once("../../Modelo/Bitacora.php");
-require_once("../../Controlador/ControladorBitacora.php");
+require_once("../../Modelo/Articulo.php");
+require_once("../../Controlador/ControladorArticulo.php");
 
 class PDF extends FPDF
 {
@@ -15,12 +14,12 @@ class PDF extends FPDF
 
       //$consulta_info = $conexion->query(" select *from hotel ");//traemos datos de la empresa desde BD
       //$dato_info = $consulta_info->fetch_object();
-      $this->Image('LOGO-HD-transparente.jpg', 230, 5, 50); //logo de la empresa,moverDerecha,moverAbajo,tamañoIMG
-      $this->SetFont('times', 'B', 25); //tipo fuente, negrita(B-I-U-BIU), tamañoTexto
+      $this->Image('LOGO-HD-transparente.jpg', 160, 5, 40); //logo de la empresa,moverDerecha,moverAbajo,tamañoIMG
+      $this->SetFont('times', 'B', 19); //tipo fuente, negrita(B-I-U-BIU), tamañoTexto
       $this->Cell(45); // Movernos a la derecha
       $this->SetTextColor(0, 0, 0); //color
       //creamos una celda o fila
-      $this->Cell(180, 15, mb_convert_encoding('EQUIPOS Y COCINAS', 'UTF-8'), 0, 2, 'C', 0); // AnchoCelda,AltoCelda,titulo,borde(1-0),saltoLinea(1-0),posicion(L-C-R),ColorFondo(1-0)
+      $this->Cell(100, 15, mb_convert_encoding('EQUIPOS Y COCINAS', 'UTF-8'), 0, 2, 'C', 0); // AnchoCelda,AltoCelda,titulo,borde(1-0),saltoLinea(1-0),posicion(L-C-R),ColorFondo(1-0)
       $this->Ln(3); // Salto de línea
       $this->SetTextColor(103); //color
 
@@ -46,8 +45,8 @@ class PDF extends FPDF
       //color
       $this->SetTextColor(205, 92, 92);
       $this->Cell(1); // mover a la derecha
-      $this->SetFont('Arial', 'B', 20);
-      $this->Cell(65, 10, mb_convert_encoding('REPORTE DE BITACORAS ', 'windows-1252', 'UTF-8'), 0, 2, 'L', 0);
+      $this->SetFont('Arial', 'B', 15);
+      $this->Cell(65, 10, mb_convert_encoding('REPORTE DE ARTICULOS ', 'windows-1252', 'UTF-8'), 0, 2, 'L', 0);
       $this->Ln(7);
 
       /* CAMPOS DE LA TABLA */
@@ -56,12 +55,10 @@ class PDF extends FPDF
       $this->SetTextColor(255, 255, 255); //colorTexto
       $this->SetDrawColor(163, 163, 163); //colorBorde
       $this->SetFont('Arial', 'B', 11);
-      $this->Cell(10, 10, mb_convert_encoding('ID','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(43, 10, mb_convert_encoding('FECHA','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(35, 10, mb_convert_encoding('USUARIO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(40, 10, mb_convert_encoding('OBJETO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(30, 10, mb_convert_encoding('ACCION','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(123, 10, mb_convert_encoding('DESCRIPCION','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(32, 10, mb_convert_encoding('COD ARTICULO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(58, 10, mb_convert_encoding('ARTICULO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(60, 10, mb_convert_encoding('DETALLE','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(40, 10, mb_convert_encoding('MARCA','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
       $this->Ln(10);
    }
 
@@ -87,27 +84,24 @@ class PDF extends FPDF
 //$dato_info = $consulta_info->fetch_object();
 
 $pdf = new PDF();
-$pdf->AddPage('landscape'); /* aqui entran dos para parametros (horientazion,tamaño)V->portrait H->landscape tamaño (A3.A4.A5.letter.legal) */
+$pdf->AddPage('portrait'); /* aqui entran dos para parametros (horientazion,tamaño)V->portrait H->landscape tamaño (A3.A4.A5.letter.legal) */
 $pdf->AliasNbPages(); //muestra la pagina / y total de paginas
 $pdf->SetAutoPageBreak(true, 25); //margen de pie de pagina
 
 $i = 0;
-$pdf->SetFont('Arial', '', 12);
+$pdf->SetFont('Arial', '', 9);
 $pdf->SetDrawColor(163, 163, 163); //colorBorde
 
 /*$consulta_reporte_alquiler = $conexion->query("  ");*/
-$bitacoras = ControladorBitacora::bitacorasUsuario();
-foreach ($bitacoras as $bitacora) {
-   $pdf->Cell(10, 10, mb_convert_encoding($bitacora['id_Bitacora'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(43, 10, mb_convert_encoding($bitacora['fecha'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(35, 10, mb_convert_encoding($bitacora['Usuario'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(40, 10, mb_convert_encoding($bitacora['Objeto'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(30, 10, mb_convert_encoding($bitacora['accion'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(123, 10, mb_convert_encoding($bitacora['descripcion'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-
+$articulo = ControladorArticulo::obtenerTodosArticulos();
+foreach ($articulo as $articulos) {
+   $pdf->Cell(32, 10, mb_convert_encoding($articulos['codigo'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(58, 10, mb_convert_encoding($articulos['articulo'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(60, 10, mb_convert_encoding($articulos['detalle'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+    $pdf->Cell(40, 10, mb_convert_encoding($articulos['marcaArticulo'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
  
    $pdf->Ln(10);
 }
 /* TABLA */
 
-$pdf->Output('Bitacoras.pdf', 'I');//nombreDescarga, Visor(I->visualizar - D->descargar)
+$pdf->Output('Articulos.pdf', 'I');//nombreDescarga, Visor(I->visualizar - D->descargar)

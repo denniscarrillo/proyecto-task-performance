@@ -36,7 +36,7 @@ require_once("../../../Controlador/ControladorMetricas.php");
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
-  <title> Prueba </title>
+  <title> Métricas </title>
 </head>
 <body>
   <div class="conteiner">
@@ -61,7 +61,7 @@ require_once("../../../Controlador/ControladorMetricas.php");
         <H1>Gestión de Metricas</H1>
         <div class="table-conteiner">
           <div>
-            <a href="../../fpdf/ReporteMetrica.php" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
+            <a href="../../fpdf/ReporteMetrica.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
           </div>
           <table class="table" id="table-Metricas">
             <thead>

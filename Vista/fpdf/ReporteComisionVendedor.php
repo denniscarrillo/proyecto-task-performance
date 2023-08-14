@@ -48,7 +48,7 @@ class PDF extends FPDF
       $this->SetTextColor(205, 92, 92);
       $this->Cell(1); // mover a la derecha
       $this->SetFont('Arial', 'B', 15);
-      $this->Cell(65, 10, mb_convert_encoding('REPORTE DE COMISIÓN   ', 'windows-1252', 'UTF-8'), 0, 2, 'L', 0);
+      $this->Cell(65, 10, mb_convert_encoding('REPORTE DE COMISIÓN POR VENDEDOR   ', 'windows-1252', 'UTF-8'), 0, 2, 'L', 0);
       $this->Ln(7);
 
       /* CAMPOS DE LA TABLA */
@@ -58,7 +58,7 @@ class PDF extends FPDF
       $this->SetDrawColor(163, 163, 163); //colorBorde
       $this->SetFont('Arial', 'B', 11);
       $this->Cell(30, 10, mb_convert_encoding('ID VENDEDOR','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(30, 10, mb_convert_encoding('VENDEDOR','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(40, 10, mb_convert_encoding('VENDEDOR','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
       $this->Cell(80, 10, mb_convert_encoding('COMISION TOTAL','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
       $this->Cell(25, 10, mb_convert_encoding('ESTADO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
       $this->Ln(10);
@@ -98,7 +98,7 @@ $pdf->SetDrawColor(163, 163, 163); //colorBorde
 $totalComision = ControladorComision::obtenerSumaComisionesVendedores('2023-08-10', '2023-08-13');
 foreach ($totalComision as $Comisiones) {
    $pdf->Cell(30, 10, mb_convert_encoding($Comisiones['idVendedor'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(30, 10, mb_convert_encoding($Comisiones['nombreVendedor'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(40, 10, mb_convert_encoding($Comisiones['nombreVendedor'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Cell(80, 10, mb_convert_encoding($Comisiones['totalComision'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Cell(25, 10, mb_convert_encoding($Comisiones['estadoComision'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Ln(10);
