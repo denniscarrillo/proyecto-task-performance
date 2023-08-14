@@ -1,4 +1,4 @@
-// import {estadoValidado as validado } from './validacionesModalNuevoUsuario.js';
+import {estadoValidado as validado } from './ValidacionesModalNuevoPermiso.js';
 // import {estadoValidado as valido } from './validacionesModalEditarUsuario.js';
 
 let tablaPermisos = '';
@@ -32,6 +32,43 @@ $('#btn_nuevoRegistro').click(function () {
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");	 
 });
+
+$('#form-permiso').submit(function (e) {
+  e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
+     //Obtener datos del nuevo Usuario
+     let rol = document.getElementById('rol').value;
+     let objeto = document.getElementById('objeto').value;
+     let consultar = document.getElementById('consultar').value;
+     let insertar = document.getElementById('insertar').value;
+     let actualizar = document.getElementById('actualizar').value;
+     let eliminar = document.getElementById('eliminar').value;
+    if(validado){
+      $.ajax({
+        url: "../../../Vista/crud/usuario/nuevoPermiso.php",
+        type: "POST",
+        datatype: "JSON",
+        data: {
+          rol: rol,
+          objeto: objeto,
+          consultar: consultar,
+          insertar: insertar,
+          actualizar: actualizar,
+          eliminar: eliminar
+        },
+        success: function () {
+          //Mostrar mensaje de exito
+          Swal.fire(
+           'Registrado!',
+           'Se ha creado un nuevo permiso!',
+           'success',
+         )
+         tablaPermisos.ajax.reload(null, false);
+        }
+      });
+     $('#modalNuevoPermiso').modal('hide');
+    } 
+});
+
 let obtenerRoles = function (idElemento) {
   //Petición para obtener roles
   $.ajax({
