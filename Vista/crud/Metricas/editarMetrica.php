@@ -1,20 +1,19 @@
 <?php
     require_once ("../../../db/Conexion.php");
-    require_once ("../../../Modelo/Usuario.php");
-    require_once("../../../Controlador/ControladorUsuario.php");
+    // require_once ("../../../Modelo/Usuario.php");
+    // require_once("../../../Controlador/ControladorUsuario.php");
     require_once ("../../../Modelo/Metricas.php");
     // require_once ("../../../Modelo/Bitacora.php");
     require_once("../../../Controlador/ControladorMetricas.php");
     // require_once("../../../Controlador/ControladorBitacora.php");
     
 
-    session_start(); //Reanudamos session
-    if(isset($_SESSION['usuario'])){
-        $nuevaMetrica = new Porcentajes();
-        $nuevaMetrica ->idMetrica = $_POST['idMetrica'];
-        $nuevaMetrica ->idEstadoAvance = $_POST['idEstadoAvance'];
+    // session_start(); //Reanudamos session
+    // if(isset($_SESSION['usuario'])){
+        $nuevaMetrica = new Metricas();
+        $nuevaMetrica->idMetrica = $_POST['idMetrica'];
         $nuevaMetrica->meta = $_POST['meta'];
-        Metricas::editarMetrica($nuevaMetrica);
+        ControladorMetricas::editarMetricas($nuevaMetrica);
         /* ========================= Evento Editar Usuario. ======================*/
         // $newBitacora = new Bitacora();
         // $accion = ControladorBitacora::accion_Evento();
@@ -26,4 +25,4 @@
         // $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' modificó el usuario '.$_POST['usuario'];
         // ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
         // /* =======================================================================================*/
-    }
+    // }

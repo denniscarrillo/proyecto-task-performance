@@ -126,6 +126,7 @@ export const validarSoloNumeros = (elemento, objetoRegex) => {
     return estado;
 }
 
+
     
 
 

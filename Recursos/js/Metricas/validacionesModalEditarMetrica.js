@@ -7,17 +7,10 @@ const validaciones = {
     // correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
     
 }
-//VARIABLES GLOBALES
-// let estadoSoloLetras = {
-//     estadoLetrasName: true,
-// }
-let estadoSelect = true;
-
 let estadoSoloNumeros = {
     estadoNumerosMeta: true,
 }
 const $form = document.getElementById('form-Edit-Metrica');
-const $descripcion = document.getElementById('E_descripcion');
 const $meta = document.getElementById('E_meta');
 
 /* ---------------- VALIDACIONES FORMULARIO GESTION NUEVO USUARIO ----------------------*/
@@ -27,48 +20,22 @@ const $meta = document.getElementById('E_meta');
 */
 $form.addEventListener('submit', e => {   
     //Validamos que algún campo no esté vacío.
-    let estadoInputDescripcion = funciones.validarCampoVacio($descripcion);
     let estadoInputMeta = funciones.validarCampoVacio($meta);
     // Comprobamos que todas las validaciones se hayan cumplido 
-    if (estadoInputDescripcion == false || estadoInputMeta == false) {
+    if (estadoInputMeta == false) {
         e.preventDefault();
     } else {
-            if(estadoSelect == false){
-                e.preventDefault();
-                estadoSelect = funciones.validarCampoVacio($descripcion);           
-            }
-              else{
-                   if(estadoSoloNumeros.estadoNumerosMeta == false){
-                    e.preventDefault();
-                    estadoSoloNumeros.estadoNumerosMeta = funciones.validarSoloNumeros($meta, validaciones.soloNumeros);
-                  } 
-                    else {
-                    estadoValidado = true;
-                    console.log(estadoValidado); // 
-                }
-            
-            }       
-            
-        }
+        if(estadoSoloNumeros.estadoNumerosMeta == false){
+            e.preventDefault();
+            estadoSoloNumeros.estadoNumerosMeta = funciones.validarSoloNumeros($meta, validaciones.soloNumeros);
+        }else {
+            estadoValidado = true;
+        }     
+    }
 });
-// // $name.addEventListener('keyup', ()=>{
-// //     estadoSoloLetras.estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
-// //     $("#nombre").inputlimiter({
-// //         limit: 50
-// //     });
-// // });
-// // $name.addEventListener('focusout', ()=>{
-// //     let usuarioMayus = $name.value.toUpperCase();
-// //     $name.value = usuarioMayus;
-// // });
-
-// $meta.addEventListener('keyup', ()=>{
-//      estadoSoloNumeros.estadoNumerosMeta = funciones.validarSoloNumeros($meta, validaciones.soloNumeros);
-//     $("#E_meta").inputlimiter({
-//        limit: 14
-//     });
-// });
-
-// $descripcion.addEventListener('change', ()=>{
-//     estadoSelect = funciones.validarCampoVacio($descripcion);
-// });
+$meta.addEventListener('keyup', ()=>{
+     estadoSoloNumeros.estadoNumerosMeta = funciones.validarSoloNumeros($meta, validaciones.soloNumeros);
+    $("#E_meta").inputlimiter({
+       limit: 14
+    });
+});
