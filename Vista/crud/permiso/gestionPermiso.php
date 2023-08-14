@@ -65,7 +65,7 @@ session_start(); //Reanudamos la sesion
         <H1>Gestión de Permisos</H1>
         <div class="table-conteiner">
         <div>
-            <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoPorcentaje"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
+            <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoPermiso"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
             <a href="../../fpdf/ReportePermisos.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
           </div>
           <table class="table" id="table-Permisos">
@@ -91,7 +91,7 @@ session_start(); //Reanudamos la sesion
     </div>
   </div>
   <?php
-//   require('modalNuevoPorcentaje.html');
+  require_once('./modalNuevoPermiso.html');
 //   require('modalEditarPorcentaje.html');
   ?>
  

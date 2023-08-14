@@ -15,8 +15,7 @@ class Permiso
     public $Fecha_Modificacion;
 
     // Obtener todas las tareas que le pertenecen a un usuario.
-    public static function obtenerPermisos()
-    {
+    public static function obtenerPermisos(){
         $permisos = null;
         try {
             $permisos = array();
@@ -42,5 +41,25 @@ class Permiso
         }
         mysqli_close($abrirConexion); //Cerrar conexion
         return $permisos;
+    }
+    public static function obtenerObjetos(){
+        $objetos = null;
+        try {
+            $objetos = array();
+            $con = new Conexion();
+            $abrirConexion = $con->abrirConexionDB();
+            $resultado = $abrirConexion->query("SELECT id_Objeto, objeto, descripcion FROM tbl_ms_objetos;");
+            while($fila = $resultado->fetch_assoc()){
+                $objetos [] = [
+                    'id_Objeto' => $fila["id_Objeto"],
+                    'objeto' => $fila["objeto"],
+                    'descripcion' => $fila["descripcion"]
+                ];
+            }
+        } catch (Exception $e) {
+            $objetos = 'Error SQL:' . $e;
+        }
+        mysqli_close($abrirConexion); //Cerrar conexion
+        return $objetos;
     }
 }

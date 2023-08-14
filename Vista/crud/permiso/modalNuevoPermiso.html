@@ -1,0 +1,60 @@
+<div class="modal fade" id="modalNuevoPermiso" tabindex="-1" aria-labelledby="nuevoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="nuevoModalLabel">Crear Nuevo Permiso</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" id="form-permiso">
+                    <div class="grupo-form">
+                        <div class="mb-3">
+                            <label for="rol" class="form-label">Rol:</label>
+                            <select name="rol" id="rol" class="form-control"> 
+                            </select>
+                            <p class="mensaje"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="objeto" class="form-label">Objeto:</label>
+                            <select name="objeto" id="objeto" class="form-control"> 
+                            </select>
+                            <p class="mensaje"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="consultar" class="form-label">Permiso Consultar:</label>
+                            <select name="consultar" id="consultar" class="form-control"> 
+                            <!-- Opciones clasificacion lead -->
+							<option value="" disabled selected>Seleccionar...</option>
+                            <option value="S">Permitir</option>
+                            <option value="N">Denegar</option>
+                            </select>
+                            <p class="mensaje"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rol" class="form-label">Permiso Insertar:</label>
+                            <select name="rol" id="rol" class="form-control"> 
+                            </select>
+                            <p class="mensaje"></p>
+                        </div> 
+                        <div class="mb-3">
+                            <label for="rol" class="form-label">Permiso Actualizar:</label>
+                            <select name="rol" id="rol" class="form-control"> 
+                            </select>
+                            <p class="mensaje"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rol" class="form-label">Permiso Eliminar:</label>
+                            <select name="rol" id="rol" class="form-control"> 
+                            </select>
+                            <p class="mensaje"></p>
+                        </div>
+                    </div>
+                    <div class="btn-guardar">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary" id="btn-submit"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
