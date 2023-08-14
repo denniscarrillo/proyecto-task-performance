@@ -35,4 +35,18 @@ class Parametro {
         mysqli_close($abrirConexion); //Cerrar conexion
         return $parametros;
     }
+    public static function editarParametros($nuevoParametro){
+        try {
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $id=$nuevoParametro->idParametro;
+            $parametro=$nuevoParametro->parametro;
+            $valor=$nuevoParametro->valor;
+            $update = "UPDATE tbl_ms_parametro SET parametro='$parametro', valor='$valor' WHERE id_Parametro='$id' ";
+            $ejecutar_update = mysqli_query($abrirConexion, $update);
+        } catch (Exception $e) {
+            echo 'Error SQL:' . $e;
+        }
+        mysqli_close($abrirConexion); //Cerrar conexion
+    }
 }

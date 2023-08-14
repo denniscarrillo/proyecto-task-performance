@@ -62,15 +62,14 @@ session_start(); //Reanudamos la sesion
         ?>
       </div>
       <div class="columna2 col-10">
-        <H1>Gestión de Parametros</H1>
+        <H1>Gestión de Parámetros</H1>
         <div class="table-conteiner">
+        <a href=".." class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
         <div>
-            <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoPorcentaje"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
-          </div>
           <table class="table" id="table-Parametro">
             <thead>
               <tr>
-                <th scope="col"> ID PARAMETRO</th>
+                <th scope="col"> ID </th>
                 <th scope="col"> PARAMETRO </th>
                 <th scope="col"> VALOR </th>
                 <th scope="col"> USUARIO </th>
@@ -88,8 +87,7 @@ session_start(); //Reanudamos la sesion
     </div>
   </div>
   <?php
-//   require('modalNuevoPorcentaje.html');
-//   require('modalEditarPorcentaje.html');
+  require_once('./modalEditarParametro.html');
   ?>
  
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
@@ -98,7 +96,6 @@ session_start(); //Reanudamos la sesion
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script src="../../../Recursos/js/Parametro/datatable.js" type="module"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-  <!-- <script src="../../../Recursos/js/Porcentajes/ValidacionesModalNuevoPorcentaje.js"  type="module"></script>
   <script src="../../../Recursos/js/Porcentajes/ValidacionesModalEditarPorcentaje.js" type="module"></script> -->
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
