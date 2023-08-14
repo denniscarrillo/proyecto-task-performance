@@ -40,4 +40,7 @@ class ControladorTarea {
     public static function insertarNuevoCliente($nombre, $rtn, $telefono, $correo, $direccion){
         Tarea::agregarNuevoCliente($nombre, $rtn, $telefono, $correo, $direccion);
     }
+    public static function almacenarProductosInteres($idTarea, $productos, $CreadoPor, $fechaCreacion){
+        Tarea::guardarProductosInteres($idTarea, $productos, $CreadoPor, $fechaCreacion);
+    }
 }

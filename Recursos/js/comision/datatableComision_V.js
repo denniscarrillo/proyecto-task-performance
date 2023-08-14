@@ -15,6 +15,7 @@ $(document).ready(function () {
       { "data": "idVendedor" },
       { "data": "usuario" },
       { "data": "comisionTotal" },
+      { "data": "estadoComision" },
       { "data": "fechaComision" },
     ]
   });

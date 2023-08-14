@@ -1,5 +1,5 @@
 <?php
-	// require_once('./validacionesEditarTarea.php');
+	require_once('./validacionesEditarTarea.php');
 ?>
 
 <!DOCTYPE html>
@@ -11,6 +11,7 @@
 	<!-- Boxicons CSS -->
 	<link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 	<link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1862/1862358.png">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
 	<link rel="stylesheet" href="../../Recursos/bootstrap5/bootstrap.min.css">
 	<link rel="stylesheet" href="../../Recursos/css/layout/sidebar.css">
 	<link rel="stylesheet" href="../../Recursos/css/tarea.css">
@@ -46,8 +47,8 @@
 							<div class="mb-3">
 								<label id="<?php echo $_GET['estadoTarea']; ?>" class="id-tarea" hidden="true"></label>
 								<input type="text" value="<?php echo $_GET['idTarea'];?>" id="id-Tarea" class="id-tarea" name="idTarea" hidden="true">
-
 								<label for="estados-tarea" class="form-label"> Estado: </label>
+								<label id="estado-tarea"></label>
 								<select name="estadoTarea" id="estados-tarea" class="form-control">
 									<!-- Opciones estados de tarea -->
 									<?php
@@ -166,6 +167,7 @@
     ?>
 	<script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="../../Recursos/bootstrap5/bootstrap.min.js "></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
   <script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>

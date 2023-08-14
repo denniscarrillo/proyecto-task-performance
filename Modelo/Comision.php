@@ -129,11 +129,11 @@ class Comision
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $selectVendedores = $conexion->query("SELECT id_usuario_vendedor FROM tbl_comision_por_vendedor WHERE id_Comision = '$comision->idComision';");
-        for ($i = 0; $i < $selectVendedores->num_rows; $i++){
-            $id = $selectVendedores->fetch_assoc();
-            $idVendedor = $id['id_usuario_vendedor'];
-            $conexion->query("UPDATE tbl_comision_por_vendedor SET estadoComisionVendedor = '$comision->estadoComision', 
-        Modificado_Por = '$comision->ModificadoPor', Fecha_Modificacion = '$comision->fechaModificacion' WHERE id_usuario_vendedor = '$idVendedor';");
+        // $vendedores = array();
+        while ($fila = $selectVendedores->fetch_assoc()) {
+            $idVendedor = intval($fila['id_usuario_vendedor']);
+            $conexion->query("UPDATE `tbl_comision_por_vendedor` SET `estadoComisionVendedor` = '$comision->estadoComision', 
+            `Modificado_Por` = '$comision->ModificadoPor', `Fecha_Modificacion` = '$comision->fechaModificacion' WHERE `id_Comision` = '$comision->idComision' AND `id_usuario_vendedor` = '$idVendedor' ;");
         }
         mysqli_close($conexion); #Cerramos la conexión.
     }
@@ -142,7 +142,7 @@ class Comision
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $listaComision =
-            $consulta->query("SELECT vt.id_Comision_Por_Vendedor, vt.id_usuario_vendedor, u.Usuario, vt.total_Comision, vt.Fecha_Creacion
+            $consulta->query("SELECT vt.id_Comision_Por_Vendedor, vt.id_usuario_vendedor, u.usuario, vt.total_Comision, vt.estadoComisionVendedor, vt.Fecha_Creacion
             FROM tbl_ms_usuario AS u
             INNER JOIN tbl_comision_por_vendedor AS vt ON u.id_Usuario = vt.id_usuario_vendedor;");
         $ComisionVendedor = array();
@@ -151,8 +151,9 @@ class Comision
             $ComisionVendedor[] = [
                 'idComisionVendedor' => $fila["id_Comision_Por_Vendedor"],
                 'idVendedor' => $fila["id_usuario_vendedor"],
-                'usuario' => $fila["Usuario"],
+                'usuario' => $fila["usuario"],
                 'comisionTotal' => $fila["total_Comision"],
+                'estadoComision' => $fila["estadoComisionVendedor"],
                 'fechaComision' => $fila["Fecha_Creacion"]
             ];
         }
@@ -164,18 +165,20 @@ class Comision
     {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $sumaComisiones = $consulta->query("SELECT vt.id_usuario_vendedor, u.Usuario, vt.Fecha_Creacion, SUM(vt.total_Comision) AS totalComision FROM tbl_comision_por_vendedor vt 
-        inner join tbl_ms_usuario AS u ON vt.id_usuario_vendedor = u.id_Usuario WHERE vt.Fecha_Creacion BETWEEN '$fechaDesde' AND '$fechaHasta'
-        group by vt.id_usuario_vendedor, u.Usuario, vt.Fecha_Creacion ORDER BY totalComision;
+        $sumaComisiones = $consulta->query("SELECT vt.id_usuario_vendedor, u.usuario, SUM(vt.Fecha_Creacion) AS Fecha_Creacion, SUM(vt.total_Comision) AS totalComision, vt.estadoComisionVendedor FROM tbl_comision_por_vendedor vt 
+        inner join tbl_ms_usuario AS u ON vt.id_usuario_vendedor = u.id_Usuario WHERE vt.estadoComisionVendedor = 'Activa' and vt.Fecha_Creacion BETWEEN '$fechaDesde' AND '$fechaHasta'
+        group by vt.id_usuario_vendedor, u.Usuario, vt.estadoComisionVendedor ORDER BY Fecha_Creacion, totalComision;
         ");
         $fila = $sumaComisiones->fetch_assoc();
         $totalComision = array();
         while ($fila = $sumaComisiones->fetch_assoc()) {
             $totalComision[] = [
                 'idVendedor' => $fila['id_usuario_vendedor'],
-                'nombreVendedor' => $fila['Usuario'],
-                'totalComision' => $fila['totalComision'],
-                'fechaComision' => $fila['Fecha_Creacion']
+                'nombreVendedor' => $fila['usuario'],
+                'estadoComision' => $fila['estadoComisionVendedor'], //cambiar a estadoComision
+                'totalComision' => $fila['totalComision']
+                
+                
             ];
         }
         mysqli_close($consulta); #Cerramos la conexión.

@@ -40,12 +40,8 @@ let iniciarDataTable = function (fechaDesde, fechaHasta) {
     columns: [
       { data: "idVendedor" },
       { data: "nombreVendedor" },
-      { data: "fechaComision" },
+      { data: "estadoComision" },
       { data: "totalComision" },
-      {
-        defaultContent:
-          '<button class="btns btn" id="btn_seleccionar"><i class="fas fa-file-pdf"></i></button>',
-      },
     ],
   });
   $("#modalfiltroComisiones").modal("hide");

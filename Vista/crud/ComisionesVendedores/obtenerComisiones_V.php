@@ -6,3 +6,5 @@
    $data = ControladorComision::traerComisionesPorVendedor();
 
    print json_encode($data, JSON_UNESCAPED_UNICODE);
+
+   
