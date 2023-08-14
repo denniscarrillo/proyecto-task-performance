@@ -15,10 +15,7 @@ $(document).ready(function () {
       { "data": "codigo"},
       { "data": "articulo" },
       { "data": "detalle" },
-      { "data": "marcaArticulo" },
-      {"defaultContent":
-          '<div><button class="btns btn" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button></div>'
-      }
+      { "data": "marcaArticulo" }
     ]
   });
 });

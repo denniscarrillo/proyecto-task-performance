@@ -65,7 +65,7 @@ session_start(); //Reanudamos la sesion
         <H1>Gestión de Articulos</H1>
         <div class="table-conteiner">
         <div>
-            <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoPorcentaje"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
+        <a href="../" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
           </div>
           <table class="table" id="table-Articulos">
             <thead>
@@ -74,7 +74,6 @@ session_start(); //Reanudamos la sesion
                 <th scope="col"> ARTICULO </th>
                 <th scope="col"> DETALLE </th>
                 <th scope="col"> MARCA </th>
-                <th scope="col"> ACCIONES </th>
               </tr>
             </thead>
             <!-- <div class ="text-left mb-2">

@@ -11,6 +11,7 @@ require_once('validacionesTarea.php');
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1862/1862358.png">
   <link rel="stylesheet" href="../../Recursos/bootstrap5/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
   <link rel="stylesheet" href="../../Recursos/css/layout/sidebar.css">
   <link rel="stylesheet" href="../../Recursos/css/tarea.css">
   <link rel="stylesheet" href="../../Recursos/css/modalEditarTarea.css">
@@ -112,6 +113,7 @@ require_once('validacionesTarea.php');
   <script src="../../Recursos/bootstrap5/bootstrap.min.js "></script>
   <script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
   <script src="../../Recursos/js/librerias/Sortable.min.js"></script>
   <script src="../../Recursos/js/index.js"></script>

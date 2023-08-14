@@ -2,15 +2,10 @@ $(document).ready(function(){
     setEstadoTarea();
 });
 document.getElementById('form-Edit-Tarea').addEventListener('submit', function(e){
+  // e.preventDefault();
   let $idTask = $('#id-Tarea').val();
-  enviarProductosInteres($idTask );
+  enviarProductosInteres($idTask); //Enviamos los productos de interes a almacenar
 });
-// $('#btn-guardar').submit(function (e) {
-//     alert('HOLA DANIELA');
-//     e.preventDefault();
-//     console.log(e);
-//     console.log('HOLA DANIELA');
-// });
 // CARGAR LOS ARTICULOS A AGREGAR A LA TAREA
 $('#btn-articulos').click(() => {
     if (document.getElementById('table-Articulos_wrapper') == null) {
@@ -245,60 +240,9 @@ let limpiarForm = () => {
     direccion.removeAttribute('disabled');
   }
 }
-$(document).on('click', '.btn-vendedores', function () {
-  obtenerVendedores();
-});
-let obtenerVendedores = function () {
-  if (document.getElementById('table-Vendedores_wrapper') == null) {
-    $('#table-Vendedores').DataTable({
-      "ajax": {
-        "url": "../../../Vista/rendimiento/obtenerVendedores.php",
-        "dataSrc": ""
-      },
-      "language": {
-        "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
-      },
-      "columns": [
-        { "data": 'id' },
-        { "data": 'usuario' },
-        { "data": 'nombre' },
-        {
-          "defaultContent":
-            '<div><button class="btns btn" id="btn_select-Vendedores"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>'
-        }
-      ]
-    });
-  }
-}
-$(document).on('click', '#btn_select-Vendedores', function () {
-  $(this).classList.toggle('select-vendedor');
-});
-let agregarVendedores = function($id_Tarea) {
-  let $Vendedores = [];
-  let vendedoresSeleccionados = document.querySelectorAll('.select-vendedor');
-  vendedoresSeleccionados.forEach(function (vendedor) {
-    if (vendedor.classList.contains('select-vendedor')) {
-      let $idVendedor = $(vendedor).closest('tr').find('td:eq(0)').text();
-      let $vendedor = {
-        id: $idVendedor
-      }
-      $Vendedores.push($vendedor);
-    }
-  });
-  let $idTarea = {
-    idTarea: $id_Tarea
-  }
-  $Vendedores.push($idTarea);
-  //AJAX para almacenar vendedores en la base de datos
-  // $.ajax({
-  //   url: "../../../Vista/rendimiento/agregarVendedoresTarea.php",
-  //   type: "POST",
-  //   datatype: "JSON",
-  //   data: $Vendedores,
-  //   success: function () {
-  //   }
-  // }); //Fin AJAX
-}
+// $(document).on('click', '.btn-vendedores', function () {
+//   obtenerVendedores();
+// });
 let enviarProductosInteres = ($idTarea) => {
   let $idProductos = document.querySelectorAll('.id-producto');
   let $cantProducto = document.querySelectorAll('.cant-producto');
@@ -320,12 +264,17 @@ let enviarProductosInteres = ($idTarea) => {
     type: "POST",
     datatype: "JSON",
     data: {
-      idTarea: $idTarea,
-      productos: productos
+      "idTarea": $idTarea,
+      "productos": JSON.stringify(productos)
     },
     success: function () {
-      console.log(productos);
-      console.log($idTarea);
+      //Redireccionamiento tras 5 segundos
+      // setTimeout( function() {window.location.href = "http://localhost:3000/Vista/rendimiento/v_tarea.php";}, 2000 );
+      Swal.fire(
+        'Cambios guardados',
+        'La tarea '+$idTarea+' ha sido editada!',
+        'success',
+      )
     }
   });//Fin AJAX
 }

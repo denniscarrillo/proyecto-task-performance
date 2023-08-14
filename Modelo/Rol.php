@@ -35,20 +35,6 @@ class Rol {
         mysqli_close($abrirConexion); //Cerrar conexion
     }
 
-    public static function eliminarRol($id_Rol){
-        try {
-            $conn = new Conexion();
-            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $rol=$nuevoRol->rol;
-            $descripcion=$nuevoRol->descripcion;
-            $insert = "INSERT INTO tbl_ms_roles (rol, descripcion) VALUES ('$rol','$descripcion');";
-            $ejecutar_insert = mysqli_query($abrirConexion, $insert);
-        } catch (Exception $e) {
-            echo 'Error SQL:' . $e;
-        }
-        mysqli_close($abrirConexion); //Cerrar conexion
-    }
-
     public static function editarRol($nuevoRol){
         try {
             $conn = new Conexion();
