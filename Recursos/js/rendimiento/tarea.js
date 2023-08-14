@@ -30,7 +30,7 @@ $(document).ready(function () {
     dragClass: 'drag',
     onEnd: () => {
       actualizarContadores();
-      // $('#modalVendedores').modal('show');
+      $('#modal-evidencia').modal('show');
     }
   });
   new Sortable(document.getElementById('conteiner-lead'), {
@@ -41,7 +41,7 @@ $(document).ready(function () {
     dragClass: 'drag',
     onEnd: () => {
       actualizarContadores();
-      // $('#modalVendedores').modal('show');
+      $('#modal-evidencia').modal('show');
     }
   });
   new Sortable(document.getElementById('conteiner-cotizacion'), {
@@ -52,7 +52,7 @@ $(document).ready(function () {
     dragClass: 'drag',
     onEnd: () => {
       actualizarContadores();
-      // $('#modalVendedores').modal('show');
+      $('#modal-evidencia').modal('show');
     }
   });
   new Sortable(document.getElementById('conteiner-venta'), {
@@ -63,7 +63,7 @@ $(document).ready(function () {
     dragClass: 'drag',
     onEnd: () => {
       actualizarContadores();
-      // $('#modalVendedores').modal('show');
+      $('#modal-evidencia').modal('show');
     }
   });
 });
