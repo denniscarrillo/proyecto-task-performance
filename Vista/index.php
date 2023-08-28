@@ -62,6 +62,7 @@ if (isset($_SESSION['usuario'])) {
     </div>
     <div class="conteiner-main">
       <div class="navbar-conteiner">
+        <p>NAVBAR</p>
       </div>
       <!-- Cuerpo de la pagina -->
       <main class="main">
