@@ -55,16 +55,16 @@ class PDF extends FPDF
       $this->SetFillColor(33, 47, 60 ); //colorFondo
       $this->SetTextColor(255, 255, 255); //colorTexto
       $this->SetDrawColor(163, 163, 163); //colorBorde
-      $this->SetFont('Arial', 'B', 11);
+      $this->SetFont('Arial', 'B', 10);
       $this->Cell(10, 10, mb_convert_encoding('ID','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(50, 10, mb_convert_encoding('FECHA','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(35, 10, mb_convert_encoding('DESCRIPCION','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(35, 10, mb_convert_encoding('CORREO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(25, 10, mb_convert_encoding('UBICACION','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(35, 10, mb_convert_encoding('ESTADO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(35, 10, mb_convert_encoding('SERVICIO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(40, 10, mb_convert_encoding('FECHA','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(30, 10, mb_convert_encoding('DESCRIPCION','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(45, 10, mb_convert_encoding('CORREO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(30, 10, mb_convert_encoding('UBICACION','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(30, 10, mb_convert_encoding('ESTADO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(30, 10, mb_convert_encoding('SERVICIO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
       $this->Cell(35, 10, mb_convert_encoding('CLIENTE','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
-      $this->Cell(35, 10, mb_convert_encoding('USUARIO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
+      $this->Cell(30, 10, mb_convert_encoding('USUARIO','windows-1252', 'UTF-8'), 1, 0, 'C', 1);
 
       $this->Ln(10);
    }
@@ -96,21 +96,21 @@ $pdf->AliasNbPages(); //muestra la pagina / y total de paginas
 $pdf->SetAutoPageBreak(true, 25); //margen de pie de pagina
 
 $i = 0;
-$pdf->SetFont('Arial', '', 12);
+$pdf->SetFont('Arial', '', 9);
 $pdf->SetDrawColor(163, 163, 163); //colorBorde
 
 /*$consulta_reporte_alquiler = $conexion->query("  ");*/
 $solicitudes = ControladorSolicitud::getSolicitudes();
 foreach ($solicitudes as $solicitud) {
    $pdf->Cell(10, 10, mb_convert_encoding($solicitud['IdSolicitud'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(50, 10, mb_convert_encoding($solicitud['Fecha_Envio'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(35, 10, mb_convert_encoding($solicitud['Descripcion'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(35, 10, mb_convert_encoding($solicitud['Correo'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(25, 10, mb_convert_encoding($solicitud['Ubicacion'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(35, 10, mb_convert_encoding($solicitud['EstadoSolicitud'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(35, 10, mb_convert_encoding($solicitud['ServicioTecnico'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(40, 10, mb_convert_encoding($solicitud['Fecha_Envio'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(30, 10, mb_convert_encoding($solicitud['Descripcion'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(45, 10, mb_convert_encoding($solicitud['Correo'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(30, 10, mb_convert_encoding($solicitud['Ubicacion'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(30, 10, mb_convert_encoding($solicitud['EstadoSolicitud'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(30, 10, mb_convert_encoding($solicitud['ServicioTecnico'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Cell(35, 10, mb_convert_encoding($solicitud['NombreCliente'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(35, 10, mb_convert_encoding($solicitud['Usuario'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(30, 10, mb_convert_encoding($solicitud['Usuario'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Ln(10);
 }
 /* TABLA */

@@ -34,6 +34,9 @@ require_once('validacionesTarea.php');
       $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
       $urlPorcentaje = '../crud/Porcentajes/gestionPorcentajes.php';
       $urlMetricas = '../crud/Metricas/gestionMetricas.php';
+      $urlRoles = '../crud/rol/gestionRol.php';
+      $urlPreguntas = '../crud/pregunta/gestionPregunta.php';
+      $urlBitacoras = '../crud/bitacora/gestionBitacora.php';
       require_once '../layout/sidebar.php';
       ?>
     </div>
