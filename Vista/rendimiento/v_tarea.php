@@ -16,6 +16,7 @@ require_once('validacionesTarea.php');
   <link rel="stylesheet" href="../../Recursos/css/tarea.css">
   <link rel="stylesheet" href="../../Recursos/css/modalEditarTarea.css">
   <link rel="stylesheet" href="../../Recursos/css/index.css">
+  <link href='../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <title>Tareas</title>
 </head>
 
@@ -42,7 +43,8 @@ require_once('validacionesTarea.php');
     </div>
     <div class="tareas-main">
       <div class="navbar-conteiner">
-        <p>NAVBAR</p>
+        <!-- Aqui va la barra -->
+        <?php include_once '../layout/navbar.php'?>
       </div>
       <!-- Cuerpo de la pagina -->
       <main class="main-tareas">

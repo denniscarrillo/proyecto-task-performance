@@ -32,8 +32,8 @@ if (isset($_SESSION['usuario'])) {
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <link href='../Recursos/css/layout/sidebar.css' rel='stylesheet'>
-  <!--   para el index.css
- -->
+  <link href='../Recursos/css/layout/navbar.css' rel='stylesheet'>
+  <link href='../Recursos/css/layout/footer.css' rel='stylesheet'>
   <link href='../Recursos/css/index.css' rel='stylesheet'>
   <title>Dashboard</title>
 </head>
@@ -65,25 +65,25 @@ if (isset($_SESSION['usuario'])) {
     </div>
     <div class="conteiner-main">
       <div class="navbar-conteiner">
-        <p>NAVBAR</p>
+        <!-- Aqui va la barra -->
+        <?php include_once './layout/navbar.php'?>
       </div>
       <!-- Cuerpo de la pagina -->
       <main class="main">
         <!-- Contenedor de los enlaces de los modulos -->
         <div class="conteiner-link">
-          <a class="card-link" href="#"><i class="fa-solid fa-cash-register"></i> Ventas</a>
-          <a class="card-link" href="#"><i class="fa-solid fa-square-poll-vertical"></i> Rendimiento</a>
-          <a class="card-link" href="/Vista/comisiones/v_comision.php"><i class="fa-solid fa-money-bill"></i> Comisiones</a>
-          <a class="card-link" href="/Vista/crud/cliente/gestionCliente.php"><i class="fa-solid fa-user-group"></i> Clientes</a>
-          <a class="card-link" href="#"><i class="fa-solid fa-screwdriver-wrench"></i> Mantenimiento</a>
-          <a class="card-link" href="#"><i class="fa-solid fa-screwdriver-wrench"></i> Consultas</a>
+          <a class="card-link" href="rendimiento/v_tarea.php"><i class="fa-solid fa-clipboard-list icon-size"></i><p>Tareas</p></a>
+          <a class="card-link" href="comisiones/v_comision.php"><i class="fa-solid fa-file-invoice-dollar icon-size"></i><p>Comisiones</p></a>
+          <a class="card-link" href="crud/solicitud/gestionSolicitud.php"><i class="fa-solid fa-envelopes-bulk icon-size"></i><p>Solicitud</p></a>
+          <a class="card-link" href="crud/Venta/gestionVenta.php"><i class="fa-solid fa-cash-register icon-size"></i><p>Ventas</p></a>
+          <a class="card-link" href="crud/articulo/gestionArticulo.php"><i class="fa-solid fa-kitchen-set icon-size"></i><p>Artículos</p></a>
+          <a class="card-link" href="crud/cliente/gestionCliente.php"><i class="fa-solid fa-user-group icon-size"></i><p>Clientes</p></a>
         </div>
       </main>
       <!-- Footer -->
       <div class="footer-conteiner">
-        <P>FOOTER</P>
         <?php
-        // require_once 'layout/navbar.php';
+          require_once 'layout/footer.php';
         ?>
       </div>
     </div>

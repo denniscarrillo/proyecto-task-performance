@@ -37,7 +37,7 @@
   max-height: calc(100vh + 250px); */
   width: 250px;
   /* background: linear-gradient(180deg, #4d4947 30%, #605d5d 40%); */
-  background-color: #605d5d;
+  background-color: #484545;
   padding: 15px 10px;
   transition: all 0.6s ease;
 }

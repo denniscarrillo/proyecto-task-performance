@@ -1,9 +1,10 @@
-<nav class="navbar bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand">Navbar</a>
-    <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
+<nav class="navbar">
+  <div class="navbar-content">
+    <div class="notifations-conteiner">
+    <p>Notificaciones</p><span class="notification-conteiner"><i class="notification-icon fa-solid fa-bell"></i></span> 
+    </div>
+    <div class="profile-conteiner">
+      <p class="title-profile">Perfil</p><span class="icon-circle"><i class="user-icon fa-solid fa-user"></i></span>
+    </div> 
   </div>
 </nav>
