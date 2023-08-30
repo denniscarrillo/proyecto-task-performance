@@ -48,8 +48,10 @@
   gap: 0.4rem;
   justify-content: center;
   align-items: center;
-  width: 15rem;
-  height: 10rem;
+  width: 10em;
+  height: 6em;
+  /* width: 15rem;
+  height: 10rem; */
   border-radius: 0.3rem;
   background-color: #cb7a2dfa;
   text-decoration: none;
