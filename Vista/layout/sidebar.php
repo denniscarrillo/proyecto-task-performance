@@ -1,4 +1,5 @@
 <nav class="sidebar locked">
+  <!-- Logo del siberbar -->
   <div class="logo_items flex-log">
     <span class="nav_image">
       <a href="<?php echo $urlIndex; ?>">
@@ -8,125 +9,162 @@
   </div>
   <div class="flex-log">
     <a href="<?php echo $urlIndex; ?>" style="text-decoration: none;">
-    <span class="logo_name" >Cocinas&Equipos</span>
-  </a>
+      <span class="logo_name" >Cocinas&Equipos</span>
+    </a>
   </div>
   <span class="flex-log">
     <i class="bx bx-lock-alt" id="lock-icon" title="Unlock Sidebar"></i>
     <i class="bx bx-x" id="sidebar-close"></i>
   </span>
+  <!-- Contenedor principal del menu sidebar -->
   <div class="menu_container">
-    <div class="menu_items">
-      <ul class="menu_item">
-        <div class="menu_title flex align">
-          <span class="title">Modúlos</span>
-          <span class="line"></span>
-        </div>
-        <li class="item">
-          <a href="<?php echo $urlTarea; ?>" class="link flex">
-            <i class='bx bx-task'></i>
-            <span>Rendimiento</span>
-          </a>
-        </li>
-        <li class="item">
-          <a href="<?php echo $urlSolicitud; ?>" class="link flex">
-            <i class='bx bx-store-alt'></i>
-            <span>Solicitud</span>
-          </a>
-        </li>
-        <li class="item">
-          <a href="<?php echo $urlComision; ?>" class="link flex">
-            <i class='bx bx-store-alt'></i>
-            <span>Comisión</span>
-          </a>
-        </li>
-      </ul>
-      <ul class="menu_item">
-        <div class="menu_title flex">
-          <span class="title">Consulta</span>
-          <span class="line"></span>
-        </div>
-        <li class="item">
-          <a href="<?php echo $urlVenta ; ?>" class="link flex">
-            <i class="bx bxs-magic-wand"></i>
-            <span>Ventas</span>
-          </a>
-        </li>
-        <li class="item">
-          <a href="<?php echo $urlCliente; ?>" class="link flex">
-            <i class="bx bx-folder"></i>
-            <span>Clientes</span>
-          </a>
-        </li>
-        <li class="item">
-          <a href="<?php echo$urlComisionVendedor; ?>" class="link flex">
-            <i class='bx bx-folder'></i>
-            <span>Comision Vendedor</span>
-          </a>
-        </li>
-        <li class="item">
-          <a href="<?php echo $urlCarteraCliente; ?>" class="link flex">
-            <i class="bx bx-folder"></i>
-            <span>Cartera clientes</span>
-          </a>
-        </li>
-      </ul>
-
-      <ul class="menu_item">
-        <div class="menu_title flex">
-          <span class="title">Mantenimiento</span>
-          <span class="line"></span>
-        </div>
-
-        <li class="item">
-          <a href="<?php echo $urlGestion; ?>" class="link flex">
-            <i class='bx bxs-user-badge'></i>
-            <span>Usuarios</span>
-          </a>
-          <li class="item">
-          <a href="<?php echo $urlRoles; ?>" class="link flex">
-            <i class="bx bx-folder"></i>
-            <span>Roles</span>
-          </a>
-        </li>
-        <li class="item">
-          <a href="<?php echo $urlPreguntas; ?>" class="link flex">
-            <i class="bx bx-folder"></i>
-            <span>Preguntas</span>
-          </a>
-        </li>
-        <li class="item">
-          <a href="<?php echo $urlBitacoras; ?>" class="link flex">
-            <i class="bx bx-folder"></i>
-            <span>Bitacoras</span>
-          </a>
-        </li>
-        <li class="item">
-          <a href="<?php echo $urlCrudComision; ?>" class="link flex">
-          <a href="<?php echo $urlPorcentaje; ?>" class="link flex">
-            <i class="bx bx-folder"></i>
-            <span>Porcentajes</span>
-          </a>
-        </li>
-        <li class="item">
-          <a href="<?php echo $urlMetricas; ?>" class="link flex">
-            <i class='bx bx-list-ul'></i>
-            <span>Metricas</span>
-          </a>
-        </li>
-        <li class="item">
-          <a href="<?php echo$urlCrudComision; ?>" class="link flex">
-            <i class='bx bxs-user-badge'></i>
-            <span>Comisiones</span>
-          </a>
-        </li>
-        <!-- <li class="item">
-          <a href="" class="link flex">
-            <i class='bx bxs-user-badge'></i>
-            <span>Settings</span>
-          </a>
-        </li> -->
-      </ul>
+    <!-- Titulo general modulo -->
+    <div class="">
+      <span class="title__module">Modúlos</span>
+      <span class="line"></span>
     </div>
+    <!-- Lista de menus del sistema -->
+    <ul class="conteiner__menu-principal">
+      <!-- Lista rendimiento -->
+      <li class=""> 
+        <span>Rendimiento</span>
+        <ul class="conteiner__menu-secundario">
+          <li class="item-rendimiento">
+            <a href="<?php echo $urlTarea; ?>" class="">
+              <i class=""></i>
+              <span>Mis Tareas</span>
+            </a>
+          </li>
+          <li class="item-rendimiento">
+            <a href="<?php echo $urlTarea; ?>" class="">
+              <i class=""></i>
+              <span>Consultar Tareas</span>
+            </a>
+          </li>
+          <li class="item-rendimiento">
+            <a href="<?php echo $urlTarea; ?>" class="">
+              <i class=""></i>
+              <span>Bitácora Tarea</span>
+            </a>
+          </li>
+          <li class="item-rendimiento">
+            <a href="<?php echo $urlMetricas; ?>" class="">
+              <i class=""></i>
+              <span>Metrícas</span>
+            </a>
+          </li>
+          <li class="item-rendimiento">
+            <a href="<?php echo $urlTarea; ?>" class="">
+              <i class=""></i>
+              <span>Estadísticas</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <!-- Solicitud -->
+      <li class="">
+        <a href="<?php echo $urlSolicitud; ?>" class="">
+          <i class=""></i>
+          <span>Solicitud</span>
+        </a>
+      </li>
+      <!-- Comision -->
+      <li class="">
+        <a href="<?php echo $urlComision; ?>" class="">
+          <i class=""></i>
+          <span>Comisión</span>
+        </a>
+      </li>
+      <!-- Consulta -->
+      <li class="">
+        <span>Consulta</span>
+        <ul class=conteiner__menu-secundario">
+          <li class="item-consulta">
+            <a href="<?php echo $urlCliente; ?>" class="">
+              <i class=""></i>
+              <span>Clientes</span>
+            </a>
+          </li>
+          <li class="item-consulta">
+            <a href="<?php echo $urlVenta; ?>" class="">
+              <i class=""></i>
+              <span>Ventas</span>
+            </a>
+          </li>
+          <li class="item-consulta">
+            <a href="<?php echo $urlTarea; ?>" class="">
+              <i class=""></i>
+              <span>Artículo</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <!-- Mantenimiento -->
+      <li class="">
+        <span>Mantenimiento</span>
+        <ul class="conteiner__menu-secundario">
+          <li class="item-mantenimiento">
+            <a href="<?php echo $urlGestion; ?>" class="">
+              <i class=""></i>
+              <span>Usuarios</span>
+            </a>
+          </li>
+          <li class="item-mantenimiento">
+            <a href="<?php echo $urlTarea; ?>" class="">
+              <i class=""></i>
+              <span>Estado Usuario</span>
+            </a>
+          </li>
+          <li class="item-mantenimiento">
+            <a href="<?php echo $urlCarteraCliente; ?>" class="">
+              <i class=""></i>
+              <span>Cartera Cliente</span>
+            </a>
+          </li>
+          <li class="item-mantenimiento">
+            <a href="<?php echo $urlPreguntas; ?>" class="">
+              <i class=""></i>
+              <span>Preguntas</span>
+            </a>
+          </li>
+          <li class="item-mantenimiento">
+            <a href="<?php echo $urlBitacoras; ?>" class="">
+              <i class=""></i>
+              <span>Bitácora Sistema</span>
+            </a>
+          </li>
+          <li class="item-mantenimiento">
+            <a href="<?php echo $urlTarea; ?>" class="">
+              <i class=""></i>
+              <span>Parámetros</span>
+            </a>
+          </li>
+          <li class="item-mantenimiento">
+            <a href="<?php echo $urlTarea; ?>" class="">
+              <i class=""></i>
+              <span>Permisos</span>
+            </a>
+          </li>
+          <li class="item-mantenimiento">
+            <a href="<?php echo $urlRoles; ?>" class="">
+              <i class=""></i>
+              <span>Roles</span>
+            </a>
+          </li>
+          <li class="item-mantenimiento">
+            <a href="<?php echo $urlPorcentaje; ?>" class="">
+              <i class=""></i>
+              <span>Porcentajes</span>
+            </a>
+          </li>
+          <li class="item-mantenimiento">
+            <a href="<?php echo $urlTarea; ?>" class="">
+              <i class=""></i>
+              <span>Servicios Técnicos</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
   </div>
 </nav>
