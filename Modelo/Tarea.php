@@ -31,12 +31,13 @@ class Tarea
             $tareasUsuario = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $resultado = $abrirConexion->query("SELECT t.id_Tarea, t.id_EstadoAvance, t.titulo, t.fecha_Inicio, e.descripcion  FROM tbl_vendedores_tarea AS vt
+            $query = "SELECT t.id_Tarea, t.id_EstadoAvance, t.titulo, t.fecha_Inicio, e.descripcion  FROM tbl_vendedores_tarea AS vt
             INNER JOIN tbl_tarea AS t ON t.id_Tarea = vt.id_Tarea
             INNER JOIN tbl_estadoavance AS e ON t.id_EstadoAvance = e.id_EstadoAvance
-            WHERE vt.id_usuario_vendedor = '$idUser';");
+            WHERE vt.id_usuario_vendedor = '$idUser';";
+            $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
-            while ($fila = $resultado->fetch_assoc()) {
+            while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
                 $tareasUsuario[] = [
                     'id' => $fila['id_Tarea'],
                     'idEstadoAvance' => $fila['id_EstadoAvance'],
@@ -48,7 +49,7 @@ class Tarea
         } catch (Exception $e) {
             $tareasUsuario = 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
         return $tareasUsuario;
     }
 
@@ -61,17 +62,17 @@ class Tarea
             $insert = "INSERT INTO `tbl_tarea` (`id_EstadoAvance`, `titulo`, `fecha_Inicio`, `Creado_Por`, `Fecha_Creacion`) 
                             VALUES ('$tarea->idEstadoAvance','$tarea->titulo', 
                                     '$tarea->fechaInicio', '$tarea->Creado_Por', '$tarea->fechaInicio')"; 
-            $ejecutar_insert = mysqli_query($abrirConexion, $insert);
+            $ejecutar_insert = sqlsrv_query($abrirConexion, $insert);
             $idTarea = mysqli_insert_id($abrirConexion);
             $insertUsuarioTarea = "INSERT INTO `tbl_vendedores_tarea` (`id_Tarea`, `id_usuario_vendedor`) 
                                     VALUES ('$idTarea', '$tarea->idUsuario');";
-            $ejecutar_insert = mysqli_query($abrirConexion, $insertUsuarioTarea);
+            $ejecutar_insert = sqlsrv_query($abrirConexion, $insertUsuarioTarea);
             /* $abrirConexion->query($insertUsuarioTarea); */
             
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
     public static function obtenerEstadoClienteTarea($rtnCliente)
     {
@@ -81,8 +82,8 @@ class Tarea
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             $select = "SELECT estado_Cliente_Tarea 
             FROM tbl_tarea WHERE id_EstadoAvance = 4 AND RTN_Cliente = '$rtnCliente'";
-            $estadoCliente = $abrirConexion->query($select);
-            while ($fila = $estadoCliente->fetch_assoc()) {
+            $estadoCliente = sqlsrv_query($abrirConexion, $select);
+            while ($fila = sqlsrv_fetch_array($estadoCliente, SQLSRV_FETCH_ASSOC)) {
                 $estado [] = [
                     'estadoClienteTarea' => $fila['estado_Cliente_Tarea']
                 ];
@@ -91,7 +92,7 @@ class Tarea
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
     public static function clienteExistente($rtnCliente)
     {
@@ -100,8 +101,8 @@ class Tarea
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             $select = "SELECT COUNT(*) AS 'clienteExistente' FROM tbl_tarea WHERE RTN_Cliente = '$rtnCliente'";
-            $estadoCliente = $abrirConexion->query($select);
-            while ($fila = $estadoCliente->fetch_assoc()) {
+            $estadoCliente = sqlsrv_query($abrirConexion, $select);
+            while ($fila = sqlsrv_fetch_array($estadoCliente, SQLSRV_FETCH_ASSOC)) {
                 $estado [] = [
                     'clienteExistente' => $fila['clienteExistente']
                 ];
@@ -118,7 +119,7 @@ class Tarea
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
     public static function obtenerVendedoresTarea()
     {
@@ -127,8 +128,8 @@ class Tarea
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             $select = "SELECT id_Tarea, From tbl_tarea";
-            $listaVendedores = $abrirConexion->query($select);
-            while ($fila = $listaVendedores->fetch_assoc()) {
+            $listaVendedores = sqlsrv_query($abrirConexion, $select);
+            while ($fila = sqlsrv_fetch_array($listaVendedores, SQLSRV_FETCH_ASSOC)) {
                 $vendedores[] = [
                     'idVendedor' => $fila['id_Usuario'],
                     'nombreVendedor' => $fila['nombre_Usuario']
@@ -138,7 +139,7 @@ class Tarea
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
     public static function obtenerArticulos(){
         try{
@@ -146,8 +147,8 @@ class Tarea
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             $select = "SELECT * FROM view_articulos";
-            $listaArticulos = $abrirConexion->query($select);
-            while($fila = $listaArticulos->fetch_assoc()){
+            $listaArticulos = sqlsrv_query($abrirConexion, $select);
+            while($fila = sqlsrv_fetch_array($listaArticulos, SQLSRV_FETCH_ASSOC)){
                 $articulos[] = [
                     'codArticulo' => $fila['CODARTICULO'],
                     'articulo' => $fila['ARTICULO'],
@@ -159,7 +160,7 @@ class Tarea
         }catch(Exception $e){
             echo 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
     public static function obtenerEstadosTarea(){
         try{
@@ -167,8 +168,8 @@ class Tarea
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             $select = "SELECT * FROM tbl_estadoavance";
-            $listaEstados = $abrirConexion->query($select);
-            while($fila = $listaEstados->fetch_assoc()){
+            $listaEstados = sqlsrv_query($abrirConexion, $select);
+            while($fila = sqlsrv_fetch_array($listaEstados, SQLSRV_FETCH_ASSOC)){
                 $estadosTarea[] = [
                    'idEstado' => $fila['id_EstadoAvance'],
                    'estado' => $fila['descripcion'] 
@@ -178,7 +179,7 @@ class Tarea
         }catch(Exception $e){
             echo 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
     public static function validarTipoCliente($rtn){
         try{
@@ -186,13 +187,13 @@ class Tarea
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             $selectCliente = "SELECT CODCLIENTE FROM view_clientes WHERE CIF = '$rtn'";
-            $consulta = $abrirConexion->query($selectCliente);  
+            $consulta = sqlsrv_query($abrirConexion, $selectCliente);
             if($consulta->num_rows > 0){
-                $arrCodCiente = $consulta->fetch_assoc();
+                $arrCodCiente = sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC);
                 $codCliente = $arrCodCiente['CODCLIENTE'];
                 $selectFacturas = "SELECT count(NUMFACTURA) AS CANT FROM view_facturasventa WHERE CODCLIENTE = '$codCliente'";
-                $consulta= $abrirConexion->query($selectFacturas);
-                $cantFacturas = $consulta->fetch_assoc();
+                $consulta= sqlsrv_query($abrirConexion, $selectFacturas);
+                $cantFacturas = sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC);
                 $facturas = intval($cantFacturas['CANT']);
                 if($facturas > 1){
                     $estadoCliente = true;
@@ -206,7 +207,7 @@ class Tarea
         }catch(Exception $e){
             echo 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
     public static function obtenerClientes(){
         try{
@@ -214,7 +215,7 @@ class Tarea
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             $select = "SELECT CODCLIENTE, NOMBRECLIENTE, CIF, TELEFONO1, DIRECCION1 FROM view_clientes";
-            $listaClientes = $abrirConexion->query($select);
+            $listaClientes = sqlsrv_query($abrirConexion, $select);
             while($fila = $listaClientes->fetch_assoc()){
                 $clientes[] = [
                     'codCliente' => $fila['CODCLIENTE'],
@@ -228,7 +229,7 @@ class Tarea
         }catch(Exception $e){
             echo 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
     public static function agregarVendedoresTarea($idTarea, $idVendedores){
         try {
@@ -238,12 +239,12 @@ class Tarea
                 $id= $idVendedor['idVendedor'];
                 $insertUsuarioTarea = "INSERT INTO `tbl_vendedores_tarea` (`id_Tarea`, `id_usuario_vendedor`) 
                                     VALUES ('$idTarea', '$id');";
-                 mysqli_query($abrirConexion, $insertUsuarioTarea);
+                 sqlsrv_query($abrirConexion, $insertUsuarioTarea);
             }
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
     public static function obtenerVendedores(){
         try{
@@ -251,7 +252,7 @@ class Tarea
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             $select = "SELECT id_Usuario, usuario, nombre_Usuario FROM tbl_ms_usuario WHERE id_Rol = 4;";
-            $listaVendedores = $abrirConexion->query($select);
+            $listaVendedores = sqlsrv_query($abrirConexion, $select);
             while($fila = $listaVendedores->fetch_assoc()){
                 $vendedores[] = [
                     'id' => $fila['id_Usuario'],
@@ -263,7 +264,7 @@ class Tarea
         }catch(Exception $e){
             echo 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
     public static function editarTarea($idTarea, $tipoTarea, $datosTarea){
         try{
@@ -279,18 +280,18 @@ class Tarea
                 $update = "UPDATE tbl_tarea SET `RTN_Cliente` = '$rtn', `estado_Cliente_Tarea` = '$estadoCliente', 
                 `id_ClasificacionLead` = '$idClasificacionLead', `id_OrigenLead` = $idOrigen, `rubro_Comercial` = '$rubro', `razon_Social` ='$razon'
                 WHERE `id_Tarea` = '$idTarea';";
-                $abrirConexion->query($update);
+                sqlsrv_query($abrirConexion, $update);
             }else{
                 $rtn = $datosTarea['rtn']; $estadoCliente = $datosTarea['tipoCliente']; $razon = $datosTarea ['razon']; $rubro = $datosTarea['rubro']; 
                 //Actualizamos los datos de la tarea
                 $update = "UPDATE tbl_tarea SET `RTN_Cliente` = '$rtn', `estado_Cliente_Tarea` = '$estadoCliente', 
                 `rubro_Comercial` = '$rubro', `razon_Social` ='$razon' WHERE `id_Tarea` = '$idTarea'";
-                $abrirConexion->query($update);
+                sqlsrv_query($abrirConexion, $update);
             }
         }catch(Exception $e){
             echo 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
     public static function guardarProductosInteres($idTarea, $productos, $CreadoPor, $fechaCreacion){
         try{
@@ -301,19 +302,20 @@ class Tarea
                 $cantProd = $producto['CantProducto'];
                 $insert = "INSERT INTO `tbl_productointeres` (`id_Tarea`, `id_Articulo`, `cantidad`, `Creado_Por`, `Fecha_Creacion`) 
                 VALUES ('$idTarea', '$idProducto', '$cantProd', '$CreadoPor', '$fechaCreacion');";
-                $abrirConexion->query($insert); 
+                sqlsrv_query($abrirConexion, $insert);
             }
         }catch(Exception $e){
             echo 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+       sqlsrv_close($abrirConexion); //Cerrar conexion
     }
     public static function obtenerClasificacionLead() {
         try{
             $clasificacion = array();
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $resultado = $abrirConexion->query("SELECT `id_ClasificacionLead`, `descripcion` FROM `tbl_ClasificacionLead`;");
+            $query = "SELECT `id_ClasificacionLead`, `descripcion` FROM `tbl_ClasificacionLead`;";
+            $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
             while ($fila = $resultado->fetch_assoc()) {
                 $clasificacion[] = [
@@ -325,14 +327,15 @@ class Tarea
         }catch(Exception $e){
             echo 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
     public static function obtenerOrigenLead() {
         try{
             $origen = array();
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $resultado = $abrirConexion->query("SELECT `id_OrigenLead`, `descripcion` FROM `tbl_OrigenLead`;");
+            $query = "SELECT `id_OrigenLead`, `descripcion` FROM `tbl_OrigenLead`;";
+            $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
             while ($fila = $resultado->fetch_assoc()) {
                 $origen[] = [
@@ -344,7 +347,7 @@ class Tarea
         }catch(Exception $e){
             echo 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
     public static function agregarNuevoCliente($nombre, $rtn, $telefono, $correo, $direccion){
         try {
@@ -352,10 +355,10 @@ class Tarea
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             $insertNuevoCliente = "INSERT INTO `tbl_CarteraCliente` (`nombre_Cliente`, `rtn_Cliente`, `telefono`, `correo`, `direccion`) 
             VALUES('$nombre', '$rtn', '$telefono', '$correo', '$direccion');";
-            mysqli_query($abrirConexion, $insertNuevoCliente);
+            sqlsrv_query($abrirConexion, $insertNuevoCliente);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
 }

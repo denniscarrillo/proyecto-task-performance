@@ -13,14 +13,15 @@ class Venta {
     public static function obtenertodaslasventas(){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $listaVentas = 
-            $consulta->query("SELECT v.NUMFACTURA, v.CODCLIENTE, c.NOMBRECLIENTE, c.CIF, v.FECHA, v.TOTALBRUTO, v.TOTALIMPUESTO, v.TOTALNETO
+        
+        $query = "SELECT v.NUMFACTURA, v.CODCLIENTE, c.NOMBRECLIENTE, c.CIF, v.FECHA, v.TOTALBRUTO, v.TOTALIMPUESTOS, v.TOTALNETO
             FROM view_Clientes AS c
             INNER JOIN View_FACTURASVENTA AS v ON c.CODCLIENTE = v.CODCLIENTE;
-            ");
+            ";
+        $listaVentas = sqlsrv_query($consulta, $query);
         $ventas = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
-        while($fila = $listaVentas->fetch_assoc()){
+        while($fila = sqlsrv_fetch_array($listaVentas, SQLSRV_FETCH_ASSOC)){
             $ventas [] = [
                 'numFactura' => $fila["NUMFACTURA"],
                 'codCliente' => $fila["CODCLIENTE"],
@@ -28,24 +29,25 @@ class Venta {
                 'rtnCliente' => $fila["CIF"],
                 'fechaEmision'=> $fila["FECHA"],
                 'totalBruto' => $fila["TOTALBRUTO"],
-                'totalImpuesto' => $fila["TOTALIMPUESTO"],     
+                'totalImpuesto' => $fila["TOTALIMPUESTOS"],     
                 'totalNeto' => $fila["TOTALNETO"]    
             ];
         }
-        mysqli_close($consulta); #Cerramos la conexión.
+        sqlsrv_close($consulta); #Cerramos la conexión.
         return $ventas;
     }
     public static function obtenerVentasPorFechas($fechaDesde, $fechaHasta){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $select = "SELECT v.NUMFACTURA, v.CODCLIENTE, c.NOMBRECLIENTE, c.CIF, v.FECHA, v.TOTALBRUTO, v.TOTALIMPUESTO, v.TOTALNETO
+        $select = "SELECT v.NUMFACTURA, v.CODCLIENTE, c.NOMBRECLIENTE, c.CIF, v.FECHA, v.TOTALBRUTO, v.TOTALIMPUESTOS, v.TOTALNETO
                     FROM view_clientes AS c
                     INNER JOIN View_facturasventa AS v ON c.CODCLIENTE = v.CODCLIENTE
                     WHERE v.FECHA BETWEEN '$fechaDesde' AND '$fechaHasta';";
-        $listaVentas =  $conexion->query($select);
+        $query = $select;
+        $listaVentas = sqlsrv_query($conexion, $query);
         $ventas = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
-        while($fila = $listaVentas->fetch_assoc()){
+        while($fila = sqlsrv_fetch_array($listaVentas, SQLSRV_FETCH_ASSOC)){
             $ventas [] = [
                 'numFactura' => $fila["NUMFACTURA"],
                 'codCliente'=> $fila["CODCLIENTE"],
@@ -53,11 +55,11 @@ class Venta {
                 'rtnCliente'=> $fila["CIF"],
                 'fechaEmision' => $fila["FECHA"],
                 'totalBruto'=> $fila["TOTALBRUTO"],
-                'totalImpuesto' => $fila["TOTALIMPUESTO"],   
+                'totalImpuesto' => $fila["TOTALIMPUESTOS"],   
                 'totalVenta' => $fila["TOTALNETO"]       
             ];
         }
-        mysqli_close($conexion); #Cerramos la conexión.
+        sqlsrv_close($conexion); #Cerramos la conexión.
         return $ventas;
     }
 
@@ -65,11 +67,12 @@ class Venta {
     public static function obtenerIdVenta($numFactura){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $consulta = $conexion->query("SELECT v.NUMFACTURA, v.CODCLIENTE, c.NOMBRECLIENTE, c.CIF, v.FECHA, v.TOTALBRUTO, v.TOTALIMPUESTO, v.TOTALNETO
+        $query = "SELECT v.NUMFACTURA, v.CODCLIENTE, c.NOMBRECLIENTE, c.CIF, v.FECHA, v.TOTALBRUTO, v.TOTALIMPUESTOS, v.TOTALNETO
         FROM View_Clientes AS c
-        INNER JOIN View_FACTURASVENTA AS v ON c.CODCLIENTE = v.CODCLIENTE WHERE NUMFACTURA = '$numFactura';");
+        INNER JOIN View_FACTURASVENTA AS v ON c.CODCLIENTE = v.CODCLIENTE WHERE NUMFACTURA = '$numFactura';";
+        $consulta = sqlsrv_query($conexion, $query);
         $idVenta = array();
-        While($fila = $consulta->fetch_assoc()){
+        While($fila = sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC)){
             $idVenta [] = [
                 'numFactura' => $fila["NUMFACTURA"],
                 'codCliente'=> $fila["CODCLIENTE"],
@@ -77,11 +80,11 @@ class Venta {
                 'rtnCliente'=> $fila["CIF"],
                 'fechaEmision' => $fila["FECHA"],
                 'totalBruto'=> $fila["TOTALBRUTO"],
-                'totalImpuesto' => $fila["TOTALIMPUESTO"],   
+                'totalImpuesto' => $fila["TOTALIMPUESTOS"],   
                 'totalVenta' => $fila["TOTALNETO"]    
             ];
         }
-        mysqli_close($conexion); #Cerramos la conexión.
+        sqlsrv_close($conexion); #Cerramos la conexión.
         return $idVenta;
     }
     //obtener el id de la venta

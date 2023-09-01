@@ -16,10 +16,11 @@ class CarteraClientes{
     public static function obtenerCarteraClientes(){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB();
-        $obtenerCarteraCliente = $consulta->query("SELECT id_CarteraCliente, nombre_Cliente, rtn_Cliente, telefono, correo, direccion
-        FROM tbl_CarteraCliente;");
+        $obtenerCarteraCliente = "SELECT id_CarteraCliente, nombre_Cliente, rtn_Cliente, telefono, correo, direccion
+        FROM tbl_CarteraCliente;";
+        $resultado = sqlsrv_query($consulta, $obtenerCarteraCliente);
         $carteraCliente = array();
-        while($fila = $obtenerCarteraCliente->fetch_assoc()){
+        while($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)){
             $carteraCliente [] = [
                 'idcarteraCliente' => $fila["id_CarteraCliente"],
                 'nombre' => $fila["nombre_Cliente"],
@@ -29,7 +30,7 @@ class CarteraClientes{
                 'direccion' => $fila["direccion"]
             ];
         }
-        mysqli_close($consulta); #Cerramos la conexión.
+        sqlsrv_close($consulta); #Cerramos la conexión.
         return $carteraCliente;
     }
     //Método para crear nuevo cliente
@@ -42,9 +43,10 @@ class CarteraClientes{
     $correo = $nuevoCliente->correo;
     $direccion = $nuevoCliente->direccion;
     $estadoContacto = $nuevoCliente->estadoContacto;
-    $nuevoCliente = $consulta->query("INSERT INTO tbl_CarteraCliente(nombre_Cliente,rtn_Cliente,telefono,correo,direccion,estado_Contacto)
-                   VALUES ('$nombre', '$rtn', '$telefono', '$correo','$direccion','$estadoContacto');");
-    mysqli_close($consulta); #Cerramos la conexión.
+    $nuevoCliente = "INSERT INTO tbl_CarteraCliente(nombre_Cliente,rtn_Cliente,telefono,correo,direccion,estado_Contacto)
+                   VALUES ('$nombre', '$rtn', '$telefono', '$correo','$direccion','$estadoContacto');";
+    $nuevoCliente = sqlsrv_query($consulta, $nuevoCliente);
+    sqlsrv_close($consulta); #Cerramos la conexión.
     return $nuevoCliente;
     }
 
@@ -60,11 +62,11 @@ class CarteraClientes{
             $direccion=$nuevoCliente->direccion;
             $update = "UPDATE tbl_carteracliente SET nombre_Cliente='$nombre', rtn_Cliente='$rtn', telefono='$telefono',
             correo='$correo', direccion='$direccion' WHERE id_CarteraCliente='$id' ";
-            $ejecutar_update = mysqli_query($abrirConexion, $update);
+            $nuevoCliente = sqlsrv_query($abrirConexion, $update);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
 }#Fin de la clase
 

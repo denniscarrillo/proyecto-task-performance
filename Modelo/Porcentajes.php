@@ -12,12 +12,12 @@ class Porcentajes {
     public static function obtenerPorcentajes(){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $listaPorcentajes = 
-            $consulta->query("SELECT id_Porcentaje,valor_Porcentaje,descripcion,estado_Porcentaje 
-            FROM tbl_porcentaje;");
+        $query = "SELECT id_Porcentaje,valor_Porcentaje,descripcion,estado_Porcentaje 
+            FROM tbl_porcentaje;";
+        $listaPorcentajes = sqlsrv_query($consulta, $query);
         $Porcent = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
-        while($fila = $listaPorcentajes->fetch_assoc()){
+        while($fila = sqlsrv_fetch_array($listaPorcentajes, SQLSRV_FETCH_ASSOC)){
             $Porcent [] = [
                 'idPorcentaje' => $fila["id_Porcentaje"],
                 'valorPorcentaje' => $fila["valor_Porcentaje"],
@@ -25,7 +25,7 @@ class Porcentajes {
                 'estadoPorcentaje' => $fila["estado_Porcentaje"]
             ];
         }
-        mysqli_close($consulta); #Cerramos la conexión.
+        sqlsrv_close($consulta); #Cerramos la conexión.
         return $Porcent;
     }
 
@@ -36,9 +36,10 @@ class Porcentajes {
         $valorPorcentaje = $nuevoPorcentaje->valorPorcentaje;
         $descripcionPorcentaje = $nuevoPorcentaje->descripcionPorcentaje;
         $estadoPorcentaje = $nuevoPorcentaje->estadoPorcentaje;
-        $nuevoPorcentaje = $consulta->query("INSERT INTO tbl_Porcentaje(valor_Porcentaje,descripcion,estado_Porcentaje)
-                       VALUES ('$valorPorcentaje', '$descripcionPorcentaje', '$estadoPorcentaje');");
-        mysqli_close($consulta); #Cerramos la conexión.
+        $query = "INSERT INTO tbl_Porcentaje(valor_Porcentaje,descripcion,estado_Porcentaje)
+                       VALUES ('$valorPorcentaje', '$descripcionPorcentaje', '$estadoPorcentaje');";        
+        $nuevoPorcentaje = sqlsrv_query($consulta, $query);
+        sqlsrv_close($consulta); #Cerramos la conexión.
         return $nuevoPorcentaje;
     }
 
@@ -49,8 +50,9 @@ class Porcentajes {
         $valorPorcentaje = $nuevoPorcentaje->valorPorcentaje;
         $descripcionPorcentaje =$nuevoPorcentaje->descripcionPorcentaje;
         $estadoPorcentaje = $nuevoPorcentaje->estadoPorcentaje;
-        $nuevoPorcentaje = $conexion->query("UPDATE tbl_porcentaje SET valor_Porcentaje='$valorPorcentaje', descripcion='$descripcionPorcentaje',estado_Porcentaje='$estadoPorcentaje' WHERE id_Porcentaje='$idPorcentaje';");
-        mysqli_close($conexion); #Cerramos la conexión.
+        $query = "UPDATE tbl_porcentaje SET valor_Porcentaje='$valorPorcentaje', descripcion='$descripcionPorcentaje',estado_Porcentaje='$estadoPorcentaje' WHERE id_Porcentaje='$idPorcentaje';";
+        $nuevoPorcentaje = sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion); #Cerramos la conexión.
     }
 
 

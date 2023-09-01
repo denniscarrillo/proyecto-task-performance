@@ -1,15 +1,21 @@
 
 <?php
  class Conexion {
-    private $hostName = 'localhost';
-    private $dbName = 'COCINAS_Y_EQUIPOS';
-    private $userName = 'root';
-    private $password = '';
+    private $ServerName = 'DJ-REYES10\SQLEXPRESS';
+    private $ConexionInfo = array("Database"=>"Cocinas_Y_Equipos", "CharacterSet"=>"UTF-8");
+    // private $password = 'Proyectxforce2023';
 
     #Abrir conexión al servidor de MySQL
     public function abrirConexionDB(){
-        $conn = mysqli_connect($this->hostName, $this->userName, $this->password, $this->dbName);
-        return $conn;
-    }
- }
-?>
+        try{
+            $conn = sqlsrv_connect($this->ServerName, $this->ConexionInfo);
+            if($conn == false){
+                die(print_r(sqlsrv_errors(), true));
+            }
+            return $conn;
+        }
+        catch(Exception $e){
+            echo "Ocurrió un error al conectar a la base de datos: ". $e->getMessage();
+        }
+    }}
+    ?>

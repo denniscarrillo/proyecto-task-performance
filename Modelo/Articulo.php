@@ -20,10 +20,11 @@ class Articulo
             $articulo = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $resultado = $abrirConexion->query("SELECT CODARTICULO, ARTICULO, DETALLE, MARCA FROM view_articulos;");
+            $query = "SELECT CODARTICULO, ARTICULO, DETALLE, MARCA FROM view_articulos;";
+            $resultado = sqlsrv_query($abrirConexion, $query);
             $articulo = array();
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
-            while ($fila = $resultado->fetch_assoc()) {
+            while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
                 $articulo[] = [
                     'codigo' => $fila['CODARTICULO'],
                     'articulo' => $fila['ARTICULO'],
@@ -34,7 +35,7 @@ class Articulo
         } catch (Exception $e) {
             $articulo = 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
         return $articulo;
     }
 }

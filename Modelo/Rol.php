@@ -8,16 +8,17 @@ class Rol {
     public static function obtenerRolesUsuario(){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB();
-        $obtenerRoles = $consulta->query("SELECT id_Rol, rol, descripcion FROM tbl_ms_roles");
+        $query = "SELECT id_Rol, rol, descripcion FROM tbl_ms_roles";
+        $obtenerRoles = sqlsrv_query($consulta, $query);
         $roles = array();
-        while($fila = $obtenerRoles->fetch_assoc()){
+        while($fila = sqlsrv_fetch_array($obtenerRoles, SQLSRV_FETCH_ASSOC)){
             $roles [] = [
                 'id_Rol' => $fila["id_Rol"],
                 'rol' => $fila["rol"],
                 'descripcion' => $fila["descripcion"]
             ];
         }
-        mysqli_close($consulta); #Cerramos la conexión.
+        sqlsrv_close($consulta); #Cerramos la conexión.
         return $roles;
     }
 
@@ -28,11 +29,11 @@ class Rol {
             $rol=$nuevoRol->rol;
             $descripcion=$nuevoRol->descripcion;
             $insert = "INSERT INTO tbl_ms_roles (rol, descripcion) VALUES ('$rol','$descripcion');";
-            $ejecutar_insert = mysqli_query($abrirConexion, $insert);
+            $ejecutar_insert = sqlsrv_query($abrirConexion, $insert);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); #Cerramos la conexión.
     }
 
     public static function editarRol($nuevoRol){
@@ -43,11 +44,11 @@ class Rol {
             $rol=$nuevoRol->rol;
             $descripcion=$nuevoRol->descripcion;
             $update = "UPDATE tbl_ms_roles SET rol='$rol', descripcion='$descripcion' WHERE id_Rol='$id' ";
-            $ejecutar_update = mysqli_query($abrirConexion, $update);
+            $ejecutar_update = sqlsrv_query($abrirConexion, $update);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); #Cerramos la conexión.
     }
 
 }
