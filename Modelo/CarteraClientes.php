@@ -43,9 +43,11 @@ class CarteraClientes{
     $correo = $nuevoCliente->correo;
     $direccion = $nuevoCliente->direccion;
     $estadoContacto = $nuevoCliente->estadoContacto;
-    $nuevoCliente = "INSERT INTO tbl_CarteraCliente(nombre_Cliente,rtn_Cliente,telefono,correo,direccion,estado_Contacto)
+    $CreadoPor = $nuevoCliente->CreadoPor;
+    $fechaCreacion = $nuevoCliente->fechaCreacion;
+    $query = "INSERT INTO tbl_CarteraCliente(nombre_Cliente,rtn_Cliente,telefono,correo,direccion,estado_Contacto, )
                    VALUES ('$nombre', '$rtn', '$telefono', '$correo','$direccion','$estadoContacto');";
-    $nuevoCliente = sqlsrv_query($consulta, $nuevoCliente);
+    $nuevoCliente = sqlsrv_query($consulta, $query);
     sqlsrv_close($consulta); #Cerramos la conexión.
     return $nuevoCliente;
     }

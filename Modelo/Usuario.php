@@ -7,6 +7,7 @@ class Usuario {
     public $nombre;
     public $idEstado;
     public $contrasenia;
+    public $intentosFallidos;
     public $fechaUltimaConexion;
     public $preguntasContestadas;
     public $IngresoUsuario;
@@ -16,7 +17,10 @@ class Usuario {
     public $idRol;
     public $idCargo;
     public $creadoPor;
+    public $fechaCreacion;
     public $reseteoClave;
+    public $modificadoPor;
+    public $fechaModificacion;
 
     //Método para obtener todos los usuarios que existen.
     public static function obtenerTodosLosUsuarios(){
@@ -43,7 +47,7 @@ class Usuario {
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $usuarios;
     }
-    //Método para crear nuevo usuario desde Autoregistro.
+    //Método para crear nuevo usuario desde Autoregistro y gestion Usuario.
     public static function registroNuevoUsuario($nuevoUsuario){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
@@ -53,23 +57,26 @@ class Usuario {
         $idRol = $nuevoUsuario->idRol;
         $contrasenia = $nuevoUsuario->contrasenia;
         $correo = $nuevoUsuario->correo;
+        $cantIntentos = $nuevoUsuario->intentosFallidos;
         $creadoPor = $nuevoUsuario->creadoPor;
+        $fechaCreacion = $nuevoUsuario->fechaCreacion;
         $cantPreguntasContestadas = $nuevoUsuario->preguntasContestadas;
-        $query = "INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico, 
-                                        id_Rol, preguntas_Contestadas, Creado_Por) 
-                        VALUES ('$usuario','$nombre', '$idEstado', '$contrasenia', '$correo','$idRol', '$cantPreguntasContestadas', '$creadoPor' )";
+        $query = "INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico, intentos_fallidos, 
+                                        id_Rol, preguntas_Contestadas, Creado_Por, Fecha_Creacion) 
+                        VALUES ('$usuario','$nombre', '$idEstado', '$contrasenia', '$correo', '$cantIntentos', '$idRol', '$cantPreguntasContestadas', '$creadoPor', '$fechaCreacion' )";
         $nuevoUsuario = sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $nuevoUsuario;
     }
     //Hace la búsqueda del usuario en login para saber si es válido
     public static function existeUsuario($userName, $userPassword){
-        $passwordValida = false;
+        $passwordValida = 0;
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $query = "SELECT contrasenia FROM tbl_MS_Usuario WHERE usuario = '$userName'";
         $usuario = sqlsrv_query($consulta, $query); #Ejecutamos la consulta (Recordset
         $existe = sqlsrv_num_rows($usuario);
+        echo 'resultado'.sqlsrv_num_rows($usuario);
         if ($existe > 0) {
             $user = sqlsrv_fetch_array($usuario, SQLSRV_FETCH_ASSOC);
             $Password = $user['contrasenia'];
@@ -178,7 +185,6 @@ class Usuario {
         foreach($preguntas as $pregunta){
             $query = "INSERT INTO tbl_ms_preguntas (pregunta, Creado_Por) VALUES ('$pregunta','$usuario');";
             $conexion = sqlsrv_query($conexion, $query);
-
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
     }
