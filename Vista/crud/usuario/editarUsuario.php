@@ -5,8 +5,8 @@
     require_once("../../../Controlador/ControladorUsuario.php");
     require_once("../../../Controlador/ControladorBitacora.php");
 
-    session_start(); //Reanudamos session
-    if(isset($_SESSION['usuario'])){
+    // session_start(); //Reanudamos session
+    // if(isset($_SESSION['usuario'])){
         $nuevoUsuario = new Usuario();
         $nuevoUsuario->idUsuario = $_POST['idUsuario'];//aquí va la variable de inicio de 
         $nuevoUsuario->usuario = $_POST['usuario'];
@@ -14,6 +14,9 @@
         $nuevoUsuario->correo = $_POST['correo'];
         $nuevoUsuario->idRol = $_POST['idRol'];
         $nuevoUsuario->idEstado = $_POST['idEstado'];
+        date_default_timezone_set('America/Tegucigalpa');
+        $nuevoRol->fechaModificacion = date("Y-m-d h:i:s");
+        $nuevoRol->modificadoPor = 'SUPERADMIN';
         ControladorUsuario::editarUsuario($nuevoUsuario);
         /* ========================= Evento Editar Usuario. ======================*/
         $newBitacora = new Bitacora();
@@ -26,4 +29,4 @@
         $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' modificó el usuario '.$_POST['usuario'];
         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
         /* =======================================================================================*/
-    }
+    // }

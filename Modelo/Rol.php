@@ -4,6 +4,8 @@ class Rol {
     public $id_Rol;
     public $rol;
     public $descripcion;
+    public $creadoPor;
+    public $FechaCreacion;
 
     public static function obtenerRolesUsuario(){
         $conn = new Conexion();
@@ -28,7 +30,9 @@ class Rol {
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             $rol=$nuevoRol->rol;
             $descripcion=$nuevoRol->descripcion;
-            $insert = "INSERT INTO tbl_ms_roles (rol, descripcion) VALUES ('$rol','$descripcion');";
+            $creadoPor=$nuevoRol->creadoPor;
+            $fechaCreacion=$nuevoRol->fechaCreacion;
+            $insert = "INSERT INTO tbl_ms_roles (rol, descripcion, Creado_Por, Fecha_Creacion) VALUES ('$rol','$descripcion', '$creadoPor', '$fechaCreacion');";
             $ejecutar_insert = sqlsrv_query($abrirConexion, $insert);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;

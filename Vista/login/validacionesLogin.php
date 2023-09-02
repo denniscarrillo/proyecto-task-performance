@@ -68,6 +68,7 @@
                     } else {
                         if ($intentosFallidos == null){
                             $mensaje = 'Usuario no existe';
+                            // echo 'El usuario'.$existeUsuario;
                         } else {
                             $incremento = ControladorUsuario::incrementarIntentos($_POST["userName"], $intentosFallidos);
                             $nuevoEstado = Usuario::bloquearUsuario($intentosMax, $incremento, $_POST["userName"]); 

@@ -7,7 +7,9 @@
         public static function login($usuario, $contrasenia){
             $valido = false;
             $usuario = Usuario::existeUsuario($usuario, $contrasenia);
-            if($usuario > 0){
+            if($usuario == 0){
+                $valido = false;
+            }else{
                 $valido = true;
             }
             return $valido;
