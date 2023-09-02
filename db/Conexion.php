@@ -1,7 +1,7 @@
 
 <?php
  class Conexion {
-    private $ServerName = 'DJ-REYES10\SQLEXPRESS';
+    private $ServerName = 'DELL-E6430\SQLEXPRESS';
     private $ConexionInfo = array("Database"=>"Cocinas_Y_Equipos", "CharacterSet"=>"UTF-8");
     // private $password = 'Proyectxforce2023';
 
