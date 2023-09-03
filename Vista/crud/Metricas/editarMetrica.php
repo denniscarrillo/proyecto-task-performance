@@ -13,6 +13,7 @@
         $nuevaMetrica = new Metricas();
         $nuevaMetrica->idMetrica = $_POST['idMetrica'];
         $nuevaMetrica->meta = $_POST['meta'];
+        $nuevaMetrica->modificadoPor = 'SUPERADMIN';
         ControladorMetricas::editarMetricas($nuevaMetrica);
         /* ========================= Evento Editar Usuario. ======================*/
         // $newBitacora = new Bitacora();

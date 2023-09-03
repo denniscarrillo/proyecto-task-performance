@@ -16,7 +16,7 @@ class CarteraClientes{
     public static function obtenerCarteraClientes(){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB();
-        $obtenerCarteraCliente = "SELECT id_CarteraCliente, nombre_Cliente, rtn_Cliente, telefono, correo, direccion
+        $obtenerCarteraCliente = "SELECT id_CarteraCliente, nombre_Cliente, rtn_Cliente, telefono, correo, direccion, estadoContacto
         FROM tbl_CarteraCliente;";
         $resultado = sqlsrv_query($consulta, $obtenerCarteraCliente);
         $carteraCliente = array();
@@ -27,7 +27,8 @@ class CarteraClientes{
                 'rtn' => $fila["rtn_Cliente"],
                 'telefono' => $fila["telefono"],
                 'correo' => $fila["correo"],
-                'direccion' => $fila["direccion"]
+                'direccion' => $fila["direccion"],
+                'estadoContacto' => $fila["estadoContacto"]
             ];
         }
         sqlsrv_close($consulta); #Cerramos la conexión.
@@ -45,8 +46,9 @@ class CarteraClientes{
     $estadoContacto = $nuevoCliente->estadoContacto;
     $CreadoPor = $nuevoCliente->CreadoPor;
     $fechaCreacion = $nuevoCliente->fechaCreacion;
-    $query = "INSERT INTO tbl_CarteraCliente(nombre_Cliente,rtn_Cliente,telefono,correo,direccion,estado_Contacto, )
-                   VALUES ('$nombre', '$rtn', '$telefono', '$correo','$direccion','$estadoContacto');";
+    $query = "INSERT INTO tbl_CarteraCliente(nombre_Cliente,rtn_Cliente,telefono,
+                                            correo,direccion,estadoContacto,Creado_Por,Fecha_Creacion )
+                   VALUES ('$nombre', '$rtn', '$telefono', '$correo','$direccion','$estadoContacto','$CreadoPor','$fechaCreacion');";
     $nuevoCliente = sqlsrv_query($consulta, $query);
     sqlsrv_close($consulta); #Cerramos la conexión.
     return $nuevoCliente;
@@ -62,8 +64,11 @@ class CarteraClientes{
             $telefono=$nuevoCliente->telefono;
             $correo=$nuevoCliente->correo;
             $direccion=$nuevoCliente->direccion;
+            $estadoContacto=$nuevoCliente->estadoContacto;
+            $modificadoPor = $nuevoCliente->modificadoPor;
+            $fechaModificacion = $nuevoCliente->fechaModificacion;
             $update = "UPDATE tbl_carteracliente SET nombre_Cliente='$nombre', rtn_Cliente='$rtn', telefono='$telefono',
-            correo='$correo', direccion='$direccion' WHERE id_CarteraCliente='$id' ";
+            correo='$correo', direccion='$direccion', estadoContacto = '$estadoContacto', Modificado_Por = '$modificadoPor', Fecha_Modificacion = '$fechaModificacion' WHERE id_CarteraCliente='$id' ";
             $nuevoCliente = sqlsrv_query($abrirConexion, $update);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;

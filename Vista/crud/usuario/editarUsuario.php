@@ -14,19 +14,17 @@
         $nuevoUsuario->correo = $_POST['correo'];
         $nuevoUsuario->idRol = $_POST['idRol'];
         $nuevoUsuario->idEstado = $_POST['idEstado'];
-        date_default_timezone_set('America/Tegucigalpa');
-        $nuevoRol->fechaModificacion = date("Y-m-d h:i:s");
-        $nuevoRol->modificadoPor = 'SUPERADMIN';
+        $nuevoUsuario->modificadoPor = $_POST['usuario'];
         ControladorUsuario::editarUsuario($nuevoUsuario);
         /* ========================= Evento Editar Usuario. ======================*/
-        $newBitacora = new Bitacora();
-        $accion = ControladorBitacora::accion_Evento();
-        date_default_timezone_set('America/Tegucigalpa');
-        $newBitacora->fecha = date("Y-m-d h:i:s"); 
-        $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionUsuario.php');
-        $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-        $newBitacora->accion = $accion['Update'];
-        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' modificó el usuario '.$_POST['usuario'];
-        ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+        // $newBitacora = new Bitacora();
+        // $accion = ControladorBitacora::accion_Evento();
+        // date_default_timezone_set('America/Tegucigalpa');
+        // $newBitacora->fecha = date("Y-m-d h:i:s"); 
+        // $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionUsuario.php');
+        // $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+        // $newBitacora->accion = $accion['Update'];
+        // $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' modificó el usuario '.$_POST['usuario'];
+        // ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
         /* =======================================================================================*/
     // }

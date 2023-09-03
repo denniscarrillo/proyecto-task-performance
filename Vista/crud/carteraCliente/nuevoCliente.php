@@ -16,7 +16,10 @@
         $nuevoCliente->telefono = $_POST['telefono'];
         $nuevoCliente->correo = $_POST['correo'];
         $nuevoCliente->direccion = $_POST['direccion'];
-        $nuevoCliente->estadoContacto = 'Nuevo';
+        $nuevoCliente->estadoContacto = 'En Proceso';
+        date_default_timezone_set('America/Tegucigalpa');
+        $nuevoCliente->CreadoPor = 'SUPERADMIN';
+        $nuevoCliente->fechaCreacion = date("Y-m-d h:i:s");
         ControladorCarteraClientes::registroCliente($nuevoCliente);
         //enviarCorreoNuevoUsuario($nuevoUsuario->correo, $nuevoUsuario->usuario, $_POST['contrasenia']);
         /* ========================= Evento Creacion nuevo Usuario. ======================*/

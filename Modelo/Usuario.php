@@ -59,7 +59,8 @@ class Usuario {
         $correo = $nuevoUsuario->correo;
         $cantIntentos = $nuevoUsuario->intentosFallidos;
         $creadoPor = $nuevoUsuario->creadoPor;
-        $fechaCreacion = $nuevoUsuario->fechaCreacion;
+        date_default_timezone_set('America/Tegucigalpa');
+        $fechaCreacion = date("Y-m-d");
         $cantPreguntasContestadas = $nuevoUsuario->preguntasContestadas;
         $query = "INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico, intentos_fallidos, 
                                         id_Rol, preguntas_Contestadas, Creado_Por, Fecha_Creacion) 
@@ -257,7 +258,10 @@ class Usuario {
         $correo =$nuevoUsuario->correo;
         $idEstado = $nuevoUsuario->idEstado;
         $idRol = $nuevoUsuario->idRol;
-        $query = "UPDATE tbl_ms_usuario SET usuario='$usuario', nombre_usuario='$nombre', correo_Electronico='$correo', id_Estado_Usuario='$idEstado', id_Rol='$idRol' WHERE id_Usuario='$idUsuario' ";
+        $modificadoPor = $nuevoUsuario->modificadoPor;
+        date_default_timezone_set('America/Tegucigalpa');
+        $fechaModificacion = date("Y-m-d");
+        $query = "UPDATE tbl_ms_usuario SET usuario='$usuario', nombre_usuario='$nombre', correo_Electronico='$correo', id_Estado_Usuario='$idEstado', id_Rol='$idRol', Modificado_Por='$modificadoPor', Fecha_Modificacion='$fechaModificacion' WHERE id_Usuario='$idUsuario' ";
         $nuevoUsuario = sqlsrv_query($conexion, $query);
         sqlsrv_close($conexion); #Cerramos la conexión.
     }

@@ -11,8 +11,6 @@
         $nuevoRol = new Rol();
         $nuevoRol->rol = $_POST['rolUsuario'];
         $nuevoRol->descripcion = $_POST['descripcionRol'];
-        date_default_timezone_set('America/Tegucigalpa');
-        $nuevoRol->fechaCreacion = date("Y-m-d h:i:s");
         $nuevoRol->creadoPor = 'SUPERADMIN';
         ControladorRol::ingresarNuevoRol($nuevoRol);
         /* ========================= Evento Creacion nuevo Usuario. ======================*/

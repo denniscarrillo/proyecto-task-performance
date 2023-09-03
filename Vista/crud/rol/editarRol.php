@@ -11,9 +11,7 @@
         $nuevoRol->id_Rol = $_POST['idRol'];//aquí va la variable de inicio de 
         $nuevoRol->rol = $_POST['rol'];
         $nuevoRol->descripcion = $_POST['descripcion'];
-        date_default_timezone_set('America/Tegucigalpa');
-        $nuevoRol->fechaCreacion = date("Y-m-d h:i:s");
-        $nuevoRol->creadoPor = 'SUPERADMIN';
+        $nuevoRol->ModificadoPor = 'SUPERADMIN';
         ControladorRol::editarRolUsuario($nuevoRol);
         /* ========================= Evento Editar Usuario. ======================*/
         // $newBitacora = new Bitacora();

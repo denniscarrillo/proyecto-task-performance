@@ -63,7 +63,7 @@ class Venta {
         return $ventas;
     }
 
-//obtener el id de la venta
+    //obtener el id de la venta
     public static function obtenerIdVenta($numFactura){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.

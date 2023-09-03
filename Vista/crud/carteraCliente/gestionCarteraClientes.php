@@ -75,7 +75,8 @@ session_start(); //Reanudamos la sesion
                 <th scope="col"> TELEFONO </th>
                 <th scope="col"> CORREO </th>
                 <th scope="col"> DIRECCION </th>
-                <th scope="col"> ACCIONES </th>
+                <th scope="col"> ESTADO CONTACTO </th>
+                <th scope="col"> ACCIONES </th>                
               </tr>
             </thead>
             <div class ="text-left mb-2">
