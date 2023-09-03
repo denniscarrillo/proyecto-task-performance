@@ -1,8 +1,8 @@
 
 <?php
  class Conexion {
-    private $ServerName = 'DJ-REYES10\SQLEXPRESS';
-    private $ConexionInfo = array("Database"=>"Cocinas_Y_Equipos", "CharacterSet"=>"UTF-8");
+    private $ServerName = 'DESKTOP-REQKDIP\SQLEXPRESS';
+    private $ConexionInfo = array("Database"=>"COCINAS_Y_EQUIPOS", "CharacterSet"=>"UTF-8");
     // private $password = 'Proyectxforce2023';
 
     #Abrir conexión al servidor de MySQL
