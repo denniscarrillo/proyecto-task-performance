@@ -5,19 +5,22 @@
     require_once("../../../Controlador/ControladorUsuario.php");
     require_once("../../../Controlador/ControladorBitacora.php");
     require_once('enviarCorreoNuevoUsuario.php');
-    $user = '';
-    session_start(); //Reanudamos session
-    if(isset($_SESSION['usuario'])){
-        $user = $_SESSION['usuario'];
+    // $user = '';
+    // session_start(); //Reanudamos session
+    // if(isset($_SESSION['usuario'])){
+    //     $user = $_SESSION['usuario'];
         $nuevoUsuario = new Usuario();
         $nuevoUsuario->nombre = $_POST['nombre'];
         $nuevoUsuario->usuario = $_POST['usuario'];
         $nuevoUsuario->contrasenia = password_hash($_POST['contrasenia'], PASSWORD_DEFAULT);
         $nuevoUsuario->correo = $_POST['correo'];
+        $nuevoUsuario->intentosFallidos = 0;
         $nuevoUsuario->idRol = $_POST['idRol'];
         $nuevoUsuario->idEstado = 1;
         $nuevoUsuario->preguntasContestadas = 0;
-        $nuevoUsuario->creadoPor = $user;
+        date_default_timezone_set('America/Tegucigalpa');
+        $nuevoUsuario->fechaCreacion = date("Y-m-d h:i:s");
+        $nuevoUsuario->creadoPor = $_POST['usuario'];
         ControladorUsuario::registroUsuario($nuevoUsuario);
         enviarCorreoNuevoUsuario($nuevoUsuario->correo, $nuevoUsuario->usuario, $_POST['contrasenia']);
         /* ========================= Evento Creacion nuevo Usuario. ======================*/
@@ -31,5 +34,9 @@
         $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' creo usuario '.$_POST['usuario'];
         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
         /* =======================================================================================*/
-    }
+        $data = array();
+        $data = ['Estado'=>'false'];
+        var_dump($_POST['idRol']);
+        // print json_encode($data, JSON_UNESCAPED_UNICODE);
+    // }
 ?>

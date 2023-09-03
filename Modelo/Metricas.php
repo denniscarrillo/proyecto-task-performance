@@ -3,6 +3,8 @@ class Metricas{
     public $idMetrica;
     public $idEstadoAvance;
     public $meta;
+    public $modificadoPor;
+    public $fechaModificacion;
 
     public static function obtenerTodasLasMetricas(){
         $metricas = null;
@@ -34,7 +36,9 @@ class Metricas{
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             $id=$nuevaMetrica->idMetrica;
             $meta=$nuevaMetrica->meta;
-            $query ="UPDATE tbl_metrica SET meta='$meta' WHERE id_Metrica='$id';";
+            $modificadoPor=$nuevaMetrica->modificadoPor;
+            $fechaModificacion=$nuevaMetrica->fechaModificacion;
+            $query ="UPDATE tbl_metrica SET meta='$meta', Modificado_Por='$modificadoPor', Fecha_Modificacion='$fechaModificacion' WHERE id_Metrica='$id';";
             $nuevaMetrica = sqlsrv_query($abrirConexion, $query);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;

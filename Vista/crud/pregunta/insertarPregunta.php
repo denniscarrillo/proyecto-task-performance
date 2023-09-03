@@ -6,14 +6,13 @@
     require_once ("../../../Controlador/ControladorPregunta.php");
     require_once ("../../../Controlador/ControladorBitacora.php");
     require_once ("../../../Controlador/ControladorUsuario.php");
-    $user = '';
-    session_start();
-    if(isset($_SESSION['usuario'])){
-        $user = $_SESSION['usuario'];
+    // $user = '';
+    // session_start();
+    // if(isset($_SESSION['usuario'])){
+    //     $user = $_SESSION['usuario'];
         $insertarPregunta = new Pregunta();
         $insertarPregunta->pregunta = ($_POST['pregunta']);
-        $insertarPregunta->CreadoPor = $user;
-        $insertarPregunta->FechaCreacion = date("Y-m-d");
+        $insertarPregunta->CreadoPor = 'SUPERADMIN';
         ControladorPregunta::agregarPregunta($insertarPregunta);
         
         $newBitacora = new Bitacora();
@@ -26,7 +25,7 @@
         $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' creo usuario '.$_POST['usuario'];
         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
         /* =======================================================================================*/
-    }
+    // }
 
 ?>
 

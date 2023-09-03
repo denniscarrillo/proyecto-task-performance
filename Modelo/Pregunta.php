@@ -12,14 +12,13 @@ class Pregunta {
     public static function obtenerPreguntasUsuario(){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB();
-        $obtenerPreguntas = "SELECT id_Pregunta, pregunta FROM tbl_ms_preguntas";
-        $query = sqlsrv_query($consulta, $obtenerPreguntas);
+        $query = "SELECT id_Pregunta, pregunta FROM tbl_ms_preguntas";
+        $obtenerPreguntas = sqlsrv_query($consulta, $query);
         $preguntas = array();
-        while($fila = sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC)){
+        while($fila = sqlsrv_fetch_array($obtenerPreguntas, SQLSRV_FETCH_ASSOC)){
             $preguntas [] = [
                 'id_Pregunta' => $fila["id_Pregunta"],
-                'pregunta' => $fila["pregunta"]
-                
+                'pregunta' => $fila["pregunta"]               
             ];
         }
         sqlsrv_close($consulta); #Cerramos la conexión.
@@ -31,7 +30,8 @@ class Pregunta {
         $consulta = $conn->abrirConexionDB();
         $pregunta = $insertarPregunta->pregunta;
         $CreadoPor = $insertarPregunta->CreadoPor;
-        $FechaCreacion = $insertarPregunta->FechaCreacion;
+        date_default_timezone_set('America/Tegucigalpa');
+        $FechaCreacion = date("Y-m-d");
         $query = "INSERT INTO tbl_ms_preguntas (pregunta, Creado_Por, Fecha_Creacion) VALUES ('$pregunta', '$CreadoPor', '$FechaCreacion')";
         $insertarPregunta = sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerramos la conexión.
@@ -44,7 +44,8 @@ class Pregunta {
         $idPregunta = $insertarPregunta->idPregunta;
         $pregunta = $insertarPregunta->pregunta;
         $ModificadoPor = $insertarPregunta->ModificadoPor;
-        $FechaModificacion = $insertarPregunta->FechaModificacion;
+        date_default_timezone_set('America/Tegucigalpa'); 
+        $FechaModificacion = date("Y-m-d");
         $query = "UPDATE tbl_ms_preguntas SET pregunta = '$pregunta', Modificado_Por = '$ModificadoPor', Fecha_Modificacion = '$FechaModificacion'
          WHERE id_Pregunta = '$idPregunta'";
         $insertarPregunta = sqlsrv_query($consulta, $query);

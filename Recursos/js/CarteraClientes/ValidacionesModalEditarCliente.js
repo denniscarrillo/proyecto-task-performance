@@ -15,6 +15,7 @@ const $rtn = document.getElementById('E_Rtn');
 const $telefono = document.getElementById('E_Telefono');
 const $correo = document.getElementById('E_Correo');
 const $direccion = document.getElementById('E_Direccion');
+const $estadoContacto = document.getElementById('E_estadoContacto');
 
 /* ---------------- VALIDACIONES FORMULARIO GESTION NUEVO USUARIO ----------------------*/
 /* 
@@ -28,9 +29,10 @@ $form.addEventListener('submit', e => {
     let estadoInputTelefono = funciones.validarCampoVacio($telefono);
     let estadoInputCorreo = funciones.validarCampoVacio($correo);
     let estadoInputDireccion = funciones.validarCampoVacio($direccion);
+    let estadoInputEstadoContacto = funciones.validarCampoVacio($estadoContacto);
     // Comprobamos que todas las validaciones se hayan cumplido 
     if (estadoInputNombre == false || estadoInputRtn ==false || estadoInputTelefono == false ||
-        estadoInputCorreo == false || estadoInputDireccion == false) {
+        estadoInputCorreo == false || estadoInputDireccion == false || estadoInputEstadoContacto == false) {
         e.preventDefault();
     } else {
         if(estadoLetrasName == false){

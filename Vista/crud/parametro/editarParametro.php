@@ -14,6 +14,8 @@
         $nuevoParametro->idParametro = $_POST['idParametro'];
         $nuevoParametro->parametro = $_POST['parametro'];
         $nuevoParametro->valor = $_POST['valor'];
+        $nuevoParametro->idUsuario = 8;
+        $nuevoParametro->ModificadoPor = 'SUPERADMIN';
         ControladorParametro::editarParametroSistema($nuevoParametro);
         /* ========================= Evento Editar Usuario. ======================*/
         // $newBitacora = new Bitacora();

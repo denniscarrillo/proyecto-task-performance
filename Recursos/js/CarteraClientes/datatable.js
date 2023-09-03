@@ -18,6 +18,7 @@ $(document).ready(function () {
       { "data": "telefono"},
       { "data": "correo"},
       { "data": "direccion"},
+      { "data": "estadoContacto"},
       {
         "defaultContent":
         '<div><button class="btns btn" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>' 
@@ -70,13 +71,15 @@ $(document).on("click", "#btn_editar", function(){
   rtn = fila.find('td:eq(2)').text(),
   telefono = fila.find('td:eq(3)').text(),
   correo = fila.find('td:eq(4)').text(),
-  direccion = fila.find('td:eq(5)').text();
+  direccion = fila.find('td:eq(5)').text(),
+  estadoContacto = fila.find('td:eq(6)').text();
   $("#E_Cliente").val(idcarteraCliente);
   $("#E_Nombre").val(nombre);
   $("#E_Rtn").val(rtn);
   $("#E_Telefono").val(telefono);
   $("#E_Correo").val(correo);
   $("#E_Direccion").val(direccion);
+  $("#E_estadoContacto").val(estadoContacto);
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");	
   $('#modalEditarCliente').modal('show');		   
@@ -90,7 +93,8 @@ $('#form-editar-carteraCliente').submit(function (e) {
    rtn =  $('#E_Rtn').val(),
    telefono = $('#E_Telefono').val(),
    correo = $('#E_Correo').val(),
-   direccion = $('#E_Direccion').val();
+   direccion = $('#E_Direccion').val(),
+   estadoContacto = $('#E_estadoContacto').val();
    if(valido){
     $.ajax({
       url: "../../../Vista/crud/carteraCliente/editarCliente.php",
@@ -102,9 +106,11 @@ $('#form-editar-carteraCliente').submit(function (e) {
        rtn: rtn,
        telefono: telefono,
        correo: correo,
-       direccion: direccion
+       direccion: direccion,
+       estadoContacto: estadoContacto
       },
-      success: function () {
+      success: function (res) {
+        console.log(res);
         //Mostrar mensaje de exito
         Swal.fire(
           'Actualizado!',

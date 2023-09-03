@@ -22,7 +22,7 @@ class Permiso
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
             $query="SELECT r.descripcion, o.objeto, p.permiso_Consultar, p.permiso_Insercion, 
-            p.permiso_Actualizacion, p.permiso_Eliminacion FROM cocinas_y_equipos.tbl_ms_permisos p
+            p.permiso_Actualizacion, p.permiso_Eliminacion FROM tbl_ms_permisos p
             INNER JOIN tbl_ms_objetos o ON o.id_Objeto = p.id_Objeto
             INNER JOIN tbl_ms_roles r ON p.id_Rol = r.id_Rol;";
             $resultado = sqlsrv_query($abrirConexion, $query);
