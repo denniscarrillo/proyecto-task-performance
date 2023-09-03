@@ -70,15 +70,32 @@ class Usuario {
         return $nuevoUsuario;
     }
     //Hace la búsqueda del usuario en login para saber si es válido
+    // public static function existeUsuario($userName, $userPassword){
+    //     $passwordValida = 0;
+    //     $conn = new Conexion();
+    //     $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+    //     $query = "SELECT contrasenia FROM tbl_MS_Usuario WHERE usuario = '$userName'";
+    //     $usuario = sqlsrv_query($consulta, $query); #Ejecutamos la consulta (Recordset
+    //     $existe = sqlsrv_num_rows($usuario);
+    //     echo 'resultado'.sqlsrv_num_rows($usuario);
+    //     if ($existe > 0) {
+    //         $user = sqlsrv_fetch_array($usuario, SQLSRV_FETCH_ASSOC);
+    //         $Password = $user['contrasenia'];
+    //         $passwordValida = password_verify($userPassword, $Password);
+    //     }
+    //     sqlsrv_close($consulta); #Cerramos la conexión.
+        
+    //     return $passwordValida; //Si se encuentra un usuario válido/existente retorna un entero mayor a 0.
+    // }
     public static function existeUsuario($userName, $userPassword){
-        $passwordValida = 0;
+        $passwordValida = false;
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $query = "SELECT contrasenia FROM tbl_MS_Usuario WHERE usuario = '$userName'";
         $usuario = sqlsrv_query($consulta, $query); #Ejecutamos la consulta (Recordset
-        $existe = sqlsrv_num_rows($usuario);
-        echo 'resultado'.sqlsrv_num_rows($usuario);
-        if ($existe > 0) {
+        // $existe = sqlsrv_num_rows($usuario);
+        $existe = sqlsrv_has_rows($usuario);
+        if ($existe) {
             $user = sqlsrv_fetch_array($usuario, SQLSRV_FETCH_ASSOC);
             $Password = $user['contrasenia'];
             $passwordValida = password_verify($userPassword, $Password);
@@ -86,12 +103,13 @@ class Usuario {
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $passwordValida; //Si se encuentra un usuario válido/existente retorna un entero mayor a 0.
     }
+
     //Obtener intentos permitidos de la tabla parámetro
     public static function intentosPermitidos(){
         $intentos = null;
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $query = "SELECT valor  FROM tbl_MS_Parametro WHERE parametro = 'ADMIN INTENTOS'";
+        $query = "SELECT valor FROM tbl_MS_Parametro WHERE parametro = 'ADMIN INTENTOS'";
         $intentos = sqlsrv_query($conexion, $query);
         //Obtenemos el valor de Intentos que viene de la DB
         $fila = sqlsrv_fetch_array($intentos, SQLSRV_FETCH_ASSOC);
@@ -103,12 +121,12 @@ class Usuario {
     }
     //Obtener número de intentos falllidos del usuario en el login.
     public static function intentosInvalidos($usuario){
-        $intentosFallidos = null;
+        $intentosFallidos = false;
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $query = "SELECT usuario FROM tbl_MS_Usuario WHERE usuario = '$usuario'";
         $result = sqlsrv_query($conexion, $query); #Ejecutamos la consulta (Recordset)
-        $existeUsuario = sqlsrv_num_rows($result);
+        $existeUsuario = sqlsrv_has_rows($result);
         if($existeUsuario){
             $qr = "SELECT intentos_fallidos FROM tbl_MS_Usuario WHERE usuario = '$usuario'";
             $intentosFallidos = sqlsrv_query($conexion, $qr);
@@ -127,7 +145,7 @@ class Usuario {
         $estadoUser = false;
         if($intentosFallidos > $intentosMax){
             $nuevoEstado = 4;
-            $query = "UPDATE tbl_MS_Usuario SET `id_Estado_Usuario`= '$nuevoEstado' WHERE `usuario` = '$user'";
+            $query = "UPDATE tbl_MS_Usuario SET id_Estado_Usuario = '$nuevoEstado' WHERE usuario = '$user'";
             $estadoUser = sqlsrv_query($conexion, $query);
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
@@ -139,8 +157,8 @@ class Usuario {
         $incremento = 0;
         if($intentosFallidos<=3){
             $incremento = ($intentosFallidos + 1);
-            $query = "UPDATE tbl_MS_Usuario SET `intentos_fallidos` = '$incremento' WHERE `usuario` = '$usuario'";
-            $incremento = sqlsrv_query($conexion, $query);
+            $query = "UPDATE tbl_MS_Usuario SET intentos_fallidos = '$incremento' WHERE usuario = '$usuario';";
+            sqlsrv_query($conexion, $query);
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $incremento;
@@ -163,7 +181,7 @@ class Usuario {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $resetear = 0;
-        $query = "UPDATE tbl_MS_Usuario SET `intentos_fallidos` = '$resetear' WHERE `usuario` = '$usuario'";
+        $query = "UPDATE tbl_MS_Usuario SET intentos_fallidos = '$resetear' WHERE usuario = '$usuario'";
         $resetear = sqlsrv_query($conexion, $query);
         sqlsrv_close($conexion); #Cerramos la conexión.
     }

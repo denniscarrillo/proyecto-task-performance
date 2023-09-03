@@ -5,20 +5,13 @@
             return Usuario::obtenerTodosLosUsuarios();
         }
         public static function login($usuario, $contrasenia){
-            $valido = false;
-            $usuario = Usuario::existeUsuario($usuario, $contrasenia);
-            if($usuario == 0){
-                $valido = false;
-            }else{
-                $valido = true;
-            }
-            return $valido;
+           return Usuario::existeUsuario($usuario, $contrasenia);
         }
         public static function registroUsuario($nuevoUsuario){
             return Usuario::registroNuevoUsuario($nuevoUsuario);
         }
         public static function intentosLogin(){
-            return  Usuario::intentosPermitidos();
+            return Usuario::intentosPermitidos();
         }
         public static function bloquearUsuario($max, $intentos, $user){
             return Usuario::bloquearUsuario($max, $intentos, $user);
