@@ -13,17 +13,19 @@
             $consulta = $conn->abrirConexionDB();
             $ejecutarSQL = "INSERT INTO tbl_ms_bitacora (`fecha`, `id_Usuario`, `id_Objeto`, `accion`, `descripcion`) 
             VALUES('$datosEvento->fecha','$datosEvento->idUsuario','$datosEvento->idObjeto','$datosEvento->accion','$datosEvento->descripcion')";
-            $consulta->query($ejecutarSQL);
-            mysqli_close($consulta); #Cerramos la conexión.
+            $ejecutarSQL = sqlsrv_query($consulta, $ejecutarSQL);
+            sqlsrv_close($consulta); #Cerramos la conexión.
+            
         }
         //Método que recibe un objeto y devuelve su id.
         public static function obtener_Id_Objeto($objeto){
             $conn = new Conexion();
             $consulta = $conn->abrirConexionDB();
-            $resultado = $consulta->query("SELECT id_Objeto FROM tbl_ms_objetos WHERE objeto = '$objeto'");
-            $fila = $resultado->fetch_assoc();
+            $query = "SELECT id_Objeto FROM tbl_ms_objetos WHERE objeto = '$objeto'";
+            $resultado = sqlsrv_query($consulta, $query);
+            $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
             $idObjeto = $fila['id_Objeto'];
-            mysqli_close($consulta); #Cerramos la conexión.
+            sqlsrv_close($consulta); #Cerramos la conexión.
             return $idObjeto;
         }
         public static function acciones_Evento(){
@@ -42,11 +44,11 @@
         public static function obtenerBitacorasUsuario(){
             $conn = new Conexion();
             $consulta = $conn->abrirConexionDB();
-            $obtenerBitacoras = $consulta->query("SELECT B.id_Bitacora, B.fecha, u.usuario, o.objeto, B.accion, B.descripcion FROM tbl_ms_bitacora AS B
+            $query= "SELECT B.id_Bitacora, B.fecha, u.usuario, o.objeto, B.accion, B.descripcion FROM tbl_ms_bitacora AS B
             INNER JOIN tbl_ms_Usuario AS u ON u.id_Usuario = B.id_Usuario
-            INNER JOIN tbl_ms_objetos AS o ON o.id_Objeto = B.id_Objeto;");
-            $bitacoras = array();
-            while($fila = $obtenerBitacoras->fetch_assoc()){
+            INNER JOIN tbl_ms_objetos AS o ON o.id_Objeto = B.id_Objeto;";
+            $obtenerBitacoras = sqlsrv_query($consulta, $query);
+            while($fila = sqlsrv_fetch_array($obtenerBitacoras, SQLSRV_FETCH_ASSOC)){
                 $bitacoras [] = [
                     'id_Bitacora' => $fila["id_Bitacora"],
                     'fecha' => $fila["fecha"],
@@ -57,7 +59,7 @@
                     
                 ];
             }
-            mysqli_close($consulta); #Cerramos la conexión.
+            sqlsrv_close($consulta); #Cerramos la conexión.
             return $bitacoras;
         } 
     }

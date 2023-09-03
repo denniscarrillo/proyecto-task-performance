@@ -3,6 +3,8 @@ class Metricas{
     public $idMetrica;
     public $idEstadoAvance;
     public $meta;
+    public $modificadoPor;
+    public $fechaModificacion;
 
     public static function obtenerTodasLasMetricas(){
         $metricas = null;
@@ -10,10 +12,11 @@ class Metricas{
             $metricas = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $resultado = $abrirConexion->query("SELECT m.id_Metrica,e.descripcion,m.meta FROM tbl_metrica as m
-            inner join tbl_estadoavance AS e ON m.id_EstadoAvance = e.id_EstadoAvance;");
+            $query = "SELECT m.id_Metrica,e.descripcion,m.meta FROM tbl_metrica as m
+            inner join tbl_estadoavance AS e ON m.id_EstadoAvance = e.id_EstadoAvance;";
+            $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
-            while ($fila = $resultado->fetch_assoc()) {
+            while ($fila = sqlsrv_fetch_array( $resultado, SQLSRV_FETCH_ASSOC)) {
                 $metricas[] = [
                     'idMetrica' => $fila['id_Metrica'],
                     'descripcion' => $fila['descripcion'],
@@ -23,7 +26,7 @@ class Metricas{
         } catch (Exception $e) {
             $metricas = 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
         return $metricas;
     }
 
@@ -33,11 +36,13 @@ class Metricas{
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             $id=$nuevaMetrica->idMetrica;
             $meta=$nuevaMetrica->meta;
-            $update ="UPDATE tbl_metrica SET meta='$meta' WHERE id_Metrica='$id';";
-            $ejecutar_update = mysqli_query($abrirConexion, $update);
+            $modificadoPor=$nuevaMetrica->modificadoPor;
+            $fechaModificacion=$nuevaMetrica->fechaModificacion;
+            $query ="UPDATE tbl_metrica SET meta='$meta', Modificado_Por='$modificadoPor', Fecha_Modificacion='$fechaModificacion' WHERE id_Metrica='$id';";
+            $nuevaMetrica = sqlsrv_query($abrirConexion, $query);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
 }#Fin de la clase

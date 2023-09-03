@@ -11,11 +11,11 @@ class Cliente {
     public static function obtenerTodosLosClientes(){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $listaClientes = 
-            $consulta->query("SELECT CODCLIENTE, NOMBRECLIENTE, CIF, TELEFONO1, DIRECCION1 FROM View_Clientes;");
+        $query="SELECT CODCLIENTE, NOMBRECLIENTE, CIF, TELEFONO1, DIRECCION1 FROM View_Clientes;"; 
+        $listaClientes = sqlsrv_query($consulta, $query);
         $clientes = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
-        while($fila = $listaClientes->fetch_assoc()){
+        while($fila = sqlsrv_fetch_array($listaClientes, SQLSRV_FETCH_ASSOC)){
             $clientes [] = [
                 'codCliente' => $fila["CODCLIENTE"],
                 'nombreCliente'=> $fila["NOMBRECLIENTE"],
@@ -24,7 +24,7 @@ class Cliente {
                 'direccion' => $fila["DIRECCION1"]             
             ];
         }
-        mysqli_close($consulta); #Cerramos la conexión.
+        sqlsrv_close($consulta); #Cerramos la conexión.
         return $clientes;
     }
 

@@ -12,16 +12,16 @@ class Pregunta {
     public static function obtenerPreguntasUsuario(){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB();
-        $obtenerPreguntas = $consulta->query("SELECT id_Pregunta, pregunta FROM tbl_ms_preguntas");
+        $query = "SELECT id_Pregunta, pregunta FROM tbl_ms_preguntas";
+        $obtenerPreguntas = sqlsrv_query($consulta, $query);
         $preguntas = array();
-        while($fila = $obtenerPreguntas->fetch_assoc()){
+        while($fila = sqlsrv_fetch_array($obtenerPreguntas, SQLSRV_FETCH_ASSOC)){
             $preguntas [] = [
                 'id_Pregunta' => $fila["id_Pregunta"],
-                'pregunta' => $fila["pregunta"]
-                
+                'pregunta' => $fila["pregunta"]               
             ];
         }
-        mysqli_close($consulta); #Cerramos la conexión.
+        sqlsrv_close($consulta); #Cerramos la conexión.
         return $preguntas;
     }
 
@@ -30,9 +30,11 @@ class Pregunta {
         $consulta = $conn->abrirConexionDB();
         $pregunta = $insertarPregunta->pregunta;
         $CreadoPor = $insertarPregunta->CreadoPor;
-        $FechaCreacion = $insertarPregunta->FechaCreacion;
-        $insertarPregunta = $consulta->query("INSERT INTO tbl_ms_preguntas (pregunta, Creado_Por, Fecha_Creacion) VALUES ('$pregunta', '$CreadoPor', '$FechaCreacion')");
-        mysqli_close($consulta); #Cerramos la conexión.
+        date_default_timezone_set('America/Tegucigalpa');
+        $FechaCreacion = date("Y-m-d");
+        $query = "INSERT INTO tbl_ms_preguntas (pregunta, Creado_Por, Fecha_Creacion) VALUES ('$pregunta', '$CreadoPor', '$FechaCreacion')";
+        $insertarPregunta = sqlsrv_query($consulta, $query);
+        sqlsrv_close($consulta); #Cerramos la conexión.
         return $insertarPregunta;
     }
 
@@ -42,22 +44,26 @@ class Pregunta {
         $idPregunta = $insertarPregunta->idPregunta;
         $pregunta = $insertarPregunta->pregunta;
         $ModificadoPor = $insertarPregunta->ModificadoPor;
-        $FechaModificacion = $insertarPregunta->FechaModificacion;
-        $insertarPregunta = $consulta->query("UPDATE tbl_ms_preguntas SET pregunta = '$pregunta', Modificado_Por = '$ModificadoPor', Fecha_Modificacion = '$FechaModificacion'
-         WHERE id_Pregunta = '$idPregunta'");
-        mysqli_close($consulta); #Cerramos la conexión.
+        date_default_timezone_set('America/Tegucigalpa'); 
+        $FechaModificacion = date("Y-m-d");
+        $query = "UPDATE tbl_ms_preguntas SET pregunta = '$pregunta', Modificado_Por = '$ModificadoPor', Fecha_Modificacion = '$FechaModificacion'
+         WHERE id_Pregunta = '$idPregunta'";
+        $insertarPregunta = sqlsrv_query($consulta, $query);
+        sqlsrv_close($consulta); #Cerramos la conexión.
         return $insertarPregunta;
     }
 
     public static function eliminarPregunta($pregunta){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $consultaIdPregunta = $conexion->query("SELECT id_Pregunta FROM tbl_ms_preguntas WHERE pregunta = '$pregunta'");
-        $fila = $consultaIdPregunta->fetch_assoc();
+        $query = "SELECT id_Pregunta FROM tbl_ms_preguntas WHERE pregunta = '$pregunta'";
+        $consultaIdPregunta = sqlsrv_query($conexion, $query);
+        $fila = sqlsrv_fetch_array($consultaIdPregunta, SQLSRV_FETCH_ASSOC);
         $idPregunta = $fila['id_Pregunta'];
         //Eliminamos la pregunta
-        $estadoEliminado = $conexion->query("DELETE FROM tbl_ms_preguntas WHERE id_Pregunta = '$idPregunta'");
-        mysqli_close($conexion); #Cerramos la conexión.
+        $query2 = "DELETE FROM tbl_ms_preguntas WHERE id_Pregunta = '$idPregunta'";
+        $estadoEliminado = sqlsrv_query($conexion, $query2);
+        sqlsrv_close($conexion); #Cerramos la conexión.
         return $estadoEliminado;
     }
 }

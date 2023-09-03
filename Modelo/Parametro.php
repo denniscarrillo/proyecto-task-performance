@@ -4,7 +4,6 @@ class Parametro {
     public $idParametro;
     public $parametro;
     public $valor;
-    public $nombre;
     public $idUsuario;
     public $creadoPor;
     public $FechaCreacion;
@@ -18,10 +17,11 @@ class Parametro {
             $parametros = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $resultado = $abrirConexion->query("SELECT p.id_Parametro, p.parametro, p.valor, u.usuario FROM tbl_ms_parametro AS p
-            INNER JOIN tbl_ms_usuario AS u ON p.id_Usuario = u.id_Usuario;");
+            $query = "SELECT p.id_Parametro, p.parametro, p.valor, u.usuario FROM tbl_ms_parametro AS p
+            INNER JOIN tbl_ms_usuario AS u ON p.id_Usuario = u.id_Usuario;";
+            $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
-            while ($fila = $resultado->fetch_assoc()) {
+            while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
                 $parametros[] = [
                     'id' => $fila['id_Parametro'],
                     'parametro' => $fila['parametro'],
@@ -32,7 +32,7 @@ class Parametro {
         } catch (Exception $e) {
             $parametros = 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+       sqlsrv_close($abrirConexion); //Cerrar conexion
         return $parametros;
     }
     public static function editarParametros($nuevoParametro){
@@ -42,11 +42,15 @@ class Parametro {
             $id=$nuevoParametro->idParametro;
             $parametro=$nuevoParametro->parametro;
             $valor=$nuevoParametro->valor;
-            $update = "UPDATE tbl_ms_parametro SET parametro='$parametro', valor='$valor' WHERE id_Parametro='$id' ";
-            $ejecutar_update = mysqli_query($abrirConexion, $update);
+            $usuario=$nuevoParametro->idUsuario;
+            $ModificadoPor=$nuevoParametro->ModificadoPor;
+            date_default_timezone_set('America/Tegucigalpa');
+            $fechaModificacion = date("Y-m-d");
+            $query = "UPDATE tbl_ms_parametro SET parametro='$parametro', valor='$valor', id_Usuario='$usuario', Modificado_Por='$ModificadoPor', Fecha_Modificacion='$fechaModificacion'  WHERE id_Parametro='$id' ";
+            $nuevoParametro = sqlsrv_query($abrirConexion, $query);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+       sqlsrv_close($abrirConexion); //Cerrar conexion
     }
 }

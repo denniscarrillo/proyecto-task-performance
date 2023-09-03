@@ -7,15 +7,15 @@
     require_once("../../../Controlador/ControladorPorcentajes.php");
     //require_once("../../../Controlador/ControladorBitacora.php");
     //require_once('enviarCorreoNuevoUsuario.php');
-    $user = '';
-    session_start(); //Reanudamos session
-    if(isset($_SESSION['usuario'])){
-        $user = $_SESSION['usuario'];
+    // $user = '';
+    // session_start(); //Reanudamos session
+    // if(isset($_SESSION['usuario'])){
+    //     $user = $_SESSION['usuario'];
         $nuevoPorcentaje = new Porcentajes();
         $nuevoPorcentaje->valorPorcentaje = $_POST['valorPorcentaje'];
         $nuevoPorcentaje->descripcionPorcentaje= $_POST['descripcionPorcentaje'];
         $nuevoPorcentaje->estadoPorcentaje = $_POST['estadoPorcentaje'];
-        $nuevoPorcentaje->CreadoPor = $user;
+        $nuevoPorcentaje->CreadoPor = 'SUPERADMIN';
         Porcentajes::registroNuevoPorcentaje($nuevoPorcentaje);
         //enviarCorreoNuevoUsuario($nuevoUsuario->correo, $nuevoUsuario->usuario, $_POST['contrasenia']);
         /* ========================= Evento Creacion nuevo Usuario. ======================*/
@@ -29,5 +29,5 @@
         //$newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' creo usuario '.$_POST['usuario'];
         //ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
         /* =======================================================================================*/
-    }
+    // }
 ?>

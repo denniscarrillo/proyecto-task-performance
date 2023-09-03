@@ -11,6 +11,7 @@
         $nuevoRol = new Rol();
         $nuevoRol->rol = $_POST['rolUsuario'];
         $nuevoRol->descripcion = $_POST['descripcionRol'];
+        $nuevoRol->creadoPor = 'SUPERADMIN';
         ControladorRol::ingresarNuevoRol($nuevoRol);
         /* ========================= Evento Creacion nuevo Usuario. ======================*/
 /*         $newBitacora = new Bitacora();

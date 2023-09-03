@@ -8,13 +8,14 @@
     // require_once("../../../Controlador/ControladorBitacora.php");
     
 
-    session_start(); //Reanudamos session
-    if(isset($_SESSION['usuario'])){
+    // session_start(); //Reanudamos session
+    // if(isset($_SESSION['usuario'])){
         $nuevoPorcentaje = new Porcentajes();
         $nuevoPorcentaje->idPorcentaje = $_POST['idPorcentaje'];
         $nuevoPorcentaje->valorPorcentaje = $_POST['valorPorcentaje'];
         $nuevoPorcentaje->descripcionPorcentaje = $_POST['descripcionPorcentaje'];
         $nuevoPorcentaje->estadoPorcentaje = $_POST['estadoPorcentaje'];
+        $nuevoPorcentaje->ModificadoPor = 'SUPERADMIN';
         Porcentajes::editarPorcentaje($nuevoPorcentaje);
         /* ========================= Evento Editar Usuario. ======================*/
         // $newBitacora = new Bitacora();
@@ -27,4 +28,4 @@
         // $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' modificó el usuario '.$_POST['usuario'];
         // ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
         // /* =======================================================================================*/
-    }
+    // }

@@ -46,7 +46,7 @@
                         $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
                         $newBitacora->accion = $accion['Login'];
                         $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' ingreso al sistema exitosamente';
-                        ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+                        // ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
                         /* =======================================================================================*/
                         switch($estadoUsuario){
                             case 1: {
@@ -66,14 +66,14 @@
                             } 
                         }
                     } else {
-                        if ($intentosFallidos == null){
+                        if ($intentosFallidos === false){
                             $mensaje = 'Usuario no existe';
                         } else {
                             $incremento = ControladorUsuario::incrementarIntentos($_POST["userName"], $intentosFallidos);
                             $nuevoEstado = Usuario::bloquearUsuario($intentosMax, $incremento, $_POST["userName"]); 
                             if($nuevoEstado == true || $estadoUsuario == 4){
                                 $mensaje = 'Usuario bloqueado';
-                            }  else {
+                            } else {
                                 $mensaje = 'Usuario y/o Contraseña invalidos';
                             }  
                         }

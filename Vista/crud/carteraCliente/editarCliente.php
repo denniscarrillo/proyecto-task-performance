@@ -17,7 +17,12 @@
         $nuevoCliente->telefono = $_POST['telefono'];
         $nuevoCliente->correo= $_POST['correo'];
         $nuevoCliente->direccion = $_POST['direccion'];
+        $nuevoCliente->estadoContacto = $_POST['estadoContacto'];
+        date_default_timezone_set('America/Tegucigalpa');
+        $nuevoCliente->modificadoPor = 'SUPERADMIN';
+        $nuevoCliente->fechaModificacion = date("Y-m-d h:i:s");
         ControladorCarteraClientes::editarCliente($nuevoCliente);
+        print json_encode($data = ['estado'=>'false']);
         /* ========================= Evento Editar Usuario. ======================*/
         // $newBitacora = new Bitacora();
         // $accion = ControladorBitacora::accion_Evento();

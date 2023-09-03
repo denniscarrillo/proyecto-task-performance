@@ -6,8 +6,15 @@
     
     #Abrir conexión al servidor de MySQL
     public function abrirConexionDB(){
-        $conn = mysqli_connect($this->hostName, $this->userName, $this->password, $this->dbName);
-        return $conn;
-    }
- }
-?>
+        try{
+            $conn = sqlsrv_connect($this->ServerName, $this->ConexionInfo);
+            if($conn == false){
+                die(print_r(sqlsrv_errors(), true));
+            }
+            return $conn;
+        }
+        catch(Exception $e){
+            echo "Ocurrió un error al conectar a la base de datos: ". $e->getMessage();
+        }
+    }}
+    ?>

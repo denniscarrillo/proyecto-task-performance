@@ -31,9 +31,11 @@
         $nuevoUsuario->idEstado= 1; 
         $nuevoUsuario->contrasenia = password_hash($_POST["contraseña"], PASSWORD_DEFAULT);
         $nuevoUsuario->correo = $_POST["correoElectronico"]; 
+        $nuevoUsuario->intentosFallidos = 0;
         $nuevoUsuario->idRol = 1;
-        
         $nuevoUsuario->preguntasContestadas = 0;
+        date_default_timezone_set('America/Tegucigalpa');
+        $nuevoUsuario->fechaCreacion = date("Y-m-d h:i:s"); 
         $nuevoUsuario->creadoPor = $_POST["usuario"]; 
 
         ControladorUsuario::registroUsuario($nuevoUsuario);

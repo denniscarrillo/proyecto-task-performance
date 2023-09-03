@@ -58,8 +58,9 @@ $('#form-usuario').submit(function (e) {
           correo: correo,
           idRol: rol
         },
-        success: function () {
+        success: function (res) {
           //Mostrar mensaje de exito
+          console.log(res);
           Swal.fire(
            'Registrado!',
            'Se le ha enviado un correo al usuario!',

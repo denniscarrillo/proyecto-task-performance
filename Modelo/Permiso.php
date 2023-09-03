@@ -21,12 +21,13 @@ class Permiso
             $permisos = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $resultado = $abrirConexion->query("SELECT r.descripcion, o.objeto, p.permiso_Consultar, p.permiso_Insercion, 
-            p.permiso_Actualizacion, p.permiso_Eliminacion FROM cocinas_y_equipos.tbl_ms_permisos p
+            $query="SELECT r.descripcion, o.objeto, p.permiso_Consultar, p.permiso_Insercion, 
+            p.permiso_Actualizacion, p.permiso_Eliminacion FROM tbl_ms_permisos p
             INNER JOIN tbl_ms_objetos o ON o.id_Objeto = p.id_Objeto
-            INNER JOIN tbl_ms_roles r ON p.id_Rol = r.id_Rol;");
+            INNER JOIN tbl_ms_roles r ON p.id_Rol = r.id_Rol;";
+            $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
-            while ($fila = $resultado->fetch_assoc()) {
+            while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
                 $permisos[] = [
                     'rolUsuario' => $fila['descripcion'],
                     'objetoSistema' => $fila['objeto'],
@@ -39,7 +40,7 @@ class Permiso
         } catch (Exception $e) {
             $permisos = 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
         return $permisos;
     }
     public static function obtenerObjetos(){
@@ -48,8 +49,9 @@ class Permiso
             $objetos = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $resultado = $abrirConexion->query("SELECT id_Objeto, objeto, descripcion FROM tbl_ms_objetos;");
-            while($fila = $resultado->fetch_assoc()){
+            $query="SELECT id_Objeto, objeto, descripcion FROM tbl_ms_objetos;";
+            $resultado = sqlsrv_query($abrirConexion, $query);
+            while($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)){
                 $objetos [] = [
                     'id_Objeto' => $fila["id_Objeto"],
                     'objeto' => $fila["objeto"],
@@ -59,7 +61,7 @@ class Permiso
         } catch (Exception $e) {
             $objetos = 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
         return $objetos;
     }
     public static function registroPermiso($nuevoPermiso) {
@@ -72,12 +74,12 @@ class Permiso
             $insertar=$nuevoPermiso->PermisoInsercion;
             $actualizar=$nuevoPermiso->PermisoActualizacion;
             $eliminar=$nuevoPermiso->PermisoEliminacion;
-            $insert = "INSERT INTO tbl_ms_permisos (id_Rol, id_Objeto, permiso_Consultar, permiso_Insercion, 
+            $query = "INSERT INTO tbl_ms_permisos (id_Rol, id_Objeto, permiso_Consultar, permiso_Insercion, 
             permiso_Actualizacion, permiso_Eliminacion) VALUES ('$rol', '$objeto', '$consultar', '$insertar', '$actualizar', '$eliminar');";
-            $ejecutar_insert = mysqli_query($abrirConexion, $insert);
+            $nuevoPermiso = sqlsrv_query($abrirConexion, $query);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
-        mysqli_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
 }
