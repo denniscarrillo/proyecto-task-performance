@@ -18,24 +18,23 @@
   </span>
   <!-- Contenedor principal del menu sidebar -->
   <div class="menu__container">
-    <!-- Titulo general modulo -->
-    <div class="title-conteiner">
-      <span class="title__module">Modúlos</span>
-      <span class="line"></span>
-    </div>
     <!-- Lista de menus del sistema -->
     <ul class="dropdown-menu__content">
       <!-- Lista rendimiento -->
       <li class="dropdown-menu__content__list">
-        <span class="check__conteiner">Rendimiento
+        <span class="check__conteiner dropdown__link__span">
+        <div class="icon-menu-principal__conteiner">
+          <i class="icon-menu-principal fa-solid fa-square-poll-vertical"></i>  
+        </div>
+        <p>Rendimiento</p>
+          <i class="dropdown__arrow fa-solid fa-angle-down"></i>
           <input type="checkbox" class="dropdown-menu__content__list__check">
         </span>
-
         <div class="dropdown__content">
           <ul class="dropdown-menu__content__secundario">
-            <li class="dropdown__list dropdown-menu__content__list__item">
+            <li class="dropdown-menu__content__list__item">
               <a href="<?php echo $urlTarea; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
+              <!-- <i class="fa-solid fa-list-check"></i> -->
                 <span>Mis Tareas</span>
               </a>
             </li>
@@ -69,106 +68,133 @@
       <!-- Solicitud -->
       <li class="dropdown-menu__content__list">
         <a href="<?php echo $urlSolicitud; ?>" class="dropdown__link">
-          <i class=""></i>
-          <span class="dropdown__link__span">Solicitud</span>
+          <span class="check__conteiner dropdown__link__span">
+          <div class="icon-menu-principal__conteiner">
+            <i class="icon-menu-principal fa-solid fa-envelopes-bulk icon-size"></i>
+          </div>
+          <p>Solicitud</p>
+          </span>
         </a>
       </li>
       <!-- Comision -->
       <li class="dropdown-menu__content__list">
         <a href="<?php echo $urlComision; ?>" class="dropdown__link">
           <i class=""></i>
-          <span class="dropdown__link__span">Comisión</span>
+          <span class="check__conteiner dropdown__link__span">
+          <div class="icon-menu-principal__conteiner">
+           <i class="icon-menu-principal fa-solid fa-file-invoice-dollar icon-size"></i>
+          </div>
+          <p>Comisión</p>
+          </span>
         </a>
       </li>
       <!-- Consulta -->
       <li class="dropdown-menu__content__list">
-        <span>Consulta</span>
-        <ul class="dropdown-menu__content__secundario">
-          <li class="dropdown-menu__content__list__item">
-            <a href="<?php echo $urlCliente; ?>" class="dropdown-menu__content__secundario__link">
-              <i class=""></i>
-              <span>Clientes</span>
-            </a>
-          </li>
-          <li class="dropdown-menu__content__list__item">
-            <a href="<?php echo $urlVenta; ?>" class="dropdown-menu__content__secundario__link">
-              <i class=""></i>
-              <span>Ventas</span>
-            </a>
-          </li>
-          <li class="dropdown-menu__content__list__item">
-            <a href="<?php echo $urlTarea; ?>" class="dropdown-menu__content__secundario__link">
-              <i class=""></i>
-              <span>Artículo</span>
-            </a>
-          </li>
-        </ul>
+        <span class="check__conteiner dropdown__link__span">
+        <div class="icon-menu-principal__conteiner">
+          <i class="icon-menu-principal fa-solid fa-magnifying-glass-arrow-right"></i>
+        </div>
+        <p>Consulta</p>
+        <i class="dropdown__arrow fa-solid fa-angle-down"></i>
+          <input type="checkbox" class="dropdown-menu__content__list__check">
+        </span>
+        <div class="dropdown__content">
+          <ul class="dropdown-menu__content__secundario">
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlCliente; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Clientes</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlVenta; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Ventas</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlTarea; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Artículo</span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </li>
       <!-- Mantenimiento -->
       <li class="dropdown-menu__content__list">
-        <span>Mantenimiento</span>
-        <ul class="dropdown-menu__content__secundario">
-          <li class="item-mantenimiento">
-            <a href="<?php echo $urlGestion; ?>" class="dropdown-menu__content__secundario__link">
-              <i class=""></i>
-              <span>Usuarios</span>
-            </a>
-          </li>
-          <li class="item-mantenimiento">
-            <a href="<?php echo $urlTarea; ?>" class="dropdown-menu__content__secundario__link">
-              <i class=""></i>
-              <span>Estado Usuario</span>
-            </a>
-          </li>
-          <li class="item-mantenimiento">
-            <a href="<?php echo $urlCarteraCliente; ?>" class="dropdown-menu__content__secundario__link">
-              <i class=""></i>
-              <span>Cartera Cliente</span>
-            </a>
-          </li>
-          <li class="item-mantenimiento">
-            <a href="<?php echo $urlPreguntas; ?>" class="dropdown-menu__content__secundario__link">
-              <i class=""></i>
-              <span>Preguntas</span>
-            </a>
-          </li>
-          <li class="item-mantenimiento">
-            <a href="<?php echo $urlBitacoras; ?>" class="dropdown-menu__content__secundario__link">
-              <i class=""></i>
-              <span>Bitácora Sistema</span>
-            </a>
-          </li>
-          <li class="item-mantenimiento">
-            <a href="<?php echo $urlTarea; ?>" class="dropdown-menu__content__secundario__link">
-              <i class=""></i>
-              <span>Parámetros</span>
-            </a>
-          </li>
-          <li class="item-mantenimiento">
-            <a href="<?php echo $urlTarea; ?>" class="dropdown-menu__content__secundario__link">
-              <i class=""></i>
-              <span>Permisos</span>
-            </a>
-          </li>
-          <li class="item-mantenimiento">
-            <a href="<?php echo $urlRoles; ?>" class="dropdown-menu__content__secundario__link">
-              <i class=""></i>
-              <span>Roles</span>
-            </a>
-          </li>
-          <li class="item-mantenimiento">
-            <a href="<?php echo $urlPorcentaje; ?>" class="dropdown-menu__content__secundario__link">
-              <i class=""></i>
-              <span>Porcentajes</span>
-            </a>
-          </li>
-          <li class="item-mantenimiento">
-            <a href="<?php echo $urlTarea; ?>" class="dropdown-menu__content__secundario__link">
-              <i class=""></i>
-              <span>Servicios Técnicos</span>
-            </a>
-          </li>
-        </ul>
+        <span class="check__conteiner dropdown__link__span">
+          <div class="icon-menu-principal__conteiner">
+            <i class="icon-menu-principal fa-solid fa-business-time"></i>
+          </div>
+          <p>Mantenimiento</p>
+          <i class="dropdown__arrow fa-solid fa-angle-down"></i>
+          <input type="checkbox" class="dropdown-menu__content__list__check">
+        </span>
+        <div class="dropdown__content">
+          <ul class="dropdown-menu__content__secundario">
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlGestion; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Usuarios</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlTarea; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Estado Usuario</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlCarteraCliente; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Cartera Cliente</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlPreguntas; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Preguntas</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlBitacoras; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Bitácora Sistema</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlTarea; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Parámetros</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlTarea; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Permisos</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlRoles; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Roles</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlPorcentaje; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Porcentajes</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlTarea; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Servicios Técnicos</span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </li>
     </ul>
   </div>

@@ -38,13 +38,16 @@ if (isset($_SESSION['usuario'])) {
   <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
+    <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+    <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <title> Prueba </title>
 </head>
 
 <body>
   <div class="conteiner">
-    <div class="row">
-      <div class="columna1 col-2">
+    <div class="conteiner-global">
+      <div class="sidebar-conteiner">
         <?php
         $urlIndex = '../../index.php';
         $urlGestion = 'gestionUsuario.php';
@@ -60,7 +63,13 @@ if (isset($_SESSION['usuario'])) {
         require_once '../../layout/sidebar.php';
         ?>
       </div>
-      <div class="columna2 col-10">
+
+      <!-- CONTENIDO DE LA PAGINA - 2RA PARTE -->
+        <div class="conteiner-main">
+            <div class="navbar-conteiner">
+                <!-- Aqui va la barra -->
+                <?php include_once '../../layout/navbar.php'?>
+            </div>
         <H1>Gestión de Usuarios</H1>
         <div class="table-conteiner">
           <div>
@@ -83,6 +92,12 @@ if (isset($_SESSION['usuario'])) {
             </tbody>
           </table>
         </div>
+        <!-- Footer -->
+        <div class="footer-conteiner">
+                <?php
+                require_once '../../layout/footer.php';
+                ?>
+          </div>
       </div> <!-- Fin de la columna -->
     </div>
   </div>

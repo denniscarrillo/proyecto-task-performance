@@ -36,14 +36,18 @@ session_start(); //Reanudamos la sesion
   <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
   <title> Bitacora </title>
 </head>
 
-<body>
-  <div class="conteiner">
-    <div class="row">
-      <div class="columna1 col-2">
+<body style="overflow: hidden;">
+  <div class ="conteiner">
+    <!-- Sidebar 1RA PARTE -->
+    <div class="conteiner-global">
+      <div class="sidebar-conteiner">
         <?php
         $urlIndex = '../../index.php';
         $urlGestion = '../usuario/gestionUsuario.php';
@@ -60,45 +64,61 @@ session_start(); //Reanudamos la sesion
         require_once '../../layout/sidebar.php';
         ?>
       </div>
-      <div class="columna2 col-10">
-        <H1>Bitacora</H1>
-        <div class="table-conteiner">
-          <table class="table" id="table-Bitacora">
-            <thead>
-              <tr>
-                <th scope="col"> N° </th>
-                <th scope="col"> FECHA </th>
-                <th scope="col"> USUARIO </th>
-                <th scope="col"> OBJETO </th>
-                <th scope="col"> ACCION </th>
-                <th scope="col"> DESCRIPCION </th>
-                <th ></th>
-              </tr>
-            </thead>
-            <div class ="text-left mb-2">
-            <a href="../../fpdf/ReporteBitacora.php" target="_blank" class="btn btn-success" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
+
+      
+      <div class="conteiner-main">
+            <div class="navbar-conteiner">
+                <!-- Aqui va la barra -->
+                <?php include_once '../../layout/navbar.php'?>
             </div>
-            <tbody class="table-group-divider">
-            </tbody>
-          </table>
+            <H1>Bitacora</H1>
+          <div class="table-conteiner">
+            <table class="table" id="table-Bitacora">
+              <thead>
+                <tr>
+                  <th scope="col"> N° </th>
+                  <th scope="col"> FECHA </th>
+                  <th scope="col"> USUARIO </th>
+                  <th scope="col"> OBJETO </th>
+                  <th scope="col"> ACCION </th>
+                  <th scope="col"> DESCRIPCION </th>
+                  <th ></th>
+                </tr>
+              </thead>
+              <div class ="text-left mb-2">
+              <a href="../../fpdf/ReporteBitacora.php" target="_blank" class="btn btn-success" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
+              </div>
+              <tbody class="table-group-divider">
+              </tbody>
+            </table>
+          </div>
+
+        <!-- Footer -->
+        <div class="footer-conteiner">
+           <?php
+              require_once '../../layout/footer.php';
+           ?>
         </div>
+
       </div>
+
+      
     </div>
-  </div>
-  <?php
-  //require('modalNuevoUsuario.html');
-  //require('modalEditarUsuario.html');
-  ?>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-  <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
-  <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
-  <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-  <script src="../../../Recursos/js/bitacora/dataTableBitacora.js" type="module"></script>
-  <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-  <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
-  <!--<script src="../../../Recursos/js/validacionesModalNuevoUsuario.js"  type="module"></script>-->
-  <!--<script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script>-->
-</body>
+  
+      <?php
+      //require('modalNuevoUsuario.html');
+      //require('modalEditarUsuario.html');
+      ?>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+      <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+      <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
+      <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+      <script src="../../../Recursos/js/bitacora/dataTableBitacora.js" type="module"></script>
+      <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
+      <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
+      <!--<script src="../../../Recursos/js/validacionesModalNuevoUsuario.js"  type="module"></script>-->
+      <!--<script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script>-->
+  </body>
 
 </html>

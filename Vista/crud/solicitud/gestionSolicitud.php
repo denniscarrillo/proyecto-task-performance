@@ -28,13 +28,16 @@ require_once("../../../Controlador/ControladorUsuario.php");
   <link href="../../../Recursos/css/gestionSolicitud.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevaSolicitud.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
+    <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+    <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <title> PruebaSolicitud </title>
 </head>
 
-<body>
+<body style="overflow: hidden;">
 <div class="conteiner">
-  <div class="row">
-    <div class="columna1 col-2">
+  <div class="conteiner-global">
+    <div class="sidebar-conteiner">
       <?php
       $urlIndex = '../../index.php';
       $urlGestion = '../usuario/gestionUsuario.php';
@@ -50,7 +53,14 @@ require_once("../../../Controlador/ControladorUsuario.php");
       require_once '../../layout/sidebar.php';
       ?>
     </div>
-    <div class="columna2 col-10">
+
+
+    <!-- CONTENIDO DE LA PAGINA - 2RA PARTE -->
+        <div class="conteiner-main">
+            <div class="navbar-conteiner">
+                <!-- Aqui va la barra -->
+                <?php include_once '../../layout/navbar.php'?>
+            </div>
       <H1>Gestión de Solicitudes</H1>
       <div class="table-conteiner">
       <div>
@@ -78,6 +88,13 @@ require_once("../../../Controlador/ControladorUsuario.php");
         </tbody>
       </table>
       </div>
+      <!-- Footer -->
+      <div class="footer-conteiner">
+                <?php
+                require_once '../../layout/footer.php';
+                ?>
+          </div>
+        </div>
     </div>
     </div>
   </div>

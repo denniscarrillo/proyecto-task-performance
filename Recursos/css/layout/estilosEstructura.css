@@ -1,0 +1,14 @@
+.conteiner-global{
+    display: flex;
+    width: 100%;
+}
+
+.conteiner-main{
+    width: 100%;
+    overflow-y: scroll;
+    height: 100vh;
+}
+
+.footer-conteiner{
+    background-color: rgb(172, 172, 172);
+}

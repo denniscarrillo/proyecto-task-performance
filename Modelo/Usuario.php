@@ -69,24 +69,6 @@ class Usuario {
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $nuevoUsuario;
     }
-    //Hace la búsqueda del usuario en login para saber si es válido
-    // public static function existeUsuario($userName, $userPassword){
-    //     $passwordValida = 0;
-    //     $conn = new Conexion();
-    //     $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-    //     $query = "SELECT contrasenia FROM tbl_MS_Usuario WHERE usuario = '$userName'";
-    //     $usuario = sqlsrv_query($consulta, $query); #Ejecutamos la consulta (Recordset
-    //     $existe = sqlsrv_num_rows($usuario);
-    //     echo 'resultado'.sqlsrv_num_rows($usuario);
-    //     if ($existe > 0) {
-    //         $user = sqlsrv_fetch_array($usuario, SQLSRV_FETCH_ASSOC);
-    //         $Password = $user['contrasenia'];
-    //         $passwordValida = password_verify($userPassword, $Password);
-    //     }
-    //     sqlsrv_close($consulta); #Cerramos la conexión.
-        
-    //     return $passwordValida; //Si se encuentra un usuario válido/existente retorna un entero mayor a 0.
-    // }
     public static function existeUsuario($userName, $userPassword){
         $passwordValida = false;
         $conn = new Conexion();
