@@ -38,14 +38,18 @@ session_start(); //Reanudamos la sesion
   <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
-  <title> Prueba </title>
+  <title> Clientes </title>
 </head>
 
 <body>
-  <div class="conteiner">
-    <div class="row">
-      <div class="columna1 col-2">
+  <div style="overflow: hidden;">
+    <!-- Sidebar 1RA PARTE -->
+    <div class="conteiner-global">
+      <div class="sidebar-conteiner">
         <?php
         $urlIndex = '../../index.php';
         $urlGestion = '../usuario/gestionUsuario.php';
@@ -61,8 +65,12 @@ session_start(); //Reanudamos la sesion
         require_once '../../layout/sidebar.php';
         ?>
       </div>
-      <div class="columna2 col-10">
-        <H1>Gestión de Clientes</H1>
+      <div class="conteiner-main">
+            <div class="navbar-conteiner">
+                <!-- Aqui va la barra -->
+                <?php include_once '../../layout/navbar.php'?>
+            </div>        
+        <H1>Clientes</H1>
         <div class="table-conteiner">
           <table class="table" id="table-VistaClientes">
             <thead>
@@ -80,6 +88,13 @@ session_start(); //Reanudamos la sesion
             <tbody class="table-group-divider">
             </tbody>
           </table>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-conteiner">
+                <?php
+                require_once '../../layout/footer.php';
+                ?>
         </div>
       </div>
     </div>

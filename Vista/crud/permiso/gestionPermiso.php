@@ -38,14 +38,19 @@ session_start(); //Reanudamos la sesion
   <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
   <title> Permisos </title>
 </head>
 
-<body>
+<body style="overflow: hidden;">
   <div class="conteiner">
-    <div class="row">
-      <div class="columna1 col-2">
+    <!-- Sidebar 1RA PARTE -->
+    <div class="conteiner-global">
+      <div class="sidebar-conteiner">
         <?php
         $urlIndex = '../../index.php';
         $urlGestion = '../usuario/gestionUsuario.php';
@@ -61,7 +66,11 @@ session_start(); //Reanudamos la sesion
         require_once '../../layout/sidebar.php';
         ?>
       </div>
-      <div class="columna2 col-10">
+      <div class="conteiner-main">
+            <div class="navbar-conteiner">
+                <!-- Aqui va la barra -->
+                <?php include_once '../../layout/navbar.php'?>
+            </div>
         <H1>Gestión de Permisos</H1>
         <div class="table-conteiner">
         <div>
@@ -87,6 +96,12 @@ session_start(); //Reanudamos la sesion
             </tbody>
           </table>
         </div>
+        <!-- Footer -->
+        <div class="footer-conteiner">
+                <?php
+                require_once '../../layout/footer.php';
+                ?>
+          </div>
       </div>
     </div>
   </div>
