@@ -23,20 +23,34 @@ require_once("validacionesComision.php");
   <div class="conteiner">
     <div class="row">
       <div class="columna1 col-2">
-        <?php
+      <?php
         $urlIndex = '../index.php';
-        $urlGestion = '../crud/usuario/gestionUsuario.php';
-        $urlTarea = '../rendimiento/v_tarea.php';
-        $urlSolicitud = '../crud/solicitud/gestionSolicitud.php';
-        $urlComision = 'v_comision.php';
-        $urlComisionVendedor = '../crud/ComisionesVendedores/ComisionesVendedores.php';
-        $urlVenta = '../crud/venta/gestionVenta.php';
-        $urlCliente = '../crud/cliente/gestionCliente.php';
-        $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
-        $urlPorcentaje = '../crud/Porcentajes/gestionPorcentajes.php';
+        // Rendimiento
+        $urlMisTareas = '../rendimiento/v_tarea.php';
+        $urlConsultarTareas = './'; //PENDIENTE
+        $urlBitacoraTarea = ''; //PENDIENTE
         $urlMetricas = '../crud/Metricas/gestionMetricas.php';
+        $urlEstadisticas = ''; //PENDIENTE
+        //Solicitud
+        $urlSolicitud = '../crud/solicitud/gestionSolicitud.php';
+        //Comisión
+        $urlComision = './v_comision.php';
+        //Consulta
+        $urlClientes = '../crud/cliente/gestionCliente.php';
+        $urlVentas = '../crud/Venta/gestionVenta.php';
+        $urlArticulos = '../crud/articulo/gestionArticulo.php';
+        //Mantenimiento
+        $urlUsuarios = '../crud/usuario/gestionUsuario.php';
+        $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
+        $urlPreguntas = '../crud/pregunta/gestionPregunta.php';
+        $urlBitacoraSistema = '../crud/bitacora/gestionBitacora.php';
+        $urlParametros = '../crud/parametro/gestionParametro.php';
+        $urlPermisos = '../crud/permiso/gestionPermiso.php';
+        $urlRoles = '../crud/rol/gestionRol.php';
+        $urlPorcentajes = '../crud/Porcentajes/gestionPorcentajes.php';
+        $urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
         require_once '../layout/sidebar.php';
-        ?>
+      ?>
       </div>
       <div class="columna2 col-10">
         <H1>Comisiones</H1>
