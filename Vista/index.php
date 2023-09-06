@@ -17,6 +17,9 @@ if (isset($_SESSION['usuario'])) {
   $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingreso al menú principal';
   ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
   /* =======================================================================================*/
+}else{
+  header('location: ./login/login.php');
+  die();
 }
 ?>
 <!DOCTYPE html>
