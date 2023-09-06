@@ -5,10 +5,10 @@
     require_once("../../../Controlador/ControladorUsuario.php");
     require_once("../../../Controlador/ControladorBitacora.php");
     require_once('enviarCorreoNuevoUsuario.php');
-    // $user = '';
-    // session_start(); //Reanudamos session
-    // if(isset($_SESSION['usuario'])){
-    //     $user = $_SESSION['usuario'];
+    $user = '';
+    session_start(); //Reanudamos session
+    if(isset($_SESSION['usuario'])){
+        $user = $_SESSION['usuario'];
         $nuevoUsuario = new Usuario();
         $nuevoUsuario->nombre = $_POST['nombre'];
         $nuevoUsuario->usuario = $_POST['usuario'];
@@ -20,7 +20,7 @@
         $nuevoUsuario->preguntasContestadas = 0;
         date_default_timezone_set('America/Tegucigalpa');
         $nuevoUsuario->fechaCreacion = date("Y-m-d h:i:s");
-        $nuevoUsuario->creadoPor = $_POST['usuario'];
+        $nuevoUsuario->creadoPor = $user;
         ControladorUsuario::registroUsuario($nuevoUsuario);
         enviarCorreoNuevoUsuario($nuevoUsuario->correo, $nuevoUsuario->usuario, $_POST['contrasenia']);
         /* ========================= Evento Creacion nuevo Usuario. ======================*/
@@ -29,14 +29,10 @@
         date_default_timezone_set('America/Tegucigalpa');
         $newBitacora->fecha = date("Y-m-d h:i:s"); 
         $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionUsuario.php');
-        $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+        $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($user);
         $newBitacora->accion = $accion['Insert'];
-        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' creo usuario '.$_POST['usuario'];
+        $newBitacora->descripcion = 'El usuario '.$user.' creó usuario '.$_POST['usuario'];
         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
         /* =======================================================================================*/
-        $data = array();
-        $data = ['Estado'=>'false'];
-        var_dump($_POST['idRol']);
-        // print json_encode($data, JSON_UNESCAPED_UNICODE);
-    // }
+    }
 ?>
