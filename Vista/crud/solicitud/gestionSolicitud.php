@@ -39,18 +39,32 @@ require_once("../../../Controlador/ControladorUsuario.php");
   <div class="conteiner-global">
     <div class="sidebar-conteiner">
       <?php
-      $urlIndex = '../../index.php';
-      $urlGestion = '../usuario/gestionUsuario.php';
-      $urlTarea = '../../rendimiento/v_tarea.php';
-      $urlSolicitud = '../solicitud/gestionSolicitud.php';
-      $urlComision = '../../comisiones/v_comision.php';
-      $urlCrudComision = '../comision/gestionComision.php';
-      $urlVenta = '../venta/gestionVenta.php';
-      $urlCliente = '../cliente/gestionCliente.php';
-      $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
-      $urlPorcentaje = '../Porcentajes/gestionPorcentajes.php';
-      $urlMetricas = '../Metricas/gestionMetricas.php';
-      require_once '../../layout/sidebar.php';
+        $urlIndex = '../../index.php';
+        // Rendimiento
+        $urlMisTareas = '../../rendimiento/v_tarea.php';
+        $urlConsultarTareas = './'; //PENDIENTE
+        $urlBitacoraTarea = ''; //PENDIENTE
+        $urlMetricas = '../Metricas/gestionMetricas.php';
+        $urlEstadisticas = ''; //PENDIENTE
+        //Solicitud
+        $urlSolicitud = './gestionSolicitud.php';
+        //Comisión
+        $urlComision = '../../comisiones/v_comision.php';
+        //Consulta
+        $urlClientes = '../cliente/gestionCliente.php';
+        $urlVentas = '../Venta/gestionVenta.php';
+        $urlArticulos = '../articulo/gestionArticulo.php';
+        //Mantenimiento
+        $urlUsuarios = '../usuario/gestionUsuario.php';
+        $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
+        $urlPreguntas = '../pregunta/gestionPregunta.php';
+        $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
+        $urlParametros = '../parametro/gestionParametro.php';
+        $urlPermisos = '../permiso/gestionPermiso.php';
+        $urlRoles = '../rol/gestionRol.php';
+        $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
+        $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+        require_once '../../layout/sidebar.php';
       ?>
     </div>
 

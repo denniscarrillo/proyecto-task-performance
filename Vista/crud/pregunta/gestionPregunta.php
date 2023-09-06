@@ -54,20 +54,33 @@ session_start(); //Reanudamos la sesion
   <div class="conteiner">
     <div class="conteiner-global">
       <div class="sidebar-conteiner">
-        <?php
-        $urlIndex = '../../index.php';
-        $urlGestion = '../usuario/gestionUsuario.php';
-        $urlTarea = '../../rendimiento/v_tarea.php';
-        $urlSolicitud = '../solicitud/gestionSolicitud.php';
-        $urlComision = '../../comisiones/v_comision.php';
-        $urlCrudComision = '../comision/gestionComision.php';
-        $urlVenta = 'gestionVenta.php';
-        $urlCliente = '../cliente/gestionCliente.php';
-        $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
-        $urlRoles = '../../../Vista/crud/rol/gestionRol.php';
-        $urlPreguntas = '../../../Vista/crud/pregunta/gestionPregunta.php';
-        
-        require_once '../../layout/sidebar.php';
+      <?php
+          $urlIndex = '../../index.php';
+          // Rendimiento
+          $urlMisTareas = '../../rendimiento/v_tarea.php';
+          $urlConsultarTareas = './'; //PENDIENTE
+          $urlBitacoraTarea = ''; //PENDIENTE
+          $urlMetricas = '../Metricas/gestionMetricas.php';
+          $urlEstadisticas = ''; //PENDIENTE
+          //Solicitud
+          $urlSolicitud = '../solicitud/gestionSolicitud.php';
+          //Comisión
+          $urlComision = '../../comisiones/v_comision.php';
+          //Consulta
+          $urlClientes = '../cliente/gestionCliente.php';
+          $urlVentas = '../Venta/gestionVenta.php';
+          $urlArticulos = '../articulo/gestionArticulo.php';
+          //Mantenimiento
+          $urlUsuarios = '../usuario/gestionUsuario.php';
+          $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
+          $urlPreguntas = './gestionPregunta.php';
+          $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
+          $urlParametros = '../parametro/gestionParametro.php';
+          $urlPermisos = '../permiso/gestionPermiso.php';
+          $urlRoles = '../rol/gestionRol.php';
+          $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
+          $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+          require_once '../../layout/sidebar.php';
         ?>
       </div>
 
