@@ -84,11 +84,17 @@ if (isset($_SESSION['usuario'])) {
         ?>
       </div>
       <div class="conteiner-main">
-            <div class="navbar-conteiner">
-                <!-- Aqui va la barra -->
-                <?php include_once '../../layout/navbar.php'?>
+            <!-- Encabezado -->
+            <div class= "encabezado">
+              <div class="navbar-conteiner">
+                  <!-- Aqui va la barra -->
+                  <?php include_once '../../layout/navbar.php'?>                             
+              </div>        
+              <div class ="titulo">
+                    <H2 class="title-dashboard-task">Avance de Tareas</H2>
+              </div>  
             </div>
-        <H1>Gestión de Avance de Tareas</H1>
+
         <div class="table-conteiner">
           <div>
             
