@@ -64,11 +64,17 @@ require_once("../../../Controlador/ControladorMetricas.php");
         ?>
       </div>
       <div class="conteiner-main">
+            <!-- Encabezado -->
+          <div class= "encabezado">
             <div class="navbar-conteiner">
                 <!-- Aqui va la barra -->
-                <?php include_once '../../layout/navbar.php'?>
+                <?php include_once '../../layout/navbar.php'?>                             
             </div>        
-        <H1>Gestión de Metricas</H1>
+            <div class ="titulo">
+                  <H2 class="title-dashboard-task">Gestión de Metricas</H2>
+            </div>  
+          </div>       
+      
         <div class="table-conteiner">
           <div>
             <a href="../../fpdf/ReporteMetrica.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>

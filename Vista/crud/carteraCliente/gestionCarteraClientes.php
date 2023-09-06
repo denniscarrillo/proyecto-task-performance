@@ -65,11 +65,19 @@ session_start(); //Reanudamos la sesion
         ?>
       </div>
       <div class="conteiner-main">
-          <div class="navbar-conteiner">
-            <!-- Aqui va la barra -->
-            <?php include_once '../../layout/navbar.php'?>
+
+           <!-- Encabezado -->
+           <div class= "encabezado">
+            <div class="navbar-conteiner">
+                <!-- Aqui va la barra -->
+                <?php include_once '../../layout/navbar.php'?>                             
+            </div>        
+            <div class ="titulo">
+                  <H1 class="title-dashboard-task">Gestión de Cartera de Clientes</H1>
+            </div>  
           </div>
-          <H1>Gestión de Cartera de Clientes</H1>
+          
+          <H1></H1>
         <div class="table-conteiner">
           <div>
             <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoCliente"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>

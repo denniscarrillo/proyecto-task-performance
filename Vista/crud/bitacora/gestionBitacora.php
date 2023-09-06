@@ -67,11 +67,20 @@ session_start(); //Reanudamos la sesion
 
       
       <div class="conteiner-main">
+           
+            <!-- Encabezado -->
+          <div class= "encabezado">
             <div class="navbar-conteiner">
                 <!-- Aqui va la barra -->
-                <?php include_once '../../layout/navbar.php'?>
+                <?php include_once '../../layout/navbar.php'?>                             
             </div>
-            <H1>Bitacora</H1>
+        
+            <div class ="titulo">
+                  <H1 class="title-dashboard-task">Bitacora</H1>
+            </div>  
+          </div>
+
+
           <div class="table-conteiner">
             <table class="table" id="table-Bitacora">
               <thead>

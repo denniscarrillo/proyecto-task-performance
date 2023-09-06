@@ -16,13 +16,16 @@ require_once("validacionesComision.php");
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <link href="../../Recursos/css/gestionComision.css" rel="stylesheet" />
   <link href='../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+  <link href='../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
+  <link href='../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+  <link href='../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
   <title> Comision </title>
 </head>
-<body>
+<body style="overflow: hidden;">
   <div class="conteiner">
-    <div class="row">
-      <div class="columna1 col-2">
+    <div class="conteiner-global">
+      <div class="sidebar-conteiner">
         <?php
         $urlIndex = '../index.php';
         $urlGestion = '../crud/usuario/gestionUsuario.php';
@@ -38,8 +41,22 @@ require_once("validacionesComision.php");
         require_once '../layout/sidebar.php';
         ?>
       </div>
-      <div class="columna2 col-10">
-        <H1>Comisiones</H1>
+       <!-- CONTENIDO DE LA PAGINA - 2RA PARTE -->
+      <div class="conteiner-main">
+
+          <!-- Encabezado -->
+          <div class= "encabezado">
+            <div class="navbar-conteiner">
+                <!-- Aqui va la barra -->
+                <?php include_once '../layout/navbar.php'?>                             
+            </div>        
+            <div class ="titulo">
+                  <H2 class="title-dashboard-task">Comisiones</H2>
+            </div>  
+          </div>
+
+
+        
         <div class= "table-conteiner">
           <div class="filtros">
             <div class="filtro-fecha">
@@ -75,6 +92,13 @@ require_once("validacionesComision.php");
             </tbody>
           </table>
         </div>
+
+          <!-- Footer -->
+          <div class="footer-conteiner">
+                <?php
+                require_once '../layout/footer.php';
+                ?>
+          </div>
       </div>
     </div>
   </div>
