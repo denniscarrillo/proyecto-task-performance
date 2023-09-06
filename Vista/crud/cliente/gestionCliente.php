@@ -80,11 +80,19 @@ session_start(); //Reanudamos la sesion
       ?>
       </div>
       <div class="conteiner-main">
+         
+        <!-- Encabezado -->
+        <div class= "encabezado">
             <div class="navbar-conteiner">
                 <!-- Aqui va la barra -->
-                <?php include_once '../../layout/navbar.php'?>
+                <?php include_once '../../layout/navbar.php'?>                             
             </div>        
-        <H1>Clientes</H1>
+            <div class ="titulo">
+                  <H1 class="title-dashboard-task">Clientes</H1>
+            </div>  
+          </div>
+      
+
         <div class="table-conteiner">
           <table class="table" id="table-VistaClientes">
             <thead>

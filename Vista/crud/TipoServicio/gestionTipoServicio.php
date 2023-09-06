@@ -81,11 +81,17 @@
 
 
       <div class="conteiner-main">
+            <!-- Encabezado -->
+          <div class= "encabezado">
             <div class="navbar-conteiner">
                 <!-- Aqui va la barra -->
-                <?php include_once '../../layout/navbar.php'?>
-            </div>
-        <H1>Gestión de Tipos de Servicio</H1>
+                <?php include_once '../../layout/navbar.php'?>                             
+            </div>        
+            <div class ="titulo">
+                  <H2 class="title-dashboard-task">Gestión de Tipos de Servicio</H2>
+            </div>  
+          </div>
+
         <div class="table-conteiner">
           <div>
             <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoTipoServicio"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>

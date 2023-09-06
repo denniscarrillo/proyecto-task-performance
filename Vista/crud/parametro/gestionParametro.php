@@ -81,11 +81,17 @@ session_start(); //Reanudamos la sesion
       </div>
 
       <div class="conteiner-main">
-            <div class="navbar-conteiner">
-                <!-- Aqui va la barra -->
-                <?php include_once '../../layout/navbar.php'?>
-            </div>
-        <H1>Gestión de Parámetros</H1>
+            <!-- Encabezado -->
+          <div class= "encabezado">
+              <div class="navbar-conteiner">
+                  <!-- Aqui va la barra -->
+                  <?php include_once '../../layout/navbar.php'?>                             
+              </div>        
+              <div class ="titulo">
+                    <H2 class="title-dashboard-task">Gestión de Parámetros</H2>
+              </div>  
+          </div>
+      
           <div class="table-conteiner">
               <div>
               <a href="../../fpdf/ReporteParametros.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>

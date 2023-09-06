@@ -42,7 +42,7 @@ session_start(); //Reanudamos la sesion
     <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
-  <title> Prueba </title>
+  <title> Ventas </title>
 </head>
 
 <body  style="overflow: hidden;">
@@ -79,11 +79,17 @@ session_start(); //Reanudamos la sesion
       ?>
       </div>
       <div class="conteiner-main">
+            <!-- Encabezado -->
+          <div class= "encabezado">
             <div class="navbar-conteiner">
                 <!-- Aqui va la barra -->
-                <?php include_once '../../layout/navbar.php'?>
-            </div>
-        <H1>Gestión de Ventas</H1>
+                <?php include_once '../../layout/navbar.php'?>                             
+            </div>        
+            <div class ="titulo">
+                  <H2 class="title-dashboard-task">Ventas</H2>
+            </div>  
+          </div>
+
         <div class="table-conteiner">
           <table class="table" id="table-Ventas">
             <thead>

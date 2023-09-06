@@ -80,19 +80,25 @@ session_start(); //Reanudamos la sesion
       </div>
       <!-- CONTENIDO DE LA PAGINA - 2RA PARTE -->
         <div class="conteiner-main">
+
+          <!-- Encabezado -->
+          <div class= "encabezado">
             <div class="navbar-conteiner">
                 <!-- Aqui va la barra -->
-                <?php include_once '../../layout/navbar.php'?>
-            </div>
-          <H1>Gestión de Articulos</H1>
-          <div class="table-conteiner">
-            
+                <?php include_once '../../layout/navbar.php'?>                             
+            </div>        
+            <div class ="titulo">
+                  <H2 class="title-dashboard-task">Gestión de Articulos</H2>
+            </div>  
+          </div>
+
+          <div class="table-conteiner"  >
             <div>
               <a href="../../fpdf/ReporteArticulo.php" class="btn_Pdf btn btn-primary" target="_blank"  id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
             </div>
-            <table class="table" id="table-Articulos">
-              <thead>
-                <tr>
+            <table class="table"  id="table-Articulos">
+              <thead >
+                <tr >
                   <th scope="col"> COD ARTICULO</th>
                   <th scope="col"> ARTICULO </th>
                   <th scope="col"> DETALLE </th>
