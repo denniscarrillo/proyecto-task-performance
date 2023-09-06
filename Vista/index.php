@@ -14,7 +14,7 @@ if (isset($_SESSION['usuario'])) {
   $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('index.php');
   $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
   $newBitacora->accion = $accion['income'];
-  $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingreso al menú principal';
+  $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingreso al página principal';
   ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
   /* =======================================================================================*/
 }else{

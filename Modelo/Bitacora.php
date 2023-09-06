@@ -11,7 +11,7 @@
             //Recibir objeto y obtener parametros
             $conn = new Conexion();
             $consulta = $conn->abrirConexionDB();
-            $ejecutarSQL = "INSERT INTO tbl_ms_bitacora (`fecha`, `id_Usuario`, `id_Objeto`, `accion`, `descripcion`) 
+            $ejecutarSQL = "INSERT INTO tbl_ms_bitacora (fecha, id_Usuario, id_Objeto, accion, descripcion) 
             VALUES('$datosEvento->fecha','$datosEvento->idUsuario','$datosEvento->idObjeto','$datosEvento->accion','$datosEvento->descripcion')";
             $ejecutarSQL = sqlsrv_query($consulta, $ejecutarSQL);
             sqlsrv_close($consulta); #Cerramos la conexión.

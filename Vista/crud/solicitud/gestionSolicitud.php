@@ -7,6 +7,23 @@ require_once("../../../Controlador/ControladorSolicitud.php");
 require_once("../../../Controlador/ControladorBitacora.php");
 require_once("../../../Controlador/ControladorUsuario.php");
 
+session_start(); //Reanudamos la sesion
+if (isset($_SESSION['usuario'])) {
+  /* ========================= Capturar evento Consultar Tarea. =============================*/
+  $newBitacora = new Bitacora();
+  $accion = ControladorBitacora::accion_Evento();
+  date_default_timezone_set('America/Tegucigalpa');
+  $newBitacora->fecha = date("Y-m-d h:i:s");
+  $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionSolicitud.php');
+  $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+  $newBitacora->accion = $accion['income'];
+  $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingreso a solicitud';
+  ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+  /* =======================================================================================*/
+}else{
+  header('location: ../../login/login.php');
+  die();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
