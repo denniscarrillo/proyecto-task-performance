@@ -3,6 +3,8 @@ const sidebar = document.querySelector(".sidebar-conteiner");
 // const sidebarOpenBtn = document.querySelector("#sidebar-open");
 const sidebarCloseBtn = document.querySelector("#sidebar-close");
 const sidebarLockBtn = document.querySelector("#lock-icon");
+const listElements = document.querySelectorAll(".dropdown__link__span");
+const listArrows = document.querySelectorAll('.dropdown__arrow');
 
 // Function to toggle the lock state of the sidebar
 const toggleLock = () => {
@@ -21,6 +23,9 @@ const toggleLock = () => {
 const hideSidebar = () => {
   if (sidebar.classList.contains("hoverable")){
     sidebar.classList.add("close");
+    listElements.forEach((item) => {
+      item.classList.add("close");
+    });
   }
 };
 
@@ -28,7 +33,12 @@ const hideSidebar = () => {
 const showSidebar = () => {
   if (sidebar.classList.contains("hoverable")) {
     sidebar.classList.remove("close");
+    //A todos los menus principal la añadimos la clase close
+    listElements.forEach((item) => {
+      item.classList.remove("close");
+    });
   }
+
 };
 
 // Function to show and hide the sidebar
