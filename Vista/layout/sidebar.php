@@ -118,6 +118,12 @@
                 <span>Artículos</span>
               </a>
             </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlBitacoraSistema; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Bitácora Sistema</span>
+              </a>
+            </li>
           </ul>
         </div>
       </li>
@@ -149,12 +155,6 @@
               <a href="<?php echo $urlPreguntas; ?>" class="dropdown-menu__content__secundario__link">
                 <i class=""></i>
                 <span>Preguntas</span>
-              </a>
-            </li>
-            <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo $urlBitacoraSistema; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Bitácora Sistema</span>
               </a>
             </li>
             <li class="dropdown-menu__content__list__item">

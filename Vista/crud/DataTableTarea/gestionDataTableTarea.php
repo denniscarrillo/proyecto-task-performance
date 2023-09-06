@@ -9,19 +9,33 @@ require_once('../../../Controlador/ControladorUsuario.php');
 
 session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
-  /* ========================= Capturar evento Consultar Tarea. =============================*/
   $newBitacora = new Bitacora();
+  if(isset($_SESSION['objetoAnterior'])){
+    /* ====================== Evento ingreso a mantenimiento de usuario. =====================*/
+    $accion = ControladorBitacora::accion_Evento();
+    date_default_timezone_set('America/Tegucigalpa');
+    $newBitacora->fecha = date("Y-m-d h:i:s");
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
+    $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+    $newBitacora->accion = $accion['Exit'];
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de '.$_SESSION['descripcionObjeto'];
+    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+  /* =======================================================================================*/
+  }
+  /* ========================= Capturar evento inicio sesión. =============================*/
   $accion = ControladorBitacora::accion_Evento();
   date_default_timezone_set('America/Tegucigalpa');
   $newBitacora->fecha = date("Y-m-d h:i:s");
-  $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionDataTable.php');
+  $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionDataTableTarea.php');
   $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
   $newBitacora->accion = $accion['income'];
-  $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingreso a consultar sus tareas';
+  $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a consultar tareas';
   ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+  $_SESSION['objetoAnterior'] = 'gestionDataTableTarea.php';
+  $_SESSION['descripcionObjeto'] = 'consultar tareas';
   /* =======================================================================================*/
 }else{
-  header('location: ../login/login.php');
+  header('location: ./login/login.php');
   die();
 }
 ?>

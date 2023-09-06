@@ -56,7 +56,6 @@
                     'Objeto' => $fila["objeto"],
                     'accion' => $fila["accion"],
                     'descripcion' => $fila["descripcion"],
-                    
                 ];
             }
             sqlsrv_close($consulta); #Cerramos la conexión.
