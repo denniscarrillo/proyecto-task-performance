@@ -1,4 +1,4 @@
-<nav class="sidebar locked">
+<nav>
   <!-- Logo del siberbar -->
   <div class="logo_items flex-log">
     <span class="nav_image">

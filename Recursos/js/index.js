@@ -1,7 +1,5 @@
 // Selecting the sidebar and buttons
-const sidebar = document.querySelector(".sidebar");
-const col1HiddeBar = document.querySelector('.columna1');
-const col2ShowBar = document.querySelector('.columna2');
+const sidebar = document.querySelector(".sidebar-conteiner");
 // const sidebarOpenBtn = document.querySelector("#sidebar-open");
 const sidebarCloseBtn = document.querySelector("#sidebar-close");
 const sidebarLockBtn = document.querySelector("#lock-icon");
@@ -23,13 +21,6 @@ const toggleLock = () => {
 const hideSidebar = () => {
   if (sidebar.classList.contains("hoverable")){
     sidebar.classList.add("close");
-    if (sidebar.classList.contains("close")){
-      col1HiddeBar?.classList.remove('col-2'); 
-      col1HiddeBar?.classList.add('col-1');
-    } else {
-      col1HiddeBar.classList.remove('col-1');
-      col1HiddeBar.classList.add('col-2');
-    }
   }
 };
 
@@ -37,14 +28,6 @@ const hideSidebar = () => {
 const showSidebar = () => {
   if (sidebar.classList.contains("hoverable")) {
     sidebar.classList.remove("close");
-    if(col2ShowBar?.classList.contains('col-11')){
-      col2ShowBar?.classList.remove('col-11');
-    } else {
-      col2ShowBar?.classList.remove('col-10');
-    }
-    col1HiddeBar?.classList.remove('col-2');
-    col2ShowBar?.classList.add('col-10');
-    col1HiddeBar?.classList.add('col-2');
   }
 };
 

@@ -25,7 +25,7 @@ require_once('validacionesTarea.php');
 
 <body>
   <div class="conteiner-global">
-    <div class="sidebar-conteiner">
+    <div class="sidebar-conteiner sidebar locked">
       <?php
       $urlIndex = '../index.php';
       $urlGestion = '../crud/usuario/gestionUsuario.php';
