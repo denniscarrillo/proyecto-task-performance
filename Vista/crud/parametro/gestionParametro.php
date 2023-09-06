@@ -50,28 +50,48 @@ session_start(); //Reanudamos la sesion
     <!-- Sidebar 1RA PARTE -->
     <div class="conteiner-global">
       <div class="sidebar-conteiner">
-        <?php
-        $urlIndex = '../../index.php';
-        $urlGestion = '../usuario/gestionUsuario.php';
-        $urlTarea = '../../rendimiento/v_tarea.php';
-        $urlSolicitud = '../solicitud/gestionSolicitud.php';
-        $urlComision = '../../comisiones/v_comision.php';
-        $urlCrudComision = '../comision/gestionComision.php';
-        $urlVenta = '../venta/gestionVenta.php';
-        $urlCliente = '../cliente/gestionCliente.php';
-        $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
-        $urlPorcentaje = 'gestionPorcentajes.php';
-        $urlMetricas = '../Metricas/gestionMetricas.php';
-        require_once '../../layout/sidebar.php';
+      <?php
+          $urlIndex = '../../index.php';
+          // Rendimiento
+          $urlMisTareas = '../../rendimiento/v_tarea.php';
+          $urlConsultarTareas = './'; //PENDIENTE
+          $urlBitacoraTarea = ''; //PENDIENTE
+          $urlMetricas = '../Metricas/gestionMetricas.php';
+          $urlEstadisticas = ''; //PENDIENTE
+          //Solicitud
+          $urlSolicitud = '../solicitud/gestionSolicitud.php';
+          //Comisión
+          $urlComision = '../../comisiones/v_comision.php';
+          //Consulta
+          $urlClientes = '../cliente/gestionCliente.php';
+          $urlVentas = '../Venta/gestionVenta.php';
+          $urlArticulos = '../articulo/gestionArticulo.php';
+          //Mantenimiento
+          $urlUsuarios = '../usuario/gestionUsuario.php';
+          $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
+          $urlPreguntas = '../pregunta/gestionPregunta.php';
+          $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
+          $urlParametros = './gestionParametro.php';
+          $urlPermisos = '../permiso/gestionPermiso.php';
+          $urlRoles = '../rol/gestionRol.php';
+          $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
+          $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+          require_once '../../layout/sidebar.php';
         ?>
       </div>
 
       <div class="conteiner-main">
-            <div class="navbar-conteiner">
-                <!-- Aqui va la barra -->
-                <?php include_once '../../layout/navbar.php'?>
-            </div>
-        <H1>Gestión de Parámetros</H1>
+            <!-- Encabezado -->
+          <div class= "encabezado">
+              <div class="navbar-conteiner">
+                  <!-- Aqui va la barra -->
+                  <?php include_once '../../layout/navbar.php'?>                             
+              </div>        
+              <div class ="titulo">
+                    <H2 class="title-dashboard-task">Gestión de Parámetros</H2>
+              </div>  
+          </div>
+      
           <div class="table-conteiner">
               <div>
               <a href="../../fpdf/ReporteParametros.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>

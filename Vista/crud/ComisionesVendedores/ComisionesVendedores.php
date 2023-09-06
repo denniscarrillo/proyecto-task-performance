@@ -71,11 +71,19 @@ require_once("../../../Controlador/ControladorComision.php");
 
       <!-- CONTENIDO DE LA PAGINA - 2RA PARTE -->
       <div class="conteiner-main">
+
+        <!-- Encabezado -->
+          <div class= "encabezado">
             <div class="navbar-conteiner">
                 <!-- Aqui va la barra -->
-                <?php include_once '../../layout/navbar.php'?>
-            </div>
-        <H1>Comisiones Por Vendedores</H1>
+                <?php include_once '../../layout/navbar.php'?>                             
+            </div>        
+            <div class ="titulo">
+                  <h2 class="title-dashboard-task">Comisiones Por Vendedores</h2>
+            </div>  
+          </div>    
+
+
         <div class="table-conteiner">
         <div>
             <a href="ComisionPorVendedor.php" class="btn_nuevoRegistro btn btn-primary"><i class="fa-solid fa-circle-plus"></i> Comision total por vendedor</a>
