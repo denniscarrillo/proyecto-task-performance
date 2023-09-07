@@ -276,7 +276,6 @@ class Usuario {
             $rolUsuario = $fila["id_Rol"];
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
-        
         return intval($rolUsuario);
     }
     public static function obtenerPreguntas($usuario){//método para obtener preguntas
@@ -450,5 +449,34 @@ class Usuario {
         $id = $fila['id_Usuario'];
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $id;
+    }
+    public static function permisosRol($idRolUser){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT id_Objeto, permiso_Consultar, permiso_Insercion, permiso_Actualizacion, permiso_Eliminacion  
+        FROM tbl_MS_Permisos WHERE id_Rol = '$idRolUser';";
+        $resultado = sqlsrv_query($conexion, $query);
+        while($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)){
+            $permisoRol [] = [
+                'idObjeto' => $fila['id_Objeto'],
+                'consulta' => $fila['permiso_Consultar'],
+                'insertar' => $fila['permiso_Insercion'],
+                'actualizar' => $fila['permiso_Actualizacion'],
+                'eliminar' => $fila['permiso_Eliminacion']
+            ];
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $permisoRol;
+    }
+    //Metodo que valida los objetos y los permisos del usuario sobre ellos
+    public static function validarPermisoSobreObjeto($userName, $IdObjetoActual, $permisosRol) {
+        $permitido = false;
+        foreach ($permisosRol as $objeto) {
+            if($objeto['idObjeto'] == $IdObjetoActual && $objeto['consulta'] == 'Y'){
+                $permitido = true;
+                break;
+            }
+        }
+        return $permitido;
     }
 }#Fin de la clase
