@@ -103,8 +103,8 @@ body {
 }
 .dropdown__link__span{
   list-style: none;
-  /* color: #ee9827; */
-  color: #e2beb2;
+  color: #ee9827;
+  /* color: #e2beb2; */
   font-weight: 600;
   font-size: 1rem;
   display:flex;
