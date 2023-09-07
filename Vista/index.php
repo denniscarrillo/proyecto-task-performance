@@ -8,7 +8,7 @@ session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   if(isset($_SESSION['objetoAnterior'])){
-    /* ====================== Evento ingreso a mantenimiento de usuario. =====================*/
+    /* =============================== Evento salio del objeto. ============================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
     $newBitacora->fecha = date("Y-m-d h:i:s");

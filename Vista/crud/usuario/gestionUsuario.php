@@ -4,6 +4,7 @@ require_once("../../../Modelo/Usuario.php");
 require_once("../../../Modelo/Bitacora.php");
 require_once("../../../Controlador/ControladorUsuario.php");
 require_once("../../../Controlador/ControladorBitacora.php");
+
 session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
@@ -12,7 +13,7 @@ if (isset($_SESSION['usuario'])) {
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
   $objetoPermitido = ControladorUsuario::permisoSobreObjeto($_SESSION['usuario'], $idObjetoActual, $permisoRol);
   if(!$objetoPermitido){
-    /* ====================== Evento intento de ingreso sin permiso a mantenimiento de usuario. =====================*/
+    /* ==================== Evento intento de ingreso sin permiso a mantenimiento usuario. ==========================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
     $newBitacora->fecha = date("Y-m-d h:i:s");
@@ -23,12 +24,12 @@ if (isset($_SESSION['usuario'])) {
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     $_SESSION['objetoAnterior'] = '';
     $_SESSION['descripcionObjeto'] = '';
-    /* =======================================================================================*/
+    /* ===============================================================================================================*/
     header('location: ../../v_errorSinPermiso.php');
     die();
   }else{
     if(isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])){
-      /* ====================== Evento salir. =====================*/
+      /* ====================== Evento salir. ================================================*/
       $accion = ControladorBitacora::accion_Evento();
       date_default_timezone_set('America/Tegucigalpa');
       $newBitacora->fecha = date("Y-m-d h:i:s");
@@ -39,7 +40,7 @@ if (isset($_SESSION['usuario'])) {
       ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     /* =======================================================================================*/
     }
-    /* ====================== Evento ingreso a mantenimiento de usuario. =====================*/
+    /* ====================== Evento ingreso a mantenimiento usuario. ========================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
     $newBitacora->fecha = date("Y-m-d h:i:s");
@@ -52,7 +53,6 @@ if (isset($_SESSION['usuario'])) {
     $_SESSION['descripcionObjeto'] = 'mantenimiento usuario';
     /* =======================================================================================*/
   }
-  
 } else {
   header('location: ../../login/login.php');
   die();
