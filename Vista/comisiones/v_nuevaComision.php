@@ -17,12 +17,16 @@ require_once('obtenerEstadoComision.php');
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <link href="../../Recursos/css/v_nuevaComision.css" rel="stylesheet">
   <link href='../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+  <link href='../../Recursos/css/layout/footer.css' rel='stylesheet'>
 </head>
 
-<body>
-  <div class="conteiner">
-    <div class="row gx-0 row-conteiner">
-      <div class="col-2 col-height">
+<body style="overflow: hidden;">
+  
+    <div class="conteiner-global">
+      <!-- row gx-0 row-conteiner -->
+      <div class="sidebar-conteiner">
         <?php
         $urlIndex = '../index.php';
         $urlGestion = '../crud/usuario/gestionUsuario.php';
@@ -36,6 +40,16 @@ require_once('obtenerEstadoComision.php');
         require_once '../layout/sidebar.php';
         ?>
       </div>
+
+      <div class="conteiner-main">
+        <!-- Encabezado -->
+          <div class= "encabezado">
+            <div class="navbar-conteiner">
+                <!-- Aqui va la barra -->
+                <?php include_once '../layout/navbar.php'?>                             
+            </div>          
+          </div>
+
       <div class="col-10 form-conteiner">
         <form action="" method="post" id="form-Comision">
           <div class="title-form">
@@ -95,6 +109,12 @@ require_once('obtenerEstadoComision.php');
           </div>
         </form>
       </div>
+          <!-- Footer -->
+          <div class="footer-conteiner">
+                <?php
+                require_once '../layout/footer.php';
+                ?>
+          </div>
     </div>
   </div>
   <?php

@@ -45,8 +45,8 @@
                         $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('login.php');
                         $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
                         $newBitacora->accion = $accion['Login'];
-                        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' ingreso al sistema exitosamente';
-                        // ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+                        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' ingresó al sistema exitosamente';
+                        ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
                         /* =======================================================================================*/
                         switch($estadoUsuario){
                             case 1: {

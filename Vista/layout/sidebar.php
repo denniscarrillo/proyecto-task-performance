@@ -1,4 +1,4 @@
-<nav class="sidebar locked">
+<nav>
   <!-- Logo del siberbar -->
   <div class="logo_items flex-log">
     <span class="nav_image">
@@ -26,7 +26,7 @@
         <div class="icon-menu-principal__conteiner">
           <i class="icon-menu-principal fa-solid fa-square-poll-vertical"></i>  
         </div>
-        <p>Rendimiento</p>
+        <p class="item__menu__principal">Rendimiento</p>
           <i class="dropdown__arrow fa-solid fa-angle-down"></i>
           <input type="checkbox" class="dropdown-menu__content__list__check">
         </span>
@@ -72,7 +72,7 @@
           <div class="icon-menu-principal__conteiner">
             <i class="icon-menu-principal fa-solid fa-envelopes-bulk icon-size"></i>
           </div>
-          <p>Solicitud</p>
+          <p class="item__menu__principal">Solicitud</p>
           </span>
         </a>
       </li>
@@ -84,7 +84,7 @@
           <div class="icon-menu-principal__conteiner">
            <i class="icon-menu-principal fa-solid fa-file-invoice-dollar icon-size"></i>
           </div>
-          <p>Comisión</p>
+          <p class="item__menu__principal">Comisión</p>
           </span>
         </a>
       </li>
@@ -94,7 +94,7 @@
         <div class="icon-menu-principal__conteiner">
           <i class="icon-menu-principal fa-solid fa-magnifying-glass-arrow-right"></i>
         </div>
-        <p>Consulta</p>
+        <p class="item__menu__principal">Consulta</p>
         <i class="dropdown__arrow fa-solid fa-angle-down"></i>
           <input type="checkbox" class="dropdown-menu__content__list__check">
         </span>
@@ -118,6 +118,12 @@
                 <span>Artículos</span>
               </a>
             </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlBitacoraSistema; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Bitácora Sistema</span>
+              </a>
+            </li>
           </ul>
         </div>
       </li>
@@ -127,7 +133,7 @@
           <div class="icon-menu-principal__conteiner">
             <i class="icon-menu-principal fa-solid fa-business-time"></i>
           </div>
-          <p>Mantenimiento</p>
+          <p class="item__menu__principal">Mantenimiento</p>
           <i class="dropdown__arrow fa-solid fa-angle-down"></i>
           <input type="checkbox" class="dropdown-menu__content__list__check">
         </span>
@@ -149,12 +155,6 @@
               <a href="<?php echo $urlPreguntas; ?>" class="dropdown-menu__content__secundario__link">
                 <i class=""></i>
                 <span>Preguntas</span>
-              </a>
-            </li>
-            <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo $urlBitacoraSistema; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Bitácora Sistema</span>
               </a>
             </li>
             <li class="dropdown-menu__content__list__item">

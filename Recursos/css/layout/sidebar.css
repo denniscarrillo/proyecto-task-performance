@@ -1,4 +1,3 @@
-
 /* :root {
   --view: none;
   --height: 0px;
@@ -23,7 +22,7 @@ body {
   justify-content: center;
   align-items: center;
 }
-.sidebar.close {
+.sidebar-conteiner.close {
   width: calc(55px + 20px);
 }
 .logo_items {
@@ -37,11 +36,11 @@ body {
   font-size: 22px;
   color: #c8bfbd;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: all 0.3s linear;
 }
-.sidebar.close .logo_name,
-.sidebar.close #lock-icon,
-.sidebar.close #sidebar-close {
+.sidebar-conteiner.close .logo_name,
+.sidebar-conteiner.close #lock-icon,
+.sidebar-conteiner.close #sidebar-close {
   opacity: 0;
   pointer-events: none;
 }
@@ -73,16 +72,16 @@ body {
 /* ============================= Estilos del sidebar ============================= */
 .sidebar-conteiner {
   background-color: #363232;
-  padding: 0.2rem;
-  width: 270px;
+  padding: 0.2rem 0.5rem ;
+  width: 250px;
+  transition: all 0.8s ease-out;
 }
 /* ============================= Estilos de la lista de menu  ============================= */
 .menu__container {
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
-  padding: 1rem;
-  margin: 0.5rem;
+  padding: 1rem 0.5rem;
+  /* margin: 0.5rem; */
   background-color: #474343;
   border-radius: 1rem;
 }
@@ -95,7 +94,8 @@ body {
   list-style: none;
   overflow-y: scroll;
   max-height: 65vh;
-  min-width: fit-content;
+  min-width: 210px;
+  /* min-width: inherit; */
 }
 /* Ocultar scroll de navegacion */
 .dropdown-menu__content::-webkit-scrollbar {
@@ -103,15 +103,27 @@ body {
 }
 .dropdown__link__span{
   list-style: none;
-  color: #ee9827;
+  /* color: #ee9827; */
+  color: #e2beb2;
   font-weight: 600;
   font-size: 1rem;
   display:flex;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
-  padding: 4px;
+  padding: 8px;
   padding-top: 8px;
   padding-bottom: 8px;
+  position: relative;
+  /* width: fit-content; */
+  /* transition: all 2s ease-in; */
+  /* transition: all 0.3s linear; */
+}
+/* ================== Estilos para ocultar el Sidebar ==================  */
+.dropdown__link__span.close{
+  width: 40px;
+  overflow-x: hidden;
+  padding-left: 4px;
+  padding-right: 4px;
 }
 .dropdown__link {
   text-decoration: none;
@@ -140,6 +152,8 @@ body {
 .dropdown__arrow {
   transform: var(--rotate, 0);
   transition: .2s transform;
+  position: absolute;
+  right: 8px;
 }
 .dropdown__content {
   display: grid;
