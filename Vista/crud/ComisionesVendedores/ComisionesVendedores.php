@@ -57,7 +57,7 @@ require_once("../../../Controlador/ControladorComision.php");
 
         $urlGestion = '../usuario/gestionUsuario.php';
         $urlTarea = '../../rendimiento/v_tarea.php';
-        $urlSolicitud = '../solicitud/gestionSolicitud.php';
+        $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
         $urlComision = '../../comisiones/v_comision.php';
         $urlCrudComision = '../comision/gestionComision.php';
         $urlComisionVendedor = '../ComisionesVendedores.php';
