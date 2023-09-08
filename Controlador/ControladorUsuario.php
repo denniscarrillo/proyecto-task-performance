@@ -94,4 +94,7 @@
         public static function obtenerIdUsuario($usuario){
             return Usuario::obtenerIdUsuario($usuario);
         }
+        public static function validarUsuarioExistente($usuario){
+            return Usuario::usuarioExiste($usuario);
+        }
     }

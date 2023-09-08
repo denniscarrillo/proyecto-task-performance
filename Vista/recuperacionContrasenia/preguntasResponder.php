@@ -23,7 +23,7 @@ if (isset($_SESSION['usuario'])) {
 
 <body class="container">
   <div class="ancho">
-    <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" id="formpreguntasresponder">
+    <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" id="formPreguntasRes">
       <div class="logo-empresa">
         <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="180px">
       </div>
@@ -32,7 +32,7 @@ if (isset($_SESSION['usuario'])) {
           <!-- <label><strong>Responda .</strong></label> -->
         </div>
         <p>Preguntas de Seguridad:</p>
-        <select name="pregunta" class="select-preguntas form-select">
+        <select name="pregunta" class="select-preguntas form-select" id="pregunta">
           <?php
           foreach ($preguntas as $pregunta) {
             echo '<option value="' . $pregunta['id_Pregunta'] . '">' . $pregunta['pregunta'] . '</option>';
@@ -40,7 +40,8 @@ if (isset($_SESSION['usuario'])) {
           ?>
         </select>
         <div class="wrap-input mb-3">
-          <input type="text" class="form-control" id="preguntasecretas" name="Respuesta" id="Respuesta" placeholder="Respuesta">
+          <input type="text" class="form-control"  name="Respuesta" id="Respuesta" maxlength="50" placeholder="Respuesta">
+          <p class="mensaje"></p>
         </div>
        <h3>
         <?php
@@ -56,7 +57,9 @@ if (isset($_SESSION['usuario'])) {
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-  <script src="../../Recursos/js/validacioncorreo.js"></script>
+  <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
+<!--   <script src="../../Recursos/js/validacioncorreo.js"></script> -->
+  <script src="../../Recursos/js/validacionesPreguntasResponder.js" type = "module"></script>
 </body>
 
 </html>

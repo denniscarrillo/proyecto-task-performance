@@ -80,7 +80,7 @@ $form.addEventListener('submit', e => {
                     estadoCorreo = funciones.validarCorreo($correo, validaciones.correo);
                     estadoSelect = funciones.validarCampoVacio($rol);
                 } else {
-                    estadoValidado = true; // 
+                    estadoValidado = true; 
                 }
             }
         }
@@ -90,9 +90,7 @@ $form.addEventListener('submit', e => {
 
 $name.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
-    $("#nombre").inputlimiter({
-        limit: 50
-    });
+    funciones.limitarCantidadCaracteres("nombre", 20 );
 });
 $name.addEventListener('focusout', ()=>{
     let usuarioMayus = $name.value.toUpperCase();
@@ -102,9 +100,7 @@ $name.addEventListener('focusout', ()=>{
 $user.addEventListener('keyup', () => {
     estadoEspacioInput.estadoEspacioUser = funciones.validarEspacios($user);
     //Validación con jQuery inputlimiter
-    $("#usuario").inputlimiter({
-        limit: 15
-    });
+    funciones.limitarCantidadCaracteres("usuario", 15 );
 });
 // Convierte usuario en mayúsuculas antes de enviar.
 $user.addEventListener('focusout', () => {
@@ -117,9 +113,7 @@ $user.addEventListener('focusout', () => {
 //Evento que llama a la función que valida espacios entre caracteres.
 $password.addEventListener('keyup', () => {
     estadoEspacioInput.estadoEspacioPassword= funciones.validarEspacios($password);
-    $("#password").inputlimiter({
-        limit: 20
-    });
+    funciones.limitarCantidadCaracteres("password", 15 );
 });
 //Evento que llama a la función para validar que la contraseña sea robusta.
 $password.addEventListener('focusout',() => {

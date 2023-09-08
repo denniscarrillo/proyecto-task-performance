@@ -19,4 +19,5 @@ $form.addEventListener('submit', (e) => {
 
 $pregunta.addEventListener('keyup', ()=>{
     funciones.validarCampoVacio($pregunta);
+    funciones.limitarCantidadCaracteres($pregunta, 100);
 });

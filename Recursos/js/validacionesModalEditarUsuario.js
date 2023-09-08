@@ -53,9 +53,7 @@ $form.addEventListener('submit', e => {
 });
 $name.addEventListener('keyup', ()=>{
     estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
-    $("E_nombre").inputlimiter({
-        limit: 50
-    });
+   funciones.limitarCantidadCaracteres("E_nombre", 50);
 });
 $name.addEventListener('focusout', ()=>{
     let usuarioMayus = $name.value.toUpperCase();

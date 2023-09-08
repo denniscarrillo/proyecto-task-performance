@@ -1,10 +1,10 @@
 import * as funciones from './funcionesValidaciones.js';
-
+export let estadoValidado = false;
 //VARIABLES GLOBALES
 let estadoValidacionesEspacio = {
     estadoEspacioUsuario: true,
     estadoEspacioCorreo: true,
-    estadoEspaciopPassword: true,
+    estadoEspacioPassword: true,
     estadoEspacioPassword2: true
 }
 let estadoLetrasRepetidas = {
@@ -16,6 +16,17 @@ let estadoSoloLetras = {
     estadoLetrasUsuario: true,
     estadoLetrasNombre: true,
 }
+let estadoMasdeUnEspacio = {
+    estadoMasEspacioNombre: true
+}
+
+// CAMPOS VACIOS
+const $form = document.getElementById('formRegis');
+const $nombre = document.getElementById('nombre');
+const $usuario = document.getElementById('usuario');
+const $password = document.getElementById('password');
+const $password2 = document.getElementById('password2');
+const $correo = document.getElementById('correo');
 
 let iconClass = document.querySelector('.type-lock');
 let icon_candado = document.querySelector('.lock');
@@ -39,34 +50,27 @@ const expresiones = {
     password : /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,15}$/,
 	correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
 }
-// CAMPOS VACIOS
-const $form = document.getElementById('formRegis');
-const $usuario = document.getElementById('usuario');
-const $nombre = document.getElementById('nombre');
-const $password = document.getElementById('password');
-const $password2 = document.getElementById('password2');
-const $correo = document.getElementById('correo');
 
 //Cuando se quiera enviar el formulario de registro, primero se validaran si los inputs no estan vacios
 $form.addEventListener('submit', e => {  
-    let estadoInputUsuario = funciones.validarCampoVacio($usuario);
     let estadoInputNombre = funciones.validarCampoVacio($nombre);
+    let estadoInputUsuario = funciones.validarCampoVacio($usuario);
     let estadoInputPassword = funciones.validarCampoVacio($password);
     let estadoInputPassword2 = funciones.validarCampoVacio($password2);
     let estadoInputCorreo = funciones.validarCampoVacio($correo);
 
-    if (estadoInputUsuario == false || estadoInputPassword == false || estadoInputNombre == false
-        || estadoInputPassword2 == false || estadoInputCorreo == false){
+    if (estadoInputNombre == false || estadoInputUsuario  == false || estadoInputPassword == false || 
+        estadoInputPassword2 == false || estadoInputCorreo == false){
         e.preventDefault();
-    }
-        else{
-            if(estadoValidacionesEspacio.estadoEspaciousuario == false || estadoValidacionesEspacio.estadoEspacioPassword == false || 
+    } else {
+            if(estadoMasdeUnEspacio.estadoMasEspacioNombre == false || estadoValidacionesEspacio.estadoEspacioUsuario == false || estadoValidacionesEspacio.estadoEspacioPassword == false || 
                 estadoValidacionesEspacio.estadoEspacioPassword2 == false || estadoValidacionesEspacio.estadoEspacioCorreo == false){ 
                 e.preventDefault();
+                estadoMasdeUnEspacio.estadoMasEspacioNombre = funciones.validarMasdeUnEspacio($nombre);
                 estadoValidacionesEspacio.estadoEspacioUsuario = funciones.validarEspacios($usuario);
                 estadoValidacionesEspacio.estadoEspacioCorreo = funciones.validarEspacios($correo);
                 estadoValidacionesEspacio.estadoEspacioPassword = funciones.validarEspacios($password); 
-                estadoValidacionesEspacio.estadoEspacioPassword2 = funciones.validarEspacios($password2); 
+                estadoValidacionesEspacio.estadoEspacioPassword2 = funciones.validarEspacios($password2);
                     } else {
                         if(estadoLetrasRepetidas.estadoLetrasRepetidasNombre == false || estadoLetrasRepetidas.estadoPassword == false ||
                             estadoLetrasRepetidas.estadoLetrasRepetidasUsuario == false){
@@ -79,7 +83,15 @@ $form.addEventListener('submit', e => {
                             if (estadoSoloLetras.estadoLetrasUsuario == false || estadoSoloLetras.estadoLetrasNombre == false) {
                                 e.preventDefault();
                                 estadoSoloLetras.estadoLetrasUsuario = funciones.validarSoloLetras($usuario, expresiones.user);
-                                estadoSoloLetras.estadoLetrasNombre = funciones.validarSoloLetras($nombre, expresiones.nombre);
+                                estadoSoloLetras.estadoLetrasNombre = funciones.validarSoloLetras($nombre, expresiones.user);
+                            } else {
+                                if(estadoMasdeUnEspacio.estadoMasEspacioNombre == false){
+                                    e.preventDefault();
+                                    estadoMasdeUnEspacio.estadoMasEspacioNombre = funciones.validarMasdeUnEspacio($nombre);
+                                } else {
+                                    estadoValidado = true;
+                                    console.log(estadoValidado);
+                                }
                             }
                          }
                     }
@@ -95,8 +107,12 @@ $usuario.addEventListener('focusout', () => {
     $usuario.value = usuarioMayus;
 });
 $nombre.addEventListener('focusout', () =>{
+    if(estadoMasdeUnEspacio.estadoMasEspacioNombre){
+        funciones.validarMasdeUnEspacio($nombre);
+    } else{
     if(estadoLetrasRepetidas.estadoLetrasRepetidasNombre){
         funciones.validarSoloLetras($nombre, expresiones.nombre);
+    }
     }
     let nombreMayus = $nombre.value.toUpperCase();
     $nombre.value = nombreMayus;
@@ -104,24 +120,30 @@ $nombre.addEventListener('focusout', () =>{
 
 //solo permitir una letra keyup Nombre
 $nombre.addEventListener('keyup', ()=>{
+    /* estadoCampoVacio.estadoVacioNombre = funciones.validarCampoVacio($nombre); */
     estadoLetrasRepetidas.estadoLetrasRepetidasNombre = funciones.limiteMismoCaracter($nombre, expresiones.usuario);
+    funciones.limitarCantidadCaracteres("nombre", 20 );
 });
+
+$nombre.addEventListener('keyup', ()=>{
+    estadoSoloLetras.estadoLetrasNombre = funciones.validarSoloLetras($nombre, expresiones.user);
+}
+);
 
 // NO PERMITIR ESPACIOS
 $usuario.addEventListener('keyup', () => {
+    /* estadoCampoVacio.estadoVacioUsuario = funciones.validarCampoVacio($usuario); */
+    let usuario = $('#usuario').val();
+    obtenerUsuarioExiste(usuario);
     estadoValidacionesEspacio.estadoEspacioUsuario = funciones.validarEspacios($usuario);
-    $("#usuario").inputlimiter({
-        limit: 15
-    });
+    funciones.limitarCantidadCaracteres("usuario", 15 );
 });
 $correo.addEventListener('keyup', () => {
     funciones.validarEspacios($correo);
 });
 $password.addEventListener('keyup', () => {
     estadoValidacionesEspacio.estadoEspacioPassword = funciones.validarEspacios($password);
-    $("#password").inputlimiter({
-        limit: 20
-    });
+    funciones.limitarCantidadCaracteres("password", 15 );
 });
 $password2.addEventListener('keyup', () => {
     funciones.validarEspacios($password2);
@@ -135,21 +157,22 @@ $password2.addEventListener('keyup',() =>{
 //Validacion en la cual no deje hacer submit hasta que las dos contraseñas coincidan
 
 $form.addEventListener('submit', e =>{
-    let mensaje = '';
-    let div = '';
+    let estado;
+    let mensaje = $password2.parentElement.querySelector('p');
     if($password.value != $password2.value){
-        div = $password2.parentElement 
-        mensaje = div.querySelector('p');
-        mensaje.innerText = '*Las Contraseñas no coinciden';
+        mensaje.innerText = '*Las Contraseña no coincide';
         $password2.classList.add('mensaje_error');
-    } 
+        estado = false;
+        } 
     else {
         $password2.classList.remove('mensaje_error');
         mensaje.innerText = '';
+        estado = true;
     }
     if ($password.value != $password2.value) {
         e.preventDefault();
     }
+    return estado;
 });
 //Validacion en la cual no deje hacer submit hasta que la contraseña sea robusta
 $form.addEventListener('submit', e =>{
@@ -172,7 +195,7 @@ $form.addEventListener('submit', e =>{
 
     //llama a la funcion para validar la contraseña segura
     $password.addEventListener('focusout', () => {
-        if(estadoValidacionesEspacio.estadoEspaciopPassword){
+        if(estadoValidacionesEspacio.estadoEspacioPassword){
             funciones.validarPassword($password, expresiones.password);
         }
         
@@ -210,26 +233,83 @@ $form.addEventListener('submit', e => {
         e.preventDefault();
     }
 });
-    /* $usuario.addEventListener('focusout', () => {
-    let usuario = $usuario.value;
+$form.addEventListener('submit', e => {
+    let estado;
+    let mensaje = $nombre.parentElement.querySelector('p');
+    if ($nombre.value.trim() === ''){
+        mensaje.innerText = '*Campo vacio';
+        $nombre.classList.add('mensaje_error');
+        estado = false;
+    } else {
+        $nombre.classList.remove('mensaje_error');
+        mensaje.innerText = '';
+        estado = true;
+    }
+    if ($nombre.value.trim() === '') {
+        e.preventDefault();
+    }
+    return estado;
+});
+
+$form.addEventListener('submit', e => {
+    let estado;
     let mensaje = $usuario.parentElement.querySelector('p');
-    // let mensaje = $usuario.parentElement.querySelector('p').innerText='EVENTO '+usuario;
-        $.ajax({
-            url: "../../../Vista/login/validarRegistro.php",
-            type: "POST",
-            datatype: "JSON",
-            data: {
-             nuevoUsuario: usuario
-            },
-            success:function(data) {
-                if(data[0].usuario > 0){
-                  mensaje.innerText = '*Este usuario ya existe';
-                  $usuario.classList.add('mensaje_error');
-                }
-                else{
-                    mensaje.innerText = '';
-                    $usuario.classList.remove('mensaje_error');
-                }
+    if ($usuario.value.trim() === ''){
+        mensaje.innerText = '*Campo vacio';
+        $usuario.classList.add('mensaje_error');
+        estado = false;
+    } else {
+        $usuario.classList.remove('mensaje_error');
+        mensaje.innerText = '';
+        estado = true;
+    }
+    if ($usuario.value.trim() === '') {
+        e.preventDefault();
+    }
+    return estado;
+});
+
+$form.addEventListener('submit', e => {
+    let mensaje = $nombre.parentElement.querySelector('p');
+    let estado;
+    let input = $nombre.value;
+    let regex = /\s\s/g; //Expresión literal para saber si existen mas de un espacio en la cadena
+    if (regex.test(input.trim())){ //Evaluamos expresion vs la cadena
+        //Si existen especios mostramos mensaje de error
+        mensaje.innerText = '*No se permite más un espacio entre palabras';
+        $nombre.classList.add('mensaje_error');
+        estado = false;
+    } else {
+        $nombre.classList.remove('mensaje_error');
+        mensaje.innerText = '';
+        estado = true;
+    }
+    if (regex.test(input.trim())) {
+        e.preventDefault();
+    }
+    return estado;
+});
+
+
+let obtenerUsuarioExiste = ($usuario) => {
+    $.ajax({
+        url: "../../Vista/crud/usuario/usuarioExistente.php",
+        type: "POST",
+        datatype: "JSON",
+        data: {
+            usuario: $usuario
+        },
+        success: function (usuario) {
+            let $objUsuario = JSON.parse(usuario);
+            if ($objUsuario.estado == 'true') {
+                document.getElementById('usuario').classList.add('mensaje_error');
+                document.getElementById('usuario').parentElement.querySelector('p').innerText = '*Usuario ya existe';
+                estadoValidado = false;
+            } else {
+                document.getElementById('usuario').classList.remove('mensaje_error');
+                document.getElementById('usuario').parentElement.querySelector('p').innerText = '';
+                estadoValidado = true;
             }
-          });
-    }) */
+        }
+    });
+} 

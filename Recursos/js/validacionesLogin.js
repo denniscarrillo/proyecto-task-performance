@@ -81,16 +81,12 @@ $user.addEventListener('focusout', () => {
 $user.addEventListener('keyup', () => {
     estadoEspacioInput.estadoEspacioUser = funciones.validarEspacios($user);
     //Validación con jQuery inputlimiter
-    $("#userName").inputlimiter({
-        limit: 15
-    });
+    funciones.limitarCantidadCaracteres("userName", 15);
 });
 //Evento que llama a la función que valida espacios entre caracteres.
 $password.addEventListener('keyup', () => {
     estadoEspacioInput.estadoEspacioPassword= funciones.validarEspacios($password);
-    $("#userPassword").inputlimiter({
-        limit: 20
-    });
+    funciones.limitarCantidadCaracteres("userPassword", 20);
 });
 ////Evento que llama a la función para validar que la contraseña sea robusta.
 $password.addEventListener('focusout',() => {
