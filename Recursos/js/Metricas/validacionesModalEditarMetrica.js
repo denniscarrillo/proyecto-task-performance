@@ -35,7 +35,5 @@ $form.addEventListener('submit', e => {
 });
 $meta.addEventListener('keyup', ()=>{
      estadoSoloNumeros.estadoNumerosMeta = funciones.validarSoloNumeros($meta, validaciones.soloNumeros);
-    $("#E_meta").inputlimiter({
-       limit: 14
-    });
+    funciones.limitarCantidadCaracteres("E_meta", 14);
 });

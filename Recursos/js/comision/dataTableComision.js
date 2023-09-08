@@ -4,7 +4,7 @@ let tablaComision = "";
 $(document).ready(function () {
   tablaComision = $("#table-Comision").DataTable({
     ajax: {
-      url: "../../../Vista/crud/comision/obtenerComision.php",
+      url: "../../../Vista/comisiones/obtenerComision.php",
       dataSrc: "",
     },
     language: {

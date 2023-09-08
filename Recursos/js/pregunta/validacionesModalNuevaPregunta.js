@@ -19,6 +19,7 @@ $form.addEventListener('submit', (e) => {
 
 $pregunta.addEventListener('keyup', ()=>{
     funciones.validarCampoVacio($pregunta);
+    funciones.limitarCantidadCaracteres($pregunta, 100);
 });
 /* $pregunta.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasPregunta = funciones.validarSoloLetras($pregunta, validaciones.soloLetras);

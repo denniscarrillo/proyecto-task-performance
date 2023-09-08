@@ -33,13 +33,9 @@ $form.addEventListener('submit', e => {
 
 $Rol.addEventListener('keyup', () => {
     estadoSoloLetras.estadoLetrasRol = funciones.validarSoloLetras($Rol, validaciones.soloLetras);
-    $("#rol").inputlimiter({
-        limit: 45,
-    });
+   funciones.limitarCantidadCaracteres("rol", 45);
 });
 $Descripcion.addEventListener('keyup', () => {
     estadoSoloLetras.estadoLetrasRol = funciones.validarSoloLetras($Descripcion, validaciones.soloLetras);
-    $("#descripcion").inputlimiter({
-        limit: 45,
-    });
+    funciones.limitarCantidadCaracteres("descripcion", 45);
 });

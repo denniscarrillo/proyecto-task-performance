@@ -125,6 +125,29 @@ export const validarSoloNumeros = (elemento, objetoRegex) => {
     }
     return estado;
 }
+export const limitarCantidadCaracteres = (elemento, cantMax) => {
+    $('#'+elemento).inputlimiter({
+        limit: cantMax
+    });
+}
+
+export const validarMasdeUnEspacio = elemento => {
+    let mensaje = elemento.parentElement.querySelector('p');
+    let estado;
+    let input = elemento.value;
+    let regex = /\s\s/g; //Expresión literal para saber si existen mas de un espacio en la cadena
+    if (regex.test(input.trim())){ //Evaluamos expresion vs la cadena
+        //Si existen especios mostramos mensaje de error
+        mensaje.innerText = '*No se permite más de un espacio entre palabras';
+        elemento.classList.add('mensaje_error');
+        estado = false;
+    } else {
+        elemento.classList.remove('mensaje_error');
+        mensaje.innerText = '';
+        estado = true;
+    }
+    return estado;
+};
 
 
     

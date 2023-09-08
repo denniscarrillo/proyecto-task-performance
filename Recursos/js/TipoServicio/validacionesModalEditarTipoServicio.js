@@ -32,7 +32,5 @@ $form.addEventListener('submit', e => {
 
 $servicio_Tecnico.addEventListener('keyup', () => {
     estadoValidaciones.estadoLetrasServicio_Tecnico = funciones.validarSoloLetras($servicio_Tecnico, validaciones.soloLetras);
-    $("#servicio_Tecnico").inputlimiter({
-        limit: 50,
-    });
+    funciones.limitarCantidadCaracteres("E_servicio_Tecnico", 50);
 });
