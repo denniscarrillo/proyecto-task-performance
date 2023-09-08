@@ -49,9 +49,7 @@ $user.addEventListener('focusout', () => {
 $user.addEventListener('keyup', e => {
   validarEspacios(e, $user);
   //Validación con jQuery inputlimiter
-  $("#userName").inputlimiter({
-      limit: 15
-  });
+  funciones.limitarCantidadCaracteres("user", 15);
 });
 
 //NO PERMITIR ESPACIOS

@@ -54,9 +54,7 @@ $form.addEventListener('submit', e => {
 });
 $name.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
-    $("#nombre").inputlimiter({
-        limit: 50
-    });
+    funciones.limitarCantidadCaracteres("nombre", 50);
 });
 $name.addEventListener('focusout', ()=>{
     let usuarioMayus = $name.value.toUpperCase();
@@ -65,4 +63,13 @@ $name.addEventListener('focusout', ()=>{
 
 $correo.addEventListener('keyup', ()=>{
     estadoCorreo = funciones.validarCorreo($correo, validaciones.correo);
+});
+$rtn.addEventListener('keyup', ()=>{
+    funciones.limitarCantidadCaracteres("rtn", 14);
+});
+$telefono.addEventListener('keyup', ()=>{
+    funciones.limitarCantidadCaracteres("telefono", 18);
+});
+$direccion.addEventListener('keyup', ()=>{
+    funciones.limitarCantidadCaracteres("direccion", 100);
 });

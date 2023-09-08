@@ -56,9 +56,11 @@ $form.addEventListener('submit', e => {
     });
     $password2.addEventListener('keyup',() =>{
         funciones.validarCoincidirPassword($password, $password2);
+        funciones.limitarCantidadCaracteres("confirmPassword", 15);
     });
-    $password.addEventListener('focusout', () => {
+    $password.addEventListener('keyup', () => {
         funciones.validarPassword($password, expresiones.password);
+        funciones.limitarCantidadCaracteres("password", 15);
     });
         
 $form.addEventListener('submit', e =>{
