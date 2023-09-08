@@ -100,4 +100,7 @@
         public static function permisoSobreObjeto($userName, $IdObjetoActual, $permisosRol) {
             return Usuario::validarPermisoSobreObjeto($userName, $IdObjetoActual, $permisosRol);
         }
+        public static function validarUsuarioExistente($usuario){
+            return Usuario::usuarioExiste($usuario);
+        }
     }

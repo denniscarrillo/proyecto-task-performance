@@ -1,43 +1,23 @@
 <?php
 require_once("../../../db/Conexion.php");
-require_once("../../../Modelo/DataTableTarea.php");
-require_once("../../../Controlador/ControladorDataTableTarea.php");
-require_once("../../../Modelo/Bitacora.php");
-require_once("../../../Controlador/ControladorBitacora.php");
-require_once('../../../Modelo/Usuario.php');
-require_once('../../../Controlador/ControladorUsuario.php');
-
-session_start(); //Reanudamos la sesion
-if (isset($_SESSION['usuario'])) {
-  $newBitacora = new Bitacora();
-  if(isset($_SESSION['objetoAnterior'])){
-    /* ====================== Evento ingreso a mantenimiento de usuario. =====================*/
-    $accion = ControladorBitacora::accion_Evento();
-    date_default_timezone_set('America/Tegucigalpa');
-    $newBitacora->fecha = date("Y-m-d h:i:s");
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
-    $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-    $newBitacora->accion = $accion['Exit'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de '.$_SESSION['descripcionObjeto'];
-    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-  /* =======================================================================================*/
-  }
-  /* ========================= Capturar evento inicio sesión. =============================*/
-  $accion = ControladorBitacora::accion_Evento();
-  date_default_timezone_set('America/Tegucigalpa');
-  $newBitacora->fecha = date("Y-m-d h:i:s");
-  $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionDataTableTarea.php');
-  $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-  $newBitacora->accion = $accion['income'];
-  $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a consultar tareas';
-  ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-  $_SESSION['objetoAnterior'] = 'gestionDataTableTarea.php';
-  $_SESSION['descripcionObjeto'] = 'consultar tareas';
-  /* =======================================================================================*/
-}else{
-  header('location: ./login/login.php');
-  die();
-}
+require_once("../../../Modelo/DataTableObjeto.php");
+// require_once("../../../Modelo/Bitacora.php");
+require_once("../../../Controlador/ControladorDataTableObjeto.php");
+// require_once("../../../Controlador/ControladorBitacora.php");
+// session_start(); //Reanudamos la sesion
+// if (isset($_SESSION['usuario'])) {
+//   /* ====================== Evento ingreso a mantenimiento de usuario. =====================*/
+//   $newBitacora = new Bitacora();
+//   $accion = ControladorBitacora::accion_Evento();
+//   date_default_timezone_set('America/Tegucigalpa');
+//   $newBitacora->fecha = date("Y-m-d h:i:s");
+//   $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
+//   $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+//   $newBitacora->accion = $accion['income'];
+//   $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingreso a mantenimiento usuario';
+//   ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+//   /* =======================================================================================*/
+// }
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -61,7 +41,7 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
-  <title> Avance Tareas </title>
+  <title> Estado De Objetos</title>
 </head>
 
 <body style="overflow: hidden;">
@@ -98,29 +78,27 @@ if (isset($_SESSION['usuario'])) {
         ?>
       </div>
       <div class="conteiner-main">
-            <!-- Encabezado -->
-            <div class= "encabezado">
-              <div class="navbar-conteiner">
-                  <!-- Aqui va la barra -->
-                  <?php include_once '../../layout/navbar.php'?>                             
-              </div>        
-              <div class ="titulo">
-                    <H2 class="title-dashboard-task">Avance de Tareas</H2>
-              </div>  
-            </div>
-
+      <div class= "encabezado">
+            <div class="navbar-conteiner">
+                <!-- Aqui va la barra -->
+                <?php include_once '../../layout/navbar.php'?>                             
+            </div>        
+            <div class ="titulo">
+                  <H2 class="title-dashboard-task"> Objetos</H2>
+            </div>  
+          </div> 
         <div class="table-conteiner">
           <div>
-            
             <a href="../../fpdf/ReporteRol.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> 
           </div>
-          <table class="table" id="table-Tareas">
+          <table class="table" id="table-Objeto">
             <thead>
               <tr>
                 <th scope="col"> ID </th>
-                <th scope="col"> NOMBRE </th>
-                <th scope="col"> TITULO </th>
-                <th scope="col"> AVANCE DE LA TAREA </th>
+                <th scope="col"> OBJETO</th>
+                <th scope="col"> DESCRIPCION</th>
+                <th scope="col"> TIPO OBJETO </th>
+            
               </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -142,7 +120,7 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
   <!-- Scripts propios -->
-  <script src="../../../Recursos/js/DataTableTarea/dataTableTarea.js" type="module"></script>
+  <script src="../../../Recursos/js/DataTableObjeto/dataTableObjeto.js" type="module"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>

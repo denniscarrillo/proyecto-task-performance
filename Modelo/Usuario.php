@@ -185,7 +185,7 @@ class Usuario {
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         foreach($preguntas as $pregunta){
             $query = "INSERT INTO tbl_ms_preguntas (pregunta, Creado_Por) VALUES ('$pregunta','$usuario');";
-            $conexion = sqlsrv_query($conexion, $query);
+            sqlsrv_query($conexion, $query);
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
     }
@@ -215,7 +215,7 @@ class Usuario {
         $idUsuario = $fila["id_usuario"];
         $qry = "INSERT INTO tbl_MS_Preguntas_X_Usuario (id_pregunta, id_usuario, respuesta)
             VALUES ('$idPregunta','$idUsuario','$respuesta');";
-        $conexion = sqlsrv_query($conexion, $qry);
+        sqlsrv_query($conexion, $qry);
         sqlsrv_close($conexion); #Cerramos la conexión.
     }
     //===================== METODO REPETIDO, REVISAR==========================
@@ -371,14 +371,14 @@ class Usuario {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
         $query = "UPDATE tbl_MS_Usuario  SET `preguntas_Contestadas`= '$incremento' WHERE `usuario` = '$usuario';";
-        $userCantPreguntas = sqlsrv_query($consulta, $query);
+        sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerrar la conexión.
     }
     public static function cambiarEstadoNuevo($usuario){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
         $query = "UPDATE tbl_MS_Usuario  SET `id_Estado_Usuario`= 2 WHERE `usuario` = '$usuario';";
-        $userCantPreguntas = sqlsrv_query($consulta, $query);
+        sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerrar la conexión.
     }
     //Obtener contraseña actual y guardar en tbl_MS_historial_Contraseña
@@ -478,5 +478,21 @@ class Usuario {
             }
         }
         return $permitido;
+    }
+
+    public static function usuarioExiste($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT usuario FROM tbl_MS_Usuario WHERE usuario = '$usuario'";
+        $user = sqlsrv_query($conexion, $query);
+        $existe = sqlsrv_has_rows($user);
+        if($existe){
+            $existente = sqlsrv_fetch_array($user, SQLSRV_FETCH_ASSOC);
+            $usuario = $existente['usuario'];
+        }else{
+            $usuario = null;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $existe;
     }
 }#Fin de la clase

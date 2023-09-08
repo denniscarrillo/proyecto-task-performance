@@ -98,7 +98,7 @@ if (isset($_SESSION['usuario'])) {
           $urlMetricas = '../Metricas/gestionMetricas.php';
           $urlEstadisticas = ''; //PENDIENTE
           //Solicitud
-          $urlSolicitud = '../solicitud/gestionSolicitud.php';
+          $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
           //Comisión
           $urlComision = '../../comisiones/v_comision.php';
           //Consulta
@@ -109,8 +109,8 @@ if (isset($_SESSION['usuario'])) {
           $urlUsuarios = '../usuario/gestionUsuario.php';
           $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
           $urlPreguntas = '../pregunta/gestionPregunta.php';
-          $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
-          $urlParametros = './gestionParametro.php';
+          $urlBitacoraSistema = './gestionBitacora.php';
+          $urlParametros = '../parametro/gestionParametro.php';
           $urlPermisos = '../permiso/gestionPermiso.php';
           $urlRoles = '../rol/gestionRol.php';
           $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';

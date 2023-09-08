@@ -23,14 +23,14 @@
             <span class="lock conteiner-icon">
                 <i class="icon type-lock fa-solid fa-lock" id="lok1"></i>
             </span>
-              <input type="password" class="form-control" name="password" id="password" placeholder="Nueva contraseña">
+              <input type="password" class="form-control" name="password" id="password" maxlength = "15" placeholder="Nueva contraseña">
               <p class="mensaje"></p>
             </div>
             <div class="wrap-input mb-3">
               <span class="lock1 conteiner-icon">
                 <i class="icon type-lock fa-solid fa-lock" id="lok2"></i>
               </span>
-              <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirmar contraseña" >
+              <input type="password" class="form-control" id="confirmPassword" maxlength="15" name="confirmPassword" placeholder="Confirmar contraseña" >
               <p class="mensaje"></p>
             </div>
             <button type="submit" class="btn btn-primary" name="submit" id="btn-submit">Cambiar</button>

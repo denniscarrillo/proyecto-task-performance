@@ -61,15 +61,19 @@ $objeto.addEventListener('change', ()=>{
 });
 $consultar.addEventListener('change', ()=>{
     estadoSelect.estadoSelectInsertar = funciones.validarCampoVacio($consultar);
+    funciones.limitarCantidadCaracteres("consultar", 1);
 });
 $insertar.addEventListener('change', ()=>{
     estadoSelect.estadoSelectConsultar = funciones.validarCampoVacio($insertar);
+    funciones.limitarCantidadCaracteres("insertar", 1);
 });
 $actualizar.addEventListener('change', ()=>{
     estadoSelect.estadoSelectActualizar = funciones.validarCampoVacio($actualizar);
+    funciones.limitarCantidadCaracteres("actualizar", 1);
 });
 $eliminar.addEventListener('change', ()=>{
     estadoSelect.estadoSelectEliminar = funciones.validarCampoVacio($eliminar);
+    funciones.limitarCantidadCaracteres("eliminar", 1);
 });
 
 
