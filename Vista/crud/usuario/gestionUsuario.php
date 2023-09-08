@@ -6,16 +6,30 @@ require_once("../../../Controlador/ControladorUsuario.php");
 require_once("../../../Controlador/ControladorBitacora.php");
 session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
-  /* ====================== Evento ingreso a mantenimiento de usuario. =====================*/
   $newBitacora = new Bitacora();
+  if(isset($_SESSION['objetoAnterior'])){
+    /* ====================== Evento salir. =====================*/
+    $accion = ControladorBitacora::accion_Evento();
+    date_default_timezone_set('America/Tegucigalpa');
+    $newBitacora->fecha = date("Y-m-d h:i:s");
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
+    $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+    $newBitacora->accion = $accion['Exit'];
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de '.$_SESSION['descripcionObjeto'];
+    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+  /* =======================================================================================*/
+  }
+  /* ====================== Evento ingreso a mantenimiento de usuario. =====================*/
   $accion = ControladorBitacora::accion_Evento();
   date_default_timezone_set('America/Tegucigalpa');
   $newBitacora->fecha = date("Y-m-d h:i:s");
   $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
   $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
   $newBitacora->accion = $accion['income'];
-  $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingreso a mantenimiento usuario';
+  $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a mantenimiento usuario';
   ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+  $_SESSION['objetoAnterior'] = 'gestionUsuario.php';
+  $_SESSION['descripcionObjeto'] = 'mantenimiento usuario';
   /* =======================================================================================*/
 }
 ?>
@@ -38,30 +52,59 @@ if (isset($_SESSION['usuario'])) {
   <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
+    <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+    <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <title> Prueba </title>
 </head>
 
 <body>
   <div class="conteiner">
-    <div class="row">
-      <div class="columna1 col-2">
+    <div class="conteiner-global">
+      <div class="sidebar-conteiner">
         <?php
-        $urlIndex = '../../index.php';
-        $urlGestion = 'gestionUsuario.php';
-        $urlTarea = '../../rendimiento/v_tarea.php';
-        $urlSolicitud = '../solicitud/gestionSolicitud.php';
-        $urlComision = '../../comisiones/v_comision.php';
-        $urlCrudComision = '../comision/gestionComision.php';
-        $urlVenta = '../venta/gestionVenta.php';
-        $urlCliente ='./cliente/gestionCliente.php';
-        $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
-        $urlPorcentaje = '../Porcentajes/gestionPorcentajes.php';
-        $urlMetricas = '../Metricas/gestionMetricas.php';
-        require_once '../../layout/sidebar.php';
+          $urlIndex = '../../index.php';
+          // Rendimiento
+          $urlMisTareas = '../../rendimiento/v_tarea.php';
+          $urlConsultarTareas = './'; //PENDIENTE
+          $urlBitacoraTarea = ''; //PENDIENTE
+          $urlMetricas = '../Metricas/gestionMetricas.php';
+          $urlEstadisticas = ''; //PENDIENTE
+          //Solicitud
+          $urlSolicitud = '../solicitud/gestionSolicitud.php';
+          //Comisión
+          $urlComision = '../../comisiones/v_comision.php';
+          //Consulta
+          $urlClientes = '../cliente/gestionCliente.php';
+          $urlVentas = '../Venta/gestionVenta.php';
+          $urlArticulos = '../articulo/gestionArticulo.php';
+          //Mantenimiento
+          $urlUsuarios = './gestionUsuario.php';
+          $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
+          $urlPreguntas = '../pregunta/gestionPregunta.php';
+          $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
+          $urlParametros = '../parametro/gestionParametro.php';
+          $urlPermisos = '../permiso/gestionPermiso.php';
+          $urlRoles = '../rol/gestionRol.php';
+          $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
+          $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+          require_once '../../layout/sidebar.php';
         ?>
       </div>
-      <div class="columna2 col-10">
-        <H1>Gestión de Usuarios</H1>
+
+      <!-- CONTENIDO DE LA PAGINA - 2RA PARTE -->
+        <div class="conteiner-main">
+            <!-- Encabezado -->
+          <div class= "encabezado">
+            <div class="navbar-conteiner">
+                <!-- Aqui va la barra -->
+                <?php include_once '../../layout/navbar.php'?>                             
+            </div>        
+            <div class ="titulo">
+                  <H2 class="title-dashboard-task">Gestión de Usuarios</H2>
+            </div>  
+          </div>
+  
         <div class="table-conteiner">
           <div>
             <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoUsuario"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
@@ -83,6 +126,12 @@ if (isset($_SESSION['usuario'])) {
             </tbody>
           </table>
         </div>
+        <!-- Footer -->
+        <div class="footer-conteiner">
+                <?php
+                require_once '../../layout/footer.php';
+                ?>
+          </div>
       </div> <!-- Fin de la columna -->
     </div>
   </div>

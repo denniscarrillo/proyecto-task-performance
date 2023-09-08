@@ -40,13 +40,18 @@ require_once("../../../Controlador/ControladorComision.php");
   <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
   <!-- <link href="../../../Recursos/css/modalNuevaComision.css" rel="stylesheet"> -->
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
+    <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+    <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'> 
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
   <title> Comisiones Por Vendedores </title>
 </head>
-<body>
+<body style="overflow: hidden;">
+  
+  <!-- Sidebar 1RA PARTE -->
   <div class="conteiner">
-    <div class="row">
-      <div class="columna1 col-2">
+    <div class="conteiner-global">
+      <div class="sidebar-conteiner">
         <?php
         $urlIndex = '../../index.php';
 
@@ -63,8 +68,22 @@ require_once("../../../Controlador/ControladorComision.php");
         require_once '../../layout/sidebar.php';
         ?>
       </div>
-      <div class="columna2 col-10">
-        <H1>Comisiones Por Vendedores</H1>
+
+      <!-- CONTENIDO DE LA PAGINA - 2RA PARTE -->
+      <div class="conteiner-main">
+
+        <!-- Encabezado -->
+          <div class= "encabezado">
+            <div class="navbar-conteiner">
+                <!-- Aqui va la barra -->
+                <?php include_once '../../layout/navbar.php'?>                             
+            </div>        
+            <div class ="titulo">
+                  <h2 class="title-dashboard-task">Comisiones Por Vendedores</h2>
+            </div>  
+          </div>    
+
+
         <div class="table-conteiner">
         <div>
             <a href="ComisionPorVendedor.php" class="btn_nuevoRegistro btn btn-primary"><i class="fa-solid fa-circle-plus"></i> Comision total por vendedor</a>
@@ -85,6 +104,15 @@ require_once("../../../Controlador/ControladorComision.php");
             </tbody>
           </table>
         </div>
+
+        <!-- Footer -->
+        <div class="footer-conteiner">
+                <?php
+                require_once '../../layout/footer.php';
+                ?>
+        </div>
+
+
       </div>
     </div>
   </div>

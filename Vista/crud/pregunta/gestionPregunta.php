@@ -40,37 +40,67 @@ session_start(); //Reanudamos la sesion
   <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+    <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
+    <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+    <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
   <title> Pregunta </title>
 </head>
 
-<body>
+<body style="overflow: hidden;">
+
+  <!-- Sidebar 1RA PARTE -->
   <div class="conteiner">
-    <div class="row">
-      <div class="columna1 col-2">
-        <?php
-        $urlIndex = '../../index.php';
-        $urlGestion = '../usuario/gestionUsuario.php';
-        $urlTarea = '../../rendimiento/v_tarea.php';
-        $urlSolicitud = '../solicitud/gestionSolicitud.php';
-        $urlComision = '../../comisiones/v_comision.php';
-        $urlCrudComision = '../comision/gestionComision.php';
-        $urlVenta = 'gestionVenta.php';
-        $urlCliente = '../cliente/gestionCliente.php';
-        $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
-        $urlRoles = '../../../Vista/crud/rol/gestionRol.php';
-        $urlPreguntas = '../../../Vista/crud/pregunta/gestionPregunta.php';
-        
-        require_once '../../layout/sidebar.php';
+    <div class="conteiner-global">
+      <div class="sidebar-conteiner">
+      <?php
+          $urlIndex = '../../index.php';
+          // Rendimiento
+          $urlMisTareas = '../../rendimiento/v_tarea.php';
+          $urlConsultarTareas = './'; //PENDIENTE
+          $urlBitacoraTarea = ''; //PENDIENTE
+          $urlMetricas = '../Metricas/gestionMetricas.php';
+          $urlEstadisticas = ''; //PENDIENTE
+          //Solicitud
+          $urlSolicitud = '../solicitud/gestionSolicitud.php';
+          //Comisión
+          $urlComision = '../../comisiones/v_comision.php';
+          //Consulta
+          $urlClientes = '../cliente/gestionCliente.php';
+          $urlVentas = '../Venta/gestionVenta.php';
+          $urlArticulos = '../articulo/gestionArticulo.php';
+          //Mantenimiento
+          $urlUsuarios = '../usuario/gestionUsuario.php';
+          $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
+          $urlPreguntas = './gestionPregunta.php';
+          $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
+          $urlParametros = '../parametro/gestionParametro.php';
+          $urlPermisos = '../permiso/gestionPermiso.php';
+          $urlRoles = '../rol/gestionRol.php';
+          $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
+          $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+          require_once '../../layout/sidebar.php';
         ?>
       </div>
-      <div class="columna2 col-10">
-        <H1>Gestión de Preguntas</H1>
+
+      <div class="conteiner-main">
+            <!-- Encabezado -->
+          <div class= "encabezado">
+            <div class="navbar-conteiner">
+                <!-- Aqui va la barra -->
+                <?php include_once '../../layout/navbar.php'?>                             
+            </div>        
+            <div class ="titulo">
+                  <H2 class="title-dashboard-task">Gestión de Preguntas</H2>
+            </div>  
+          </div>
+
         <div class="table-conteiner">
-        <div>
-        <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevaPregunta"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
-        <a href="../../fpdf/ReportePregunta.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> 
-        </div>
+          <div>
+            <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevaPregunta"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
+            <a href="../../fpdf/ReportePregunta.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> 
+          </div>
           <table class="table" id="table-Pregunta">
             <thead>
               <tr>
@@ -83,23 +113,30 @@ session_start(); //Reanudamos la sesion
             </tbody>
           </table>
         </div>
+
+          <!-- Footer -->
+          <div class="footer-conteiner">
+                <?php
+                require_once '../../layout/footer.php';
+                ?>
+          </div>
       </div>
     </div>
   </div>
-  <?php
-  require('modalNuevaPregunta.html');
-  require('modalEditarPregunta.html');
-  ?>
-  <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
-  <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
-  <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-  <script src="../../../Recursos/js/pregunta/dataTablePregunta.js" type="module"></script>
-  <script src="../../../Recursos/js/pregunta/validacionesModalNuevaPregunta.js" type="module"></script>
-  <script src="../../../Recursos/js/pregunta/validacionesModalEditarPregunta.js" type="module"></script>
-  <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-  <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
-  <!--<script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script>-->
+        <?php
+        require('modalNuevaPregunta.html');
+        require('modalEditarPregunta.html');
+        ?>
+        <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+        <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
+        <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+        <script src="../../../Recursos/js/pregunta/dataTablePregunta.js" type="module"></script>
+        <script src="../../../Recursos/js/pregunta/validacionesModalNuevaPregunta.js" type="module"></script>
+        <script src="../../../Recursos/js/pregunta/validacionesModalEditarPregunta.js" type="module"></script>
+        <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
+        <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
+        <!--<script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script>-->
 </body>
 
 </html>

@@ -1,8 +1,8 @@
 <?php
-// require_once("../../../db/Conexion.php");
-// require_once("../../../Modelo/TipoServicio.php");
+require_once("../../../db/Conexion.php");
+require_once("../../../Modelo/DataTableSolicitud.php");
 // require_once("../../../Modelo/Bitacora.php");
-// require_once("../../../Controlador/ControladorTipoServicio.php");
+require_once("../../../Controlador/ControladorDataTableSolicitud.php");
 // require_once("../../../Controlador/ControladorBitacora.php");
 // session_start(); //Reanudamos la sesion
 // if (isset($_SESSION['usuario'])) {
@@ -18,7 +18,6 @@
 //   ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
 //   /* =======================================================================================*/
 // }
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -37,72 +36,54 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
   <!-- Estilos personalizados -->
   <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
-  <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
+
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
-  <title> Gestion de Tipo Servicio </title>
+  <title> Estado De Solicitudes</title>
 </head>
 
 <body style="overflow: hidden;">
   <div class="conteiner">
     <div class="conteiner-global">
       <div class="sidebar-conteiner">
-      <?php
-          $urlIndex = '../../index.php';
-          // Rendimiento
-          $urlMisTareas = '../../rendimiento/v_tarea.php';
-          $urlConsultarTareas = './'; //PENDIENTE
-          $urlBitacoraTarea = ''; //PENDIENTE
-          $urlMetricas = '../Metricas/gestionMetricas.php';
-          $urlEstadisticas = ''; //PENDIENTE
-          //Solicitud
-          $urlSolicitud = '../solicitud/gestionSolicitud.php';
-          //Comisión
-          $urlComision = '../../comisiones/v_comision.php';
-          //Consulta
-          $urlClientes = '../cliente/gestionCliente.php';
-          $urlVentas = '../Venta/gestionVenta.php';
-          $urlArticulos = '../articulo/gestionArticulo.php';
-          //Mantenimiento
-          $urlUsuarios = '../usuario/gestionUsuario.php';
-          $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
-          $urlPreguntas = '../pregunta/gestionPregunta.php';
-          $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
-          $urlParametros = '../parametro/gestionParametro.php';
-          $urlPermisos = '../permiso/gestionPermiso.php';
-          $urlRoles = '../rol/gestionRol.php';
-          $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
-          $urlServiciosTecnicos = './gestionTipoServicio.php';
-          require_once '../../layout/sidebar.php';
+        <?php
+        $urlIndex = '../../index.php';
+        $urlGestion = 'gestionUsuario.php';
+        $urlTarea = '../../rendimiento/v_tarea.php';
+        $urlSolicitud = '../solicitud/gestionSolicitud.php';
+        $urlComision = '../../comisiones/v_comision.php';
+        $urlCrudComision = '../comision/gestionComision.php';
+        $urlVenta = '../venta/gestionVenta.php';
+        $urlCliente ='./cliente/gestionCliente.php';
+        $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
+        $urlPorcentaje = '../Porcentajes/gestionPorcentajes.php';
+        $urlMetricas = '../Metricas/gestionMetricas.php';
+        require_once '../../layout/sidebar.php';
         ?>
       </div>
-
-
       <div class="conteiner-main">
-            <!-- Encabezado -->
-          <div class= "encabezado">
             <div class="navbar-conteiner">
                 <!-- Aqui va la barra -->
-                <?php include_once '../../layout/navbar.php'?>                             
-            </div>        
-            <div class ="titulo">
-                  <H2 class="title-dashboard-task">Gestión de Tipos de Servicio</H2>
-            </div>  
-          </div>
-
+                <?php include_once '../../layout/navbar.php'?>
+            </div>
+        <H1>Gestión Avance de Solicitudes</H1>
         <div class="table-conteiner">
           <div>
-            <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoTipoServicio"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
-            <a href="../../fpdf/ReporteTipoServicio.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> 
+            
+            <a href="../../fpdf/ReporteRol.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> 
           </div>
-          <table class="table" id="table-TipoServicio">
+          <table class="table" id="table-Solicitud">
             <thead>
               <tr>
                 <th scope="col"> ID </th>
-                <th scope="col"> SERVICIO TECNICO </th>
-                <th scope="col"> ACCIONES </th>
+                <th scope="col"> SERVICIO TECNICO</th>
+                <th scope="col"> TELEFONO</th>
+                <th scope="col"> AVANCE DE LA SOLICITUD </th>
+                <th scope="col"> ESTADO DE LA SOLICITUD</th>
+                <th scope="col"> MOTIVO DE CANCELACION  </th>
+                <th scope="col"> FECHA DE CREACION  </th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -118,18 +99,13 @@
       </div> <!-- Fin de la columna -->
     </div>
   </div>
-  <?php
-  require('modalNuevoTipoServicio.html');
-  require('modalEditarTipoServicio.html');
-  ?>
+ 
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
   <!-- Scripts propios -->
-  <script src="../../../Recursos/js/TipoServicio/validacionesModalNuevoTipoServicio.js" type="module"></script>
-  <script src="../../../Recursos/js/TipoServicio/validacionesModalEditarTipoServicio.js" type="module"></script>
-  <script src="../../../Recursos/js/TipoServicio/dataTableTipoServicio.js" type="module"></script>
+  <script src="../../../Recursos/js/DataTableSolicitud/dataTableSolicitud.js" type="module"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>

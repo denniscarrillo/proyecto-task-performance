@@ -98,7 +98,8 @@ class Comision
     {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $query = "SELECT id_Tarea FROM tbl_AdjuntoEvidencia WHERE evidencia = $idFacturaVenta;";
+        $query = "SELECT id_Tarea FROM tbl_AdjuntoEvidencia 
+        WHERE evidencia = $idFacturaVenta;";
         $consulta = sqlsrv_query($conexion, $query);
         $fila = $consulta->fetch_assoc();
         $idTarea = $fila['id_Tarea'];

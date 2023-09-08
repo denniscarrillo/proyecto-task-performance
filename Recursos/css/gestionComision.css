@@ -72,13 +72,14 @@ h1{
     margin-left: -2rem;
     padding: 1rem;
     font-size: 1.2rem;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(202, 199, 195);
 }
 .filtro-fecha input{
     margin: 0.5rem;
     padding: 0.5rem;
     font-size: 1.2rem;
     width: auto;
+    background-color: #dbd2c0;
     border-color: rgb(9, 107, 107);
 }
 .filtro-fecha label{
@@ -86,14 +87,15 @@ h1{
     padding: 0.5rem;
     font-size: 1.2rem;
     width: auto;
-    border-color: rgb(9, 107, 107);
+    border-color: rgb(24, 26, 26);
 }
 .filtro-fecha button{
     margin: 0.5rem;
     padding: 0.5rem;
     font-size: 1.2rem;
     width: 5rem;
-    background-color: rgb(9, 107, 107);
+    border-color: rgb(24, 26, 26);
+    background-color: #d1821b;
 }
 .mensaje {
     position: absolute;

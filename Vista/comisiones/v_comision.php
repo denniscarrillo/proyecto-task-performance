@@ -16,30 +16,61 @@ require_once("validacionesComision.php");
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <link href="../../Recursos/css/gestionComision.css" rel="stylesheet" />
   <link href='../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+  <link href='../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
+  <link href='../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+  <link href='../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
   <title> Comision </title>
 </head>
-<body>
+<body style="overflow: hidden;">
   <div class="conteiner">
-    <div class="row">
-      <div class="columna1 col-2">
+    <div class="conteiner-global">
+      <div class="sidebar-conteiner">
         <?php
         $urlIndex = '../index.php';
-        $urlGestion = '../crud/usuario/gestionUsuario.php';
-        $urlTarea = '../rendimiento/v_tarea.php';
-        $urlSolicitud = '../crud/solicitud/gestionSolicitud.php';
-        $urlComision = 'v_comision.php';
-        $urlComisionVendedor = '../crud/ComisionesVendedores/ComisionesVendedores.php';
-        $urlVenta = '../crud/venta/gestionVenta.php';
-        $urlCliente = '../crud/cliente/gestionCliente.php';
-        $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
-        $urlPorcentaje = '../crud/Porcentajes/gestionPorcentajes.php';
+        // Rendimiento
+        $urlMisTareas = '../rendimiento/v_tarea.php';
+        $urlConsultarTareas = './'; //PENDIENTE
+        $urlBitacoraTarea = ''; //PENDIENTE
         $urlMetricas = '../crud/Metricas/gestionMetricas.php';
+        $urlEstadisticas = ''; //PENDIENTE
+        //Solicitud
+        $urlSolicitud = '../crud/solicitud/gestionSolicitud.php';
+        //Comisión
+        $urlComision = './v_comision.php';
+        //Consulta
+        $urlClientes = '../crud/cliente/gestionCliente.php';
+        $urlVentas = '../crud/Venta/gestionVenta.php';
+        $urlArticulos = '../crud/articulo/gestionArticulo.php';
+        //Mantenimiento
+        $urlUsuarios = '../crud/usuario/gestionUsuario.php';
+        $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
+        $urlPreguntas = '../crud/pregunta/gestionPregunta.php';
+        $urlBitacoraSistema = '../crud/bitacora/gestionBitacora.php';
+        $urlParametros = '../crud/parametro/gestionParametro.php';
+        $urlPermisos = '../crud/permiso/gestionPermiso.php';
+        $urlRoles = '../crud/rol/gestionRol.php';
+        $urlPorcentajes = '../crud/Porcentajes/gestionPorcentajes.php';
+        $urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
         require_once '../layout/sidebar.php';
-        ?>
+      ?>
       </div>
-      <div class="columna2 col-10">
-        <H1>Comisiones</H1>
+       <!-- CONTENIDO DE LA PAGINA - 2RA PARTE -->
+      <div class="conteiner-main">
+
+          <!-- Encabezado -->
+          <div class= "encabezado">
+            <div class="navbar-conteiner">
+                <!-- Aqui va la barra -->
+                <?php include_once '../layout/navbar.php'?>                             
+            </div>        
+            <div class ="titulo">
+                  <H2 class="title-dashboard-task">Comisiones</H2>
+            </div>  
+          </div>
+
+
+        
         <div class= "table-conteiner">
           <div class="filtros">
             <div class="filtro-fecha">
@@ -75,6 +106,13 @@ require_once("validacionesComision.php");
             </tbody>
           </table>
         </div>
+
+          <!-- Footer -->
+          <div class="footer-conteiner">
+                <?php
+                require_once '../layout/footer.php';
+                ?>
+          </div>
       </div>
     </div>
   </div>

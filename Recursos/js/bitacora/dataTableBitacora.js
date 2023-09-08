@@ -10,17 +10,11 @@ $(document).ready(function () {
     },
     "columns": [
       { "data": "id_Bitacora"},
-      { "data": 'fecha' },
-      { "data": 'Usuario' },
-      { "data": 'Objeto' },
-      { "data": 'accion' },
-      { "data": 'descripcion' },
-      
-      
-      {
-        "defaultContent":
-          '<div></div>'
-      }
+      { "data": "fecha" },
+      { "data": "Usuario" },
+      { "data": "Objeto" },
+      { "data": "accion" },
+      { "data": "descripcion" },
     ]
   });
 

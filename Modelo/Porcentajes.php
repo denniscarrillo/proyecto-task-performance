@@ -16,8 +16,8 @@ class Porcentajes {
     public static function obtenerPorcentajes(){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $query = "SELECT id_TipoServicio,servicio_Tecnico 
-        FROM tbl_TipoServicio;";
+        $query = "SELECT id_Porcentaje,valor_Porcentaje, descripcion, estado_Porcentaje
+        FROM tbl_Porcentaje;";
         $listaPorcentajes = sqlsrv_query($consulta, $query);
         $Porcent = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo

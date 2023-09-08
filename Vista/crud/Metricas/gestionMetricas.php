@@ -2,21 +2,42 @@
 require_once("../../../db/Conexion.php");
 require_once("../../../Modelo/Metricas.php");
 require_once("../../../Controlador/ControladorMetricas.php");
-// session_start(); //Reanudamos la sesion
+require_once('../../../Modelo/Usuario.php');
+require_once('../../../Controlador/ControladorUsuario.php');
+require_once("../../../Modelo/Bitacora.php");
+require_once("../../../Controlador/ControladorBitacora.php");
 
-// if(isset($_SESSION['usuario'])){
-//   /* ====================== Evento ingreso a mantenimiento de usuario. =====================*/
-//   $newBitacora = new Bitacora();
-//   $accion = ControladorBitacora::accion_Evento();
-//  date_default_timezone_set('America/Tegucigalpa');
-//   $newBitacora->fecha = date("Y-m-d h:i:s"); 
-//   $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionUsuario.php');
-//   $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-//   $newBitacora->accion = $accion['income'];
-//   $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' ingreso a mantenimiento usuario';
-//   ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-//   /* =======================================================================================*/
-// }
+session_start(); //Reanudamos la sesion
+if (isset($_SESSION['usuario'])) {
+  $newBitacora = new Bitacora();
+  if(isset($_SESSION['objetoAnterior'])){
+    /* ====================== Evento ingreso a mantenimiento de usuario. =====================*/
+    $accion = ControladorBitacora::accion_Evento();
+    date_default_timezone_set('America/Tegucigalpa');
+    $newBitacora->fecha = date("Y-m-d h:i:s");
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
+    $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+    $newBitacora->accion = $accion['Exit'];
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de '.$_SESSION['descripcionObjeto'];
+    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+  /* =======================================================================================*/
+  }
+  /* ========================= Capturar evento Consultar Tarea. =============================*/
+  $accion = ControladorBitacora::accion_Evento();
+  date_default_timezone_set('America/Tegucigalpa');
+  $newBitacora->fecha = date("Y-m-d h:i:s");
+  $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionMetricas.php');
+  $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+  $newBitacora->accion = $accion['income'];
+  $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a consultar métricas';
+  ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+  $_SESSION['objetoAnterior'] = 'gestionMetricas.php';
+  $_SESSION['descripcionObjeto'] = 'consultar métricas';
+  /* =======================================================================================*/
+}else{
+  header('location: ../login/login.php');
+  die();
+}
 
 ?>
 <!DOCTYPE html>
@@ -35,30 +56,60 @@ require_once("../../../Controlador/ControladorMetricas.php");
   <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
   <title> Métricas </title>
 </head>
-<body>
+<body style="overflow: hidden;">
+
+  <!-- Sidebar 1RA PARTE -->
   <div class="conteiner">
-    <div class="row">
-      <div class="columna1 col-2">
-        <?php
+    <div class="conteiner-global">
+      <div class="sidebar-conteiner">
+      <?php
         $urlIndex = '../../index.php';
-        $urlGestion = '../usuario/gestionUsuario.php';
-        $urlTarea = '../../rendimiento/v_tarea.php';
+        // Rendimiento
+        $urlMisTareas = '../../rendimiento/v_tarea.php';
+        $urlConsultarTareas = './'; //PENDIENTE
+        $urlBitacoraTarea = ''; //PENDIENTE
+        $urlMetricas = './gestionMetricas.php';
+        $urlEstadisticas = ''; //PENDIENTE
+        //Solicitud
         $urlSolicitud = '../solicitud/gestionSolicitud.php';
+        //Comisión
         $urlComision = '../../comisiones/v_comision.php';
-        $urlCrudComision = '../comision/gestionComision.php';
-        $urlVenta = '../venta/gestionVenta.php';
-        $urlCliente = '../cliente/gestionCliente.php';
+        //Consulta
+        $urlClientes = '../cliente/gestionCliente.php';
+        $urlVentas = '../Venta/gestionVenta.php';
+        $urlArticulos = '../articulo/gestionArticulo.php';
+        //Mantenimiento
+        $urlUsuarios = '../usuario/gestionUsuario.php';
         $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
-        $urlPorcentaje = '../Porcentajes/gestionPorcentajes.php';
-        $urlMetricas = 'gestionMetricas.php';
+        $urlPreguntas = '../pregunta/gestionPregunta.php';
+        $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
+        $urlParametros = '../parametro/gestionParametro.php';
+        $urlPermisos = '../permiso/gestionPermiso.php';
+        $urlRoles = '../rol/gestionRol.php';
+        $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
+        $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
         require_once '../../layout/sidebar.php';
-        ?>
+      ?>
       </div>
-      <div class="columna2 col-10">
-        <H1>Gestión de Metricas</H1>
+      <div class="conteiner-main">
+            <!-- Encabezado -->
+          <div class= "encabezado">
+            <div class="navbar-conteiner">
+                <!-- Aqui va la barra -->
+                <?php include_once '../../layout/navbar.php'?>                             
+            </div>        
+            <div class ="titulo">
+                  <H2 class="title-dashboard-task">Gestión de Metricas</H2>
+            </div>  
+          </div>       
+      
         <div class="table-conteiner">
           <div>
             <a href="../../fpdf/ReporteMetrica.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
@@ -76,6 +127,13 @@ require_once("../../../Controlador/ControladorMetricas.php");
             </tbody>
           </table>
         </div>
+
+          <!-- Footer -->
+          <div class="footer-conteiner">
+                <?php
+                require_once '../../layout/footer.php';
+                ?>
+          </div>        
       </div>
     </div>
   </div>

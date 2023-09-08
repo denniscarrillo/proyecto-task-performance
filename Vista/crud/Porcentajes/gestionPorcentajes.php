@@ -38,31 +38,59 @@ session_start(); //Reanudamos la sesion
   <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
+    <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+    <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
   <title> Porcentaje </title>
 </head>
 
-<body>
+<body style="overflow: hidden;">
   <div class="conteiner">
-    <div class="row">
-      <div class="columna1 col-2">
-        <?php
-        $urlIndex = '../../index.php';
-        $urlGestion = '../usuario/gestionUsuario.php';
-        $urlTarea = '../../rendimiento/v_tarea.php';
-        $urlSolicitud = '../solicitud/gestionSolicitud.php';
-        $urlComision = '../../comisiones/v_comision.php';
-        $urlCrudComision = '../comision/gestionComision.php';
-        $urlVenta = '../venta/gestionVenta.php';
-        $urlCliente = '../cliente/gestionCliente.php';
-        $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
-        $urlPorcentaje = 'gestionPorcentajes.php';
-        $urlMetricas = '../Metricas/gestionMetricas.php';
-        require_once '../../layout/sidebar.php';
+    <div class="conteiner-global">
+      <div class="sidebar-conteiner">
+      <?php
+          $urlIndex = '../../index.php';
+          // Rendimiento
+          $urlMisTareas = '../../rendimiento/v_tarea.php';
+          $urlConsultarTareas = './'; //PENDIENTE
+          $urlBitacoraTarea = ''; //PENDIENTE
+          $urlMetricas = '../Metricas/gestionMetricas.php';
+          $urlEstadisticas = ''; //PENDIENTE
+          //Solicitud
+          $urlSolicitud = '../solicitud/gestionSolicitud.php';
+          //Comisión
+          $urlComision = '../../comisiones/v_comision.php';
+          //Consulta
+          $urlClientes = '../cliente/gestionCliente.php';
+          $urlVentas = '../Venta/gestionVenta.php';
+          $urlArticulos = '../articulo/gestionArticulo.php';
+          //Mantenimiento
+          $urlUsuarios = '../usuario/gestionUsuario.php';
+          $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
+          $urlPreguntas = '../pregunta/gestionPregunta.php';
+          $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
+          $urlParametros = '../parametro/gestionParametro.php';
+          $urlPermisos = '../permiso/gestionPermiso.php';
+          $urlRoles = '../rol/gestionRol.php';
+          $urlPorcentajes = './gestionPorcentajes.php';
+          $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+          require_once '../../layout/sidebar.php';
         ?>
       </div>
-      <div class="columna2 col-10">
-        <H1>Gestión de Porcentajes</H1>
+
+      <div class="conteiner-main">
+            <!-- Encabezado -->
+          <div class= "encabezado">
+            <div class="navbar-conteiner">
+                <!-- Aqui va la barra -->
+                <?php include_once '../../layout/navbar.php'?>                             
+            </div>        
+            <div class ="titulo">
+                  <H2 class="title-dashboard-task">Gestión de Porcentajes</H2>
+            </div>  
+          </div>
+
         <div class="table-conteiner">
         <div>
             <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoPorcentaje"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
@@ -84,6 +112,12 @@ session_start(); //Reanudamos la sesion
             <tbody class="table-group-divider">
             </tbody>
           </table>
+        </div>
+        <!-- Footer -->
+        <div class="footer-conteiner">
+                <?php
+                require_once '../../layout/footer.php';
+                ?>
         </div>
       </div>
     </div>

@@ -6,17 +6,34 @@ require_once("../Controlador/ControladorUsuario.php");
 require_once("../Controlador/ControladorBitacora.php");
 session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
-  /* ========================= Capturar evento inicio sesión. =============================*/
   $newBitacora = new Bitacora();
+  if(isset($_SESSION['objetoAnterior'])){
+    /* ====================== Evento ingreso a mantenimiento de usuario. =====================*/
+    $accion = ControladorBitacora::accion_Evento();
+    date_default_timezone_set('America/Tegucigalpa');
+    $newBitacora->fecha = date("Y-m-d h:i:s");
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
+    $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+    $newBitacora->accion = $accion['Exit'];
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de '.$_SESSION['descripcionObjeto'];
+    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+  /* =======================================================================================*/
+  }
+  /* ========================= Capturar evento inicio sesión. =============================*/
   $accion = ControladorBitacora::accion_Evento();
   date_default_timezone_set('America/Tegucigalpa');
   $newBitacora->fecha = date("Y-m-d h:i:s");
   $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('index.php');
   $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
   $newBitacora->accion = $accion['income'];
-  $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingreso al menú principal';
+  $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a página principal';
   ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+  $_SESSION['objetoAnterior'] = 'index.php';
+  $_SESSION['descripcionObjeto'] = 'página principal';
   /* =======================================================================================*/
+}else{
+  header('location: ./login/login.php');
+  die();
 }
 ?>
 <!DOCTYPE html>
@@ -45,24 +62,32 @@ if (isset($_SESSION['usuario'])) {
   <div class="conteiner-global">
     <div class="sidebar-conteiner">
       <?php
-      $urlIndex = 'index.php';
-      $urlGestion = './crud/usuario/gestionUsuario.php';
-      $urlTarea = './rendimiento/v_tarea.php';
-      $urlSolicitud = './crud/solicitud/gestionSolicitud.php';
-      $urlComision = './comisiones/v_comision.php';
-      $urlVenta = './crud/venta/gestionVenta.php';
-      $urlCliente = './crud/cliente/gestionCliente.php';
-      $urlCarteraCliente = './crud/carteraCliente/gestionCarteraClientes.php';
-      $urlCrudComision = './crud/comision/gestionComision.php';
-      $urlRoles = '../../../Vista/crud/rol/gestionRol.php';
-      $urlPreguntas = '../../../Vista/crud/pregunta/gestionPregunta.php';
-      $urlBitacoras = '../../../Vista/crud/bitacora/gestionBitacora.php';
-      $urlPorcentaje = './crud/Porcentajes/gestionPorcentajes.php';
-      $urlMetricas = './crud/Metricas/gestionMetricas.php';
-      $urlRoles = './crud/rol/gestionRol.php';
-      $urlPreguntas = './crud/pregunta/gestionPregunta.php';
-      $urlBitacoras = './crud/bitacora/gestionBitacora.php';
-      require_once 'layout/sidebar.php';
+        $urlIndex = 'index.php';
+        // Rendimiento
+        $urlMisTareas = './rendimiento/v_tarea.php';
+        $urlConsultarTareas = './crud/DataTableTarea/gestionDataTableTarea.php'; //PENDIENTE
+        $urlBitacoraTarea = ''; //PENDIENTE
+        $urlMetricas = './crud/Metricas/gestionMetricas.php';
+        $urlEstadisticas = ''; //PENDIENTE
+        //Solicitud
+        $urlSolicitud = './crud/solicitud/gestionSolicitud.php';
+        //Comisión
+        $urlComision = './comisiones/v_comision.php';
+        //Consulta
+        $urlClientes = './crud/cliente/gestionCliente.php';
+        $urlVentas = './crud/Venta/gestionVenta.php';
+        $urlArticulos = './crud/articulo/gestionArticulo.php';
+        //Mantenimiento
+        $urlUsuarios = './crud/usuario/gestionUsuario.php';
+        $urlCarteraCliente = './crud/carteraCliente/gestionCarteraClientes.php';
+        $urlPreguntas = './crud/pregunta/gestionPregunta.php';
+        $urlBitacoraSistema = './crud/bitacora/gestionBitacora.php';
+        $urlParametros = './crud/parametro/gestionParametro.php';
+        $urlPermisos = './crud/permiso/gestionPermiso.php';
+        $urlRoles = './crud/rol/gestionRol.php';
+        $urlPorcentajes = './crud/Porcentajes/gestionPorcentajes.php';
+        $urlServiciosTecnicos = './crud/TipoServicio/gestionTipoServicio.php';
+        require_once 'layout/sidebar.php';
       ?>
     </div>
     <div class="conteiner-main">

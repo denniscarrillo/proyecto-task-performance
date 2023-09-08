@@ -1,9 +1,9 @@
 <?php
 require_once('validacionesTarea.php');
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,23 +25,34 @@ require_once('validacionesTarea.php');
 
 <body>
   <div class="conteiner-global">
-    <div class="sidebar-conteiner">
+    <div class="sidebar-conteiner sidebar locked">
       <?php
-      $urlIndex = '../index.php';
-      $urlGestion = '../crud/usuario/gestionUsuario.php';
-      $urlTarea = 'v_tarea.php';
-      $urlSolicitud = '../crud/solicitud/gestionSolicitud.php';
-      $urlComision = '../comisiones/v_comision.php';
-      $urlCrudComision = '../crud/comision/gestionComision.php';
-      $urlVenta = '../crud/venta/gestionVenta.php';
-      $urlCliente = '../crud/cliente/gestionCliente.php';
-      $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
-      $urlPorcentaje = '../crud/Porcentajes/gestionPorcentajes.php';
-      $urlMetricas = '../crud/Metricas/gestionMetricas.php';
-      $urlRoles = '../crud/rol/gestionRol.php';
-      $urlPreguntas = '../crud/pregunta/gestionPregunta.php';
-      $urlBitacoras = '../crud/bitacora/gestionBitacora.php';
-      require_once '../layout/sidebar.php';
+        $urlIndex = '../index.php';
+        // Rendimiento
+        $urlMisTareas = './v_tarea.php';
+        $urlConsultarTareas = './'; //PENDIENTE
+        $urlBitacoraTarea = ''; //PENDIENTE
+        $urlMetricas = '../crud/Metricas/gestionMetricas.php';
+        $urlEstadisticas = ''; //PENDIENTE
+        //Solicitud
+        $urlSolicitud = '../crud/solicitud/gestionSolicitud.php';
+        //Comisión
+        $urlComision = '../comisiones/v_comision.php';
+        //Consulta
+        $urlClientes = '../crud/cliente/gestionCliente.php';
+        $urlVentas = '../crud/Venta/gestionVenta.php';
+        $urlArticulos = '../crud/articulo/gestionArticulo.php';
+        //Mantenimiento
+        $urlUsuarios = '../crud/usuario/gestionUsuario.php';
+        $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
+        $urlPreguntas = '../crud/pregunta/gestionPregunta.php';
+        $urlBitacoraSistema = '../crud/bitacora/gestionBitacora.php';
+        $urlParametros = '../crud/parametro/gestionParametro.php';
+        $urlPermisos = '../crud/permiso/gestionPermiso.php';
+        $urlRoles = '../crud/rol/gestionRol.php';
+        $urlPorcentajes = '../crud/Porcentajes/gestionPorcentajes.php';
+        $urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
+        require_once '../layout/sidebar.php';
       ?>
     </div>
     <div class="tareas-main">
