@@ -64,11 +64,15 @@ require_once("../../../Controlador/ControladorDataTableSolicitud.php");
         ?>
       </div>
       <div class="conteiner-main">
+      <div class= "encabezado">
             <div class="navbar-conteiner">
                 <!-- Aqui va la barra -->
-                <?php include_once '../../layout/navbar.php'?>
-            </div>
-        <H1>Gestión Avance de Solicitudes</H1>
+                <?php include_once '../../layout/navbar.php'?>                             
+            </div>        
+            <div class ="titulo">
+                  <H2 class="title-dashboard-task"> Solicitudes</H2>
+            </div>  
+      </div>    
         <div class="table-conteiner">
           <div>
             
