@@ -86,12 +86,23 @@
                     </div>
                     
                     <div class="filtro-PorVendedor" id="PorVendedor">
+                        <label for="PorTarea" class="form-label">Seleccione Vendedores:</label>
                         <select class="filtro-PorVendedor" data-placeholder="Lorem ipsum dolor sit amet">
-                            <option>Duis aute irure dolor </option>
-                            <option>Nemo enim</option>
+                            <option value="" disabled selected>Seleccionar...</option>
+                            <option value="L">LEAD</option>
+                            <option value="C">LLAMADA</option>
                         </select>
                     </div> 
-                    
+
+                    <div class="filtro-PorTarea" id="PorTarea">
+                        <label for="PorTarea" class="form-label">Seleccione Tareas:</label>
+                        <select class="filtro-PorTarea" disable="What's your favorite movie ?">
+                        <option value="" disabled selected>Seleccionar...</option>
+                            <option value="L">LEAD</option>
+                            <option value="C">LLAMADA</option>
+                            
+                        </select>
+                    </div> 
                     <button type="button" class="btn btn-primary" id="btnFiltrar">Filtrar</button>
 
                 </div>  

@@ -1,0 +1,56 @@
+.filtros{
+    padding: 20px;
+    background-color:  #8f8f8f; 
+    display: flex;
+    /* width: 30%; */
+    font-size: 20px;
+    border-radius:8px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+   
+}
+.filtro-fecha{
+    text-align: left;
+    font-size: 1rem;
+    padding: 0.6rem;
+    padding-right: 1rem;
+    margin: 1;
+    
+}
+.filtro-Input{
+    text-align: left;
+    font-size: 1.3rem;
+    padding: 0.6rem;
+    padding-right:1.5rem;
+    margin: 1;
+    width: 120%;
+    
+}
+
+.btn-primary{
+   padding: 15;
+    margin: auto;
+    display: block;
+    min-width: 8rem;
+    width: 10%;
+     
+}
+
+.filtro-PorVendedor{
+    text-align:center;
+    padding-top: 15px;
+    width: 100%; 
+    font-size: 15px;
+    border-radius:45px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-right:45;
+}
+.filtro-PorTarea{
+    text-align:center;
+    padding-top: 15px;
+    width: 100%; 
+    font-size: 15px;
+    border-radius:45px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-right:65;
+     
+}

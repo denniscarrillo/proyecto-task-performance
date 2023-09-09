@@ -1,7 +1,7 @@
 // Obtener una referencia al elemento canvas del DOM
 const $grafica = document.querySelector("#grafica");
 // Las etiquetas son las porciones de la gráfica
-const etiquetas = ["Ventas", "Donaciones", "Trabajos", "Publicidad"]
+const etiquetas = ["Llamadas", "Leads", "Cotizaciones", "Ventas"]
 // Podemos tener varios conjuntos de datos. Comencemos con uno
 const datosIngresos = {
     data: [1500, 400, 2000, 700], // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
