@@ -26,7 +26,7 @@
         <div class="icon-menu-principal__conteiner">
           <i class="icon-menu-principal fa-solid fa-square-poll-vertical"></i>  
         </div>
-        <p class="item__menu__principal">Rendimiento</p>
+        <p class="list__menu__principal-text">Rendimiento</p>
           <i class="dropdown__arrow fa-solid fa-angle-down"></i>
           <input type="checkbox" class="dropdown-menu__content__list__check">
         </span>
@@ -72,7 +72,7 @@
           <div class="icon-menu-principal__conteiner">
             <i class="icon-menu-principal fa-solid fa-envelopes-bulk icon-size"></i>
           </div>
-          <p class="item__menu__principal">Solicitud</p>
+          <p class="list__menu__principal-text">Solicitud</p>
           </span>
         </a>
       </li>
@@ -84,7 +84,7 @@
           <div class="icon-menu-principal__conteiner">
            <i class="icon-menu-principal fa-solid fa-file-invoice-dollar icon-size"></i>
           </div>
-          <p class="item__menu__principal">Comisión</p>
+          <p class="list__menu__principal-text">Comisión</p>
           </span>
         </a>
       </li>
@@ -94,7 +94,7 @@
         <div class="icon-menu-principal__conteiner">
           <i class="icon-menu-principal fa-solid fa-magnifying-glass-arrow-right"></i>
         </div>
-        <p class="item__menu__principal">Consulta</p>
+        <p class="list__menu__principal-text">Consulta</p>
         <i class="dropdown__arrow fa-solid fa-angle-down"></i>
           <input type="checkbox" class="dropdown-menu__content__list__check">
         </span>
@@ -133,7 +133,7 @@
           <div class="icon-menu-principal__conteiner">
             <i class="icon-menu-principal fa-solid fa-business-time"></i>
           </div>
-          <p class="item__menu__principal">Mantenimiento</p>
+          <p class="list__menu__principal-text">Mantenimiento</p>
           <i class="dropdown__arrow fa-solid fa-angle-down"></i>
           <input type="checkbox" class="dropdown-menu__content__list__check">
         </span>
