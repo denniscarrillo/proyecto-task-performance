@@ -22,7 +22,7 @@
        $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionPregunta.php');
        $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($user);
        $newBitacora->accion = $accion['Insert'];
-       $newBitacora->descripcion = 'El usuario '.$user.' creó la pregunta a '.$_POST['pregunta'];
+       $newBitacora->descripcion = 'El usuario '.$user.' creó la pregunta '.$_POST['pregunta'];
        ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
        /* =======================================================================================*/
     }
