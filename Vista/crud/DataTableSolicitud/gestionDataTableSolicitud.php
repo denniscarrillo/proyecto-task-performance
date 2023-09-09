@@ -74,6 +74,7 @@ require_once("../../../Controlador/ControladorDataTableSolicitud.php");
         $urlRoles = '../rol/gestionRol.php';
         $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
         $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+        $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
         require_once '../../layout/sidebar.php';
         ?>
       </div>

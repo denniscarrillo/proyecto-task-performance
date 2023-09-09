@@ -3,7 +3,7 @@
   <div class="logo_items flex-log">
     <span class="nav_image">
       <a href="<?php echo $urlIndex; ?>">
-        <img src="../../Recursos/imagenes/Logo-E&C.png" alt="logo_img" height="80px">
+        <img src="<?php echo $urlImg; ?>" alt="logo_img" height="80px">
       </a>
     </span>
   </div>
