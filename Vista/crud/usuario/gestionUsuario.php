@@ -91,7 +91,7 @@ if (isset($_SESSION['usuario'])) {
           $urlIndex = '../../index.php';
           // Rendimiento
           $urlMisTareas = '../../rendimiento/v_tarea.php';
-          $urlConsultarTareas = './'; //PENDIENTE
+          $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php'; //PENDIENTE
           $urlBitacoraTarea = ''; //PENDIENTE
           $urlMetricas = '../Metricas/gestionMetricas.php';
           $urlEstadisticas = ''; //PENDIENTE

@@ -24,8 +24,6 @@ if (isset($_SESSION['usuario'])) {
     $newBitacora->accion = $accion['fallido'];
     $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a mantenimiento pregunta';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-    $_SESSION['objetoAnterior'] = '';
-    $_SESSION['descripcionObjeto'] = '';
     /* ===============================================================================================================*/
     header('location: ../../v_errorSinPermiso.php');
     die();
@@ -96,7 +94,7 @@ if (isset($_SESSION['usuario'])) {
           $urlIndex = '../../index.php';
           // Rendimiento
           $urlMisTareas = '../../rendimiento/v_tarea.php';
-          $urlConsultarTareas = './'; //PENDIENTE
+          $urlConsultarTareas = './gestionDataTableTarea.php'; 
           $urlBitacoraTarea = ''; //PENDIENTE
           $urlMetricas = '../Metricas/gestionMetricas.php';
           $urlEstadisticas = ''; //PENDIENTE
