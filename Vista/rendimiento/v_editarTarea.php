@@ -32,6 +32,7 @@
 				$urlVenta = '../crud/venta/gestionVenta.php';
 				$urlCliente = '../crud/cliente/gestionCliente.php';
 				$urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
+				$urlImg = '../../Recursos/imagenes/Logo-E&C.png';
 				require_once '../layout/sidebar.php';
 				?>
 			</div>

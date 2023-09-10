@@ -74,10 +74,10 @@ require_once('validacionesTarea.php');
                 <p class="title-task-label">Llamada</p>
                 <p class="circle-count" id="circle-count-llamadas"></p>
               </div>
-              <button type="button" class="btn_nuevaTarea btn btn-primary" id="btn-NuevaLLamada">+ Nueva llamada</button>
               <div class="container_tarea dragged-conteiner" id="conteiner-llamada">
                 <!-- Aqui van las tareas llamadas -->
               </div>
+              <button type="button" class="btn_nuevaTarea btn btn-primary" id="btn-NuevaLLamada">+ Nueva llamada</button>
             </div>
             <!-- COLUMNA LEADS -->
             <div class="task-colum" id="columna-leads">
@@ -116,12 +116,6 @@ require_once('validacionesTarea.php');
           </div>
         </div>
       </main>
-      <div class="footer-conteiner">
-        <P>FOOTER</P>
-        <?php
-        // require_once 'layout/navbar.php';
-        ?>
-      </div>
     </div>
   </div>
   <div id="modals-container">

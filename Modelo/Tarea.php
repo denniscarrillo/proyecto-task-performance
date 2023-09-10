@@ -216,7 +216,7 @@ class Tarea
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             $select = "SELECT CODCLIENTE, NOMBRECLIENTE, CIF, TELEFONO1, DIRECCION1 FROM view_clientes";
             $listaClientes = sqlsrv_query($abrirConexion, $select);
-            while($fila = $listaClientes->fetch_assoc()){
+            while($fila = sqlsrv_fetch_array($listaClientes, SQLSRV_FETCH_ASSOC)){
                 $clientes[] = [
                     'codCliente' => $fila['CODCLIENTE'],
                     'nombre' => $fila['NOMBRECLIENTE'],
@@ -253,7 +253,7 @@ class Tarea
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             $select = "SELECT id_Usuario, usuario, nombre_Usuario FROM tbl_ms_usuario WHERE id_Rol = 4;";
             $listaVendedores = sqlsrv_query($abrirConexion, $select);
-            while($fila = $listaVendedores->fetch_assoc()){
+            while($fila = sqlsrv_fetch_array($listaVendedores , SQLSRV_FETCH_ASSOC)){
                 $vendedores[] = [
                     'id' => $fila['id_Usuario'],
                     'usuario' => $fila['usuario'],
@@ -314,13 +314,13 @@ class Tarea
             $clasificacion = array();
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $query = "SELECT `id_ClasificacionLead`, `descripcion` FROM `tbl_ClasificacionLead`;";
+            $query = "SELECT id_ClasificacionLead, nombre FROM tbl_ClasificacionLead;";
             $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
-            while ($fila = $resultado->fetch_assoc()) {
+            while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
                 $clasificacion[] = [
                     'id' => $fila['id_ClasificacionLead'],
-                    'clasificacion' => $fila['descripcion']
+                    'clasificacion' => $fila['nombre']
                 ];
             }
             return $clasificacion;
@@ -334,10 +334,10 @@ class Tarea
             $origen = array();
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $query = "SELECT `id_OrigenLead`, `descripcion` FROM `tbl_OrigenLead`;";
+            $query = "SELECT id_OrigenLead, descripcion FROM tbl_OrigenLead;";
             $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
-            while ($fila = $resultado->fetch_assoc()) {
+            while ($fila = sqlsrv_fetch_array($resultado , SQLSRV_FETCH_ASSOC)) {
                 $origen[] = [
                     'id' => $fila['id_OrigenLead'],
                     'origen' => $fila['descripcion']

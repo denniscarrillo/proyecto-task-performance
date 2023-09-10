@@ -39,8 +39,8 @@ require_once("../../../Controlador/ControladorDataTableSolicitud.php");
 
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <title> Estado De Solicitudes</title>
 </head>
 
@@ -111,10 +111,10 @@ require_once("../../../Controlador/ControladorDataTableSolicitud.php");
         </div>
         <!-- Footer -->
         <div class="footer-conteiner">
-                <?php
-                require_once '../../layout/footer.php';
-                ?>
-          </div>
+            <?php
+            require_once '../../layout/footer.php';
+            ?>
+        </div>
       </div> <!-- Fin de la columna -->
     </div>
   </div>
