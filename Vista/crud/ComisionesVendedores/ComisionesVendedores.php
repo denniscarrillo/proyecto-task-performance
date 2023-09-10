@@ -65,6 +65,7 @@ require_once("../../../Controlador/ControladorComision.php");
         $urlCliente ='./cliente/gestionCliente.php';
         $urlCarteraCliente = './carteraCliente/gestionCarteraClientes.php';
         $urlPorcentaje = '../Porcentajes/gestionPorcentajes.php';
+        $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
         require_once '../../layout/sidebar.php';
         ?>
       </div>

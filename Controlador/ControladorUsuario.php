@@ -94,6 +94,12 @@
         public static function obtenerIdUsuario($usuario){
             return Usuario::obtenerIdUsuario($usuario);
         }
+        public static function permisosRol($idRol){
+            return Usuario::permisosRol($idRol);
+        }
+        public static function permisoSobreObjeto($userName, $IdObjetoActual, $permisosRol) {
+            return Usuario::validarPermisoSobreObjeto($userName, $IdObjetoActual, $permisosRol);
+        }
         public static function validarUsuarioExistente($usuario){
             return Usuario::usuarioExiste($usuario);
         }

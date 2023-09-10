@@ -6,26 +6,26 @@
     require_once ("../../../Controlador/ControladorPregunta.php");
     require_once ("../../../Controlador/ControladorBitacora.php");
     require_once ("../../../Controlador/ControladorUsuario.php");
-    // $user = '';
-    // session_start();
-    // if(isset($_SESSION['usuario'])){
-    //     $user = $_SESSION['usuario'];
+    $user = '';
+    session_start();
+    if(isset($_SESSION['usuario'])){
+        $user = $_SESSION['usuario'];
         $insertarPregunta = new Pregunta();
         $insertarPregunta->idPregunta = ($_POST['idPregunta']);
         $insertarPregunta->pregunta = ($_POST['pregunta']);
-        $insertarPregunta->ModificadoPor = 'SUPERADMIN';
+        $insertarPregunta->ModificadoPor = $user;
         ControladorPregunta::actualizarPregunta($insertarPregunta);
-        
+        /* ========================= Evento Editar pregunta. ====================================*/
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();
         date_default_timezone_set('America/Tegucigalpa');
         $newBitacora->fecha = date("Y-m-d h:i:s"); 
-        $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionUsuario.php');
+        $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionPregunta.php');
         $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-        $newBitacora->accion = $accion['Insert'];
-        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' creo usuario '.$_POST['usuario'];
+        $newBitacora->accion = $accion['Update'];
+        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' modificó la pregunta '.$_POST['pregunta'];
         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
         /* =======================================================================================*/
-    // }
+    }
 
 ?>

@@ -27,6 +27,10 @@
                     case 4: {
                         $mensaje = 'Usuario bloqueado';
                         break;
+                    }
+                    case 5: {
+                        $mensaje = 'Usuario de vacaciones';
+                        break;
                     };
                 }
             } else {
@@ -60,7 +64,7 @@
                                 if($intentosFallidos > 0){
                                     ControladorUsuario::resetearIntentos($_POST["userName"]);
                                 }
-                                if($rolUsuario > 1 && $rolUsuario < 5){
+                                if($rolUsuario > 1){
                                     header('location: ../index.php');
                                 }
                             } 
