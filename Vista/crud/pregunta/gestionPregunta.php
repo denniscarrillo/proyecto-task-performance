@@ -63,7 +63,7 @@ session_start(); //Reanudamos la sesion
           $urlMetricas = '../Metricas/gestionMetricas.php';
           $urlEstadisticas = ''; //PENDIENTE
           //Solicitud
-          $urlSolicitud = '../solicitud/gestionSolicitud.php';
+          $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
           //Comisión
           $urlComision = '../../comisiones/v_comision.php';
           //Consulta

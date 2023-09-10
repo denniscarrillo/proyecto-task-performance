@@ -31,7 +31,7 @@ require_once('obtenerEstadoComision.php');
         $urlIndex = '../index.php';
         $urlGestion = '../crud/usuario/gestionUsuario.php';
         $urlTarea = '../rendimiento/v_tarea.php';
-        $urlSolicitud = '../crud/solicitud/gestionSolicitud.php';
+        $urlSolicitud = '../crud/DataTableSolicitud/gestionDataTableSolicitud.php';
         $urlComision = 'v_comision.php';
         $urlVenta = '../crud/venta/gestionVenta.php';
         $urlCliente = '../crud/cliente/gestionCliente.php';

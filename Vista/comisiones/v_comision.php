@@ -35,7 +35,7 @@ require_once("validacionesComision.php");
         $urlMetricas = '../crud/Metricas/gestionMetricas.php';
         $urlEstadisticas = ''; //PENDIENTE
         //Solicitud
-        $urlSolicitud = '../crud/solicitud/gestionSolicitud.php';
+        $urlSolicitud = '../crud/DataTableSolicitud/gestionDataTableSolicitud.php';
         //Comisión
         $urlComision = './v_comision.php';
         //Consulta

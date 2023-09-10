@@ -70,33 +70,33 @@ if (isset($_SESSION['usuario'])) {
     <div class="conteiner-global">
       <div class="sidebar-conteiner">
       <?php
-        $urlIndex = '../../index.php';
-        // Rendimiento
-        $urlMisTareas = '../../rendimiento/v_tarea.php';
-        $urlConsultarTareas = './'; //PENDIENTE
-        $urlBitacoraTarea = ''; //PENDIENTE
-        $urlMetricas = './gestionMetricas.php';
-        $urlEstadisticas = ''; //PENDIENTE
-        //Solicitud
-        $urlSolicitud = '../solicitud/gestionSolicitud.php';
-        //Comisión
-        $urlComision = '../../comisiones/v_comision.php';
-        //Consulta
-        $urlClientes = '../cliente/gestionCliente.php';
-        $urlVentas = '../Venta/gestionVenta.php';
-        $urlArticulos = '../articulo/gestionArticulo.php';
-        //Mantenimiento
-        $urlUsuarios = '../usuario/gestionUsuario.php';
-        $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
-        $urlPreguntas = '../pregunta/gestionPregunta.php';
-        $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
-        $urlParametros = '../parametro/gestionParametro.php';
-        $urlPermisos = '../permiso/gestionPermiso.php';
-        $urlRoles = '../rol/gestionRol.php';
-        $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
-        $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
-        require_once '../../layout/sidebar.php';
-      ?>
+          $urlIndex = '../../index.php';
+          // Rendimiento
+          $urlMisTareas = '../../rendimiento/v_tarea.php';
+          $urlConsultarTareas = './'; //PENDIENTE
+          $urlBitacoraTarea = ''; //PENDIENTE
+          $urlMetricas = '../Metricas/gestionMetricas.php';
+          $urlEstadisticas = ''; //PENDIENTE
+          //Solicitud
+          $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
+          //Comisión
+          $urlComision = '../../comisiones/v_comision.php';
+          //Consulta
+          $urlClientes = '../cliente/gestionCliente.php';
+          $urlVentas = '../Venta/gestionVenta.php';
+          $urlArticulos = '../articulo/gestionArticulo.php';
+          //Mantenimiento
+          $urlUsuarios = '../usuario/gestionUsuario.php';
+          $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
+          $urlPreguntas = '../pregunta/gestionPregunta.php';
+          $urlBitacoraSistema = './gestionBitacora.php';
+          $urlParametros = '../parametro/gestionParametro.php';
+          $urlPermisos = '../permiso/gestionPermiso.php';
+          $urlRoles = '../rol/gestionRol.php';
+          $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
+          $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+          require_once '../../layout/sidebar.php';
+        ?>
       </div>
       <div class="conteiner-main">
             <!-- Encabezado -->
