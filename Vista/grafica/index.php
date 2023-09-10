@@ -78,48 +78,57 @@
                         <input type="date" id="fechaHastaf" name="fechaHastaf" class="form-control">
                     </div>
                     
-                    <div class="filtro-Input">   
-                        <input type="radio" id="general" name="fav_language" value="General">
-                        <label for="html">General</label><br>
-                        <input type="radio" id="porVendedor" name="fav_language" value="Por Vendedor">
-                        <label for="css">PorVendedor</label><br>
+                    <div class="filtro-Input"> 
+                        <form> 
+                            <fieldset> 
+                                <legend>Elige el tipo de gráfico</legend>
+                                <input type="radio" id="general" name="fav_language" value="General">
+                                <label for="html">General</label><br>
+                                <input type="radio" id="porVendedor" name="fav_language" value="Por Vendedor">
+                                <label for="css">PorVendedor</label><br>
+                            </fieldset> 
+                        </form>    
                     </div>
                     
                     <div class="filtro-PorVendedor" id="PorVendedor">
                         <label for="PorTarea" class="form-label">Seleccione Vendedores:</label>
-                        <select class="filtro-PorVendedor" data-placeholder="Lorem ipsum dolor sit amet">
-                            <option value="" disabled selected>Seleccionar...</option>
-                            <option value="L">LEAD</option>
-                            <option value="C">LLAMADA</option>
-                        </select>
+                        <button type="button" class="btn btn-primary btn-success" id="Vendedores">Vendedores</button>
                     </div> 
 
-                    <div class="filtro-PorTarea" id="PorTarea">
-                        <label for="PorTarea" class="form-label">Seleccione Tareas:</label>
-                        <select class="filtro-PorTarea" disable="What's your favorite movie ?">
-                        <option value="" disabled selected>Seleccionar...</option>
-                            <option value="L">LEAD</option>
-                            <option value="C">LLAMADA</option>
-                            
-                        </select>
-                    </div> 
+                    
                     <button type="button" class="btn btn-primary" id="btnFiltrar">Filtrar</button>
 
-                </div>  
-                <div class="grafica">
+                </div> 
+                 
+                <div class="grafica_Tareas">
                     <canvas id="grafica"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
                 </div>
+                
+                    
+                
+                <!-- <div class="grafica_Lead">
+                    <canvas id="grafica"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
+                </div>
+                
+                <div class="grafica_Comiciones">
+                    <canvas id="grafica"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
+                </div>
+                <div class="grafica_Ventas">
+                    <canvas id="grafica"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
+                </div> -->
             </div>
             
                 <!-- Footer -->
             <div class="footer-conteiner">
                     <?php
                     require_once '../layout/footer.php';
+                    //require_once('./modalFiltroVendedores.html');
                     ?>
             </div>
         </div>
     </div>
     <script src="script.js"></script>
+    <script src="script_Llamada.js"></script>
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
     <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
