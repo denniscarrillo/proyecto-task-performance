@@ -94,7 +94,7 @@ if (isset($_SESSION['usuario'])) {
           $urlIndex = '../../index.php';
           // Rendimiento
           $urlMisTareas = '../../rendimiento/v_tarea.php';
-          $urlConsultarTareas = './gestionDataTableTarea.php'; 
+          $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
           $urlBitacoraTarea = ''; //PENDIENTE
           $urlMetricas = '../Metricas/gestionMetricas.php';
           $urlEstadisticas = ''; //PENDIENTE
@@ -106,11 +106,12 @@ if (isset($_SESSION['usuario'])) {
           $urlClientes = '../cliente/gestionCliente.php';
           $urlVentas = '../Venta/gestionVenta.php';
           $urlArticulos = '../articulo/gestionArticulo.php';
+          $urlObjetos = '../DataTableObjeto/gestionDataTableObjeto.php';
+          $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
           //Mantenimiento
           $urlUsuarios = '../usuario/gestionUsuario.php';
           $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
           $urlPreguntas = './gestionPregunta.php';
-          $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
           $urlParametros = '../parametro/gestionParametro.php';
           $urlPermisos = '../permiso/gestionPermiso.php';
           $urlRoles = '../rol/gestionRol.php';

@@ -77,6 +77,7 @@ if (isset($_SESSION['usuario'])) {
         $urlClientes = './crud/cliente/gestionCliente.php';
         $urlVentas = './crud/Venta/gestionVenta.php';
         $urlArticulos = './crud/articulo/gestionArticulo.php';
+        $urlObjetos = './crud/DataTableObjeto/gestionDataTableObjeto.php';
         //Mantenimiento
         $urlUsuarios = './crud/usuario/gestionUsuario.php';
         $urlCarteraCliente = './crud/carteraCliente/gestionCarteraClientes.php';

@@ -8,4 +8,8 @@
         public static function editarMetricas($nuevaMetrica){
             return Metricas::editarMetrica($nuevaMetrica);
         }
+
+        public static function obtenerNombreMetrica($idMetrica){
+            return Metricas::obtenerEstadoAvance($idMetrica);
+        }
     }

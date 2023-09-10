@@ -30,7 +30,7 @@ require_once('validacionesTarea.php');
         $urlIndex = '../index.php';
         // Rendimiento
         $urlMisTareas = './v_tarea.php';
-        $urlConsultarTareas = './'; //PENDIENTE
+        $urlConsultarTareas = '../crud/DataTableTarea/gestionDataTableTarea.php'; 
         $urlBitacoraTarea = ''; //PENDIENTE
         $urlMetricas = '../crud/Metricas/gestionMetricas.php';
         $urlEstadisticas = ''; //PENDIENTE
@@ -42,11 +42,12 @@ require_once('validacionesTarea.php');
         $urlClientes = '../crud/cliente/gestionCliente.php';
         $urlVentas = '../crud/Venta/gestionVenta.php';
         $urlArticulos = '../crud/articulo/gestionArticulo.php';
+        $urlObjetos = '../crud/DataTableObjeto/gestionDataTableObjeto.php';
+        $urlBitacoraSistema = '../crud/bitacora/gestionBitacora.php';
         //Mantenimiento
         $urlUsuarios = '../crud/usuario/gestionUsuario.php';
         $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
         $urlPreguntas = '../crud/pregunta/gestionPregunta.php';
-        $urlBitacoraSistema = '../crud/bitacora/gestionBitacora.php';
         $urlParametros = '../crud/parametro/gestionParametro.php';
         $urlPermisos = '../crud/permiso/gestionPermiso.php';
         $urlRoles = '../crud/rol/gestionRol.php';

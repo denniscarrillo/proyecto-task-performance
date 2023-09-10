@@ -119,6 +119,12 @@
               </a>
             </li>
             <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlObjetos; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Objetos Sistema</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
               <a href="<?php echo $urlBitacoraSistema; ?>" class="dropdown-menu__content__secundario__link">
                 <i class=""></i>
                 <span>Bitácora Sistema</span>
