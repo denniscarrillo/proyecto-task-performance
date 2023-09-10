@@ -79,8 +79,8 @@ if (isset($_SESSION['usuario'])) {
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
   <title> Ventas </title>
 </head>
@@ -115,6 +115,7 @@ if (isset($_SESSION['usuario'])) {
         $urlRoles = '../rol/gestionRol.php';
         $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
         $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+        $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
         require_once '../../layout/sidebar.php';
       ?>
       </div>
