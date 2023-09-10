@@ -53,7 +53,10 @@ class Comision
         VALUES ('$nuevaComision->idVenta','$nuevaComision->idPorcentaje','$nuevaComision->comisionTotal', '$nuevaComision->estadoComision', '$nuevaComision->creadoPor', '$nuevaComision->fechaComision')";
         // Ejecutamos la consulta y comprobamos si fue exitosa
         $consulta = sqlsrv_query($consulta, $query);
-        $idComision = mysqli_insert_id($consulta);
+        $query = "SELECT SCOPE_IDENTITY() AS id_Comision";
+        $resultado = sqlsrv_query($consulta, $query);
+        $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+        $idComision = $fila['id_Comision'];
         // Ejecutamos la consulta y comprobamos si fue exitosa
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $idComision;

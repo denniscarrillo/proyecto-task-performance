@@ -9,6 +9,11 @@ const validaciones = {
 let estadoLetrasName = true;
 let estadoCorreo = true;
 
+let estasdoMasdeUnEspacio = {
+    estadoMasEspacioNombre: true,
+    estadoMasEspacioDireccion: true
+}
+
 const $form = document.getElementById('form-editar-carteraCliente');
 const $name = document.getElementById('E_Nombre');
 const $rtn = document.getElementById('E_Rtn');
@@ -43,8 +48,14 @@ $form.addEventListener('submit', e => {
                 e.preventDefault();
                 estadoCorreo = funciones.validarCorreo($correo, validaciones.correo);
             } else {
+                if(estasdoMasdeUnEspacio.estadoMasEspacioNombre == false || estasdoMasdeUnEspacio.estadoMasEspacioDireccion == false){
+                    e.preventDefault();
+                    estasdoMasdeUnEspacio.estadoMasEspacioNombre = funciones.validarMasdeUnEspacio($name);
+                    estasdoMasdeUnEspacio.estadoMasEspacioDireccion = funciones.validarMasdeUnEspacio($direccion);
+                } else {
                 estadoValidado = true; // 
             }
+          }
         }
     }
 });
@@ -53,6 +64,9 @@ $name.addEventListener('keyup', ()=>{
     funciones.limitarCantidadCaracteres("E_nombre", 50);
 });
 $name.addEventListener('focusout', ()=>{
+    if(estasdoMasdeUnEspacio.estadoMasEspacioNombre){
+        estasdoMasdeUnEspacio.estadoMasEspacioNombre = funciones.validarMasdeUnEspacio($name);
+    }
     let usuarioMayus = $name.value.toUpperCase();
     $name.value = usuarioMayus;
 });
@@ -67,4 +81,9 @@ $telefono.addEventListener('keyup', ()=>{
 });
 $direccion.addEventListener('keyup', ()=>{
     funciones.limitarCantidadCaracteres("E_direccion", 100);
+});
+$direccion.addEventListener('focusout', ()=>{
+    if(estasdoMasdeUnEspacio.estadoMasEspacioDireccion){
+        estasdoMasdeUnEspacio.estadoMasEspacioDireccion = funciones.validarMasdeUnEspacio($direccion);
+    }
 });

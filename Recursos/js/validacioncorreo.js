@@ -1,40 +1,47 @@
+import * as funciones from './funcionesValidaciones.js';
 // VALIDACIONES FORMULARIO CORREO
 // Objeto con expresiones regulares para los inputs
+let estadoExisteUsuario = true;
+
 const validaciones = {
   user: /^[A-Za-z0-9_\-]{4,16}$/
 };
 
 // CAMPOS
 const $form = document.getElementById('formcorreo');
-const $user = document.getElementById('user');
+const $usuario = document.getElementById('usuario');
 const $mensaje = document.querySelector('.mensaje');
 
 // Función para validar el formulario
 $form.addEventListener('submit', e =>{
 
 
-  if ($user.value.trim() === '') {
-    let div = $user.parentElement;
+  if ($usuario.value.trim() === '') {
+    let div = $usuario.parentElement;
     let mensaje = div.querySelector('p');
     mensaje.innerText = '*Campo vacío';
-    $user.classList.add('mensaje_error');
+    $usuario.classList.add('mensaje_error');
     
   } else {
-    let div = $user.parentElement;
+    let div = $usuario.parentElement;
     let mensaje = div.querySelector('p');
-    $user.classList.remove('mensaje_error');
+    $usuario.classList.remove('mensaje_error');
     mensaje.innerText = '';
   }
-     if ($user.value.trim() === ''){
+     if ($usuario.value.trim() === ''){
         e.preventDefault();
     }
   
 });
 
 //Esta validacion convierte el usuario en letras mayusculas
-$user.addEventListener('focusout', () => {
-  let usuarioMayus = $user.value.toUpperCase();
-  $user.value = usuarioMayus;
+$usuario.addEventListener('focusout', () => {
+  let usuarioMayus = $usuario.value.toUpperCase();
+  $usuario.value = usuarioMayus;
+});
+$usuario.addEventListener('keyup', () => {
+  let usuario = $('#usuario').val();
+      estadoExisteUsuario = obtenerUsuarioExiste(usuario);
 });
 // Cuando se quiera enviar el formulario de correo, se validarán si los inputs no están vacíos
 /* $form.addEventListener('submit', e => {
@@ -45,9 +52,32 @@ $user.addEventListener('focusout', () => {
     $form.submit();
   }
 }); */
+let obtenerUsuarioExiste = ($usuario) => {
+  let estadoUsuario = false;
+  $.ajax({
+      url: "../../Vista/crud/usuario/usuarioExistente.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {
+          usuario: $usuario
+      },
+      success: function (usuario) {
+          let $objUsuario = JSON.parse(usuario);
+          if ($objUsuario.estado == 'false') {
+              document.getElementById('usuario').classList.add('mensaje_error');
+              document.getElementById('usuario').parentElement.querySelector('p').innerText = '*Usuario no existe';
+          } else {
+              document.getElementById('usuario').classList.remove('mensaje_error');
+              document.getElementById('usuario').parentElement.querySelector('p').innerText = '';
+              estadoUsuario = true;
+          }
+      }
+  });
+  return estadoUsuario;
+} 
 
 $user.addEventListener('keyup', e => {
-  validarEspacios(e, $user);
+  validarEspacios(e, $usuario);
   //Validación con jQuery inputlimiter
   funciones.limitarCantidadCaracteres("user", 15);
 });

@@ -94,7 +94,7 @@ require_once("validacionesComision.php");
                 <th scope="col"> ID COMISION </th>
                 <th scope="col"> FACTURA </th>
                 <th scope="col"> TOTAL VENTA </th>
-                <th scope="col"> PORCENTAJE </th>
+                
                 <ht scope="col"> ESTADO </th>
                 <th scope="col"> COMISION TOTAL </th>
                 <th scope="col"> ESTADO </th>

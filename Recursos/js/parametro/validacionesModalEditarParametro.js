@@ -7,6 +7,10 @@ const validaciones = {
     // correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
     
 }
+let estasdoMasdeUnEspacio = {
+    estadoMasEspacioValor: true
+   
+}
 
 const $form = document.getElementById('form-Edit-Parametro');
 const $valor = document.getElementById('E_valor');
@@ -23,6 +27,12 @@ $form.addEventListener('submit', e => {
     if (estadoInputValor == false) {
         e.preventDefault();
     } else {
+        if (estasdoMasdeUnEspacio.estadoMasEspacioValor == false) {
+            e.preventDefault();
+            estasdoMasdeUnEspacio.estadoMasEspacioValor = funciones.validarMasdeUnEspacio($valor);
+        } else {
         estadoValidado = true;    
+       }
     }
+    
 });

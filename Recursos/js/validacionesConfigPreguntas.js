@@ -1,6 +1,7 @@
 import * as funciones from './funcionesValidaciones.js';
 /* VALIDACIONES FORMULARIO PREGUNTAS */
-let estadoSelect = true;
+
+let estadoMasdeUnEspacioRespuesta = true;
 
 const $form = document.getElementById('formConfig');
 const $pregunta = document.getElementById('id_pregunta');
@@ -15,16 +16,17 @@ $form.addEventListener('submit', e => {
         if (estadoInputPregunta == false || estadoInputRespuesta == false) {
             e.preventDefault();
         } else {
-            if (estadoSelect == false || estadoEspacioVacioRespuesta == false) {
+            if (estadoMasdeUnEspacioRespuesta == false) {
                 e.preventDefault();
-                estadoSelect = validaciones.validarCampoVacio($pregunta);
+                estadoMasdeUnEspacioRespuesta = funciones.validarMasdeUnEspacio($respuesta);
             } 
         }
     });
     $pregunta.addEventListener('change', ()=>{
-        estadoSelect = funciones.validarCampoVacio($pregunta);
+        funciones.validarCampoVacio($pregunta);
     });
-    $respuesta.addEventListener('keyup', ()=>{
+    $respuesta.addEventListener('focusout', ()=>{
+        estadoMasdeUnEspacioRespuesta = funciones.validarMasdeUnEspacio($respuesta);
         funciones.limitarCantidadCaracteres("respuesta", 50);
     });
     
