@@ -5,7 +5,7 @@ import * as funciones from './funcionesValidaciones.js';
     estadoEspacioUsuario: true
 } */
 let estadoSelect = true;
-let estadoEspacioVacioRespuesta = true;
+let estadoMasdeUnEspacioRespuesta = true;
 
 const validaciones = {
     user: /^[Z0-9-a-zA\_\-]{4,16}$/,
@@ -33,7 +33,7 @@ $form.addEventListener('submit', e => {
         if (estadoSelect == false || estadoEspacioVacioRespuesta == false) {
             e.preventDefault();
             estadoSelect = funciones.validarCampoVacio($pregunta);
-            estadoEspacioVacioRespuesta = funciones.validarEspacios($respuestas);
+            estadoMasdeUnEspacioRespuesta = funciones.validarMasdeUnEspacio($respuestas);
         } 
     }
 });
@@ -41,7 +41,7 @@ $pregunta.addEventListener('change', ()=>{
     estadoSelect = funciones.validarCampoVacio($pregunta);
 });
 $respuestas.addEventListener('keyup', ()=>{
-    estadoEspacioVacioRespuesta = funciones.validarEspacios($respuestas);
+    estadoMasdeUnEspacioRespuesta = funciones.validarMasdeUnEspacio($respuestas);
     funciones.limitarCantidadCaracteres("Respuesta", 50);
 });
 

@@ -481,18 +481,16 @@ class Usuario {
     }
 
     public static function usuarioExiste($usuario){
+        $existeUsuario = false;
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
         $query = "SELECT usuario FROM tbl_MS_Usuario WHERE usuario = '$usuario'";
         $user = sqlsrv_query($conexion, $query);
         $existe = sqlsrv_has_rows($user);
         if($existe){
-            $existente = sqlsrv_fetch_array($user, SQLSRV_FETCH_ASSOC);
-            $usuario = $existente['usuario'];
-        }else{
-            $usuario = null;
+            $existeUsuario = true;
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
-        return $existe;
+        return $existeUsuario;
     }
 }#Fin de la clase

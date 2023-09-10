@@ -53,6 +53,7 @@ require_once("validacionesComision.php");
         $urlRoles = '../crud/rol/gestionRol.php';
         $urlPorcentajes = '../crud/Porcentajes/gestionPorcentajes.php';
         $urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
+        $urlImg = '../../Recursos/imagenes/Logo-E&C.png';
         require_once '../layout/sidebar.php';
       ?>
       </div>
@@ -95,7 +96,7 @@ require_once("validacionesComision.php");
                 <th scope="col"> ID COMISION </th>
                 <th scope="col"> FACTURA </th>
                 <th scope="col"> TOTAL VENTA </th>
-                <th scope="col"> PORCENTAJE </th>
+                
                 <ht scope="col"> ESTADO </th>
                 <th scope="col"> COMISION TOTAL </th>
                 <th scope="col"> ESTADO </th>

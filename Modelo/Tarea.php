@@ -63,7 +63,11 @@ class Tarea
                             VALUES ('$tarea->idEstadoAvance','$tarea->titulo', 
                                     '$tarea->fechaInicio', '$tarea->Creado_Por', '$tarea->fechaInicio')"; 
             $ejecutar_insert = sqlsrv_query($abrirConexion, $insert);
-            $idTarea = mysqli_insert_id($abrirConexion);
+            $query = "SELECT SCOPE_IDENTITY() AS id_Tarea";
+            $resultado = sqlsrv_query($abrirConexion, $query);
+            while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+                $idTarea = $fila['id_Tarea'];
+            }
             $insertUsuarioTarea = "INSERT INTO `tbl_vendedores_tarea` (`id_Tarea`, `id_usuario_vendedor`) 
                                     VALUES ('$idTarea', '$tarea->idUsuario');";
             $ejecutar_insert = sqlsrv_query($abrirConexion, $insertUsuarioTarea);

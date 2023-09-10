@@ -10,6 +10,9 @@ const validaciones = {
 let estadoSoloNumeros = {
     estadoNumerosMeta: true,
 }
+let estadoMasdeUnEspacio = {
+    estadoMasEspacioMeta: true
+}
 const $form = document.getElementById('form-Edit-Metrica');
 const $meta = document.getElementById('E_meta');
 
@@ -29,11 +32,19 @@ $form.addEventListener('submit', e => {
             e.preventDefault();
             estadoSoloNumeros.estadoNumerosMeta = funciones.validarSoloNumeros($meta, validaciones.soloNumeros);
         }else {
+            if(estadoMasdeUnEspacio.estadoMasEspacioMeta == false){
+            e.preventDefault();
+            estadoMasdeUnEspacio.estadoMasEspacioMeta = funciones.validarMasdeUnEspacio($meta);
+            } else{
             estadoValidado = true;
+            }
         }     
     }
 });
 $meta.addEventListener('keyup', ()=>{
      estadoSoloNumeros.estadoNumerosMeta = funciones.validarSoloNumeros($meta, validaciones.soloNumeros);
     funciones.limitarCantidadCaracteres("E_meta", 14);
+});
+$meta.addEventListener('focusout', ()=>{
+    estadoMasdeUnEspacio.estadoMasEspacioMeta = funciones.validarMasdeUnEspacio($meta);
 });
