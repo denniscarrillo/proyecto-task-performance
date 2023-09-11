@@ -21,7 +21,7 @@ class Permiso
             $permisos = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $query="SELECT r.descripcion, o.objeto, p.permiso_Consultar, p.permiso_Insercion, 
+            $query="SELECT r.rol, o.objeto, p.permiso_Consultar, p.permiso_Insercion, 
             p.permiso_Actualizacion, p.permiso_Eliminacion FROM tbl_ms_permisos p
             INNER JOIN tbl_ms_objetos o ON o.id_Objeto = p.id_Objeto
             INNER JOIN tbl_ms_roles r ON p.id_Rol = r.id_Rol;";
@@ -29,7 +29,7 @@ class Permiso
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
             while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
                 $permisos[] = [
-                    'rolUsuario' => $fila['descripcion'],
+                    'rolUsuario' => $fila['rol'],
                     'objetoSistema' => $fila['objeto'],
                     'consultar' => $fila['permiso_Consultar'],
                     'insertar' => $fila['permiso_Insercion'],

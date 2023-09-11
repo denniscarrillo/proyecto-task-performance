@@ -8,11 +8,8 @@ class Comision
     public $comisionTotal;
     public $estadoComision;
     public $creadoPor;
-
     public $ModificadoPor;
-
     public $fechaComision;
-
     public $fechaModificacion;
 
     public static function obtenerTodasLasComisiones()
@@ -20,10 +17,11 @@ class Comision
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $listaComision =
-            $query = "  SELECT co.id_Comision, co.id_Venta, v.TOTALNETO, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, co.Fecha_Creacion
+            $query = "SELECT co.id_Comision, co.id_Venta, v.TOTALNETO, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, co.Fecha_Creacion
             FROM tbl_comision AS co
             INNER JOIN view_facturasventa AS v ON co.id_Venta = v.NUMFACTURA
-            INNER JOIN  tbl_porcentaje AS po ON co.id_Porcentaje = po.id_Porcentaje;";
+            INNER JOIN  tbl_porcentaje AS po ON co.id_Porcentaje = po.id_Porcentaje
+			WHERE v.TOTALNETO > 0;";
         $listaComision = sqlsrv_query($consulta, $query);
         $Comision = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
