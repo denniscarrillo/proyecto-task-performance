@@ -1,23 +1,62 @@
 <?php
 require_once("../../../db/Conexion.php");
 require_once("../../../Modelo/DataTableSolicitud.php");
-// require_once("../../../Modelo/Bitacora.php");
+require_once("../../../Modelo/Bitacora.php");
 require_once("../../../Controlador/ControladorDataTableSolicitud.php");
-// require_once("../../../Controlador/ControladorBitacora.php");
-// session_start(); //Reanudamos la sesion
-// if (isset($_SESSION['usuario'])) {
-//   /* ====================== Evento ingreso a mantenimiento de usuario. =====================*/
-//   $newBitacora = new Bitacora();
-//   $accion = ControladorBitacora::accion_Evento();
-//   date_default_timezone_set('America/Tegucigalpa');
-//   $newBitacora->fecha = date("Y-m-d h:i:s");
-//   $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
-//   $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-//   $newBitacora->accion = $accion['income'];
-//   $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingreso a mantenimiento usuario';
-//   ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-//   /* =======================================================================================*/
-// }
+require_once("../../../Controlador/ControladorBitacora.php");
+require_once('../../../Modelo/Usuario.php');
+require_once('../../../Controlador/ControladorUsuario.php');
+
+session_start(); //Reanudamos la sesion
+if (isset($_SESSION['usuario'])) {
+  $newBitacora = new Bitacora();
+  $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
+  $permisoRol = ControladorUsuario::permisosRol($idRolUsuario);
+  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionSolicitud.php');
+  $objetoPermitido = ControladorUsuario::permisoSobreObjeto($_SESSION['usuario'], $idObjetoActual, $permisoRol);
+  if(!$objetoPermitido){
+    /* ====================== Evento intento de ingreso sin permiso a solicitud. ================================*/
+    $accion = ControladorBitacora::accion_Evento();
+    date_default_timezone_set('America/Tegucigalpa');
+    $newBitacora->fecha = date("Y-m-d h:i:s");
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionSolicitud.php');
+    $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+    $newBitacora->accion = $accion['fallido'];
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a solicitud';
+    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+    /* ===============================================================================================================*/
+    header('location: ../../v_errorSinPermiso.php');
+    die();
+  }else{
+    if(isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])){
+      /* ====================== Evento salir. ================================================*/
+      $accion = ControladorBitacora::accion_Evento();
+      date_default_timezone_set('America/Tegucigalpa');
+      $newBitacora->fecha = date("Y-m-d h:i:s");
+      $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
+      $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+      $newBitacora->accion = $accion['Exit'];
+      $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de '.$_SESSION['descripcionObjeto'];
+      ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+    /* =======================================================================================*/
+    }
+    /* ====================== Evento ingreso a vista clientes. =====================*/
+    $accion = ControladorBitacora::accion_Evento();
+    date_default_timezone_set('America/Tegucigalpa');
+    $newBitacora->fecha = date("Y-m-d h:i:s");
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
+    $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+    $newBitacora->accion = $accion['income'];
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a vista de clientes';
+    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+    $_SESSION['objetoAnterior'] = 'gestionCliente.php';
+    $_SESSION['descripcionObjeto'] = 'vista de clientes';
+    /* =======================================================================================*/
+  }
+} else {
+  header('location: ../../login/login.php');
+  die();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -39,8 +78,8 @@ require_once("../../../Controlador/ControladorDataTableSolicitud.php");
 
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <title> Estado De Solicitudes</title>
 </head>
 
@@ -52,7 +91,7 @@ require_once("../../../Controlador/ControladorDataTableSolicitud.php");
         $urlIndex = '../../index.php';
         // Rendimiento
         $urlMisTareas = '../../rendimiento/v_tarea.php';
-        $urlConsultarTareas = './'; //PENDIENTE
+        $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
         $urlBitacoraTarea = ''; //PENDIENTE
         $urlMetricas = '../Metricas/gestionMetricas.php';
         $urlEstadisticas = ''; //PENDIENTE
@@ -64,16 +103,18 @@ require_once("../../../Controlador/ControladorDataTableSolicitud.php");
         $urlClientes = '../cliente/gestionCliente.php';
         $urlVentas = '../Venta/gestionVenta.php';
         $urlArticulos = '../articulo/gestionArticulo.php';
+        $urlObjetos = '../DataTableObjeto/gestionDataTableObjeto.php';
+        $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
         //Mantenimiento
         $urlUsuarios = '../usuario/gestionUsuario.php';
         $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
         $urlPreguntas = '../pregunta/gestionPregunta.php';
-        $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
         $urlParametros = '../parametro/gestionParametro.php';
         $urlPermisos = '../permiso/gestionPermiso.php';
         $urlRoles = '../rol/gestionRol.php';
         $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
         $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+        $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
         require_once '../../layout/sidebar.php';
         ?>
       </div>
@@ -110,10 +151,10 @@ require_once("../../../Controlador/ControladorDataTableSolicitud.php");
         </div>
         <!-- Footer -->
         <div class="footer-conteiner">
-                <?php
-                require_once '../../layout/footer.php';
-                ?>
-          </div>
+            <?php
+            require_once '../../layout/footer.php';
+            ?>
+        </div>
       </div> <!-- Fin de la columna -->
     </div>
   </div>

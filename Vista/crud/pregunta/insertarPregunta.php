@@ -6,26 +6,26 @@
     require_once ("../../../Controlador/ControladorPregunta.php");
     require_once ("../../../Controlador/ControladorBitacora.php");
     require_once ("../../../Controlador/ControladorUsuario.php");
-    // $user = '';
-    // session_start();
-    // if(isset($_SESSION['usuario'])){
-    //     $user = $_SESSION['usuario'];
+    $user = '';
+    session_start();
+    if(isset($_SESSION['usuario'])){
+        $user = $_SESSION['usuario'];
         $insertarPregunta = new Pregunta();
         $insertarPregunta->pregunta = ($_POST['pregunta']);
-        $insertarPregunta->CreadoPor = 'SUPERADMIN';
+        $insertarPregunta->CreadoPor = $user;
         ControladorPregunta::agregarPregunta($insertarPregunta);
-        
-        $newBitacora = new Bitacora();
-        $accion = ControladorBitacora::accion_Evento();
-        date_default_timezone_set('America/Tegucigalpa');
-        $newBitacora->fecha = date("Y-m-d h:i:s"); 
-        $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionUsuario.php');
-        $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-        $newBitacora->accion = $accion['Insert'];
-        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' creo usuario '.$_POST['usuario'];
-        ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-        /* =======================================================================================*/
-    // }
+        /* ========================= Evento Creacion pregunta. ==================================*/
+       $newBitacora = new Bitacora();
+       $accion = ControladorBitacora::accion_Evento();
+       date_default_timezone_set('America/Tegucigalpa');
+       $newBitacora->fecha = date("Y-m-d h:i:s"); 
+       $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionPregunta.php');
+       $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($user);
+       $newBitacora->accion = $accion['Insert'];
+       $newBitacora->descripcion = 'El usuario '.$user.' creó la pregunta '.$_POST['pregunta'];
+       ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+       /* =======================================================================================*/
+    }
 
 ?>
 

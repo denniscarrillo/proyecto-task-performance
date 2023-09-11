@@ -45,7 +45,8 @@ class CarteraClientes{
     $direccion = $nuevoCliente->direccion;
     $estadoContacto = $nuevoCliente->estadoContacto;
     $CreadoPor = $nuevoCliente->CreadoPor;
-    $fechaCreacion = $nuevoCliente->fechaCreacion;
+    date_default_timezone_set('America/Tegucigalpa');
+    $fechaCreacion = date("Y-m-d");
     $query = "INSERT INTO tbl_CarteraCliente(nombre_Cliente,rtn_Cliente,telefono,
                                             correo,direccion,estadoContacto,Creado_Por,Fecha_Creacion )
                    VALUES ('$nombre', '$rtn', '$telefono', '$correo','$direccion','$estadoContacto','$CreadoPor','$fechaCreacion');";
@@ -66,7 +67,8 @@ class CarteraClientes{
             $direccion=$nuevoCliente->direccion;
             $estadoContacto=$nuevoCliente->estadoContacto;
             $modificadoPor = $nuevoCliente->modificadoPor;
-            $fechaModificacion = $nuevoCliente->fechaModificacion;
+            date_default_timezone_set('America/Tegucigalpa');
+            $fechaModificacion = date("Y-m-d");
             $update = "UPDATE tbl_carteracliente SET nombre_Cliente='$nombre', rtn_Cliente='$rtn', telefono='$telefono',
             correo='$correo', direccion='$direccion', estadoContacto = '$estadoContacto', Modificado_Por = '$modificadoPor', Fecha_Modificacion = '$fechaModificacion' WHERE id_CarteraCliente='$id' ";
             $nuevoCliente = sqlsrv_query($abrirConexion, $update);

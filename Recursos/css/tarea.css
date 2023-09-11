@@ -4,14 +4,15 @@
   width: 100%;
   max-width: 100%;
   background-color: #6b6967;
-  height: fit-content;
-  overflow-y: auto; /*Aplicar scroll vertical automaticamente*/
+  height: 100vh;
+  overflow-y: hidden; /*Aplicar scroll vertical automaticamente*/
   overflow-x: hidden;
 }
 .main-tareas{
   height: 100vh;
   padding: 1rem;
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 .encabezado {
   position: sticky;
@@ -34,20 +35,33 @@
 }
 .colum-task-conteiner{
   display: flex;
-  /* justify-content: center; */
-  width: max-content;
+  max-width: 100%;
+  padding: 1rem;
   gap: 1rem;
-  height: 40rem;
-  /* max-height: 100vh; */
-  /* overflow-y: auto; */
-  /* width: 100vw;  */
-  overflow-x: auto;
+  height: 100vh;
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+.colum-task-conteiner::-webkit-scrollbar{
+  height: 0.5rem;
+  border-radius: 4px;
+  background: #555351;
+}
+.colum-task-conteiner::-webkit-scrollbar-thumb{
+  background: #f4f2f0;
+  border-radius: 4px;
+  margin: 0.4rem;
+  width: 1rem;
 }
 .task-conteiner{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* width: fit-content; */
+  width: 100%;
+  max-height: 90%;
+  margin-bottom: 0.8rem;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 h2,
 p {
@@ -64,12 +78,14 @@ p {
   justify-content: center;
   gap: 5px;
   font-weight: 600;
-  color: #343232;
-  background-color: #e2d7d7;
+  color: #aaa6a6;
+  background-color: #343232;
   margin-bottom: 0.7rem;
   border: none;
   border-top: 0.5rem solid #e58541;
   padding: 0.6rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
 }
 .title-task-label {
   margin: 0;
@@ -88,14 +104,30 @@ p {
 .container_tarea {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
+  align-items: center;
   padding: 0.2rem;
   gap: 1rem;
-  /* overflow-y: auto;
-  overflow-x: hidden; */
-  height: 22rem;
-  width: 20rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 19rem;
+  max-height: 80%;
   margin-bottom: 1.5rem;
+}
+.container_tarea::-webkit-scrollbar {
+  width: 0.3rem;
+  border-radius: 4px;
+}
+.container_tarea::-webkit-scrollbar-thumb {
+  background: #ef904d;;
+  border-radius: 4px;
+  padding: 0 0.4rem;
+}
+.task-colum {
+  position: relative;
+  border-radius: 2rem;
+  background-color: #302f2f;
+  box-shadow: 4px 2px 5px 0px #00000014;
+  height: 100%;
 }
 .card_task {
   height: fit-content;
@@ -105,18 +137,15 @@ p {
   background-color: #ded5d4fa;
   border-radius: 0.2rem;
   border: 1px double #d4cdcd;
-  /* -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.08);
-  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.08); */
-  box-shadow: 4px 2px 5px 0px rgba(0,0,0,0.08);
-  /*box-shadow: 10px 10px 5px 0px #cc7245 ; */
+  box-shadow: 4px 2px 5px 0px #00000014;
 }
 .btn_nuevaTarea {
-  /* display: inline; */
   border: none;
   background-color: #ef904d;
   padding: 8px;
   margin-bottom: 10px;
   border-radius: 0.2rem;
+  text-align: left;
 }
 .form-nuevaTarea {
   width: 17rem;
@@ -209,6 +238,17 @@ p {
   display: block;
   margin: 0 auto;
 }
+.btn_nuevaTarea {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  margin-bottom: 0;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  /* border-radius:  0 01rem  1rem ; */
+ }
 .card_task.seleccionado{
   transform: scale(1.02) rotate(-1deg);
   box-shadow: 0px 0px 10px rgba(245, 140, 69, 0.658);

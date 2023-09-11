@@ -9,6 +9,10 @@ let estadoSoloLetras = {
     estadoLetrasRol: true,
     estadoLetrasDescripcion: true,
 };
+let estadoMasdeUnEspacio = {
+    estadoMasEspacioRol: true,
+    estadoMasEspacioDescripcion: true,
+};
 
 const $form = document.getElementById('form-Edit-Rol');
 const $Rol = document.getElementById('E_rol');
@@ -29,10 +33,16 @@ $form.addEventListener('submit', e => {
             e.preventDefault();
             estadoSoloLetras.estadoLetrasRol = funciones.validarSoloLetras($Rol, validaciones.soloLetras);
             estadoSoloLetras.estadoLetrasDescripcion = funciones.validarSoloLetras($Descripcion, validaciones.soloLetras);
+        } else{ 
+        if(estadoMasdeUnEspacio.estadoMasEspacioRol == false || estadoMasdeUnEspacio.estadoMasEspacioDescripcion == false){
+            e.preventDefault();
+            estadoMasdeUnEspacio.estadoMasEspacioRol = funciones.validarMasdeUnEspacio($Rol);
+            estadoMasdeUnEspacio.estadoMasEspacioDescripcion = funciones.validarMasdeUnEspacio($Descripcion);
         } else {
             estadoValidado = true;
         } 
-    }
+      }
+   }
 });
 
 $Rol.addEventListener('keyup', () => {
@@ -42,4 +52,10 @@ $Rol.addEventListener('keyup', () => {
 $Descripcion.addEventListener('keyup', () => {
     estadoSoloLetras.estadoLetrasRol = funciones.validarSoloLetras($Descripcion, validaciones.soloLetras);
     funciones.limitarCantidadCaracteres("E_descripcion", 45);
+});
+$Rol.addEventListener('focusout', () => {
+    estadoMasdeUnEspacio.estadoMasEspacioRol = funciones.validarMasdeUnEspacio($Rol);
+});
+$Descripcion.addEventListener('focusout', () => {
+    estadoMasdeUnEspacio.estadoMasEspacioDescripcion = funciones.validarMasdeUnEspacio($Descripcion);
 });

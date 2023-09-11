@@ -10,31 +10,50 @@ require_once("../../../Controlador/ControladorBitacora.php");
 session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
-  if(isset($_SESSION['objetoAnterior'])){
-    /* ====================== Evento ingreso a mantenimiento de usuario. =====================*/
+  $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
+  $permisoRol = ControladorUsuario::permisosRol($idRolUsuario);
+  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionCliente.php');
+  $objetoPermitido = ControladorUsuario::permisoSobreObjeto($_SESSION['usuario'], $idObjetoActual, $permisoRol);
+  if(!$objetoPermitido){
+    /* ====================== Evento intento de ingreso sin permiso a vista cliente. ================================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
     $newBitacora->fecha = date("Y-m-d h:i:s");
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionCliente.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-    $newBitacora->accion = $accion['Exit'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de '.$_SESSION['descripcionObjeto'];
+    $newBitacora->accion = $accion['fallido'];
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a vista de clientes';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-  /* =======================================================================================*/
+    /* ===============================================================================================================*/
+    header('location: ../../v_errorSinPermiso.php');
+    die();
+  }else{
+    if(isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])){
+      /* ====================== Evento salir. ================================================*/
+      $accion = ControladorBitacora::accion_Evento();
+      date_default_timezone_set('America/Tegucigalpa');
+      $newBitacora->fecha = date("Y-m-d h:i:s");
+      $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
+      $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+      $newBitacora->accion = $accion['Exit'];
+      $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de '.$_SESSION['descripcionObjeto'];
+      ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+    /* =======================================================================================*/
+    }
+    /* ====================== Evento ingreso a vista clientes. =====================*/
+    $accion = ControladorBitacora::accion_Evento();
+    date_default_timezone_set('America/Tegucigalpa');
+    $newBitacora->fecha = date("Y-m-d h:i:s");
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
+    $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+    $newBitacora->accion = $accion['income'];
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a vista de clientes';
+    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+    $_SESSION['objetoAnterior'] = 'gestionCliente.php';
+    $_SESSION['descripcionObjeto'] = 'vista de clientes';
+    /* =======================================================================================*/
   }
-  /* ========================= Capturar evento inicio sesión. =============================*/
-  $accion = ControladorBitacora::accion_Evento();
-  date_default_timezone_set('America/Tegucigalpa');
-  $newBitacora->fecha = date("Y-m-d h:i:s");
-  $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionCliente.php');
-  $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-  $newBitacora->accion = $accion['income'];
-  $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a vista de clientes existentes';
-  ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-  $_SESSION['objetoAnterior'] = 'gestionCliente.php';
-  $_SESSION['descripcionObjeto'] = 'vista de clientes existentes';
-  /* =======================================================================================*/
-}else{
+} else {
   header('location: ../../login/login.php');
   die();
 }
@@ -73,7 +92,7 @@ if (isset($_SESSION['usuario'])) {
         $urlIndex = '../../index.php';
         // Rendimiento
         $urlMisTareas = '../../rendimiento/v_tarea.php';
-        $urlConsultarTareas = './'; //PENDIENTE
+        $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
         $urlBitacoraTarea = ''; //PENDIENTE
         $urlMetricas = '../Metricas/gestionMetricas.php';
         $urlEstadisticas = ''; //PENDIENTE
@@ -85,16 +104,18 @@ if (isset($_SESSION['usuario'])) {
         $urlClientes = './gestionCliente.php';
         $urlVentas = '../Venta/gestionVenta.php';
         $urlArticulos = '../articulo/gestionArticulo.php';
+        $urlObjetos = '../DataTableObjeto/gestionDataTableObjeto.php';
+        $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
         //Mantenimiento
         $urlUsuarios = '../usuario/gestionUsuario.php';
         $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
         $urlPreguntas = '../pregunta/gestionPregunta.php';
-        $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
         $urlParametros = '../parametro/gestionParametro.php';
         $urlPermisos = '../permiso/gestionPermiso.php';
         $urlRoles = '../rol/gestionRol.php';
         $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
         $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+        $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
         require_once '../../layout/sidebar.php';
       ?>
       </div>

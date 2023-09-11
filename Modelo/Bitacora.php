@@ -19,12 +19,15 @@
         }
         //Método que recibe un objeto y devuelve su id.
         public static function obtener_Id_Objeto($objeto){
+            $idObjeto = null;
             $conn = new Conexion();
             $consulta = $conn->abrirConexionDB();
             $query = "SELECT id_Objeto FROM tbl_ms_objetos WHERE objeto = '$objeto'";
             $resultado = sqlsrv_query($consulta, $query);
             $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
-            $idObjeto = $fila['id_Objeto'];
+            if(isset( $fila['id_Objeto'])){
+                $idObjeto = $fila['id_Objeto'];
+            }
             sqlsrv_close($consulta); #Cerramos la conexión.
             return $idObjeto;
         }
@@ -36,6 +39,7 @@
                 'Login'  => 'Iniciar Sesion',
                 'Logout'  => 'Cerrar Session',
                 'income'  => 'Ingreso',
+                'fallido' => 'Ingreso fallido',
                 'Exit' => 'Salio'
             ];
             return $acciones;

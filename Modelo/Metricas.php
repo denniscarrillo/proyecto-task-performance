@@ -46,6 +46,18 @@ class Metricas{
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
     }
+    public static function obtenerEstadoAvance($idMetrica){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query="  SELECT ea.descripcion FROM tbl_Metrica me
+        INNER JOIN tbl_EstadoAvance ea ON me.id_EstadoAvance = ea.id_EstadoAvance
+        WHERE me.id_EstadoAvance = '$idMetrica';";
+        $resultado = sqlsrv_query($conexion, $query);
+        $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+        $estadoAvance = $fila['descripcion'];
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estadoAvance;
+    }
 
 
 

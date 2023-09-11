@@ -10,31 +10,14 @@ $(document).ready(function () {
     },
     "columns": [
       { "data": "numFactura"},
-      { "data": 'codCliente' },
-      { "data": 'nombreCliente' },
-      { "data": 'rtnCliente' },
-      { "data": 'fechaEmision' },
-      { "data": 'totalBruto' },
-      { "data": 'totalImpuesto'},
-      { "data": 'totalNeto' }
+      { "data": "codCliente"},
+      { "data": "nombreCliente"},
+      { "data": "rtnCliente"},
+      { "data": "fechaEmision" },
+      { "data": "totalBruto "},
+      { "data": "totalImpuesto"},
+      { "data": "totalNeto" }
     ]
   });
-
-  $('#btn_ver').click(function () {
-    let numFactura = $(this).closest('tr').find('td:eq(0)').text();
-    GenerarReporte(numFactura);
-  });
-
-  let GenerarReporte = (numFactura) => {
-    $.ajax({
-      url: "../../../Vista/fpdf/Reporte_Venta.php",
-      type: "POST",
-      datatype: "JSON",
-      data: {
-        numFactura: numFactura
-      }
-    }); //Fin AJAX
-  }
-
 });
 

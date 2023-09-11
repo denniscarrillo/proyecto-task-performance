@@ -30,7 +30,7 @@ require_once("validacionesComision.php");
         $urlIndex = '../index.php';
         // Rendimiento
         $urlMisTareas = '../rendimiento/v_tarea.php';
-        $urlConsultarTareas = './'; //PENDIENTE
+        $urlConsultarTareas = '../crud/DataTableTarea/gestionDataTableTarea.php';
         $urlBitacoraTarea = ''; //PENDIENTE
         $urlMetricas = '../crud/Metricas/gestionMetricas.php';
         $urlEstadisticas = ''; //PENDIENTE
@@ -42,16 +42,18 @@ require_once("validacionesComision.php");
         $urlClientes = '../crud/cliente/gestionCliente.php';
         $urlVentas = '../crud/Venta/gestionVenta.php';
         $urlArticulos = '../crud/articulo/gestionArticulo.php';
+        $urlObjetos = '../crud/DataTableObjeto/gestionDataTableObjeto.php';
+        $urlBitacoraSistema = '../crud/bitacora/gestionBitacora.php';
         //Mantenimiento
         $urlUsuarios = '../crud/usuario/gestionUsuario.php';
         $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
         $urlPreguntas = '../crud/pregunta/gestionPregunta.php';
-        $urlBitacoraSistema = '../crud/bitacora/gestionBitacora.php';
         $urlParametros = '../crud/parametro/gestionParametro.php';
         $urlPermisos = '../crud/permiso/gestionPermiso.php';
         $urlRoles = '../crud/rol/gestionRol.php';
         $urlPorcentajes = '../crud/Porcentajes/gestionPorcentajes.php';
         $urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
+        $urlImg = '../../Recursos/imagenes/Logo-E&C.png';
         require_once '../layout/sidebar.php';
       ?>
       </div>
@@ -95,7 +97,6 @@ require_once("validacionesComision.php");
                 <th scope="col"> FACTURA </th>
                 <th scope="col"> TOTAL VENTA </th>
                 <th scope="col"> PORCENTAJE </th>
-                <ht scope="col"> ESTADO </th>
                 <th scope="col"> COMISION TOTAL </th>
                 <th scope="col"> ESTADO </th>
                 <th scope="col"> FECHA </th>
@@ -125,7 +126,7 @@ require_once("validacionesComision.php");
   <script src="../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script src="../../Recursos/js/comision/dataTableComision.js" type="module"></script>
-  <script src="../../Recursos/js/comision/validacionesEditarComision.js" type="module"></script>
+  <!-- <script src="../../Recursos/js/comision/validacionesEditarComision.js" type="module"></script> -->
   <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../Recursos/js/index.js"></script>

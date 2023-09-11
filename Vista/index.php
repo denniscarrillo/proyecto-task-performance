@@ -8,7 +8,7 @@ session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   if(isset($_SESSION['objetoAnterior'])){
-    /* ====================== Evento ingreso a mantenimiento de usuario. =====================*/
+    /* =============================== Evento salio del objeto. ============================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
     $newBitacora->fecha = date("Y-m-d h:i:s");
@@ -77,6 +77,7 @@ if (isset($_SESSION['usuario'])) {
         $urlClientes = './crud/cliente/gestionCliente.php';
         $urlVentas = './crud/Venta/gestionVenta.php';
         $urlArticulos = './crud/articulo/gestionArticulo.php';
+        $urlObjetos = './crud/DataTableObjeto/gestionDataTableObjeto.php';
         //Mantenimiento
         $urlUsuarios = './crud/usuario/gestionUsuario.php';
         $urlCarteraCliente = './crud/carteraCliente/gestionCarteraClientes.php';
@@ -87,6 +88,7 @@ if (isset($_SESSION['usuario'])) {
         $urlRoles = './crud/rol/gestionRol.php';
         $urlPorcentajes = './crud/Porcentajes/gestionPorcentajes.php';
         $urlServiciosTecnicos = './crud/TipoServicio/gestionTipoServicio.php';
+        $urlImg = '../Recursos/imagenes/Logo-E&C.png';
         require_once 'layout/sidebar.php';
       ?>
     </div>

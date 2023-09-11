@@ -1,0 +1,26 @@
+.form-conteiner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+#form-solicitud {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    /* width: fit-content; */
+    border-radius: 1rem;
+    border: 2px solid black;
+    padding: 0.7rem;
+}
+.group-form {
+    min-width: 400px;
+}
+.input-conteiner
+{
+    padding: 0.5rem 0;
+}
+p {
+    margin-bottom: 0;
+}

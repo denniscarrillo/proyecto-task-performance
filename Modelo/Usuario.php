@@ -276,7 +276,6 @@ class Usuario {
             $rolUsuario = $fila["id_Rol"];
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
-        
         return intval($rolUsuario);
     }
     public static function obtenerPreguntas($usuario){//método para obtener preguntas
@@ -451,21 +450,48 @@ class Usuario {
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $id;
     }
+    public static function permisosRol($idRolUser){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT id_Objeto, permiso_Consultar, permiso_Insercion, permiso_Actualizacion, permiso_Eliminacion  
+        FROM tbl_MS_Permisos WHERE id_Rol = '$idRolUser';";
+        $resultado = sqlsrv_query($conexion, $query);
+        while($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)){
+            $permisoRol [] = [
+                'idObjeto' => $fila['id_Objeto'],
+                'consulta' => $fila['permiso_Consultar'],
+                'insertar' => $fila['permiso_Insercion'],
+                'actualizar' => $fila['permiso_Actualizacion'],
+                'eliminar' => $fila['permiso_Eliminacion']
+            ];
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $permisoRol;
+    }
+    //Metodo que valida los objetos y los permisos del usuario sobre ellos
+    public static function validarPermisoSobreObjeto($userName, $IdObjetoActual, $permisosRol) {
+        $permitido = false;
+        foreach ($permisosRol as $objeto) {
+            if($objeto['idObjeto'] == $IdObjetoActual && $objeto['consulta'] == 'Y'){
+                $permitido = true;
+                break;
+            }
+        }
+        return $permitido;
+    }
 
     public static function usuarioExiste($usuario){
+        $existeUsuario = false;
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
         $query = "SELECT usuario FROM tbl_MS_Usuario WHERE usuario = '$usuario'";
         $user = sqlsrv_query($conexion, $query);
         $existe = sqlsrv_has_rows($user);
         if($existe){
-            $existente = sqlsrv_fetch_array($user, SQLSRV_FETCH_ASSOC);
-            $usuario = $existente['usuario'];
-        }else{
-            $usuario = null;
+            $existeUsuario = true;
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
-        return $existe;
+        return $existeUsuario;
     }
 
     public static function CantVendedores(){
