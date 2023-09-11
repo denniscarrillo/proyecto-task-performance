@@ -1,7 +1,7 @@
 <?php
-   require_once ("../../../db/Conexion.php");
-   require_once ("../../../Modelo/Comision.php");
-   require_once("../../../Controlador/ControladorComision.php");
+   require_once ("../../db/Conexion.php");
+   require_once ("../../Modelo/Comision.php");
+   require_once("../../Controlador/ControladorComision.php");
    
    $data = ControladorComision::getComision();
 
