@@ -48,8 +48,8 @@ class Comision
         // Preparamos la insercion en la base de datos
         date_default_timezone_set('America/Tegucigalpa');
         $fechaComision = date("Y-m-d");
-        $query = "INSERT INTO `tbl_comision` (`id_Venta`, `id_Porcentaje`, 
-        `comision_TotalVenta`, `estadoComision`, `Creado_Por`, `Fecha_Creacion`)  
+        $query = "INSERT INTO tbl_comision (id_Venta, id_Porcentaje, 
+        comision_TotalVenta, estadoComision, Creado_Por, Fecha_Creacion)  
         VALUES ('$nuevaComision->idVenta','$nuevaComision->idPorcentaje','$nuevaComision->comisionTotal', '$nuevaComision->estadoComision', '$nuevaComision->creadoPor', $fechaComision')";
         // Ejecutamos la consulta y comprobamos si fue exitosa
         $consulta = sqlsrv_query($consulta, $query);
