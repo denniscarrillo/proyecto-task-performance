@@ -20,7 +20,7 @@ class Comision
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $listaComision =
-            $query = "SELECT co.id_Comision, co.id_Venta, v.TOTALNETO, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, co.Creado_Por, co.Fecha_Creacion
+            $query = "  SELECT co.id_Comision, co.id_Venta, v.TOTALNETO, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, co.Fecha_Creacion
             FROM tbl_comision AS co
             INNER JOIN view_facturasventa AS v ON co.id_Venta = v.NUMFACTURA
             INNER JOIN  tbl_porcentaje AS po ON co.id_Porcentaje = po.id_Porcentaje;";
@@ -48,9 +48,11 @@ class Comision
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         // Preparamos la insercion en la base de datos
+        date_default_timezone_set('America/Tegucigalpa');
+        $fechaComision = date("Y-m-d");
         $query = "INSERT INTO `tbl_comision` (`id_Venta`, `id_Porcentaje`, 
         `comision_TotalVenta`, `estadoComision`, `Creado_Por`, `Fecha_Creacion`)  
-        VALUES ('$nuevaComision->idVenta','$nuevaComision->idPorcentaje','$nuevaComision->comisionTotal', '$nuevaComision->estadoComision', '$nuevaComision->creadoPor', '$nuevaComision->fechaComision')";
+        VALUES ('$nuevaComision->idVenta','$nuevaComision->idPorcentaje','$nuevaComision->comisionTotal', '$nuevaComision->estadoComision', '$nuevaComision->creadoPor', $fechaComision')";
         // Ejecutamos la consulta y comprobamos si fue exitosa
         $consulta = sqlsrv_query($consulta, $query);
         $query = "SELECT SCOPE_IDENTITY() AS id_Comision";
@@ -60,7 +62,6 @@ class Comision
         // Ejecutamos la consulta y comprobamos si fue exitosa
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $idComision;
-
     }
 
     public static function obtenerPorcentajesComision()
@@ -143,8 +144,8 @@ class Comision
         // $vendedores = array();
         while ($fila = sqlsrv_fetch_array($selectVendedores, SQLSRV_FETCH_ASSOC)) {
             $idVendedor = intval($fila['id_usuario_vendedor']);
-            $query2 = "UPDATE `tbl_comision_por_vendedor` SET `estadoComisionVendedor` = '$comision->estadoComision', 
-            `Modificado_Por` = '$comision->ModificadoPor', `Fecha_Modificacion` = '$comision->fechaModificacion' WHERE `id_Comision` = '$comision->idComision' AND `id_usuario_vendedor` = '$idVendedor' ;";
+            $query2 = "UPDATE tbl_comision_por_vendedor SET estadoComisionVendedor = '$comision->estadoComision', 
+            Modificado_Por = '$comision->ModificadoPor', Fecha_Modificacion = '$comision->fechaModificacion' WHERE id_Comision = '$comision->idComision' AND id_usuario_vendedor = '$idVendedor' ;";
             $comisionVendedor = sqlsrv_query($conexion, $query2);
         }
        sqlsrv_close($conexion); #Cerramos la conexión.

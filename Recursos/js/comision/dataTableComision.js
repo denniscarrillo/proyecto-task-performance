@@ -3,29 +3,37 @@
 let tablaComision = "";
 $(document).ready(function () {
   tablaComision = $("#table-Comision").DataTable({
-    ajax: {
-      url: "../../../Vista/comisiones/obtenerComision.php",
-      dataSrc: "",
+    "ajax": {
+      "url": "../../../Vista/comisiones/obtenerComision.php",
+      "dataSrc": ""
     },
-    language: {
-      url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
+    "language": {
+      "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
     },
-    columns: [
-      { data: "idComision" },
-      { data: "factura" },
-      { data: "totalVenta" },
-      { data: "porcentaje" },
-      { data: "comisionTotal" },
-      { data: "estadoComisionar" },
-      { data: "fechaComision" },
+    "columns": [
+      { "data": "idComision" },
+      { "data": "factura" },
+      { "data": "totalVenta" },
+      { "data": "porcentaje" },
+      { "data": "comisionTotal" },
+      { "data": "estadoComisionar" },
+      { "data": "fechaComision.date" },
       {
-        defaultContent:
+        "defaultContent":
           '<div><button class="btns btn" id="btn_ver"><i class="fas fa-file-pdf"></i></button>' +
-          '<button class="btns btn" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>',
-      },
-    ],
+          '<button class="btns btn" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>'
+      }
+    ]
   });
 });
+
+// 'idComision' => $fila["id_Comision"],
+// 'factura' => $fila["id_Venta"],
+// 'totalVenta' => $fila["TOTALNETO"],
+// 'porcentaje' => $fila["valor_Porcentaje"],
+// 'comisionTotal' => $fila["comision_TotalVenta"],
+// 'estadoComisionar' => $fila["estadoComision"],
+// 'fechaComision' => $fila["Fecha_Creacion"]
 
 //Editar Comision
 $(document).on("click", "#btn_editar", function(){

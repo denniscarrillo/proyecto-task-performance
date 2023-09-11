@@ -13,7 +13,7 @@ $(document).ready(function () {
       { "data": 'codCliente' },
       { "data": 'nombreCliente' },
       { "data": 'rtnCliente' },
-      { "data": 'fechaEmision' },
+      { "data": 'fechaEmision.date'},
       { "data": 'totalBruto' },
       { "data": 'totalImpuesto'},
       { "data": 'totalNeto' }
