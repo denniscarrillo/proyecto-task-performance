@@ -31,7 +31,7 @@ class Tarea
             $tareasUsuario = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $query = "SELECT t.id_Tarea, t.id_EstadoAvance, t.titulo, t.fecha_Inicio, e.descripcion  FROM tbl_vendedores_tarea AS vt
+            $query = " SELECT t.id_Tarea, t.id_EstadoAvance, t.titulo, t.fecha_Inicio, e.descripcion  FROM tbl_vendedores_tarea AS vt
             INNER JOIN tbl_tarea AS t ON t.id_Tarea = vt.id_Tarea
             INNER JOIN tbl_estadoavance AS e ON t.id_EstadoAvance = e.id_EstadoAvance
             WHERE vt.id_usuario_vendedor = '$idUser';";
@@ -43,7 +43,7 @@ class Tarea
                     'idEstadoAvance' => $fila['id_EstadoAvance'],
                     'tipoTarea' => $fila['descripcion'],
                     'tituloTarea' => $fila['titulo'],
-                    'fechaInicio' => $fila['fecha_Inicio'],
+                    'fechaInicio' => $fila['fecha_Inicio']['date']
                 ];
             }
         } catch (Exception $e) {
@@ -59,20 +59,17 @@ class Tarea
             $idTarea = null;
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $insert = "INSERT INTO `tbl_tarea` (`id_EstadoAvance`, `titulo`, `fecha_Inicio`, `Creado_Por`, `Fecha_Creacion`) 
+            $insert = "INSERT INTO tbl_tarea (id_EstadoAvance, titulo, fecha_Inicio, Creado_Por, Fecha_Creacion) 
                             VALUES ('$tarea->idEstadoAvance','$tarea->titulo', 
                                     '$tarea->fechaInicio', '$tarea->Creado_Por', '$tarea->fechaInicio')"; 
             $ejecutar_insert = sqlsrv_query($abrirConexion, $insert);
             $query = "SELECT SCOPE_IDENTITY() AS id_Tarea";
             $resultado = sqlsrv_query($abrirConexion, $query);
-            while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
-                $idTarea = $fila['id_Tarea'];
-            }
-            $insertUsuarioTarea = "INSERT INTO `tbl_vendedores_tarea` (`id_Tarea`, `id_usuario_vendedor`) 
+            $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+            $idTarea = $fila['id_Tarea'];
+            $insertUsuarioTarea = "INSERT INTO tbl_vendedores_tarea (id_Tarea, id_usuario_vendedor) 
                                     VALUES ('$idTarea', '$tarea->idUsuario');";
-            $ejecutar_insert = sqlsrv_query($abrirConexion, $insertUsuarioTarea);
-            /* $abrirConexion->query($insertUsuarioTarea); */
-            
+            sqlsrv_query($abrirConexion, $insertUsuarioTarea);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
@@ -98,53 +95,34 @@ class Tarea
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
     }
-    public static function clienteExistente($rtnCliente)
-    {
-        try {
-            $estado = array();
-            $conn = new Conexion();
-            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $select = "SELECT COUNT(*) AS 'clienteExistente' FROM tbl_tarea WHERE RTN_Cliente = '$rtnCliente'";
-            $estadoCliente = sqlsrv_query($abrirConexion, $select);
-            while ($fila = sqlsrv_fetch_array($estadoCliente, SQLSRV_FETCH_ASSOC)) {
-                $estado [] = [
-                    'clienteExistente' => $fila['clienteExistente']
-                ];
-            }
-            if ($estado[0]['clienteExistente'] < 2 && $estado[0]['clienteExistente'] > 0) {
-                $estado[0]['clienteExistente'] = 'Nuevo';
-            } else if ($estado[0]['clienteExistente'] > 1) {
-                $estado[0]['clienteExistente'] = 'Existente';
-            }
-            else{
-                $estado[0]['clienteExistente'] = 'No Aplica Comision';
-            }
-            return $estado;
-        } catch (Exception $e) {
-            echo 'Error SQL:' . $e;
-        }
-        sqlsrv_close($abrirConexion); //Cerrar conexion
-    }
-    public static function obtenerVendedoresTarea()
-    {
-        try {
-            $vendedores = array();
-            $conn = new Conexion();
-            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $select = "SELECT id_Tarea, From tbl_tarea";
-            $listaVendedores = sqlsrv_query($abrirConexion, $select);
-            while ($fila = sqlsrv_fetch_array($listaVendedores, SQLSRV_FETCH_ASSOC)) {
-                $vendedores[] = [
-                    'idVendedor' => $fila['id_Usuario'],
-                    'nombreVendedor' => $fila['nombre_Usuario']
-                ];
-            }
-            return $vendedores;
-        } catch (Exception $e) {
-            echo 'Error SQL:' . $e;
-        }
-        sqlsrv_close($abrirConexion); //Cerrar conexion
-    }
+    // public static function clienteExistente($rtnCliente)
+    // {
+    //     try {
+    //         $estado = array();
+    //         $conn = new Conexion();
+    //         $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+    //         $select = "SELECT COUNT(*) AS clienteExistente FROM tbl_tarea WHERE RTN_Cliente = '$rtnCliente'";
+    //         $estadoCliente = sqlsrv_query($abrirConexion, $select);
+    //         while ($fila = sqlsrv_fetch_array($estadoCliente, SQLSRV_FETCH_ASSOC)) {
+    //             $estado [] = [
+    //                 'clienteExistente' => $fila['clienteExistente']
+    //             ];
+    //         }
+    //         if ($estado[0]['clienteExistente'] < 2 && $estado[0]['clienteExistente'] > 0) {
+    //             $estado[0]['clienteExistente'] = 'Nuevo';
+    //         } else if ($estado[0]['clienteExistente'] > 1) {
+    //             $estado[0]['clienteExistente'] = 'Existente';
+    //         }
+    //         else{
+    //             $estado[0]['clienteExistente'] = 'No Aplica Comision';
+    //         }
+    //         return $estado;
+    //     } catch (Exception $e) {
+    //         echo 'Error SQL:' . $e;
+    //     }
+    //     sqlsrv_close($abrirConexion); //Cerrar conexion
+    // }
+    
     public static function obtenerArticulos(){
         try{
             $articulos = array();
@@ -241,9 +219,9 @@ class Tarea
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             foreach($idVendedores as $idVendedor){
                 $id= $idVendedor['idVendedor'];
-                $insertUsuarioTarea = "INSERT INTO `tbl_vendedores_tarea` (`id_Tarea`, `id_usuario_vendedor`) 
+                $insertUsuarioTarea = "INSERT INTO tbl_vendedores_tarea (id_Tarea, id_usuario_vendedor) 
                                     VALUES ('$idTarea', '$id');";
-                 sqlsrv_query($abrirConexion, $insertUsuarioTarea);
+                sqlsrv_query($abrirConexion, $insertUsuarioTarea);
             }
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
@@ -255,7 +233,7 @@ class Tarea
             $vendedores = array();
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $select = "SELECT id_Usuario, usuario, nombre_Usuario FROM tbl_ms_usuario WHERE id_Rol = 4;";
+            $select = "SELECT id_Usuario, usuario, nombre_Usuario FROM tbl_ms_usuario WHERE id_Rol = 3;";
             $listaVendedores = sqlsrv_query($abrirConexion, $select);
             while($fila = sqlsrv_fetch_array($listaVendedores , SQLSRV_FETCH_ASSOC)){
                 $vendedores[] = [
@@ -281,15 +259,15 @@ class Tarea
                 $rtn = $datosTarea['rtn']; $estadoCliente = $datosTarea['tipoCliente']; $idClasificacionLead = $datosTarea['clasificacionLead'];
                 $idOrigen = $datosTarea['origenLead']; $razon = $datosTarea['razon']; $rubro = $datosTarea['rubro']; 
                 //Actualizamos los datos de la tarea
-                $update = "UPDATE tbl_tarea SET `RTN_Cliente` = '$rtn', `estado_Cliente_Tarea` = '$estadoCliente', 
-                `id_ClasificacionLead` = '$idClasificacionLead', `id_OrigenLead` = $idOrigen, `rubro_Comercial` = '$rubro', `razon_Social` ='$razon'
-                WHERE `id_Tarea` = '$idTarea';";
+                $update = "UPDATE tbl_tarea SET RTN_Cliente = '$rtn', estado_Cliente_Tarea = '$estadoCliente', 
+                id_ClasificacionLead = '$idClasificacionLead', id_OrigenLead = $idOrigen, rubro_Comercial = '$rubro', razon_Social ='$razon'
+                WHERE id_Tarea = '$idTarea';";
                 sqlsrv_query($abrirConexion, $update);
             }else{
                 $rtn = $datosTarea['rtn']; $estadoCliente = $datosTarea['tipoCliente']; $razon = $datosTarea ['razon']; $rubro = $datosTarea['rubro']; 
                 //Actualizamos los datos de la tarea
-                $update = "UPDATE tbl_tarea SET `RTN_Cliente` = '$rtn', `estado_Cliente_Tarea` = '$estadoCliente', 
-                `rubro_Comercial` = '$rubro', `razon_Social` ='$razon' WHERE `id_Tarea` = '$idTarea'";
+                $update = "UPDATE tbl_tarea SET RTN_Cliente = '$rtn', estado_Cliente_Tarea = '$estadoCliente', 
+                rubro_Comercial = '$rubro', razon_Social ='$razon' WHERE id_Tarea = '$idTarea'";
                 sqlsrv_query($abrirConexion, $update);
             }
         }catch(Exception $e){
@@ -304,7 +282,7 @@ class Tarea
             foreach($productos as $producto){
                 $idProducto = $producto['idProducto'];
                 $cantProd = $producto['CantProducto'];
-                $insert = "INSERT INTO `tbl_productointeres` (`id_Tarea`, `id_Articulo`, `cantidad`, `Creado_Por`, `Fecha_Creacion`) 
+                $insert = "INSERT INTO tbl_productointeres (id_Tarea, id_Articulo, cantidad, Creado_Por, Fecha_Creacion) 
                 VALUES ('$idTarea', '$idProducto', '$cantProd', '$CreadoPor', '$fechaCreacion');";
                 sqlsrv_query($abrirConexion, $insert);
             }
@@ -357,7 +335,7 @@ class Tarea
         try {
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $insertNuevoCliente = "INSERT INTO `tbl_CarteraCliente` (`nombre_Cliente`, `rtn_Cliente`, `telefono`, `correo`, `direccion`) 
+            $insertNuevoCliente = "INSERT INTO tbl_CarteraCliente (nombre_Cliente, rtn_Cliente, telefono, correo, direccion) 
             VALUES('$nombre', '$rtn', '$telefono', '$correo', '$direccion');";
             sqlsrv_query($abrirConexion, $insertNuevoCliente);
         } catch (Exception $e) {

@@ -42,6 +42,17 @@
   overflow-y: hidden;
   overflow-x: scroll;
 }
+.colum-task-conteiner::-webkit-scrollbar{
+  height: 0.5rem;
+  border-radius: 4px;
+  background: #555351;
+}
+.colum-task-conteiner::-webkit-scrollbar-thumb{
+  background: #f4f2f0;
+  border-radius: 4px;
+  margin: 0.4rem;
+  width: 1rem;
+}
 .task-conteiner{
   display: flex;
   flex-direction: column;
@@ -102,6 +113,15 @@ p {
   max-height: 80%;
   margin-bottom: 1.5rem;
 }
+.container_tarea::-webkit-scrollbar {
+  width: 0.3rem;
+  border-radius: 4px;
+}
+.container_tarea::-webkit-scrollbar-thumb {
+  background: #ef904d;;
+  border-radius: 4px;
+  padding: 0 0.4rem;
+}
 .task-colum {
   position: relative;
   border-radius: 2rem;
@@ -120,12 +140,12 @@ p {
   box-shadow: 4px 2px 5px 0px #00000014;
 }
 .btn_nuevaTarea {
-  /* display: inline; */
   border: none;
   background-color: #ef904d;
   padding: 8px;
   margin-bottom: 10px;
   border-radius: 0.2rem;
+  text-align: left;
 }
 .form-nuevaTarea {
   width: 17rem;
@@ -218,7 +238,7 @@ p {
   display: block;
   margin: 0 auto;
 }
- #btn-NuevaLLamada {
+.btn_nuevaTarea {
   position: absolute;
   bottom: 0;
   width: 100%;

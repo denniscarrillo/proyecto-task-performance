@@ -46,9 +46,11 @@ class Comision
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         // Preparamos la insercion en la base de datos
-        $query = "INSERT INTO tbl_comision (id_Venta, id_Porcentaje, 
-        comision_TotalVenta, estadoComision, Creado_Por, Fecha_Creacion)  
-        VALUES ('$nuevaComision->idVenta','$nuevaComision->idPorcentaje','$nuevaComision->comisionTotal', '$nuevaComision->estadoComision', '$nuevaComision->creadoPor', '$nuevaComision->fechaComision')";
+        date_default_timezone_set('America/Tegucigalpa');
+        $fechaComision = date("Y-m-d");
+        $query = "INSERT INTO `tbl_comision` (`id_Venta`, `id_Porcentaje`, 
+        `comision_TotalVenta`, `estadoComision`, `Creado_Por`, `Fecha_Creacion`)  
+        VALUES ('$nuevaComision->idVenta','$nuevaComision->idPorcentaje','$nuevaComision->comisionTotal', '$nuevaComision->estadoComision', '$nuevaComision->creadoPor', $fechaComision')";
         // Ejecutamos la consulta y comprobamos si fue exitosa
         $consulta = sqlsrv_query($consulta, $query);
         $query = "SELECT SCOPE_IDENTITY() AS id_Comision";
@@ -60,7 +62,6 @@ class Comision
 
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $idComision;
-
     }
 
     public static function obtenerPorcentajesComision()
@@ -143,8 +144,8 @@ class Comision
         // $vendedores = array();
         while ($fila = sqlsrv_fetch_array($selectVendedores, SQLSRV_FETCH_ASSOC)) {
             $idVendedor = intval($fila['id_usuario_vendedor']);
-            $query2 = "UPDATE `tbl_comision_por_vendedor` SET `estadoComisionVendedor` = '$comision->estadoComision', 
-            `Modificado_Por` = '$comision->ModificadoPor', `Fecha_Modificacion` = '$comision->fechaModificacion' WHERE `id_Comision` = '$comision->idComision' AND `id_usuario_vendedor` = '$idVendedor' ;";
+            $query2 = "UPDATE tbl_comision_por_vendedor SET estadoComisionVendedor = '$comision->estadoComision', 
+            Modificado_Por = '$comision->ModificadoPor', Fecha_Modificacion = '$comision->fechaModificacion' WHERE id_Comision = '$comision->idComision' AND id_usuario_vendedor = '$idVendedor' ;";
             $comisionVendedor = sqlsrv_query($conexion, $query2);
         }
        sqlsrv_close($conexion); #Cerramos la conexión.

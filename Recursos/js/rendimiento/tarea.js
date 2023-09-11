@@ -7,10 +7,10 @@ let $contenedorCotizaciones = document.getElementById('conteiner-cotizacion');
 let $contadorCotizaciones = document.getElementById('circle-count-cotizaciones');
 let $contenedorVentas = document.getElementById('conteiner-venta');
 let $contadorVentas = document.getElementById('circle-count-ventas');
-let $columnaLlamadas = document.getElementById('columna-llamadas');
-let $columnaLeads = document.getElementById('columna-leads');
-let $columnaCotizaciones = document.getElementById('columna-cotizaciones');
-let $columnaVentas = document.getElementById('columna-ventas');
+let $columnaLlamadas = document.getElementById('conteiner-llamada');
+let $columnaLeads = document.getElementById('conteiner-lead');
+let $columnaCotizaciones = document.getElementById('conteiner-cotizacion');
+let $columnaVentas = document.getElementById('conteiner-venta');
 let $ArticulosInteres = [];
 let $idTarea = '';
 
@@ -119,16 +119,18 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
     datatype: "JSON",
     success: function (data) {
       let objData = JSON.parse(data); //Convertimos JSON a objeto javascript
+      console.log(objData);
       let $tareas = '';
       let count = 0;
       //Recorremo arreglo de objetos con un forEach para mostrar tareas
       objData.forEach(tarea => {
         if (tarea.tipoTarea == tipoTarea) {
+          let fechaIni = tarea.fechaInicio.date.split(" ");
           $tareas +=
             `<div class="card_task dragged-element" draggable="true">
               <div class="conteiner-text-task">
                 <p>${tarea.tituloTarea}</p>
-                <p>${tarea.fechaInicio}</p>
+                <p>${fechaIni[0]}</p>
               </div>
               <div class="conteiner-icons-task">
               <div>
@@ -157,7 +159,7 @@ let crearNuevaTarea = ($contenedor, $idConteinerForm, $idForm, $placeholder, $ta
     newFormulario.setAttribute('class', 'form-nuevaTarea'); //Añadimos clase al div
     newFormulario.setAttribute('id', $idConteinerForm); //Añadimos clase al div
     newFormulario.innerHTML = `
-      <form action="" method="POST" id="${$idForm}" class="new-form">
+      <form action="" method="" id="${$idForm}" class="new-form">
         <textarea id="title-task" class="input-title" placeholder="${$placeholder}"></textarea>
         <div class="btns">
           <button type="submit" class="btn btn-primary" id="btn-submit-${$tarea}">Guardar</button>
