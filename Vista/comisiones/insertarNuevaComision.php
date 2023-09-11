@@ -10,6 +10,7 @@ session_start();
 if(isset($_POST['idVenta']) || isset($_POST['idComision'])){
     $user = $_SESSION['usuario'];
     $nuevaComision = new Comision();
+    /* $nuevaComision->idComision = intval($_POST['id_Comision']); */
     $nuevaComision->idVenta = intval($_POST['idVenta']);
     $nuevaComision->idPorcentaje = intval($_POST['idPorcentaje']);
     $nuevaComision->comisionTotal = floatval($_POST['comisionTotal']);

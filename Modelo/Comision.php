@@ -20,10 +20,11 @@ class Comision
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $listaComision =
-            $query = "SELECT co.id_Comision, co.id_Venta, v.TOTALNETO, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, co.Creado_Por, co.Fecha_Creacion
+            $query = "SELECT co.id_Comision, co.id_Venta, v.TOTALNETO, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, co.Fecha_Creacion
             FROM tbl_comision AS co
             INNER JOIN view_facturasventa AS v ON co.id_Venta = v.NUMFACTURA
-            INNER JOIN  tbl_porcentaje AS po ON co.id_Porcentaje = po.id_Porcentaje;";
+            INNER JOIN  tbl_porcentaje AS po ON co.id_Porcentaje = po.id_Porcentaje
+            WHERE v.TOTALNETO > 0;";
         $listaComision = sqlsrv_query($consulta, $query);
         $Comision = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
@@ -48,16 +49,18 @@ class Comision
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         // Preparamos la insercion en la base de datos
-        $query = "INSERT INTO `tbl_comision` (`id_Venta`, `id_Porcentaje`, 
-        `comision_TotalVenta`, `estadoComision`, `Creado_Por`, `Fecha_Creacion`)  
+        $query = "INSERT INTO tbl_comision (id_Venta, id_Porcentaje, 
+        comision_TotalVenta, estadoComision, Creado_Por, Fecha_Creacion)  
         VALUES ('$nuevaComision->idVenta','$nuevaComision->idPorcentaje','$nuevaComision->comisionTotal', '$nuevaComision->estadoComision', '$nuevaComision->creadoPor', '$nuevaComision->fechaComision')";
         // Ejecutamos la consulta y comprobamos si fue exitosa
         $consulta = sqlsrv_query($consulta, $query);
         $query = "SELECT SCOPE_IDENTITY() AS id_Comision";
         $resultado = sqlsrv_query($consulta, $query);
         $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+
         $idComision = $fila['id_Comision'];
-        // Ejecutamos la consulta y comprobamos si fue exitosa
+
+
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $idComision;
 
@@ -88,7 +91,7 @@ class Comision
         INNER JOIN tbl_ms_Usuario AS u ON u.id_Usuario = vt.id_usuario_vendedor WHERE vt.id_Tarea = $idTarea;";
         $listaVendedores = sqlsrv_query($conexion, $query);
         $vendedores = array();
-        while ($fila = $listaVendedores->fetch_assoc()) {
+        while ($fila = sqlsrv_fetch_array($listaVendedores, SQLSRV_FETCH_ASSOC)) {
             $vendedores[] = [
                 'idVendedor' => $fila['id_usuario_vendedor'],
                 'nombreVendedor' => $fila['Usuario']
@@ -104,7 +107,7 @@ class Comision
         $query = "SELECT id_Tarea FROM tbl_AdjuntoEvidencia 
         WHERE evidencia = $idFacturaVenta;";
         $consulta = sqlsrv_query($conexion, $query);
-        $fila = $consulta->fetch_assoc();
+        $fila = sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC);
         $idTarea = $fila['id_Tarea'];
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $idTarea;
@@ -203,7 +206,7 @@ class Comision
         $query="SELECT * FROM tbl_comision_por_vendedor WHERE Fecha_Creacion BETWEEN '$fechaDesde' AND '$fechaHasta';
         ";
         $fechasComisiones= sqlsrv_query($consulta, $query);
-        $fila = $fechasComisiones->fetch_assoc();
+        $fila = sqlsrv_fetch_array($fechasComisiones, SQLSRV_FETCH_ASSOC);
         $fechaComision = array();
         while ($fila = sqlsrv_fetch_array($fechasComisiones, SQLSRV_FETCH_ASSOC)) {
             $fechaComision[] = [
@@ -222,7 +225,7 @@ class Comision
         $query="SELECT id_Comision FROM tbl_comision WHERE estadoComision = 'Activa' AND id_Venta = '$idVenta';
         ";
         $estadoComision= sqlsrv_query($consulta, $query);
-        $existe = $estadoComision->num_rows;
+        $existe = sqlsrv_has_rows($estadoComision);
         if($existe > 0){
             $estadoVenta = true;
         }
