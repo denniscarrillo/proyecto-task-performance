@@ -19,22 +19,5 @@ $(document).ready(function () {
       { "data": "totalNeto" }
     ]
   });
-
- /*  $('#btn_ver').click(function () {
-    let numFactura = $(this).closest('tr').find('td:eq(0)').text();
-    GenerarReporte(numFactura);
-  });
-
-  let GenerarReporte = (numFactura) => {
-    $.ajax({
-      url: "../../../Vista/fpdf/Reporte_Venta.php",
-      type: "POST",
-      datatype: "JSON",
-      data: {
-        numFactura: numFactura
-      }
-    }); //Fin AJAX
-  } */
-
 });
 

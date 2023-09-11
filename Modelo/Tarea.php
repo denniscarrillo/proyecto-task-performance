@@ -43,7 +43,7 @@ class Tarea
                     'idEstadoAvance' => $fila['id_EstadoAvance'],
                     'tipoTarea' => $fila['descripcion'],
                     'tituloTarea' => $fila['titulo'],
-                    'fechaInicio' => $fila['fecha_Inicio']['date']
+                    'fechaInicio' => $fila['fecha_Inicio']
                 ];
             }
         } catch (Exception $e) {
