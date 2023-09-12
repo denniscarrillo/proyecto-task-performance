@@ -47,12 +47,12 @@ $form.addEventListener('submit', e => {
 
     if (estadoInputPassword == false || estadoInputPassword2 == false){
         e.preventDefault();
-    }else{
+    }/* else{
         if (estadoPasswordSegura.estadoPassword == false ) {
             estadoPasswordSegura.estadoPassword = funciones.validarPassword($password, expresiones.password);
         }
                            
-        }
+        } */
     });
     $password2.addEventListener('keyup',() =>{
         funciones.validarCoincidirPassword($password, $password2);
@@ -97,6 +97,23 @@ $form.addEventListener('submit', e =>{
     if (!expresiones.password.test(input)) {
         e.preventDefault();
     }
+    $form.addEventListener('submit', e =>{
+            let mensaje = $password.parentElement.querySelector('p');
+            let estado;
+            let input = $password.value;
+            if (!expresiones.test(input)){
+                mensaje.innerText = '*Mínimo 8 caracteres, una mayúscula, minúscula, número y caracter especial.';
+                $password.classList.add('mensaje_error');
+                estado =  false;
+            } else {
+                mensaje.innerText = '';
+                $password.classList.remove('mensaje_error');
+                estado = true;
+            }
+            return estado;
+        }
+    );
+
 }); 
 
 

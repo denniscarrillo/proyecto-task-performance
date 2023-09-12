@@ -13,7 +13,14 @@ $(document).ready(function () {
     },
     "columns": [
       { "data": "idPorcentaje"},
-      { "data": "valorPorcentaje" },
+      { "data": "valorPorcentaje",
+       "render": function (data, type) {
+          if (type === 'display') {
+          return (parseFloat(data) * 100).toFixed(0) + '%'; // Formatea el porcentaje
+          }
+          return data; // En otras ocasiones, devuelve el valor sin formato
+        }
+      },
       { "data": "descripcionPorcentaje" },
       { "data": "estadoPorcentaje" },
       {"defaultContent":

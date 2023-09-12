@@ -39,7 +39,7 @@
                         header ('location: login.php');
                         session_destroy();
                     } else {
-                        header ('location: ./recuperacionContrasenia/v_nuevaContrasenia.php');
+                        header ('location: ../recuperacionContrasenia/v_nuevaContrasenia.php');
                     }
                 }
                 /* ========================= Evento Responder pregunta. ======================*/
