@@ -29,14 +29,32 @@ require_once('obtenerEstadoComision.php');
       <div class="sidebar-conteiner">
         <?php
         $urlIndex = '../index.php';
-        $urlGestion = '../crud/usuario/gestionUsuario.php';
-        $urlTarea = '../rendimiento/v_tarea.php';
+        // Rendimiento
+        $urlMisTareas = '../rendimiento/v_tarea.php';
+        $urlConsultarTareas = '../crud/DataTableTarea/gestionDataTableTarea.php';
+        $urlBitacoraTarea = ''; //PENDIENTE
+        $urlMetricas = '../crud/Metricas/gestionMetricas.php';
+        $urlEstadisticas = '../grafica/estadistica.php'; //PENDIENTE
+        //Solicitud
         $urlSolicitud = '../crud/DataTableSolicitud/gestionDataTableSolicitud.php';
-        $urlComision = 'v_comision.php';
-        $urlVenta = '../crud/venta/gestionVenta.php';
-        $urlCliente = '../crud/cliente/gestionCliente.php';
+        //Comisión
+        $urlComision = './v_comision.php';
+        //Consulta
+        $urlClientes = '../crud/cliente/gestionCliente.php';
+        $urlVentas = '../crud/Venta/gestionVenta.php';
+        $urlArticulos = '../crud/articulo/gestionArticulo.php';
+        $urlObjetos = '../crud/DataTableObjeto/gestionDataTableObjeto.php';
+        $urlBitacoraSistema = '../crud/bitacora/gestionBitacora.php';
+        //Mantenimiento
+        $urlUsuarios = '../crud/usuario/gestionUsuario.php';
         $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
-        $urlPorcentaje = '../crud/Porcentajes/gestionPorcentajes.php';
+        $urlPreguntas = '../crud/pregunta/gestionPregunta.php';
+        $urlParametros = '../crud/parametro/gestionParametro.php';
+        $urlPermisos = '../crud/permiso/gestionPermiso.php';
+        $urlRoles = '../crud/rol/gestionRol.php';
+        $urlPorcentajes = '../crud/Porcentajes/gestionPorcentajes.php';
+        $urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
+        $urlImg = '../../Recursos/imagenes/Logo-E&C.png';
         require_once '../layout/sidebar.php';
         ?>
       </div>

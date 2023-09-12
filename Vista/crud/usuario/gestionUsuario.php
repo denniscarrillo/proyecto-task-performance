@@ -92,7 +92,7 @@ if (isset($_SESSION['usuario'])) {
           $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
           $urlBitacoraTarea = ''; //PENDIENTE
           $urlMetricas = '../Metricas/gestionMetricas.php';
-          $urlEstadisticas = ''; //PENDIENTE
+          $urlEstadisticas = '../../grafica/estadistica.php'; 
           //Solicitud
           $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
           //Comisión
