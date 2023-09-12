@@ -19,7 +19,6 @@
     width: 80%;  
 }
 
-
 legend{
     font-size: 1rem;
 }
@@ -43,18 +42,39 @@ legend{
     margin-right:45;
 }
 
+
+
+
 .Graficoss{
     margin-bottom: 5%;
 }
-
-.grafica_Llamada .chartjs-render-monitor {
-    position: relative;
-    left: -300px;
-    left: 500px;
-
+#grafica{
+    width: 100%; 
+}
+ #grafica_llamada{
+    max-width: 500px;
+    float:left; 
+    margin-bottom: 5%;
+  
+}
+ #grafica_lead{
+    max-width: 500px;
+    float:right; 
+    margin-bottom: 5%;
 }
 
-.grafica_Lead .chartjs-render-monitor {
-    position: relative;
-    left: 300px;
+ #grafica_Cotizacion{
+    max-width: 500px;  
+    float:left; 
 }
+
+ #grafica_Ventas{
+    max-width: 500px; 
+    float:right; 
+}
+
+.footer-conteiner{
+    float:inline-start; 
+}
+
+

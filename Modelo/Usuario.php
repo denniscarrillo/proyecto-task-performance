@@ -185,7 +185,7 @@ class Usuario {
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         foreach($preguntas as $pregunta){
             $query = "INSERT INTO tbl_ms_preguntas (pregunta, Creado_Por) VALUES ('$pregunta','$usuario');";
-            sqlsrv_query($conexion, $query);
+            $query = sqlsrv_query($conexion, $query);
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
     }
@@ -215,7 +215,7 @@ class Usuario {
         $idUsuario = $fila["id_usuario"];
         $qry = "INSERT INTO tbl_MS_Preguntas_X_Usuario (id_pregunta, id_usuario, respuesta)
             VALUES ('$idPregunta','$idUsuario','$respuesta');";
-        sqlsrv_query($conexion, $qry);
+        $qry = sqlsrv_query($conexion, $qry);
         sqlsrv_close($conexion); #Cerramos la conexión.
     }
     //===================== METODO REPETIDO, REVISAR==========================
@@ -370,14 +370,14 @@ class Usuario {
         $incremento = $valorActual+1;
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
-        $query = "UPDATE tbl_MS_Usuario  SET `preguntas_Contestadas`= '$incremento' WHERE `usuario` = '$usuario';";
+        $query = "UPDATE tbl_MS_Usuario  SET preguntas_Contestadas = '$incremento' WHERE usuario = '$usuario';";
         sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerrar la conexión.
     }
     public static function cambiarEstadoNuevo($usuario){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
-        $query = "UPDATE tbl_MS_Usuario  SET `id_Estado_Usuario`= 2 WHERE `usuario` = '$usuario';";
+        $query = "UPDATE tbl_MS_Usuario  SET id_Estado_Usuario= 2 WHERE usuario = '$usuario';";
         sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerrar la conexión.
     }
@@ -399,7 +399,7 @@ class Usuario {
     public static function actualizaRContrasenia($usuario, $contrasenia){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
-        $query = "UPDATE tbl_MS_Usuario  SET `contrasenia`= '$contrasenia' WHERE `usuario` = '$usuario';";
+        $query = "UPDATE tbl_MS_Usuario  SET contrasenia = '$contrasenia' WHERE usuario = '$usuario';";
         $actualizar = sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerrar la conexión.
         return $actualizar;
@@ -497,7 +497,7 @@ class Usuario {
     public static function CantVendedores(){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query = "Select COUNT(id_Rol) as Cant from tbl_MS_Usuario where id_Rol = 4";
+        $query = "Select COUNT(id_Rol) as Cant from tbl_MS_Usuario where id_Rol = 3";
         $result = sqlsrv_query($conexion, $query);
         $resultArray = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC);
         $CantVendedores = $resultArray['Cant'];        

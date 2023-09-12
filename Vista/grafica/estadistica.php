@@ -21,7 +21,7 @@
     <link href='../../Recursos/css/layout/navbar.css' rel='stylesheet'>
     <link href='../../Recursos/css/layout/footer.css' rel='stylesheet'>
 </head>
-
+../../Vista/grafica/estadistica.php
 <body style="overflow: hidden;">
     <!-- Sidebar 1RA PARTE -->
     <div class="conteiner-global">
@@ -107,18 +107,18 @@
 
                 <div class= "graficosPorTareas">
                     <div class="grafica_Llamada">
-                        <canvas id="grafica_llamada"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
+                        <canvas id="grafica_llamada" style=" width: 1333px; height: 366px;" ></canvas>
                     </div>   
                     
                     <div class="grafica_Lead">
-                        <canvas id="grafica_lead"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
+                        <canvas id="grafica_lead" style=" width: 1333px; height: 366px;" ></canvas>
                     </div>
                     
                     <div class="grafica_Cotizacion">
-                        <canvas id="grafica_Cotizacion"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
+                        <canvas id="grafica_Cotizacion" style=" width: 1333px; height: 366px;" ></canvas>
                     </div>
                     <div class="grafica_Ventas">
-                        <canvas id="grafica_Ventas"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
+                        <canvas id="grafica_Ventas" style=" width: 1333px; height: 366px;" ></canvas>
                     </div>
                 </div>
                 
