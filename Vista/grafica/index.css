@@ -46,3 +46,15 @@ legend{
 .Graficoss{
     margin-bottom: 5%;
 }
+
+.grafica_Llamada .chartjs-render-monitor {
+    position: relative;
+    left: -300px;
+    left: 500px;
+
+}
+
+.grafica_Lead .chartjs-render-monitor {
+    position: relative;
+    left: 300px;
+}

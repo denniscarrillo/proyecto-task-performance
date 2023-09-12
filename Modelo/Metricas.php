@@ -6,6 +6,7 @@ class Metricas{
     public $modificadoPor;
     public $fechaModificacion;
 
+
     public static function obtenerTodasLasMetricas(){
         $metricas = null;
         try {
@@ -57,4 +58,28 @@ class Metricas{
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $estadoAvance;
     }
+
+
+
+    public static function obtenerMetas() {
+        $conn = new Conexion();
+        $abrirConexion = $conn->abrirConexionDB(); // Abrimos la conexión a la DB.   
+        // Consulta para obtener la meta
+        $query = "SELECT id_EstadoAvance, meta FROM tbl_Metrica";
+        $resultMeta = sqlsrv_query($abrirConexion, $query);    
+        $meta = array(); // Inicializamos la variable $meta en 0
+    
+        while ($fila = sqlsrv_fetch_array($resultMeta, SQLSRV_FETCH_ASSOC)) {
+            // Sumamos todas las metas obtenidas de la consulta
+            $meta [] = [ 
+                "id_EstadoAvenace" => $fila ['id_EstadoAvance'],
+                "meta" => $fila ['meta']
+            ];
+        }  
+        sqlsrv_close($abrirConexion);            
+        return $meta;
+    }
+
 }#Fin de la clase
+
+

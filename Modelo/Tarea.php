@@ -23,6 +23,7 @@ class Tarea
     public $Modificado_Por;
     public $Fecha_Modificacion;
 
+
     // Obtener todas las tareas que le pertenecen a un usuario.
     public static function obtenerTareas($idUser)
     {
@@ -343,4 +344,49 @@ class Tarea
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
     }
+
+
+    public static function obtenerCantTarea($FechaDesde, $FechaHasta) {
+        $conn = new Conexion();
+        $abrirConexion = $conn->abrirConexionDB(); // Abrimos la conexión a la DB.      
+        // Consulta para obtener el conteo de tareas con id_EstadoAvance especificado
+        $query = "SELECT id_EstadoAvance
+        FROM tbl_Tarea where fecha_Inicio between '$FechaDesde' and '$FechaHasta';";
+        $result = sqlsrv_query($abrirConexion, $query);  
+        $cantTareas = array(); // Inicializamos la variable $rowCount en 0
+        
+        $contadorLlamada = 0; $contadorLead = 0; $contadorCotizacion = 0; $contadorVentas = 0;
+        while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+            $idEstadoAvance = intval($row['id_EstadoAvance']);
+            switch ($idEstadoAvance){
+                case 1: {
+                    $contadorLlamada++ ;
+                    break;
+                }
+                case 2: {
+                    $contadorLead++ ;
+                    break;
+                }
+                case 3: {
+                    $contadorCotizacion++ ;
+                    break;
+                }
+                case 4: {
+                    $contadorVentas++ ;
+                    break;
+                }
+            }
+        }
+        $cantTareas = [
+            "Llamadas" => $contadorLlamada,
+            "Lead" => $contadorLead,
+            "Cotizacion" => $contadorCotizacion,
+            "Venta" => $contadorVentas
+        ];
+
+        sqlsrv_close($abrirConexion);   
+       
+        return $cantTareas;
+    } 
+
 }

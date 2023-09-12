@@ -43,4 +43,8 @@ class ControladorTarea {
     public static function almacenarProductosInteres($idTarea, $productos, $CreadoPor, $fechaCreacion){
         Tarea::guardarProductosInteres($idTarea, $productos, $CreadoPor, $fechaCreacion);
     }
+
+    public static function obtenerCantTareas($FechaDesde, $FechaHasta){
+        return Tarea::obtenerCantTarea($FechaDesde, $FechaHasta);
+    }
 }
