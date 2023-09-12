@@ -12,4 +12,8 @@
         public static function obtenerNombreMetrica($idMetrica){
             return Metricas::obtenerEstadoAvance($idMetrica);
         }
+
+        public static function obtenerMetaMetricas(){
+            return Metricas::obtenerMetas();
+        }
     }

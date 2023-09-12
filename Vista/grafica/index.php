@@ -1,4 +1,4 @@
-?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -79,6 +79,7 @@
                     </div>
                     
                     <div class="filtro-Input"> 
+                        
                         <form> 
                             <fieldset> 
                                 <legend>Elige el tipo de gráfico</legend>
@@ -103,19 +104,24 @@
                 <div class="grafica_Tareas">
                     <canvas id="grafica"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
                 </div>
-                
+
+                <div class= "graficosPorTareas">
+                    <div class="grafica_Llamada">
+                        <canvas id="grafica_llamada"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
+                    </div>   
                     
-                
-                <!-- <div class="grafica_Lead">
-                    <canvas id="grafica"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
+                    <div class="grafica_Lead">
+                        <canvas id="grafica_lead"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
+                    </div>
+                    
+                    <div class="grafica_Cotizacion">
+                        <canvas id="grafica_Cotizacion"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
+                    </div>
+                    <div class="grafica_Ventas">
+                        <canvas id="grafica_Ventas"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
+                    </div>
                 </div>
                 
-                <div class="grafica_Comiciones">
-                    <canvas id="grafica"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
-                </div>
-                <div class="grafica_Ventas">
-                    <canvas id="grafica"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
-                </div> -->
             </div>
             
                 <!-- Footer -->
@@ -127,15 +133,16 @@
             </div>
         </div>
     </div>
-    <script src="script.js"></script>
-    <script src="script_Llamada.js"></script>
+    
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
     <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
     <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
     <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
+    <script src="../../../Recursos/js/grafica/script.js"></script>  
      <script src="../../../Recursos/js/index.js"></script>
+     
 </body>
 
 </html>

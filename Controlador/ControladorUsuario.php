@@ -103,4 +103,7 @@
         public static function validarUsuarioExistente($usuario){
             return Usuario::usuarioExiste($usuario);
         }
+        public static function obtenerCantVendedores(){
+            return Usuario::CantVendedores();
+        }
     }

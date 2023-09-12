@@ -76,10 +76,9 @@ if (isset($_SESSION['usuario'])) {
   <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
-  <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
   <title> Pregunta </title>
 </head>
