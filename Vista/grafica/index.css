@@ -42,19 +42,57 @@ legend{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     margin-right:45;
 }
-
 .Graficoss{
     margin-bottom: 5%;
 }
-
-.grafica_Llamada .chartjs-render-monitor {
+#grafica{
+    width: 100%; 
+}
+ #grafica_llamada{
+    max-width: 600px;
+    float:left; 
+    margin-bottom: 5%;
+   
+}
+ #grafica_lead{
+    max-width: 600px;
+    float:right; 
     position: relative;
-    left: -300px;
-    left: 500px;
+    margin-bottom: 5%;
+
+}
+
+ #grafica_Cotizacion{
+    max-width: 600px;
+    float:left; 
+    margin-right: 4%;
+
+}
+
+ #grafica_Ventas{
+    max-width: 600px; 
+    position: right;
+    
+  
+}
+.Graficoss{
+    margin-bottom: 5%;
+    position: relative;
+}
+
+
+/* .grafica_Llamada canvas{
+    position: relative;
+    right: 400px;
+
+    border: 5px solid darkblue;
+
+    
 
 }
 
 .grafica_Lead .chartjs-render-monitor {
     position: relative;
     left: 300px;
-}
+    right: -300px;
+} */
