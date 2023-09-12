@@ -13,7 +13,7 @@
     <link href='../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
     <!-- Boxicons CSS -->
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    <link href='./index.css' rel='stylesheet'>
+    <link href='../../Recursos/css/estadisticas.css' rel='stylesheet'>
     <title>Gráfica</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@latest/dist/Chart.min.js"></script>
     <link href='../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
