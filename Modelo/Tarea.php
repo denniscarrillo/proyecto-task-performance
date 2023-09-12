@@ -96,6 +96,8 @@ class Tarea
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
     }
+
+    //Pertenece al modulo de comision.
     public static function clienteExistente($rtnCliente)
     {
         try {

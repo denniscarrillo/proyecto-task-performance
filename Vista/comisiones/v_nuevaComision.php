@@ -60,7 +60,7 @@ require_once('obtenerEstadoComision.php');
           </div>
           <div class="form-element">
             <label>Fecha de ingreso</label>
-            <input type="date" class="form-control" id="fecha-comision">
+            <input type="text" class="form-control" id="fecha-comision">
           </div>
           <!-- <div class="form-element">
             <label>ID comision</label>

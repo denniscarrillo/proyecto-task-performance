@@ -88,14 +88,14 @@ $form.addEventListener('submit', e => {
                                 if(estadoMasdeUnEspacio.estadoMasEspacioNombre == false){
                                     e.preventDefault();
                                     estadoMasdeUnEspacio.estadoMasEspacioNombre = funciones.validarMasdeUnEspacio($nombre);
-                                } else {
+                                } /* else {
                                     if(estadoExisteUsuario == false){
                                         e.preventDefault();
                                         estadoExisteUsuario = obtenerUsuarioExiste($('#usuario').val());
                                     } else {
                                         estadoExisteUsuario = false;
                                     }
-                                }
+                                } */
                             }
                          }
                     }
