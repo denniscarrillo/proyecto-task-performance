@@ -3,8 +3,15 @@ let $btnCerrarModalVentas = document.getElementById("btn-close-modal-ventas");
 let $tablaVentas = "";
 
 $(document).ready(function () {
-  let now = new Date().toISOString().split("T")[0];
-  document.getElementById("fecha-comision").setAttribute("value", now);
+  //necesito que me muestre la hora en zona horaria de Honduras solo la fecha nada mas en el input de fecha
+  let now = new Date().toLocaleString("en-US", {
+    timeZone: "America/Tegucigalpa",
+    hour12: true,
+    dateStyle: "short",
+  });
+  //Que muetre la fecha actual en el input de fecha
+  document.getElementById("fecha-comision").value = now;
+  console.log(now);
   document.getElementById("fecha-comision").setAttribute("disabled", "true");
   document.getElementById("id-venta").setAttribute("disabled", "true");
   document.getElementById("monto-total").setAttribute("disabled", "true");

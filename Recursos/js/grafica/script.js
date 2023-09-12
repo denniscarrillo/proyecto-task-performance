@@ -1,216 +1,24 @@
+  //Grafica general Llamadas
+  const $grafica_llamada = document.querySelector("#grafica_llamada");
+  const etiquetas_llamada = ["Llamadas"]
+  const color_Llamada = ['rgba(133, 52, 0 )', 'rgb(82, 82, 82 )']
+  //Grafica general Lead
+  const $grafica_lead = document.querySelector("#grafica_lead");
+  const etiquetas_lead = ["Leads"]
+  const color_Lead = ['rgba( 202, 117, 24)', 'rgb(82, 82, 82 )']
 
-let btnFiltrar = document.getElementById('btnFiltrar')
+  //Grafica general Cotizaciones
+  const $grafica_Cotizacion = document.querySelector("#grafica_Cotizacion");
+  const etiquetas_Cotizacion = ["Cotizacion"]
+  const color_Cotizacion =['rgba(255, 152, 0)','rgb(82, 82, 82 )']
 
-btnFiltrar.addEventListener('click', function(){
-    let fechadesde = document.getElementById('fechaDesdef').value;
-    let fechahasta = document.getElementById('fechaHastaf').value;
-    obtenerDatosGrafica(fechadesde, fechahasta);
-})
-
-// Obtener una referencia al elemento canvas del DOM
-const $grafica = document.querySelector("#grafica");
-// Las etiquetas son las porciones de la gráfica
-const etiquetas = ["Llamadas", "Leads", "Cotizaciones", "Ventas"]
-// Podemos tener varios conjuntos de datos. Comencemos con uno
-const datosIngresos = {
-    data: [1500, 400, 2000, 700], // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
-    // Ahora debería haber tantos background colors como datos, es decir, para este ejemplo, 4
-    backgroundColor: [
-        'rgba(255, 77, 77)',
-        'rgba(232,233,161)',
-        'rgba(128, 191, 255)',
-        'rgba(71, 209, 71)',
-    ],// Color de fondo
-    borderColor: [
-        'rgba(128, 0, 0)',
-        'rgba(179, 143, 0)',
-        'rgba(0, 0, 102)',
-        'rgba(0, 153, 51)',
-    ],// Color del borde
-    borderWidth: 2,// Ancho del borde
-};
-new Chart($grafica, {
-    type: 'doughnut',// Tipo de gráfica. Puede ser doughnut o pie 
-    data: {
-        labels: etiquetas,
-        datasets: [
-            datosIngresos,
-            // Aquí más datos...
-        ]
-    },
-
-    Options:{
-        scales:{
-            yAxes:[{
-                ticks:{
-                    beginAtZaero:true
-                }
-            }]
-        }
-    }
-});
-
-// Obtener una referencia al elemento canvas del DOM
-const $grafica_llamada = document.querySelector("#grafica_llamada");
-// Las etiquetas son las porciones de la gráfica
-const etiquetas_llamada = ["Llamadas"]
-// Podemos tener varios conjuntos de datos. Comencemos con uno
-const datosIngresos_llamada = {
-    data: [1500,500], // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
-    // Ahora debería haber tantos background colors como datos, es decir, para este ejemplo, 4
-    backgroundColor: [
-        'rgba(255, 77, 77)',
-        'rgba(232,233,161)',
-    ],// Color de fondo
-    borderColor: [
-        'rgba(128, 0, 0)',
-        'rgba(179, 143, 0)',
-    ],// Color del borde
-    borderWidth: 2,// Ancho del borde
-};
-new Chart($grafica_llamada, {
-    type: 'doughnut',// Tipo de gráfica. Puede ser doughnut o pie 
-    data: {
-        labels: etiquetas_llamada,
-        datasets: [
-            datosIngresos_llamada,
-            // Aquí más datos...
-        ]
-    },
-
-    Options:{
-        scales:{
-            yAxes:[{
-                ticks:{
-                    beginAtZaero:true
-                }
-            }]
-        }
-    }
-});
+  //Grafica general Ventas
+  const $grafica_Venta = document.querySelector("#grafica_Ventas");
+  const etiquetas_Venta = ["Ventas"]
+  const color_Venta = ['rgba(255, 212, 120)','rgb(82, 82, 82 )']
 
 
-// Obtener una referencia al elemento canvas del DOM
-const $grafica_lead = document.querySelector("#grafica_lead");
-// Las etiquetas son las porciones de la gráfica
-const etiquetas_lead = ["Leads"]
-// Podemos tener varios conjuntos de datos. Comencemos con uno
-const datosIngresos_lead = {
-    data: [1500, 500], // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
-    // Ahora debería haber tantos background colors como datos, es decir, para este ejemplo, 4
-    backgroundColor: [
-        'rgba(255, 77, 77)',
-        'rgba(232,233,161)',
-    ],// Color de fondo
-    borderColor: [
-        'rgba(128, 0, 0)',
-        'rgba(179, 143, 0)',
-    ],// Color del borde
-    borderWidth: 2,// Ancho del borde
-};
-new Chart($grafica_lead, {
-    type: 'doughnut',// Tipo de gráfica. Puede ser doughnut o pie 
-    data: {
-        labels: etiquetas_lead,
-        datasets: [
-            datosIngresos_lead,
-            // Aquí más datos...
-        ]
-    },
-
-    Options:{
-        scales:{
-            yAxes:[{
-                ticks:{
-                    beginAtZaero:true
-                }
-            }]
-        }
-    }
-});
-
-
-// Obtener una referencia al elemento canvas del DOM
-const $grafica_Cotizacion = document.querySelector("#grafica_Cotizacion");
-// Las etiquetas son las porciones de la gráfica
-const etiquetas_Cotizacion = ["Cotizacion"]
-// Podemos tener varios conjuntos de datos. Comencemos con uno
-const datosIngresos_Cotizacion = {
-    data: [1500, 500], // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
-    // Ahora debería haber tantos background colors como datos, es decir, para este ejemplo, 4
-    backgroundColor: [
-        'rgba(255, 77, 77)',
-        'rgba(232,233,161)',
-    ],// Color de fondo
-    borderColor: [
-        'rgba(128, 0, 0)',
-        'rgba(179, 143, 0)',
-    ],// Color del borde
-    borderWidth: 2,// Ancho del borde
-};
-new Chart($grafica_Cotizacion, {
-    type: 'doughnut',// Tipo de gráfica. Puede ser doughnut o pie 
-    data: {
-        labels: etiquetas_Cotizacion,
-        datasets: [
-            datosIngresos_Cotizacion,
-            // Aquí más datos...
-        ]
-    },
-
-    Options:{
-        scales:{
-            yAxes:[{
-                ticks:{
-                    beginAtZaero:true
-                }
-            }]
-        }
-    }
-});
-
-// Obtener una referencia al elemento canvas del DOM
-const $grafica_Venta = document.querySelector("#grafica_Ventas");
-// Las etiquetas son las porciones de la gráfica
-const etiquetas_Venta = ["Ventas"]
-// Podemos tener varios conjuntos de datos. Comencemos con uno
-const datosIngresos_Venta = {
-    data: [1500, 500], // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
-    // Ahora debería haber tantos background colors como datos, es decir, para este ejemplo, 4
-    backgroundColor: [
-        'rgba(255, 77, 77)',
-        'rgba(232,233,161)',
-    ],// Color de fondo
-    borderColor: [
-        'rgba(128, 0, 0)',
-        'rgba(179, 143, 0)',
-    ],// Color del borde
-    borderWidth: 2,// Ancho del borde
-};
-new Chart($grafica_Venta, {
-    type: 'doughnut',// Tipo de gráfica. Puede ser doughnut o pie 
-    data: {
-        labels: etiquetas_Venta,
-        datasets: [
-            datosIngresos_Venta,
-            // Aquí más datos...
-        ]
-    },
-
-    Options:{
-        scales:{
-            yAxes:[{
-                ticks:{
-                    beginAtZaero:true
-                }
-            }]
-        }
-    }
-});
-
-
-
-let obtenerDatosGrafica = function (fechaDesde, fechaHasta){
+let obtenerDatosGrafica = function(fechaDesde, fechaHasta){
     $.ajax({
         url: "../../../Vista/grafica/obtenerCantTareas.php",
         type: "POST",
@@ -220,12 +28,150 @@ let obtenerDatosGrafica = function (fechaDesde, fechaHasta){
             fechaHasta: fechaHasta
         },
         success: function (resp) {
-          //Mostrar mensaje 
-          console.log(resp) 
-
-          
+            datosGrafica = JSON.parse(resp);   
+            generarGraficas(datosGrafica);
+            console.log(datosGrafica);
         }
-      });
+    });
 }
+
+
+///////////////Boton editar
+let btnFiltrar = document.getElementById('btnFiltrar')
+    btnFiltrar.addEventListener('click', function(){
+    let fechadesde = document.getElementById('fechaDesdef').value;
+    let fechahasta = document.getElementById('fechaHastaf').value;
+    obtenerDatosGrafica(fechadesde, fechahasta);
+    obtenerMetaMetricas();
+});
+
+let generarGraficas = function(data) {
+///////////////////////////////////////////////////GRAFICA GENERAL LLAMADA//////////////////////////////////////////////////// 
+    const datosIngresos_llamada = {
+        data: [data.TotalLlamadas, data.metaGeneralLlamada], 
+        backgroundColor: color_Llamada,
+    };
+    new Chart($grafica_llamada, {
+        type: 'doughnut',// Tipo de gráfica. Puede ser doughnut o pie 
+        data: {
+            labels: etiquetas_llamada,
+            datasets: [
+                datosIngresos_llamada
+            ]
+        }
+    });
+////////////////////////////////////////////////////GRAFICA GENERAL LEAD////////////////////////////////////////////////////
+    const datosIngresos_lead = {
+        data: [data.TotalLead, data.metaGeneralLead], 
+        backgroundColor: color_Lead,
+    }
+    new Chart($grafica_lead, {
+        type: 'doughnut',
+        data: {
+            labels: etiquetas_lead,
+            datasets: [
+                datosIngresos_lead
+            ]
+        }
+    });   
+////////////////////////////////////////////////////GRAFICA GENERAL COTIZACION////////////////////////////////////////////////////
+    const datosIngresos_Cotizacion = {
+        data: [data.TotalCotizacion, data.metaGeneralCotizacion],
+        backgroundColor: color_Cotizacion,
+    };
+    new Chart($grafica_Cotizacion, {
+        type: 'doughnut',
+        data: {
+            labels: etiquetas_Cotizacion,
+            datasets: [
+                datosIngresos_Cotizacion,
+            ]
+        },       
+    });
+    
+    ////////////////////////////////////////////////////GRAFICA GENERAL VENTAS////////////////////////////////////////////////////  
+    const datosIngresos_Venta = {
+        data: [data.TotalVenta, data.metaGeneralVentas], 
+        backgroundColor: color_Venta,
+    };
+    new Chart($grafica_Venta, {
+        type: 'doughnut',
+        data: {
+            labels: etiquetas_Venta,
+            datasets: [
+                datosIngresos_Venta,
+            ]
+        },
+    });
+}
+
+let obtenerMetaMetricas = function(){
+    $.ajax({
+        url: "../../../Vista/grafica/obtenerDatosMetrica.php",
+        type: "POST",
+        datatype: "JSON",
+        data: {
+        },
+        success: function (resp) {
+            datosGrafica = JSON.parse(resp);  
+            console.log(datosGrafica) ;
+           
+            const $grafica = document.querySelector("#grafica");
+            const etiquetas = ["Meta Llamadas" ,"Meta Lead" ,"Meta Cotizacion","Meta Ventas" ]
+            const color = ['rgba(133, 52, 0 )','rgba( 202, 117, 24)','rgba(255, 152, 0)','rgba(255, 212, 120)']
+
+            const datosIngresos = {
+                data: [datosGrafica[0].meta, datosGrafica[1].meta, datosGrafica[2].meta, datosGrafica[3].meta],
+                backgroundColor: color,
+            };
+            new Chart($grafica, {
+                type: 'pie',
+                data: {
+                    labels: etiquetas,
+                    datasets: [
+                        datosIngresos,
+                    ]
+                },
+            });
+        }
+    });
+}
+
+
+
+
+
+// const $grafica_llamada = document.querySelector("#grafica_llamada");
+// const etiquetas_llamada = ["Llamadas"]
+// const color_Llamada = ['rgba(133, 52, 0 )', 'rgb(82, 82, 82 )']
+
+// const datosIngresos_llamada = {
+//     data: [datosGrafica['metaGeneralLlamada'], datosGrafica['TotalLlamadas']], 
+//     backgroundColor: color_Llamada,
+// };
+// new Chart($grafica_llamada, {
+//     type: 'doughnut',// Tipo de gráfica. Puede ser doughnut o pie 
+//     data: {
+//         labels: etiquetas_llamada,
+//         datasets: [
+//             datosIngresos_llamada
+//         ]
+//     }
+// });
+
+
+
+
+
+
+
+
+ 
+//    
+
+
+
+
+
 
 

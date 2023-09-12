@@ -107,11 +107,11 @@
 
                 <div class= "graficosPorTareas">
                     <div class="grafica_Llamada">
-                        <canvas id="grafica_llamada"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
+                        <canvas id="grafica_llamada" style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor" ></canvas>
                     </div>   
                     
                     <div class="grafica_Lead">
-                        <canvas id="grafica_lead"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
+                        <canvas id="grafica_lead" style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor" ></canvas>
                     </div>
                     
                     <div class="grafica_Cotizacion">

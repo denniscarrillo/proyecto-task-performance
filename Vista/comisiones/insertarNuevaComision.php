@@ -16,7 +16,8 @@ if(isset($_POST['idVenta']) || isset($_POST['idComision'])){
     $nuevaComision->comisionTotal = floatval($_POST['comisionTotal']);
     $nuevaComision->estadoComision = 'Activa';
     $nuevaComision->creadoPor = $user;
-    $nuevaComision->fechaComision = $_POST['fechaComision'];
+    date_default_timezone_set('America/Tegucigalpa');
+    $nuevaComision->fechaComision = date("Y-m-d", strtotime($_POST['fechaComision']));
     $idTarea = ControladorComision::traerIdTarea(intval($_POST['idVenta']));
     $vendedores = ControladorComision::traerVendedores($idTarea);
     

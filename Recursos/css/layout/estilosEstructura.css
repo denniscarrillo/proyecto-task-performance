@@ -7,7 +7,7 @@
     width: 100%;
     overflow-y: scroll;
     height: 100vh;
-    background-color: rgb(202, 199, 195);
+    background-color: #cac7c3;
 }
 
 .footer-conteiner{
@@ -63,6 +63,19 @@ table.dataTable.no-footer{
 }  
 .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_paginate{
     margin-top: 8px;
+}
+.modal-body {
+    background-color: #6e6c6c;
+    color: white;
+}
+.modal-header{
+    background-color: #4d4b4a;
+    color: #ee9827;
+    height: 3rem;
+}
+.btn-guardar .btn-primary {
+    background-color: #ee9827;
+    border: none;
 }
 
 

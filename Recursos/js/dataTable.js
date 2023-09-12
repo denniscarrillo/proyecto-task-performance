@@ -131,8 +131,6 @@ $(document).on("click", "#btn_editar", function(){
   $("#E_correo").val(correo);
   $("#E_estado").val(obtenerEstadoUsuario('#E_estado'));
   $("#E_rol").val(obtenerRoles('#E_rol'));
-  $(".modal-header").css("background-color", "#007bff");
-  $(".modal-header").css("color", "white");	
   $('#modalEditarUsuario').modal('show');		   
 });
 
