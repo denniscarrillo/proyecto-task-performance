@@ -119,7 +119,7 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
     datatype: "JSON",
     success: function (data) {
       let objData = JSON.parse(data); //Convertimos JSON a objeto javascript
-      console.log(objData);
+      // console.log(objData);
       let $tareas = '';
       let count = 0;
       //Recorremo arreglo de objetos con un forEach para mostrar tareas

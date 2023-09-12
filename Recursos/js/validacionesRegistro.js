@@ -100,7 +100,6 @@ $form.addEventListener('submit', e => {
                          }
                     }
             }
-            console.log(estadoExisteUsuario); 
     });
 // INPUTS TEXTOS EN MAYUSCULAS y //Solo permite letras
 $usuario.addEventListener('focusout', () => {
