@@ -95,33 +95,35 @@ class Tarea
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
     }
-    // public static function clienteExistente($rtnCliente)
-    // {
-    //     try {
-    //         $estado = array();
-    //         $conn = new Conexion();
-    //         $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-    //         $select = "SELECT COUNT(*) AS clienteExistente FROM tbl_tarea WHERE RTN_Cliente = '$rtnCliente'";
-    //         $estadoCliente = sqlsrv_query($abrirConexion, $select);
-    //         while ($fila = sqlsrv_fetch_array($estadoCliente, SQLSRV_FETCH_ASSOC)) {
-    //             $estado [] = [
-    //                 'clienteExistente' => $fila['clienteExistente']
-    //             ];
-    //         }
-    //         if ($estado[0]['clienteExistente'] < 2 && $estado[0]['clienteExistente'] > 0) {
-    //             $estado[0]['clienteExistente'] = 'Nuevo';
-    //         } else if ($estado[0]['clienteExistente'] > 1) {
-    //             $estado[0]['clienteExistente'] = 'Existente';
-    //         }
-    //         else{
-    //             $estado[0]['clienteExistente'] = 'No Aplica Comision';
-    //         }
-    //         return $estado;
-    //     } catch (Exception $e) {
-    //         echo 'Error SQL:' . $e;
-    //     }
-    //     sqlsrv_close($abrirConexion); //Cerrar conexion
-    // }
+
+    //Pertenece al modulo de comision.
+    public static function clienteExistente($rtnCliente)
+    {
+        try {
+            $estado = array();
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $select = "SELECT COUNT(*) AS clienteExistente FROM tbl_tarea WHERE RTN_Cliente = '$rtnCliente'";
+            $estadoCliente = sqlsrv_query($abrirConexion, $select);
+            while ($fila = sqlsrv_fetch_array($estadoCliente, SQLSRV_FETCH_ASSOC)) {
+                $estado [] = [
+                    'clienteExistente' => $fila['clienteExistente']
+                ];
+            }
+            if ($estado[0]['clienteExistente'] < 2 && $estado[0]['clienteExistente'] > 0) {
+                $estado[0]['clienteExistente'] = 'Nuevo';
+            } else if ($estado[0]['clienteExistente'] > 1) {
+                $estado[0]['clienteExistente'] = 'Existente';
+            }
+            else{
+                $estado[0]['clienteExistente'] = 'No Aplica Comision';
+            }
+            return $estado;
+        } catch (Exception $e) {
+            echo 'Error SQL:' . $e;
+        }
+        sqlsrv_close($abrirConexion); //Cerrar conexion
+    }
     
     public static function obtenerArticulos(){
         try{
