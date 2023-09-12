@@ -46,7 +46,7 @@ let iniciarDataTable = function (fechaDesde, fechaHasta) {
     },
     columns: [
       { data: "numFactura" },
-      { data: "fechaEmision" },
+      { data: "fechaEmision.date" },
       { data: "codCliente" },
       { data: "nombreCliente" },
       { data: "rtnCliente" },
