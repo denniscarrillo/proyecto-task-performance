@@ -497,7 +497,7 @@ class Usuario {
     public static function CantVendedores(){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query = "Select COUNT(id_Rol) as Cant from tbl_MS_Usuario where id_Rol = 4";
+        $query = "Select COUNT(id_Rol) as Cant from tbl_MS_Usuario where id_Rol = 3";
         $result = sqlsrv_query($conexion, $query);
         $resultArray = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC);
         $CantVendedores = $resultArray['Cant'];        
