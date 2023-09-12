@@ -505,6 +505,24 @@ class Usuario {
         return $CantVendedores;
     }
 
+    public static function obtenerVendedores($idTarea)
+    {
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $query = "SELECT vt.id_usuario_vendedor, u.Usuario FROM tbl_vendedores_tarea AS vt
+        INNER JOIN tbl_ms_Usuario AS u ON u.id_Usuario = vt.id_usuario_vendedor WHERE vt.id_Tarea = $idTarea;";
+        $listaVendedores = sqlsrv_query($conexion, $query);
+        $vendedores = array();
+        while ($fila = sqlsrv_fetch_array($listaVendedores, SQLSRV_FETCH_ASSOC)) {
+            $vendedores[] = [
+                'idVendedor' => $fila['id_usuario_vendedor'],
+                'nombreVendedor' => $fila['Usuario']
+            ];
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $vendedores;
+    }
+
 
 
 }#Fin de la clase

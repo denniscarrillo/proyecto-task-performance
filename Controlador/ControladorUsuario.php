@@ -106,4 +106,8 @@
         public static function obtenerCantVendedores(){
             return Usuario::CantVendedores();
         }
+
+        public static function traerVendedores($idTarea) {
+            return Usuario::obtenerVendedores($idTarea);
+        }
     }

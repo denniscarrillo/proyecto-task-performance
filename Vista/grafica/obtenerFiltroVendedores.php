@@ -1,8 +1,10 @@
 <?php
-require_once ("../../db/Conexion.php");
-require_once ("../../Modelo/Usuario.php");
-require_once("../../Controlador/ControladorUsuario.php");
+require_once('../../db/Conexion.php');
+require_once('../../Modelo/Usuario.php');
+require_once('../../Controlador/ControladorUsuario.php');
 
-$CantVendedores = ControladorUsuario::obtenerCantVendedores();
-print json_encode($CantVendedores, JSON_UNESCAPED_UNICODE);
-    
+session_start(); //Reanudamos sesion
+if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
+    $vendedoresTarea = ControladorUsuario::obtenerVendedores($idTarea);
+    print json_encode($vendedoresTarea, JSON_UNESCAPED_UNICODE);
+}
