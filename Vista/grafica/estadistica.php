@@ -21,7 +21,6 @@
     <link href='../../Recursos/css/layout/navbar.css' rel='stylesheet'>
     <link href='../../Recursos/css/layout/footer.css' rel='stylesheet'>
 </head>
-
 <body style="overflow: hidden;">
     <!-- Sidebar 1RA PARTE -->
     <div class="conteiner-global">
@@ -29,11 +28,11 @@
             <?php
             $urlIndex = '../index.php';
             // Rendimiento
-            $urlMisTareas = './v_tarea.php';
-            $urlConsultarTareas = './'; //PENDIENTE
+            $urlMisTareas = '../rendimiento/v_tarea.php';
+            $urlConsultarTareas = '../crud/DataTableTarea/gestionDataTableTarea.php'; //PENDIENTE
             $urlBitacoraTarea = ''; //PENDIENTE
             $urlMetricas = '../crud/Metricas/gestionMetricas.php';
-            $urlEstadisticas = ''; //PENDIENTE
+            $urlEstadisticas = './estadistica.php'; //PENDIENTE
             //Solicitud
             $urlSolicitud = '../crud/DataTableSolicitud/gestionDataTableSolicitud.php';
             //Comisión
@@ -42,16 +41,18 @@
             $urlClientes = '../crud/cliente/gestionCliente.php';
             $urlVentas = '../crud/Venta/gestionVenta.php';
             $urlArticulos = '../crud/articulo/gestionArticulo.php';
+            $urlObjetos = '../crud/DataTableObjeto/gestionDataTableObjeto.php';
+            $urlBitacoraSistema = '../crud/bitacora/gestionBitacora.php';
             //Mantenimiento
             $urlUsuarios = '../crud/usuario/gestionUsuario.php';
             $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
             $urlPreguntas = '../crud/pregunta/gestionPregunta.php';
-            $urlBitacoraSistema = '../crud/bitacora/gestionBitacora.php';
             $urlParametros = '../crud/parametro/gestionParametro.php';
             $urlPermisos = '../crud/permiso/gestionPermiso.php';
             $urlRoles = '../crud/rol/gestionRol.php';
             $urlPorcentajes = '../crud/Porcentajes/gestionPorcentajes.php';
             $urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
+            $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
             require_once '../layout/sidebar.php';
           ?>
         </div>    

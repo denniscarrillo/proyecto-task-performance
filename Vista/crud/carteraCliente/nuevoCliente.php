@@ -18,7 +18,6 @@
         $nuevoCliente->correo = $_POST['correo'];
         $nuevoCliente->direccion = $_POST['direccion'];
         $nuevoCliente->estadoContacto = 'En Proceso';
-        date_default_timezone_set('America/Tegucigalpa');
         $nuevoCliente->CreadoPor = $user;
         ControladorCarteraClientes::registroCliente($nuevoCliente);
        /* ========================= Evento Creacion cartera cliente. =============================*/

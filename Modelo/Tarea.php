@@ -14,6 +14,7 @@ class Tarea
     public $chatComentario;
     public $idClasificacionLead;
     public $idOrigenLead;
+    public $estadoContacto;
     public $rubroComercial;
     public $razonSocial;
     public $estadoFinalizacion;
@@ -60,9 +61,10 @@ class Tarea
             $idTarea = null;
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $insert = "INSERT INTO tbl_tarea (id_EstadoAvance, titulo, fecha_Inicio, Creado_Por, Fecha_Creacion) 
+            $estadoFinalizacion = 'Pendiente';
+            $insert = "INSERT INTO tbl_tarea (id_EstadoAvance, titulo, fecha_Inicio, estado_Finalizacion, Creado_Por, Fecha_Creacion) 
                             VALUES ('$tarea->idEstadoAvance','$tarea->titulo', 
-                                    '$tarea->fechaInicio', '$tarea->Creado_Por', '$tarea->fechaInicio')"; 
+                                    '$tarea->fechaInicio', '$estadoFinalizacion', '$tarea->Creado_Por', '$tarea->fechaInicio')"; 
             $ejecutar_insert = sqlsrv_query($abrirConexion, $insert);
             $query = "SELECT SCOPE_IDENTITY() AS id_Tarea";
             $resultado = sqlsrv_query($abrirConexion, $query);
@@ -173,10 +175,10 @@ class Tarea
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             $selectCliente = "SELECT CODCLIENTE FROM view_clientes WHERE CIF = '$rtn'";
             $consulta = sqlsrv_query($abrirConexion, $selectCliente);
-            if($consulta->num_rows > 0){
+            if(sqlsrv_has_rows($consulta)){
                 $arrCodCiente = sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC);
                 $codCliente = $arrCodCiente['CODCLIENTE'];
-                $selectFacturas = "SELECT count(NUMFACTURA) AS CANT FROM view_facturasventa WHERE CODCLIENTE = '$codCliente'";
+                $selectFacturas = "SELECT COUNT(NUMFACTURA) AS CANT FROM View_FACTURASVENTA WHERE CODCLIENTE = '$codCliente';";
                 $consulta= sqlsrv_query($abrirConexion, $selectFacturas);
                 $cantFacturas = sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC);
                 $facturas = intval($cantFacturas['CANT']);
@@ -278,15 +280,15 @@ class Tarea
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
     }
-    public static function guardarProductosInteres($idTarea, $productos, $CreadoPor, $fechaCreacion){
+    public static function guardarProductosInteres($idTarea, $productos){
         try{
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             foreach($productos as $producto){
                 $idProducto = $producto['idProducto'];
                 $cantProd = $producto['CantProducto'];
-                $insert = "INSERT INTO tbl_productointeres (id_Tarea, id_Articulo, cantidad, Creado_Por, Fecha_Creacion) 
-                VALUES ('$idTarea', '$idProducto', '$cantProd', '$CreadoPor', '$fechaCreacion');";
+                $insert = "INSERT INTO tbl_productointeres (id_Tarea, id_Articulo, cantidad) 
+                VALUES ('$idTarea', '$idProducto', '$cantProd');";
                 sqlsrv_query($abrirConexion, $insert);
             }
         }catch(Exception $e){
@@ -334,12 +336,15 @@ class Tarea
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
     }
-    public static function agregarNuevoCliente($nombre, $rtn, $telefono, $correo, $direccion){
+    public static function agregarNuevoCliente($nombre, $rtn, $telefono, $correo, $direccion, $Creado_Por){
         try {
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $insertNuevoCliente = "INSERT INTO tbl_CarteraCliente (nombre_Cliente, rtn_Cliente, telefono, correo, direccion) 
-            VALUES('$nombre', '$rtn', '$telefono', '$correo', '$direccion');";
+            $estadoContacto = 'En Proceso';
+            date_default_timezone_set('America/Tegucigalpa');
+            $Fecha_Creacion = date("Y-m-d");
+            $insertNuevoCliente = "INSERT INTO tbl_CarteraCliente (nombre_Cliente, rtn_Cliente, telefono, correo, direccion, estadoContacto,Creado_Por, Fecha_Creacion) 
+            VALUES('$nombre', '$rtn', '$telefono', '$correo', '$direccion', '$estadoContacto', '$Creado_Por', '$Fecha_Creacion');";
             sqlsrv_query($abrirConexion, $insertNuevoCliente);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;

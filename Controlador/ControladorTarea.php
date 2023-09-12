@@ -37,11 +37,11 @@ class ControladorTarea {
     public static function actualizarTarea($idTarea, $tipoTarea, $datosTarea){
         Tarea::editarTarea($idTarea, $tipoTarea, $datosTarea);
     }
-    public static function insertarNuevoCliente($nombre, $rtn, $telefono, $correo, $direccion){
-        Tarea::agregarNuevoCliente($nombre, $rtn, $telefono, $correo, $direccion);
+    public static function insertarNuevoCliente($nombre, $rtn, $telefono, $correo, $direccion, $Creado_Por){
+        Tarea::agregarNuevoCliente($nombre, $rtn, $telefono, $correo, $direccion, $Creado_Por);
     }
-    public static function almacenarProductosInteres($idTarea, $productos, $CreadoPor, $fechaCreacion){
-        Tarea::guardarProductosInteres($idTarea, $productos, $CreadoPor, $fechaCreacion);
+    public static function almacenarProductosInteres($idTarea, $productos){
+        Tarea::guardarProductosInteres($idTarea, $productos);
     }
 
     public static function obtenerCantTareas($FechaDesde, $FechaHasta){
