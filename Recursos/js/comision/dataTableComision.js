@@ -14,7 +14,15 @@ $(document).ready(function () {
       { "data": "idComision" },
       { "data": "factura" },
       { "data": "totalVenta" },
-      { "data": "porcentaje" },
+      {
+        "data": "porcentaje",
+        "render": function (data, type, row) {
+          if (type === 'display') {
+            return (parseFloat(data) * 100).toFixed(0) + '%'; // Formatea el porcentaje
+          }
+          return data; // En otras ocasiones, devuelve el valor sin formato
+        }
+      },
       { "data": "comisionTotal" },
       { "data": "estadoComisionar" },
       { "data": "fechaComision.date" },

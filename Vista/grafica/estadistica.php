@@ -21,7 +21,7 @@
     <link href='../../Recursos/css/layout/navbar.css' rel='stylesheet'>
     <link href='../../Recursos/css/layout/footer.css' rel='stylesheet'>
 </head>
-../../Vista/grafica/estadistica.php
+
 <body style="overflow: hidden;">
     <!-- Sidebar 1RA PARTE -->
     <div class="conteiner-global">

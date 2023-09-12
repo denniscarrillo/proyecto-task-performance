@@ -88,9 +88,11 @@ require_once('obtenerEstadoComision.php');
             <select name="porcentajeComision" class="form-control" id="porcentaje-comision">
               <option value="0">Seleccionar...</option>
               <?php
-              foreach ($porcentajes as $porcentaje) {
-                echo '<option value="' . $porcentaje['idPorcentaje'] . '">' . $porcentaje['porcentaje'] . '</option>';
-              }
+                foreach ($porcentajes as $porcentaje) {
+                // Formatear el porcentaje sin decimales y con el símbolo de porcentaje
+                $porcentajeFormateado = number_format($porcentaje['porcentaje'] * 100, 0) . '%';
+              echo '<option value="' . $porcentaje['idPorcentaje'] . '">' . $porcentajeFormateado . '</option>';
+                }
               ?>
             </select>
           </div>
