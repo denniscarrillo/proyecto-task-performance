@@ -11,7 +11,6 @@ $(document).ready(function () {
   });
   //Que muetre la fecha actual en el input de fecha
   document.getElementById("fecha-comision").value = now;
-  console.log(now);
   document.getElementById("fecha-comision").setAttribute("disabled", "true");
   document.getElementById("id-venta").setAttribute("disabled", "true");
   document.getElementById("monto-total").setAttribute("disabled", "true");
@@ -47,7 +46,7 @@ let iniciarDataTable = function (fechaDesde, fechaHasta) {
     },
     columns: [
       { data: "numFactura" },
-      { data: "fechaEmision" },
+      { data: "fechaEmision.date" },
       { data: "codCliente" },
       { data: "nombreCliente" },
       { data: "rtnCliente" },

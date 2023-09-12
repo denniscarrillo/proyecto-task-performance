@@ -126,7 +126,8 @@ $('#btn-articulos').click(() => {
   }
 /* ============= EVENTOS DE TIPO DE CLIENTE Y BOTON PARA BUSCAR EL CLIENTE, EN CASO SEA EXISTENTE ================== */
 // Si el tipo de cliente es existen se crea y muestra un boton para buscar el cliente
-document.getElementById('cliente-existente').addEventListener('change', function () {
+let rtnCliente = document.getElementById('cliente-existente');
+rtnCliente.addEventListener('change', function () {
   limpiarForm();
   let $containerRTN = document.getElementById('container-rtn-cliente');
   if (document.getElementById('btn-clientes') == null) {
@@ -148,9 +149,7 @@ document.getElementById('cliente-nuevo').addEventListener('change', function () 
   let $btnBuscarCliente = document.querySelector('.btn-buscar-cliente');
   if ($btnBuscarCliente) {
     $containerRTN.removeChild($btnBuscarCliente);
-    if (document.getElementById('rnt-cliente').value != '') {
-      limpiarForm();
-    }
+    limpiarForm();
   }
   let correo = document.getElementById('container-correo');
   correo.removeAttribute('hidden');
@@ -184,34 +183,35 @@ let obtenerClientes = function () {
 }
 let $rtn = document.getElementById('rnt-cliente');
 $rtn.addEventListener('focusout', function () {
-  $.ajax({
-    url: "../../../Vista/rendimiento/validarTipoCliente.php",
-    type: "POST",
-    datatype: "JSON",
-    data: {
-      rtnCliente: $rtn.value
-    },
-    success: function (cliente) {
-      let $mensaje = document.getElementById('mensaje');
-      let $objCliente = JSON.parse(cliente);
-      // console.log(cliente)
-      if ($objCliente.estado == 'true') {
-        $mensaje.innerText = 'Cliente existente'
-        $mensaje.classList.add('mensaje-existe-cliente');
-      } else {
-        $mensaje.innerText = '';
-        $mensaje.classList.remove('mensaje-existe-cliente');
+  let $mensaje = document.getElementById('mensaje');
+  $mensaje.innerText = '';
+  $mensaje.classList.remove('mensaje-existe-cliente');
+  if($rtn.value.trim() != ''){
+    $.ajax({
+      url: "../../../Vista/rendimiento/validarTipoCliente.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {
+        rtnCliente: $rtn.value
+      },
+      success: function (cliente) {
+        let $objCliente = JSON.parse(cliente);
+        // console.log(cliente)
+        if ($objCliente.estado == 'true') {
+          $mensaje.innerText = 'Cliente existente'
+          $mensaje.classList.add('mensaje-existe-cliente');
+        } else {
+          $mensaje.innerText = '';
+          $mensaje.classList.remove('mensaje-existe-cliente');
+        }
       }
-    }
-  }); //Fin AJAX
+    }); //Fin AJAX   
+  }
 });
-// document.getElementById('btn-cerrar-modal').addEventListener('click', () => {
-//   limpiarForm();
-// });
-// document.getElementById('btn-cerrar2').addEventListener('click', () => {
-//   limpiarForm();
-// });
 let limpiarForm = () => {
+  let $mensaje = document.getElementById('mensaje');
+  $mensaje.innerText = '';
+  $mensaje.classList.remove('mensaje-existe-cliente');
   let rtn = document.getElementById('rnt-cliente'),
     nombre = document.getElementById('nombre-cliente'),
     telefono = document.getElementById('telefono-cliente'),
@@ -219,10 +219,9 @@ let limpiarForm = () => {
     direccion = document.getElementById('direccion-cliente'),
     rubro = document.getElementById('rubrocomercial'),
     razon = document.getElementById('razonsocial'),
-    clasificacion = document.getElementById('clasificacionlead'),
-    origen = document.getElementById('origenlead');
-  //Vaciar campos
-  if (rtn.value != '') {
+    clasificacion = document.getElementById('clasificacion-lead'),
+    origen = document.getElementById('origen-lead');
+  //Vaciar campos cliente
     rtn.value = '';
     nombre.value = '';
     telefono.value = '';
@@ -231,8 +230,7 @@ let limpiarForm = () => {
     rubro.value = '';
     razon.value = '';
     clasificacion.value = '';
-    origen.value = '';
-  }
+    origen.value = ''; 
   if (rtn.getAttribute('disabled')) {
     // rtn.removeAttribute('disabled');
     nombre.removeAttribute('disabled');
@@ -240,9 +238,6 @@ let limpiarForm = () => {
     direccion.removeAttribute('disabled');
   }
 }
-// $(document).on('click', '.btn-vendedores', function () {
-//   obtenerVendedores();
-// });
 let enviarProductosInteres = ($idTarea) => {
   let $idProductos = document.querySelectorAll('.id-producto');
   let $cantProducto = document.querySelectorAll('.cant-producto');

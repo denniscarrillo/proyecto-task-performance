@@ -121,7 +121,6 @@ class Comision
     {
         $conn = new Conexion();
         $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        
         $estadoComisionVendedor = 'Activa';
         $comisionVendedor = $comisionVenta / count($vendedores);
         foreach ($vendedores as $vendedor) {
@@ -129,7 +128,7 @@ class Comision
         $insert = "INSERT INTO tbl_Comision_Por_Vendedor(id_Comision, id_usuario_vendedor, total_Comision, estadoComisionVendedor, Creado_Por, Fecha_Creacion) 
         VALUES ('$idComision', '$idVendedor', '$comisionVendedor', '$estadoComisionVendedor', '$user', '$fechaComision');";
     
-        $query = sqlsrv_query($abrirConexion, $insert);
+        $insertComision = sqlsrv_query($abrirConexion, $insert);
         }
         sqlsrv_close($abrirConexion); #Cerramos la conexión.
     }
@@ -144,7 +143,7 @@ class Comision
             $idVendedor = intval($fila['id_usuario_vendedor']);
             $insertVendedor = "UPDATE tbl_comision_por_vendedor SET estadoComisionVendedor = '$comision->estadoComision', 
             Modificado_Por = '$comision->ModificadoPor', Fecha_Modificacion = '$comision->fechaModificacion' WHERE id_Comision = '$comision->idComision' AND id_usuario_vendedor = '$idVendedor' ;";
-            $query2 = sqlsrv_query($conexion, $query2);
+            $query2 = sqlsrv_query($conexion, $insertVendedor);
         }
        sqlsrv_close($conexion); #Cerramos la conexión.
     }

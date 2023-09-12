@@ -13,7 +13,7 @@
     <link href='../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
     <!-- Boxicons CSS -->
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    <link href='./index.css' rel='stylesheet'>
+    <link href='../../Recursos/css/estadisticas.css' rel='stylesheet'>
     <title>Gráfica</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@latest/dist/Chart.min.js"></script>
     <link href='../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
@@ -21,7 +21,6 @@
     <link href='../../Recursos/css/layout/navbar.css' rel='stylesheet'>
     <link href='../../Recursos/css/layout/footer.css' rel='stylesheet'>
 </head>
-
 <body style="overflow: hidden;">
     <!-- Sidebar 1RA PARTE -->
     <div class="conteiner-global">
@@ -29,11 +28,11 @@
             <?php
             $urlIndex = '../index.php';
             // Rendimiento
-            $urlMisTareas = './v_tarea.php';
-            $urlConsultarTareas = './'; //PENDIENTE
+            $urlMisTareas = '../rendimiento/v_tarea.php';
+            $urlConsultarTareas = '../crud/DataTableTarea/gestionDataTableTarea.php'; //PENDIENTE
             $urlBitacoraTarea = ''; //PENDIENTE
             $urlMetricas = '../crud/Metricas/gestionMetricas.php';
-            $urlEstadisticas = ''; //PENDIENTE
+            $urlEstadisticas = './estadistica.php'; //PENDIENTE
             //Solicitud
             $urlSolicitud = '../crud/DataTableSolicitud/gestionDataTableSolicitud.php';
             //Comisión
@@ -42,16 +41,18 @@
             $urlClientes = '../crud/cliente/gestionCliente.php';
             $urlVentas = '../crud/Venta/gestionVenta.php';
             $urlArticulos = '../crud/articulo/gestionArticulo.php';
+            $urlObjetos = '../crud/DataTableObjeto/gestionDataTableObjeto.php';
+            $urlBitacoraSistema = '../crud/bitacora/gestionBitacora.php';
             //Mantenimiento
             $urlUsuarios = '../crud/usuario/gestionUsuario.php';
             $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
             $urlPreguntas = '../crud/pregunta/gestionPregunta.php';
-            $urlBitacoraSistema = '../crud/bitacora/gestionBitacora.php';
             $urlParametros = '../crud/parametro/gestionParametro.php';
             $urlPermisos = '../crud/permiso/gestionPermiso.php';
             $urlRoles = '../crud/rol/gestionRol.php';
             $urlPorcentajes = '../crud/Porcentajes/gestionPorcentajes.php';
             $urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
+            $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
             require_once '../layout/sidebar.php';
           ?>
         </div>    
@@ -107,18 +108,18 @@
 
                 <div class= "graficosPorTareas">
                     <div class="grafica_Llamada">
-                        <canvas id="grafica_llamada" style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor" ></canvas>
+                        <canvas id="grafica_llamada" style=" width: 1333px; height: 366px;" ></canvas>
                     </div>   
                     
                     <div class="grafica_Lead">
-                        <canvas id="grafica_lead" style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor" ></canvas>
+                        <canvas id="grafica_lead" style=" width: 1333px; height: 366px;" ></canvas>
                     </div>
                     
                     <div class="grafica_Cotizacion">
-                        <canvas id="grafica_Cotizacion"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
+                        <canvas id="grafica_Cotizacion" style=" width: 1333px; height: 366px;" ></canvas>
                     </div>
                     <div class="grafica_Ventas">
-                        <canvas id="grafica_Ventas"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
+                        <canvas id="grafica_Ventas" style=" width: 1333px; height: 366px;" ></canvas>
                     </div>
                 </div>
                 

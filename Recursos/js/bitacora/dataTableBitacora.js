@@ -10,7 +10,7 @@ $(document).ready(function () {
     },
     "columns": [
       { "data": "id_Bitacora"},
-      { "data": "fecha" },
+      { "data": "fecha.date" },
       { "data": "Usuario" },
       { "data": "Objeto" },
       { "data": "accion" },
