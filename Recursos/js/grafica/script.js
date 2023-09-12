@@ -1,20 +1,20 @@
   //Grafica general Llamadas
   const $grafica_llamada = document.querySelector("#grafica_llamada");
-  const etiquetas_llamada = ["Llamadas"]
+  const etiquetas_llamada = ["Llamadas", "Meta"]
   const color_Llamada = ['rgba(133, 52, 0 )', 'rgb(82, 82, 82 )']
   //Grafica general Lead
   const $grafica_lead = document.querySelector("#grafica_lead");
-  const etiquetas_lead = ["Leads"]
+  const etiquetas_lead = ["Leads", "Meta"]
   const color_Lead = ['rgba( 202, 117, 24)', 'rgb(82, 82, 82 )']
 
   //Grafica general Cotizaciones
   const $grafica_Cotizacion = document.querySelector("#grafica_Cotizacion");
-  const etiquetas_Cotizacion = ["Cotizacion"]
+  const etiquetas_Cotizacion = ["Cotizacion", "Meta"]
   const color_Cotizacion =['rgba(255, 152, 0)','rgb(82, 82, 82 )']
 
   //Grafica general Ventas
   const $grafica_Venta = document.querySelector("#grafica_Ventas");
-  const etiquetas_Venta = ["Ventas"]
+  const etiquetas_Venta = ["Ventas", "Meta"]
   const color_Venta = ['rgba(255, 212, 120)','rgb(82, 82, 82 )']
 
 
