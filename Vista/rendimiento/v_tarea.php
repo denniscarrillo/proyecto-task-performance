@@ -33,7 +33,7 @@ require_once('validacionesTarea.php');
         $urlConsultarTareas = '../crud/DataTableTarea/gestionDataTableTarea.php'; 
         $urlBitacoraTarea = ''; //PENDIENTE
         $urlMetricas = '../crud/Metricas/gestionMetricas.php';
-        $urlEstadisticas = ''; //PENDIENTE
+        $urlEstadisticas = '../grafica/estadistica.php'; 
         //Solicitud
         $urlSolicitud = '../crud/DataTableSolicitud/gestionDataTableSolicitud.php';
         //Comisión
