@@ -16,6 +16,7 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
         $cliente = array();
         $tarea = array();
         $id_Tarea = $_POST['idTarea'];
+        $Creado_Por = $_SESSION['usuario'];
         if($_POST['radioOption'] == 'Nuevo'){
             $rtn = $_POST['rtnCliente'];
             $nombre = $_POST['nombre'];
@@ -36,7 +37,7 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
             }
             if(count($tarea) > 0 || count($cliente) > 0){
                 ControladorTarea::actualizarTarea($id_Tarea, $tipo_Tarea, $tarea);
-                ControladorTarea::insertarNuevoCliente($nombre, $rtn, $telefono, $correo, $direccion);
+                ControladorTarea::insertarNuevoCliente($nombre, $rtn, $telefono, $correo, $direccion, $Creado_Por);
                 header('location: ./v_tarea.php');
                 // header('refresh:2;url=./v_tarea.php');
             }
