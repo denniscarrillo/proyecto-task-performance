@@ -66,13 +66,14 @@ class Comision
     {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $query = "SELECT id_Porcentaje, valor_Porcentaje FROM tbl_porcentaje WHERE estado_Porcentaje = 'Activo'";
+        $query = "SELECT id_Porcentaje, valor_Porcentaje, descripcion FROM tbl_porcentaje WHERE estado_Porcentaje = 'Activo'";
         $listaPorcentajes = sqlsrv_query($conexion, $query);
         $porcentajes = array();
         while ($fila = sqlsrv_fetch_array($listaPorcentajes, SQLSRV_FETCH_ASSOC)) {
             $porcentajes[] = [
                 'idPorcentaje' => $fila['id_Porcentaje'],
-                'porcentaje' => $fila['valor_Porcentaje']
+                'porcentaje' => $fila['valor_Porcentaje'],
+                'descripcion' => $fila['descripcion']
             ];
         }
         sqlsrv_close($conexion); #Cerramos la conexión.

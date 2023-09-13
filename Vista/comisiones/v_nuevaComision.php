@@ -109,7 +109,8 @@ require_once('obtenerEstadoComision.php');
                 foreach ($porcentajes as $porcentaje) {
                 // Formatear el porcentaje sin decimales y con el símbolo de porcentaje
                 $porcentajeFormateado = number_format($porcentaje['porcentaje'] * 100, 0) . '%';
-              echo '<option value="' . $porcentaje['idPorcentaje'] . '">' . $porcentajeFormateado . '</option>';
+                $opcion = '<option value="' . $porcentaje['idPorcentaje'] . '">' . $porcentajeFormateado . ' - ' . $porcentaje['descripcion'] . '</option>';
+                echo $opcion;
                 }
               ?>
             </select>
