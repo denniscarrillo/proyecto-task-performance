@@ -14,7 +14,7 @@ $(document).ready(function () {
       { "data": "nombreCliente"},
       { "data": "rtnCliente"},
       { "data": "fechaEmision.date" },
-      { "data": "totalBruto "},
+      { "data": "totalBruto"},
       { "data": "totalImpuesto"},
       { "data": "totalNeto" }
     ]
