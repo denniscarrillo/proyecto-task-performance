@@ -62,13 +62,13 @@ if (isset($_SESSION['usuario'])) {
   <div class="conteiner-global">
     <div class="sidebar-conteiner">
       <?php
-        $urlIndex = '../../index.php';
+        $urlIndex = './index.php';
         // Rendimiento
         $urlMisTareas = './rendimiento/v_tarea.php';
         $urlConsultarTareas = './crud/DataTableTarea/gestionDataTableTarea.php'; //PENDIENTE
         $urlBitacoraTarea = ''; //PENDIENTE
         $urlMetricas = './crud/Metricas/gestionMetricas.php';
-        $urlEstadisticas = ''; //PENDIENTE
+        $urlEstadisticas = './grafica/estadistica.php'; //PENDIENTE
         //Solicitud
         $urlSolicitud = './crud/DataTableSolicitud/gestionDataTableSolicitud.php';
         //Comisión
