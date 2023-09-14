@@ -396,4 +396,49 @@ class Tarea
         return $cantTareas;
     } 
 
+    public static function obtenerTareaPorVendedor($idUsuario_Vendedor, $FechaDesde, $FechaHasta){
+        $conn = new Conexion();
+        $abrirConexion = $conn->abrirConexionDB(); 
+        $query = "SELECT  t.id_EstadoAvance  
+                 FROM tbl_vendedores_tarea AS vt
+                 INNER JOIN tbl_tarea AS t ON t.id_Tarea = vt.id_Tarea 
+                 WHERE vt.id_usuario_vendedor = '$idUsuario_Vendedor' and t.fecha_Inicio between '$FechaDesde' and '$FechaHasta';";
+        $ListaTareas = sqlsrv_query($abrirConexion, $query);  
+        $TareasXvendedor = array();
+
+        $TotalLlamada = 0; $TotalLead = 0; $TotalCotizacion = 0; $TotalVentas = 0;
+
+        while ($row = sqlsrv_fetch_array($ListaTareas, SQLSRV_FETCH_ASSOC)) {
+            $idEstadoAvance = intval($row['id_EstadoAvance']);
+            switch ($idEstadoAvance){
+                case 1: {
+                    $TotalLlamada++ ;
+                    break;
+                }
+                case 2: {
+                    $TotalLead++ ;
+                    break;
+                }
+                case 3: {
+                    $TotalCotizacion++ ;
+                    break;
+                }
+                case 4: {
+                    $TotalVentas++ ;
+                    break;
+                }
+            }
+        }
+        $TareasXvendedor = [
+            "LlamadasV" => $TotalLlamada,
+            "LeadV" => $TotalLead,
+            "CotizacionV" => $TotalCotizacion,
+            "VentaV" => $TotalVentas
+        ];
+
+        sqlsrv_close($abrirConexion);   
+       
+        return $TareasXvendedor;
+    }
+
 }

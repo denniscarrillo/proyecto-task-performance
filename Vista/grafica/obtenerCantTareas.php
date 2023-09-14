@@ -43,7 +43,7 @@ if(isset($_POST['fechaDesde']) && isset($_POST['fechaHasta'])){
             "TotalLead" => $CantTareas["Lead"],
             "TotalCotizacion" => $CantTareas["Cotizacion"],
             "TotalVenta" => $CantTareas["Venta"]
-     ];
+        ];
 
      print json_encode($datosGrafica, JSON_UNESCAPED_UNICODE);
     
