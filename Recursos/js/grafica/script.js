@@ -42,10 +42,13 @@ let obtenerDatosGrafica = function(fechaDesde, fechaHasta){
 ///////////////Boton Filtrar
 let btnFiltrar = document.getElementById('btnFiltrar')
     btnFiltrar.addEventListener('click', function(){
+    let idUsuario_Vendedor = 4;
     let fechadesde = document.getElementById('fechaDesdef').value;
     let fechahasta = document.getElementById('fechaHastaf').value;
+    
     obtenerDatosGrafica(fechadesde, fechahasta);
     obtenerMetaMetricas();
+    obtenerTareaVendedor(idUsuario_Vendedor, fechadesde, fechahasta);
 });
 
 
@@ -144,20 +147,6 @@ let obtenerMetaMetricas = function(){
 }
 
 
-// let obtenerDatosVendedores = function(){
-//     $.ajax({
-//         url: "../../../Vista/grafica/obtenerFiltroVendedores.php",
-//         type: "POST",
-//         datatype: "JSON",
-//         data: {
-//         },
-//         success: function (resp) {
-//             traerVendedores = JSON.parse(resp);
-//             console.log(traerVendedores);
-//         }
-//     });
-// } 
-
 $(document).ready(function () {
     $tablaVendedores = $("#table-Traer-Vendedor").DataTable({
         "ajax": {
@@ -186,9 +175,25 @@ $(document).on("click", "#btn_seleccionar", function () {
     let fila = $(this).closest("tr");
     document.getElementById("idUsuario_Vendedor").value = idUsuario_Vendedor;
     idUsuario_Vendedor(idUsuario_Vendedor);
-
    
 });
+
+let obtenerTareaVendedor = function(idUsuario_Vendedor,fechaDesde, fechaHasta){
+    $.ajax({
+        url: "../../../Vista/grafica/obtenerTareasPorVendedor.php",
+        type: "POST",
+        datatype: "JSON",
+        data: {
+            idUsuario_Vendedor:idUsuario_Vendedor,
+            fechaDesde: fechaDesde,
+            fechaHasta: fechaHasta
+        },
+        success: function (resp) {
+            // traerTareasVendedor = JSON.parse(resp);
+            console.log(resp);
+        }
+    });
+}
  
   
 
