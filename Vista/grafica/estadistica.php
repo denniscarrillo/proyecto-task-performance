@@ -94,7 +94,8 @@
                     
                     <div class="filtro-PorVendedor" id="PorVendedor">
                         <label for="PorTarea" class="form-label">Seleccione Vendedores:</label>
-                        <button type="button" class="btn btn-primary btn-success" id="btnVendedores" data-bs-toggle="modal"  data-bs-target="#modalTraerVendedores" >Vendedores</button>
+                        <button type="button" class="btn btn-primary btn-success" id="btnVendedores" data-bs-toggle="modal"  
+                        data-bs-target="#modalTraerVendedores">Seleccionar Vendedores...<i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i></button>
                     </div> 
 
                     
