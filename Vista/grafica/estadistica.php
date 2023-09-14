@@ -135,7 +135,7 @@
         </div>
     </div>
     <?php
-       require_once('./modalFiltroVendedores.html');
+       require_once('modalFiltroVendedores.html');
     ?>
     
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>

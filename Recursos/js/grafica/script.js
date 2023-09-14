@@ -17,6 +17,8 @@
   const etiquetas_Venta = ["Ventas", "Meta"]
   const color_Venta = ['rgba(255, 212, 120)','rgb(82, 82, 82 )']
 
+  let $tablaVendedores = "";
+
 
 let obtenerDatosGrafica = function(fechaDesde, fechaHasta){
     $.ajax({
@@ -28,6 +30,7 @@ let obtenerDatosGrafica = function(fechaDesde, fechaHasta){
             fechaHasta: fechaHasta
         },
         success: function (resp) {
+            
             datosGrafica = JSON.parse(resp);   
             generarGraficas(datosGrafica);
             console.log(datosGrafica);
@@ -45,11 +48,7 @@ let btnFiltrar = document.getElementById('btnFiltrar')
     obtenerMetaMetricas();
 });
 
-///////////////Boton Para modal vendedores
-let btnVendedores = document.getElementById('btnVendedores')
-    btnVendedores.addEventListener('click', function(){
-        obtenerDatosVendedores();
-});
+
 
 
 let generarGraficas = function(data) {
@@ -145,44 +144,52 @@ let obtenerMetaMetricas = function(){
 }
 
 
-let obtenerDatosVendedores = function(){
-    $.ajax({
-        url: "../../../Vista/grafica/obtenerFiltroVendedores.php",
-        type: "POST",
-        datatype: "JSON",
-        data: {
-        },
-        success: function (resp) {
-            traerVendedores = JSON.parse(resp);
-            console.log(traerVendedores);
-        }
-    });
-} 
+// let obtenerDatosVendedores = function(){
+//     $.ajax({
+//         url: "../../../Vista/grafica/obtenerFiltroVendedores.php",
+//         type: "POST",
+//         datatype: "JSON",
+//         data: {
+//         },
+//         success: function (resp) {
+//             traerVendedores = JSON.parse(resp);
+//             console.log(traerVendedores);
+//         }
+//     });
+// } 
 
-
-
-
-    $('#btnVendedores').click(() => {
-     if (document.getElementById('modalTraerVendedores') == null) {
-      $('#table-Traer-Vendedor').DataTable({
+$(document).ready(function () {
+    $tablaVendedores = $("#table-Traer-Vendedor").DataTable({
         "ajax": {
-          "url": "../../../Vista/grafica/obtenerFiltroVendedores.php",
-          "dataSrc": ""
+            "url": "../../../Vista/grafica/obtenerFiltroVendedores.php",
+            "type": "POST",
+            "datatype": "JSON",
+            "dataSrc": "",
         },
         "language": {
-          "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+        "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
         },
         "columns": [
-          { "data": 'idUsuario_Vendedor' },
-          { "data": 'nombreVendedor' },
-          {
+            { "data": "idUsuario_Vendedor" },
+            { "data": "nombreVendedor" },
+        {
             "defaultContent":
-              '<div><button class="btns btn btn_select-Vendedores"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>'
-          }
-        ]
-      });
-     }
+            '<button class="btns btn" id="btn_seleccionar"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>',
+        },
+        ],
     });
+});
+
+
+
+$(document).on("click", "#btn_seleccionar", function () {
+    let fila = $(this).closest("tr");
+    document.getElementById("idUsuario_Vendedor").value = idUsuario_Vendedor;
+    idUsuario_Vendedor(idUsuario_Vendedor);
+
+   
+});
+ 
   
 
 
