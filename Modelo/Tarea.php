@@ -402,7 +402,8 @@ class Tarea
         $query = "SELECT  t.id_EstadoAvance  
                  FROM tbl_vendedores_tarea AS vt
                  INNER JOIN tbl_tarea AS t ON t.id_Tarea = vt.id_Tarea 
-                 WHERE vt.id_usuario_vendedor = '$idUsuario_Vendedor' and t.fecha_Inicio between '$FechaDesde' and '$FechaHasta';";
+                 WHERE vt.id_usuario_vendedor = '$idUsuario_Vendedor' and t.fecha_Inicio 
+                       between '$FechaDesde' and '$FechaHasta';";
         $ListaTareas = sqlsrv_query($abrirConexion, $query);  
         $TareasXvendedor = array();
 

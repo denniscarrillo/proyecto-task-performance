@@ -17,6 +17,7 @@ $btnFiltrar.addEventListener("click", function () {
      $tablaComisionesV.rows().remove().draw();
   });
 });
+
 //Iniciar dataTable y carga las ventas filtradas segun el rango de fechas
 let iniciarDataTable = function (fechaDesde, fechaHasta) {
   if (document.querySelector(".dataTables_info") !== null) {

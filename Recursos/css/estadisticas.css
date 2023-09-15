@@ -42,9 +42,21 @@ legend{
     margin-right:45;
 }
 
+.btn-success{
+    background-color: #ef904d;
+    border: none;
+    font-size: 17px;
+    color: #fff;
+}
 
+.btn-success:hover{
+    background-color: #f2a670;
+}
 
-
+.btn-success:disabled {
+    background-color: gray; 
+    cursor: not-allowed;
+}
 .Graficoss{
     margin-bottom: 5%;
     position: relative;

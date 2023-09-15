@@ -1,25 +1,98 @@
   //Grafica general Llamadas
-  const $grafica_llamada = document.querySelector("#grafica_llamada");
-  const etiquetas_llamada = ["Llamadas", "Meta"]
-  const color_Llamada = ['rgba(133, 52, 0 )', 'rgb(82, 82, 82 )']
+const $grafica_llamada = document.querySelector("#grafica_llamada");
+const etiquetas_llamada = ["Llamadas", "Meta"]
+const color_Llamada = ['rgba(133, 52, 0 )', 'rgb(82, 82, 82 )']
   //Grafica general Lead
-  const $grafica_lead = document.querySelector("#grafica_lead");
-  const etiquetas_lead = ["Leads", "Meta"]
-  const color_Lead = ['rgba( 202, 117, 24)', 'rgb(82, 82, 82 )']
+const $grafica_lead = document.querySelector("#grafica_lead");
+const etiquetas_lead = ["Leads", "Meta"]
+const color_Lead = ['rgba( 202, 117, 24)', 'rgb(82, 82, 82 )']
 
   //Grafica general Cotizaciones
-  const $grafica_Cotizacion = document.querySelector("#grafica_Cotizacion");
-  const etiquetas_Cotizacion = ["Cotizacion", "Meta"]
-  const color_Cotizacion =['rgba(255, 152, 0)','rgb(82, 82, 82 )']
+const $grafica_Cotizacion = document.querySelector("#grafica_Cotizacion");
+const etiquetas_Cotizacion = ["Cotizacion", "Meta"]
+const color_Cotizacion =['rgba(255, 152, 0)','rgb(82, 82, 82 )']
 
   //Grafica general Ventas
-  const $grafica_Venta = document.querySelector("#grafica_Ventas");
-  const etiquetas_Venta = ["Ventas", "Meta"]
-  const color_Venta = ['rgba(255, 212, 120)','rgb(82, 82, 82 )']
+const $grafica_Venta = document.querySelector("#grafica_Ventas");
+const etiquetas_Venta = ["Ventas", "Meta"]
+const color_Venta = ['rgba(255, 212, 120)','rgb(82, 82, 82 )']
 
-  let $tablaVendedores = "";
+let $tablaVendedores = "";
+
+let idUsuario_Vendedor = "";
+/// funcion habilita el boton seleccionar vendedores
+let rdVendedores = document.getElementById("RadioPorVendedor");
+let btnSelecVendedores = document.getElementById("btnVendedores");
+rdVendedores.addEventListener("change", function(){
+    if (rdVendedores.checked ) {
+        // Habilitar el botón seleccionar vendedores
+        btnSelecVendedores.removeAttribute("disabled");
+      } else {
+          btnSelecVendedores.setAttribute("disabled", "true");
+      }    
+});
+
+/// funcion que deshabilita el boton seleccionar vendedores
+let rdGeneral = document.getElementById("RadioGeneral");
+rdGeneral.addEventListener("change", function () {
+    if (rdGeneral.checked) {
+      // Si se deselecciona el radio rdGeneral, deshabilita el botón
+      btnSelecVendedores.setAttribute("disabled", "true");
+    }
+});
 
 
+  ////////////Boton Seleccionar
+// $(document).on("click", "#btn_seleccionar", function () {
+//     let fila = $(this).closest("tr");
+//     document.getElementById("idUsuario_Vendedor").value = idUsuario_Vendedor;
+//     idUsuario_Vendedor(idUsuario_Vendedor);
+   
+// });
+
+///////////////Boton Filtrar
+// let btnFiltrar = document.getElementById('btnFiltrar')
+//     btnFiltrar.addEventListener('click', function(){
+//     let idUsuario_Vendedor = 2;
+//     let fechadesde = document.getElementById('fechaDesdef').value;
+//     let fechahasta = document.getElementById('fechaHastaf').value;
+
+//     // if (fechadesde && fechahasta === "") {
+//     //     alert('Por favor, complete el campo de fecha antes de enviar el formulario.');
+//     //     return false; // Evitar que el formulario se envíe si la fecha está vacía
+//     // }
+//     obtenerDatosGrafica(fechadesde, fechahasta);
+//     obtenerMetaMetricas();
+//     obtenerTareaVendedor(idUsuario_Vendedor, fechadesde, fechahasta);
+// });
+
+///////////////Boton Filtrar
+$(document).ready(function () {
+    $('#btnFiltrar').click(function () {
+        const fechadesde = $('#fechaDesdef').val();
+        const fechahasta = $('#fechaHastaf').val();
+
+        // Verificar si la fecha se ha llenado
+        if (fechadesde === "" && fechahasta === "" ) {
+            alert('LLenar campos de fecha.');
+        } else {
+            // let btnFiltrar = document.getElementById('btnFiltrar')
+            // btnFiltrar.addEventListener('click', function(){
+            // let idUsuario_Vendedor = ;
+            console.log(idUsuario_Vendedor);
+            let fechadesde = document.getElementById('fechaDesdef').value;
+            let fechahasta = document.getElementById('fechaHastaf').value;
+            obtenerDatosGrafica(fechadesde, fechahasta);
+            obtenerMetaMetricas();
+            obtenerTareaVendedor(idUsuario_Vendedor, fechadesde, fechahasta);
+        // });
+
+        }
+    });
+});
+
+
+// Obtener datos Genrales para las 4 graficas de cada tarea
 let obtenerDatosGrafica = function(fechaDesde, fechaHasta){
     $.ajax({
         url: "../../../Vista/grafica/obtenerCantTareas.php",
@@ -38,22 +111,7 @@ let obtenerDatosGrafica = function(fechaDesde, fechaHasta){
     });
 }
 
-
-///////////////Boton Filtrar
-let btnFiltrar = document.getElementById('btnFiltrar')
-    btnFiltrar.addEventListener('click', function(){
-    let idUsuario_Vendedor = 4;
-    let fechadesde = document.getElementById('fechaDesdef').value;
-    let fechahasta = document.getElementById('fechaHastaf').value;
-    
-    obtenerDatosGrafica(fechadesde, fechahasta);
-    obtenerMetaMetricas();
-    obtenerTareaVendedor(idUsuario_Vendedor, fechadesde, fechahasta);
-});
-
-
-
-
+//funcion que genera los datos por tarea
 let generarGraficas = function(data) {
     ///////////////////////////////////////////////////GRAFICA GENERAL LLAMADA//////////////////////////////////////////////////// 
     const datosIngresos_llamada = {
@@ -114,6 +172,7 @@ let generarGraficas = function(data) {
     });
 }
 
+//funcion que obtiene y manda datos a la primera grafica de meta
 let obtenerMetaMetricas = function(){
     $.ajax({
         url: "../../../Vista/grafica/obtenerDatosMetrica.php",
@@ -146,7 +205,7 @@ let obtenerMetaMetricas = function(){
     });
 }
 
-
+//funcion para llenar el modal de vendedores
 $(document).ready(function () {
     $tablaVendedores = $("#table-Traer-Vendedor").DataTable({
         "ajax": {
@@ -170,14 +229,7 @@ $(document).ready(function () {
 });
 
 
-
-$(document).on("click", "#btn_seleccionar", function () {
-    let fila = $(this).closest("tr");
-    document.getElementById("idUsuario_Vendedor").value = idUsuario_Vendedor;
-    idUsuario_Vendedor(idUsuario_Vendedor);
-   
-});
-
+//funcion que Obtiene los las tareas por vendedor
 let obtenerTareaVendedor = function(idUsuario_Vendedor,fechaDesde, fechaHasta){
     $.ajax({
         url: "../../../Vista/grafica/obtenerTareasPorVendedor.php",
@@ -194,6 +246,26 @@ let obtenerTareaVendedor = function(idUsuario_Vendedor,fechaDesde, fechaHasta){
         }
     });
 }
+
+$(document).on("click", "#btn_seleccionar", function() {
+    let fila = $(this).closest("tr");
+    idUsuario_Vendedor = fila.find("td:eq(0)").text(); //captura el ID DEL vendedor
+    console.log(idUsuario_Vendedor);
+    $("#modalTraerVendedores").modal("hide");
+});
+
+  
+
+
+// vendedoresSeleccionados.forEach(function (vendedor) {
+//     if (vendedor.classList.contains('select-vendedor')) {
+//       let $idVendedor = $(vendedor).closest('tr').find('td:eq(0)').text();
+//       let $vendedor = {
+//         idVendedor: $idVendedor
+//       }
+//       $Vendedores.push($vendedor);
+//     }
+// });
  
   
 

@@ -85,9 +85,9 @@
                         <form> 
                             <fieldset> 
                                 <legend>Elige el tipo de gráfico</legend>
-                                <input type="radio" id="general" name="fav_language" value="General" checked>
+                                <input type="radio" id="RadioGeneral" name="fav_language" value="General" checked>
                                 <label for="html">General</label><br>
-                                <input type="radio" id="porVendedor" name="fav_language" value="Por Vendedor">
+                                <input type="radio" id="RadioPorVendedor" name="fav_language" value="Por Vendedor">
                                 <label for="css">Por Vendedor</label><br>
                             </fieldset> 
                         </form>    
@@ -95,8 +95,8 @@
                     
                     <div class="filtro-PorVendedor" id="PorVendedor">
                         <label for="PorTarea" class="form-label">Seleccione Vendedores:</label>
-                        <button type="button" class="btn btn-primary btn-success" id="btnVendedores" data-bs-toggle="modal"  
-                        data-bs-target="#modalTraerVendedores">Seleccionar Vendedores...<i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i></button>
+                        <button type="button" class="btn btn-success" id="btnVendedores" data-bs-toggle="modal"  
+                        data-bs-target="#modalTraerVendedores" disabled>Seleccionar...<i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i></button>
                     </div> 
 
                     
@@ -146,9 +146,9 @@
     <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
     <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
-    <script src="../../../Recursos/js/grafica/script.js"></script>  
-     <script src="../../../Recursos/js/index.js"></script>
-     
+    <script src="../../../Recursos/js/grafica/script.js"></script>
+   
+    
 </body>
 
 </html>
