@@ -16,7 +16,7 @@ $(document).ready(function () {
       { "data": "usuario" },
       { "data": "comisionTotal" },
       { "data": "estadoComision" },
-      { "data": "fechaComision" },
+      { "data": "fechaComision.date" },
     ]
   });
 });

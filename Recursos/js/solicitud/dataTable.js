@@ -14,7 +14,7 @@ $(document).ready(function () {
     },
     "columns": [
       { "data": "IdSolicitud" },
-      { "data": "Fecha_Envio" },
+      { "data": "Fecha_Envio.date" },
       { "data": "Descripcion" },
       { "data": "Correo" },
       { "data": "Ubicacion" },

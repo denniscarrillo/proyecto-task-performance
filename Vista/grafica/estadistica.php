@@ -14,6 +14,7 @@
     <!-- Boxicons CSS -->
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link href='../../Recursos/css/estadisticas.css' rel='stylesheet'>
+    <link href="../../Recursos/css/modalFiltroVendedor.css" rel="stylesheet" />
     <title>Gráfica</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@latest/dist/Chart.min.js"></script>
     <link href='../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
@@ -84,17 +85,18 @@
                         <form> 
                             <fieldset> 
                                 <legend>Elige el tipo de gráfico</legend>
-                                <input type="radio" id="general" name="fav_language" value="General">
+                                <input type="radio" id="general" name="fav_language" value="General" checked>
                                 <label for="html">General</label><br>
                                 <input type="radio" id="porVendedor" name="fav_language" value="Por Vendedor">
-                                <label for="css">PorVendedor</label><br>
+                                <label for="css">Por Vendedor</label><br>
                             </fieldset> 
                         </form>    
                     </div>
                     
                     <div class="filtro-PorVendedor" id="PorVendedor">
                         <label for="PorTarea" class="form-label">Seleccione Vendedores:</label>
-                        <button type="button" class="btn btn-primary btn-success" id="Vendedores">Vendedores</button>
+                        <button type="button" class="btn btn-primary btn-success" id="btnVendedores" data-bs-toggle="modal"  
+                        data-bs-target="#modalTraerVendedores">Seleccionar Vendedores...<i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i></button>
                     </div> 
 
                     
@@ -134,6 +136,9 @@
             </div>
         </div>
     </div>
+    <?php
+       require_once('modalFiltroVendedores.html');
+    ?>
     
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>

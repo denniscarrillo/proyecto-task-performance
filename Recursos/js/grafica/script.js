@@ -17,6 +17,8 @@
   const etiquetas_Venta = ["Ventas", "Meta"]
   const color_Venta = ['rgba(255, 212, 120)','rgb(82, 82, 82 )']
 
+  let $tablaVendedores = "";
+
 
 let obtenerDatosGrafica = function(fechaDesde, fechaHasta){
     $.ajax({
@@ -28,6 +30,7 @@ let obtenerDatosGrafica = function(fechaDesde, fechaHasta){
             fechaHasta: fechaHasta
         },
         success: function (resp) {
+            
             datosGrafica = JSON.parse(resp);   
             generarGraficas(datosGrafica);
             console.log(datosGrafica);
@@ -36,17 +39,23 @@ let obtenerDatosGrafica = function(fechaDesde, fechaHasta){
 }
 
 
-///////////////Boton editar
+///////////////Boton Filtrar
 let btnFiltrar = document.getElementById('btnFiltrar')
     btnFiltrar.addEventListener('click', function(){
+    let idUsuario_Vendedor = 4;
     let fechadesde = document.getElementById('fechaDesdef').value;
     let fechahasta = document.getElementById('fechaHastaf').value;
+    
     obtenerDatosGrafica(fechadesde, fechahasta);
     obtenerMetaMetricas();
+    obtenerTareaVendedor(idUsuario_Vendedor, fechadesde, fechahasta);
 });
 
+
+
+
 let generarGraficas = function(data) {
-///////////////////////////////////////////////////GRAFICA GENERAL LLAMADA//////////////////////////////////////////////////// 
+    ///////////////////////////////////////////////////GRAFICA GENERAL LLAMADA//////////////////////////////////////////////////// 
     const datosIngresos_llamada = {
         data: [data.TotalLlamadas, data.metaGeneralLlamada], 
         backgroundColor: color_Llamada,
@@ -60,7 +69,7 @@ let generarGraficas = function(data) {
             ]
         }
     });
-////////////////////////////////////////////////////GRAFICA GENERAL LEAD////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////GRAFICA GENERAL LEAD////////////////////////////////////////////////////
     const datosIngresos_lead = {
         data: [data.TotalLead, data.metaGeneralLead], 
         backgroundColor: color_Lead,
@@ -74,7 +83,7 @@ let generarGraficas = function(data) {
             ]
         }
     });   
-////////////////////////////////////////////////////GRAFICA GENERAL COTIZACION////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////GRAFICA GENERAL COTIZACION////////////////////////////////////////////////////
     const datosIngresos_Cotizacion = {
         data: [data.TotalCotizacion, data.metaGeneralCotizacion],
         backgroundColor: color_Cotizacion,
@@ -138,37 +147,55 @@ let obtenerMetaMetricas = function(){
 }
 
 
+$(document).ready(function () {
+    $tablaVendedores = $("#table-Traer-Vendedor").DataTable({
+        "ajax": {
+            "url": "../../../Vista/grafica/obtenerFiltroVendedores.php",
+            "type": "POST",
+            "datatype": "JSON",
+            "dataSrc": "",
+        },
+        "language": {
+        "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
+        },
+        "columns": [
+            { "data": "idUsuario_Vendedor" },
+            { "data": "nombreVendedor" },
+        {
+            "defaultContent":
+            '<button class="btns btn" id="btn_seleccionar"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>',
+        },
+        ],
+    });
+});
 
 
 
-// const $grafica_llamada = document.querySelector("#grafica_llamada");
-// const etiquetas_llamada = ["Llamadas"]
-// const color_Llamada = ['rgba(133, 52, 0 )', 'rgb(82, 82, 82 )']
+$(document).on("click", "#btn_seleccionar", function () {
+    let fila = $(this).closest("tr");
+    document.getElementById("idUsuario_Vendedor").value = idUsuario_Vendedor;
+    idUsuario_Vendedor(idUsuario_Vendedor);
+   
+});
 
-// const datosIngresos_llamada = {
-//     data: [datosGrafica['metaGeneralLlamada'], datosGrafica['TotalLlamadas']], 
-//     backgroundColor: color_Llamada,
-// };
-// new Chart($grafica_llamada, {
-//     type: 'doughnut',// Tipo de gráfica. Puede ser doughnut o pie 
-//     data: {
-//         labels: etiquetas_llamada,
-//         datasets: [
-//             datosIngresos_llamada
-//         ]
-//     }
-// });
-
-
-
-
-
-
-
-
+let obtenerTareaVendedor = function(idUsuario_Vendedor,fechaDesde, fechaHasta){
+    $.ajax({
+        url: "../../../Vista/grafica/obtenerTareasPorVendedor.php",
+        type: "POST",
+        datatype: "JSON",
+        data: {
+            idUsuario_Vendedor:idUsuario_Vendedor,
+            fechaDesde: fechaDesde,
+            fechaHasta: fechaHasta
+        },
+        success: function (resp) {
+            // traerTareasVendedor = JSON.parse(resp);
+            console.log(resp);
+        }
+    });
+}
  
-//    
-
+  
 
 
 

@@ -16,7 +16,7 @@ $(document).ready(function () {
       {"data":  'EstadoAvance' },
       { "data": 'EstadoSolicitud' },
       { "data": 'motivo_cancelacion' },
-      {"data":  'Fecha_Creacion' }
+      {"data":  'Fecha_Creacion.date' }
       
     ]
   });
