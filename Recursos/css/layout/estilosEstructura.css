@@ -44,7 +44,7 @@
 .dataTables_wrapper .dataTables_length {
     margin-bottom: 8px;
 }
-table.dataTable.no-footer{ 
+table.dataTable.no-footer{                           
   border-radius: 5px;
   box-shadow: 1px 1px 1px 2px #8f8f8f; 
 }
@@ -76,6 +76,10 @@ table.dataTable.no-footer{
 .btn-guardar .btn-primary {
     background-color: #ee9827;
     border: none;
+}
+.check-permiso {
+    border-color: #ee9827;
+    background-color: #ee9827;
 }
 
 
