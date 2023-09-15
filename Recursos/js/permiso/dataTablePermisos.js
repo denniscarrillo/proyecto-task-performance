@@ -14,12 +14,17 @@ $(document).ready(function () {
     "columns": [
       { "data": "rolUsuario"},
       { "data": "objetoSistema" },
-      { "data": "consultar" },
-      { "data": "insertar" },
-      { "data": "actualizar" },
-      { "data": "eliminar" },
       {"defaultContent":
-          '<button class="btns btn" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>' 
+        `<input type="checkbox" id="" class="check-permiso">` 
+      }, 
+      {"defaultContent":
+        `<input type="checkbox" id="" class="check-permiso">` 
+      },
+      {"defaultContent":
+        '<input type="checkbox">' 
+      },
+      {"defaultContent":
+        '<input type="checkbox">' 
       }
     ]
   });
