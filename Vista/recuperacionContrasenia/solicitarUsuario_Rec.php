@@ -31,6 +31,7 @@
             <div class="wrap-input">
                 <?php
                     $opcion = '';
+                    $texto = '';
                     if(isset($_SESSION['metodo']) || isset($_POST['radioOption'])){
                         if(isset($_SESSION['metodo'])){
                             $opcion = $_SESSION['metodo'];

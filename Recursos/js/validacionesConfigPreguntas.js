@@ -3,6 +3,7 @@ import * as funciones from './funcionesValidaciones.js';
 
 let estadoMasdeUnEspacioRespuesta = true;
 
+let estadoPregunta = true;
 const $form = document.getElementById('formConfig');
 const $pregunta = document.getElementById('id_pregunta');
 const $respuesta = document.getElementById('respuesta');
@@ -10,16 +11,20 @@ const $respuesta = document.getElementById('respuesta');
 //Cuando se quiera enviar el formulario de login, primero se validaran si los inputs no estan vacios
 $form.addEventListener('submit', e => {
     
-        let estadoInputPregunta = funciones.validarCampoVacio($pregunta);
         let estadoInputRespuesta = funciones.validarCampoVacio($respuesta);
     
-        if (estadoInputPregunta == false || estadoInputRespuesta == false) {
+        if (estadoInputRespuesta == false) {
             e.preventDefault();
         } else {
             if (estadoMasdeUnEspacioRespuesta == false) {
                 e.preventDefault();
                 estadoMasdeUnEspacioRespuesta = funciones.validarMasdeUnEspacio($respuesta);
-            } 
+            // } else {
+            //     if(estadoPregunta == false){
+            //         e.preventDefault();
+            //         estadoPregunta = funciones.validarCampoVacio($pregunta);
+            //     }
+            }
         }
     });
     $pregunta.addEventListener('change', ()=>{
@@ -27,7 +32,9 @@ $form.addEventListener('submit', e => {
     });
     $respuesta.addEventListener('focusout', ()=>{
         estadoMasdeUnEspacioRespuesta = funciones.validarMasdeUnEspacio($respuesta);
-        funciones.limitarCantidadCaracteres("respuesta", 50);
+    });
+    $respuesta.addEventListener('keyup', ()=>{
+        funciones.limitarCantidadCaracteres("respuesta", 100);
     });
     
     /* $form.addEventListener('submit', e => {

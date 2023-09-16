@@ -29,9 +29,6 @@ require_once('../../Vista/login/validarRegistro.php');
                 <!-- input para usuario -->
                 <div class="wrap-input mb-3">
                     <label><b>Usuario</b></label>
-                    <span class="conteiner-icon">
-                  <i class="icon fa-solid fa-user"></i>
-                </span>
                     <input type="text" class="form-control input" name="usuario" id="usuario" maxlength="14" placeholder="Usuario">
                     <p class="mensaje"></p>
                 </div>
@@ -46,23 +43,19 @@ require_once('../../Vista/login/validarRegistro.php');
                 <!-- input para Contraseña -->
                 <div class="wrap-input mb-3" id="grupo__password">
                     <label><b>Contraseña</b></label>
-                    <span class="lock conteiner-icon">
-              <i class="icon type-lock fa-solid fa-lock"></i>
-              </span>
                     <input type="password" class="form-control input" name="contraseña" id="password" maxlength="15" placeholder="Contraseña">
-                   <!--  <i class="form-control__validacion-estado fas fa-times-circle"></i> -->
                     <p class="mensaje"></p>
                     <br>
                 </div>
                 <!-- input para confirmación Contraseña -->
                 <div class="wrap-input mb-3" id="grupo__password2">
                     <label><b>Confirmar contraseña</b></label>
-                    <span class="lock conteiner-icon">
-              <i class="icon type-lock fa-solid fa-lock"></i>
-              </span>
                     <input type="password" class="form-control input" name="confirmarContraseña" id="password2" maxlength="15" placeholder="Confirmar Contraseña">
                     <!-- <i class="form-control__validacion-estado fas fa-times-circle"></i> -->
                     <p class="mensaje"></p>
+                </div>
+                <div>
+                <input type="checkbox" id="checkbox"> Mostrar Contraseñas
                 </div>
             </div>
             </div>
@@ -77,7 +70,7 @@ require_once('../../Vista/login/validarRegistro.php');
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-    <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
+    <script src="../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
     <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
     <script src="../../Recursos/js/validacionesRegistro.js" type="module"></script>
 </body>

@@ -12,13 +12,15 @@
         $_SESSION['metodo'] = $_POST['radioOption'];
     }
     if(isset($_POST['submit'])){
-        if(isset($_POST['userName'])){
-            $_SESSION['usuario'] = $_POST['userName'];
+        if(isset($_POST['usuario'])){
+            $_SESSION['usuario'] = $_POST['usuario'];
         }
         if(isset($_SESSION['usuario']) && isset($_SESSION['metodo'])) {
             $usuario = $_SESSION['usuario'];
             $metodoRec = $_SESSION['metodo'];
             $userExiste = ControladorUsuario::usuarioExiste($usuario);
+           var_dump( $userExiste);
+            
             if($userExiste  > 0){
                 //Si el método es recuperación por correo
                 if($metodoRec == 'correo'){

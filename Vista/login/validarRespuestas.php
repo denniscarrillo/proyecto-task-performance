@@ -8,17 +8,6 @@
     $user = '';
     session_start();
     if (isset($_SESSION['usuario'])) {
-        /* ========================= Evento Configurar respuestas. ======================*/
-         /* $newBitacora = new Bitacora();
-         $accion = ControladorBitacora::accion_Evento();
-         date_default_timezone_set('America/Tegucigalpa');
-         $newBitacora->fecha = date("Y-m-d h:i:s"); 
-         $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('configRespuestas.php');
-         $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-         $newBitacora->accion = $accion['income'];
-         $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' ingreso a pantalla configuración respuestas';
-         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora); */
-        /* =======================================================================================*/
         $user = $_SESSION['usuario'];
         $preguntas = ControladorUsuario::obtenerPreguntasUsuario();
         $cantPreguntasParametro = ControladorUsuario::cantidadPreguntas();
