@@ -1,0 +1,17 @@
+.modal-dialog {
+    max-width: 700px;
+}
+
+
+
+.modal-body h1{
+    margin-bottom: 1rem;
+}
+
+.dataTables_length label{
+    margin-bottom: 25px;
+}
+
+.table-striped {
+    min-width: 36rem;
+  }

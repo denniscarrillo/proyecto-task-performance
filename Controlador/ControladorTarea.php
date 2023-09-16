@@ -47,4 +47,9 @@ class ControladorTarea {
     public static function obtenerCantTareas($FechaDesde, $FechaHasta){
         return Tarea::obtenerCantTarea($FechaDesde, $FechaHasta);
     }
+
+    public static function obtenerCantTareasPorVendedor($idUsuario_Vendedor, $FechaDesde, $FechaHasta){
+        return Tarea::obtenerTareaPorVendedor($idUsuario_Vendedor, $FechaDesde, $FechaHasta);
+    }
+
 }

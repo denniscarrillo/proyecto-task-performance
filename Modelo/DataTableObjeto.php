@@ -34,4 +34,23 @@ class DataTableObjeto
         sqlsrv_close($abrirConexion); //Cerrar conexion
         return $ObjetoUsuario;
     } 
+    public static function obtenerIdObjetos()
+    {
+        $idObjeto = array();
+        try {
+            $con = new Conexion();
+            $abrirConexion = $con->abrirConexionDB();
+            $query = "SELECT id_Objeto FROM tbl_MS_Objetos;";
+            $resultado = sqlsrv_query($abrirConexion, $query);
+            while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+                $idObjeto[] = [
+                    'id_Objeto' => $fila['id_Objeto']
+                ];
+            }
+        } catch (Exception $e) {
+            $idObjeto = 'Error SQL:' . $e;
+        }
+        sqlsrv_close($abrirConexion); //Cerrar conexion
+        return $idObjeto;
+    } 
 }
