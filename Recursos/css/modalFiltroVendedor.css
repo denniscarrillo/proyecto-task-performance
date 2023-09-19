@@ -2,8 +2,6 @@
     max-width: 700px;
 }
 
-
-
 .modal-body h1{
     margin-bottom: 1rem;
 }
@@ -15,3 +13,28 @@
 .table-striped {
     min-width: 36rem;
   }
+
+
+ #btn_seleccionar{
+    color: #050a0d;
+ }
+ /* .icon-select{
+    color: #2679a2;
+ } */
+ .icon-select:hover{
+    color: #2679a2;
+ }
+ #btn-info{
+    color: #2679a2;
+ }
+
+ .mensaje {
+    position: absolute;
+    margin-top: 3px;
+    color: red;
+    font-size: 14px;
+    background-color: #dcc4353b;
+}
+
+
+
