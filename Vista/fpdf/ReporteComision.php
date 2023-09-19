@@ -20,7 +20,7 @@ class PDF extends FPDF
       $this->Cell(45); // Movernos a la derecha
       $this->SetTextColor(0, 0, 0); //color
       //creamos una celda o fila
-      $this->Cell(100, 15, mb_convert_encoding('EQUIPOS Y COCINAS', 'UTF-8'), 0, 2, 'C', 0); // AnchoCelda,AltoCelda,titulo,borde(1-0),saltoLinea(1-0),posicion(L-C-R),ColorFondo(1-0)
+      $this->Cell(100, 15, mb_convert_encoding('EQUIPOS Y REPRESENTACIONES S.A', 'UTF-8'), 0, 2, 'C', 0); // AnchoCelda,AltoCelda,titulo,borde(1-0),saltoLinea(1-0),posicion(L-C-R),ColorFondo(1-0)
       $this->Ln(3); // Salto de línea
       $this->SetTextColor(103); //color
 
@@ -99,13 +99,31 @@ $pdf->SetDrawColor(163, 163, 163); //colorBorde
 /*$consulta_reporte_alquiler = $conexion->query("  ");*/
 $Comision = ControladorComision::getComision();
 foreach ($Comision as $Comisiones) {
+   // Check if $Comisiones['fechaComision'] is a DateTime object
+   if ($Comisiones['fechaComision'] instanceof DateTime) {
+      // Convert DateTime object to a string in your desired format
+      $formattedDate = $Comisiones['fechaComision']->format('Y-m-d');
+  } else {
+      // Assume $Comisiones['fechaComision'] is already a string in the correct format
+      $formattedDate = $Comisiones['fechaComision'];
+  }
+
+  // Check if $Comisiones['porcentaje'] is numeric
+  if (is_numeric($Comisiones['porcentaje'])) {
+   // Format the percentage as a string with '%' symbol and no decimal places
+   $formattedPorcentaje = number_format($Comisiones['porcentaje'] * 100, 0) . '%';
+} else {
+   // Handle the case where $Comisiones['porcentaje'] is not numeric
+   $formattedPorcentaje = ''; // or some other default value
+}
+  
    $pdf->Cell(15, 10, mb_convert_encoding($Comisiones['idComision'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Cell(30, 10, mb_convert_encoding($Comisiones['factura'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Cell(30, 10, mb_convert_encoding($Comisiones['totalVenta'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(30, 10, mb_convert_encoding($Comisiones['porcentaje'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(30, 10, mb_convert_encoding($formattedPorcentaje,'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Cell(35, 10, mb_convert_encoding($Comisiones['comisionTotal'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Cell(25, 10, mb_convert_encoding($Comisiones['estadoComisionar'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
-   $pdf->Cell(30, 10, mb_convert_encoding($Comisiones['fechaComision'],'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
+   $pdf->Cell(30, 10, mb_convert_encoding($formattedDate,'windows-1252', 'UTF-8'), 1, 0, 'C', 0);
    $pdf->Ln(10);
 }
 /* TABLA */

@@ -44,26 +44,12 @@ form {
     font-family: Arial, Helvetica, sans-serif;
     box-shadow: 5px 10px 10px 0px #909090 ;
 }
-.conteiner-icon{
-    position: absolute;
-    left: 0;
-    /* Para centrar icono */
-    top: 20px;
-    height: 13%;
-    transform: translateY(-60%);
-}
+
 .btn:hover{
     background-color: rgb(114, 110, 110);
     color: #ffffff;
  }
-.icon {
-    display: block;
-    margin: 15px;
-    font-size: 25px;
-}
-.lock{
-    cursor: pointer;
-}
+
 .logo-empresa{
     margin-bottom: 30px;
     text-align: center;
@@ -74,7 +60,7 @@ form {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .form-control {
-    padding-left: 45px;
+    padding-left: 20px;
 }
 .mensaje-error {
     padding: 5px;

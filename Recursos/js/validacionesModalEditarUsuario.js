@@ -12,6 +12,9 @@ let estadoSelect = {
     estadoSelectRol: true,
     estadoSelectEstado: true,
 }
+let estadoMasdeUnEspacio = {
+    estadoMasEspacioNombre: true
+}
 
 let estadoCorreo = true;
 
@@ -35,20 +38,21 @@ $form.addEventListener('submit', e => {
     // Comprobamos que todas las validaciones se hayan cumplido 
     if (estadoInputNombre == false || estadoInputCorreo == false || estadoInputRol == false || estadoInputEstado == false) {
         e.preventDefault();
-    } else {
+    } else{
         if(estadoLetrasName == false){
             e.preventDefault();
             estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
         } else {
-            if(estadoCorreo == false || estadoSelect.estadoSelectEstado == false || estadoSelect.estadoSelectRol == false){
+            if(estadoCorreo == false || estadoSelect.estadoSelectEstado == false || estadoSelect.estadoSelectRol == false || estadoMasdeUnEspacio.estadoMasEspacioNombre == true){
                 e.preventDefault();
                 estadoCorreo = funciones.validarCorreo($correo, validaciones.correo);
                 estadoSelect.estadoSelectEstado = funciones.validarCampoVacio($estado);
                 estadoSelect.estadoSelectRol = funciones.validarCampoVacio($rol);
+                estadoMasdeUnEspacio.estadoMasEspacioNombre = funciones.validarMasdeUnEspacio($name);
             } else {
                 estadoValidado = true; // 
             }
-        }
+      }
     }
 });
 $name.addEventListener('keyup', ()=>{
@@ -56,6 +60,9 @@ $name.addEventListener('keyup', ()=>{
    funciones.limitarCantidadCaracteres("E_nombre", 50);
 });
 $name.addEventListener('focusout', ()=>{
+    if(estadoMasdeUnEspacio.estadoMasEspacioNombre){
+        funciones.validarMasdeUnEspacio($name);
+    }
     let usuarioMayus = $name.value.toUpperCase();
     $name.value = usuarioMayus;
 });
