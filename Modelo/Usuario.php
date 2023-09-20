@@ -185,7 +185,7 @@ class Usuario {
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         foreach($preguntas as $pregunta){
             $query = "INSERT INTO tbl_ms_preguntas (pregunta, Creado_Por) VALUES ('$pregunta','$usuario');";
-            $query = sqlsrv_query($conexion, $query);
+            $insertarPreguntas = sqlsrv_query($conexion, $query);
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
     }
@@ -210,14 +210,32 @@ class Usuario {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $query = "SELECT id_usuario FROM tbl_ms_usuario WHERE usuario = '$usuario'";
-        $consultaIdUsuario = sqlsrv_query($conexion, $query);
-        $fila = sqlsrv_fetch_array($consultaIdUsuario, SQLSRV_FETCH_ASSOC);
-        $idUsuario = $fila["id_usuario"];
-        $qry = "INSERT INTO tbl_MS_Preguntas_X_Usuario (id_pregunta, id_usuario, respuesta)
-            VALUES ('$idPregunta','$idUsuario','$respuesta');";
-        $qry = sqlsrv_query($conexion, $qry);
-        sqlsrv_close($conexion); #Cerramos la conexión.
+        $params = array($usuario);
+        $consultaIdUsuario = sqlsrv_query($conexion, $query, $params);
+        if ($consultaIdUsuario) {
+            $fila = sqlsrv_fetch_array($consultaIdUsuario, SQLSRV_FETCH_ASSOC);
+            $idUsuario = $fila["id_usuario"];
+        // Inserta la respuesta utilizando una declaración preparada.
+        $creadoPor = $usuario;
+        date_default_timezone_set('America/Tegucigalpa');
+        $fechaCreacion = date("Y-m-d");
+        $qry = "INSERT INTO tbl_MS_Preguntas_X_Usuario (id_pregunta, id_usuario, respuesta, Creado_Por, Fecha_Creacion)
+                VALUES ('$idPregunta', '$idUsuario', '$respuesta','$creadoPor', '$fechaCreacion');";
+        $params = array($idPregunta, $idUsuario, $respuesta);
+        $insert = sqlsrv_query($conexion, $qry, $params);
+
+        if ($insert) {
+            sqlsrv_close($conexion);
+            return true; // Devuelve verdadera en la inserción exitosa
+        } else {
+            // Maneja el error de inserción aquí
+            return false;
+        }
+    } else {
+        // Maneja el error de inserción aquí
+        return false;
     }
+}
     //===================== METODO REPETIDO, REVISAR==========================
     public static function obEstadoUsuario(){
         $conn = new Conexion();
@@ -312,9 +330,9 @@ class Usuario {
         $query = "SELECT respuesta FROM tbl_ms_preguntas_x_usuario WHERE id_Pregunta = '$idPregunta';";
         $respuesta = sqlsrv_query($consulta, $query);
         $fila = sqlsrv_fetch_array($respuesta, SQLSRV_FETCH_ASSOC);
-        $res = $fila['respuesta'];
+        $respuesta = $fila['respuesta'];
         sqlsrv_close($consulta); #Cerrar la conexión.
-        return $res; 
+        return $respuesta; 
     }
     public static function correoUsuario($usuario){
         $correo = '';
@@ -322,8 +340,8 @@ class Usuario {
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
         $query = "SELECT correo_Electronico FROM tbl_MS_Usuario WHERE usuario = '$usuario'";
         $usuario = sqlsrv_query($consulta, $query); #Ejecutamos la consulta (Recordset)
-        $existe = sqlsrv_has_rows($usuario);
-        if($existe){
+        $existe = sqlsrv_num_rows($usuario);
+        if($existe > 0){
             $fila = sqlsrv_fetch_array($usuario, SQLSRV_FETCH_ASSOC);
             $correo = $fila['correo_Electronico'];
         }
@@ -360,14 +378,16 @@ class Usuario {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
         $query = "SELECT preguntas_Contestadas FROM tbl_MS_Usuario WHERE usuario = '$usuario';";
-        $userCantPreguntas = sqlsrv_query($consulta, $query);
-        $row = sqlsrv_fetch_array($userCantPreguntas, SQLSRV_FETCH_ASSOC);
-        if(isset($row["preguntas_Contestadas"])){
-            $cantPreguntas = $row["preguntas_Contestadas"];
+        $params = array($usuario);
+        $userCantPreguntas = sqlsrv_query($consulta, $query, $params);
+        $fila = sqlsrv_fetch_array($userCantPreguntas, SQLSRV_FETCH_ASSOC);
+        if(isset($fila["preguntas_Contestadas"])){
+            $cantPreguntas = $fila["preguntas_Contestadas"];
         }
         sqlsrv_close($consulta); #Cerrar la conexión.
         return $cantPreguntas;
     }
+    
     public static function incrementarPreguntasContestadas($usuario, $valorActual){
         $incremento = $valorActual+1;
         $conn = new Conexion();
@@ -393,7 +413,10 @@ class Usuario {
         $idUser = $existe['id_Usuario'];
         $contraseniaActual = $existe['contrasenia'];
         //Guardamos contraseña
-       $query = "INSERT INTO tbl_ms_hist_contrasenia (id_Usuario, contrasenia) VALUES ('$idUser','$contraseniaActual');";
+        $creadoPor = $usuario;
+        date_default_timezone_set('America/Tegucigalpa');
+        $fechaCreacion = date("Y-m-d");
+       $query = "INSERT INTO tbl_ms_hist_contrasenia (id_Usuario, contrasenia, Creado_Por, Fecha_Creacion) VALUES ('$idUser','$contraseniaActual', '$creadoPor', '$fechaCreacion');";
        $guardar = sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerrar la conexión.
         return $guardar; //Si se guardo retorna true.
@@ -507,18 +530,17 @@ class Usuario {
         return $CantVendedores;
     }
 
-    public static function obtenerVendedores($idTarea)
+    public static function obtenerVendedores()
     {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $query = "SELECT vt.id_usuario_vendedor, u.Usuario FROM tbl_vendedores_tarea AS vt
-        INNER JOIN tbl_ms_Usuario AS u ON u.id_Usuario = vt.id_usuario_vendedor WHERE vt.id_Tarea = $idTarea;";
+        $query = "SELECT  id_usuario, nombre_Usuario FROM tbl_MS_Usuario where id_Rol = 3";
         $listaVendedores = sqlsrv_query($conexion, $query);
         $vendedores = array();
         while ($fila = sqlsrv_fetch_array($listaVendedores, SQLSRV_FETCH_ASSOC)) {
             $vendedores[] = [
-                'idVendedor' => $fila['id_usuario_vendedor'],
-                'nombreVendedor' => $fila['Usuario']
+                'idUsuario_Vendedor' => $fila['id_usuario'],
+                'nombreVendedor' => $fila['nombre_Usuario']
             ];
         }
         sqlsrv_close($conexion); #Cerramos la conexión.

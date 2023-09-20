@@ -42,9 +42,21 @@ legend{
     margin-right:45;
 }
 
+.btn-success{
+    background-color: #ef904d;
+    border: none;
+    font-size: 17px;
+    color: #fff;
+}
 
+.btn-success:hover{
+    background-color: #f2a670;
+}
 
-
+.btn-success:disabled {
+    background-color: gray; 
+    cursor: not-allowed;
+}
 .Graficoss{
     margin-bottom: 5%;
     position: relative;
@@ -80,4 +92,24 @@ legend{
     clear:both;
 }
 
+.grafica_Tareas{
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-bottom: 2%;
+    padding: 15px;
+    background-color:  #8f8f8f; 
+    display: flex;
+    border-radius:10px;
+}
+
+    .graficosPorTareas{
+        margin-left: 2%;
+        margin-right: 2%;
+        margin-bottom: 2%;
+        padding: 15px;
+        background-color:  #8f8f8f; 
+        display:flow-root;
+        border-radius:10px;
+    }
+    
 

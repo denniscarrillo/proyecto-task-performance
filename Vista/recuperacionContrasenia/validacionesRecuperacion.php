@@ -21,6 +21,8 @@
             $usuario = $_SESSION['usuario'];
             $metodoRec = $_SESSION['metodo'];
             $userExiste = ControladorUsuario::usuarioExiste($usuario);
+           var_dump( $userExiste);
+            
             if($userExiste){
                 //Si el método es recuperación por correo
                 if($metodoRec == 'correo'){

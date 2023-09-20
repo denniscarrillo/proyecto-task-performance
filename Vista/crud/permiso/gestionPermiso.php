@@ -145,7 +145,6 @@ if (isset($_SESSION['usuario'])) {
                 <th scope="col"> INSERTAR </th>
                 <th scope="col"> ACTUALIZAR </th>
                 <th scope="col"> ELIMINAR </th>
-                <th scope="col"> ACCIONES </th>
               </tr>
             </thead>
             <!-- <div class ="text-left mb-2">

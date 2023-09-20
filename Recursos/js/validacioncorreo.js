@@ -66,10 +66,11 @@ let obtenerUsuarioExiste = ($usuario) => {
           if ($objUsuario.estado == 'false') {
               document.getElementById('usuario').classList.add('mensaje_error');
               document.getElementById('usuario').parentElement.querySelector('p').innerText = '*Usuario no existe';
+              estadoUsuario = true; // el usuario no existe, es true
           } else {
               document.getElementById('usuario').classList.remove('mensaje_error');
               document.getElementById('usuario').parentElement.querySelector('p').innerText = '';
-              estadoUsuario = true;
+              estadoUsuario = false; // el usuario existe, es false
           }
       }
   });
@@ -97,10 +98,7 @@ const validarEspacios = (input, elemento) => {
       elemento.classList.remove('mensaje_error');
       mensaje.innerText = '';
   }
-/* //Validar que sean mayusculas */
-  function mayus(e) {
-    e.value = e.value.toUpperCase();
-}
+
 
 };
 

@@ -29,20 +29,19 @@ const $password = document.getElementById('password');
 const $password2 = document.getElementById('password2');
 const $correo = document.getElementById('correo');
 
-let iconClass = document.querySelector('.type-lock');
-let icon_candado = document.querySelector('.lock');
-
-icon_candado.addEventListener('click', function() { 
-    if(this.nextElementSibling.type === "password") {
-        this.nextElementSibling.type = "text";
-        iconClass.classList.remove('fa-lock');
-        iconClass.classList.add('fa-lock-open');
-    } else { 
-        this.nextElementSibling.type = "password";
-        iconClass.classList.remove('fa-lock-open');
-        iconClass.classList.add('fa-lock');
-    }
+//Funcion para mostrar contraseña
+$(document).ready(function () {
+    $('#checkbox').click(function () {
+        if ($(this).is(':checked')) {
+            $('#password').attr('type', 'text');
+            $('#password2').attr('type', 'text');
+        } else {
+            $('#password').attr('type', 'password');
+            $('#password2').attr('type', 'password');
+        }
+    });
 });
+
 //objeto con expresiones regulares para los inptus
 const expresiones = {
 	usuario: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
@@ -65,12 +64,13 @@ $form.addEventListener('submit', e => {
         e.preventDefault();
     } else {
             if(estadoValidacionesEspacio.estadoEspacioUsuario == false || estadoValidacionesEspacio.estadoEspacioPassword == false || 
-                estadoValidacionesEspacio.estadoEspacioPassword2 == false || estadoValidacionesEspacio.estadoEspacioCorreo == false){ 
+                estadoValidacionesEspacio.estadoEspacioPassword2 == false || estadoValidacionesEspacio.estadoEspacioCorreo == false || estadoMasdeUnEspacio.estadoMasEspacioNombre == true){ 
                 e.preventDefault();
                 estadoValidacionesEspacio.estadoEspacioUsuario = funciones.validarEspacios($usuario);
                 estadoValidacionesEspacio.estadoEspacioCorreo = funciones.validarEspacios($correo);
                 estadoValidacionesEspacio.estadoEspacioPassword = funciones.validarEspacios($password); 
                 estadoValidacionesEspacio.estadoEspacioPassword2 = funciones.validarEspacios($password2);
+                estadoMasdeUnEspacio.estadoMasEspacioNombre = funciones.validarMasdeUnEspacio($nombre);
                     } else {
                         if(estadoLetrasRepetidas.estadoLetrasRepetidasNombre == false || estadoLetrasRepetidas.estadoPassword == false ||
                             estadoLetrasRepetidas.estadoLetrasRepetidasUsuario == false){
@@ -85,18 +85,11 @@ $form.addEventListener('submit', e => {
                                 estadoSoloLetras.estadoLetrasUsuario = funciones.validarSoloLetras($usuario, expresiones.user);
                                 estadoSoloLetras.estadoLetrasNombre = funciones.validarSoloLetras($nombre, expresiones.user);
                             } else {
-                                if(estadoMasdeUnEspacio.estadoMasEspacioNombre == false){
-                                    e.preventDefault();
-                                    estadoMasdeUnEspacio.estadoMasEspacioNombre = funciones.validarMasdeUnEspacio($nombre);
-                                } /* else {
-                                    if(estadoExisteUsuario == false){
-                                        e.preventDefault();
+                                    if (estadoExisteUsuario == false) {
+                                        e.preventDefault(); // Prevent form submission if username exists
                                         estadoExisteUsuario = obtenerUsuarioExiste($('#usuario').val());
-                                    } else {
-                                        estadoExisteUsuario = false;
                                     }
-                                } */
-                            }
+                                }
                          }
                     }
             }
@@ -118,10 +111,6 @@ $usuario.addEventListener('focusout', () => {
 $nombre.addEventListener('focusout', () =>{
     if(estadoMasdeUnEspacio.estadoMasEspacioNombre){
         funciones.validarMasdeUnEspacio($nombre);
-    } else{
-    if(estadoLetrasRepetidas.estadoLetrasRepetidasNombre){
-        funciones.validarSoloLetras($nombre, expresiones.nombre);
-    }
     }
     let nombreMayus = $nombre.value.toUpperCase();
     $nombre.value = nombreMayus;
@@ -129,15 +118,12 @@ $nombre.addEventListener('focusout', () =>{
 
 //solo permitir una letra keyup Nombre
 $nombre.addEventListener('keyup', ()=>{
-    /* estadoCampoVacio.estadoVacioNombre = funciones.validarCampoVacio($nombre); */
+    estadoSoloLetras.estadoLetrasNombre = funciones.validarSoloLetras($nombre, expresiones.user);
+    if(estadoSoloLetras.estadoLetrasNombre){
     estadoLetrasRepetidas.estadoLetrasRepetidasNombre = funciones.limiteMismoCaracter($nombre, expresiones.usuario);
+    }
     funciones.limitarCantidadCaracteres("nombre", 20 );
 });
-
-$nombre.addEventListener('keyup', ()=>{
-    estadoSoloLetras.estadoLetrasNombre = funciones.validarSoloLetras($nombre, expresiones.user);
-}
-);
 
 // NO PERMITIR ESPACIOS
 $usuario.addEventListener('keyup', () => {
@@ -173,9 +159,7 @@ $password.addEventListener('focusout', () => {
     
 });
 
-//Validacion en la cual no deje hacer submit hasta que las dos contraseñas coincidan
-
-/* $form.addEventListener('submit', e =>{
+$form.addEventListener('submit', e =>{
     let estado;
     let mensaje = $password2.parentElement.querySelector('p');
     if($password.value != $password2.value){
@@ -210,39 +194,8 @@ $form.addEventListener('submit', e =>{
     if (!expresiones.password.test(input)) {
         e.preventDefault();
     }
-});  */
+});
 
-    //Para validar que el Usuario no coloque mas de tres veces un mismo caracter y para que no permita espacios
-   
-/* $form.addEventListener('submit', e => {
-        let mensaje = $usuario.parentElement.querySelector('p');
-        let input = $usuario.value;
-        if (expresiones.user.test(input)){
-            mensaje.innerText = '*Solo se permiten letras.';
-            $usuario.classList.add('mensaje_error');
-        } else {
-            mensaje.innerText = '';
-            $usuario.classList.remove('mensaje_error');
-        }
-        if (expresiones.user.test(input)) {
-            e.preventDefault();
-        }
-        
-});
-$form.addEventListener('submit', e => {
-    let mensaje = $nombre.parentElement.querySelector('p');
-    let input = $nombre.value;
-    if (expresiones.nombre.test(input)){
-        mensaje.innerText = '*Solo se permiten letras.';
-        $nombre.classList.add('mensaje_error');
-    } else {
-        mensaje.innerText = '';
-        $nombre.classList.remove('mensaje_error');
-    }
-    if (expresiones.nombre.test(input)) {
-        e.preventDefault();
-    }
-});
 $form.addEventListener('submit', e => {
     let estado;
     let mensaje = $nombre.parentElement.querySelector('p');
@@ -261,46 +214,6 @@ $form.addEventListener('submit', e => {
     return estado;
 });
 
-$form.addEventListener('submit', e => {
-    let estado;
-    let mensaje = $usuario.parentElement.querySelector('p');
-    if ($usuario.value.trim() === ''){
-        mensaje.innerText = '*Campo vacio';
-        $usuario.classList.add('mensaje_error');
-        estado = false;
-    } else {
-        $usuario.classList.remove('mensaje_error');
-        mensaje.innerText = '';
-        estado = true;
-    }
-    if ($usuario.value.trim() === '') {
-        e.preventDefault();
-    }
-    return estado;
-});
-
-$form.addEventListener('submit', e => {
-    let mensaje = $nombre.parentElement.querySelector('p');
-    let estado;
-    let input = $nombre.value;
-    let regex = /\s\s/g; //Expresión literal para saber si existen mas de un espacio en la cadena
-    if (regex.test(input.trim())){ //Evaluamos expresion vs la cadena
-        //Si existen especios mostramos mensaje de error
-        mensaje.innerText = '*No se permite más un espacio entre palabras';
-        $nombre.classList.add('mensaje_error');
-        estado = false;
-    } else {
-        $nombre.classList.remove('mensaje_error');
-        mensaje.innerText = '';
-        estado = true;
-    }
-    if (regex.test(input.trim())) {
-        e.preventDefault();
-    }
-    return estado;
-});
-
- */
 let obtenerUsuarioExiste = ($usuario) => {
     let estadoUsuario = false;
     $.ajax({
@@ -315,12 +228,15 @@ let obtenerUsuarioExiste = ($usuario) => {
             if ($objUsuario.estado == 'true') {
                 document.getElementById('usuario').classList.add('mensaje_error');
                 document.getElementById('usuario').parentElement.querySelector('p').innerText = '*Usuario ya existe';
+                estadoExisteUsuario = false; // Username exists, set to false
             } else {
                 document.getElementById('usuario').classList.remove('mensaje_error');
                 document.getElementById('usuario').parentElement.querySelector('p').innerText = '';
-                estadoUsuario = true;
+                estadoExisteUsuario = true; // Username doesn't exist, set to true
             }
         }
+        
     });
     return estadoUsuario;
-} 
+}
+

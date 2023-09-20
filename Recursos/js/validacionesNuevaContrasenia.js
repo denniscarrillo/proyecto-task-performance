@@ -1,33 +1,16 @@
 import * as funciones from './funcionesValidaciones.js';
 
 //  Cambiar tipo del candado para mostrar/ocultar contraseña
-let iconClass = document.getElementsByClassName('type-lock');
-let iconClass1 = document.getElementsByClassName('type-lock');
-let icon_candado = document.querySelector('.lock');
-let icon_candado1 = document.querySelector('.lock1');
-
-//Ocultar o mostrar contrasenia
-icon_candado.addEventListener('click', function() { 
-    if(this.nextElementSibling.type === "password"){
-        this.nextElementSibling.type = "text";
-        iconClass.classList.remove('fa-lock');
-        iconClass.classList.add('fa-lock-open');
-    } else {
-        this.nextElementSibling.type = "password";
-        iconClass.classList.remove('fa-lock-open');
-        iconClass.classList.add('fa-lock');
-    }
-});
-icon_candado1.addEventListener('click', function() { 
-    if(this.nextElementSibling.type === "password"){
-        this.nextElementSibling.type = "text";
-        iconClass1.classList.remove('fa-lock');
-        iconClass1.classList.add('fa-lock-open');
-    } else {
-        this.nextElementSibling.type = "password";
-        iconClass1.classList.remove('fa-lock-open');
-        iconClass1.classList.add('fa-lock');
-    }
+$(document).ready(function () {
+    $('#checkbox').click(function () {
+        if ($(this).is(':checked')) {
+            $('#password').attr('type', 'text');
+            $('#confirmPassword').attr('type', 'text');
+        } else {
+            $('#password').attr('type', 'password');
+            $('#confirmPassword').attr('type', 'password');
+        }
+    });
 });
 
 let estadoPasswordSegura ={
@@ -47,12 +30,11 @@ $form.addEventListener('submit', e => {
 
     if (estadoInputPassword == false || estadoInputPassword2 == false){
         e.preventDefault();
-    }/* else{
+    }else{
         if (estadoPasswordSegura.estadoPassword == false ) {
             estadoPasswordSegura.estadoPassword = funciones.validarPassword($password, expresiones.password);
+        }                
         }
-                           
-        } */
     });
     $password2.addEventListener('keyup',() =>{
         funciones.validarCoincidirPassword($password, $password2);
