@@ -322,23 +322,25 @@ class Usuario {
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
         $query = "SELECT correo_Electronico FROM tbl_MS_Usuario WHERE usuario = '$usuario'";
         $usuario = sqlsrv_query($consulta, $query); #Ejecutamos la consulta (Recordset)
-        $existe = sqlsrv_num_rows($usuario);
-        if($existe > 0){
+        $existe = sqlsrv_has_rows($usuario);
+        if($existe){
             $fila = sqlsrv_fetch_array($usuario, SQLSRV_FETCH_ASSOC);
             $correo = $fila['correo_Electronico'];
         }
         sqlsrv_close($consulta); #Cerrar la conexión.
         return $correo;
     }
-    public static function guardarToken($user, $token){
+    public static function guardarToken($user, $token, $creadoPor){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
         $query = "SELECT id_Usuario FROM tbl_MS_Usuario WHERE usuario = '$user'";
         $usuario = sqlsrv_query($consulta, $query); #Ejecutamos la consulta (Recordset)
         $fila = sqlsrv_fetch_array($usuario, SQLSRV_FETCH_ASSOC);
         $idUsuario = $fila['id_Usuario'];
-        $query = "INSERT INTO tbl_token (id_usuario, Token)
-                    VALUES ('$idUsuario','$token')";
+        date_default_timezone_set('America/Tegucigalpa');
+        $fechaCreacion = date("Y-m-d");
+        $query = "INSERT INTO tbl_token (id_usuario, Token, fecha_expiracion, Creado_Por, Fecha_Creacion)
+                    VALUES ('$idUsuario','$token', '2023-09-08', '$creadoPor', '$fechaCreacion')";
         $resultado = sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerrar la conexión.        
         return $resultado;
@@ -349,7 +351,7 @@ class Usuario {
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
         $query = "SELECT usuario FROM tbl_MS_Usuario WHERE usuario = '$usuario'";
         $user = sqlsrv_query($consulta, $query); #Ejecutamos la consulta (Recordset)
-        $existe = sqlsrv_num_rows($user);
+        $existe = sqlsrv_has_rows($user);
         sqlsrv_close($consulta); #Cerrar la conexión.
         return $existe;
     } 

@@ -53,4 +53,22 @@ class Parametro {
         }
        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
+    public static function dataServerEmail(){
+        try{
+            $parametrosEmail = array();
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB();
+            $query = "SELECT valor FROM tbl_MS_Parametro WHERE id_Parametro IN(3,4,5,6);";
+            $resultado = sqlsrv_query($abrirConexion, $query);
+            while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+                $parametrosEmail[] = [
+                    'valorParametro' => $fila['valor']
+                ];
+            }
+        }catch (Exception $e) {
+            echo 'Error SQL:' . $e;
+        }
+        sqlsrv_close($abrirConexion); //Cerrar conexion
+        return $parametrosEmail;
+    }
 }

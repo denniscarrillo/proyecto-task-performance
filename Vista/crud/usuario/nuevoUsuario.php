@@ -4,6 +4,8 @@
     require_once ("../../../Modelo/Bitacora.php");
     require_once("../../../Controlador/ControladorUsuario.php");
     require_once("../../../Controlador/ControladorBitacora.php");
+    require_once '../../../Modelo/Parametro.php';
+    require_once '../../../Controlador/ControladorParametro.php';
     require_once('enviarCorreoNuevoUsuario.php');
     $user = '';
     session_start(); //Reanudamos session
