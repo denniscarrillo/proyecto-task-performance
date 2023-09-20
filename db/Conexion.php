@@ -1,7 +1,7 @@
 
 <?php
  class Conexion {
-    private $ServerName = 'DELL-E6430\SQLEXPRESS';
+    private $ServerName = 'DANIELA\ESTEFANI';
     private $ConexionInfo = array("Database"=>"COCINAS_Y_EQUIPOS", "CharacterSet"=>"UTF-8");
     
     #Abrir conexión al servidor de MySQL

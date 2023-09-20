@@ -340,7 +340,7 @@ class Usuario {
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
         $query = "SELECT correo_Electronico FROM tbl_MS_Usuario WHERE usuario = '$usuario'";
         $usuario = sqlsrv_query($consulta, $query); #Ejecutamos la consulta (Recordset)
-        $existe = sqlsrv_num_rows($usuario);
+        $existe = sqlsrv_has_rows($usuario);
         if($existe > 0){
             $fila = sqlsrv_fetch_array($usuario, SQLSRV_FETCH_ASSOC);
             $correo = $fila['correo_Electronico'];
