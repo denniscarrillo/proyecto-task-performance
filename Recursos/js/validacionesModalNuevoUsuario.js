@@ -66,11 +66,10 @@ $form.addEventListener('submit', e => {
         estadoInputConfirmarContrasenia == false || estadoInputCorreo == false || estadoInputRol == false) {
         e.preventDefault();
     } else {
-        if(estadoEspacioInput.estadoEspacioUser == false || estadoEspacioInput.estadoEspacioPassword == false || estadoMasdeUnEspacio.estadoMasEspacioNombre == true){ 
+        if(estadoEspacioInput.estadoEspacioUser == false || estadoEspacioInput.estadoEspacioPassword == false){ 
             e.preventDefault();
             estadoEspacioInput.estadoEspacioPassword = funciones.validarEspacios($password); 
             estadoEspacioInput.estadoEspacioUser = funciones.validarEspacios($user);
-            estadoMasdeUnEspacio.estadoMasEspacioNombre = funciones.validarMasdeUnEspacio($name);
         } else {
             if(estadoSoloLetras.estadoLetrasUser == false || estadoSoloLetras.estadoLetrasName == false ||
                 estadoPassword.estadoPassword1 == false || estadoPassword.estadoPassword2 == false){
@@ -151,7 +150,6 @@ $rol.addEventListener('change', ()=>{
 
 
 let obtenerUsuarioExiste = ($usuario) => {
-    let estadoUsuario = false;
     $.ajax({
         url: "../../../Vista/crud/usuario/usuarioExistente.php",
         type: "POST",
@@ -173,9 +171,9 @@ let obtenerUsuarioExiste = ($usuario) => {
         }
         
     });
-    return estadoUsuario;
 }
 
+// || estadoMasdeUnEspacio.estadoMasEspacioNombre == true
 
 
 
