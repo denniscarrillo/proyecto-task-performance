@@ -77,11 +77,11 @@ let obtenerUsuarioExiste = ($usuario) => {
   return estadoUsuario;
 } 
 
-$usuario.addEventListener('keyup', e => {
-  validarEspacios(e, $usuario);
-  //Validación con jQuery inputlimiter
-  funciones.limitarCantidadCaracteres("user", 15);
-});
+// $user.addEventListener('keyup', e => {
+//   validarEspacios(e, $usuario);
+//   //Validación con jQuery inputlimiter
+//   funciones.limitarCantidadCaracteres("user", 15);
+// });
 
 //NO PERMITIR ESPACIOS
 const validarEspacios = (input, elemento) => {

@@ -59,8 +59,7 @@ class Usuario {
         $correo = $nuevoUsuario->correo;
         $cantIntentos = $nuevoUsuario->intentosFallidos;
         $creadoPor = $nuevoUsuario->creadoPor;
-        date_default_timezone_set('America/Tegucigalpa');
-        $fechaCreacion = date("Y-m-d");
+        $fechaCreacion = $nuevoUsuario->fechaCreacion;
         $cantPreguntasContestadas = $nuevoUsuario->preguntasContestadas;
         $query = "INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico, intentos_fallidos, 
                                         id_Rol, preguntas_Contestadas, Creado_Por, Fecha_Creacion) 
@@ -348,15 +347,17 @@ class Usuario {
         sqlsrv_close($consulta); #Cerrar la conexión.
         return $correo;
     }
-    public static function guardarToken($user, $token){
+    public static function guardarToken($user, $token, $creadoPor){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
         $query = "SELECT id_Usuario FROM tbl_MS_Usuario WHERE usuario = '$user'";
         $usuario = sqlsrv_query($consulta, $query); #Ejecutamos la consulta (Recordset)
         $fila = sqlsrv_fetch_array($usuario, SQLSRV_FETCH_ASSOC);
         $idUsuario = $fila['id_Usuario'];
-        $query = "INSERT INTO tbl_token (id_usuario, Token)
-                    VALUES ('$idUsuario','$token')";
+        date_default_timezone_set('America/Tegucigalpa');
+        $fechaCreacion = date("Y-m-d");
+        $query = "INSERT INTO tbl_token (id_usuario, Token, fecha_expiracion, Creado_Por, Fecha_Creacion)
+                    VALUES ('$idUsuario','$token', '2023-09-08', '$creadoPor', '$fechaCreacion')";
         $resultado = sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerrar la conexión.        
         return $resultado;
