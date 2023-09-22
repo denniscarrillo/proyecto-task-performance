@@ -6,3 +6,5 @@ require_once("../../Controlador/ControladorMetricas.php");
 
 $Metricas = ControladorMetricas::obtenerMetaMetricas();
 print json_encode($Metricas, JSON_UNESCAPED_UNICODE);
+
+

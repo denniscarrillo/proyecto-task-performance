@@ -430,16 +430,16 @@ class Tarea
                 }
             }
         }
-        $TareasXvendedor = [
-            "LlamadasV" => $TotalLlamada,
-            "LeadV" => $TotalLead,
-            "CotizacionV" => $TotalCotizacion,
-            "VentaV" => $TotalVentas
+        $cantTareas = [
+            "Llamadas" => $TotalLlamada,
+            "Lead" => $TotalLead,
+            "Cotizacion" => $TotalCotizacion,
+            "Venta" => $TotalVentas
         ];
 
         sqlsrv_close($abrirConexion);   
        
-        return $TareasXvendedor;
+        return $cantTareas;
     }
 
 }

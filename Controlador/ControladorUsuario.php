@@ -64,8 +64,8 @@
         public static function obCorreoUsuario($usuario){
             return Usuario::correoUsuario($usuario);
         } 
-        public static function almacenarToken($user, $token){
-            return Usuario::guardarToken($user, $token);
+        public static function almacenarToken($user, $token, $usuario){
+            return Usuario::guardarToken($user, $token, $usuario);
         }
         public static function usuarioExiste($usuario){
             return Usuario::usuarioExistente($usuario);

@@ -78,6 +78,8 @@
                         <input type="date" id="fechaDesdef" name="fechaDesdef" class="form-control">
                         <label for="fechaHasta">Fecha hasta:</label>
                         <input type="date" id="fechaHastaf" name="fechaHastaf" class="form-control">
+                        <p class="mensaje"></p>
+                       
                     </div>
                     
                     <div class="filtro-Input"> 
@@ -87,6 +89,7 @@
                                 <legend>Elige el tipo de gráfico</legend>
                                 <input type="radio" id="RadioGeneral" name="fav_language" value="General" checked>
                                 <label for="html">General</label><br>
+                                
                                 <input type="radio" id="RadioPorVendedor" name="fav_language" value="Por Vendedor">
                                 <label for="css">Por Vendedor</label><br>
                             </fieldset> 
@@ -98,16 +101,14 @@
                         <button type="button" class="btn btn-success" id="btnVendedores" data-bs-toggle="modal"  
                         data-bs-target="#modalTraerVendedores" disabled>Seleccionar...<i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i></button>
                     </div> 
+                           <button type="button" class="btn btn-info" id="btnFiltrar">Filtrar <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i></button>
 
-                    
-                    <button type="button" class="btn btn-primary" id="btnFiltrar">Filtrar</button>
-
-                </div> 
-                 
-                <div class="grafica_Tareas">
-                    <canvas id="grafica"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
-                </div>
-
+                    </div> 
+                
+             <div class = "Graficas-Fechas" id="GraficasPorTarea">
+                 <div class="grafica_Tareas" >
+                        <canvas id="grafica"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
+                    </div>    
                 <div class= "graficosPorTareas">
                     <div class="grafica_Llamada">
                         <canvas id="grafica_llamada" style=" width: 1333px; height: 366px;" ></canvas>
@@ -122,11 +123,8 @@
                     </div>
                     <div class="grafica_Ventas">
                         <canvas id="grafica_Ventas" style=" width: 1333px; height: 366px;" ></canvas>
-                    </div>
+                    </div> 
                 </div>
-                
-            </div>
-            
                 <!-- Footer -->
             <div class="footer-conteiner">
                     <?php
@@ -134,6 +132,7 @@
                     //require_once('./modalFiltroVendedores.html');
                     ?>
             </div>
+            
         </div>
     </div>
     <?php
