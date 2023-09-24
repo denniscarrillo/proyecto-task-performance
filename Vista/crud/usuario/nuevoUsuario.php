@@ -23,6 +23,7 @@
         date_default_timezone_set('America/Tegucigalpa');
         $nuevoUsuario->fechaCreacion = date("Y-m-d h:i:s");
         $nuevoUsuario->creadoPor = $user;
+        $nuevoUsuario->fechaV = $_POST['fechaV'];        
         ControladorUsuario::registroUsuario($nuevoUsuario);
         enviarCorreoNuevoUsuario($nuevoUsuario->correo, $nuevoUsuario->usuario, $_POST['contrasenia']);
         /* ========================= Evento Creacion nuevo Usuario. ======================*/

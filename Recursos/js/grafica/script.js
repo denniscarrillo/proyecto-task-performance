@@ -25,13 +25,11 @@ const color_Venta = ['rgba(255, 212, 120)','rgb(82, 82, 82 )']
 let rdVendedores = document.getElementById("RadioPorVendedor");
 let btnSelecVendedores = document.getElementById("btnVendedores");
 rdVendedores.addEventListener("change", function(){
-    if (rdVendedores.checked ) {
-       
+    if (rdVendedores.checked ) {      
         // Habilitar el botón seleccionar vendedores
         btnSelecVendedores.removeAttribute("disabled");
       } else {
-          btnSelecVendedores.setAttribute("disabled", "true");
-        
+          btnSelecVendedores.setAttribute("disabled", "true");        
     }    
 });
 /// funcion que deshabilita el boton seleccionar vendedores
@@ -94,7 +92,7 @@ $(document).ready(function () {
             let fechadesde = document.getElementById('fechaDesdef').value;
             let fechahasta = document.getElementById('fechaHastaf').value;
             obtenerDatosGrafica(fechadesde, fechahasta);
-            obtenerMetaMetricas();
+            // obtenerMetaMetricas();
             $mensaje.innerText = '';
             $mensaje.classList.remove('.mensaje')
         
@@ -217,6 +215,12 @@ let obtenerMetaMetricas = function(){
     });
 }
 
+//Carga la grafica Metas 
+    function cargarGraficaMetas() {
+        obtenerMetaMetricas();
+    }
+    document.addEventListener('DOMContentLoaded', cargarGraficaMetas);
+
 //funcion para llenar el modal de vendedores
 $(document).ready(function () {
     $tablaVendedores = $("#table-Traer-Vendedor").DataTable({
@@ -257,7 +261,7 @@ $(document).on("click", "#btn_seleccionar", function() {
     }else{
         let fechadesde = document.getElementById('fechaDesdef').value;
         let fechahasta = document.getElementById('fechaHastaf').value;
-        obtenerMetaMetricas();
+        // obtenerMetaMetricas();
         obtenerTareaVendedor(idUsuario_Vendedor,fechadesde, fechahasta);
         $mensaje.innerText = '';
         $mensaje.classList.remove('.mensaje')
@@ -347,33 +351,6 @@ let generarGraficasVendedores = function(data) {
             
                 
 }
-
-// function destruirGraficas() {
-//     // Destruir las gráficas generales
-//     if ($grafica_llamada) {
-//         $grafica_llamada.destroy();
-//     }
-//     if ($grafica_lead) {
-//         $grafica_lead.destroy();
-//     }
-//     if ($grafica_Cotizacion) {
-//         $grafica_Cotizacion.destroy();
-//     }
-//     if ($grafica_Venta) {
-//         $grafica_Venta.destroy();
-//     }
-
-//     // Limpiar los elementos del DOM
-//     const graficaElement = document.querySelector("#grafica");
-//     graficaElement.innerHTML = ''; // Elimina el contenido dentro del elemento
-
-//     // Restablecer los colores de fondo si es necesario
-//     // Puedes definir tus propios colores o restaurar a los colores predeterminados aquí
-//     color_Llamada = ['rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)'];
-//     color_Lead = ['rgba(255, 206, 86, 0.6)', 'rgba(75, 192, 192, 0.6)'];
-//     color_Cotizacion = ['rgba(75, 192, 192, 0.6)', 'rgba(255, 99, 132, 0.6)'];
-//     color_Venta = ['rgba(255, 206, 86, 0.6)', 'rgba(54, 162, 235, 0.6)'];
-// }
 
 
 

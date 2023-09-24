@@ -21,6 +21,7 @@ class Usuario {
     public $reseteoClave;
     public $modificadoPor;
     public $fechaModificacion;
+    public $fechaV;
 
     //Método para obtener todos los usuarios que existen.
     public static function obtenerTodosLosUsuarios(){
@@ -61,9 +62,10 @@ class Usuario {
         $creadoPor = $nuevoUsuario->creadoPor;
         $fechaCreacion = $nuevoUsuario->fechaCreacion;
         $cantPreguntasContestadas = $nuevoUsuario->preguntasContestadas;
+        $fechaV = $nuevoUsuario->fechaV;
         $query = "INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico, intentos_fallidos, 
-                                        id_Rol, preguntas_Contestadas, Creado_Por, Fecha_Creacion) 
-                        VALUES ('$usuario','$nombre', '$idEstado', '$contrasenia', '$correo', '$cantIntentos', '$idRol', '$cantPreguntasContestadas', '$creadoPor', '$fechaCreacion' )";
+                                        id_Rol, preguntas_Contestadas, fecha_Vencimiento, Creado_Por, Fecha_Creacion) 
+                        VALUES ('$usuario','$nombre', '$idEstado', '$contrasenia', '$correo', '$cantIntentos', '$idRol', '$cantPreguntasContestadas', '$fechaV', '$creadoPor', '$fechaCreacion' )";
         $nuevoUsuario = sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $nuevoUsuario;
