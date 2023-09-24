@@ -352,15 +352,17 @@ class Usuario {
     public static function guardarToken($user, $token, $creadoPor){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
-        $query = "SELECT id_Usuario FROM tbl_MS_Usuario WHERE usuario = '$user'";
-        $usuario = sqlsrv_query($consulta, $query); #Ejecutamos la consulta (Recordset)
+        $querySelectU = "SELECT id_Usuario FROM tbl_MS_Usuario WHERE usuario = '$user'";
+        $usuario = sqlsrv_query($consulta, $querySelectU); #Ejecutamos la consulta (Recordset)
         $fila = sqlsrv_fetch_array($usuario, SQLSRV_FETCH_ASSOC);
         $idUsuario = $fila['id_Usuario'];
-        date_default_timezone_set('America/Tegucigalpa');
-        $fechaCreacion = date("Y-m-d");
-        $query = "INSERT INTO tbl_token (id_usuario, Token, fecha_expiracion, Creado_Por, Fecha_Creacion)
-                    VALUES ('$idUsuario','$token', '2023-09-08', '$creadoPor', '$fechaCreacion')";
-        $resultado = sqlsrv_query($consulta, $query);
+        $queryVigenciaToken = "SELECT valor FROM tbl_MS_Parametro WHERE parametro = 'HORAS VIGENCIA TOKEN';";
+        $vigenciaToken = sqlsrv_query($consulta, $queryVigenciaToken);
+        $filaToken = sqlsrv_fetch_array($vigenciaToken, SQLSRV_FETCH_ASSOC);
+        $horasVencimiento = $filaToken['valor'];
+        $queryInsert = "INSERT INTO tbl_token (id_usuario, Token, fecha_expiracion, Creado_Por, Fecha_Creacion)
+                    VALUES ('$idUsuario','$token', DATEADD(MINUTE, $horasVencimiento, GETDATE()), '$creadoPor', GETDATE())";
+        $resultado = sqlsrv_query($consulta, $queryInsert);
         sqlsrv_close($consulta); #Cerrar la conexión.        
         return $resultado;
     }
@@ -454,10 +456,11 @@ class Usuario {
         $user = sqlsrv_query($consulta, $query);
         $fila = sqlsrv_fetch_array($user, SQLSRV_FETCH_ASSOC);
         $idUser = $fila['id_Usuario'];
-        $query2 = "SELECT token FROM tbl_token WHERE id_usuario='$idUser'";
+        $query2 = "SELECT token, fecha_expiracion FROM tbl_token WHERE id_usuario = '$idUser'";
         $validar = sqlsrv_query($consulta, $query2);
         while($row = sqlsrv_fetch_array($validar, SQLSRV_FETCH_ASSOC)){
-            if($tokenUsuario == $row['token']){
+            date_default_timezone_set('America/Tegucigalpa');
+            if($tokenUsuario == $row['token'] && strtotime(date("Y-m-d H:i:s")->format('Y-m-d H:i:s')) < strtotime($row['fecha_expiracion']->format('Y-m-d H:i:s'))){
                 $existe = true;
                 break;
             }

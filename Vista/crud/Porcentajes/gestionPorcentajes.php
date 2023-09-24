@@ -99,6 +99,8 @@ if (isset($_SESSION['usuario'])) {
           $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
           //Comisión
           $urlComision = '../../comisiones/v_comision.php';
+          $comisionVendedor = '../ComisionesVendedores/ComisionesVendedores.php';
+          $urlPorcentajes = './gestionPorcentajes.php';
           //Consulta
           $urlClientes = '../cliente/gestionCliente.php';
           $urlVentas = '../Venta/gestionVenta.php';

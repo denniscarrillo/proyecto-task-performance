@@ -75,7 +75,6 @@ if (isset($_SESSION['usuario'])) {
   <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
-  <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
@@ -100,6 +99,8 @@ if (isset($_SESSION['usuario'])) {
           $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
           //Comisión
           $urlComision = '../../comisiones/v_comision.php';
+          $comisionVendedor = '../ComisionesVendedores/ComisionesVendedores.php';
+          $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
           //Consulta
           $urlClientes = '../cliente/gestionCliente.php';
           $urlVentas = '../Venta/gestionVenta.php';
@@ -113,7 +114,6 @@ if (isset($_SESSION['usuario'])) {
           $urlParametros = '../parametro/gestionParametro.php';
           $urlPermisos = './gestionPermiso.php';
           $urlRoles = '../rol/gestionRol.php';
-          $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
           $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
           $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
           require_once '../../layout/sidebar.php';
@@ -145,6 +145,7 @@ if (isset($_SESSION['usuario'])) {
                 <th scope="col"> INSERTAR </th>
                 <th scope="col"> ACTUALIZAR </th>
                 <th scope="col"> ELIMINAR </th>
+                <th scope="col"> ACCION </th>
               </tr>
             </thead>
             <!-- <div class ="text-left mb-2">

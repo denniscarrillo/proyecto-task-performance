@@ -25,6 +25,9 @@ $(document).ready(function () {
       },
       {"defaultContent":
         '<input type="checkbox">' 
+      },
+      {"defaultContent":
+      '<div><button class="btns btn" id="btn_confirm"><i class="fa-solid fa-circle-check icon-confirm"></i></button>' 
       }
     ]
   });

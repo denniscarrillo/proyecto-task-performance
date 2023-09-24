@@ -38,6 +38,8 @@
             $urlSolicitud = '../crud/DataTableSolicitud/gestionDataTableSolicitud.php';
             //Comisión
             $urlComision = '../comisiones/v_comision.php';
+            $comisionVendedor = '../crud/ComisionesVendedores/ComisionesVendedores.php';
+            $urlPorcentajes = '../crud/Porcentajes/gestionPorcentajes.php';
             //Consulta
             $urlClientes = '../crud/cliente/gestionCliente.php';
             $urlVentas = '../crud/Venta/gestionVenta.php';
@@ -51,7 +53,6 @@
             $urlParametros = '../crud/parametro/gestionParametro.php';
             $urlPermisos = '../crud/permiso/gestionPermiso.php';
             $urlRoles = '../crud/rol/gestionRol.php';
-            $urlPorcentajes = '../crud/Porcentajes/gestionPorcentajes.php';
             $urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
             $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
             require_once '../layout/sidebar.php';

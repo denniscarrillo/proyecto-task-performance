@@ -127,7 +127,7 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
         if (tarea.tipoTarea == tipoTarea) {
           let fechaIni = tarea.fechaInicio.date.split(" ");
           $tareas +=
-            `<div class="card_task dragged-element" draggable="true">
+            `<div class="card_task dragged-element" draggable="true" id="${tarea.id}">
               <div class="conteiner-text-task">
                 <p>${tarea.tituloTarea}</p>
                 <p>${fechaIni[0]}</p>
@@ -152,6 +152,16 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
     }
   });
 }
+$(document).on('click', `#1`, function(){
+  let newFormulario = document.createElement("div");
+  newFormulario.setAttribute('class', 'nuevaTarea'); //Añadimos clase al div
+  newFormulario.innerHTML = `
+    <form action="" method="" id="" class="priority-menu">
+
+    </form>
+  `;
+  $('#1').append(newFormulario);
+});
 let crearNuevaTarea = ($contenedor, $idConteinerForm, $idForm, $placeholder, $tarea) => {
   // Validamos si no existe el formulrio para nueva tarea, solo entonces se agrega.
   if (document.getElementById($idForm) == null) {

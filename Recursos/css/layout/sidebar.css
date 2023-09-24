@@ -167,6 +167,8 @@ body {
 .dropdown-menu__content__secundario__link {
   text-decoration: none;
   color: #c8bfbd;
+  /* min-width: none; */
+  display: block;
 }
 .icon-menu-principal{
   font-size: 2em;
