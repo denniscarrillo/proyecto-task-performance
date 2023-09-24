@@ -64,13 +64,12 @@ $form.addEventListener('submit', e => {
         e.preventDefault();
     } else {
             if(estadoValidacionesEspacio.estadoEspacioUsuario == false || estadoValidacionesEspacio.estadoEspacioPassword == false || 
-                estadoValidacionesEspacio.estadoEspacioPassword2 == false || estadoValidacionesEspacio.estadoEspacioCorreo == false || estadoMasdeUnEspacio.estadoMasEspacioNombre == true){ 
+                estadoValidacionesEspacio.estadoEspacioPassword2 == false || estadoValidacionesEspacio.estadoEspacioCorreo == false){ 
                 e.preventDefault();
                 estadoValidacionesEspacio.estadoEspacioUsuario = funciones.validarEspacios($usuario);
                 estadoValidacionesEspacio.estadoEspacioCorreo = funciones.validarEspacios($correo);
                 estadoValidacionesEspacio.estadoEspacioPassword = funciones.validarEspacios($password); 
                 estadoValidacionesEspacio.estadoEspacioPassword2 = funciones.validarEspacios($password2);
-                estadoMasdeUnEspacio.estadoMasEspacioNombre = funciones.validarMasdeUnEspacio($nombre);
                     } else {
                         if(estadoLetrasRepetidas.estadoLetrasRepetidasNombre == false || estadoLetrasRepetidas.estadoPassword == false ||
                             estadoLetrasRepetidas.estadoLetrasRepetidasUsuario == false){
@@ -215,7 +214,6 @@ $form.addEventListener('submit', e => {
 });
 
 let obtenerUsuarioExiste = ($usuario) => {
-    let estadoUsuario = false;
     $.ajax({
         url: "../../Vista/crud/usuario/usuarioExistente.php",
         type: "POST",
@@ -237,6 +235,6 @@ let obtenerUsuarioExiste = ($usuario) => {
         }
         
     });
-    return estadoUsuario;
 }
 
+// || estadoMasdeUnEspacio.estadoMasEspacioNombre == true

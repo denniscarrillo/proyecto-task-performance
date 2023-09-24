@@ -43,12 +43,12 @@ $form.addEventListener('submit', e => {
             e.preventDefault();
             estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
         } else {
-            if(estadoCorreo == false || estadoSelect.estadoSelectEstado == false || estadoSelect.estadoSelectRol == false || estadoMasdeUnEspacio.estadoMasEspacioNombre == true){
+            if(estadoCorreo == false || estadoSelect.estadoSelectEstado == false || estadoSelect.estadoSelectRol == false){
                 e.preventDefault();
                 estadoCorreo = funciones.validarCorreo($correo, validaciones.correo);
                 estadoSelect.estadoSelectEstado = funciones.validarCampoVacio($estado);
                 estadoSelect.estadoSelectRol = funciones.validarCampoVacio($rol);
-                estadoMasdeUnEspacio.estadoMasEspacioNombre = funciones.validarMasdeUnEspacio($name);
+                // estadoMasdeUnEspacio.estadoMasEspacioNombre = funciones.validarMasdeUnEspacio($name);
             } else {
                 estadoValidado = true; // 
             }
@@ -75,3 +75,4 @@ $rol.addEventListener('change', ()=>{
 $estado.addEventListener('change', ()=>{
     estadoSelect.estadoSelectEstado = funciones.validarCampoVacio($estado);
 });
+// || estadoMasdeUnEspacio.estadoMasEspacioNombre == true
