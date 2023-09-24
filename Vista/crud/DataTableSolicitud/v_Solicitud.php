@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-  <!-- DataTables -->
-  <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
-  <!-- <link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" rel="stylesheet"> -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
+    <!-- DataTables -->
+    <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+    <!-- <link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
     <!-- Boostrap5 -->
     <link href='../../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
     <link href='../../../Recursos/css/v_nueva_solicitud.css' rel='stylesheet'>
-      <!-- Estilos personalizados -->
+    <!-- Estilos personalizados -->
     <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet">
     <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
