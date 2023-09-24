@@ -78,14 +78,37 @@
       </li>
       <!-- Comision -->
       <li class="dropdown-menu__content__list">
-        <a href="<?php echo $urlComision; ?>" class="dropdown__link">
           <i class=""></i>
           <span class="check__conteiner dropdown__link__span">
           <div class="icon-menu-principal__conteiner">
            <i class="icon-menu-principal fa-solid fa-file-invoice-dollar icon-size"></i>
           </div>
           <p class="list__menu__principal-text">Comisión</p>
+          <i class="dropdown__arrow fa-solid fa-angle-down"></i>
+          <input type="checkbox" class="dropdown-menu__content__list__check">
           </span>
+          <div class="dropdown__content">
+            <ul class="dropdown-menu__content__secundario">
+              <li class="dropdown-menu__content__list__item">
+                <a href="<?php echo $urlComision; ?>" class="dropdown-menu__content__secundario__link">
+                <!-- <i class="fa-solid fa-list-check"></i> -->
+                  <span>Nueva Comisión</span>
+                </a>
+              </li>
+              <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $comisionVendedor; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Total Vendedores</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlPorcentajes; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Porcentajes</span>
+              </a>
+            </li>
+            </ul>
+          </div>
         </a>
       </li>
       <!-- Consulta -->
@@ -179,12 +202,6 @@
               <a href="<?php echo $urlRoles; ?>" class="dropdown-menu__content__secundario__link">
                 <i class=""></i>
                 <span>Roles</span>
-              </a>
-            </li>
-            <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo $urlPorcentajes; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Porcentajes</span>
               </a>
             </li>
             <li class="dropdown-menu__content__list__item">

@@ -7,7 +7,6 @@
     // if(isset($_SESSION['usuario'])){
     //     $user = $_SESSION['usuario'];
     // }
-    $mensaje = "";
     // if(isset($_POST['nuevoUsuario'])){ 
     //     $data = array();
     //     $usuario = $_POST['nuevoUsuario'];

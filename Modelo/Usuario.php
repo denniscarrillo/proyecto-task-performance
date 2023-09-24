@@ -59,8 +59,7 @@ class Usuario {
         $correo = $nuevoUsuario->correo;
         $cantIntentos = $nuevoUsuario->intentosFallidos;
         $creadoPor = $nuevoUsuario->creadoPor;
-        date_default_timezone_set('America/Tegucigalpa');
-        $fechaCreacion = date("Y-m-d");
+        $fechaCreacion = $nuevoUsuario->fechaCreacion;
         $cantPreguntasContestadas = $nuevoUsuario->preguntasContestadas;
         $query = "INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico, intentos_fallidos, 
                                         id_Rol, preguntas_Contestadas, Creado_Por, Fecha_Creacion) 
@@ -478,6 +477,7 @@ class Usuario {
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $id;
     }
+
     public static function permisosRol($idRolUser){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
@@ -548,6 +548,29 @@ class Usuario {
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $vendedores;
+    }
+    // Esta funcion trae los datos para el modal Editar
+    public static function obtenerUsuariosPorId($IdUsuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query="SELECT  nombre_Usuario, usuario, correo_Electronico, id_Rol, id_Estado_Usuario,Fecha_Creacion, fecha_Vencimiento 
+        FROM tbl_ms_usuario WHERE id_Usuario = '$IdUsuario'";
+        $resultado = sqlsrv_query($conexion, $query);
+        $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+        // $fecha_C = $fila['Fecha_Creacion'];
+
+        $datosusuario = [
+            'Nombre_Usuario' => $fila['nombre_Usuario'],
+            'Usuario' => $fila['usuario'],
+            'Correo_Electronico' => $fila['correo_Electronico'],
+            'Id_Rol' => $fila['id_Rol'],
+            'Id_Estado_Usuario' => $fila['id_Estado_Usuario'],
+            'Fecha_Creacion' => $fila['Fecha_Creacion'],
+            'Fecha_Vencimiento' => $fila['fecha_Vencimiento']    
+        ];
+
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $datosusuario;
     }
 
 

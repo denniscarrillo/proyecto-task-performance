@@ -110,4 +110,8 @@
         public static function traerVendedores() {
             return Usuario::obtenerVendedores();
         }
+
+        public static function obtenerUsuariosPorId($IdUsuario) {
+            return Usuario::obtenerUsuariosPorId($IdUsuario);
+        }
     }
