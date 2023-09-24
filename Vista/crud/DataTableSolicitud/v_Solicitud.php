@@ -35,6 +35,8 @@
                 $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
                 //Comisión
                 $urlComision = '../../comisiones/v_comision.php';
+                $comisionVendedor = '../ComisionesVendedores/ComisionesVendedores.php';
+                $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
                 //Consulta
                 $urlClientes = '../cliente/gestionCliente.php';
                 $urlVentas = '../Venta/gestionVenta.php';
@@ -47,7 +49,6 @@
                 $urlParametros = '../parametro/gestionParametro.php';
                 $urlPermisos = '../permiso/gestionPermiso.php';
                 $urlRoles = '../rol/gestionRol.php';
-                $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
                 $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
                 $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
                 require_once '../../layout/sidebar.php';
