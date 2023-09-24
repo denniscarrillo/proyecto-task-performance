@@ -195,21 +195,21 @@ p {
   display: flex;
   justify-content: flex-end;
   background: #eee5e4;
-  ;
   padding: 0.3rem;
 }
 /*Estilos para iconos de la tareas*/
 .fa-solid-btn {
   font-size: 1.5rem;
-  color: #e33026;
+  color: #e47e35;
   margin-left: 0.5rem;
   padding: 0.2rem;
   border-radius: 2px;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
 }
 .fa-solid-btn:hover {
-  color: #f2e8e8;
-  background-color: #e68b4a;
+  color: #e66e23;
+  cursor: pointer;
+  /* background-color: #e68b4a; */
 }
 .conteiner-text-task {
   padding: 0.4rem;
@@ -256,5 +256,13 @@ p {
 }
 .card_task.drag{
   opacity: 0;
+}
+.priority-menu {
+  position: absolute;
+  right: 15px;
+  bottom: 2;
+  background-color: #1289d8;
+  height: 50px;
+  width: 200px;
 }
 

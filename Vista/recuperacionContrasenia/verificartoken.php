@@ -11,11 +11,11 @@ if(isset($_SESSION['usuario'])){
 
 $mensaje = "";
 if (isset($_POST['submit'])){
-    $token =$_POST['token'];
+    $token = $_POST['token'];
     $estadoToken = ControladorUsuario::validarTokenUsuario($user, $token);
-    if( $estadoToken ){
+    if($estadoToken){
         header('location: v_nuevaContrasenia.php');
     } else {
-        $mensaje= "Token no válido o incorrecto";
+        $mensaje = "Token no válido o incorrecto";
     }
 }
