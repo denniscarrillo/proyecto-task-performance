@@ -75,7 +75,6 @@ if (isset($_SESSION['usuario'])) {
   <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
-  <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
@@ -146,6 +145,7 @@ if (isset($_SESSION['usuario'])) {
                 <th scope="col"> INSERTAR </th>
                 <th scope="col"> ACTUALIZAR </th>
                 <th scope="col"> ELIMINAR </th>
+                <th scope="col"> ACCION </th>
               </tr>
             </thead>
             <!-- <div class ="text-left mb-2">
