@@ -5,9 +5,9 @@ class Permiso
     public $idRol;
     public $idObjeto;
     public $permisoConsultar;
-    public $PermisoInsercion;
-    public $PermisoActualizacion;
-    public $PermisoEliminacion;
+    public $permisoInsercion;
+    public $permisoActualizacion;
+    public $permisoEliminacion;
     //Campos de auditoria
     public $Creado_Por;
     public $Fecha_Creacion;
@@ -79,4 +79,43 @@ class Permiso
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
     }
+    public static function obtenerIdRolObjeto($rol, $objeto){
+        $arrayId = array();
+        try{
+            $conn = new Conexion();
+            $conexion = $conn->abrirConexionDB();
+            $queryIdRol = "SELECT id_Rol FROM tbl_MS_Roles WHERE rol = '$rol';";
+            $resultadoIdRol = sqlsrv_query($conexion, $queryIdRol);
+            $filaRol = sqlsrv_fetch_array($resultadoIdRol, SQLSRV_FETCH_ASSOC);
+            $idRol = $filaRol['id_Rol'];
+            $queryIdObjeto = "SELECT id_Objeto FROM tbl_MS_Objetos WHERE objeto = '$objeto'";
+            $resultadoIdObjeto = sqlsrv_query($conexion, $queryIdObjeto);
+            $filaObjeto = sqlsrv_fetch_array($resultadoIdObjeto, SQLSRV_FETCH_ASSOC);
+            $idObjeto = $filaObjeto['id_Objeto'];
+            $arrayId = [
+                'idRol' => $idRol,
+                'idObjeto' => $idObjeto
+            ];
+        }catch (Exception $e) {
+            echo 'Error SQL:' . $e;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $arrayId;
+    }
+    public static function actualizarPermisos($permisos){
+        $arrayId = array();
+        try{
+            $conn = new Conexion();
+            $conexion = $conn->abrirConexionDB();
+            $query = "UPDATE tbl_MS_Permisos SET permiso_Consultar='$permisos->permisoConsultar', permiso_Insercion='$permisos->permisoInsercion', 
+            permiso_Actualizacion='$permisos->permisoActualizacion', permiso_Eliminacion='$permisos->permisoEliminacion', Modificado_Por='$permisos->Modificado_Por', 
+            Fecha_Modificacion = GETDATE() WHERE id_Rol='$permisos->idRol' AND id_Objeto='$permisos->idObjeto';";
+            $resultado = sqlsrv_query($conexion, $query);
+        }catch (Exception $e) {
+            echo 'Error SQL:' . $e;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $arrayId;
+    }
+
 }
