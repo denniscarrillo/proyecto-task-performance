@@ -149,7 +149,10 @@ $(document).on("click", "#btn_editar", async function(){
   if (!!usuario['Fecha_Vencimiento']) {
     let dateV = new Date(usuario['Fecha_Vencimiento'].date)
     $("#E_fecha_V").val(dateV.toISOString().slice(0, 10));
-  }
+  } else {
+    // Limpiar el valor del campo #E_fecha_V
+    $("#E_fecha_V").val('');
+}
   $('#modalEditarUsuario').modal('show');		   
 });
 
