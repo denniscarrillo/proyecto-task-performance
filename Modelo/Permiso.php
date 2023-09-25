@@ -14,7 +14,7 @@ class Permiso
     public $Modificado_Por;
     public $Fecha_Modificacion;
 
-    // Obtener todas las tareas que le pertenecen a un usuario.
+    // Obtener todas las permisos del rol sobre los objetos del sistema.
     public static function obtenerPermisos(){
         $permisos = null;
         try {
