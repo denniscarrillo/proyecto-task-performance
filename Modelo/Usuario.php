@@ -359,7 +359,10 @@ class Usuario {
         $queryVigenciaToken = "SELECT valor FROM tbl_MS_Parametro WHERE parametro = 'HORAS VIGENCIA TOKEN';";
         $vigenciaToken = sqlsrv_query($consulta, $queryVigenciaToken);
         $filaToken = sqlsrv_fetch_array($vigenciaToken, SQLSRV_FETCH_ASSOC);
-        $horasVencimiento = $filaToken['valor'];
+        $horasVencimiento = "";
+        if (isset($filaToken['valor'])) {
+            $horasVencimiento = $filaToken['valor'];
+        }              
         $queryInsert = "INSERT INTO tbl_token (id_usuario, Token, fecha_expiracion, Creado_Por, Fecha_Creacion)
                     VALUES ('$idUsuario','$token', DATEADD(MINUTE, $horasVencimiento, GETDATE()), '$creadoPor', GETDATE())";
         $resultado = sqlsrv_query($consulta, $queryInsert);
@@ -407,23 +410,41 @@ class Usuario {
         sqlsrv_close($consulta); #Cerrar la conexión.
     }
     //Obtener contraseña actual y guardar en tbl_MS_historial_Contraseña
-    public static function respaldarContraseniaAnterior($usuario){
+    public static function respaldarContraseniaActual($userCreador, $usuario, $contraseniaActual, $origenLlamadaFuncion){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
-        $query = "SELECT id_Usuario, contrasenia FROM tbl_MS_Usuario WHERE usuario = '$usuario'";
-        $usuario = sqlsrv_query($consulta, $query); #Ejecutamos la consulta (Recordset)
-        $existe = sqlsrv_fetch_array($usuario, SQLSRV_FETCH_ASSOC);
+        $query1 = "";
+        switch ($origenLlamadaFuncion){
+            case 1: {
+                //Cuando se llame desde autoregistro
+                $query1 = "SELECT id_Usuario FROM tbl_MS_Usuario WHERE usuario = '$usuario'";
+                $creadoPor = $usuario;
+                break;
+            }
+            case 2: {
+                //Cuando se llame desde gestion usuario
+                $query1 = "SELECT id_Usuario FROM tbl_MS_Usuario WHERE usuario = '$usuario'";
+                $creadoPor = $userCreador;
+                break;
+            }
+            case 3: {
+                //Cuando se llame desde recuperacion contraseña
+                $query1 = "SELECT id_Usuario FROM tbl_MS_Usuario WHERE usuario = '$userCreador'";
+                $creadoPor = $userCreador;
+                break;
+            }
+        }
+        $result = sqlsrv_query($consulta, $query1); #Ejecutamos la consulta (Recordset)
+        $existe = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC);
         $idUser = $existe['id_Usuario'];
-        $contraseniaActual = $existe['contrasenia'];
         //Guardamos contraseña
-        $creadoPor = $usuario;
-        date_default_timezone_set('America/Tegucigalpa');
-        $fechaCreacion = date("Y-m-d");
-       $query = "INSERT INTO tbl_ms_hist_contrasenia (id_Usuario, contrasenia, Creado_Por, Fecha_Creacion) VALUES ('$idUser','$contraseniaActual', '$creadoPor', '$fechaCreacion');";
-       $guardar = sqlsrv_query($consulta, $query);
-        sqlsrv_close($consulta); #Cerrar la conexión.
-        return $guardar; //Si se guardo retorna true.
+        
+        $query2 = "INSERT INTO tbl_ms_hist_contrasenia (id_Usuario, contrasenia, Creado_Por, Fecha_Creacion) 
+                VALUES ('$idUser','$contraseniaActual', '$creadoPor', GETDATE());";
+        sqlsrv_query($consulta, $query2);
+        sqlsrv_close($consulta); #Cerrar la conexión.        
     }
+
     public static function actualizaRContrasenia($usuario, $contrasenia){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.

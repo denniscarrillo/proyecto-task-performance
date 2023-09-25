@@ -25,6 +25,7 @@
         $nuevoUsuario->creadoPor = $user;
         $nuevoUsuario->fechaV = $_POST['fechaV'];        
         ControladorUsuario::registroUsuario($nuevoUsuario);
+        ControladorUsuario::respaldarContrasenia($user, $_POST['usuario'], $nuevoUsuario->contrasenia, 2);
         enviarCorreoNuevoUsuario($nuevoUsuario->correo, $nuevoUsuario->usuario, $_POST['contrasenia']);
         /* ========================= Evento Creacion nuevo Usuario. ======================*/
         $newBitacora = new Bitacora();
