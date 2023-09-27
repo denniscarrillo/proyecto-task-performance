@@ -27,6 +27,7 @@ class Rol {
     }
 
     public static function registroRol($nuevoRol) {
+        $rol = array();
         try {
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
@@ -37,10 +38,15 @@ class Rol {
             $fechaCreacion = date("Y-m-d");
             $insert = "INSERT INTO tbl_ms_roles (rol, descripcion, Creado_Por, Fecha_Creacion) VALUES ('$rol','$descripcion', '$creadoPor', '$fechaCreacion');";
             $ejecutar_insert = sqlsrv_query($abrirConexion, $insert);
+            $query = "SELECT SCOPE_IDENTITY() AS id_Rol";
+            $resultado = sqlsrv_query($abrirConexion, $query);
+            $array = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+            $rol = $array['id_Rol'];
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
         sqlsrv_close($abrirConexion); #Cerramos la conexión.
+        return $rol;
     }
 
     public static function editarRol($nuevoRol){

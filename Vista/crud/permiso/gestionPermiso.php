@@ -75,7 +75,6 @@ if (isset($_SESSION['usuario'])) {
   <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
-  <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
@@ -100,6 +99,8 @@ if (isset($_SESSION['usuario'])) {
           $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
           //Comisión
           $urlComision = '../../comisiones/v_comision.php';
+          $comisionVendedor = '../ComisionesVendedores/ComisionesVendedores.php';
+          $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
           //Consulta
           $urlClientes = '../cliente/gestionCliente.php';
           $urlVentas = '../Venta/gestionVenta.php';
@@ -113,7 +114,6 @@ if (isset($_SESSION['usuario'])) {
           $urlParametros = '../parametro/gestionParametro.php';
           $urlPermisos = './gestionPermiso.php';
           $urlRoles = '../rol/gestionRol.php';
-          $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
           $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
           $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
           require_once '../../layout/sidebar.php';
@@ -133,7 +133,6 @@ if (isset($_SESSION['usuario'])) {
 
         <div class="table-conteiner">
         <div>
-            <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoPermiso"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
             <a href="../../fpdf/ReportePermisos.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
           </div>
           <table class="table" id="table-Permisos">
@@ -145,12 +144,31 @@ if (isset($_SESSION['usuario'])) {
                 <th scope="col"> INSERTAR </th>
                 <th scope="col"> ACTUALIZAR </th>
                 <th scope="col"> ELIMINAR </th>
+                <th scope="col"> ACCION </th>
               </tr>
             </thead>
             <!-- <div class ="text-left mb-2">
             <a href="../../fpdf/ReporteClientes.php" target="_blank" class="btn btn-success" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
             </div> -->
             <tbody class="table-group-divider">
+              <?php
+                $Permisos = ControladorPermiso::obtenerPermisosSistema();
+                foreach($Permisos as $permiso){
+                 $permisoConsultar = ($permiso['consultar'] == 'Y') ? "checked" : "";
+                 $permisoInsertar = ($permiso['insertar'] == 'Y') ? "checked" : "";
+                 $permisoActualizar = ($permiso['actualizar'] == 'Y') ? "checked" : "";
+                 $permisoEliminar = ($permiso['eliminar'] == 'Y') ? "checked" : "";
+                  echo '<tr class="tr-permisos">'.
+                    '<td class="td-permisos">'.$permiso['rolUsuario'].'</td>'.
+                    '<td class="td-permisos">'.$permiso['objetoSistema'].'</td>'.
+                    '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoConsultar.'></td>'.
+                    '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoInsertar.'></td>'.
+                    '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoActualizar.'></td>'.
+                    '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoEliminar.'></td>'.
+                    '<td class="td-permisos"><div><button class="btns btn btn_confirm" ><i class="fa-solid fa-circle-check icon-confirm"></i></button></td>'.
+                  '</tr>';
+                }
+              ?>
             </tbody>
           </table>
         </div>
@@ -163,19 +181,12 @@ if (isset($_SESSION['usuario'])) {
       </div>
     </div>
   </div>
-  <?php
-  require_once('./modalNuevoPermiso.html');
-//   require('modalEditarPorcentaje.html');
-  ?>
- 
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script src="../../../Recursos/js/permiso/dataTablePermisos.js" type="module"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-  <script src="../../../Recursos/js/permiso/ValidacionesModalNuevoPermiso.js"  type="module"></script>
-  <!-- <script src="../../../Recursos/js/Porcentajes/ValidacionesModalEditarPorcentaje.js" type="module"></script>  -->
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
 </body>

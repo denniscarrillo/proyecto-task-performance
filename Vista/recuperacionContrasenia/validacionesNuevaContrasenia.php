@@ -26,15 +26,13 @@
       if(isset($_SESSION['usuario'])){
           $user = $_SESSION['usuario'];
           if($password == $password1){
-              //Guardar contraseña anterior en la tabla historial contraseña.
-              $respaldada = ControladorUsuario::respaldarContrasenia($user);
-              if($respaldada){
+              //Guardar contraseña anterior en la tabla historial contraseña.             
                 $encriptPassword = password_hash($password, PASSWORD_DEFAULT);
                   //Actualizar a la nueva contraseña en la tabla usuario.
                   ControladorUsuario::actualizarContrasenia($user, $encriptPassword);
+                  $respaldada = ControladorUsuario::respaldarContrasenia($user, "", $encriptPassword, 3);
                   header('location: ../login/login.php');
-                  session_destroy();
-              }
+                  session_destroy();              
           } else {
             $mensaje = 'Deben coincidir ambas contraseñas!';
           }

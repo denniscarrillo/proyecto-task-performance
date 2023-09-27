@@ -40,17 +40,17 @@ if (isset($_SESSION['usuario'])) {
       ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     /* =======================================================================================*/
     }
-    /* ====================== Evento ingreso a vista clientes. =====================*/
+    /* ====================== Evento ingreso a vista solicitud. =====================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
     $newBitacora->fecha = date("Y-m-d h:i:s");
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionSolicitud.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['income'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a vista de clientes';
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a vista a la vista de solicitud';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-    $_SESSION['objetoAnterior'] = 'gestionCliente.php';
-    $_SESSION['descripcionObjeto'] = 'vista de clientes';
+    $_SESSION['objetoAnterior'] = 'gestionSolicitud.php';
+    $_SESSION['descripcionObjeto'] = 'vista de solicitud';
     /* =======================================================================================*/
   }
 } else {
@@ -99,6 +99,8 @@ if (isset($_SESSION['usuario'])) {
         $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
         //Comisión
         $urlComision = '../../comisiones/v_comision.php';
+        $comisionVendedor = '../ComisionesVendedores/ComisionesVendedores.php';
+        $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
         //Consulta
         $urlClientes = '../cliente/gestionCliente.php';
         $urlVentas = '../Venta/gestionVenta.php';
@@ -112,7 +114,6 @@ if (isset($_SESSION['usuario'])) {
         $urlParametros = '../parametro/gestionParametro.php';
         $urlPermisos = '../permiso/gestionPermiso.php';
         $urlRoles = '../rol/gestionRol.php';
-        $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
         $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
         $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
         require_once '../../layout/sidebar.php';
@@ -130,7 +131,7 @@ if (isset($_SESSION['usuario'])) {
       </div>    
         <div class="table-conteiner">
           <div>
-            
+            <a href="v_Solicitud.php" class="btn_nuevoRegistro btn btn-primary"><i class="fa-solid fa-circle-plus"></i> Generar solicitud</a>
             <a href="../../fpdf/ReporteRol.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> 
           </div>
           <table class="table" id="table-Solicitud">

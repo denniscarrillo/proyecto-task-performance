@@ -5,9 +5,9 @@ class Permiso
     public $idRol;
     public $idObjeto;
     public $permisoConsultar;
-    public $PermisoInsercion;
-    public $PermisoActualizacion;
-    public $PermisoEliminacion;
+    public $permisoInsercion;
+    public $permisoActualizacion;
+    public $permisoEliminacion;
     //Campos de auditoria
     public $Creado_Por;
     public $Fecha_Creacion;
@@ -64,22 +64,58 @@ class Permiso
         sqlsrv_close($abrirConexion); //Cerrar conexion
         return $objetos;
     }
-    public static function registroPermiso($nuevoPermiso) {
+    public static function registroPermiso($idRol, $idObjetos, $creadoPor) {
         try {
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $rol=$nuevoPermiso->idRol;
-            $objeto=$nuevoPermiso->idObjeto;
-            $consultar=$nuevoPermiso->permisoConsultar;
-            $insertar=$nuevoPermiso->PermisoInsercion;
-            $actualizar=$nuevoPermiso->PermisoActualizacion;
-            $eliminar=$nuevoPermiso->PermisoEliminacion;
-            $query = "INSERT INTO tbl_ms_permisos (id_Rol, id_Objeto, permiso_Consultar, permiso_Insercion, 
-            permiso_Actualizacion, permiso_Eliminacion) VALUES ('$rol', '$objeto', '$consultar', '$insertar', '$actualizar', '$eliminar');";
-            $nuevoPermiso = sqlsrv_query($abrirConexion, $query);
+            foreach($idObjetos as $idObjeto){
+                $id = $idObjeto['id_Objeto'];
+                $query = "INSERT INTO tbl_ms_permisos (id_Rol, id_Objeto, permiso_Consultar, permiso_Insercion, 
+                permiso_Actualizacion, permiso_Eliminacion, Creado_Por, Fecha_Creacion) VALUES ('$idRol', '$id', 'N', 'N', 'N', 'N', '$creadoPor', GETDATE());";
+                sqlsrv_query($abrirConexion, $query);
+            }
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
     }
+    public static function obtenerIdRolObjeto($rol, $objeto){
+        $arrayId = array();
+        try{
+            $conn = new Conexion();
+            $conexion = $conn->abrirConexionDB();
+            $queryIdRol = "SELECT id_Rol FROM tbl_MS_Roles WHERE rol = '$rol';";
+            $resultadoIdRol = sqlsrv_query($conexion, $queryIdRol);
+            $filaRol = sqlsrv_fetch_array($resultadoIdRol, SQLSRV_FETCH_ASSOC);
+            $idRol = $filaRol['id_Rol'];
+            $queryIdObjeto = "SELECT id_Objeto FROM tbl_MS_Objetos WHERE objeto = '$objeto'";
+            $resultadoIdObjeto = sqlsrv_query($conexion, $queryIdObjeto);
+            $filaObjeto = sqlsrv_fetch_array($resultadoIdObjeto, SQLSRV_FETCH_ASSOC);
+            $idObjeto = $filaObjeto['id_Objeto'];
+            $arrayId = [
+                'idRol' => $idRol,
+                'idObjeto' => $idObjeto
+            ];
+        }catch (Exception $e) {
+            echo 'Error SQL:' . $e;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $arrayId;
+    }
+    public static function actualizarPermisos($permisos){
+        $arrayId = array();
+        try{
+            $conn = new Conexion();
+            $conexion = $conn->abrirConexionDB();
+            $query = "UPDATE tbl_MS_Permisos SET permiso_Consultar='$permisos->permisoConsultar', permiso_Insercion='$permisos->permisoInsercion', 
+            permiso_Actualizacion='$permisos->permisoActualizacion', permiso_Eliminacion='$permisos->permisoEliminacion', Modificado_Por='$permisos->Modificado_Por', 
+            Fecha_Modificacion = GETDATE() WHERE id_Rol='$permisos->idRol' AND id_Objeto='$permisos->idObjeto';";
+            $resultado = sqlsrv_query($conexion, $query);
+        }catch (Exception $e) {
+            echo 'Error SQL:' . $e;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $arrayId;
+    }
+
 }
