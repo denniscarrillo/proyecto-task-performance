@@ -72,6 +72,7 @@ if (isset($_SESSION['usuario'])) {
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
+  <link href="../../../Recursos/css/gestionBitacora.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
@@ -147,7 +148,15 @@ if (isset($_SESSION['usuario'])) {
                   <th scope="col"> DESCRIPCION </th>
                 </tr>
               </thead>
-              <div class ="text-left mb-2">
+              <label>Seleccionar Rango:</label>
+              <div class ="text-left mb-2 div-header">
+                <div>
+                 <label>Desde:</label>
+                 <input type="datetime-local" id="fecha-desde">
+                 <label>Hasta:</label>
+                 <input type="datetime-local" id="fecha-hasta">
+                </div>
+              <a target="_blank" class="btn btn-success" id="btn_depurar"> <i class="fa-solid fa-trash"></i> Depurar Bitácora</a>
               <a href="../../fpdf/ReporteBitacora.php" target="_blank" class="btn btn-success" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
               </div>
               <tbody class="table-group-divider">

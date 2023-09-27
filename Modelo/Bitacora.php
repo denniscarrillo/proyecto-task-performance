@@ -15,7 +15,6 @@
             VALUES('$datosEvento->fecha','$datosEvento->idUsuario','$datosEvento->idObjeto','$datosEvento->accion','$datosEvento->descripcion')";
             $ejecutarSQL = sqlsrv_query($consulta, $ejecutarSQL);
             sqlsrv_close($consulta); #Cerramos la conexión.
-            
         }
         //Método que recibe un objeto y devuelve su id.
         public static function obtener_Id_Objeto($objeto){
@@ -64,5 +63,13 @@
             }
             sqlsrv_close($consulta); #Cerramos la conexión.
             return $bitacoras;
-        } 
+        }
+        public static function depurarBitacora($fechaDesde, $fechaHasta){
+            $conn = new Conexion();
+            $conexion = $conn->abrirConexionDB();
+            $query = "EXEC pa_depurarBitacora '$fechaDesde','$fechaHasta';";
+            $resultado = sqlsrv_query($conexion, $query);
+            // sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+            sqlsrv_close($conexion);
+        }
     }
