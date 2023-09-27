@@ -16,7 +16,7 @@ if (isset($_SESSION['usuario'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
   <link href="../../Recursos/css/login.css" rel="stylesheet">
-  <link href="../../Recursos/css/configRespuestas.css" rel="stylesheet">
+  <link href="../../Recursos/css/preguntasResponder.css" rel="stylesheet">
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1862/1862358.png">
   <title>Pregunta secreta</title>
 </head>
@@ -45,7 +45,7 @@ if (isset($_SESSION['usuario'])) {
         </div>
        <h3>
         <?php
-          echo $mensaje;
+          echo '<p class="mensaje">' . $mensaje . '</p>';
           ?>
         </h3>
         <button type="submit" class="btn" name="submit">Responder</button>

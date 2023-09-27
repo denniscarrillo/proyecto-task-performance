@@ -570,6 +570,26 @@ class Usuario {
         return $datosusuario;
     }
 
+    public static function parametrosContrasenia() {
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
+        // Obtener la longitud mínima de la contraseña
+        $queryMin = "SELECT valor FROM tbl_MS_Parametro WHERE parametro = 'MIN PASS'";
+        $resultadoMin = sqlsrv_query($consulta, $queryMin);
+        $rowMin = sqlsrv_fetch_array($resultadoMin, SQLSRV_FETCH_ASSOC);
+        if(isset($rowMin["valor"])){
+            $resultadoMin = (int)$rowMin["valor"];
+        }
+        // Obtener la longitud máxima de la contraseña
+        $queryMax = "SELECT valor FROM tbl_MS_Parametro WHERE parametro = 'MAX PASS'";
+        $resultadoMax = sqlsrv_query($consulta, $queryMax);
+        $rowMax = sqlsrv_fetch_array($resultadoMax, SQLSRV_FETCH_ASSOC);
+        if(isset($rowMax["valor"])){
+            $resultadoMax = (int)$rowMax["valor"];
+        }
+        sqlsrv_close($consulta);
 
+        return [$resultadoMin, $resultadoMax];
+    }
 
 }#Fin de la clase

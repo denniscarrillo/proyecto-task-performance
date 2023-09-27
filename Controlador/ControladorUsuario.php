@@ -114,4 +114,7 @@
         public static function obtenerUsuariosPorId($IdUsuario) {
             return Usuario::obtenerUsuariosPorId($IdUsuario);
         }
+        public static function parametrosLimiteContrasenia(){
+            return Usuario::parametrosContrasenia();
+        }
     }

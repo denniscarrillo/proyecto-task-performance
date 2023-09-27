@@ -23,7 +23,7 @@ export const validarPassword = (elemento, objetoRegex) => {
     let estado;
     let input = elemento.value;
     if (!objetoRegex.test(input)){
-        mensaje.innerText = '*Mínimo 8 caracteres, una mayúscula, minúscula, número y caracter especial.';
+        mensaje.innerText = '*Minimo una mayúscula, minúscula, número y caracter especial.';
         elemento.classList.add('mensaje_error');
         estado =  false;
     } else {
@@ -149,6 +149,33 @@ export const validarMasdeUnEspacio = elemento => {
     return estado;
 };
 
+export const cantidadParametrosContrasenia = (elemento) => {
+    let mensaje = elemento.parentElement.querySelector('p');
+    let estado = 0;
+    $.ajax({
+        url: "../../Vista/crud/usuario/validarParametrosContrasenia.php",
+        type: "POST",
+        dataType: "JSON",
+        success: function (data) {
+            console.log(data);
+                let minLength = data[0];
+                let maxLength = data[1];
+                // limitarCantidadCaracteres(elemento, maxLength)
+                if (elemento.value.length < minLength || elemento.value.length > maxLength) {
+                    mensaje.innerText = '*Mínimo ' + minLength + ', máximo ' + maxLength + ' caracteres.';
+                    elemento.classList.add('mensaje_error');
+                    estado = false;
+                 } else {
+                    mensaje.innerText = '';
+                    elemento.classList.remove('mensaje_error');
+                    estado = true;
+                }
+                return estado;
+        }
+    });
+    // console.log(estado);
+    // return estado;
+}
 
     
 
