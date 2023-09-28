@@ -88,6 +88,9 @@ if (isset($_SESSION['usuario'])) {
         $urlRoles = './crud/rol/gestionRol.php';
         $urlPorcentajes = './crud/Porcentajes/gestionPorcentajes.php';
         $urlServiciosTecnicos = './crud/TipoServicio/gestionTipoServicio.php';
+        $urlPerfilUsuario = './crud/PerfilUsuario/gestionPerfilUsuario.php';
+        $urlPerfilContraseniaUsuarios='./crud/PerfilUsuario/gestionPerfilContrasenia.php';
+        $urlEditarCamposPerfil='./crud/PerfilUsuario/EditarCamposPerfilUsuario.php';
         $urlImg = '../Recursos/imagenes/Logo-E&C.png';
         require_once 'layout/sidebar.php';
       ?>

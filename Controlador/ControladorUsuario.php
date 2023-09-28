@@ -110,4 +110,22 @@
         public static function traerVendedores() {
             return Usuario::obtenerVendedores();
         }
+
+        public static function editarPerfilUsuario($nuevoUsuario){
+            Usuario::editarPerfilUsuario($nuevoUsuario);
+        }
+
+        public static function obtenerDatosPerfilUsuario($userName){
+           return Usuario::obtenerDatosPerfilUsuario($userName);
+        }
+
+        public static function editarContraseniaPerfil($nuevoUsuario){
+            Usuario::editarContraseniaPerfil($nuevoUsuario);
+        }
+
+        public static function obtenerContraseniaPerfil($userName){
+           return Usuario::obtenerContraseniaPerfil($userName);
+        }
+
+
     }
