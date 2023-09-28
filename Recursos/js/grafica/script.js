@@ -1,4 +1,4 @@
-
+/////////Constantes Graficas///////////////
  //Grafica general Llamadas
 const $grafica_llamada = document.querySelector("#grafica_llamada");
 const etiquetas_llamada = ["Llamadas", "Meta"]
@@ -25,13 +25,11 @@ const color_Venta = ['rgba(255, 212, 120)','rgb(82, 82, 82 )']
 let rdVendedores = document.getElementById("RadioPorVendedor");
 let btnSelecVendedores = document.getElementById("btnVendedores");
 rdVendedores.addEventListener("change", function(){
-    if (rdVendedores.checked ) {
-       
+    if (rdVendedores.checked ) {      
         // Habilitar el botón seleccionar vendedores
         btnSelecVendedores.removeAttribute("disabled");
       } else {
-          btnSelecVendedores.setAttribute("disabled", "true");
-        
+          btnSelecVendedores.setAttribute("disabled", "true");        
     }    
 });
 /// funcion que deshabilita el boton seleccionar vendedores
@@ -43,26 +41,25 @@ rdGeneral.addEventListener("change", function () {
     }
 });
 
-////////////////Boton Filtrar
-let RadioGeneral = document.getElementById("RadioGeneral");
-let btnFiltrar= document.getElementById("btnFiltrar");
-RadioGeneral.addEventListener("change", function(){
-    if (RadioGeneral.checked ) {
-        // Habilitar el botón seleccionar vendedores
-        btnFiltrar.removeAttribute("disabled");
-      } else {
-        btnFiltrar.setAttribute("disabled", "true");
-    }    
-});
+// ////////////////Boton Filtrar
+// let RadioGeneral = document.getElementById("RadioGeneral");
+// let btnFiltrar= document.getElementById("btnFiltrar");
+// RadioGeneral.addEventListener("change", function(){
+//     if (RadioGeneral.checked ) {
+//         // Habilitar el botón seleccionar vendedores
+//         btnFiltrar.removeAttribute("disabled");
+//       } else {
+//         btnFiltrar.setAttribute("disabled", "true");
+//     }    
+// });
 
-
-let radioVendedores = document.getElementById("RadioPorVendedor");
-radioVendedores.addEventListener("change", function () {
-    if (radioVendedores.checked) {
-      // Si se deselecciona el radio rdGeneral, deshabilita el botón
-      btnFiltrar.setAttribute("disabled", "true");
-    }
-});
+// let radioVendedores = document.getElementById("RadioPorVendedor");
+// radioVendedores.addEventListener("change", function () {
+//     if (radioVendedores.checked) {
+//       // Si se deselecciona el radio rdGeneral, deshabilita el botón
+//       btnFiltrar.setAttribute("disabled", "true");
+//     }
+// });
 //////////////////////
 // let $mensaje2 = document.querySelector(".grafica_Vendedor");
 // let  graficasVendedor = document.getElementById("grafica_Vendedor");
@@ -78,7 +75,7 @@ radioVendedores.addEventListener("change", function () {
 // }); 
 
 ////////////////////////////////////////////////////////////////////////////////////
-
+////Validaciones de fechas
 $tablaVendedores = "";
 let $mensaje = document.querySelector(".mensaje");
 let idUsuario_Vendedor = "";
@@ -95,7 +92,7 @@ $(document).ready(function () {
             let fechadesde = document.getElementById('fechaDesdef').value;
             let fechahasta = document.getElementById('fechaHastaf').value;
             obtenerDatosGrafica(fechadesde, fechahasta);
-            obtenerMetaMetricas();
+            // obtenerMetaMetricas();
             $mensaje.innerText = '';
             $mensaje.classList.remove('.mensaje')
         
@@ -124,7 +121,7 @@ let obtenerDatosGrafica = function(fechaDesde, fechaHasta){
 }
 
 
-//funcion que genera los datos por tarea
+//funcion que genera los datos GENERALES(todos los vendedores) de cada tarea
 let generarGraficas = function(data) {
     ///////////////////////////////////////////////////GRAFICA GENERAL LLAMADA//////////////////////////////////////////////////// 
     const datosIngresos_llamada = {
@@ -218,6 +215,12 @@ let obtenerMetaMetricas = function(){
     });
 }
 
+//Carga la grafica Metas 
+    function cargarGraficaMetas() {
+        obtenerMetaMetricas();
+    }
+    document.addEventListener('DOMContentLoaded', cargarGraficaMetas);
+
 //funcion para llenar el modal de vendedores
 $(document).ready(function () {
     $tablaVendedores = $("#table-Traer-Vendedor").DataTable({
@@ -241,9 +244,7 @@ $(document).ready(function () {
     });
 });
 
-//funcion que Obtiene los las tareas por vendedor
-
-
+//funcion que al seleccionar me de las graficas de las tareas por un vendedor 
 $(document).on("click", "#btn_seleccionar", function() {
     
         let fila = $(this).closest("tr");
@@ -260,18 +261,14 @@ $(document).on("click", "#btn_seleccionar", function() {
     }else{
         let fechadesde = document.getElementById('fechaDesdef').value;
         let fechahasta = document.getElementById('fechaHastaf').value;
-        obtenerMetaMetricas();
+        // obtenerMetaMetricas();
         obtenerTareaVendedor(idUsuario_Vendedor,fechadesde, fechahasta);
         $mensaje.innerText = '';
         $mensaje.classList.remove('.mensaje')
-
     }
-      
-
 });
 
 //////////Obtiene los datos para seleccionar las tareas de los vendedores
-
 let obtenerTareaVendedor = function(idUsuario_Vendedor,fechaDesde,fechaHasta){
     
    $.ajax({
@@ -293,6 +290,7 @@ let obtenerTareaVendedor = function(idUsuario_Vendedor,fechaDesde,fechaHasta){
 };
 
 let generarGraficasVendedores = function(data) {
+  ////////////////////////////////////////////////////GRAFICA  LLAMADA////////////////////////////////////////////////////   
     const datosIngresos_llamada = {
         data: [data.TotalLlamadas, data.metaLlamada], 
         backgroundColor: color_Llamada,
@@ -307,7 +305,7 @@ let generarGraficasVendedores = function(data) {
            
         }
     });
-    ////////////////////////////////////////////////////GRAFICA GENERAL LEAD////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////GRAFICA  LEAD////////////////////////////////////////////////////
     const datosIngresos_lead = {
         data: [data.TotalLead, data.metaLead], 
         backgroundColor: color_Lead,
@@ -321,7 +319,7 @@ let generarGraficasVendedores = function(data) {
             ]
         }
     });   
-    ////////////////////////////////////////////////////GRAFICA GENERAL COTIZACION////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////GRAFICA  COTIZACION////////////////////////////////////////////////////
     const datosIngresos_Cotizacion = {
         data: [data.TotalCotizacion, data.metaCotizacion],
         backgroundColor: color_Cotizacion,
@@ -336,7 +334,7 @@ let generarGraficasVendedores = function(data) {
         },       
     });
     
-    ////////////////////////////////////////////////////GRAFICA GENERAL VENTAS////////////////////////////////////////////////////  
+    ////////////////////////////////////////////////////GRAFICA  VENTAS////////////////////////////////////////////////////  
     const datosIngresos_Venta = {
         data: [data.TotalVenta, data.metaVentas], 
         backgroundColor: color_Venta,
@@ -352,33 +350,6 @@ let generarGraficasVendedores = function(data) {
     });    
             
                 
-}
-
-function destruirGraficas() {
-    // Destruir las gráficas generales
-    if ($grafica_llamada) {
-        $grafica_llamada.destroy();
-    }
-    if ($grafica_lead) {
-        $grafica_lead.destroy();
-    }
-    if ($grafica_Cotizacion) {
-        $grafica_Cotizacion.destroy();
-    }
-    if ($grafica_Venta) {
-        $grafica_Venta.destroy();
-    }
-
-    // Limpiar los elementos del DOM
-    const graficaElement = document.querySelector("#grafica");
-    graficaElement.innerHTML = ''; // Elimina el contenido dentro del elemento
-
-    // Restablecer los colores de fondo si es necesario
-    // Puedes definir tus propios colores o restaurar a los colores predeterminados aquí
-    color_Llamada = ['rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)'];
-    color_Lead = ['rgba(255, 206, 86, 0.6)', 'rgba(75, 192, 192, 0.6)'];
-    color_Cotizacion = ['rgba(75, 192, 192, 0.6)', 'rgba(255, 99, 132, 0.6)'];
-    color_Venta = ['rgba(255, 206, 86, 0.6)', 'rgba(54, 162, 235, 0.6)'];
 }
 
 

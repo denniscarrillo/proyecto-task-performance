@@ -18,6 +18,7 @@ $(document).ready(function () {
       { "data": "correo" },
       { "data": "Estado" },
       { "data": "Rol" },
+
       {"defaultContent":
           '<div><button class="btns btn" id="btn_ver"><i class="fa-solid fa-eye"></i></button>' +
           '<button class="btns btn" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>' +
@@ -27,17 +28,27 @@ $(document).ready(function () {
   });
 });
 
-$('#btn_nuevoRegistro').click(function () {
-  // //Petición para obtener roles
+// Cuando presionamos el boton aparece el modal con los siguientes campos
+
+$('#btn_nuevoRegistro').click(async function () {
+  // //Petición para obtener roles 
   obtenerRoles('#rol');
   //Petición para obtener estado de usuario
   obtenerEstadoUsuario('#estado');
+  //se obtiene la fecha de hoy
+  let fechaC = new Date().toISOString().slice(0, 10);
+  $("#fecha_C").val(fechaC);
+  //se obtiene la fecha de Vencimiento
+  let vigencia = await obtenerVigencia()
+  let fechaV = new Date()
+  fechaV.setDate(fechaV.getDate() + parseInt(vigencia['Vigencia']))
+  $("#fecha_V").val(fechaV.toISOString().slice(0, 10));
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");	 
 });
 
 //Crear nuevo usuario
-$('#form-usuario').submit(function (e) {
+$('#form-usuario').submit(async function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
      //Obtener datos del nuevo Usuario
      let nombre = $('#nombre').val();
@@ -46,6 +57,8 @@ $('#form-usuario').submit(function (e) {
      let correo = $('#correo').val();
      let rol = document.getElementById('rol').value;
     //  let estado = document.getElementById('estado').value;
+    //cambio 1
+    let fechaV = $('#fecha_V').val(); 
     if(validado){
       $.ajax({
         url: "../../../Vista/crud/usuario/nuevoUsuario.php",
@@ -56,7 +69,8 @@ $('#form-usuario').submit(function (e) {
           usuario: usuario,
           contrasenia: password,
           correo: correo,
-          idRol: rol
+          idRol: rol,
+          fechaV: fechaV
         },
         success: function (res) {
           //Mostrar mensaje de exito
@@ -72,6 +86,9 @@ $('#form-usuario').submit(function (e) {
      $('#modalNuevoUsuario').modal('hide');
     } 
 });
+// $(document).on( async function(){
+// });
+
 
 //Eliminar usuario
 $(document).on("click", "#btn_eliminar", function() {
@@ -115,26 +132,31 @@ $(document).on("click", "#btn_eliminar", function() {
     });                
 });
 
-$(document).on("click", "#btn_editar", function(){		        
-  let fila = $(this).closest("tr"),	        
-  idUsuario = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		            
-  nombre = fila.find('td:eq(2)').text(),
-  usuario = fila.find('td:eq(1)').text(),
-  // contrasenia = fila.find('td:eq(3)').text(),
-  correo = fila.find('td:eq(3)').text(),
-  estado = fila.find('td:eq(5)').text(),
-  rol = fila.find('td:eq(6)').text();
+$(document).on("click", "#btn_editar", async function(){		                
+  let idUsuario = $(this).closest('tr').find('td:eq(0)').text(); //capturo el ID		            
+  let usuario = await obtenerUsuariosPorId(idUsuario)
+  obtenerRoles('#E_rol', usuario.Id_Rol);
+  obtenerEstadoUsuario('#E_estado', usuario.Id_Estado_Usuario);
   $("#E_IdUsuario").val(idUsuario);
-  $("#E_nombre").val(nombre);
-  $("#E_usuario").val(usuario);
+  $("#E_nombre").val(usuario['Nombre_Usuario']);
+  $("#E_usuario").val(usuario['Usuario']);
   // $("#E_password").val(contrasenia);
-  $("#E_correo").val(correo);
-  $("#E_estado").val(obtenerEstadoUsuario('#E_estado'));
-  $("#E_rol").val(obtenerRoles('#E_rol'));
+  $("#E_correo").val(usuario['Correo_Electronico']);
+  if (!!usuario['Fecha_Creacion']) {
+    let date = new Date(usuario['Fecha_Creacion'].date)
+    $("#E_fecha_C").val(date.toISOString().slice(0, 10));
+  }
+  if (!!usuario['Fecha_Vencimiento']) {
+    let dateV = new Date(usuario['Fecha_Vencimiento'].date)
+    $("#E_fecha_V").val(dateV.toISOString().slice(0, 10));
+  } else {
+    // Limpiar el valor del campo #E_fecha_V
+    $("#E_fecha_V").val('');
+}
   $('#modalEditarUsuario').modal('show');		   
 });
 
-$('#form-Edit-Usuario').submit(function (e) {
+$('#form-Edit-Usuario').submit(function (e) { 
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
    //Obtener datos del nuevo Usuario
    let nombre = $('#E_nombre').val(),
@@ -143,6 +165,8 @@ $('#form-Edit-Usuario').submit(function (e) {
    correo = $('#E_correo').val(),
    rol = document.getElementById('E_rol').value,
    estado = document.getElementById('E_estado').value;
+   /////////////////////////////////////////////////////////////////////////////
+   console.log(valido)
    if(valido){
     $.ajax({
       url: "../../../Vista/crud/usuario/editarUsuario.php",
@@ -170,8 +194,43 @@ $('#form-Edit-Usuario').submit(function (e) {
    }
 });
 
+//obtener datos para el modal editar
+let obtenerUsuariosPorId = async (idUsuario) => {
+  try {
+    let datos = await $.ajax({
+      url: '../../../Vista/crud/usuario/obtenerUsuarioPorId.php',
+      type: 'GET',
+      dataType: 'JSON',
+      data: {
+        IdUsuario: idUsuario
+      }
+    });
+    return datos
+  } catch(err) {
+    console.error(err)
+  }
+}
 
-let obtenerRoles = function (idElemento) {
+let obtenerVigencia = async () =>{
+    try {
+      let dato = await $.ajax({
+        url: '../../../Vista/crud/usuario/obtenerVigencia.php',
+        type: 'GET',
+        dataType: 'JSON',
+        // success: function (resp) {
+        //   // let fechaV = new Date() 
+        //   // fechaV.setDate(fechaV.getDate() + parseInt(resp.Vigencia))
+        //   // console.log(fechaV)
+        //   console.log(resp.Vigencia)
+        // }
+      });
+      return dato
+    } catch(err) {
+      console.error(err)
+  }
+}
+
+let obtenerRoles = function (idElemento, rol_id) {
   //Petición para obtener roles
   $.ajax({
     url: '../../../Vista/crud/usuario/obtenerRoles.php',
@@ -180,14 +239,15 @@ let obtenerRoles = function (idElemento) {
     success: function (data) {
       let valores = '<option value="">Seleccionar...</option>';
       //Recorremos el arreglo de roles que nos devuelve la peticion
+
       for (let i = 0; i < data.length; i++) {
-        valores += '<option value="' + data[i].id_Rol + '">' + data[i].rol + '</option>';
+        valores += '<option value="' + data[i].id_Rol + '"'+ (data[i].id_Rol === rol_id ? 'selected': '') +'>' + data[i].rol + '</option>';
         $(idElemento).html(valores);
       }
     }
     });
 }
-let obtenerEstadoUsuario = function (idElemento){
+let obtenerEstadoUsuario = function (idElemento, estado_id){
     //Petición para obtener estado de usuario
     $.ajax({
       url: '../../../Vista/crud/usuario/obtenerEstadosUsuario.php',
@@ -197,10 +257,15 @@ let obtenerEstadoUsuario = function (idElemento){
         let valores = '<option value="">Seleccionar...</option>';
         //Recorremos el arreglo de roles que nos devuelve la peticion
         for (let i = 0; i < data.length; i++) {
-          valores += '<option value="' + data[i].id_Estado_Usuario + '">' + data[i].descripcion + '</option>';
+          valores += '<option value="' + data[i].id_Estado_Usuario + '"'+ (data[i].id_Estado_Usuario === estado_id ? 'selected': '') +'   >' + data[i].descripcion + '</option>';
           $(idElemento).html(valores);
         }
       }
     });
 }
+
+
+
+
+
 

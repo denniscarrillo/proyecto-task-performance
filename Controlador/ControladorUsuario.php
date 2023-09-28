@@ -64,8 +64,8 @@
         public static function obCorreoUsuario($usuario){
             return Usuario::correoUsuario($usuario);
         } 
-        public static function almacenarToken($user, $token){
-            return Usuario::guardarToken($user, $token);
+        public static function almacenarToken($user, $token, $usuario){
+            return Usuario::guardarToken($user, $token, $usuario);
         }
         public static function usuarioExiste($usuario){
             return Usuario::usuarioExistente($usuario);
@@ -79,8 +79,8 @@
         public static function cambiarEstado($usuario){
             Usuario::cambiarEstadoNuevo($usuario);
         } 
-        public static function respaldarContrasenia($usuario){
-            return Usuario::respaldarContraseniaAnterior($usuario);
+        public static function respaldarContrasenia($userCreador, $usuario, $contraseniaActual, $origenLlamadaFuncion){
+             Usuario::respaldarContraseniaActual($userCreador, $usuario, $contraseniaActual, $origenLlamadaFuncion);
         } 
         public static function actualizarContrasenia($usuario, $contrasenia){
             return Usuario::actualizaRContrasenia($usuario, $contrasenia);
@@ -128,4 +128,11 @@
         }
 
 
+
+        public static function obtenerUsuariosPorId($IdUsuario) {
+            return Usuario::obtenerUsuariosPorId($IdUsuario);
+        }
+        public static function parametrosLimiteContrasenia(){
+            return Usuario::parametrosContrasenia();
+        }
     }

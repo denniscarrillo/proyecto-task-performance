@@ -53,4 +53,37 @@ class Parametro {
         }
        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
+    public static function dataServerEmail(){
+        try{
+            $parametrosEmail = array();
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB();
+            $query = "SELECT valor FROM tbl_MS_Parametro WHERE id_Parametro IN(3,4,5,6);";
+            $resultado = sqlsrv_query($abrirConexion, $query);
+            while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+                $parametrosEmail[] = [
+                    'valorParametro' => $fila['valor']
+                ];
+            }
+        }catch (Exception $e) {
+            echo 'Error SQL:' . $e;
+        }
+        sqlsrv_close($abrirConexion); //Cerrar conexion
+        return $parametrosEmail;
+    }
+
+
+
+    public static function obtenerVigencia(){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query="SELECT CAST(valor AS INT)as vigencia FROM  tbl_MS_Parametro where id_Parametro = 7";
+        $resultado = sqlsrv_query($conexion, $query);
+        $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+        $vigencia = [
+            'Vigencia' => $fila['vigencia'],   
+        ];
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $vigencia;
+    }
 }

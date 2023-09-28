@@ -81,7 +81,20 @@ table.dataTable.no-footer{
     border-color: #ee9827;
     background-color: #ee9827;
 }
-
+.icon-confirm{
+    /* font-size: 15px; */
+    color: #4d4b4a;
+}
+/* #btn-confirm {
+    
+} */
+.check-permisos{
+    width: 1.2rem;
+    height: 1.2rem;
+    display: block;
+    /* margin: 0 2rem;
+    padding-top: 1rem; */
+}
 
 
 
