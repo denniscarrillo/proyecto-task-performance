@@ -21,13 +21,11 @@
             $usuario = $_SESSION['usuario'];
             $metodoRec = $_SESSION['metodo'];
             $userExiste = ControladorUsuario::usuarioExiste($usuario);
-           var_dump( $userExiste);
-            
             if($userExiste){
                 //Si el método es recuperación por correo
                 if($metodoRec == 'correo'){
                     $correo = ControladorUsuario::obCorreoUsuario($usuario);
-                    if($correo){
+                    if($correo != ''){
                         //Generamos el token
                         $token = random_int(1000, 9999);
                         //Almacenar token en la base de datos correspondiente al usuario

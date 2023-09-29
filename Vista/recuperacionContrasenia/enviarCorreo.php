@@ -21,7 +21,7 @@ function enviarCorreo($destinario, $token){
         $mail->Username   = $getDataServerEmail[0]['valorParametro'];                //SMTP username
         $mail->Password   = $getDataServerEmail[3]['valorParametro'];                      //SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-        $mail->Port       = $getDataServerEmail[1]['valorParametro'];                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+        $mail->Port       = intval($getDataServerEmail[1]['valorParametro']);  //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         //Recipients
         $mail->setFrom($getDataServerEmail[0]['valorParametro'], $getDataServerEmail[2]['valorParametro']);

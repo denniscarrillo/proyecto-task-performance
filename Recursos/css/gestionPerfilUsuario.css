@@ -1,0 +1,116 @@
+/* Estilos personalizados para el formulario */
+.container{
+    width: 80%;
+    margin: 90px auto;
+}
+
+#form-Edit-DatosPerfil {
+  
+    box-shadow: 0px 10px 15px 2px #a5a4a3b6 ;
+    display: flex;
+    padding: 1rem;
+    padding-bottom: 4rem;
+    position: relative;
+
+}
+
+.grupo-form {
+    width:rem;
+   margin-right:40%;
+    
+ }
+
+.grupo-form1 {
+    width:rem;
+    margin-right:10%;
+    
+ }
+.grupo-form1{
+    width: 100rem;
+    left: 20rem;
+    display:flexbox;
+ }
+label {
+    font-weight: normal;
+}
+
+/* Personalizar colores de Bootstrap si es necesario */
+.btn-guardar {
+    position: absolute;
+    bottom: 1rem;
+    left: 40%;
+    right:30%;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+    
+   
+}
+.mb-3 {
+    margin: 0.5rem;
+   
+}
+.titulos{
+    font-weight:bold;
+}
+
+
+
+.img-content{
+    background-color:  #6e6b6a;
+    padding: 0.3rem;
+    border-radius: 4px;
+ }
+
+ .title-form{
+    display: flex;
+    align-items: center;
+    background-color:  #6e6b6a;
+    margin-bottom: 1rem;
+    padding: 0.7rem;
+    border-radius: 0.2rem;
+    background-color:  #6e6b6a;
+    
+
+}
+.text-title-form{
+    margin-bottom: 0;
+    text-align: right;
+    font-size: 2rem;
+    color: #f79414;
+    background-color:  #6e6b6a;
+    border-left-style: solid;
+    display: inline-block;
+}
+
+.mensaje {
+    position: absolute;
+    color: red;
+    font-size: 12px;
+}
+.mensaje_error {
+    box-shadow: 0 0 0 .15rem #e15e3eac;
+    border-color: red;
+}
+.mensaje_error:focus {
+    box-shadow: 0 0 0 .25rem rgba(226, 73, 35, 0.455);
+    border-color: red;
+}
+
+.btn-editar{
+    position:absolute;
+    left: 75%;
+    font-size: 1.2rem; 
+    margin: 0 auto;
+    width: 40%;
+    border:none;
+    display:block;
+    
+}
+.btn:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+    
+   
+}
