@@ -165,7 +165,7 @@ if (isset($_SESSION['usuario'])) {
                     '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoInsertar.'></td>'.
                     '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoActualizar.'></td>'.
                     '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoEliminar.'></td>'.
-                    '<td class="td-permisos"><div><button class="btns btn btn_confirm" ><i class="fa-solid fa-circle-check icon-confirm"></i></button></td>'.
+                    '<td class="td-permisos"><i class="fa-solid fa-circle-check btn_confirm"></i></td>'.
                   '</tr>';
                 }
               ?>

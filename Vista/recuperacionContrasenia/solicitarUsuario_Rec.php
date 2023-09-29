@@ -10,7 +10,7 @@
     
     <link href="../../Recursos/css/login.css" rel="stylesheet" >
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1862/1862358.png">
-    <title>Solicitar usuario</title>
+    <title>Ingresar usuario</title>
 </head>
 <body class="container">
     <div class="ancho">

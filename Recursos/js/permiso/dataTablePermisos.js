@@ -24,35 +24,53 @@ let actualizarPermisos = function (elementoFila) {
   let insertar = ($fila.find("td:eq(3)").find('input')[0].checked == true) ? 'Y' : 'N'; 
   let actualizar = ($fila.find("td:eq(4)").find('input')[0].checked == true) ? 'Y' : 'N'; 
   let eliminar =  ($fila.find("td:eq(5)").find('input')[0].checked == true) ? 'Y' : 'N'; 
-  $.ajax({
-    url: "../../../Vista/crud/permiso/editarPermisos.php",
-    type: "POST",
-    datatype: "JSON",
-    data: {
-      rol: rol,
-      objeto: objeto,
-      consultar: consultar,
-      insertar: insertar,
-      actualizar: actualizar,
-      eliminar: eliminar
-    },
-    success: function () {
-      //Mostrar mensaje de exito
-      Swal.fire(
-        'Actualizado',
-        'Permisos actualizados!',
-        'success',
-      );
+
+  Swal.fire({
+    title: 'Esta seguro?',
+    text: "Se actualizaran los permisos",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#ee9827',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, actualizar',
+    cancelButtonText: 'Cancelar',
+    focusConfirm: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      //Si el usuario confirma la actualizacion de permisos esta se ejecutara
+      $.ajax({
+        url: "../../../Vista/crud/permiso/editarPermisos.php",
+        type: "POST",
+        datatype: "JSON",
+        data: {
+          rol: rol,
+          objeto: objeto,
+          consultar: consultar,
+          insertar: insertar,
+          actualizar: actualizar,
+          eliminar: eliminar
+        },
+        success: function () {
+          //Creamos el toast que nos confirma la actualización de los permisos
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+          //Mostramos el toast
+          Toast.fire({
+            icon: 'success',
+            title: 'Actualizado correctamente!'
+          })
+        }
+      });
     }
-  });
+  })
+
 }
-
-
-// checkboxs.forEach((checkbox) => {
-//   checkbox.addEventListener('change', function (e){
-//     e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
-//       //Obtener datos del nuevo Usuari
-      
-//        $('#modalNuevoPermiso').modal('hide');
-//   }); //Fin del evento change
-// }); //Fin del forEach
