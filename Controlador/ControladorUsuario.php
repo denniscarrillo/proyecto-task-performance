@@ -114,4 +114,17 @@
         public static function obtenerUsuariosPorId($IdUsuario) {
             return Usuario::obtenerUsuariosPorId($IdUsuario);
         }
+
+        public static function eliminarUltimaContrasena($idUsuario) {
+            return Usuario::eliminarContrasena($idUsuario);
+        }
+
+        public static function obtenerIdUsuariosPassword() {
+            return Usuario::obtenerIdUsuariosPassword();
+        }
+        
+        public static function actualizarFechaVencimientoContrasena($ArrayUsuarios, $vigenciaPassword) {
+             Usuario::actualizarFechaVencimientoContrasena($ArrayUsuarios, $vigenciaPassword);
+        }
+
     }

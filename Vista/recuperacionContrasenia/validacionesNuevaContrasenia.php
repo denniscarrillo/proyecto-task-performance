@@ -31,6 +31,7 @@
                   //Actualizar a la nueva contraseña en la tabla usuario.
                   ControladorUsuario::actualizarContrasenia($user, $encriptPassword);
                   $respaldada = ControladorUsuario::respaldarContrasenia($user, "", $encriptPassword, 3);
+                  ControladorUsuario::eliminarUltimaContrasena($user);                  
                   header('location: ../login/login.php');
                   session_destroy();              
           } else {
