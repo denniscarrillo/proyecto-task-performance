@@ -1,7 +1,7 @@
 
 <?php
  class Conexion {
-    private $ServerName = 'DANIELA\ESTEFANI';
+    private $ServerName = "DJ-REYES10\SQLEXPRESS";
     private $ConexionInfo = array("Database"=>"COCINAS_Y_EQUIPOS", "CharacterSet"=>"UTF-8");
     
     #Abrir conexión al servidor de MySQL

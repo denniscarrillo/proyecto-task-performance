@@ -38,7 +38,7 @@
         date_default_timezone_set('America/Tegucigalpa');
         $nuevoUsuario->fechaCreacion = date("Y-m-d h:i:s"); 
         $nuevoUsuario->creadoPor = $_POST["usuario"];
-
+         
         $fechaInicial = date("Y-m-d");
         $Vigencia = ControladorParametro::obtenerVigencia();
         $valor = $Vigencia['Vigencia'];
@@ -46,6 +46,7 @@
 
         $nuevoUsuario->fechaV = $fecha_nueva;
         ControladorUsuario::registroUsuario($nuevoUsuario);
+        ControladorUsuario::respaldarContrasenia("", $_POST["usuario"], $nuevoUsuario->contrasenia, 1);
         header('location: login.php');
         // $mensaje = "Registro éxitoso";
     }

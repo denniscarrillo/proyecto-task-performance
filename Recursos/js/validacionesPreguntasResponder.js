@@ -16,11 +16,11 @@ $form.addEventListener('submit', e => {
 
     if (estadoInputRespuesta == false) {
         e.preventDefault();
-    } else {
-        if (estadoMasdeUnEspacioRespuesta == false) {
-            e.preventDefault();
-            estadoMasdeUnEspacioRespuesta = funciones.validarMasdeUnEspacio($respuestas);
-        } 
+    // } else {
+    //     if (estadoMasdeUnEspacioRespuesta == true) {
+    //         e.preventDefault();
+    //         estadoMasdeUnEspacioRespuesta = funciones.validarMasdeUnEspacio($respuestas);
+    //     } 
     }
 });
 $pregunta.addEventListener('change', ()=>{

@@ -10,7 +10,7 @@ const validaciones = {
 // CAMPOS
 const $form = document.getElementById('formcorreo');
 const $usuario = document.getElementById('usuario');
-const $mensaje = document.querySelector('.mensaje');
+const $mensaje = document.getElementById('mensaje_P');
 
 // Función para validar el formulario
 $form.addEventListener('submit', e =>{
@@ -33,6 +33,8 @@ $form.addEventListener('submit', e =>{
     }
   
 });
+
+
 
 //Esta validacion convierte el usuario en letras mayusculas
 $usuario.addEventListener('focusout', () => {

@@ -2,6 +2,8 @@ import * as funciones from './funcionesValidaciones.js';
 //VARIABLES GLOBALES
 let estadoExisteUsuario = false;
 
+let limitecontrasenia = true;
+
 let estadoValidacionesEspacio = {
     estadoEspacioUsuario: true,
     estadoEspacioCorreo: true,
@@ -47,7 +49,7 @@ const expresiones = {
 	usuario: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
     user: /^(?=.*[^a-zA-Z\s])/, //Solo permite Letras
 	nombre: /^(?=.*[^a-zA-Z\s])/, 
-    password : /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,15}$/,
+    password : /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])./,
 	correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
 }
 
@@ -63,6 +65,10 @@ $form.addEventListener('submit', e => {
         estadoInputPassword2 == false || estadoInputCorreo == false){
         e.preventDefault();
     } else {
+        if(limitecontrasenia == false){
+            e.preventDefault();
+            limitecontrasenia = funciones.cantidadParametrosContrasenia($password);
+        } else {
             if(estadoValidacionesEspacio.estadoEspacioUsuario == false || estadoValidacionesEspacio.estadoEspacioPassword == false || 
                 estadoValidacionesEspacio.estadoEspacioPassword2 == false || estadoValidacionesEspacio.estadoEspacioCorreo == false){ 
                 e.preventDefault();
@@ -77,8 +83,7 @@ $form.addEventListener('submit', e => {
                             estadoLetrasRepetidas.estadoLetrasRepetidasNombre = funciones.limiteMismoCaracter($nombre, expresiones.usuario);
                             estadoLetrasRepetidas.estadoLetrasRepetidasUsuario = funciones.limiteMismoCaracter($usuario, expresiones.usuario);
                             estadoLetrasRepetidas.estadoPassword = funciones.validarPassword($password, expresiones.password);
-                        }
-                         else{
+                        } else {
                             if (estadoSoloLetras.estadoLetrasUsuario == false || estadoSoloLetras.estadoLetrasNombre == false) {
                                 e.preventDefault();
                                 estadoSoloLetras.estadoLetrasUsuario = funciones.validarSoloLetras($usuario, expresiones.user);
@@ -91,6 +96,7 @@ $form.addEventListener('submit', e => {
                                 }
                          }
                     }
+               }
             }
     });
 // INPUTS TEXTOS EN MAYUSCULAS y //Solo permite letras
@@ -139,7 +145,14 @@ $correo.addEventListener('keyup', () => {
 });
 $password.addEventListener('keyup', () => {
     estadoValidacionesEspacio.estadoEspacioPassword = funciones.validarEspacios($password);
-    funciones.limitarCantidadCaracteres("password", 15 );
+});
+$password.addEventListener('focusout', () => {
+        if(estadoValidacionesEspacio.estadoEspacioPassword){
+            let contrasenia = funciones.validarPassword($password, expresiones.password);
+            if(contrasenia){
+                limitecontrasenia = funciones.cantidadParametrosContrasenia($password);
+            }
+        }
 });
 $password2.addEventListener('keyup', () => {
     funciones.validarEspacios($password2);
@@ -150,13 +163,6 @@ $password2.addEventListener('keyup',() =>{
     funciones.validarCoincidirPassword($password, $password2);
 });
 
-//llama a la funcion para validar la contraseña segura
-$password.addEventListener('focusout', () => {
-    if(estadoValidacionesEspacio.estadoEspacioPassword){
-        funciones.validarPassword($password, expresiones.password);
-    }
-    
-});
 
 $form.addEventListener('submit', e =>{
     let estado;
@@ -182,7 +188,7 @@ $form.addEventListener('submit', e =>{
     let input = $password.value;
     if(!expresiones.password.test(input)){
         mensaje = $password.parentElement.querySelector('p');
-        mensaje.innerText = '*Mínimo 8 caracteres, una mayúscula, minúscula, número y caracter especial.';
+        mensaje.innerText = '*Mínimo una mayúscula, minúscula, número y caracter especial.';
         $password.classList.add('mensaje_error');
     } 
     else {
