@@ -265,11 +265,17 @@ let obtenerEstadoUsuario = function (idElemento, estado_id){
 document.getElementById('btn-cerrar').addEventListener('click', ()=>{
   limpiarForm();
 })
+document.getElementById('btn-x').addEventListener('click', ()=>{
+  limpiarForm();
+})
 let limpiarForm = () => {
-  let $mensajes = document.querySelectorAll('mensaje_error');
-  $mensajes.forEach($mensaje => {
+  let $inputs = document.querySelectorAll('.mensaje_error');
+  let $mensajes = document.querySelectorAll('.mensaje');
+  $inputs.forEach($input => {
+    $input.classList.remove('mensaje_error');
+  });
+  $mensajes.forEach($mensaje =>{
     $mensaje.innerText = '';
-    $mensaje.classList.remove('mensaje_error');
   });
   let nombre = document.getElementById('nombre'),
     usuario = document.getElementById('usuario'),
