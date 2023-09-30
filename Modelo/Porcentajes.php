@@ -49,6 +49,11 @@ class Porcentajes {
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $nuevoPorcentaje;
     }
+    //Mètodo que divida el porcentaje entre 100
+    public static function dividirPorcentaje($valorPorcentaje){
+        $porcentaje = $valorPorcentaje/100;
+        return $porcentaje;
+    }
 
     public static function editarPorcentaje($nuevoPorcentaje){
         $conn = new Conexion();
@@ -67,5 +72,17 @@ class Porcentajes {
         sqlsrv_close($conexion); #Cerramos la conexión.
     }
 
-
+    public static function porcentajeExistente($valorPorcentaje){
+        $existePorcentaje = false;
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT valor_Porcentaje FROM tbl_Porcentaje WHERE valor_Porcentaje = '$valorPorcentaje'";
+        $porcentajes = sqlsrv_query($conexion, $query);
+        $existe = sqlsrv_has_rows($porcentajes);
+        if($existe){
+            $existePorcentaje = true;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $existePorcentaje;
+    }
 }

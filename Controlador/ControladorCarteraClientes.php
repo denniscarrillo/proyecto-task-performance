@@ -12,6 +12,10 @@
         public static function editarCliente($nuevoCliente){
             CarteraClientes::editarCliente($nuevoCliente);
         }
+
+        public static function rtnExiste($rtn){
+            return CarteraClientes::rtnExistente($rtn);
+        }
     }
 
     

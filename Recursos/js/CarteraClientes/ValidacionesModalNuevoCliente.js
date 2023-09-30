@@ -1,6 +1,8 @@
 import * as funciones from '../funcionesValidaciones.js';
 export let estadoValidado = false;
 //Objeto con expresiones regulares para los inptus
+let estadoExisteRtn = false;
+
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/
@@ -56,8 +58,13 @@ $form.addEventListener('submit', e => {
                         estasdoMasdeUnEspacio.estadoMasEspacioNombre = funciones.validarMasdeUnEspacio($name);
                         estasdoMasdeUnEspacio.estadoMasEspacioDireccion = funciones.validarMasdeUnEspacio($direccion);
                     } else {
+                        if(estadoExisteRtn == false){
+                            e.preventDefault();
+                            estadoExisteRtn = obtenerRtnExiste($('#rtn').val());
+                        } else {
                     estadoValidado = true;
-                }
+                   }
+                 }
               }
             }       
             
@@ -94,3 +101,33 @@ $direccion.addEventListener('focusout', ()=>{
     /* let direccionMayus = $direccion.value.toUpperCase();
     $direccion.value = direccionMayus; */
 });
+$rtn.addEventListener('focusout', ()=>{
+    let rtn = $('#rtn').val();
+    estadoExisteRtn = obtenerRtnExiste(rtn);
+});
+
+
+let obtenerRtnExiste = ($rtn) => {
+  
+    $.ajax({
+        url: "../../../Vista/crud/carteraCliente/rtnExistente.php",
+        type: "POST",
+        datatype: "JSON",
+        data: {
+            rtn: $rtn
+        },
+        success: function (rtn) {
+            let $objRtn = JSON.parse(rtn);
+            if ($objRtn.estado == 'true') {
+                document.getElementById('rtn').classList.add('mensaje_error');
+                document.getElementById('rtn').parentElement.querySelector('p').innerText = '*Este rtn ya existe';
+                estadoExisteRtn = false; // Rtn es existente, es false
+            } else {
+                document.getElementById('rtn').classList.remove('mensaje_error');
+                document.getElementById('rtn').parentElement.querySelector('p').innerText = '';
+                estadoExisteRtn = true; // Rtn no existe, es true
+            }
+        }
+        
+    });
+}

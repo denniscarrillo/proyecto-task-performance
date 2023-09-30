@@ -1,7 +1,7 @@
 .mensaje {
     position: absolute;
     color: red;
-    font-size: 12px;
+    font-size: 15px;
 }
 .mensaje_error {
     box-shadow: 0 0 0 .15rem #e15e3eac;
