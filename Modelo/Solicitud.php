@@ -4,6 +4,8 @@ class Solicitud {
     public $idSolicitud;
     public $idEstadoSolicitud;
     public $idTipoServicio;
+
+    public $servicioTecnico;
     public $idUsuario;
     public $fechaEnvio;
     public $idCliente;
@@ -148,5 +150,18 @@ class Solicitud {
         $estadoEliminado = sqlsrv_query($conexion, $query2);
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $estadoEliminado;
+    }
+    public static function servicioTecnicoExistente($servicioTecnico){
+        $existeServicio = false;
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT servicio_Tecnico FROM tbl_tipoServicio  WHERE servicio_Tecnico  = '$servicioTecnico'";
+        $servicios = sqlsrv_query($conexion, $query);
+        $existe = sqlsrv_has_rows($servicios);
+        if($existe){
+            $existeServicio = true;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $existeServicio;
     }
 }

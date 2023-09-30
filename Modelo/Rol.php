@@ -67,4 +67,18 @@ class Rol {
         sqlsrv_close($abrirConexion); #Cerramos la conexión.
     }
 
+    public static function rolExistente($rol){
+        $existeRol = false;
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT rol FROM tbl_MS_Roles WHERE rol = '$rol'";
+        $roles = sqlsrv_query($conexion, $query);
+        $existe = sqlsrv_has_rows($roles);
+        if($existe){
+            $existeRol = true;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $existeRol;
+    }
+
 }

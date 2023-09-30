@@ -21,26 +21,33 @@ $(document).ready(function () {
 
       {"defaultContent":
           '<div><button class="btns btn" id="btn_ver"><i class="fa-solid fa-eye"></i></button>' +
-          '<button class="btns btn" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>' +
-          '<button class="btns btn" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button></div>'
+          '<button class="btn-editar btns btn hidden" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>'
       }
     ]
   });
 });
+
 // Cuando presionamos el boton aparece el modal con los siguientes campos
-$('#btn_nuevoRegistro').click(function () {
-  // //Petición para obtener roles
+
+$('#btn_nuevoRegistro').click(async function () {
+  // //Petición para obtener roles 
   obtenerRoles('#rol');
   //Petición para obtener estado de usuario
   obtenerEstadoUsuario('#estado');
+  //se obtiene la fecha de hoy
   let fechaC = new Date().toISOString().slice(0, 10);
   $("#fecha_C").val(fechaC);
+  //se obtiene la fecha de Vencimiento
+  let vigencia = await obtenerVigencia()
+  let fechaV = new Date()
+  fechaV.setDate(fechaV.getDate() + parseInt(vigencia['Vigencia']))
+  $("#fecha_V").val(fechaV.toISOString().slice(0, 10));
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");	 
 });
 
 //Crear nuevo usuario
-$('#form-usuario').submit(function (e) {
+$('#form-usuario').submit(async function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
      //Obtener datos del nuevo Usuario
      let nombre = $('#nombre').val();
@@ -49,8 +56,8 @@ $('#form-usuario').submit(function (e) {
      let correo = $('#correo').val();
      let rol = document.getElementById('rol').value;
     //  let estado = document.getElementById('estado').value;
-    /////////////////////////////////////////////////
-    //validado
+    //cambio 1
+    let fechaV = $('#fecha_V').val(); 
     if(validado){
       $.ajax({
         url: "../../../Vista/crud/usuario/nuevoUsuario.php",
@@ -61,7 +68,8 @@ $('#form-usuario').submit(function (e) {
           usuario: usuario,
           contrasenia: password,
           correo: correo,
-          idRol: rol
+          idRol: rol,
+          fechaV: fechaV
         },
         success: function (res) {
           //Mostrar mensaje de exito
@@ -74,14 +82,11 @@ $('#form-usuario').submit(function (e) {
          tablaUsuarios.ajax.reload(null, false);
         }
       });
-
      $('#modalNuevoUsuario').modal('hide');
     } 
 });
-
-$(document).on( async function(){
-
-});
+// $(document).on( async function(){
+// });
 
 
 //Eliminar usuario
@@ -143,7 +148,10 @@ $(document).on("click", "#btn_editar", async function(){
   if (!!usuario['Fecha_Vencimiento']) {
     let dateV = new Date(usuario['Fecha_Vencimiento'].date)
     $("#E_fecha_V").val(dateV.toISOString().slice(0, 10));
-  }
+  } else {
+    // Limpiar el valor del campo #E_fecha_V
+    $("#E_fecha_V").val('');
+}
   $('#modalEditarUsuario').modal('show');		   
 });
 
@@ -157,7 +165,7 @@ $('#form-Edit-Usuario').submit(function (e) {
    rol = document.getElementById('E_rol').value,
    estado = document.getElementById('E_estado').value;
    /////////////////////////////////////////////////////////////////////////////
-   //console.log(valido)
+   console.log(valido)
    if(valido){
     $.ajax({
       url: "../../../Vista/crud/usuario/editarUsuario.php",
@@ -202,6 +210,24 @@ let obtenerUsuariosPorId = async (idUsuario) => {
   }
 }
 
+let obtenerVigencia = async () =>{
+    try {
+      let dato = await $.ajax({
+        url: '../../../Vista/crud/usuario/obtenerVigencia.php',
+        type: 'GET',
+        dataType: 'JSON',
+        // success: function (resp) {
+        //   // let fechaV = new Date() 
+        //   // fechaV.setDate(fechaV.getDate() + parseInt(resp.Vigencia))
+        //   // console.log(fechaV)
+        //   console.log(resp.Vigencia)
+        // }
+      });
+      return dato
+    } catch(err) {
+      console.error(err)
+  }
+}
 
 let obtenerRoles = function (idElemento, rol_id) {
   //Petición para obtener roles
@@ -236,5 +262,9 @@ let obtenerEstadoUsuario = function (idElemento, estado_id){
       }
     });
 }
+
+
+
+
 
 

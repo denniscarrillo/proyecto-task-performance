@@ -21,6 +21,7 @@
     /* color: #ee9827;f5971d           gris    #615f5e*/
     color: #f5971d;
     background-color:  #6e6b6a;
+    font-weight: 500;
 
     margin: 1%;
     margin-bottom: 1rem;
@@ -65,25 +66,52 @@ table.dataTable.no-footer{
     margin-top: 8px;
 }
 .modal-body {
-    background-color: #6e6c6c;
+    background-color: #9f9b97;;
     color: white;
 }
 .modal-header{
-    background-color: #4d4b4a;
+    background-color: #4d4b4a !important;
     color: #ee9827;
     height: 3rem;
 }
 .btn-guardar .btn-primary {
-    background-color: #ee9827;
+    background-color: #f5971d;
     border: none;
+    bottom: 0.2rem;
+    left: 40%;
+    right:30%;
 }
 .check-permiso {
     border-color: #ee9827;
     background-color: #ee9827;
 }
-.icon-confirm{
-    color: #4d4b4a;
+.btn_confirm{
+    font-size: 1.5rem;
+    color: #f0854f;
+    cursor: pointer;
 }
+.btn_confirm:hover{
+    color: #6b6866;
+}
+.btn_confirm:active{
+    color: #549842;
+}
+.check-permisos{
+    width: 1.2rem;
+    height: 1.2rem;
+    display: block;
+    cursor: pointer;
+}
+/* .swal2-default-outline:focus {
+    
+} */
+.swal2-confirm {
+    outline: none;
+}
+.hidden {
+    display: none;
+}
+
 
 
 

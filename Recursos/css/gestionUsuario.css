@@ -9,6 +9,13 @@
 }
 h1{
     text-align: center;
+    color: #f5971d;
+    
+}
+.modal-header{
+    background-color: #4d4b4a;
+    color: #ee9827;
+    height: 3rem;
 }
 #form-usuario, #form-Edit-Usuario {
     display: flex;
@@ -24,7 +31,7 @@ h1{
 }
 .btn-guardar {
     position: absolute;
-    bottom: 0.1rem;
+    bottom: 0rem;
     left: 40%;
     right:30%;
 }

@@ -34,6 +34,10 @@
             return Solicitud::eliminarSolicitud($solicitud);
         }
 
+        public static function servicioTecnicoExiste($servicio){
+            return Solicitud::servicioTecnicoExistente($servicio);
+        }
+
     }
     
 

@@ -293,7 +293,6 @@ let agregarVendedores = function ($id_Tarea) {
       $Vendedores.push($vendedor);
     }
   });
-  console.log($Vendedores);
   //AJAX para almacenar vendedores en la base de datos
   $.ajax({
     url: "../../../Vista/rendimiento/agregarVendedoresTarea.php",

@@ -79,8 +79,8 @@
         public static function cambiarEstado($usuario){
             Usuario::cambiarEstadoNuevo($usuario);
         } 
-        public static function respaldarContrasenia($usuario){
-            return Usuario::respaldarContraseniaAnterior($usuario);
+        public static function respaldarContrasenia($userCreador, $usuario, $contraseniaActual, $origenLlamadaFuncion){
+             Usuario::respaldarContraseniaActual($userCreador, $usuario, $contraseniaActual, $origenLlamadaFuncion);
         } 
         public static function actualizarContrasenia($usuario, $contrasenia){
             return Usuario::actualizaRContrasenia($usuario, $contrasenia);
@@ -111,7 +111,41 @@
             return Usuario::obtenerVendedores();
         }
 
+        public static function editarPerfilUsuario($nuevoUsuario){
+            Usuario::editarPerfilUsuario($nuevoUsuario);
+        }
+
+        public static function obtenerDatosPerfilUsuario($userName){
+           return Usuario::obtenerDatosPerfilUsuario($userName);
+        }
+
+        public static function editarContraseniaPerfil($nuevoUsuario){
+            Usuario::editarContraseniaPerfil($nuevoUsuario);
+        }
+
+        public static function obtenerContraseniaPerfil($userName){
+           return Usuario::obtenerContraseniaPerfil($userName);
+        }
+
+
+
         public static function obtenerUsuariosPorId($IdUsuario) {
             return Usuario::obtenerUsuariosPorId($IdUsuario);
         }
+        public static function parametrosLimiteContrasenia(){
+            return Usuario::parametrosContrasenia();
+        }
+
+        public static function eliminarUltimaContrasena($idUsuario) {
+            return Usuario::eliminarContrasena($idUsuario);
+        }
+
+        public static function obtenerIdUsuariosPassword() {
+            return Usuario::obtenerIdUsuariosPassword();
+        }
+        
+        public static function actualizarFechaVencimientoContrasena($ArrayUsuarios, $vigenciaPassword) {
+             Usuario::actualizarFechaVencimientoContrasena($ArrayUsuarios, $vigenciaPassword);
+        }
+
     }

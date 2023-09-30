@@ -9,9 +9,10 @@
 }
 h1{
     text-align: center;
-    color: rgb(9, 107, 107);
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #f5971d !important;
+    font-family: "Poppins", sans-serif;
     font-size: 3rem;
+    font-weight: 500;
     
 }
 #form-comision, #form-Edit-Comision {
@@ -21,7 +22,9 @@ h1{
     position: relative;
 }
 .grupo-form {
-    width: 40rem;
+    width: 30rem;
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
 }
 .mb-3 {
     margin: 0.10rem;
@@ -29,7 +32,7 @@ h1{
 .btn-guardar {
     position: absolute;
     bottom: 0.2rem;
-    left: 40%;
+    left: 7.5%;
     right:30%;
 }
 .btn_nuevoRegistro {
@@ -100,7 +103,7 @@ h1{
 .mensaje {
     position: absolute;
     color: red;
-    font-size: 12px;
+    font-size: 15px;
 }
 .mensaje_error {
     box-shadow: 0 0 0 .15rem #e15e3eac;

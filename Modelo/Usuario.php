@@ -21,6 +21,7 @@ class Usuario {
     public $reseteoClave;
     public $modificadoPor;
     public $fechaModificacion;
+    public $fechaV;
 
     //Método para obtener todos los usuarios que existen.
     public static function obtenerTodosLosUsuarios(){
@@ -61,9 +62,10 @@ class Usuario {
         $creadoPor = $nuevoUsuario->creadoPor;
         $fechaCreacion = $nuevoUsuario->fechaCreacion;
         $cantPreguntasContestadas = $nuevoUsuario->preguntasContestadas;
+        $fechaV = $nuevoUsuario->fechaV;
         $query = "INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico, intentos_fallidos, 
-                                        id_Rol, preguntas_Contestadas, Creado_Por, Fecha_Creacion) 
-                        VALUES ('$usuario','$nombre', '$idEstado', '$contrasenia', '$correo', '$cantIntentos', '$idRol', '$cantPreguntasContestadas', '$creadoPor', '$fechaCreacion' )";
+                                        id_Rol, preguntas_Contestadas, fecha_Vencimiento, Creado_Por, Fecha_Creacion) 
+                        VALUES ('$usuario','$nombre', '$idEstado', '$contrasenia', '$correo', '$cantIntentos', '$idRol', '$cantPreguntasContestadas', '$fechaV', '$creadoPor', '$fechaCreacion' )";
         $nuevoUsuario = sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $nuevoUsuario;
@@ -338,10 +340,10 @@ class Usuario {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
         $query = "SELECT correo_Electronico FROM tbl_MS_Usuario WHERE usuario = '$usuario'";
-        $usuario = sqlsrv_query($consulta, $query); #Ejecutamos la consulta (Recordset)
-        $existe = sqlsrv_has_rows($usuario);
+        $resultEmail = sqlsrv_query($consulta, $query); #Ejecutamos la consulta (Recordset)
+        $existe = sqlsrv_has_rows($resultEmail);
         if($existe > 0){
-            $fila = sqlsrv_fetch_array($usuario, SQLSRV_FETCH_ASSOC);
+            $fila = sqlsrv_fetch_array($resultEmail, SQLSRV_FETCH_ASSOC);
             $correo = $fila['correo_Electronico'];
         }
         sqlsrv_close($consulta); #Cerrar la conexión.
@@ -357,7 +359,10 @@ class Usuario {
         $queryVigenciaToken = "SELECT valor FROM tbl_MS_Parametro WHERE parametro = 'HORAS VIGENCIA TOKEN';";
         $vigenciaToken = sqlsrv_query($consulta, $queryVigenciaToken);
         $filaToken = sqlsrv_fetch_array($vigenciaToken, SQLSRV_FETCH_ASSOC);
-        $horasVencimiento = $filaToken['valor'];
+        $horasVencimiento = "";
+        if (isset($filaToken['valor'])) {
+            $horasVencimiento = $filaToken['valor'];
+        }              
         $queryInsert = "INSERT INTO tbl_token (id_usuario, Token, fecha_expiracion, Creado_Por, Fecha_Creacion)
                     VALUES ('$idUsuario','$token', DATEADD(MINUTE, $horasVencimiento, GETDATE()), '$creadoPor', GETDATE())";
         $resultado = sqlsrv_query($consulta, $queryInsert);
@@ -405,23 +410,68 @@ class Usuario {
         sqlsrv_close($consulta); #Cerrar la conexión.
     }
     //Obtener contraseña actual y guardar en tbl_MS_historial_Contraseña
-    public static function respaldarContraseniaAnterior($usuario){
+    public static function respaldarContraseniaActual($userCreador, $usuario, $contraseniaActual, $origenLlamadaFuncion){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
-        $query = "SELECT id_Usuario, contrasenia FROM tbl_MS_Usuario WHERE usuario = '$usuario'";
-        $usuario = sqlsrv_query($consulta, $query); #Ejecutamos la consulta (Recordset)
-        $existe = sqlsrv_fetch_array($usuario, SQLSRV_FETCH_ASSOC);
+        $query1 = "";
+        switch ($origenLlamadaFuncion){
+            case 1: {
+                //Cuando se llame desde autoregistro
+                $query1 = "SELECT id_Usuario FROM tbl_MS_Usuario WHERE usuario = '$usuario'";
+                $creadoPor = $usuario;
+                break;
+            }
+            case 2: {
+                //Cuando se llame desde gestion usuario
+                $query1 = "SELECT id_Usuario FROM tbl_MS_Usuario WHERE usuario = '$usuario'";
+                $creadoPor = $userCreador;
+                break;
+            }
+            case 3: {
+                //Cuando se llame desde recuperacion contraseña
+                $query1 = "SELECT id_Usuario FROM tbl_MS_Usuario WHERE usuario = '$userCreador'";
+                $creadoPor = $userCreador;
+                break;
+            }
+        }
+        $result = sqlsrv_query($consulta, $query1); #Ejecutamos la consulta (Recordset)
+        $existe = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC);
         $idUser = $existe['id_Usuario'];
-        $contraseniaActual = $existe['contrasenia'];
         //Guardamos contraseña
-        $creadoPor = $usuario;
-        date_default_timezone_set('America/Tegucigalpa');
-        $fechaCreacion = date("Y-m-d");
-       $query = "INSERT INTO tbl_ms_hist_contrasenia (id_Usuario, contrasenia, Creado_Por, Fecha_Creacion) VALUES ('$idUser','$contraseniaActual', '$creadoPor', '$fechaCreacion');";
-       $guardar = sqlsrv_query($consulta, $query);
-        sqlsrv_close($consulta); #Cerrar la conexión.
-        return $guardar; //Si se guardo retorna true.
+        
+        $query2 = "INSERT INTO tbl_ms_hist_contrasenia (id_Usuario, contrasenia, Creado_Por, Fecha_Creacion) 
+                VALUES ('$idUser','$contraseniaActual', '$creadoPor', GETDATE());";
+        sqlsrv_query($consulta, $query2);
+        sqlsrv_close($consulta); #Cerrar la conexión.        
     }
+
+    public static function eliminarContrasena($Usuario){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
+        $query = "SELECT id_Hist, h.id_Usuario, u.usuario, h.contrasenia, h.Fecha_Creacion 
+                FROM tbl_MS_Hist_Contrasenia as h
+                inner join	tbl_MS_Usuario as u on u.id_Usuario = h.id_Usuario
+                WHERE h.id_Usuario = 1 ORDER BY id_Hist DESC;";
+        $resultado = sqlsrv_query($consulta, $query);
+        $HistorialC = array();
+        while($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)){
+            $HistorialC [] = [
+                'id' => $fila['id_Hist'],
+                'id_Usuario' => $fila['id_Usuario'],
+                'usuario'=>$fila['usuario'],
+                'contrasenia' => $fila['contrasenia'],
+                'Fecha_Creacion' => $fila['Fecha_Creacion']
+            ];
+        }
+        $tamano = count($HistorialC) > 10 ? $HistorialC[10]['id'] : null;
+        if ($tamano = 1){
+            $idH = $HistorialC[10]['id'];           
+            $query2 = "DELETE FROM tbl_MS_Hist_Contrasenia WHERE id_Hist = $idH;";
+            sqlsrv_query($consulta, $query2);
+        }            
+        sqlsrv_close($consulta); #Cerrar la conexión.
+    }
+
     public static function actualizaRContrasenia($usuario, $contrasenia){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
@@ -568,11 +618,123 @@ class Usuario {
             'Fecha_Creacion' => $fila['Fecha_Creacion'],
             'Fecha_Vencimiento' => $fila['fecha_Vencimiento']    
         ];
-
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $datosusuario;
     }
 
+    public static function obtenerIdUsuariosPassword() {
+        $usuarios = array();
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT id_Usuario, contrasenia from tbl_MS_Usuario where id_Estado_Usuario = 2";
+        $resultado = sqlsrv_query($conexion, $query);
+        //recorrer todos los usuarios y almacenarlos en un array
+        while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+            $usuarios[] = [
+                'idUsuario' => $fila['id_Usuario'],
+                'contrasenia' => $fila['contrasenia']
+            ];            
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $usuarios;
+    }
+
+    public static function actualizarFechaVencimientoContrasena($ArrayUsuarios, $vigenciaPassword) {
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        foreach ($ArrayUsuarios as $usuario){
+            $idUsuario = $usuario['idUsuario'];
+            $query = "SELECT contrasenia, Fecha_Creacion from tbl_MS_Hist_Contrasenia where id_Usuario = '$idUsuario'";
+            $listaUsuario = sqlsrv_query($conexion, $query);
+            while ($fila = sqlsrv_fetch_array($listaUsuario, SQLSRV_FETCH_ASSOC)) {
+                if($fila['contrasenia'] == $idUsuario ){
+                    $fechaC = $fila['Fecha_Creacion'];
+                    $query2 = "UPDATE tbl_MS_Usuario
+                    SET fecha_Vencimiento = DATEADD(DAY, '$vigenciaPassword', '$fechaC') where id_Usuario = '$idUsuario'";
+                    $resultado = sqlsrv_query($conexion, $query2);
+                }            
+            }
+        }
+        sqlsrv_close($conexion);
+    }
+    public static function parametrosContrasenia() {
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
+        // Obtener la longitud mínima de la contraseña
+        $queryMin = "SELECT valor FROM tbl_MS_Parametro WHERE parametro = 'MIN PASS'";
+        $resultadoMin = sqlsrv_query($consulta, $queryMin);
+        $rowMin = sqlsrv_fetch_array($resultadoMin, SQLSRV_FETCH_ASSOC);
+        if(isset($rowMin["valor"])){
+            $resultadoMin = (int)$rowMin["valor"];
+        }
+        // Obtener la longitud máxima de la contraseña
+        $queryMax = "SELECT valor FROM tbl_MS_Parametro WHERE parametro = 'MAX PASS'";
+        $resultadoMax = sqlsrv_query($consulta, $queryMax);
+        $rowMax = sqlsrv_fetch_array($resultadoMax, SQLSRV_FETCH_ASSOC);
+        if(isset($rowMax["valor"])){
+            $resultadoMax = (int)$rowMax["valor"];
+        }
+        sqlsrv_close($consulta);
+
+        return [$resultadoMin, $resultadoMax];
+    }    public static function obtenerDatosPerfilUsuario($userName){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query="select nombre_Usuario,rtn, Correo_Electronico, telefono , direccion from tbl_MS_Usuario where usuario='$userName';";
+        $resultado=sqlsrv_query($conexion,$query);
+        $arraydatos=sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+        $datosPerfil=[ 
+            'nombre'=>$arraydatos['nombre_Usuario'],
+            'rtn'=>$arraydatos['rtn'],
+            'correo'=>$arraydatos['Correo_Electronico'],
+            'telefono'=>$arraydatos['telefono'],
+            'direccion'=>$arraydatos['direccion'],
+        ];
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $datosPerfil;
+    }
+
+    public static function editarPerfilUsuario($nuevoUsuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $nombre = $nuevoUsuario->nombre;
+        $rtn = $nuevoUsuario->rtn;
+        $email =$nuevoUsuario->correo;
+        $telefono = $nuevoUsuario->telefono;
+        $direccion = $nuevoUsuario->direccion;
+        $modificadoPor = $nuevoUsuario->modificadoPor;
+        $query = "UPDATE tbl_ms_usuario
+         SET nombre_Usuario='$nombre',rtn='$rtn',Correo_Electronico='$email', 
+        telefono='$telefono', direccion='$direccion', Modificado_Por='$modificadoPor',Fecha_Modificacion = GETDATE()
+         WHERE usuario='$nuevoUsuario->usuario';";
+        sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion); #Cerramos la conexión.
+    }
+
+    public static function obtenerContraseniaPerfil($userName){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query="select contrasenia from tbl_MS_Usuario where usuario='$userName';";
+        $resultado=sqlsrv_query($conexion,$query);
+        $arraydatos=sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+        $datosPerfil=[ 
+            ' contrasenia'=>$arraydatos['contrasenia'],
+        ];
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $datosPerfil;
+    }
+
+    public static function editarContraseniaPerfil($nuevoUsuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $contrasenia = $nuevoUsuario->contrasenia;
+        $modificadoPor = $nuevoUsuario->modificadoPor;
+        $query = "UPDATE tbl_ms_usuario
+         SET contrasenia='$contrasenia' Modificado_Por='$modificadoPor',Fecha_Modificacion = GETDATE()
+         WHERE usuario='$nuevoUsuario->usuario';";
+        sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion); #Cerramos la conexión.
+    }
 
 
 }#Fin de la clase

@@ -1,6 +1,8 @@
 import * as funciones from '../funcionesValidaciones.js';
 export let estadoValidado = false;
 
+let estadoExisteRol = false;
+
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
 };
@@ -34,9 +36,14 @@ $form.addEventListener('submit', e => {
             e.preventDefault();
             estadoMasdeUnEspacio.estadoMasEspacioRol = funciones.validarMasdeUnEspacio($Rol);
             estadoMasdeUnEspacio.estadoMasEspacioDescripcion = funciones.validarMasdeUnEspacio($Descripcion);
+           } else {
+            if(estadoExisteRol == false){
+                e.preventDefault();
+                estadoExisteRol = obtenerRolExiste($('#rol').val());
         } else {
             estadoValidado = true;
-        } 
+        }
+     }
     }
 }
 });
@@ -50,8 +57,36 @@ $Descripcion.addEventListener('keyup', () => {
     funciones.limitarCantidadCaracteres("descripcion", 45);
 });
 $Rol.addEventListener('focusout', () => {
-    estadoMasdeUnEspacio.estadoMasEspacioRol = funciones.validarMasdeUnEspacio($Rol);
+    let roles = estadoMasdeUnEspacio.estadoMasEspacioRol = funciones.validarMasdeUnEspacio($Rol);
+    if(roles){
+          let rol = $('#rol').val();
+          estadoExisteRol = obtenerRolExiste(rol);
+    }
 });
 $Descripcion.addEventListener('focusout', () => {
     estadoMasdeUnEspacio.estadoMasEspacioDescripcion = funciones.validarMasdeUnEspacio($Descripcion);
 });
+
+let obtenerRolExiste = ($rol) => {
+    $.ajax({
+        url: "../../../Vista/crud/rol/rolExistente.php",
+        type: "POST",
+        datatype: "JSON",
+        data: {
+            rol: $rol
+        },
+        success: function (rol) {
+            let $objrol = JSON.parse(rol);
+            if ($objrol.estado == 'true') {
+                document.getElementById('rol').classList.add('mensaje_error');
+                document.getElementById('rol').parentElement.querySelector('p').innerText = '*El rol ya existe';
+                estadoExisteRol = false; // rol es existente, es false
+            } else {
+                document.getElementById('rol').classList.remove('mensaje_error');
+                document.getElementById('rol').parentElement.querySelector('p').innerText = '';
+                estadoExisteRol = true; // rol no existe, es true
+            }
+        }
+        
+    });
+}
