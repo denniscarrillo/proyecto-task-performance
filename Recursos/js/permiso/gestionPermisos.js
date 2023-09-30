@@ -2,6 +2,7 @@ $(document).ready(function () {
     let btnsEditar = null;
     if(document.querySelectorAll('.btn-editar')) {
         btnsEditar = document.querySelectorAll('.btn-editar');
+        console.log(btnsEditar);
     }
     console.log(btnsEditar);
     let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
