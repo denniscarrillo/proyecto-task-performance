@@ -21,8 +21,16 @@ let obtenerPermisos = function($idObjeto, btnsEditar){
     });
 }
 let mostrarElementos = function($objPermisos, btnsEditar){
+    let $idObjetoSistema = document.querySelector('.title-dashboard-task').id
     if($objPermisos.Insertar == 'Y'){
-        document.getElementById('btn_nuevoRegistro').classList.remove('hidden');
+        if($idObjetoSistema == "5"){
+            let $btnsNuevaTarea = document.querySelectorAll('.btn_nuevoRegistro');
+            $btnsNuevaTarea.forEach($btnNuevaTarea => {
+                $btnNuevaTarea.classList.remove('hidden');
+            });
+        }else{
+            document.getElementById('btn_nuevoRegistro').classList.remove('hidden');
+        }
     }
     if($objPermisos.Actualizar == 'Y') {
         btnsEditar.forEach(btnEditar => {

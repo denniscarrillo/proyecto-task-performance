@@ -262,6 +262,35 @@ let obtenerEstadoUsuario = function (idElemento, estado_id){
       }
     });
 }
+document.getElementById('btn-cerrar').addEventListener('click', ()=>{
+  limpiarForm();
+})
+let limpiarForm = () => {
+  let $mensajes = document.querySelectorAll('mensaje_error');
+  $mensajes.forEach($mensaje => {
+    $mensaje.innerText = '';
+    $mensaje.classList.remove('mensaje_error');
+  });
+  let nombre = document.getElementById('nombre'),
+    usuario = document.getElementById('usuario'),
+    password = document.getElementById('password'),
+    password2 = document.getElementById('password2'),
+    correo = document.getElementById('correo'),
+    rol = document.getElementById('rol'),
+    estado = document.getElementById('estado'),
+    fecha_C = document.getElementById('fecha_C'),
+    fecha_V = document.getElementById('fecha_V');
+  //Vaciar campos cliente
+    nombre.value = '';
+    usuario.value = '';
+    password.value = '';
+    password2.value = '';
+    correo.value = '';
+    rol.value = '';
+    estado.value = '';
+    fecha_C.value = '';
+    fecha_V.value = ''; 
+}
 
 
 

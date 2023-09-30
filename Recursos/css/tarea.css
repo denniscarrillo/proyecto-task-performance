@@ -265,4 +265,6 @@ p {
   height: 50px;
   width: 200px;
 }
-
+.hidden{
+  display: none;
+}

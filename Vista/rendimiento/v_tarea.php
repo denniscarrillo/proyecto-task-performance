@@ -66,8 +66,8 @@ require_once('validacionesTarea.php');
       <!-- Cuerpo de la pagina -->
       <main class="main-tareas">
       <div class="encabezado">
-            <h2 class="title-dashboard-task">Control de tareas</h2>
-          </div>
+          <h2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('v_tarea.php');?>">Control de tareas</h2>
+      </div>
         <div class="task-conteiner">
           <div class="colum-task-conteiner">
             <!-- COLUMNA LLAMADAS -->
@@ -79,7 +79,7 @@ require_once('validacionesTarea.php');
               <div class="container_tarea dragged-conteiner" id="conteiner-llamada">
                 <!-- Aqui van las tareas llamadas -->
               </div>
-              <button type="button" class="btn_nuevaTarea btn btn-primary" id="btn-NuevaLLamada">+ Nueva llamada</button>
+              <button type="button" class="btn_nuevaTarea btn btn-primary btn_nuevoRegistro hidden" id="btn-NuevaLLamada">+ Nueva llamada</button>
             </div>
             <!-- COLUMNA LEADS -->
             <div class="task-colum" id="columna-leads">
@@ -87,7 +87,7 @@ require_once('validacionesTarea.php');
                 <p class="title-task-label">Lead</p>
                 <p class="circle-count" id="circle-count-leads"></p>
               </div>
-              <button type="button" class="btn_nuevaTarea btn btn-primary" id="btn-NuevoLead">+ Nuevo lead</button>
+              <button type="button" class="btn_nuevaTarea btn btn-primary btn_nuevoRegistro hidden" id="btn-NuevoLead">+ Nuevo lead</button>
               <div class="container_tarea dragged-conteiner" id="conteiner-lead">
                 <!-- Aqui van las tareas leads -->
               </div>
@@ -98,7 +98,7 @@ require_once('validacionesTarea.php');
                 <p class="title-task-label">Cotización</p>
                 <p class="circle-count" id="circle-count-cotizaciones"></p>
               </div>
-              <button type="button" class="btn_nuevaTarea btn btn-primary" id="btn-NuevaCotizacion">+ Nueva Cotizacion</button>
+              <button type="button" class="btn_nuevaTarea btn btn-primary btn_nuevoRegistro hidden" id="btn-NuevaCotizacion">+ Nueva Cotizacion</button>
               <div class="container_tarea dragged-conteiner" id="conteiner-cotizacion">
                 <!-- Aqui van las tareas leads -->
               </div>
@@ -110,7 +110,7 @@ require_once('validacionesTarea.php');
                 <p class="title-task-label">Venta</p>
                 <p class="circle-count" id="circle-count-ventas"></p>
               </div>
-              <button type="button" class="btn_nuevaTarea btn btn-primary" id="btn-NuevaVenta">+ Nueva Venta</button>
+              <button type="button" class="btn_nuevaTarea btn btn-primary btn_nuevoRegistro hidden" id="btn-NuevaVenta">+ Nueva Venta</button>
               <div class="container_tarea dragged-conteiner" id="conteiner-venta">
                 <!-- Aqui van las tareas tipo ventas -->
               </div>
@@ -134,6 +134,7 @@ require_once('validacionesTarea.php');
   <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
   <script src="../../Recursos/js/librerias/Sortable.min.js"></script>
   <script src="../../Recursos/js/rendimiento/tarea.js"></script>
+  <script src="../../Recursos/js/permiso/gestionPermisos.js"></script>
   <script src="../../Recursos/js/index.js"></script>
   <script src="../../Recursos/js/rendimiento/guardarEvidencia.js"></script>
 </body>
