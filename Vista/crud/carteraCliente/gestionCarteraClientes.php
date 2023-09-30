@@ -70,7 +70,7 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-  <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
+  <link href="../../../Recursos/css/gestionCarteraClientes.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
@@ -135,6 +135,7 @@ if (isset($_SESSION['usuario'])) {
         <div class="table-conteiner">
           <div>
             <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoCliente"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
+            <a href="../../fpdf/ReporteCarteraClientes.php" target="_blank" class="btn_Pdf btn btn-primary " id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
           </div>
           <table class="table" id="table-CarteraClientes">
             <thead>
@@ -150,7 +151,6 @@ if (isset($_SESSION['usuario'])) {
               </tr>
             </thead>
             <div class ="text-left mb-2">
-            <a href="../../fpdf/ReporteCarteraClientes.php" target="_blank" class="btn btn-success" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
             </div>
             <tbody class="table-group-divider">
             </tbody>

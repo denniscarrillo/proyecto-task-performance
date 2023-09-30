@@ -135,4 +135,17 @@
         public static function parametrosLimiteContrasenia(){
             return Usuario::parametrosContrasenia();
         }
+
+        public static function eliminarUltimaContrasena($idUsuario) {
+            return Usuario::eliminarContrasena($idUsuario);
+        }
+
+        public static function obtenerIdUsuariosPassword() {
+            return Usuario::obtenerIdUsuariosPassword();
+        }
+        
+        public static function actualizarFechaVencimientoContrasena($ArrayUsuarios, $vigenciaPassword) {
+             Usuario::actualizarFechaVencimientoContrasena($ArrayUsuarios, $vigenciaPassword);
+        }
+
     }

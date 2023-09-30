@@ -66,4 +66,18 @@ class Pregunta {
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $estadoEliminado;
     }
+
+    public static function preguntaExistente($pregunta){
+        $existePregunta = false;
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT pregunta FROM tbl_MS_Preguntas WHERE pregunta = '$pregunta'";
+        $preguntas = sqlsrv_query($conexion, $query);
+        $existe = sqlsrv_has_rows($preguntas);
+        if($existe){
+            $existePregunta = true;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $existePregunta;
+    }
 }
