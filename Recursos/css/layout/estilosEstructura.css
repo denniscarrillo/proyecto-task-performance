@@ -104,6 +104,9 @@ table.dataTable.no-footer{
 .swal2-confirm {
     outline: none;
 }
+.hidden {
+    display: none;
+}
 
 
 

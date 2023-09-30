@@ -21,8 +21,7 @@ $(document).ready(function () {
 
       {"defaultContent":
           '<div><button class="btns btn" id="btn_ver"><i class="fa-solid fa-eye"></i></button>' +
-          '<button class="btns btn" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>' +
-          '<button class="btns btn" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button></div>'
+          '<button class="btn-editar btns btn hidden" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>'
       }
     ]
   });

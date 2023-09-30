@@ -14,7 +14,7 @@ class Permiso
     public $Modificado_Por;
     public $Fecha_Modificacion;
 
-    // Obtener todas las tareas que le pertenecen a un usuario.
+    // Obtener todas los permisos de un usuario que ha iniciado sesion
     public static function obtenerPermisos(){
         $permisos = null;
         try {
@@ -117,5 +117,46 @@ class Permiso
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $arrayId;
     }
-
+    public static function obtenerPermisosUsuario($usuario) {
+        $permisos = array();
+        try{
+            $conn = new Conexion();
+            $conexion = $conn->abrirConexionDB();
+            $query = "SELECT pe.id_Objeto, pe.permiso_Consultar FROM tbl_MS_Permisos pe
+            INNER JOIN tbl_MS_Usuario us ON pe.id_Rol = us.id_Rol
+            WHERE us.usuario = '$usuario' and pe.permiso_Consultar = 'Y';";
+            $resultado = sqlsrv_query($conexion, $query);
+            while($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)){
+                $permisos [] = [
+                    'idObjeto' => $fila['id_Objeto'],
+                    'permisoConsultar' => $fila['permiso_Consultar']
+                ];
+            }
+        }catch (Exception $e) {
+            echo 'Error SQL:' . $e;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $permisos;
+    }
+    public static function obtenerPermisosObjeto($usuario, $idObjeto){
+        $permisos = array();
+        try{
+            $conn = new Conexion();
+            $conexion = $conn->abrirConexionDB();
+            $query = "SELECT pe.permiso_Insercion, pe.permiso_Actualizacion, pe.permiso_Eliminacion FROM tbl_MS_Permisos pe
+            INNER JOIN tbl_MS_Usuario us ON pe.id_Rol = us.id_Rol
+            WHERE us.usuario = '$usuario' AND pe.id_Objeto = '$idObjeto';";
+            $resultado = sqlsrv_query($conexion, $query);
+            $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+            $permisos = [
+                'Insertar' => $fila['permiso_Insercion'],
+                'Actualizar' => $fila['permiso_Actualizacion'],
+                'Eliminar' => $fila['permiso_Eliminacion']
+            ];
+        }catch (Exception $e) {
+            echo 'Error SQL:' . $e;
+        }
+        sqlsrv_close($conexion);
+        return $permisos;
+    }
 }
