@@ -22,18 +22,19 @@
     if (isset($_POST['submit'])){
       $password = $_POST['password'];
       $password1 = $_POST['confirmPassword'];
-      // session_start(); //Reanudamos sesion
+      session_start(); //Reanudamos sesion
       if(isset($_SESSION['usuario'])){
           $user = $_SESSION['usuario'];
           if($password == $password1){
-              //Guardar contraseña anterior en la tabla historial contraseña.             
+              //Guardar contraseña anterior en la tabla historial contraseña.
+              $respaldada = ControladorUsuario::obtenerContraseniaPerfil($user);
+              if($respaldada){
                 $encriptPassword = password_hash($password, PASSWORD_DEFAULT);
                   //Actualizar a la nueva contraseña en la tabla usuario.
-                  ControladorUsuario::actualizarContrasenia($user, $encriptPassword);
-                  $respaldada = ControladorUsuario::respaldarContrasenia($user, "", $encriptPassword, 3);
-                  ControladorUsuario::eliminarUltimaContrasena($user);                  
+                  ControladorUsuario::editarContraseniaPerfil($user, $encriptPassword);
                   header('location: ../login/login.php');
-                  session_destroy();              
+                  session_destroy();
+              }
           } else {
             $mensaje = 'Deben coincidir ambas contraseñas!';
           }
@@ -52,3 +53,5 @@
     }
   }
 
+
+     

@@ -23,6 +23,10 @@ legend{
     font-size: 1rem;
 }
 
+.filtro-fecha .mensaje{
+    background-color:  #8f8f8f;
+}
+
 .btn-primary{
    padding: 15;
     margin: auto;
@@ -97,9 +101,11 @@ legend{
     margin-right: 25%;
     margin-bottom: 2%;
     padding: 15px;
-    background-color:  #8f8f8f; 
+    background-color:  #b8b8b8; 
     display: flex;
     border-radius:10px;
+    box-shadow: 2px 2px 5px rgba(110, 109, 109, 0.5),
+               -2px -2px 5px rgba(110, 109, 109, 0.5);
 }
 
     .graficosPorTareas{
@@ -110,6 +116,10 @@ legend{
         background-color:  #8f8f8f; 
         display:flow-root;
         border-radius:10px;
+        box-shadow: 2px 2px 5px rgba(110, 109, 109, 0.5),
+               -2px -2px 5px rgba(110, 109, 109, 0.5);
     }
+
+   
     
 

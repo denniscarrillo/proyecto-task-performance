@@ -111,10 +111,41 @@
             return Usuario::obtenerVendedores();
         }
 
+        public static function editarPerfilUsuario($nuevoUsuario){
+            Usuario::editarPerfilUsuario($nuevoUsuario);
+        }
+
+        public static function obtenerDatosPerfilUsuario($userName){
+           return Usuario::obtenerDatosPerfilUsuario($userName);
+        }
+
+        public static function editarContraseniaPerfil($nuevoUsuario){
+            Usuario::editarContraseniaPerfil($nuevoUsuario);
+        }
+
+        public static function obtenerContraseniaPerfil($userName){
+           return Usuario::obtenerContraseniaPerfil($userName);
+        }
+
+
+
         public static function obtenerUsuariosPorId($IdUsuario) {
             return Usuario::obtenerUsuariosPorId($IdUsuario);
         }
         public static function parametrosLimiteContrasenia(){
             return Usuario::parametrosContrasenia();
         }
+
+        public static function eliminarUltimaContrasena($idUsuario) {
+            return Usuario::eliminarContrasena($idUsuario);
+        }
+
+        public static function obtenerIdUsuariosPassword() {
+            return Usuario::obtenerIdUsuariosPassword();
+        }
+        
+        public static function actualizarFechaVencimientoContrasena($ArrayUsuarios, $vigenciaPassword) {
+             Usuario::actualizarFechaVencimientoContrasena($ArrayUsuarios, $vigenciaPassword);
+        }
+
     }

@@ -86,11 +86,12 @@ $(document).ready(function () {
         const fechaHasta = $('#fechaHastaf').val();
 
         if (fechaDesde === "" && fechaHasta === "" ) {
-            $mensaje.innerText = 'Debe llenar ambas Fechas';
+            $mensaje.innerText = '*Debe llenar ambas Fechas';
         } else{
            
             let fechadesde = document.getElementById('fechaDesdef').value;
             let fechahasta = document.getElementById('fechaHastaf').value;
+          
             obtenerDatosGrafica(fechadesde, fechahasta);
             // obtenerMetaMetricas();
             $mensaje.innerText = '';
@@ -100,6 +101,72 @@ $(document).ready(function () {
     });
 });
 
+//funcion que al seleccionar me de las graficas de las tareas por un vendedor 
+$(document).on("click", "#btn_seleccionar", function() {
+    
+    let fila = $(this).closest("tr");
+    idUsuario_Vendedor = fila.find("td:eq(0)").text();
+    console.log(idUsuario_Vendedor);
+    $("#modalTraerVendedores").modal("hide");
+    const fechaDesdes = $('#fechaDesdef').val();
+    const fechaHastas = $('#fechaHastaf').val();
+    
+    
+if (fechaDesdes === "" && fechaHastas === "" ) {
+    $mensaje.innerText = 'Debe llenar ambas Fechas';
+   
+}else{
+    let fechadesde = document.getElementById('fechaDesdef').value;
+    let fechahasta = document.getElementById('fechaHastaf').value;
+    // obtenerMetaMetricas();
+    
+    obtenerTareaVendedor(idUsuario_Vendedor,fechadesde, fechahasta);
+    
+    $mensaje.innerText = '';
+    $mensaje.classList.remove('.mensaje')
+}
+});
+/////////////////////////Grafica de Metas
+//funcion que obtiene y manda datos a la primera grafica de meta
+let obtenerMetaMetricas = function(){
+    $.ajax({
+        url: "../../../Vista/grafica/obtenerDatosMetrica.php",
+        type: "POST",
+        datatype: "JSON",
+        data: {
+        },
+        success: function (resp) {
+            datosGrafica = JSON.parse(resp);  
+            console.log(datosGrafica) ;
+           
+            const $grafica = document.querySelector("#grafica");
+            const etiquetas = ["Meta Llamadas" ,"Meta Lead" ,"Meta Cotizacion","Meta Ventas" ]
+            const color = ['rgba(133, 52, 0 )','rgba( 202, 117, 24)','rgba(255, 152, 0)','rgba(255, 212, 120)']
+
+            const datosIngresos = {
+                data: [datosGrafica[0].meta, datosGrafica[1].meta, datosGrafica[2].meta, datosGrafica[3].meta],
+                backgroundColor: color,
+            };
+            new Chart($grafica, {
+                type: 'pie',
+                data: {
+                    labels: etiquetas,
+                    datasets: [
+                        datosIngresos,
+                    ]
+                },
+            });
+        }
+    });
+}
+//Carga la grafica Metas 
+function cargarGraficaMetas() {
+    obtenerMetaMetricas();
+}
+document.addEventListener('DOMContentLoaded', cargarGraficaMetas);
+
+
+/////////////////////////////////////GRAFICAS GENERALES///////////////////////////////////
 // Obtener datos Genrales para las 4 graficas de cada tarea
 let obtenerDatosGrafica = function(fechaDesde, fechaHasta){
     $.ajax({
@@ -119,7 +186,6 @@ let obtenerDatosGrafica = function(fechaDesde, fechaHasta){
         }
     });
 }
-
 
 //funcion que genera los datos GENERALES(todos los vendedores) de cada tarea
 let generarGraficas = function(data) {
@@ -182,44 +248,9 @@ let generarGraficas = function(data) {
     });
 }
 
-//funcion que obtiene y manda datos a la primera grafica de meta
-let obtenerMetaMetricas = function(){
-    $.ajax({
-        url: "../../../Vista/grafica/obtenerDatosMetrica.php",
-        type: "POST",
-        datatype: "JSON",
-        data: {
-        },
-        success: function (resp) {
-            datosGrafica = JSON.parse(resp);  
-            console.log(datosGrafica) ;
-           
-            const $grafica = document.querySelector("#grafica");
-            const etiquetas = ["Meta Llamadas" ,"Meta Lead" ,"Meta Cotizacion","Meta Ventas" ]
-            const color = ['rgba(133, 52, 0 )','rgba( 202, 117, 24)','rgba(255, 152, 0)','rgba(255, 212, 120)']
 
-            const datosIngresos = {
-                data: [datosGrafica[0].meta, datosGrafica[1].meta, datosGrafica[2].meta, datosGrafica[3].meta],
-                backgroundColor: color,
-            };
-            new Chart($grafica, {
-                type: 'pie',
-                data: {
-                    labels: etiquetas,
-                    datasets: [
-                        datosIngresos,
-                    ]
-                },
-            });
-        }
-    });
-}
+////////////////////GRAFICA POR VENDENDOR////
 
-//Carga la grafica Metas 
-    function cargarGraficaMetas() {
-        obtenerMetaMetricas();
-    }
-    document.addEventListener('DOMContentLoaded', cargarGraficaMetas);
 
 //funcion para llenar el modal de vendedores
 $(document).ready(function () {
@@ -244,29 +275,7 @@ $(document).ready(function () {
     });
 });
 
-//funcion que al seleccionar me de las graficas de las tareas por un vendedor 
-$(document).on("click", "#btn_seleccionar", function() {
-    
-        let fila = $(this).closest("tr");
-        idUsuario_Vendedor = fila.find("td:eq(0)").text();
-        console.log(idUsuario_Vendedor);
-        $("#modalTraerVendedores").modal("hide");
-        const fechaDesdes = $('#fechaDesdef').val();
-        const fechaHastas = $('#fechaHastaf').val();
-        
-        
-    if (fechaDesdes === "" && fechaHastas === "" ) {
-        $mensaje.innerText = 'Debe llenar ambas Fechas';
-       
-    }else{
-        let fechadesde = document.getElementById('fechaDesdef').value;
-        let fechahasta = document.getElementById('fechaHastaf').value;
-        // obtenerMetaMetricas();
-        obtenerTareaVendedor(idUsuario_Vendedor,fechadesde, fechahasta);
-        $mensaje.innerText = '';
-        $mensaje.classList.remove('.mensaje')
-    }
-});
+
 
 //////////Obtiene los datos para seleccionar las tareas de los vendedores
 let obtenerTareaVendedor = function(idUsuario_Vendedor,fechaDesde,fechaHasta){
@@ -301,8 +310,7 @@ let generarGraficasVendedores = function(data) {
             labels: etiquetas_llamada,
             datasets: [
                 datosIngresos_llamada
-            ]
-           
+            ]          
         }
     });
     ////////////////////////////////////////////////////GRAFICA  LEAD////////////////////////////////////////////////////
@@ -347,10 +355,13 @@ let generarGraficasVendedores = function(data) {
                 datosIngresos_Venta,
             ]
         },
-    });    
-            
-                
+    });                    
 }
+
+
+
+
+
 
 
 

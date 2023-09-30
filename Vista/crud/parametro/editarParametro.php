@@ -17,6 +17,12 @@
         $nuevoParametro->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
         $nuevoParametro->ModificadoPor = $_SESSION['usuario'];
         ControladorParametro::editarParametroSistema($nuevoParametro);
+        if ($nuevoParametro->idParametro == '7'){
+            $ArrayUsuarios = ControladorUsuario::obtenerIdUsuariosPassword();
+            $vigenciaPassword = ControladorParametro::obtenerVigencia();
+            ControladorUsuario::actualizarFechaVencimientoContrasena($ArrayUsuarios, $vigenciaPassword);
+        }
+        
         /* ========================= Evento Editar parámetro. ====================================*/
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();
