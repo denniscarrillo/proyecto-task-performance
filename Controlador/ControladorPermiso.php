@@ -16,4 +16,10 @@ class ControladorPermiso {
     public static function actualizarPermisosRol($permisos){
         Permiso::actualizarPermisos($permisos);
     }
+    public static function obtenerPermisosUsuario($usuario) {
+        return Permiso::obtenerPermisosUsuario($usuario);
+    }
+    public static function obtenerPermisosUsuarioObjeto($usuario, $idObjeto){
+        return Permiso::obtenerPermisosObjeto($usuario, $idObjeto);
+    }
 }

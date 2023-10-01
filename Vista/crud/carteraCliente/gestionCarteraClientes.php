@@ -70,7 +70,7 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-  <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
+  <link href="../../../Recursos/css/gestionCarteraClientes.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
@@ -127,14 +127,15 @@ if (isset($_SESSION['usuario'])) {
                 <?php include_once '../../layout/navbar.php'?>                             
             </div>        
             <div class ="titulo">
-                  <H1 class="title-dashboard-task">Gestión de Cartera de Clientes</H1>
+                  <H1 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionCarteraClientes.php');?>">Gestión de Cartera de Clientes</H1>
             </div>  
           </div>
           
           <H1></H1>
         <div class="table-conteiner">
           <div>
-            <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoCliente"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
+            <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoCliente"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
+            <a href="../../fpdf/ReporteCarteraClientes.php" target="_blank" class="btn_Pdf btn btn-primary " id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
           </div>
           <table class="table" id="table-CarteraClientes">
             <thead>
@@ -150,7 +151,6 @@ if (isset($_SESSION['usuario'])) {
               </tr>
             </thead>
             <div class ="text-left mb-2">
-            <a href="../../fpdf/ReporteCarteraClientes.php" target="_blank" class="btn btn-success" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
             </div>
             <tbody class="table-group-divider">
             </tbody>
@@ -179,6 +179,7 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/index.js"></script>
   <script src="../../../Recursos/js/CarteraClientes/validacionesModalNuevoCliente.js"  type="module"></script>
   <script src="../../../Recursos/js/CarteraClientes/validacionesModalEditarCliente.js" type="module"></script>
+  <script src="../../../Recursos/js/permiso/gestionPermisos.js"></script>
 </body>
 
 </html>

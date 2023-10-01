@@ -13,5 +13,7 @@
         public static function bitacorasUsuario(){
             return Bitacora::obtenerBitacorasUsuario();
         }
-        
+        public static function depurarBitacoraSistema($fechaDesde, $fechaHasta){
+            Bitacora::depurarBitacora($fechaDesde, $fechaHasta);
+        }
     }

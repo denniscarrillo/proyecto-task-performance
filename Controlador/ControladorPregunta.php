@@ -15,4 +15,7 @@ class ControladorPregunta {
     public static function eliminandoPregunta($pregunta){
         return Pregunta::eliminarPregunta($pregunta);
     }
+    public static function preguntaExiste($pregunta){
+        return Pregunta::preguntaExistente($pregunta);
+    }
 }

@@ -74,7 +74,7 @@ if (isset($_SESSION['usuario'])) {
   <!-- <link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" rel="stylesheet"> -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
   <!-- Estilos personalizados -->
-  <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
+  <link href="../../../Recursos/css/gestionCarteraClientes.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
@@ -129,13 +129,13 @@ if (isset($_SESSION['usuario'])) {
                 <?php include_once '../../layout/navbar.php'?>                             
             </div>        
             <div class ="titulo">
-                  <H2 class="title-dashboard-task">Gestión de Tipos de Servicio</H2>
+                  <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionTipoServicio.php');?>">Gestión de Tipos de Servicio</H2>
             </div>  
           </div>
 
         <div class="table-conteiner">
           <div>
-            <a href="#" class="btn_nuevoRegistro btn btn-primary" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoTipoServicio"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
+            <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoTipoServicio"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
             <a href="../../fpdf/ReporteTipoServicio.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> 
           </div>
           <table class="table" id="table-TipoServicio">
@@ -171,9 +171,9 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/TipoServicio/validacionesModalNuevoTipoServicio.js" type="module"></script>
   <script src="../../../Recursos/js/TipoServicio/validacionesModalEditarTipoServicio.js" type="module"></script>
   <script src="../../../Recursos/js/TipoServicio/dataTableTipoServicio.js" type="module"></script>
+  <script src="../../../Recursos/js/permiso/gestionPermisos.js"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
 </body>
-
 </html>

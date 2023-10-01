@@ -1,5 +1,7 @@
 import * as funciones from '../funcionesValidaciones.js';
 export let estadoValidado = false;
+
+let estadoExistePorcentaje = false;
 //Objeto con expresiones regulares para los inptus
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
@@ -44,16 +46,62 @@ $form.addEventListener('submit', e => {
                     estadoSoloLetras.estadoLetrasDescripcionPorcentaje = funciones.validarSoloLetras($descripcion, validaciones.soloLetras);
                 }
                  else {
+                    if (estadoExistePorcentaje == false) {
+                        e.preventDefault();
+                        let valorEntero = parseInt($('#valorPorcentaje').val());
+                        let valorDecimal = valorEntero / 100;
+                        $valor.value = valorDecimal;
+                        estadoExistePorcentaje = 
+                        estadoExistePorcentaje = obtenerPorcentajeExiste(valorPorcentaje);
+                    } else {
                         estadoValidado = true;
                         console.log(estadoValidado); // 
                     }
                 
-            
+                }
             }       
             
         }
 });
+$('#valorPorcentaje').on('focusout', function () {
+    // Obtiene el valor ingresado por el usuario como número entero
+    let valorEntero = parseInt($(this).val());
 
+    // Verifica si el valor es un número válido
+    if (!isNaN(valorEntero)) {
+        // Convierte el número entero a decimal dividiéndolo por 100
+        let valorDecimal = valorEntero / 100;
+
+        // Llama a la función para verificar si el porcentaje existe en la base de datos
+        estadoExistePorcentaje = obtenerPorcentajeExiste(valorDecimal);
+    } 
+});
+
+
+let obtenerPorcentajeExiste = ($valorPorcentaje) => {
+  
+    $.ajax({
+        url: "../../../Vista/crud/Porcentajes/porcentajeExistente.php",
+        type: "POST",
+        datatype: "JSON",
+        data: {
+            valorPorcentaje: $valorPorcentaje
+        },
+        success: function (valorPorcentaje) {
+            let $objPorcentaje = JSON.parse(valorPorcentaje);
+            if ($objPorcentaje.estado == 'true') {
+                document.getElementById('valorPorcentaje').classList.add('mensaje_error');
+                document.getElementById('valorPorcentaje').parentElement.querySelector('p').innerText = '*El porcentaje ya existe';
+                estadoExistePorcentaje = false; // porcentaje es existente, es false
+            } else {
+                document.getElementById('valorPorcentaje').classList.remove('mensaje_error');
+                document.getElementById('valorPorcentaje').parentElement.querySelector('p').innerText = '';
+                estadoExistePorcentaje = true; // porcentaje no existe, es true
+            }
+        }
+        
+    });
+}
 
 // $valor.addEventListener('keyup', ()=>{
 //     estadoSoloNumeros.estadoNumerosValorPorcentaje = funciones.validarSoloNumeros($valor, validaciones.soloNumeros);

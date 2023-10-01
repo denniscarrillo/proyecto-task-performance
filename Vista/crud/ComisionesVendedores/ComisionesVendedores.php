@@ -133,11 +133,9 @@ if (isset($_SESSION['usuario'])) {
                   <h2 class="title-dashboard-task">Comisiones Por Vendedores</h2>
             </div>  
           </div>    
-
-
         <div class="table-conteiner">
         <div>
-            <a href="ComisionPorVendedor.php" class="btn_nuevoRegistro btn btn-primary"><i class="fa-solid fa-circle-plus"></i> Comision total por vendedor</a>
+            <!-- <a href="ComisionPorVendedor.php" class="btn_nuevoRegistro btn btn-primary"><i class="fa-solid fa-circle-plus"></i> Comision total por vendedor</a> -->
             <a href="ReporteComisionExcel.php" class="btn_Excel btn btn-primary "><i class="fa-solid fa-file-excel fa-sm"></i> Generar Excel</a>
           </div>
           <table class="table" id="table-ComisionVendedor">

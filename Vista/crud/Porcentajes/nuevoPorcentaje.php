@@ -12,7 +12,7 @@
     if(isset($_SESSION['usuario'])){
         $user = $_SESSION['usuario'];
         $nuevoPorcentaje = new Porcentajes();
-        $nuevoPorcentaje->valorPorcentaje = $_POST['valorPorcentaje'];
+        $nuevoPorcentaje->valorPorcentaje = ControladorPorcentajes::dividiendoPorcentaje($_POST['valorPorcentaje']);
         $nuevoPorcentaje->descripcionPorcentaje= $_POST['descripcionPorcentaje'];
         $nuevoPorcentaje->estadoPorcentaje = $_POST['estadoPorcentaje'];
         $nuevoPorcentaje->CreadoPor = $user;
@@ -27,6 +27,7 @@
         $newBitacora->accion = $accion['Insert'];
         $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' creo el nuevo porcentaje '.'"'.$_POST['descripcionPorcentaje'].' - '.$_POST['valorPorcentaje'].'"';
         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+
         /* =======================================================================================*/
     }
 ?>

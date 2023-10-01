@@ -77,5 +77,23 @@ class CarteraClientes{
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
     }
+// funcion que me muestre si el rtn del cliente existe tanto en cartera de clientes como en la tabla view de clientes
+    public static function rtnExistente($rtn){
+        $existeRtn = false;
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT rtn_Cliente FROM tbl_CarteraCliente WHERE rtn_Cliente = '$rtn'";
+        $rtnCliente = sqlsrv_query($conexion, $query);
+        $query2 = "SELECT CIF FROM View_Clientes WHERE (CIF = '$rtn' AND CIF IS NOT NULL AND CIF != '')
+           OR (CIF IS NOT NULL AND CIF != '' AND '$rtn' IS NULL)";
+        $rtnCliente2 = sqlsrv_query($conexion, $query2);
+        $existe = sqlsrv_has_rows($rtnCliente);
+        $existe2 = sqlsrv_has_rows($rtnCliente2);
+        if($existe || $existe2){
+            $existeRtn = true;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $existeRtn;
+    }
 }#Fin de la clase
 

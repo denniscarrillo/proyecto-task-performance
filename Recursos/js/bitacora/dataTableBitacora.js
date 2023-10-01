@@ -33,5 +33,21 @@ $(document).ready(function () {
       }
     }); //Fin AJAX
   }
+});
 
+$(document).on("click", "#btn_depurar", function() { 
+  let $fechaDesde = document.getElementById('fecha-desde').value;
+  let $fechaHasta = document.getElementById('fecha-hasta').value; 
+  console.log($fechaDesde, $fechaHasta);
+  $.ajax({
+    url: "../../../Vista/crud/bitacora/depurarBitacora.php",
+    type: "POST",
+    datatype:"json",    
+    data:  { 
+      fechaDesde: $fechaDesde,
+      $fechaHasta:$fechaHasta
+    },    
+    success: function(data) {          
+    }
+    }); //Fin del AJAX               
 });

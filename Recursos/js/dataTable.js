@@ -21,8 +21,7 @@ $(document).ready(function () {
 
       {"defaultContent":
           '<div><button class="btns btn" id="btn_ver"><i class="fa-solid fa-eye"></i></button>' +
-          '<button class="btns btn" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>' +
-          '<button class="btns btn" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button></div>'
+          '<button class="btn-editar btns btn hidden" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>'
       }
     ]
   });
@@ -257,6 +256,41 @@ let obtenerEstadoUsuario = function (idElemento, estado_id){
         }
       }
     });
+}
+document.getElementById('btn-cerrar').addEventListener('click', ()=>{
+  limpiarForm();
+})
+document.getElementById('btn-x').addEventListener('click', ()=>{
+  limpiarForm();
+})
+let limpiarForm = () => {
+  let $inputs = document.querySelectorAll('.mensaje_error');
+  let $mensajes = document.querySelectorAll('.mensaje');
+  $inputs.forEach($input => {
+    $input.classList.remove('mensaje_error');
+  });
+  $mensajes.forEach($mensaje =>{
+    $mensaje.innerText = '';
+  });
+  let nombre = document.getElementById('nombre'),
+    usuario = document.getElementById('usuario'),
+    password = document.getElementById('password'),
+    password2 = document.getElementById('password2'),
+    correo = document.getElementById('correo'),
+    rol = document.getElementById('rol'),
+    estado = document.getElementById('estado'),
+    fecha_C = document.getElementById('fecha_C'),
+    fecha_V = document.getElementById('fecha_V');
+  //Vaciar campos cliente
+    nombre.value = '';
+    usuario.value = '';
+    password.value = '';
+    password2.value = '';
+    correo.value = '';
+    rol.value = '';
+    estado.value = '';
+    fecha_C.value = '';
+    fecha_V.value = ''; 
 }
 
 
