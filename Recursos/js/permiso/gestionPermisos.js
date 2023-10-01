@@ -4,9 +4,30 @@ $(document).ready(function () {
         btnsEditar = document.querySelectorAll('.btn-editar');
         console.log(btnsEditar);
     }
-    console.log(btnsEditar);
     let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
     obtenerPermisos($idObjetoSistema, btnsEditar);
+
+    let $links = document.querySelectorAll('.check__conteiner');
+    console.log($links);
+    $links.forEach($link => {
+        if($idObjetoSistema == $link.id){
+            $link.classList.add('item-menu-active');
+            // console.log($link.setAttribute('checked'));
+            console.log($idObjetoSistema+" -- "+$link.id);
+        }
+        // console.log($idObjetoSistema+" -- "+$link.id);
+    });
+
+    //Probar para acceder a los botones de editar
+    // console.log($("#sidebar-id").find('span').length);
+    // for(let i = 0; i < $("#sidebar-id").find('span').length; i++){
+    //     if($("#sidebar-id").find('span')[i].className == 'check__conteiner dropdown__link__span'){
+    //         console.log($("#sidebar-id").find('span')[i]);
+    //     }
+    // }
+   
+
+   
 });
 let obtenerPermisos = function($idObjeto, btnsEditar){
     $.ajax({

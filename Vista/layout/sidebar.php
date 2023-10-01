@@ -1,4 +1,4 @@
-<nav>
+<nav id="sidebar-id" class="class">
   <!-- Logo del siberbar -->
   <div class="logo_items flex-log">
     <span class="nav_image">
@@ -9,7 +9,7 @@
   </div>
   <div class="flex-log">
     <a href="<?php echo $urlIndex; ?>" style="text-decoration: none;">
-      <span class="logo_name">Cocinas&Equipos</span>
+      <span class="logo_name" >Cocinas&Equipos</span>
     </a>
   </div>
   <span class="flex-log">
@@ -22,11 +22,11 @@
     <ul class="dropdown-menu__content">
       <!-- Lista rendimiento -->
       <li class="dropdown-menu__content__list">
-        <span class="check__conteiner dropdown__link__span">
+        <span class="check__conteiner dropdown__link__span" id="<?php echo ControladorBitacora::obtenerIdObjeto('v_tarea.php');?>">
         <div class="icon-menu-principal__conteiner">
           <i class="icon-menu-principal fa-solid fa-square-poll-vertical"></i>  
         </div>
-        <p class="list__menu__principal-text">Rendimiento</p>
+        <p class="list__menu__principal-text" >Rendimiento</p>
           <i class="dropdown__arrow fa-solid fa-angle-down"></i>
           <input type="checkbox" class="dropdown-menu__content__list__check">
         </span>
@@ -68,7 +68,7 @@
       <!-- Solicitud -->
       <li class="dropdown-menu__content__list">
         <a href="<?php echo $urlSolicitud; ?>" class="dropdown__link">
-          <span class="check__conteiner dropdown__link__span">
+          <span class="check__conteiner dropdown__link__span" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionDataTableSolicitud.php');?>">
           <div class="icon-menu-principal__conteiner">
             <i class="icon-menu-principal fa-solid fa-envelopes-bulk icon-size"></i>
           </div>
@@ -79,7 +79,7 @@
       <!-- Comision -->
       <li class="dropdown-menu__content__list">
           <i class=""></i>
-          <span class="check__conteiner dropdown__link__span">
+          <span class="check__conteiner dropdown__link__span" id="<?php echo ControladorBitacora::obtenerIdObjeto('v_comision.php');?>">
           <div class="icon-menu-principal__conteiner">
            <i class="icon-menu-principal fa-solid fa-file-invoice-dollar icon-size"></i>
           </div>
@@ -158,7 +158,7 @@
       </li>
       <!-- Mantenimiento -->
       <li class="dropdown-menu__content__list">
-        <span class="check__conteiner dropdown__link__span">
+        <span class="check__conteiner dropdown__link__span" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');?>">
           <div class="icon-menu-principal__conteiner">
             <i class="icon-menu-principal fa-solid fa-business-time"></i>
           </div>
