@@ -9,7 +9,7 @@
     
 
     session_start(); //Reanudamos session
-    if(isset($_SESSION['usuario'])){
+    if(isset($_SESSION['usuario']) && isset($_POST['idParametro'])){
         $nuevoParametro = new Parametro();
         $nuevoParametro->idParametro = $_POST['idParametro'];
         $nuevoParametro->parametro = $_POST['parametro'];
@@ -17,10 +17,10 @@
         $nuevoParametro->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
         $nuevoParametro->ModificadoPor = $_SESSION['usuario'];
         ControladorParametro::editarParametroSistema($nuevoParametro);
-        if ($nuevoParametro->idParametro == '7'){
+        if ($_POST['parametro'] == 'ADMIN VIGENCIA'){
             $ArrayUsuarios = ControladorUsuario::obtenerIdUsuariosPassword();
             $vigenciaPassword = ControladorParametro::obtenerVigencia();
-            ControladorUsuario::actualizarFechaVencimientoContrasena($ArrayUsuarios, $vigenciaPassword);
+            $mensaje = ControladorUsuario::actualizarFechaVencimientoContrasena($ArrayUsuarios, $vigenciaPassword['Vigencia']);
         }
         
         /* ========================= Evento Editar parámetro. ====================================*/

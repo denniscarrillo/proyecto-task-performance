@@ -126,9 +126,6 @@
         public static function obtenerContraseniaPerfil($userName){
            return Usuario::obtenerContraseniaPerfil($userName);
         }
-
-
-
         public static function obtenerUsuariosPorId($IdUsuario) {
             return Usuario::obtenerUsuariosPorId($IdUsuario);
         }
@@ -147,5 +144,8 @@
         public static function actualizarFechaVencimientoContrasena($ArrayUsuarios, $vigenciaPassword) {
              Usuario::actualizarFechaVencimientoContrasena($ArrayUsuarios, $vigenciaPassword);
         }
-
+        
+        public static function estadoFechaVencimientoContrasenia($user) {
+           return Usuario::estadoFechaVencimientoContrasenia($user);
+       }
     }
