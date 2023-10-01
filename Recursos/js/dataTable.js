@@ -41,6 +41,7 @@ $('#btn_nuevoRegistro').click(async function () {
   //se obtiene la fecha de Vencimiento
   let vigencia = await obtenerVigencia()
   let fechaV = new Date()
+  //se calcula la fecha de hoy + los dias de vigencia
   fechaV.setDate(fechaV.getDate() + parseInt(vigencia['Vigencia']))
   $("#fecha_V").val(fechaV.toISOString().slice(0, 10));
   $(".modal-header").css("background-color", "#007bff");
@@ -216,13 +217,7 @@ let obtenerVigencia = async () =>{
       let dato = await $.ajax({
         url: '../../../Vista/crud/usuario/obtenerVigencia.php',
         type: 'GET',
-        dataType: 'JSON',
-        // success: function (resp) {
-        //   // let fechaV = new Date() 
-        //   // fechaV.setDate(fechaV.getDate() + parseInt(resp.Vigencia))
-        //   // console.log(fechaV)
-        //   console.log(resp.Vigencia)
-        // }
+        dataType: 'JSON'
       });
       return dato
     } catch(err) {
