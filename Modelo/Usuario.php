@@ -642,18 +642,24 @@ class Usuario {
     public static function actualizarFechaVencimientoContrasena($ArrayUsuarios, $vigenciaPassword) {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        foreach ($ArrayUsuarios as $usuario){
-            $idUsuario = $usuario['idUsuario'];
-            $query = "SELECT contrasenia, Fecha_Creacion from tbl_MS_Hist_Contrasenia where id_Usuario = '$idUsuario'";
-            $listaUsuario = sqlsrv_query($conexion, $query);
-            while ($fila = sqlsrv_fetch_array($listaUsuario, SQLSRV_FETCH_ASSOC)) {
-                if($fila['contrasenia'] == $idUsuario ){
-                    $fechaC = $fila['Fecha_Creacion'];
-                    $query2 = "UPDATE tbl_MS_Usuario
-                    SET fecha_Vencimiento = DATEADD(DAY, '$vigenciaPassword', '$fechaC') where id_Usuario = '$idUsuario'";
-                    $resultado = sqlsrv_query($conexion, $query2);
-                }            
+        try {
+            foreach ($ArrayUsuarios as $usuario){
+                $idUsuario = $usuario['idUsuario'];
+                $query = "SELECT id_Hist, contrasenia from tbl_MS_Hist_Contrasenia where id_Usuario = '$idUsuario'";           
+                $listaUsuario = sqlsrv_query($conexion, $query);
+                while ($fila = sqlsrv_fetch_array($listaUsuario, SQLSRV_FETCH_ASSOC)) {                   
+                    if($fila['contrasenia'] == $usuario['contrasenia']){
+                        $idHist = $fila['id_Hist'];
+                        $query2 = "UPDATE tbl_MS_Usuario
+                        SET fecha_Vencimiento = DATEADD(DAY, $vigenciaPassword, (SELECT Fecha_Creacion 
+                        FROM tbl_MS_Hist_Contrasenia WHERE id_Hist = '$idHist' and id_Usuario = '$idUsuario')) 
+                        where id_Usuario = '$idUsuario';";
+                        sqlsrv_query($conexion, $query2);                       
+                    }            
+                }
             }
+        }catch (Exception $e) {
+            echo 'Error SQL:' . $e;
         }
         sqlsrv_close($conexion);
     }
@@ -730,11 +736,24 @@ class Usuario {
         $contrasenia = $nuevoUsuario->contrasenia;
         $modificadoPor = $nuevoUsuario->modificadoPor;
         $query = "UPDATE tbl_ms_usuario
-         SET contrasenia='$contrasenia' Modificado_Por='$modificadoPor',Fecha_Modificacion = GETDATE()
-         WHERE usuario='$nuevoUsuario->usuario';";
+        SET contrasenia='$contrasenia' Modificado_Por='$modificadoPor',Fecha_Modificacion = GETDATE()
+        WHERE usuario='$nuevoUsuario->usuario';";
         sqlsrv_query($conexion, $query);
         sqlsrv_close($conexion); #Cerramos la conexión.
     }
-
-
+    
+    public static function estadoFechaVencimientoContrasenia($user){
+        $estado = false;
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT DATEDIFF(DAY,  GETDATE(), fecha_Vencimiento) AS ESTADO 
+                  from tbl_MS_Usuario where usuario = '$user'";
+        $resultado = sqlsrv_query($conexion, $query);
+        $estadoVenc = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+        if (intval($estadoVenc['ESTADO'])>=1){
+            $estado = true;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estado;
+    }
 }#Fin de la clase
