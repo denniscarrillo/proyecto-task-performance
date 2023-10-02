@@ -72,16 +72,14 @@ class Parametro {
         return $parametrosEmail;
     }
 
-
-
     public static function obtenerVigencia(){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query="SELECT CAST(valor AS INT)as vigencia FROM  tbl_MS_Parametro where id_Parametro = 7";
+        $query="SELECT valor FROM  tbl_MS_Parametro where parametro = 'ADMIN VIGENCIA'";
         $resultado = sqlsrv_query($conexion, $query);
         $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
         $vigencia = [
-            'Vigencia' => $fila['vigencia'],   
+            'Vigencia' => $fila['valor'],   
         ];
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $vigencia;

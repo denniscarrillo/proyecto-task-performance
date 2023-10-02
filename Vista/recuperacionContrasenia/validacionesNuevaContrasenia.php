@@ -4,7 +4,7 @@
   require_once ("../../Modelo/Bitacora.php");
   require_once("../../Controlador/ControladorUsuario.php");
   require_once("../../Controlador/ControladorBitacora.php");
-
+  $mensaje = '';
   session_start();
   if (isset($_SESSION['usuario'])) {
     /* ========================= Evento Configurar Contraseña. ======================*/
@@ -18,21 +18,28 @@
     $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' ingreso a pantalla configuración contraseña';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     /* =======================================================================================*/
-    $mensaje = '';
+    
     if (isset($_POST['submit'])){
       $password = $_POST['password'];
       $password1 = $_POST['confirmPassword'];
       // session_start(); //Reanudamos sesion
       if(isset($_SESSION['usuario'])){
           $user = $_SESSION['usuario'];
-          if($password == $password1){
-              //Guardar contraseña anterior en la tabla historial contraseña.             
-                $encriptPassword = password_hash($password, PASSWORD_DEFAULT);
-                  //Actualizar a la nueva contraseña en la tabla usuario.
-                  ControladorUsuario::actualizarContrasenia($user, $encriptPassword);
-                  $respaldada = ControladorUsuario::respaldarContrasenia($user, "", $encriptPassword, 3);
-                  header('location: ../login/login.php');
-                  session_destroy();              
+          if($password == $password1){  
+                  $encriptPassword = password_hash($password, PASSWORD_DEFAULT); 
+                  $estadoContra = ControladorUsuario::estadoValidacionContrasenas($user, $_POST['password']);
+                  // print json_encode($estadoContra, JSON_UNESCAPED_UNICODE);
+                   if($estadoContra){
+                    $mensaje = 'Elija una contraseña diferente,ya existe';
+                   }else{                  
+                    //Actualizar a la nueva contraseña en la tabla usuario.
+                    ControladorUsuario::actualizarContrasenia($user, $encriptPassword);
+                    //Guardar contraseña anterior en la tabla historial contraseña.
+                    $respaldada = ControladorUsuario::respaldarContrasenia($user, "", $encriptPassword, 3);
+                    ControladorUsuario::eliminarUltimaContrasena($user);                  
+                    header('location: ../login/login.php');
+                    session_destroy();
+                   }                                                
           } else {
             $mensaje = 'Deben coincidir ambas contraseñas!';
           }

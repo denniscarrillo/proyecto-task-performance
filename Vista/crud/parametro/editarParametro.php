@@ -9,7 +9,7 @@
     
 
     session_start(); //Reanudamos session
-    if(isset($_SESSION['usuario'])){
+    if(isset($_SESSION['usuario']) && isset($_POST['idParametro'])){
         $nuevoParametro = new Parametro();
         $nuevoParametro->idParametro = $_POST['idParametro'];
         $nuevoParametro->parametro = $_POST['parametro'];
@@ -17,6 +17,12 @@
         $nuevoParametro->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
         $nuevoParametro->ModificadoPor = $_SESSION['usuario'];
         ControladorParametro::editarParametroSistema($nuevoParametro);
+        if ($_POST['parametro'] == 'ADMIN VIGENCIA'){
+            $ArrayUsuarios = ControladorUsuario::obtenerIdUsuariosPassword();
+            $vigenciaPassword = ControladorParametro::obtenerVigencia();
+            $mensaje = ControladorUsuario::actualizarFechaVencimientoContrasena($ArrayUsuarios, $vigenciaPassword['Vigencia']);
+        }
+        
         /* ========================= Evento Editar parámetro. ====================================*/
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();

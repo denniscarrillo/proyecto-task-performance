@@ -133,4 +133,24 @@ $('#form-Edit-Porcentaje').submit(function (e) {
     $('#modalEditarPorcentaje').modal('hide');
    }
 });
-
+document.getElementById('btn-cerrar').addEventListener('click', ()=>{
+  limpiarForm();
+})
+document.getElementById('btn-x').addEventListener('click', ()=>{
+  limpiarForm();
+})
+let limpiarForm = () => {
+  let $inputs = document.querySelectorAll('.mensaje_error');
+  let $mensajes = document.querySelectorAll('.mensaje');
+  $inputs.forEach($input => {
+    $input.classList.remove('mensaje_error');
+  });
+  $mensajes.forEach($mensaje =>{
+    $mensaje.innerText = '';
+  });
+  let valorPorcentaje = document.getElementById('valorPorcentaje'),
+    descripcionPorcentaje = document.getElementById('descripcionPorcentaje');
+  //Vaciar campos cliente
+    valorPorcentaje.value = '';
+    descripcionPorcentaje.value = '';
+}

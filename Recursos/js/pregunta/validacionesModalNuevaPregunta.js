@@ -1,6 +1,8 @@
 import * as funciones from '../funcionesValidaciones.js';
 export let estadoValidado = false;
 //Objeto con expresiones regulares para los inptus
+
+let estadoExistePregunta = false;
 let estadoMasdeUnEspacioPregunta = true;
 
 const $form = document.getElementById('form-Pregunta');
@@ -17,18 +19,51 @@ $form.addEventListener('submit', (e) => {
                 e.preventDefault();
                 estadoMasdeUnEspacioPregunta = funciones.validarMasdeUnEspacio($pregunta);
             } else {
-            estadoValidado = true; // 
+                if(estadoExistePregunta == false){
+                    e.preventDefault();
+                    estadoExistePregunta = obtenerPreguntaExiste($('#pregunta').val());
+            } else {
+                   estadoValidado = true; // 
             }
+        }
     }
 });
 
 $pregunta.addEventListener('keyup', ()=>{
     funciones.validarCampoVacio($pregunta);
-    funciones.limitarCantidadCaracteres($pregunta, 100);
+    funciones.limitarCantidadCaracteres('pregunta', 100);
 });
 $pregunta.addEventListener('focusout', ()=>{
-    estadoMasdeUnEspacioPregunta = funciones.validarMasdeUnEspacio($pregunta);
+   let preguntas = estadoMasdeUnEspacioPregunta = funciones.validarMasdeUnEspacio($pregunta);
+   if(preguntas){
+         let pregunta = $('#pregunta').val();
+         estadoExistePregunta = obtenerPreguntaExiste(pregunta);
+   }
 });
 /* $pregunta.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasPregunta = funciones.validarSoloLetras($pregunta, validaciones.soloLetras);
 }); */
+
+let obtenerPreguntaExiste = ($pregunta) => {
+    $.ajax({
+        url: "../../../Vista/crud/pregunta/preguntaExistente.php",
+        type: "POST",
+        datatype: "JSON",
+        data: {
+            pregunta: $pregunta
+        },
+        success: function (pregunta) {
+            let $objpregunta = JSON.parse(pregunta);
+            if ($objpregunta.estado == 'true') {
+                document.getElementById('pregunta').classList.add('mensaje_error');
+                document.getElementById('pregunta').parentElement.querySelector('p').innerText = '*La pregunta ya existe';
+                estadoExistePregunta = false; // Pregunta es existente, es false
+            } else {
+                document.getElementById('pregunta').classList.remove('mensaje_error');
+                document.getElementById('pregunta').parentElement.querySelector('p').innerText = '';
+                estadoExistePregunta = true; // Preunta no existe, es true
+            }
+        }
+        
+    });
+}

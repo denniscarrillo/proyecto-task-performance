@@ -1,9 +1,9 @@
-<div class="modal fade" id="modalNuevaPregunta" tabindex="-1" aria-labelledby="nuevoModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalNuevaPregunta" tabindex="-1" aria-labelledby="nuevoModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="nuevoModalLabel">Crear Nueva Pregunta</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" id ="btn-x" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form action="" method="post" id="form-Pregunta">
@@ -14,8 +14,8 @@
                             <p class="mensaje"></p>
                         </div>
                     </div>
-                    <div class="botones">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <div class="btn-guardar">
+                        <button type="button" class="btn btn-secondary" id="btn-cerrar" data-bs-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary" id="btn-submit"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
                     </div>
                 </form>
