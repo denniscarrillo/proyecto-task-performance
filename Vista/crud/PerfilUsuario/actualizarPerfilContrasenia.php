@@ -27,7 +27,7 @@
           $user = $_SESSION['usuario'];
           if($password == $password1){
               //Guardar contraseña anterior en la tabla historial contraseña.
-              $respaldada = ControladorUsuario::obtenerContraseniaPerfil($user);
+              $respaldada = ControladorUsuario::obtenerContraseniaPerfil($userName);
               if($respaldada){
                 $encriptPassword = password_hash($password, PASSWORD_DEFAULT);
                   //Actualizar a la nueva contraseña en la tabla usuario.

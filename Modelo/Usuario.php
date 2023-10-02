@@ -616,10 +616,15 @@ class Usuario {
         sqlsrv_close($consulta);
 
         return [$resultadoMin, $resultadoMax];
+
+
     }    public static function obtenerDatosPerfilUsuario($userName){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query="select nombre_Usuario,rtn, Correo_Electronico, telefono , direccion from tbl_MS_Usuario where usuario='$userName';";
+        $query="SELECT u.nombre_Usuario, u.rtn, u.Correo_Electronico, u.telefono, u.direccion,r.id_Rol, r.rol
+                FROM tbl_MS_Usuario AS u
+                INNER JOIN tbl_MS_Roles AS r ON u.id_Rol = r.id_Rol
+                WHERE u.usuario = '$userName';";
         $resultado=sqlsrv_query($conexion,$query);
         $arraydatos=sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
         $datosPerfil=[ 
@@ -628,6 +633,9 @@ class Usuario {
             'correo'=>$arraydatos['Correo_Electronico'],
             'telefono'=>$arraydatos['telefono'],
             'direccion'=>$arraydatos['direccion'],
+            'idRol'=>$arraydatos['id_Rol'],
+            'rol_name'=>$arraydatos['rol']
+
         ];
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $datosPerfil;
@@ -644,36 +652,13 @@ class Usuario {
         $modificadoPor = $nuevoUsuario->modificadoPor;
         $query = "UPDATE tbl_ms_usuario
          SET nombre_Usuario='$nombre',rtn='$rtn',Correo_Electronico='$email', 
-        telefono='$telefono', direccion='$direccion', Modificado_Por='$modificadoPor',Fecha_Modificacion = GETDATE()
+         telefono='$telefono', direccion='$direccion', Modificado_Por='$modificadoPor',Fecha_Modificacion = GETDATE()
          WHERE usuario='$nuevoUsuario->usuario';";
         sqlsrv_query($conexion, $query);
         sqlsrv_close($conexion); #Cerramos la conexión.
     }
 
-    public static function obtenerContraseniaPerfil($userName){
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB();
-        $query="select contrasenia from tbl_MS_Usuario where usuario='$userName';";
-        $resultado=sqlsrv_query($conexion,$query);
-        $arraydatos=sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
-        $datosPerfil=[ 
-            ' contrasenia'=>$arraydatos['contrasenia'],
-        ];
-        sqlsrv_close($conexion); #Cerramos la conexión.
-        return $datosPerfil;
-    }
-
-    public static function editarContraseniaPerfil($nuevoUsuario){
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB();
-        $contrasenia = $nuevoUsuario->contrasenia;
-        $modificadoPor = $nuevoUsuario->modificadoPor;
-        $query = "UPDATE tbl_ms_usuario
-         SET contrasenia='$contrasenia' Modificado_Por='$modificadoPor',Fecha_Modificacion = GETDATE()
-         WHERE usuario='$nuevoUsuario->usuario';";
-        sqlsrv_query($conexion, $query);
-        sqlsrv_close($conexion); #Cerramos la conexión.
-    }
+   
 
 
 }#Fin de la clase

@@ -145,6 +145,11 @@ if (isset($_SESSION['usuario'])) {
                     <p class="mensaje"></p>
               </div>
               <div class="mb-3">
+                    <label for="nombre">Rol:</label>
+                    <input type="text" class="form-control" name="idRol"   id="E_idRol" value="<?php echo $data['rol_name'] ?>" disabled>
+                    <p class="mensaje"></p>
+              </div>
+              <div class="mb-3">
                     <label for="nombre">Nombre:</label>
                     <input type="text" class="form-control" name="nombre"   id="E_nombre"  value="<?php echo $data['nombre'] ?>" >
                     <p class="mensaje"></p>
@@ -154,6 +159,7 @@ if (isset($_SESSION['usuario'])) {
                     <input type="text" class="form-control" name="rtn"   id="E_rtn"  value="<?php echo $data['rtn'] ?>" >
                     <p class="mensaje"></p>
               </div>
+              
               
             </div>
             <div class="grupo-form" >
@@ -173,7 +179,7 @@ if (isset($_SESSION['usuario'])) {
                     <p class="mensaje"></p>
                   </div>
                   <div class="btn-guardar">
-                        <button type="submit"  class="btn btn-uno" ><a class=" btn-uno"  href="gestionPerfilUsuario.php"  >Cancelar</a></button>
+                        <button type="button"  class="btn btn-uno" ><a class=" btn-uno"  href="gestionPerfilUsuario.php"  >Cancelar</a></button>
                         <button type="submit" name="guardar" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
                    </div>
             </div>

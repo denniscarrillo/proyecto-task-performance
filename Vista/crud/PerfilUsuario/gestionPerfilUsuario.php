@@ -154,13 +154,22 @@ if (isset($_SESSION['usuario'])) {
                  
               </div>
               <div class="mb-3">
-                    <label  class="titulos"  for="rtn">RTN:</label>
-                    <label ><?php echo $datos['rtn'] ?></label>
+                    <label  class="titulos" for="rol">Rol:</label>
+                    <label ><?php echo $datos['rol_name'] ?></label>
                   
-              </div>
+                  </div>
+              
+             
               
             </div>
+            
             <div class="grupo-form" >
+
+              <div class="mb-3">
+                      <label  class="titulos"  for="rtn">RTN:</label>
+                      <label ><?php echo $datos['rtn'] ?></label>
+                    
+                </div>
               <div class="mb-3">
                     <label  class="titulos"  for="telefono">Teléfono:</label>
                     <label ><?php echo $datos['telefono'] ?></label>
@@ -176,6 +185,9 @@ if (isset($_SESSION['usuario'])) {
                     <label ><?php echo $datos['correo'] ?></label>
                   
                   </div>
+
+                  
+
             </div>
             </form>
             </div>
