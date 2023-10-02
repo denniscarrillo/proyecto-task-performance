@@ -724,32 +724,7 @@ class Usuario {
         sqlsrv_query($conexion, $query);
         sqlsrv_close($conexion); #Cerramos la conexión.
     }
-
-    public static function obtenerContraseniaPerfil($userName){
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB();
-        $query="select contrasenia from tbl_MS_Usuario where usuario='$userName';";
-        $resultado=sqlsrv_query($conexion,$query);
-        $arraydatos=sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
-        $datosPerfil=[ 
-            ' contrasenia'=>$arraydatos['contrasenia'],
-        ];
-        sqlsrv_close($conexion); #Cerramos la conexión.
-        return $datosPerfil;
-    }
-
-    public static function editarContraseniaPerfil($nuevoUsuario){
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB();
-        $contrasenia = $nuevoUsuario->contrasenia;
-        $modificadoPor = $nuevoUsuario->modificadoPor;
-        $query = "UPDATE tbl_ms_usuario
-        SET contrasenia='$contrasenia' Modificado_Por='$modificadoPor',Fecha_Modificacion = GETDATE()
-        WHERE usuario='$nuevoUsuario->usuario';";
-        sqlsrv_query($conexion, $query);
-        sqlsrv_close($conexion); #Cerramos la conexión.
-    }
-    
+  
     public static function estadoFechaVencimientoContrasenia($user){
         $estado = false;
         $conn = new Conexion();
