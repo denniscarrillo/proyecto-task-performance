@@ -148,4 +148,8 @@
         public static function estadoFechaVencimientoContrasenia($user) {
            return Usuario::estadoFechaVencimientoContrasenia($user);
        }
+
+       public static function estadoValidacionContrasenas($user, $contrasenia) {
+        return Usuario::estadoValidacionContrasenas($user, $contrasenia);
+    }
     }
