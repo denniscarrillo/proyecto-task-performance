@@ -756,4 +756,29 @@ class Usuario {
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $estado;
     }
+
+    public static function estadoValidacionContrasenas ($user, $contrasenia){
+        $cont = 0;
+        $estadoContra = false;
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT id_Hist, H.id_Usuario, u.usuario, H.contrasenia 
+        FROM tbl_MS_Hist_Contrasenia as H
+        inner join tbl_MS_Usuario as u on u.id_Usuario = H.id_Usuario
+        WHERE u.usuario = '$user';";
+        $resultado = sqlsrv_query($conexion, $query);
+        while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) { 
+            $cont++;
+            $estadoContra = password_verify($contrasenia, $fila['contrasenia']);
+            if ($estadoContra){
+                break;
+            }            
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estadoContra;
+    }
+
 }#Fin de la clase
+
+    
+
