@@ -349,23 +349,41 @@ class Usuario {
         sqlsrv_close($consulta); #Cerrar la conexión.
         return $correo;
     }
-    public static function guardarToken($user, $token, $creadoPor){
+    public static function guardarToken($user, $creadoPor){
+        $resultado = false;
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
+        //Obtenemos el ID de usuario que inicio el proceso de recuperación contraseña
         $querySelectU = "SELECT id_Usuario FROM tbl_MS_Usuario WHERE usuario = '$user'";
         $usuario = sqlsrv_query($consulta, $querySelectU); #Ejecutamos la consulta (Recordset)
         $fila = sqlsrv_fetch_array($usuario, SQLSRV_FETCH_ASSOC);
-        $idUsuario = $fila['id_Usuario'];
+        $idUsuario = $fila['id_Usuario']; //Capturamos el ID
+        //Obtenemos el valor del parametro HORAS VIGENCIA TOKEN con el que asignamos el tiempo de expiración
         $queryVigenciaToken = "SELECT valor FROM tbl_MS_Parametro WHERE parametro = 'HORAS VIGENCIA TOKEN';";
         $vigenciaToken = sqlsrv_query($consulta, $queryVigenciaToken);
         $filaToken = sqlsrv_fetch_array($vigenciaToken, SQLSRV_FETCH_ASSOC);
         $horasVencimiento = "";
         if (isset($filaToken['valor'])) {
-            $horasVencimiento = $filaToken['valor'];
-        }              
-        $queryInsert = "INSERT INTO tbl_token (id_usuario, Token, fecha_expiracion, Creado_Por, Fecha_Creacion)
-                    VALUES ('$idUsuario','$token', DATEADD(MINUTE, $horasVencimiento, GETDATE()), '$creadoPor', GETDATE())";
-        $resultado = sqlsrv_query($consulta, $queryInsert);
+            $horasVencimiento = intval($filaToken['valor']);
+        } 
+        $tokenUsuario = "SELECT token FROM tbl_Token WHERE id_usuario = '$idUsuario';";
+        $ejecutar = sqlsrv_query($consulta, $tokenUsuario);
+        if(sqlsrv_has_rows($ejecutar)){
+            while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
+                $token = random_int(1000, 9999);
+                if($token != intval($fila['token'])){
+                    $queryInsert = "INSERT INTO tbl_token (id_usuario, Token, fecha_expiracion, Creado_Por, Fecha_Creacion)
+                    VALUES ('$idUsuario','$token', DATEADD(HOUR, $horasVencimiento, GETDATE()), '$creadoPor', GETDATE())";
+                    $resultado = sqlsrv_query($consulta, $queryInsert);
+                    break;
+                }
+            } 
+        } else {
+            $token = random_int(1000, 9999);
+            $queryInsert = "INSERT INTO tbl_token (id_usuario, Token, fecha_expiracion, Creado_Por, Fecha_Creacion)
+            VALUES ('$idUsuario','$token', DATEADD(HOUR, $horasVencimiento, GETDATE()), '$creadoPor', GETDATE())";
+            $resultado = sqlsrv_query($consulta, $queryInsert);
+        }      
         sqlsrv_close($consulta); #Cerrar la conexión.        
         return $resultado;
     }
@@ -470,7 +488,7 @@ class Usuario {
             sqlsrv_query($consulta, $query2);
         }            
         sqlsrv_close($consulta); #Cerrar la conexión.
-    }
+    } 
 
     public static function actualizaRContrasenia($usuario, $contrasenia){
         $conn = new Conexion();
@@ -497,24 +515,27 @@ class Usuario {
         return $creado;
     }
     public static function validarToken($usuario, $tokenUsuario){
-        $existe = false;
+        $vencido = 0; //Por defecto asumimos que el token no existe
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
         $query = "SELECT id_Usuario FROM tbl_MS_Usuario WHERE usuario = '$usuario'";
         $user = sqlsrv_query($consulta, $query);
         $fila = sqlsrv_fetch_array($user, SQLSRV_FETCH_ASSOC);
         $idUser = $fila['id_Usuario'];
-        $query2 = "SELECT token, fecha_expiracion FROM tbl_token WHERE id_usuario = '$idUser'";
-        $validar = sqlsrv_query($consulta, $query2);
-        while($row = sqlsrv_fetch_array($validar, SQLSRV_FETCH_ASSOC)){
-            date_default_timezone_set('America/Tegucigalpa');
-            if($tokenUsuario == $row['token'] && strtotime(date("Y-m-d H:i:s")->format('Y-m-d H:i:s')) < strtotime($row['fecha_expiracion']->format('Y-m-d H:i:s'))){
-                $existe = true;
-                break;
-            }
+        $query2 = "SELECT DATEDIFF(HOUR, GETDATE(), fecha_expiracion) AS vencimiento FROM tbl_token WHERE id_usuario = '$idUser' AND token = '$tokenUsuario'";
+        $resultado = sqlsrv_query($consulta, $query2);
+        $vencToken = sqlsrv_has_rows($resultado);
+        if($vencToken){ //Si el token existe entonces validamos su fecha de vencimiento
+            $row = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+            $FechaVenc = intval($row['vencimiento']);
+            if($FechaVenc < 1){
+                $vencido = 1; //Si ya vencio devolvemos 1
+            } else {
+                $vencido = 2; //Si no ha vencido devolvemos 2
+            }   
         }
         sqlsrv_close($consulta); #Cerramos la conexión.
-        return $existe;
+        return $vencido;
     }
     //Recibe un usuario y devuelve un id de usuario.
     public static function obtenerIdUsuario($usuario){

@@ -20,6 +20,8 @@
   justify-content: center;
   height: fit-content;
   margin: 2rem;
+  margin-bottom: auto;
+  margin-top: auto;
 }
 .conteiner-link{
   display: flex;
@@ -40,15 +42,15 @@
   gap: 0.4rem;
   justify-content: center;
   align-items: center;
-  width: 10em;
-  height: 6em;
+  width: 18vw;
+  height: 25vh;
   /* width: 15rem;
   height: 10rem; */
   border-radius: 0.3rem;
   background-color: #cb7a2dfa;
   text-decoration: none;
   color: #d9d2d2;
-  font-size: 1.4rem;
+  font-size: 8em;
   /* Estilos de sombre */
   box-shadow: 8px 10px 4px #535151; 
   transition: all ease 0.8s;
@@ -61,12 +63,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: auto;
   min-height: 8rem;
   background-color: #706d6d;
   margin-bottom: 0;
   font-size: 2rem;
   color: whitesmoke;
+  margin-top: 0.8rem;
 }
 p{
   margin-bottom: 0;

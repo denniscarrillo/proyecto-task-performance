@@ -1,3 +1,6 @@
+$(document).on('load', function(){
+    console.log(document.getElementById('btn_ver'));
+})
 $(document).ready(function () {
     let btnsEditar = null;
     if(document.querySelectorAll('.btn-editar')) {
@@ -6,16 +9,14 @@ $(document).ready(function () {
     }
     let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
     obtenerPermisos($idObjetoSistema, btnsEditar);
-
+    //Seleccionamos los span del menu
     let $links = document.querySelectorAll('.check__conteiner');
-    console.log($links);
+    //Ahora recorremos y vamos buscamos donded hay coincidencia entre la vista actual y alguna opcion del sidebar
     $links.forEach($link => {
         if($idObjetoSistema == $link.id){
+            //Donde coincidan, entonces le añadimos la clase 'item-menu-active' que aplica estilos para marcar en que parte del sidebar estamos situados
             $link.classList.add('item-menu-active');
-            // console.log($link.setAttribute('checked'));
-            console.log($idObjetoSistema+" -- "+$link.id);
         }
-        // console.log($idObjetoSistema+" -- "+$link.id);
     });
 
     //Probar para acceder a los botones de editar

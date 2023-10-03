@@ -113,7 +113,7 @@
       </li>
       <!-- Consulta -->
       <li class="dropdown-menu__content__list">
-        <span class="check__conteiner dropdown__link__span">
+        <span class="check__conteiner dropdown__link__span" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionCliente.php');?>">
         <div class="icon-menu-principal__conteiner">
           <i class="icon-menu-principal fa-solid fa-magnifying-glass-arrow-right"></i>
         </div>

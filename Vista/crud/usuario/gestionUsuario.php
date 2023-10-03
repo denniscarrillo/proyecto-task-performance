@@ -153,11 +153,11 @@ if (isset($_SESSION['usuario'])) {
           </table>
         </div>
         <!-- Footer -->
-        <div class="footer-conteiner">
-                <?php
-                require_once '../../layout/footer.php';
-                ?>
-          </div>
+        <!-- <div class="footer-conteiner"> -->
+            <?php
+            // require_once '../../layout/footer.php';
+            ?>
+          <!-- </div> -->
       </div> <!-- Fin de la columna -->
     </div>
   </div>

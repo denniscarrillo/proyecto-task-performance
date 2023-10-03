@@ -18,13 +18,13 @@
                 <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="180px">
             </div>
             <div>
-                <h2 style="font-size: 1.5rem;">Digita tu token</h2>
+                <h2 style="font-size: 1.5rem;">Digite su token</h2>
                 <div class="wrap-input mb-3">   
                     <span class="conteiner-icon">
                         <i class="icon fa-sharp fa-solid fa-key" style="color: #ee7a1b;"></i>
                         <!-- <i class="icon fa-solid fa-lock-keyhole"></i> -->
                     </span>
-                    <input type="text" class="form-control" id="token" maxlength="4" required="" pattern="[0-9]+" name="token" placeholder="token">
+                    <input type="text" class="form-control" id="token" maxlength="4" pattern="[0-9]+" name="token" placeholder="token">
                     
                 </div>
                 <button type="submit" class="btn btn-primary btn-block" name="submit">Validar</button>

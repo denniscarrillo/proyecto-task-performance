@@ -79,7 +79,7 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
-  <title> Estado De Solicitudes</title>
+  <title> Consulta solicitudes</title>
 </head>
 
 <body style="overflow: hidden;">
@@ -150,11 +150,11 @@ if (isset($_SESSION['usuario'])) {
           </table>
         </div>
         <!-- Footer -->
-        <div class="footer-conteiner">
+        <!-- <div class="footer-conteiner">
             <?php
-            require_once '../../layout/footer.php';
+            // require_once '../../layout/footer.php';
             ?>
-        </div>
+        </div> -->
       </div> <!-- Fin de la columna -->
     </div>
   </div>

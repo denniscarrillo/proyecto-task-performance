@@ -9,6 +9,7 @@
 	padding: 0;
 	font-size: 2rem;
 	color: whitesmoke;
+	margin-bottom: 0.8rem;
 }
 .navbar-content {
 	display: flex;

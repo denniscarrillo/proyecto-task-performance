@@ -27,6 +27,7 @@ body {
 }
 .logo_items {
   gap: 8px;
+  margin-top: 1rem;
 }
 .flex-log{
   display: flex;
