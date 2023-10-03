@@ -1,24 +1,22 @@
 /////////Constantes Graficas///////////////
- //Grafica general Llamadas
-const $grafica_llamada = document.querySelector("#grafica_llamada");
-const etiquetas_llamada = ["Llamadas", "Meta"]
-const color_Llamada = ['rgba(133, 52, 0 )', 'rgb(82, 82, 82 )']
-  //Grafica general Lead
-const $grafica_lead = document.querySelector("#grafica_lead");
-const etiquetas_lead = ["Leads", "Meta"]
-const color_Lead = ['rgba( 202, 117, 24)', 'rgb(82, 82, 82 )']
+    //Grafica general Llamadas
+    const $grafica_llamada = document.querySelector("#grafica_llamada");
+    const etiquetas_llamada = ["Llamadas", "Meta"]
+    const color_Llamada = ['rgba(133, 52, 0 )', 'rgb(82, 82, 82 )']
+    //Grafica general Lead
+    const $grafica_lead = document.querySelector("#grafica_lead");
+    const etiquetas_lead = ["Leads", "Meta"]
+    const color_Lead = ['rgba( 202, 117, 24)', 'rgb(82, 82, 82 )']
 
-  //Grafica general Cotizaciones
-const $grafica_Cotizacion = document.querySelector("#grafica_Cotizacion");
-const etiquetas_Cotizacion = ["Cotizacion", "Meta"]
-const color_Cotizacion =['rgba(255, 152, 0)','rgb(82, 82, 82 )']
+    //Grafica general Cotizaciones
+    const $grafica_Cotizacion = document.querySelector("#grafica_Cotizacion");
+    const etiquetas_Cotizacion = ["Cotizacion", "Meta"]
+    const color_Cotizacion =['rgba(255, 152, 0)','rgb(82, 82, 82 )']
 
-  //Grafica general Ventas
-const $grafica_Venta = document.querySelector("#grafica_Ventas");
-const etiquetas_Venta = ["Ventas", "Meta"]
-const color_Venta = ['rgba(255, 212, 120)','rgb(82, 82, 82 )']
-
-
+    //Grafica general Ventas
+    const $grafica_Venta = document.querySelector("#grafica_Ventas");
+    const etiquetas_Venta = ["Ventas", "Meta"]
+    const color_Venta = ['rgba(255, 212, 120)','rgb(82, 82, 82 )']
 
 //////////////////////Validaciones Graficas/////////////////////////////////////////
 /// funcion habilita el boton seleccionar vendedores
@@ -91,9 +89,8 @@ $(document).ready(function () {
            
             let fechadesde = document.getElementById('fechaDesdef').value;
             let fechahasta = document.getElementById('fechaHastaf').value;
-          
+            //se obtienen los datos para graficas GENERALES 
             obtenerDatosGrafica(fechadesde, fechahasta);
-            // obtenerMetaMetricas();
             $mensaje.innerText = '';
             $mensaje.classList.remove('.mensaje')
         
@@ -103,25 +100,18 @@ $(document).ready(function () {
 
 //funcion que al seleccionar me de las graficas de las tareas por un vendedor 
 $(document).on("click", "#btn_seleccionar", function() {
-    
     let fila = $(this).closest("tr");
     idUsuario_Vendedor = fila.find("td:eq(0)").text();
-    console.log(idUsuario_Vendedor);
+    // console.log(idUsuario_Vendedor);
     $("#modalTraerVendedores").modal("hide");
     const fechaDesdes = $('#fechaDesdef').val();
     const fechaHastas = $('#fechaHastaf').val();
-    
-    
+       
 if (fechaDesdes === "" && fechaHastas === "" ) {
-    $mensaje.innerText = 'Debe llenar ambas Fechas';
-   
+    $mensaje.innerText = '*Debe llenar ambas Fechas';
 }else{
-    let fechadesde = document.getElementById('fechaDesdef').value;
-    let fechahasta = document.getElementById('fechaHastaf').value;
-    // obtenerMetaMetricas();
-    
-    obtenerTareaVendedor(idUsuario_Vendedor,fechadesde, fechahasta);
-    
+    //se obtienen los datos para graficas de un VENDEDOR
+    obtenerTareaVendedor(idUsuario_Vendedor,fechaDesdes, fechaHastas);
     $mensaje.innerText = '';
     $mensaje.classList.remove('.mensaje')
 }
@@ -275,8 +265,6 @@ $(document).ready(function () {
     });
 });
 
-
-
 //////////Obtiene los datos para seleccionar las tareas de los vendedores
 let obtenerTareaVendedor = function(idUsuario_Vendedor,fechaDesde,fechaHasta){
     
@@ -292,8 +280,7 @@ let obtenerTareaVendedor = function(idUsuario_Vendedor,fechaDesde,fechaHasta){
          success: function (resp) {
              datosGrafica= JSON.parse(resp);  
              generarGraficasVendedores(datosGrafica);
-             console.log(datosGrafica) ;
-      
+            //  console.log(datosGrafica) ;      
             }
      }); 
 };
@@ -340,8 +327,7 @@ let generarGraficasVendedores = function(data) {
                 datosIngresos_Cotizacion,
             ]
         },       
-    });
-    
+    });   
     ////////////////////////////////////////////////////GRAFICA  VENTAS////////////////////////////////////////////////////  
     const datosIngresos_Venta = {
         data: [data.TotalVenta, data.metaVentas], 

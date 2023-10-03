@@ -8,10 +8,10 @@ require_once("../../../Controlador/ControladorUsuario.php");
 require_once("../../../Controlador/ControladorBitacora.php");
 
 
-
+$data = ControladorUsuario::obtenerDatosPerfilUsuario($_SESSION['usuario']);
 
 if (isset($_SESSION['usuario'])) {
-  $data = ControladorUsuario::obtenerDatosPerfilUsuario($_SESSION['usuario']);
+ 
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
   $permisoRol = ControladorUsuario::permisosRol($idRolUsuario);
@@ -139,12 +139,15 @@ if (isset($_SESSION['usuario'])) {
          <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post" id="formContrasenia">
             <div class="grupo-form">
               <div class="mb-3">
-                <input type="password" class="form-control" name="password" id="password" maxlength = "15" placeholder="Nueva contraseña">
+                <input type="password" class="form-control" name="password" id="password" maxlength = "15" placeholder="Contraseña Actual">
                 <p class="mensaje"></p>
               </div>
-            
               <div class="mb-3">
-                <input type="password" class="form-control" id="confirmPassword" maxlength="15" name="confirmPassword" placeholder="Confirmar contraseña" >
+                <input type="password" class="form-control" id="newPassword" maxlength="15" name="newPassword" placeholder="Nueva Contraseña" >
+                <p class="mensaje"></p>
+              </div>
+              <div class="mb-3">
+                <input type="password" class="form-control" id="confirmPassword" maxlength="15" name="confirmPassword" placeholder="Confirmar Contraseña" >
                 <p class="mensaje"></p>
               </div>
               <div class ="mb-3">

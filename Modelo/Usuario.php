@@ -642,18 +642,24 @@ class Usuario {
     public static function actualizarFechaVencimientoContrasena($ArrayUsuarios, $vigenciaPassword) {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        foreach ($ArrayUsuarios as $usuario){
-            $idUsuario = $usuario['idUsuario'];
-            $query = "SELECT contrasenia, Fecha_Creacion from tbl_MS_Hist_Contrasenia where id_Usuario = '$idUsuario'";
-            $listaUsuario = sqlsrv_query($conexion, $query);
-            while ($fila = sqlsrv_fetch_array($listaUsuario, SQLSRV_FETCH_ASSOC)) {
-                if($fila['contrasenia'] == $idUsuario ){
-                    $fechaC = $fila['Fecha_Creacion'];
-                    $query2 = "UPDATE tbl_MS_Usuario
-                    SET fecha_Vencimiento = DATEADD(DAY, '$vigenciaPassword', '$fechaC') where id_Usuario = '$idUsuario'";
-                    $resultado = sqlsrv_query($conexion, $query2);
-                }            
+        try {
+            foreach ($ArrayUsuarios as $usuario){
+                $idUsuario = $usuario['idUsuario'];
+                $query = "SELECT id_Hist, contrasenia from tbl_MS_Hist_Contrasenia where id_Usuario = '$idUsuario'";           
+                $listaUsuario = sqlsrv_query($conexion, $query);
+                while ($fila = sqlsrv_fetch_array($listaUsuario, SQLSRV_FETCH_ASSOC)) {                   
+                    if($fila['contrasenia'] == $usuario['contrasenia']){
+                        $idHist = $fila['id_Hist'];
+                        $query2 = "UPDATE tbl_MS_Usuario
+                        SET fecha_Vencimiento = DATEADD(DAY, $vigenciaPassword, (SELECT Fecha_Creacion 
+                        FROM tbl_MS_Hist_Contrasenia WHERE id_Hist = '$idHist' and id_Usuario = '$idUsuario')) 
+                        where id_Usuario = '$idUsuario';";
+                        sqlsrv_query($conexion, $query2);                       
+                    }            
+                }
             }
+        }catch (Exception $e) {
+            echo 'Error SQL:' . $e;
         }
         sqlsrv_close($conexion);
     }
@@ -677,10 +683,15 @@ class Usuario {
         sqlsrv_close($consulta);
 
         return [$resultadoMin, $resultadoMax];
+
+
     }    public static function obtenerDatosPerfilUsuario($userName){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query="select nombre_Usuario,rtn, Correo_Electronico, telefono , direccion from tbl_MS_Usuario where usuario='$userName';";
+        $query="SELECT u.nombre_Usuario, u.rtn, u.Correo_Electronico, u.telefono, u.direccion,r.id_Rol, r.rol
+                FROM tbl_MS_Usuario AS u
+                INNER JOIN tbl_MS_Roles AS r ON u.id_Rol = r.id_Rol
+                WHERE u.usuario = '$userName';";
         $resultado=sqlsrv_query($conexion,$query);
         $arraydatos=sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
         $datosPerfil=[ 
@@ -689,6 +700,9 @@ class Usuario {
             'correo'=>$arraydatos['Correo_Electronico'],
             'telefono'=>$arraydatos['telefono'],
             'direccion'=>$arraydatos['direccion'],
+            'idRol'=>$arraydatos['id_Rol'],
+            'rol_name'=>$arraydatos['rol']
+
         ];
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $datosPerfil;
@@ -705,36 +719,49 @@ class Usuario {
         $modificadoPor = $nuevoUsuario->modificadoPor;
         $query = "UPDATE tbl_ms_usuario
          SET nombre_Usuario='$nombre',rtn='$rtn',Correo_Electronico='$email', 
-        telefono='$telefono', direccion='$direccion', Modificado_Por='$modificadoPor',Fecha_Modificacion = GETDATE()
+         telefono='$telefono', direccion='$direccion', Modificado_Por='$modificadoPor',Fecha_Modificacion = GETDATE()
          WHERE usuario='$nuevoUsuario->usuario';";
         sqlsrv_query($conexion, $query);
         sqlsrv_close($conexion); #Cerramos la conexión.
     }
-
-    public static function obtenerContraseniaPerfil($userName){
+  
+    public static function estadoFechaVencimientoContrasenia($user){
+        $estado = false;
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query="select contrasenia from tbl_MS_Usuario where usuario='$userName';";
-        $resultado=sqlsrv_query($conexion,$query);
-        $arraydatos=sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
-        $datosPerfil=[ 
-            ' contrasenia'=>$arraydatos['contrasenia'],
-        ];
+        $query = "SELECT DATEDIFF(DAY,  GETDATE(), fecha_Vencimiento) AS ESTADO 
+                  from tbl_MS_Usuario where usuario = '$user'";
+        $resultado = sqlsrv_query($conexion, $query);
+        $estadoVenc = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+        if (intval($estadoVenc['ESTADO'])>=1){
+            $estado = true;
+        }
         sqlsrv_close($conexion); #Cerramos la conexión.
-        return $datosPerfil;
+        return $estado;
     }
 
-    public static function editarContraseniaPerfil($nuevoUsuario){
+    public static function estadoValidacionContrasenas ($user, $contrasenia){
+        $cont = 0;
+        $estadoContra = false;
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $contrasenia = $nuevoUsuario->contrasenia;
-        $modificadoPor = $nuevoUsuario->modificadoPor;
-        $query = "UPDATE tbl_ms_usuario
-         SET contrasenia='$contrasenia' Modificado_Por='$modificadoPor',Fecha_Modificacion = GETDATE()
-         WHERE usuario='$nuevoUsuario->usuario';";
-        sqlsrv_query($conexion, $query);
+        $query = "SELECT id_Hist, H.id_Usuario, u.usuario, H.contrasenia 
+        FROM tbl_MS_Hist_Contrasenia as H
+        inner join tbl_MS_Usuario as u on u.id_Usuario = H.id_Usuario
+        WHERE u.usuario = '$user';";
+        $resultado = sqlsrv_query($conexion, $query);
+        while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) { 
+            $cont++;
+            $estadoContra = password_verify($contrasenia, $fila['contrasenia']);
+            if ($estadoContra){
+                break;
+            }            
+        }
         sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estadoContra;
     }
-
 
 }#Fin de la clase
+
+    
+
