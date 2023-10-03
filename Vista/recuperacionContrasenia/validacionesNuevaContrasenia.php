@@ -30,7 +30,7 @@
                   $estadoContra = ControladorUsuario::estadoValidacionContrasenas($user, $_POST['password']);
                   // print json_encode($estadoContra, JSON_UNESCAPED_UNICODE);
                    if($estadoContra){
-                    $mensaje = 'Elija una contraseña diferente,ya existe';
+                    $mensaje = 'Contraseña ya utilizada, elige otra.';
                    }else{                  
                     //Actualizar a la nueva contraseña en la tabla usuario.
                     ControladorUsuario::actualizarContrasenia($user, $encriptPassword);

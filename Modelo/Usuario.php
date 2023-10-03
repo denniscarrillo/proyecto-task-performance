@@ -451,7 +451,7 @@ class Usuario {
         $query = "SELECT id_Hist, h.id_Usuario, u.usuario, h.contrasenia, h.Fecha_Creacion 
                 FROM tbl_MS_Hist_Contrasenia as h
                 inner join	tbl_MS_Usuario as u on u.id_Usuario = h.id_Usuario
-                WHERE h.id_Usuario = 1 ORDER BY id_Hist DESC;";
+                WHERE u.usuario = '$Usuario' ORDER BY id_Hist DESC;";
         $resultado = sqlsrv_query($consulta, $query);
         $HistorialC = array();
         while($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)){
