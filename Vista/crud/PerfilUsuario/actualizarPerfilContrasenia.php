@@ -1,11 +1,12 @@
 <?php
-  require_once ("../../db/Conexion.php");
-  require_once ("../../Modelo/Usuario.php");
-  require_once ("../../Modelo/Bitacora.php");
-  require_once("../../Controlador/ControladorUsuario.php");
-  require_once("../../Controlador/ControladorBitacora.php");
+ require_once("../../../db/Conexion.php");
+ require_once("../../../Modelo/Usuario.php");
+ require_once("../../../Modelo/Bitacora.php");
+ require_once("../../../Controlador/ControladorUsuario.php");
+ require_once("../../../Controlador/ControladorBitacora.php");
 
-  session_start();
+ $mensaje = '';
+
   if (isset($_SESSION['usuario'])) {
     /* ========================= Evento Configurar Contraseña. ======================*/
     $newBitacora = new Bitacora();
@@ -18,26 +19,37 @@
     $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' ingreso a pantalla configuración contraseña';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     /* =======================================================================================*/
-    $mensaje = '';
+   
     if (isset($_POST['submit'])){
       $password = $_POST['password'];
-      $password1 = $_POST['confirmPassword'];
-      session_start(); //Reanudamos sesion
+      $NewPass= $_POST['newPassword'];
+      $ConfirmPass = $_POST['confirmPassword'];
+      
+      //session_start(); //Reanudamos sesion
       if(isset($_SESSION['usuario'])){
           $user = $_SESSION['usuario'];
-          if($password == $password1){
-              //Guardar contraseña anterior en la tabla historial contraseña.
-              $respaldada = ControladorUsuario::obtenerContraseniaPerfil($user);
-              if($respaldada){
-                $encriptPassword = password_hash($password, PASSWORD_DEFAULT);
-                  //Actualizar a la nueva contraseña en la tabla usuario.
-                  ControladorUsuario::editarContraseniaPerfil($user, $encriptPassword);
-                  header('location: ../login/login.php');
-                  session_destroy();
-              }
-          } else {
-            $mensaje = 'Deben coincidir ambas contraseñas!';
+          $existeUsuario = ControladorUsuario::login($user, $_POST["password"]);
+          if($existeUsuario){
+            if($NewPass == $ConfirmPass){
+              $encriptPassword = password_hash($NewPass, PASSWORD_DEFAULT);
+             
+              $estadoContra = ControladorUsuario::estadoValidacionContrasenas($user, $_POST['newPassword']);
+                  // print json_encode($estadoContra, JSON_UNESCAPED_UNICODE);
+                   if($estadoContra){
+                    $mensaje = 'Elija una contraseña diferente,ya existe';
+                   }else{ 
+                    ControladorUsuario::actualizarContrasenia($user, $encriptPassword);
+                    $respaldada = ControladorUsuario::respaldarContrasenia($user, "", $encriptPassword, 3); 
+                    ControladorUsuario::eliminarUltimaContrasena($_SESSION['usuario']);
+                    $mensaje = 'Contraseña Actualizada'; 
+                   }                 
+            } else {
+              $mensaje = 'Deben coincidir ambas contraseñas!';
+            }
+          }else{
+            $mensaje = 'Su contraseña actual es incorrecta';
           }
+          
           /* ========================= Evento Cambiar Contraseña. ======================*/
           $newBitacora = new Bitacora();
           $accion = ControladorBitacora::accion_Evento();
@@ -52,6 +64,6 @@
       }
     }
   }
-
+?>
 
      
