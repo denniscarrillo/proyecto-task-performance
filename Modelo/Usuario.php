@@ -497,8 +497,9 @@ class Usuario {
                 'Fecha_Creacion' => $fila['Fecha_Creacion']
             ];
         }
-        $tamano = count($HistorialC) > 10 ? $HistorialC[10]['id'] : null;
-        if ($tamano = 1){
+        $tamano = count($HistorialC);  
+        
+        if ($tamano > 10){
             $idH = $HistorialC[10]['id'];           
             $query2 = "DELETE FROM tbl_MS_Hist_Contrasenia WHERE id_Hist = $idH;";
             sqlsrv_query($consulta, $query2);
