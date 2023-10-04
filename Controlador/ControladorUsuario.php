@@ -37,6 +37,9 @@
         public static function obtenerPreguntasUsuario(){
             return Usuario::obtenerPreguntasUsuario();
         }
+        public static function validarPreguntasUsuario($idPregunta, $usuario){
+            return Usuario::validarPreguntasUsuario($idPregunta, $usuario);
+        }
         public static function guardarRespuestas($usuario, $idPreguntas, $respuestas){
             Usuario::guardarRespuestasUsuario($usuario, $idPreguntas, $respuestas);
         }
@@ -144,5 +147,8 @@
 
        public static function estadoValidacionContrasenas($user, $contrasenia) {
         return Usuario::estadoValidacionContrasenas($user, $contrasenia);
-    }
+       }
+       public static function depurarTokenUsuario($usuario){
+        Usuario::depurarToken($usuario);
+       }
     }

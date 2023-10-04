@@ -127,3 +127,13 @@ a{
 .margin-b {
     margin-bottom: 0.2rem;
 }
+/* Estilos del mensaje error del lado de PHP */
+.mensaje-error {
+    padding: 5px;
+    margin: 5px;
+    text-align: center;
+    font-size: 15px;
+    text-transform: uppercase;
+    background-color: #ebbcbc;
+    color: red;
+}

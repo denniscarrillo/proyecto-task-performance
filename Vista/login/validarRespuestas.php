@@ -6,30 +6,36 @@
     require_once("../../Controlador/ControladorBitacora.php");
 
     $user = '';
+    $mensaje = '';
     session_start();
     if (isset($_SESSION['usuario'])) {
         $user = $_SESSION['usuario'];
         $preguntas = ControladorUsuario::obtenerPreguntasUsuario();
-        $cantPreguntasParametro = ControladorUsuario::cantidadPreguntas();
-        $preguntasContestadasUsuario =  ControladorUsuario::cantPreguntasContestadas($user);
+        $cantPreguntasParametro = ControladorUsuario::cantidadPreguntas(); //Cantidad de preguntas a contestar parámetro
+        $preguntasContestadasUsuario = ControladorUsuario::cantPreguntasContestadas($user);
         $respuestasUsuario = array();
         if (isset($_POST['submit'])){
             if($preguntasContestadasUsuario < $cantPreguntasParametro){
                 $idPregunta = $_POST['id_pregunta'];
                 $respuestaUsuario = $_POST['respuesta']; 
-                ControladorUsuario::guardarRespuestas($user, $idPregunta, $respuestaUsuario);
-                ControladorUsuario::incrementarPregContestadas($user, $preguntasContestadasUsuario);
-                $contestadas = $preguntasContestadasUsuario + 1;
-                if($contestadas == $cantPreguntasParametro){
-                    //Cambiar estado del usuario nuevo a Activo
-                    ControladorUsuario::cambiarEstado($user);
-                    $origen = ControladorUsuario::origenNuevoUsuario($user);
-                    if($origen){
-                        header ('location: login.php');
-                        session_destroy();
-                    } else {
-                        header ('location: ../recuperacionContrasenia/v_nuevaContrasenia.php');
+                $existePregunta = ControladorUsuario::validarPreguntasUsuario($idPregunta, $user);
+                if(!$existePregunta){
+                    ControladorUsuario::guardarRespuestas($user, $idPregunta, $respuestaUsuario);
+                    ControladorUsuario::incrementarPregContestadas($user, $preguntasContestadasUsuario);
+                    $contestadas = $preguntasContestadasUsuario + 1;
+                    if($contestadas == $cantPreguntasParametro){
+                        //Cambiar estado del usuario nuevo a Activo
+                        ControladorUsuario::cambiarEstado($user);
+                        $origen = ControladorUsuario::origenNuevoUsuario($user);
+                        if($origen){
+                            header ('location: login.php');
+                            session_destroy();
+                        } else {
+                            header ('location: ../recuperacionContrasenia/v_nuevaContrasenia.php');
+                        }
                     }
+                } else {
+                    $mensaje = "Esta pregunta ya ha sido configurada";
                 }
                 /* ========================= Evento Responder pregunta. ======================*/
                 $newBitacora = new Bitacora();

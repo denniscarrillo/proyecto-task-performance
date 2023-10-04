@@ -56,7 +56,7 @@ let actualizarPermisos = function (elementoFila) {
             toast: true,
             position: 'top',
             showConfirmButton: false,
-            timer: 3000,
+            timer: 2500,
             timerProgressBar: true,
             didOpen: (toast) => {
               toast.addEventListener('mouseenter', Swal.stopTimer)

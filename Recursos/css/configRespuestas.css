@@ -118,15 +118,17 @@ form {
 }
 .titulo-bienvenida{
     text-align: center;
-    color: white;
+    text-transform: uppercase;
+    color: #bd2424;
     font-weight: 800;
-    font-size: 3rem;
+    font-size: 2rem;
 }
 .titulo-bienvenida2{
     text-align: center;
-    color: rgb(70, 67, 67);
+    color: #272424;
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 1.2rem;
+    margin-top: 1rem;
 }
 
 .select-preguntas {
@@ -155,4 +157,21 @@ form {
 .mensaje_error:focus {
     box-shadow: 0 0 0 .25rem rgba(226, 73, 35, 0.455);
     border-color: red;
+}
+.line-space {
+    margin: 0.2rem auto;
+    height: 0.2rem;
+    width: 100%;
+    background-color: #ac4b4b;
+    border-radius: 0.8rem;
+}
+/* Estilos del mensaje error del lado de PHP */
+.mensaje-error {
+    padding: 5px;
+    margin: 5px;
+    text-align: center;
+    font-size: 15px;
+    text-transform: uppercase;
+    background-color: #ebbcbc;
+    color: red;
 }

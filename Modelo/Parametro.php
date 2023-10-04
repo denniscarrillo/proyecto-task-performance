@@ -71,7 +71,6 @@ class Parametro {
         sqlsrv_close($abrirConexion); //Cerrar conexion
         return $parametrosEmail;
     }
-
     public static function obtenerVigencia(){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
@@ -79,8 +78,18 @@ class Parametro {
         $resultado = sqlsrv_query($conexion, $query);
         $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
         $vigencia = [
-            'Vigencia' => $fila['valor'],   
+            'Vigencia' => $fila['valor']   
         ];
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $vigencia;
+    }
+    public static function obtenerVigenciaToken(){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query="SELECT valor FROM  tbl_MS_Parametro where parametro = 'HORAS VIGENCIA TOKEN'";
+        $resultado = sqlsrv_query($conexion, $query);
+        $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+        $vigencia =  $fila['valor'];
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $vigencia;
     }

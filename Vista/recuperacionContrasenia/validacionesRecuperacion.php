@@ -27,10 +27,13 @@
                 if($metodoRec == 'correo'){
                     $correo = ControladorUsuario::obCorreoUsuario($usuario);
                     if($correo != ''){
+                        //Valida si en la tabla token ya existen 10 token, entonces busca el mas antiguo y lo elimina
+                        ControladorUsuario::depurarTokenUsuario($usuario);
                         //Generar y Almacenar token en la base de datos correspondiente al usuario
-                        $almacenado = ControladorUsuario::almacenarToken($usuario, $creadoPor);
-                        if($almacenado){
-                            enviarCorreo($correo, $token);
+                        $tokenListo = ControladorUsuario::almacenarToken($usuario, $creadoPor);
+                        if($tokenListo > 0){
+                            $horasVigencia = ControladorParametro::obtenerVigenciaToken();
+                            enviarCorreo($correo, $tokenListo, $horasVigencia);
                             header("location:v_SolicitarToken.php");
                         }
                     } else {

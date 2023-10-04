@@ -14,4 +14,7 @@ class ControladorParametro {
     public static function getDataServerEmail(){
         return Parametro::dataServerEmail();
     }
+    public static function obtenerVigenciaToken(){
+        return Parametro::obtenerVigenciaToken();
+    }
 }

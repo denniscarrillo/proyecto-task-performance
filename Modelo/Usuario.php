@@ -206,7 +206,17 @@ class Usuario {
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $preguntas;
     }
-
+    public static function validarPreguntasUsuario($idPregunta, $usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "  SELECT pu.id_pregunta FROM tbl_MS_Preguntas_X_Usuario pu
+        INNER JOIN tbl_MS_Usuario u ON u.id_Usuario = pu.id_Usuario
+        WHERE u.usuario = '$usuario' AND pu.id_Pregunta = '$idPregunta';";
+        $resultado = sqlsrv_query($conexion, $query);
+        $existe = sqlsrv_has_rows($resultado);
+        sqlsrv_close($conexion);
+        return $existe;
+    }
     public static function guardarRespuestasUsuario($usuario, $idPregunta, $respuesta){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
@@ -350,7 +360,7 @@ class Usuario {
         return $correo;
     }
     public static function guardarToken($user, $creadoPor){
-        $resultado = false;
+        $tokenListo = 0;
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
         //Obtenemos el ID de usuario que inicio el proceso de recuperación contraseña
@@ -375,7 +385,10 @@ class Usuario {
                     $queryInsert = "INSERT INTO tbl_token (id_usuario, Token, fecha_expiracion, Creado_Por, Fecha_Creacion)
                     VALUES ('$idUsuario','$token', DATEADD(HOUR, $horasVencimiento, GETDATE()), '$creadoPor', GETDATE())";
                     $resultado = sqlsrv_query($consulta, $queryInsert);
-                    break;
+                    if($resultado){
+                        $tokenListo = $token;
+                    }
+                break;
                 }
             } 
         } else {
@@ -383,9 +396,12 @@ class Usuario {
             $queryInsert = "INSERT INTO tbl_token (id_usuario, Token, fecha_expiracion, Creado_Por, Fecha_Creacion)
             VALUES ('$idUsuario','$token', DATEADD(HOUR, $horasVencimiento, GETDATE()), '$creadoPor', GETDATE())";
             $resultado = sqlsrv_query($consulta, $queryInsert);
+            if($resultado){
+                $tokenListo = $token;
+            }
         }      
         sqlsrv_close($consulta); #Cerrar la conexión.        
-        return $resultado;
+        return $tokenListo;
     }
     //Nos dice si existe o no un usuario
     public static function usuarioExistente($usuario){
@@ -772,7 +788,6 @@ class Usuario {
         WHERE u.usuario = '$user';";
         $resultado = sqlsrv_query($conexion, $query);
         while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) { 
-            $cont++;
             $estadoContra = password_verify($contrasenia, $fila['contrasenia']);
             if ($estadoContra){
                 break;
@@ -781,7 +796,26 @@ class Usuario {
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $estadoContra;
     }
-
+    public static function depurarToken($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = " SELECT COUNT(tk.id_token) AS Cant FROM tbl_Token tk 
+        INNER JOIN tbl_MS_Usuario us ON tk.id_usuario = us.id_Usuario
+        WHERE us.usuario = '$usuario';";
+        $resultado = sqlsrv_query($conexion, $query);
+        $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+        if(intval($fila['Cant']) == 10){
+            $idToken = "SELECT tk.id_token FROM tbl_Token tk 
+            INNER JOIN tbl_MS_Usuario us ON tk.id_usuario = us.id_Usuario
+            WHERE tk.Fecha_Creacion = (SELECT MIN(tk.Fecha_Creacion) FROM tbl_Token tk) AND us.usuario = '$usuario';";
+            $resultado = sqlsrv_query($conexion, $idToken);
+            $filaIdToken = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+            $id = $filaIdToken['id_token'];
+            $query = "DELETE FROM tbl_Token WHERE id_token = '$id';";
+            $resultado = sqlsrv_query($conexion, $query);
+        }
+        sqlsrv_close($conexion);
+    }
 }#Fin de la clase
 
     

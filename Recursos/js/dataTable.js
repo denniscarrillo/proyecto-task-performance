@@ -3,6 +3,7 @@ import {estadoValidado as valido } from './validacionesModalEditarUsuario.js';
 
 let tablaUsuarios = '';
 $(document).ready(function () {
+  let num = 'Y';
   tablaUsuarios = $('#table-Usuarios').DataTable({
     "ajax": {
       "url": "../../../Vista/crud/usuario/obtenerUsuarios.php",
@@ -18,10 +19,9 @@ $(document).ready(function () {
       { "data": "correo" },
       { "data": "Estado" },
       { "data": "Rol" },
-
       {"defaultContent":
           '<div><button class="btns btn" id="btn_ver"><i class="fa-solid fa-eye"></i></button>' +
-          '<button class="btn-editar btns btn hidden" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>'
+          `<button class="btn-editar btns btn ${(num == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`
       }
     ]
   });
