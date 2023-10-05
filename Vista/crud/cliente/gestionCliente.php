@@ -75,8 +75,8 @@ if (isset($_SESSION['usuario'])) {
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
-  <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
@@ -129,7 +129,7 @@ if (isset($_SESSION['usuario'])) {
                 <?php include_once '../../layout/navbar.php'?>                             
             </div>        
             <div class ="titulo">
-                  <H1 class="title-dashboard-task">Clientes</H1>
+                  <H1 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionCliente.php');?>">Clientes</H1>
             </div>  
           </div>
       
@@ -154,20 +154,21 @@ if (isset($_SESSION['usuario'])) {
         </div>
 
         <!-- Footer -->
-        <div class="footer-conteiner">
-                <?php
-                require_once '../../layout/footer.php';
-                ?>
-        </div>
+        <!-- <div class="footer-conteiner"> -->
+          <?php
+          // require_once '../../layout/footer.php';
+          ?>
+        <!-- </div> -->
       </div>
     </div>
   </div>
  
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
-  <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
+  <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script src="../../../Recursos/js/VistaClientes/dataTable.js" type="module"></script>
+  <script src="../../../Recursos/js/permiso/gestionPermisos.js"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>

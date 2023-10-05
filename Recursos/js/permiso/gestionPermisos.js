@@ -1,26 +1,28 @@
+
 $(document).ready(function () {
     let btnsEditar = null;
-    if(document.querySelectorAll('.btn-editar')) {
+    if(document.querySelectorAll('button.btn-editar')) {
         btnsEditar = document.querySelectorAll('.btn-editar');
         console.log(btnsEditar);
     }
-    console.log(btnsEditar);
     let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
     obtenerPermisos($idObjetoSistema, btnsEditar);
 });
-let obtenerPermisos = function($idObjeto, btnsEditar){
+let obtenerPermisos = async function($idObjeto, btnsEditar){
+    let objPermisos = 'no funciona';
     $.ajax({
         url: "../../../Vista/crud/permiso/obtenerPermisos.php",
         type: "POST",
         datatype: "JSON",
         data: {idObjeto: $idObjeto},
         success: function (data) {
-            let objPermisos = JSON.parse(data);
+           let objPermisos = JSON.parse(data);
             console.log(objPermisos);
             mostrarElementos(objPermisos, btnsEditar);
         }
     });
 }
+
 let mostrarElementos = function($objPermisos, btnsEditar){
     let $idObjetoSistema = document.querySelector('.title-dashboard-task').id
     if($objPermisos.Insertar == 'Y'){

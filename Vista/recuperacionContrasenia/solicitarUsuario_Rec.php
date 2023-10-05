@@ -50,7 +50,7 @@
             </div>
             <?php
             if($mensaje != ''){
-                echo '<p class="mensaje">' . $mensaje . '</p>';
+                echo '<p class="mensaje mensaje-error">' . $mensaje . '</p>';
             }
             ?>
         </form>
@@ -59,6 +59,6 @@
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
     <script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
     <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-    <script src="../../Recursos/js/validacioncorreo.js" type="module"></script>
+    <script src="../../Recursos/js/validacionCorreo.js" type="module"></script>
 </body>
 </html>

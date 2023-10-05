@@ -7,7 +7,7 @@ require '../../librerias/PHPMailer/Exception.php';
 require '../../librerias/PHPMailer/PHPMailer.php';
 require '../../librerias/PHPMailer/SMTP.php';
 
-function enviarCorreo($destinario, $token){
+function enviarCorreo($destinario, $token, $horasVigencia){
     $confirmacion = '';
     $getDataServerEmail = ControladorParametro::getDataServerEmail();
     //Create an instance; passing `true` enables exceptions
@@ -34,9 +34,9 @@ function enviarCorreo($destinario, $token){
         <h1> Ha iniciado el metodo de recuperacion de contrasenia </h1>
         <p> Hola, usted ha solicitado un cambio de contrasenia, le hemos enviado un token, copielo y peguelo en el siguiente formulario. </p> <br>
             <h2 style="text-align: center;>Este es su token de recuperacion</h2>
-            <p style="text-align: center; font-size: 25px;"><b>'.$token.'</b></p>
+            <p style="font-size: 3rem; margin-right: 2rem;"><b>'.$token.'</b></p>
             <br>
-        <p> Este token solo sera valido dentro de las proximas 24 hrs. </p>
+        <p> Este token expirará dentro de '.$horasVigencia.' hrs </p>
         <br>
         <p> Saludos, </p>
         <p> Cocina y Equipos </p>

@@ -27,6 +27,7 @@ body {
 }
 .logo_items {
   gap: 8px;
+  margin-top: 1rem;
 }
 .flex-log{
   display: flex;
@@ -139,6 +140,7 @@ body {
 }
 .check__conteiner:hover{
   background-color: #666060;
+  /* background-color: #9d3d1ef1; */
 }
 .dropdown-menu__content__list:has( :checked ){
   --row: 1fr;
@@ -187,6 +189,9 @@ body {
 }
 .list__menu__principal-text {
   margin-bottom: 0;
+}
+.item-menu-active {
+  background-color: #9d3d1ef1;
 }
 
 

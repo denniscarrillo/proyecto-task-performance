@@ -43,13 +43,9 @@ if (isset($_SESSION['usuario'])) {
           <input type="text" class="form-control"  name="Respuesta" id="Respuesta" maxlength="50" placeholder="Respuesta">
           <p class="mensaje"></p>
         </div>
-       <h3>
-        <?php
-          echo '<p class="mensaje">' . $mensaje . '</p>';
-          ?>
-        </h3>
         <button type="submit" class="btn" name="submit">Responder</button>
         <a href="../login/login.php" class="btn btn-cancelar">Cancelar</a>
+        <p class="mensaje-error"><?php echo $mensaje ?></p>
       </div>
   </div>
   </div>

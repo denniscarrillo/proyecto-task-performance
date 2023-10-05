@@ -6,9 +6,7 @@ require_once("../../../Modelo/Usuario.php");
 require_once("../../../Modelo/Bitacora.php");
 require_once("../../../Controlador/ControladorUsuario.php");
 require_once("../../../Controlador/ControladorBitacora.php");
-
-
-$data = ControladorUsuario::obtenerDatosPerfilUsuario($_SESSION['usuario']);
+require_once("actualizarPerfilContrasenia.php");
 
 if (isset($_SESSION['usuario'])) {
  
@@ -155,10 +153,10 @@ if (isset($_SESSION['usuario'])) {
               </div>
               <div class="btn-guardar">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                          <button type="submit"  href="../PerfilUsuario/gestionPerfilUsuario.php"  class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                          <button type="submit" name="submit" href="../PerfilUsuario/gestionPerfilUsuario.php"  class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
               </div>
             <?php 
-            $mensaje = '';
+           // $mensaje = '';
               if(!$mensaje == ''){
                 echo '<h2 class="mensaje-error" style="margin-top: 8px;">'. $mensaje. '</h2>';
               }

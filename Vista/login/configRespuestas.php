@@ -15,15 +15,14 @@
 </head>
 <body>
     <div class="ancho">
-    <?php 
-     $usuario = '';
-        echo '<h1 class="titulo-bienvenida">Bienvenido '.$user.'!</h1>';
-    ?>
         <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" id="formConfig">
             <div class="logo-empresa">
                 <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="200px">
             </div>
-            <h3 class="titulo-bienvenida2">Por favor elija una pregunta e ingrese su respuesta:</h3>
+            <p class="line-space"></p>
+            <h1 class="titulo-bienvenida">Bienvenido <?php echo $user ?></h1>
+            <p class="line-space"></p>
+            <h3 class="titulo-bienvenida2">Por favor, configure sus preguntas e ingrese su respuesta:</h3>
             <select name="id_pregunta" class="select-preguntas form-select" id= "id_pregunta">
             <option selected>Seleccionar...</option>
                 <?php
@@ -38,10 +37,8 @@
             <p class="mensaje"></p>
             </div>
             <button type="submit" class="btn btn-primary" name="submit" id="btn-submit">Guardar</button>
+            <p class="mensaje-error"><?php echo $mensaje ?></p>
         </form>
-        <?php 
-            // echo '<h2 class="mensaje-error">'. $mensaje. '</h2>'
-        ?>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>

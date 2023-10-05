@@ -19,6 +19,7 @@
         }
         if(isset($_SESSION['usuario']) && isset($_SESSION['metodo'])) {
             $usuario = $_SESSION['usuario'];
+            $creadoPor = $_SESSION['usuario'];
             $metodoRec = $_SESSION['metodo'];
             $userExiste = ControladorUsuario::usuarioExiste($usuario);
             if($userExiste){
@@ -26,12 +27,13 @@
                 if($metodoRec == 'correo'){
                     $correo = ControladorUsuario::obCorreoUsuario($usuario);
                     if($correo != ''){
-                        //Generamos el token
-                        $token = random_int(1000, 9999);
-                        //Almacenar token en la base de datos correspondiente al usuario
-                        $almacenado = ControladorUsuario::almacenarToken($usuario, $token, $usuario);
-                        if($almacenado){
-                            enviarCorreo($correo, $token);
+                        //Valida si en la tabla token ya existen 10 token, entonces busca el mas antiguo y lo elimina
+                        ControladorUsuario::depurarTokenUsuario($usuario);
+                        //Generar y Almacenar token en la base de datos correspondiente al usuario
+                        $tokenListo = ControladorUsuario::almacenarToken($usuario, $creadoPor);
+                        if($tokenListo > 0){
+                            $horasVigencia = ControladorParametro::obtenerVigenciaToken();
+                            enviarCorreo($correo, $tokenListo, $horasVigencia);
                             header("location:v_SolicitarToken.php");
                         }
                     } else {

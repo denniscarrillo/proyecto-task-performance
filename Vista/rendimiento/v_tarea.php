@@ -66,7 +66,7 @@ require_once('validacionesTarea.php');
       <!-- Cuerpo de la pagina -->
       <main class="main-tareas">
       <div class="encabezado">
-          <h2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('v_tarea.php');?>">Control de tareas</h2>
+          <h2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('v_tarea.php');?>">Tablero | Mis tareas</h2>
       </div>
         <div class="task-conteiner">
           <div class="colum-task-conteiner">
