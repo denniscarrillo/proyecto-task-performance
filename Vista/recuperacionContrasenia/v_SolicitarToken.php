@@ -30,7 +30,9 @@
                 <button type="submit" class="btn btn-primary btn-block" name="submit">Validar</button>
                 <a href="v_recuperarContrasena.html" class="btn btn-primary btn-block" style="margin-top: 0.8rem; background-color: #f68e3e;">Cancelar</a>
                 <?php 
-                echo '<p class="mensaje-error">'.$mensaje.'</p>'
+                if(!empty($mensaje)){
+                    echo '<p class="mensaje-error">'.$mensaje.'</p>';
+                }
                 ?>
             </div>
         </form>
