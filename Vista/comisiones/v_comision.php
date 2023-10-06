@@ -121,6 +121,7 @@ require_once("validacionesComision.php");
   <script src="../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script src="../../Recursos/js/comision/dataTableComision.js" type="module"></script>
+  <script src="../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <!-- <script src="../../Recursos/js/comision/validacionesEditarComision.js" type="module"></script> -->
   <script src="../../Recursos/js/permiso/gestionPermisos.js"></script>
   <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>

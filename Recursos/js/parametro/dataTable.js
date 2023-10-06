@@ -2,6 +2,14 @@ import {estadoValidado as valido } from './validacionesModalEditarParametro.js';
 
 let tablaParametro = '';
 $(document).ready(function () {
+  let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
+  console.log($idObjetoSistema);
+  obtenerPermisos($idObjetoSistema, procesarPermisoActualizar);
+});
+//Recibe la respuesta de la peticion AJAX y la procesa
+let procesarPermisoActualizar = data => {
+  let permisos = JSON.parse(data);
+  // console.log(permisos);
   tablaParametro = $('#table-Parametro').DataTable({
     "ajax": {
       "url": "../../../Vista/crud/parametro/obtenerParametro.php",
@@ -17,11 +25,11 @@ $(document).ready(function () {
       { "data": "descripcionParametro"},
       { "data": "usuario" },
       {"defaultContent":
-          '<div><button class="btns btn" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button></div>'
+      `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`
       }
     ]
   });
-});
+}
 
 $(document).on("click", "#btn_editar", function(){		        
   let fila = $(this).closest("tr"),	        
@@ -65,3 +73,21 @@ $('#form-Edit-Parametro').submit(function (e) {
     $('#modalEditarParametro').modal('hide');
    }
 });
+
+//Limpiar modal de editar
+document.getElementById('button-cerrar').addEventListener('click', ()=>{
+  limpiarFormEdit();
+})
+document.getElementById('button-x').addEventListener('click', ()=>{
+  limpiarFormEdit();
+})
+let limpiarFormEdit = () => {
+  let $inputs = document.querySelectorAll('.mensaje_error');
+  let $mensajes = document.querySelectorAll('.mensaje');
+  $inputs.forEach($input => {
+    $input.classList.remove('mensaje_error');
+  });
+  $mensajes.forEach($mensaje =>{
+    $mensaje.innerText = '';
+  });
+}

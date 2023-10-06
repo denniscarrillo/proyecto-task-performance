@@ -165,7 +165,7 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/TipoServicio/validacionesModalNuevoTipoServicio.js" type="module"></script>
   <script src="../../../Recursos/js/TipoServicio/validacionesModalEditarTipoServicio.js" type="module"></script>
   <script src="../../../Recursos/js/TipoServicio/dataTableTipoServicio.js" type="module"></script>
-  <script src="../../../Recursos/js/permiso/gestionPermisos.js"></script>
+  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>

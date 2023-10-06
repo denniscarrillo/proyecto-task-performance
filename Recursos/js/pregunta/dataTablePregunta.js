@@ -2,6 +2,14 @@ import {estadoValidado as validado } from './validacionesModalNuevaPregunta.js';
 import {estadoValidado as valido } from './validacionesModalEditarPregunta.js';
 let tablaPregunta = '';
 $(document).ready(function () {
+  let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
+  console.log($idObjetoSistema);
+  obtenerPermisos($idObjetoSistema, procesarPermisoActualizar);
+});
+//Recibe la respuesta de la peticion AJAX y la procesa
+let procesarPermisoActualizar = data => {
+  let permisos = JSON.parse(data);
+  // console.log(permisos);
   tablaPregunta = $('#table-Pregunta').DataTable({
     "ajax": {
       "url": "../../../Vista/crud/pregunta/obtenerPregunta.php",
@@ -16,11 +24,21 @@ $(document).ready(function () {
       { "data": 'estadoPregunta' },
       {
         "defaultContent":
-          '<div> <button class="btns btn" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>' 
+        `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>` 
       }
     ]
   });
-});
+}
+//Peticion  AJAX que trae los permisos
+let obtenerPermisos = function ($idObjeto, callback) { 
+  $.ajax({
+      url: "../../../Vista/crud/permiso/obtenerPermisos.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {idObjeto: $idObjeto},
+      success: callback
+  });
+}
 
 // Crear nueva Pregunta
 $('#form-Pregunta').submit(function (e) {
@@ -135,6 +153,8 @@ $(document).on("click", "#btn_eliminar", function() {
       }
     });                
 });
+
+//Limpiar modal de crear
 document.getElementById('btn-cerrar').addEventListener('click', ()=>{
   limpiarForm();
 })
@@ -153,4 +173,22 @@ let limpiarForm = () => {
   let pregunta = document.getElementById('pregunta');
   //Vaciar campos cliente
     pregunta.value = '';
+}
+
+//Limpiar modal de editar
+document.getElementById('button-cerrar').addEventListener('click', ()=>{
+  limpiarFormEdit();
+})
+document.getElementById('button-x').addEventListener('click', ()=>{
+  limpiarFormEdit();
+})
+let limpiarFormEdit = () => {
+  let $inputs = document.querySelectorAll('.mensaje_error');
+  let $mensajes = document.querySelectorAll('.mensaje');
+  $inputs.forEach($input => {
+    $input.classList.remove('mensaje_error');
+  });
+  $mensajes.forEach($mensaje =>{
+    $mensaje.innerText = '';
+  });
 }
