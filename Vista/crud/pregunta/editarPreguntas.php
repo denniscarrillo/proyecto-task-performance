@@ -13,6 +13,7 @@
         $insertarPregunta = new Pregunta();
         $insertarPregunta->idPregunta = ($_POST['idPregunta']);
         $insertarPregunta->pregunta = ($_POST['pregunta']);
+        $insertarPregunta->estado = ($_POST['estado']);
         $insertarPregunta->ModificadoPor = $user;
         ControladorPregunta::actualizarPregunta($insertarPregunta);
         /* ========================= Evento Editar pregunta. ====================================*/

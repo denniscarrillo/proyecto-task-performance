@@ -51,7 +51,7 @@
             $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
             $urlPreguntas = '../crud/pregunta/gestionPregunta.php';
             $urlParametros = '../crud/parametro/gestionParametro.php';
-            $urlPermisos = '../crud/permiso/gestionPermiso.php';
+            $urlPermisos = '../crud/permiso/gestionPermisos.php';
             $urlRoles = '../crud/rol/gestionRol.php';
             $urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
             $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';

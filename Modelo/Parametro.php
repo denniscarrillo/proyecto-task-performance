@@ -17,8 +17,8 @@ class Parametro {
             $parametros = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $query = "SELECT p.id_Parametro, p.parametro, p.valor, u.usuario FROM tbl_ms_parametro AS p
-            INNER JOIN tbl_ms_usuario AS u ON p.id_Usuario = u.id_Usuario;";
+            $query = "SELECT p.id_Parametro, p.parametro, p.valor, p.descripcion, u.usuario FROM tbl_ms_parametro p
+            INNER JOIN tbl_ms_usuario u ON p.id_Usuario = u.id_Usuario;";
             $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
             while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
@@ -26,6 +26,7 @@ class Parametro {
                     'id' => $fila['id_Parametro'],
                     'parametro' => $fila['parametro'],
                     'valorParametro' => $fila['valor'],
+                    'descripcionParametro' => $fila['descripcion'],
                     'usuario' => $fila['usuario'],
                 ];
             }

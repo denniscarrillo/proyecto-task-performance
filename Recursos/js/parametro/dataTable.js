@@ -14,6 +14,7 @@ $(document).ready(function () {
       { "data": "id"},
       { "data": "parametro" },
       { "data": "valorParametro" },
+      { "data": "descripcionParametro"},
       { "data": "usuario" },
       {"defaultContent":
           '<div><button class="btns btn" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button></div>'

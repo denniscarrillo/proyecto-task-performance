@@ -114,7 +114,7 @@ if (isset($_SESSION['usuario'])) {
           $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
           $urlPreguntas = './gestionPregunta.php';
           $urlParametros = '../parametro/gestionParametro.php';
-          $urlPermisos = '../permiso/gestionPermiso.php';
+          $urlPermisos = '../permiso/gestionPermisos.php';
           $urlRoles = '../rol/gestionRol.php';
           $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
           $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
@@ -144,6 +144,7 @@ if (isset($_SESSION['usuario'])) {
               <tr>
                 <th scope="col"> N° </th>
                 <th scope="col"> PREGUNTA </th>
+                <th scope="col"> ESTADO </th>
                 <th scope="col"> ACCIONES </th>
               </tr>
             </thead>

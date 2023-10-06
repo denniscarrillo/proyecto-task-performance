@@ -13,6 +13,7 @@ $(document).ready(function () {
     "columns": [
       { "data": "id_Pregunta" },
       { "data": 'pregunta' },
+      { "data": 'estadoPregunta' },
       {
         "defaultContent":
           '<div> <button class="btns btn" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>' 
@@ -24,13 +25,16 @@ $(document).ready(function () {
 // Crear nueva Pregunta
 $('#form-Pregunta').submit(function (e) {
   e.preventDefault();
-  let pregunta = $('#pregunta').val();
+  let pregunta = $('#pregunta').val(),
+      estadoPregunta = $('#estadoPregunta').val();
   if(validado){
     $.ajax({
       url: "../../../Vista/crud/pregunta/insertarPregunta.php",
       type: "POST",
       datatype: "JSON",
-      data: { pregunta: pregunta
+      data: { 
+        pregunta: pregunta,
+        estadoPregunta: estadoPregunta
       },
       success: function () {
       //Mostrar mensaje de exito
@@ -47,13 +51,14 @@ $('#form-Pregunta').submit(function (e) {
 });
 
 // Editar Pregunta
-
 $(document).on('click', '#btn_editar', function () {
   let fila = $(this).closest("tr"),
   idPregunta = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		   
-  pregunta = fila.find('td:eq(1)').text();
+  pregunta = fila.find('td:eq(1)').text(),
+  estado = fila.find('td:eq(2)').text();
   $('#idPregunta_E').val(idPregunta);
   $('#pregunta_E').val(pregunta);
+  $('#E_estado').val(estado);
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");	
   $('#modalEditarPregunta').modal('show');
@@ -64,14 +69,17 @@ $('#form-Pregunta-Editar').submit(function (e) {
   e.preventDefault();
 //obtener datos al editar la pregunta
   let pregunta = $('#pregunta_E').val(),
-  idPregunta = $('#idPregunta_E').val()
+    idPregunta = $('#idPregunta_E').val(),
+    estado = $('#E_estado').val();
   if(valido){
     $.ajax({
       url: "../../../Vista/crud/pregunta/editarPreguntas.php",
       type: "POST",
       datatype: "JSON",
-      data: { idPregunta: idPregunta,
-              pregunta: pregunta
+      data: { 
+        idPregunta: idPregunta,
+        pregunta: pregunta,
+        estado: estado
       },
       success: function () {
         Swal.fire(

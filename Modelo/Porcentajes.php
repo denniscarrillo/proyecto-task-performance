@@ -65,9 +65,9 @@ class Porcentajes {
         $ModificadoPor = $nuevoPorcentaje->ModificadoPor;
         date_default_timezone_set('America/Tegucigalpa'); 
         $FechaModificacion = date("Y-m-d");
-        $query = "UPDATE tbl_porcentaje SET valor_Porcentaje='$valorPorcentaje', descripcion='$descripcionPorcentaje',
-                                            estado_Porcentaje ='$estadoPorcentaje', Modificado_Por = '$ModificadoPor', 
-                                            Fecha_Modificacion = '$FechaModificacion' WHERE id_Porcentaje='$idPorcentaje';";
+        $query = "  UPDATE tbl_Porcentaje SET valor_Porcentaje='$valorPorcentaje', descripcion='Cliente',
+        estado_Porcentaje ='Inactivo', Modificado_Por = 'SUPERADMIN', 
+        Fecha_Modificacion = '2023-10-05' WHERE id_Porcentaje='1';";
         $nuevoPorcentaje = sqlsrv_query($conexion, $query);
         sqlsrv_close($conexion); #Cerramos la conexión.
     }
