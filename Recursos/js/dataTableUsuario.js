@@ -1,9 +1,15 @@
 import {estadoValidado as validado } from './validacionesModalNuevoUsuario.js';
 import {estadoValidado as valido } from './validacionesModalEditarUsuario.js';
-
-let tablaUsuarios = '';
+let tablaUsuarios = ''; //Variable dataTable
 $(document).ready(function () {
-  let num = 'Y';
+  let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
+  console.log($idObjetoSistema);
+  obtenerPermisos($idObjetoSistema, procesarPermisoActualizar);
+});
+//Recibe la respuesta de la peticion AJAX y la procesa
+let procesarPermisoActualizar = data => {
+  let permisos = JSON.parse(data);
+  console.log(permisos);
   tablaUsuarios = $('#table-Usuarios').DataTable({
     "ajax": {
       "url": "../../../Vista/crud/usuario/obtenerUsuarios.php",
@@ -21,14 +27,22 @@ $(document).ready(function () {
       { "data": "Rol" },
       {"defaultContent":
           '<div><button class="btns btn" id="btn_ver"><i class="fa-solid fa-eye"></i></button>' +
-          `<button class="btn-editar btns btn ${(num == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`
+          `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`
       }
     ]
   });
-});
-
+}
+//Peticion  AJAX que trae los permisos
+let obtenerPermisos = function ($idObjeto, callback) { 
+  $.ajax({
+      url: "../../../Vista/crud/permiso/obtenerPermisos.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {idObjeto: $idObjeto},
+      success: callback
+    });
+}
 // Cuando presionamos el boton aparece el modal con los siguientes campos
-
 $('#btn_nuevoRegistro').click(async function () {
   // //Petición para obtener roles 
   obtenerRoles('#rol');
