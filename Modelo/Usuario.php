@@ -335,6 +335,18 @@ class Usuario {
         sqlsrv_close($consulta); #Cerrar la conexión.
         return $existe; //Si se encuentra un usuario válido/existente retorna un entero mayor a 0.
     }
+    public static function intentosFallidosRespuesta(){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query ="SELECT valor FROM tbl_MS_Parametro WHERE parametro = 'INTEN RESPUESTAS';";
+        $ejecutar = sqlsrv_query($conexion, $query);
+        $fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC);
+        if(isset($fila["valor"])){
+            $cantRespuestasFallidas = $fila["valor"];
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $cantRespuestasFallidas;
+    }
     public static function obtenerRespuestaPregunta($idPregunta){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
@@ -344,6 +356,13 @@ class Usuario {
         $respuesta = $fila['respuesta'];
         sqlsrv_close($consulta); #Cerrar la conexión.
         return $respuesta; 
+    }
+    public static function bloquearUsuarioMetodoPregunta($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "  UPDATE tbl_MS_Usuario SET id_Estado_Usuario = 4 WHERE usuario = '$usuario'";
+        $ejecutar = sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion);
     }
     public static function correoUsuario($usuario){
         $correo = '';

@@ -61,8 +61,14 @@
         public static function existeUsuario($userName){
             return Usuario::validarUsuario($userName); 
         }
+        public static function intentosFallidosRespuesta(){
+            return Usuario::intentosFallidosRespuesta();
+        }
         public static function obtenerRespuesta($idPregunta){
             return Usuario::obtenerRespuestaPregunta($idPregunta); 
+        }
+        public static function bloquearUsuarioMetodoPregunta($usuario){
+            Usuario::bloquearUsuarioMetodoPregunta($usuario);
         }
         public static function obCorreoUsuario($usuario){
             return Usuario::correoUsuario($usuario);

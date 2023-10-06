@@ -2,6 +2,7 @@ import * as funciones from './funcionesValidaciones.js';
 /* VALIDACIONES FORMULARIO PREGUNTAS */
 
 let estadoMasdeUnEspacioRespuesta = true;
+let estadoSelect = true;
 
 // CAMPOS
 const $form = document.getElementById('formPreguntasRes');
