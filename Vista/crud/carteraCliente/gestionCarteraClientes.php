@@ -156,12 +156,6 @@ if (isset($_SESSION['usuario'])) {
             </tbody>
           </table>
         </div>
-          <!-- Footer -->
-          <div class="footer-conteiner">
-            <?php
-                require_once '../../layout/footer.php';
-            ?>
-          </div>
       </div>
     </div>
   </div>
@@ -169,17 +163,19 @@ if (isset($_SESSION['usuario'])) {
   require_once('modalNuevoCliente.html');
   require_once('modalEditarCliente.html');
   ?>
+  <!-- Librerias externas -->
+  <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
-  <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-  <script src="../../../Recursos/js/CarteraClientes/datatable.js" type="module"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
-  <script src="../../../Recursos/js/index.js"></script>
+ <!-- scripts de validaciones -->
+  <script src="../../../Recursos/js/CarteraClientes/datatable.js" type="module"></script>
+  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../../Recursos/js/CarteraClientes/validacionesModalNuevoCliente.js"  type="module"></script>
   <script src="../../../Recursos/js/CarteraClientes/validacionesModalEditarCliente.js" type="module"></script>
-  <script src="../../../Recursos/js/permiso/gestionPermisos.js"></script>
+  <script src="../../../Recursos/js/index.js"></script>
 </body>
 
 </html>

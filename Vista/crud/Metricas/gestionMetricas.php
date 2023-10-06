@@ -149,14 +149,7 @@ if (isset($_SESSION['usuario'])) {
             <tbody class="table-group-divider">
             </tbody>
           </table>
-        </div>
-
-          <!-- Footer -->
-          <div class="footer-conteiner">
-                <?php
-                require_once '../../layout/footer.php';
-                ?>
-          </div>        
+        </div>      
       </div>
     </div>
   </div>
