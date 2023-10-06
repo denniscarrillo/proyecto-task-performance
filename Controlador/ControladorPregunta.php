@@ -18,4 +18,9 @@ class ControladorPregunta {
     public static function preguntaExiste($pregunta){
         return Pregunta::preguntaExistente($pregunta);
     }
+
+    public static function obtenerCantPreguntas(){
+        return Pregunta::obtenerCantPreguntas();
+    }
+
 }
