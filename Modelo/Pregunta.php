@@ -84,4 +84,15 @@ class Pregunta {
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $existePregunta;
     }
+
+    public static function obtenerCantPreguntas(){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT COUNT(id_Pregunta)as cantP FROM tbl_MS_Preguntas";
+        $result = sqlsrv_query($conexion, $query);
+        $resultArray = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC);
+        $CantPreguntas = $resultArray['cantP'];  
+        sqlsrv_close($conexion);
+        return $CantPreguntas;
+    } 
 }
