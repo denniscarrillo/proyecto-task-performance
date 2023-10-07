@@ -64,8 +64,17 @@
         public static function intentosFallidosRespuesta(){
             return Usuario::intentosFallidosRespuesta();
         }
-        public static function obtenerRespuesta($idPregunta){
-            return Usuario::obtenerRespuestaPregunta($idPregunta); 
+        public static function obtenerintentosRespuestas($usuario){
+            return Usuario::obtenerintentosRespuestas($usuario);
+        }
+        public static function reiniciarIntentosFallidosRespuesta($usuario){
+            Usuario::reiniciarIntentosRespuesta($usuario);
+        }
+        public static function aumentarIntentosFallidosRespuesta($usuario, $intentosFallidos){
+            return Usuario::aumentarIntentosFallidosRespuesta($usuario, $intentosFallidos);
+        }
+        public static function obtenerRespuesta($idPregunta, $usuario){
+            return Usuario::obtenerRespuestaPregunta($idPregunta, $usuario); 
         }
         public static function bloquearUsuarioMetodoPregunta($usuario){
             Usuario::bloquearUsuarioMetodoPregunta($usuario);

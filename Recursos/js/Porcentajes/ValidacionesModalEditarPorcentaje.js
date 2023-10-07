@@ -44,7 +44,6 @@ $form.addEventListener('submit', e => {
                 }
                  else {
                         estadoValidado = true;
-                        console.log(estadoValidado); // 
                     }
                 
             
