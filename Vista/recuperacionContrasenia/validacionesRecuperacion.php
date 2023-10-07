@@ -43,7 +43,11 @@
                 } else { //Si el método es recuperación por pregunta secreta
                     $cantPregContestadas = ControladorUsuario::cantPreguntasContestadas($usuario);
                     if($cantPregContestadas  > 0){
-                        // ControladorUsuario::reiniciarIntentosFallidosRespuesta($usuario);
+                        $cantFallidasRespuestas = ControladorUsuario::obtenerIntentosRespuestas($usuario);
+                        $cantFallidasParametro = ControladorUsuario::intentosFallidosRespuesta();
+                        if($cantFallidasRespuestas == $cantFallidasParametro){
+                            ControladorUsuario::reiniciarIntentosFallidosRespuesta($usuario);
+                        }
                         header("location: preguntasResponder.php");
                     } else {
                         $mensaje = "No tiene preguntas contestadas";

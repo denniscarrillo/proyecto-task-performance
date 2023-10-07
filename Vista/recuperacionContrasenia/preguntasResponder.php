@@ -32,7 +32,7 @@ if (isset($_SESSION['usuario'])) {
           <!-- <label><strong>Responda .</strong></label> -->
         </div>
         <p>Preguntas de Seguridad:</p>
-        <select name="pregunta" class="select-preguntas form-select" id="pregunta">
+        <select name="pregunta" class="select-preguntas form-select" id="preguntas">
           <?php
           foreach ($preguntas as $pregunta) {
             echo '<option value="' . $pregunta['id_Pregunta'] . '">' . $pregunta['pregunta'] . '</option>';
@@ -43,9 +43,16 @@ if (isset($_SESSION['usuario'])) {
           <input type="text" class="form-control"  name="Respuesta" id="Respuesta" maxlength="50" placeholder="Respuesta">
           <p class="mensaje"></p>
         </div>
-        <button type="submit" class="btn" name="submit">Responder</button>
-        <a href="../login/login.php" class="btn btn-cancelar">Cancelar</a>
-        <p class="mensaje-error"><?php echo $mensaje ?></p>
+        <div class="btn-container">
+          <a href="./v_recuperarContrasena.html" class="btn btn-cancelar">Cancelar</a>
+          <button type="submit" class="btn" name="submit">Responder</button>
+        </div>
+        <?php 
+          if(!empty($mensaje) && !empty($mensaje2)){
+            echo "<p class='mensaje-error'>".$mensaje."</p>";
+            echo "<p class='mensaje-instruccion'>".$mensaje2."</p>";
+          }
+        ?>
       </div>
   </div>
   </div>

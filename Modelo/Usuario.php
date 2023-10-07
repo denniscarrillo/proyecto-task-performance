@@ -343,21 +343,20 @@ class Usuario {
         $ejecutar = sqlsrv_query($conexion, $query);
         $fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC);
         if(isset($fila["valor"])){
-            $cantRespuestasFallidas = $fila["valor"];
+            $cantRespuestasFallidas = intval($fila["valor"]);
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $cantRespuestasFallidas;
     }
-    public static function obtenerintentosRespuestas($usuario){
+    public static function obtenerIntentosRespuestas($usuario){
         $cantRespuestas = '';
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
         $query = "SELECT int_respuestasFallidas FROM tbl_MS_Usuario WHERE usuario = '$usuario';";
-        $params = array($usuario);
-        $userCantRespuestas = sqlsrv_query($consulta, $query, $params);
+        $userCantRespuestas = sqlsrv_query($consulta, $query);
         $fila = sqlsrv_fetch_array($userCantRespuestas, SQLSRV_FETCH_ASSOC);
         if(isset($fila["int_respuestasFallidas"])){
-            $cantRespuestas = $fila["int_respuestasFallidas"];
+            $cantRespuestas = intval($fila["int_respuestasFallidas"]);
         }
         sqlsrv_close($consulta); #Cerrar la conexión.
         return $cantRespuestas;
@@ -367,7 +366,7 @@ class Usuario {
         $conexion = $conn->abrirConexionDB();
         $query ="UPDATE tbl_MS_Usuario SET int_respuestasFallidas = 0 , id_Estado_Usuario = 2 WHERE usuario = '$usuario';";
         $ejecutar = sqlsrv_query($conexion, $query);
-        $fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC);
+        // $fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC);
         sqlsrv_close($conexion); #Cerramos la conexión.
     }
     public static function aumentarIntentosFallidosRespuesta($usuario, $intentosFallidos){
@@ -381,12 +380,15 @@ class Usuario {
         return $incremento;
     }
     // public static function 
-    public static function obtenerRespuestaPregunta($idPregunta){
+    public static function obtenerRespuestaPregunta($idPregunta, $usuario){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
-        $query = "SELECT respuesta FROM tbl_ms_preguntas_x_usuario WHERE id_Pregunta = '$idPregunta';";
-        $respuesta = sqlsrv_query($consulta, $query);
-        $fila = sqlsrv_fetch_array($respuesta, SQLSRV_FETCH_ASSOC);
+        $respuesta = 0;
+        $query = "SELECT pu.respuesta FROM tbl_ms_preguntas_x_usuario pu
+        INNER JOIN tbl_MS_Usuario us ON pu.id_Usuario = us.id_Usuario
+        WHERE pu.id_Pregunta = '$idPregunta' AND us.usuario = '$usuario';";
+        $ejecutar = sqlsrv_query($consulta, $query);
+        $fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC);
         if(isset($fila['respuesta'])){
             $respuesta = $fila['respuesta'];
         }
