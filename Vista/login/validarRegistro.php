@@ -4,27 +4,6 @@
     require_once("../../Controlador/ControladorUsuario.php");
     require_once ("../../Modelo/Parametro.php");
     require_once("../../Controlador/ControladorParametro.php");
-    // $user = '';
-    // session_start(); //Reanudamos session
-    // if(isset($_SESSION['usuario'])){
-    //     $user = $_SESSION['usuario'];
-    // }
-    // if(isset($_POST['nuevoUsuario'])){ 
-    //     $data = array();
-    //     $usuario = $_POST['nuevoUsuario'];
-        // $userExiste = ControladorUsuario::registro($usuario);
-        // if($userExiste>0){
-        //     $data [] = [
-        //         'usuario'=> $userExiste
-        //     ];
-        //     print json_encode($data, JSON_UNESCAPED_UNICODE);
-        // }else{
-        //     $data [] = [
-        //         'usuario'=> 0
-        //     ];
-        //     print json_encode($data, JSON_UNESCAPED_UNICODE);
-        // }
-    // }
     if(isset($_POST["submit"])){
         $nuevoUsuario = new Usuario();        
         $nuevoUsuario->usuario = $_POST["usuario"];
@@ -48,7 +27,6 @@
         $nuevoUsuario->fechaV = $fecha_nueva;
         ControladorUsuario::registroUsuario($nuevoUsuario);
         ControladorUsuario::respaldarContrasenia("", $_POST["usuario"], $nuevoUsuario->contrasenia, 1);
-        header('location: login.php');
-        // $mensaje = "Registro éxitoso";
+        header('location: login.php?registro=1');
     }
     

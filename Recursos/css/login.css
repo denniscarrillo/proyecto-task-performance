@@ -154,3 +154,13 @@ a{
     height:1.2rem;
     font-size: 4rem;
 }
+
+/*ESTILOS PARA LOS TOAST*/
+.customizable-toast.swal2-icon-success {
+    margin-top: 1.5rem;
+    /* background-color: #57d359 !important; */
+}
+.swal2-title {
+    margin-left: 0.7rem;
+    color: #089321;
+}

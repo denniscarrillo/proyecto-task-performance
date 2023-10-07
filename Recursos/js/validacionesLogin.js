@@ -30,6 +30,28 @@ $(document).ready(function(){
     $('body').on('contextmenu', function(e){
         return false;
     });
+    //Detectar si viene de autoregistro y mostrar un Toast de confirmacion
+    if(document.querySelector('.registro-exitoso').id == '1'){
+        //Creamos el toast que nos confirma la actualización de los permisos
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top',
+            customClass: { //Para agregar clases propias
+                popup: 'customizable-toast'
+              },
+            showConfirmButton: false,
+            timer: 3500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
+        Toast.fire({
+            icon: 'success',
+            title: 'Registro de cuenta exitoso!'
+        });
+    }
 });
 //Ocultar o mostrar contrasenia
 icon_candado.addEventListener('click', function() { 
