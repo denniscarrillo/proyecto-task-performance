@@ -51,7 +51,7 @@
             $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
             $urlPreguntas = '../crud/pregunta/gestionPregunta.php';
             $urlParametros = '../crud/parametro/gestionParametro.php';
-            $urlPermisos = '../crud/permiso/gestionPermiso.php';
+            $urlPermisos = '../crud/permiso/gestionPermisos.php';
             $urlRoles = '../crud/rol/gestionRol.php';
             $urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
             $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
@@ -130,7 +130,6 @@
             <div class="footer-conteiner">
                     <?php
                     require_once '../layout/footer.php';
-                    //require_once('./modalFiltroVendedores.html');
                     ?>
             </div>
             
@@ -138,8 +137,7 @@
     </div>
     <?php
        require_once('modalFiltroVendedores.html');
-    ?>
-    
+    ?>    
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
     <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>

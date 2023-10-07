@@ -71,6 +71,5 @@ let actualizarPermisos = function (elementoFila) {
         }
       });
     }
-  })
-
+  });
 }

@@ -112,7 +112,7 @@ if (isset($_SESSION['usuario'])) {
         $urlPreguntas = '../pregunta/gestionPregunta.php';
         $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
         $urlParametros = '../parametro/gestionParametro.php';
-        $urlPermisos = '../permiso/gestionPermiso.php';
+        $urlPermisos = '../permiso/gestionPermisos.php';
         $urlRoles = '../rol/gestionRol.php';
         $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
         $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
@@ -153,15 +153,6 @@ if (isset($_SESSION['usuario'])) {
             </tbody>
           </table>
         </div>
-
-        <!-- Footer -->
-        <div class="footer-conteiner">
-                <?php
-                require_once '../../layout/footer.php';
-                ?>
-        </div>
-
-
       </div>
     </div>
   </div>

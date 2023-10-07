@@ -113,7 +113,7 @@ if (isset($_SESSION['usuario'])) {
           $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
           $urlPreguntas = '../pregunta/gestionPregunta.php';
           $urlParametros = '../parametro/gestionParametro.php';
-          $urlPermisos = '../permiso/gestionPermiso.php';
+          $urlPermisos = '../permiso/gestionPermisos.php';
           $urlRoles = '../rol/gestionRol.php';
           $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
           $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
@@ -154,31 +154,18 @@ if (isset($_SESSION['usuario'])) {
               </tbody>
             </table>
           </div>
-
-          <!-- Footer -->
-          <div class="footer-conteiner">
-                <?php
-                require_once '../../layout/footer.php';
-                ?>
-          </div>
         </div>
     </div>
-  
-          <?php
-        //   require('modalNuevoPorcentaje.html');
-        //   require('modalEditarPorcentaje.html');
-          ?>
-        
-          <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
-          <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
-          <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-          <script src="../../../Recursos/js/articulo/dataTableArticulo.js" type="module"></script>
-          <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-          <!-- <script src="../../../Recursos/js/Porcentajes/ValidacionesModalNuevoPorcentaje.js"  type="module"></script>
-          <script src="../../../Recursos/js/Porcentajes/ValidacionesModalEditarPorcentaje.js" type="module"></script> -->
-          <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
-          <script src="../../../Recursos/js/index.js"></script>
+    <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+    <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
+    <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="../../../Recursos/js/articulo/dataTableArticulo.js" type="module"></script>
+    <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
+    <!-- <script src="../../../Recursos/js/Porcentajes/ValidacionesModalNuevoPorcentaje.js"  type="module"></script>
+    <script src="../../../Recursos/js/Porcentajes/ValidacionesModalEditarPorcentaje.js" type="module"></script> -->
+    <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
+    <script src="../../../Recursos/js/index.js"></script>
   </body>
 
 </html>

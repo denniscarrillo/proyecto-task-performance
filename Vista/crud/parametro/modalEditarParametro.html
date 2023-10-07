@@ -1,9 +1,9 @@
-<div class="modal fade" id="modalEditarParametro" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalEditarParametro" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="editarModalLabel">Editar Parámetro </h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" id ="button-x" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form action="" method="post" id="form-Edit-Parametro">
@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div class="btn-guardar">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-secondary" id="button-cerrar" data-bs-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
                     </div>
                 </form>
