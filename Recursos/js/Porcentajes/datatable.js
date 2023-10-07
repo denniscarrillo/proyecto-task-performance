@@ -133,6 +133,7 @@ $('#form-Edit-Porcentaje').submit(function (e) {
     $('#modalEditarPorcentaje').modal('hide');
    }
 });
+//Limpiar el formulario de crear
 document.getElementById('btn-cerrar').addEventListener('click', ()=>{
   limpiarForm();
 })
@@ -153,4 +154,22 @@ let limpiarForm = () => {
   //Vaciar campos cliente
     valorPorcentaje.value = '';
     descripcionPorcentaje.value = '';
+}
+
+//Limpiar el formulario de editar
+document.getElementById('button-cerrar').addEventListener('click', ()=>{
+  limpiarFormEdit();
+})
+document.getElementById('button-x').addEventListener('click', ()=>{
+  limpiarFormEdit();
+})
+let limpiarFormEdit = () => {
+  let $inputs = document.querySelectorAll('.mensaje_error');
+  let $mensajes = document.querySelectorAll('.mensaje');
+  $inputs.forEach($input => {
+    $input.classList.remove('mensaje_error');
+  });
+  $mensajes.forEach($mensaje =>{
+    $mensaje.innerText = '';
+  });
 }

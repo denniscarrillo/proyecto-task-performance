@@ -9,7 +9,7 @@ $(document).ready(function () {
 //Recibe la respuesta de la peticion AJAX y la procesa
 let procesarPermisoActualizar = data => {
   let permisos = JSON.parse(data);
-  console.log(permisos);
+  // console.log(permisos);
   tablaUsuarios = $('#table-Usuarios').DataTable({
     "ajax": {
       "url": "../../../Vista/crud/usuario/obtenerUsuarios.php",
@@ -271,6 +271,8 @@ let obtenerEstadoUsuario = function (idElemento, estado_id){
       }
     });
 }
+
+//Limpiar modal de crear
 document.getElementById('btn-cerrar').addEventListener('click', ()=>{
   limpiarForm();
 })
@@ -305,6 +307,24 @@ let limpiarForm = () => {
     estado.value = '';
     fecha_C.value = '';
     fecha_V.value = ''; 
+}
+
+//Limpiar modal de editar
+document.getElementById('button-cerrar').addEventListener('click', ()=>{
+  limpiarFormEdit();
+})
+document.getElementById('button-x').addEventListener('click', ()=>{
+  limpiarFormEdit();
+})
+let limpiarFormEdit = () => {
+  let $inputs = document.querySelectorAll('.mensaje_error');
+  let $mensajes = document.querySelectorAll('.mensaje');
+  $inputs.forEach($input => {
+    $input.classList.remove('mensaje_error');
+  });
+  $mensajes.forEach($mensaje =>{
+    $mensaje.innerText = '';
+  });
 }
 
 

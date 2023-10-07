@@ -2,6 +2,14 @@ import {estadoValidado as valido } from './validacionesModalEditarMetrica.js';
 
 let tablaMetricas = '';
 $(document).ready(function () {
+  let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
+  console.log($idObjetoSistema);
+  obtenerPermisos($idObjetoSistema, procesarPermisoActualizar);
+});
+//Recibe la respuesta de la peticion AJAX y la procesa
+let procesarPermisoActualizar = data => {
+  let permisos = JSON.parse(data);
+  // console.log(permisos);
   tablaMetricas = $('#table-Metricas').DataTable({
     "ajax": {
       "url": "../../../Vista/crud/Metricas/obtenerMetricas.php",
@@ -16,13 +24,21 @@ $(document).ready(function () {
       { "data": "meta"},
       {
         "defaultContent":
-        '<div><button class="btns btn" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>' 
+        `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`
       }
     ]
   });
-
-});
-
+}
+//Peticion  AJAX que trae los permisos
+let obtenerPermisos = function ($idObjeto, callback) { 
+  $.ajax({
+      url: "../../../Vista/crud/permiso/obtenerPermisos.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {idObjeto: $idObjeto},
+      success: callback
+    });
+}
 $(document).on("click", "#btn_editar", function(){		        
   let fila = $(this).closest("tr"),	        
   idMetrica = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		
@@ -63,3 +79,21 @@ $('#form-Edit-Metrica').submit(function (e) {
     $('#modalEditarMetrica').modal('hide');
    }
 });
+
+//Limpiar modal de editar
+document.getElementById('button-cerrar').addEventListener('click', ()=>{
+  limpiarFormEdit();
+})
+document.getElementById('button-x').addEventListener('click', ()=>{
+  limpiarFormEdit();
+})
+let limpiarFormEdit = () => {
+  let $inputs = document.querySelectorAll('.mensaje_error');
+  let $mensajes = document.querySelectorAll('.mensaje');
+  $inputs.forEach($input => {
+    $input.classList.remove('mensaje_error');
+  });
+  $mensajes.forEach($mensaje =>{
+    $mensaje.innerText = '';
+  });
+}
