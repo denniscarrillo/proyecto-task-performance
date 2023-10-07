@@ -35,7 +35,7 @@ require_once('../../Vista/login/validarRegistro.php');
                 <!-- input para correo electronico -->
                 <div class="wrap-input mb-3">
                     <label><b>Correo Electrónico</b></label>
-                    <input type="email" class="form-control input" name="correoElectronico" id="correo" maxlength="35" placeholder="Correo Electrónico">
+                    <input type="email" class="form-control input" name="correoElectronico" id="correo" maxlength="50" placeholder="Correo Electrónico">
                     <p class="mensaje"></p>
                 </div>
             </div>
@@ -50,7 +50,7 @@ require_once('../../Vista/login/validarRegistro.php');
                 <!-- input para confirmación Contraseña -->
                 <div class="wrap-input mb-3" id="grupo__password2">
                     <label><b>Confirmar contraseña</b></label>
-                    <input type="password" class="form-control input" name="confirmarContraseña" id="password2" maxlength="16" placeholder="Confirmar Contraseña">
+                    <input type="password" class="form-control input" name="confirmarContraseña" id="password2" maxlength="20" placeholder="Confirmar Contraseña">
                     <!-- <i class="form-control__validacion-estado fas fa-times-circle"></i> -->
                     <p class="mensaje"></p>
                 </div>
