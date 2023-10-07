@@ -15,6 +15,7 @@ class Usuario {
     public $telefono;
     public $direccion;
     public $idRol;
+    public $intentosRespuestas;
     public $idCargo;
     public $creadoPor;
     public $fechaCreacion;
@@ -56,6 +57,7 @@ class Usuario {
         $nombre = $nuevoUsuario->nombre;
         $idEstado = $nuevoUsuario->idEstado;
         $idRol = $nuevoUsuario->idRol;
+        $intentosRespuestas = $nuevoUsuario->intentosRespuestas;
         $contrasenia = $nuevoUsuario->contrasenia;
         $correo = $nuevoUsuario->correo;
         $cantIntentos = $nuevoUsuario->intentosFallidos;
@@ -63,9 +65,10 @@ class Usuario {
         $fechaCreacion = $nuevoUsuario->fechaCreacion;
         $cantPreguntasContestadas = $nuevoUsuario->preguntasContestadas;
         $fechaV = $nuevoUsuario->fechaV;
-        $query = "INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico, intentos_fallidos, 
-                                        id_Rol, preguntas_Contestadas, fecha_Vencimiento, Creado_Por, Fecha_Creacion) 
-                        VALUES ('$usuario','$nombre', '$idEstado', '$contrasenia', '$correo', '$cantIntentos', '$idRol', '$cantPreguntasContestadas', '$fechaV', '$creadoPor', '$fechaCreacion' )";
+        $query = "INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico, intentos_fallidos, id_Rol, 
+        preguntas_Contestadas, int_respuestasFallidas, fecha_Vencimiento, Creado_Por, Fecha_Creacion) 
+        VALUES ('$usuario','$nombre', '$idEstado', '$contrasenia', '$correo', '$cantIntentos', '$idRol', 
+        '$cantPreguntasContestadas', '$intentosRespuestas', '$fechaV', '$creadoPor', '$fechaCreacion');";
         $nuevoUsuario = sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $nuevoUsuario;

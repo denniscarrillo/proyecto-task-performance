@@ -40,7 +40,7 @@ class DataTableObjeto
         try {
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $query = " SELECT id_Objeto FROM tbl_MS_Objetos WHERE objeto NOT IN('login.php', 'configRespuestas.php', 'v_nuevaContrasenia.php', 'index.php');";
+            $query = " SELECT id_Objeto FROM tbl_MS_Objetos WHERE objeto NOT IN('login.php', 'configRespuestas.php', 'v_nuevaContrasenia.php', 'preguntasResponder.php', 'index.php');";
             $resultado = sqlsrv_query($abrirConexion, $query);
             while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
                 $idObjeto[] = [
