@@ -12,11 +12,11 @@ if (isset($_SESSION["usuario"])) {
     session_destroy(); // Destruye la sesión
 
     // Redirigir a la página de inicio de sesión
-    header("Location: ../../Vista/login/login.php");
+    header("Location: ../Vista/login/login.php");
     exit(); // Asegurarse de que el script termine aquí
 } else {
     // Si la sesión no está iniciada, redirigir a la página de inicio de sesión también
-    header("Location: ../../Vista/login/login.php");
+    header("Location: ../Vista/login/login.php");
     exit();
 }
 ?>

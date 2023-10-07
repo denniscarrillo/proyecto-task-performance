@@ -14,4 +14,4 @@ didOpen: (toast) => {
 Toast.fire({
     icon: 'success',
     title: 'Se ha enviado el token a su correo!'
-  })
+});

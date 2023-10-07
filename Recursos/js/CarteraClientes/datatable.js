@@ -69,6 +69,23 @@ $('#form-carteraCliente').submit(function (e) {
      $('#modalNuevoCliente').modal('hide');
     } 
 });
+//PENDIENTE TERMINAR
+let setEstado = function($estado){
+  let $select = document.getElementById('E_estadoContacto');
+  //Setear tipo de tarea
+  for (let i = 0; i < $select.length; i++) {
+    let option = $select[i];
+    console.log(option.getAttribute('selected'));
+    if(!option.getAttribute('selected') == null){
+      option.removeAttribute('selected');
+    }
+    if ($estado === option.textContent) {
+      option.setAttribute('selected', 'true');
+      console.log($estado, option.textContent);
+      break;
+    }
+  }
+}
 //Editar Cliente
 $(document).on('click', '#btn_editar', function(){		        
   let fila = $(this).closest("tr"),	        

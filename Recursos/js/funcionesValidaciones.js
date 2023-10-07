@@ -157,7 +157,6 @@ export const cantidadParametrosContrasenia = (elemento) => {
         type: "POST",
         dataType: "JSON",
         success: function (data) {
-            console.log(data);
                 let minLength = data[0];
                 let maxLength = data[1];
                 // limitarCantidadCaracteres(elemento, maxLength)

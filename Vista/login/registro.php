@@ -61,7 +61,7 @@ require_once('../../Vista/login/validarRegistro.php');
                 </div>
             </div>
             </div>
-            <button type="submit" class="btn btn-primary" name="submit" id= "click"><label>Crear cuenta</label></button>
+            <button type="submit" class="btn btn-primary" name="submit" id= "click">Crear cuenta</button>
             <?php 
             //   if(!$mensaje==''){
             //     echo '<h2 class="mensaje-error">'. $mensaje. '</h2>';
