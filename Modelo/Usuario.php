@@ -381,12 +381,10 @@ class Usuario {
         return $incremento;
     }
     // public static function 
-    public static function obtenerRespuestaPregunta($idPregunta, $usuario){
+    public static function obtenerRespuestaPregunta($idPregunta){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
-        $query = "SELECT respuesta FROM tbl_ms_preguntas_x_usuario pu
-        INNER JOIN tbl_MS_Usuario us ON pu.id_Usuario = us.id_Usuario
-        WHERE pu.id_Pregunta = '$idPregunta' AND us.usuario = '$usuario';";
+        $query = "SELECT respuesta FROM tbl_ms_preguntas_x_usuario WHERE id_Pregunta = '$idPregunta';";
         $respuesta = sqlsrv_query($consulta, $query);
         $fila = sqlsrv_fetch_array($respuesta, SQLSRV_FETCH_ASSOC);
         if(isset($fila['respuesta'])){

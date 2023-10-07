@@ -73,8 +73,8 @@
         public static function aumentarIntentosFallidosRespuesta($usuario, $intentosFallidos){
             return Usuario::aumentarIntentosFallidosRespuesta($usuario, $intentosFallidos);
         }
-        public static function obtenerRespuesta($idPregunta, $usuario){
-            return Usuario::obtenerRespuestaPregunta($idPregunta, $usuario); 
+        public static function obtenerRespuesta($idPregunta){
+            return Usuario::obtenerRespuestaPregunta($idPregunta); 
         }
         public static function bloquearUsuarioMetodoPregunta($usuario){
             Usuario::bloquearUsuarioMetodoPregunta($usuario);
