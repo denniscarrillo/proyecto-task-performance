@@ -36,7 +36,7 @@
                 $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('preguntasResponder.php');
                 $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
                 $newBitacora->accion = $accion['BloqueoPreguntas'];
-                $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' ha sido bloqueado, acumuló '.$cantFallidasRespuestas.' intentos fallidos al recuperar por preguntas';
+                $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' ha sido bloqueado, acumuló '.$cantFallidasRespuestas.' intentos fallidos al recuperar su contraseña por preguntas';
                 ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
                 /* =======================================================================================================*/
                 $mensaje = 'El usuario ha sido bloqueado';
