@@ -10,13 +10,15 @@
 
     session_start(); //Reanudamos session
     if(isset($_SESSION['usuario'])){
+        $user = $_SESSION['usuario'];
         $nuevoPorcentaje = new Porcentajes();
         $nuevoPorcentaje->idPorcentaje = $_POST['idPorcentaje'];
         $nuevoPorcentaje->valorPorcentaje = $_POST['valorPorcentaje'];
         $nuevoPorcentaje->descripcionPorcentaje = $_POST['descripcionPorcentaje'];
         $nuevoPorcentaje->estadoPorcentaje = $_POST['estadoPorcentaje'];
         $nuevoPorcentaje->ModificadoPor = 'SUPERADMIN';
-        Porcentajes::editarPorcentaje($nuevoPorcentaje);
+        ControladorPorcentajes::editarPorcentaje($nuevoPorcentaje);
+        // Porcentajes::editarPorcentaje($nuevoPorcentaje);
         /* ========================= Evento editar porcentaje. ======================*/
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();

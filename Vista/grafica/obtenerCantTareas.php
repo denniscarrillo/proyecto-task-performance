@@ -35,10 +35,10 @@ if(isset($_POST['fechaDesde']) && isset($_POST['fechaHasta'])){
     }   
  
      $datosGrafica = [
-            "metaGeneralLlamada" => $MetaLlamadaGeneral,
-            "metaGeneralLead" => $MetaLeadGeneral,
-            "metaGeneralCotizacion" =>$MetaCotizacionGeneral,
-            "metaGeneralVentas" =>$MetaVentasGeneral,
+            "metaLlamada" => $MetaLlamadaGeneral,
+            "metaLead" => $MetaLeadGeneral,
+            "metaCotizacion" =>$MetaCotizacionGeneral,
+            "metaVentas" =>$MetaVentasGeneral,
             "TotalLlamadas" => $CantTareas["Llamadas"],
             "TotalLead" => $CantTareas["Lead"],
             "TotalCotizacion" => $CantTareas["Cotizacion"],

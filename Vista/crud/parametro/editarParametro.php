@@ -2,11 +2,13 @@
     require_once ("../../../db/Conexion.php");
     require_once ("../../../Modelo/Usuario.php");
     require_once ("../../../Modelo/Parametro.php");
+    require_once ("../../../Modelo/Pregunta.php");
     require_once ("../../../Modelo/Bitacora.php");
     require_once("../../../Controlador/ControladorUsuario.php");
     require_once("../../../Controlador/ControladorParametro.php");
+    require_once("../../../Controlador/ControladorPregunta.php");
     require_once("../../../Controlador/ControladorBitacora.php");
-    
+    $mensaje = '';
 
     session_start(); //Reanudamos session
     if(isset($_SESSION['usuario']) && isset($_POST['idParametro'])){
@@ -15,14 +17,24 @@
         $nuevoParametro->parametro = $_POST['parametro'];
         $nuevoParametro->valor = $_POST['valor'];
         $nuevoParametro->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-        $nuevoParametro->ModificadoPor = $_SESSION['usuario'];
-        ControladorParametro::editarParametroSistema($nuevoParametro);
-        if ($_POST['parametro'] == 'ADMIN VIGENCIA'){
-            $ArrayUsuarios = ControladorUsuario::obtenerIdUsuariosPassword();
-            $vigenciaPassword = ControladorParametro::obtenerVigencia();
-            $mensaje = ControladorUsuario::actualizarFechaVencimientoContrasena($ArrayUsuarios, $vigenciaPassword['Vigencia']);
-        }
-        
+        $nuevoParametro->ModificadoPor = $_SESSION['usuario'];    
+            if ($_POST['parametro'] == 'ADMIN PREGUNTAS'){
+                $CantPreg = ControladorPregunta::obtenerCantPreguntas();
+                if (intval($_POST['valor']) > $CantPreg){                    
+                    $mensaje = 1;
+                    print json_encode ($mensaje);
+                }
+                else{
+                    ControladorParametro::editarParametroSistema($nuevoParametro);
+                }
+            }else{
+                ControladorParametro::editarParametroSistema($nuevoParametro);
+            }      
+            if ($_POST['parametro'] == 'ADMIN VIGENCIA'){
+                $ArrayUsuarios = ControladorUsuario::obtenerIdUsuariosPassword();
+                $vigenciaPassword = ControladorParametro::obtenerVigencia();
+                $mensaje = ControladorUsuario::actualizarFechaVencimientoContrasena($ArrayUsuarios, $vigenciaPassword['Vigencia']);
+            }      
         /* ========================= Evento Editar parámetro. ====================================*/
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();

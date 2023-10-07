@@ -2,10 +2,11 @@ import * as funciones from './funcionesValidaciones.js';
 /* VALIDACIONES FORMULARIO PREGUNTAS */
 
 let estadoMasdeUnEspacioRespuesta = true;
+let estadoSelect = true;
 
 // CAMPOS
 const $form = document.getElementById('formPreguntasRes');
-const $pregunta = document.getElementById('pregunta');
+const $preguntas = document.getElementById('preguntas');
 const $respuestas = document.getElementById('Respuesta');
 /* const $mensaje = document.querySelectorAll('.mensaje'); */
 
@@ -23,8 +24,8 @@ $form.addEventListener('submit', e => {
     //     } 
     }
 });
-$pregunta.addEventListener('change', ()=>{
-    estadoSelect = funciones.validarCampoVacio($pregunta);
+$preguntas.addEventListener('change', ()=>{
+    estadoSelect = funciones.validarCampoVacio($preguntas);
 });
 $respuestas.addEventListener('keyup', ()=>{
     estadoMasdeUnEspacioRespuesta = funciones.validarMasdeUnEspacio($respuestas);

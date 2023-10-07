@@ -58,9 +58,16 @@ $('#form-Edit-Parametro').submit(function (e) {
       data: {
        idParametro: idParametro,
        parametro: parametro,
-       valor: valor,
+       valor: valor
       },
-      success: function () {
+      success: function (data) {
+        if(data == '1'){
+          let elemento = document.getElementById('E_valor');
+          let mensaje = elemento.parentElement().querySelector('.mensaje');
+          mensaje.innerText = 'Se excede la cantidad de preguntas existentes';
+          mensaje.classList.add('mensaje_error');
+        }
+        console.log(data)
         //Mostrar mensaje de exito
         Swal.fire(
           'Actualizado!',

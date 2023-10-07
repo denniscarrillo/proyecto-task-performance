@@ -15,6 +15,7 @@ class Usuario {
     public $telefono;
     public $direccion;
     public $idRol;
+    public $intentosRespuestas;
     public $idCargo;
     public $creadoPor;
     public $fechaCreacion;
@@ -56,6 +57,7 @@ class Usuario {
         $nombre = $nuevoUsuario->nombre;
         $idEstado = $nuevoUsuario->idEstado;
         $idRol = $nuevoUsuario->idRol;
+        $intentosRespuestas = $nuevoUsuario->intentosRespuestas;
         $contrasenia = $nuevoUsuario->contrasenia;
         $correo = $nuevoUsuario->correo;
         $cantIntentos = $nuevoUsuario->intentosFallidos;
@@ -63,9 +65,10 @@ class Usuario {
         $fechaCreacion = $nuevoUsuario->fechaCreacion;
         $cantPreguntasContestadas = $nuevoUsuario->preguntasContestadas;
         $fechaV = $nuevoUsuario->fechaV;
-        $query = "INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico, intentos_fallidos, 
-                                        id_Rol, preguntas_Contestadas, fecha_Vencimiento, Creado_Por, Fecha_Creacion) 
-                        VALUES ('$usuario','$nombre', '$idEstado', '$contrasenia', '$correo', '$cantIntentos', '$idRol', '$cantPreguntasContestadas', '$fechaV', '$creadoPor', '$fechaCreacion' )";
+        $query = "INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico, intentos_fallidos, id_Rol, 
+        preguntas_Contestadas, int_respuestasFallidas, fecha_Vencimiento, Creado_Por, Fecha_Creacion) 
+        VALUES ('$usuario','$nombre', '$idEstado', '$contrasenia', '$correo', '$cantIntentos', '$idRol', 
+        '$cantPreguntasContestadas', '$intentosRespuestas', '$fechaV', '$creadoPor', '$fechaCreacion');";
         $nuevoUsuario = sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $nuevoUsuario;
@@ -335,15 +338,73 @@ class Usuario {
         sqlsrv_close($consulta); #Cerrar la conexión.
         return $existe; //Si se encuentra un usuario válido/existente retorna un entero mayor a 0.
     }
-    public static function obtenerRespuestaPregunta($idPregunta){
+    public static function intentosFallidosRespuesta(){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $cantRespuestasFallidas = 0;
+        $query ="SELECT valor FROM tbl_MS_Parametro WHERE parametro = 'INTEN RESPUESTAS';";
+        $ejecutar = sqlsrv_query($conexion, $query);
+        $fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC);
+        if(isset($fila["valor"])){
+            $cantRespuestasFallidas = intval($fila["valor"]);
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $cantRespuestasFallidas;
+    }
+    public static function obtenerIntentosRespuestas($usuario){
+        $cantRespuestas = '';
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
-        $query = "SELECT respuesta FROM tbl_ms_preguntas_x_usuario WHERE id_Pregunta = '$idPregunta';";
-        $respuesta = sqlsrv_query($consulta, $query);
-        $fila = sqlsrv_fetch_array($respuesta, SQLSRV_FETCH_ASSOC);
-        $respuesta = $fila['respuesta'];
+        $query = "SELECT int_respuestasFallidas FROM tbl_MS_Usuario WHERE usuario = '$usuario';";
+        $userCantRespuestas = sqlsrv_query($consulta, $query);
+        $fila = sqlsrv_fetch_array($userCantRespuestas, SQLSRV_FETCH_ASSOC);
+        if(isset($fila["int_respuestasFallidas"])){
+            $cantRespuestas = intval($fila["int_respuestasFallidas"]);
+        }
+        sqlsrv_close($consulta); #Cerrar la conexión.
+        return $cantRespuestas;
+    }
+    public static function reiniciarIntentosRespuesta($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query ="UPDATE tbl_MS_Usuario SET int_respuestasFallidas = 0 , id_Estado_Usuario = 2 WHERE usuario = '$usuario';";
+        $ejecutar = sqlsrv_query($conexion, $query);
+        // $fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC);
+        sqlsrv_close($conexion); #Cerramos la conexión.
+    }
+    public static function aumentarIntentosFallidosRespuesta($usuario, $intentosFallidos){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $incremento = 0;
+        $incremento = ($intentosFallidos + 1);
+        $query = "UPDATE tbl_MS_Usuario SET int_respuestasFallidas = '$incremento' WHERE usuario = '$usuario';";
+        sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $incremento;
+    }
+    // public static function 
+    public static function obtenerRespuestaPregunta($idPregunta, $usuario){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
+        $respuesta = 0;
+        $query = "SELECT pu.respuesta FROM tbl_ms_preguntas_x_usuario pu
+        INNER JOIN tbl_MS_Usuario us ON pu.id_Usuario = us.id_Usuario
+        WHERE pu.id_Pregunta = '$idPregunta' AND us.usuario = '$usuario';";
+        $ejecutar = sqlsrv_query($consulta, $query);
+        $fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC);
+        if(isset($fila['respuesta'])){
+            $respuesta = $fila['respuesta'];
+        }
         sqlsrv_close($consulta); #Cerrar la conexión.
         return $respuesta; 
+    }
+
+    public static function bloquearUsuarioMetodoPregunta($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "UPDATE tbl_MS_Usuario SET id_Estado_Usuario = 4 WHERE usuario = '$usuario'";
+        $ejecutar = sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion);
     }
     public static function correoUsuario($usuario){
         $correo = '';

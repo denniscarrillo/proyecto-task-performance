@@ -96,13 +96,15 @@ $(document).on('click', '#btn_editar', function(){
   correo = fila.find('td:eq(4)').text(),
   direccion = fila.find('td:eq(5)').text(),
   estadoContacto = fila.find('td:eq(6)').text();
+  // console.log(estadoContacto);
   $("#E_Cliente").val(idcarteraCliente);
   $("#E_Nombre").val(nombre);
   $("#E_Rtn").val(rtn);
   $("#E_Telefono").val(telefono);
   $("#E_Correo").val(correo);
   $("#E_Direccion").val(direccion);
-  $("#E_estadoContacto").val(estadoContacto);
+  setEstado(estadoContacto);
+  // $("#E_estadoContacto").val(estadoContacto);
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");	
   $('#modalEditarCliente').modal('show');		   
