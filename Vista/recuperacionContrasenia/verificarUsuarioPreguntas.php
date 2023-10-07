@@ -35,7 +35,6 @@
                 $newBitacora->fecha = date("Y-m-d h:i:s"); 
                 $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('preguntasResponder.php');
                 $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-                $cantFallidasRespuestas = ControladorUsuario::obtenerIntentosRespuestas($usuario);
                 $newBitacora->accion = $accion['BloqueoPreguntas'];
                 $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' ha sido bloqueado, acumuló '.$cantFallidasRespuestas.' intentos fallidos al recuperar por preguntas';
                 ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
