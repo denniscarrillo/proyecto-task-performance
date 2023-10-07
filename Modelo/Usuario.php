@@ -194,7 +194,7 @@ class Usuario {
     public static function obtenerPreguntasUsuario(){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $query = "SELECT id_pregunta, pregunta FROM tbl_ms_preguntas;";
+        $query = "  SELECT id_pregunta, pregunta FROM tbl_ms_preguntas WHERE estado = 'activa';";
         $preguntasUsuario = sqlsrv_query($conexion, $query);
         $preguntas = array();
         while($fila = sqlsrv_fetch_array($preguntasUsuario, SQLSRV_FETCH_ASSOC)){

@@ -156,19 +156,12 @@ if (isset($_SESSION['usuario'])) {
                           <button type="submit" name="submit" href="../PerfilUsuario/gestionPerfilUsuario.php"  class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
               </div>
             <?php 
-           // $mensaje = '';
-              if(!$mensaje == ''){
+              if(!empty($mensaje)){
                 echo '<h2 class="mensaje-error" style="margin-top: 8px;">'. $mensaje. '</h2>';
               }
             ?>
          </form>
          </div>
-      <!-- Footer -->
-      <div class="footer-conteiner">
-                <?php
-                require_once '../../layout/footer.php';
-                ?>
-          </div>
         </div>
     </div>
     </div>

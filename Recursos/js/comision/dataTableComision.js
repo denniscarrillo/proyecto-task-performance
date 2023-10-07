@@ -2,6 +2,14 @@
 
 let tablaComision = "";
 $(document).ready(function () {
+  let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
+  console.log($idObjetoSistema);
+  obtenerPermisos($idObjetoSistema, procesarPermisoActualizar);
+});
+//Recibe la respuesta de la peticion AJAX y la procesa
+let procesarPermisoActualizar = data => {
+  let permisos = JSON.parse(data);
+  // console.log(permisos);
   tablaComision = $('#table-Comision').DataTable({
     "ajax": {
       "url": "../../../Vista/comisiones/obtenerComision.php",
@@ -29,11 +37,21 @@ $(document).ready(function () {
       {
         "defaultContent":
           '<div><button class="btns btn" id="btn_ver"><i class="fas fa-file-pdf"></i></button>' +
-          '<button class="btns btn" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button></div>'
+          `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`
       }
     ]
   });
-});
+}
+//Peticion  AJAX que trae los permisos
+let obtenerPermisos = function ($idObjeto, callback) { 
+  $.ajax({
+      url: "../../../Vista/crud/permiso/obtenerPermisos.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {idObjeto: $idObjeto},
+      success: callback
+    });
+}
 /* {"idComision":1,"factura":13,"totalVenta":-11360.61,"porcentaje":".04","comisionTotal":"6.99","estadoComisionar":"Activa","fechaComision":{"date":"2023-09-11 00:00:00.000000","timezone_type":3,"timezone":"Europe\/Berlin"}} */
 //Editar Comision
 $(document).on("click", "#btn_editar", function(){

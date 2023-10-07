@@ -105,10 +105,9 @@ a{
     padding-left: 5px;
 }
 .mensaje {
-    /* position: absolute; */
     margin-top: 3px;
     color: red;
-    font-size: 20px;
+    font-size: 15px;
 }
 .mensaje_error {
     box-shadow: 0 0 0 .15rem #e15e3eac;

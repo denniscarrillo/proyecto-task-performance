@@ -31,7 +31,7 @@
               <input type="password" class="form-control" id="userPassword" name="userPassword" maxlength="20" placeholder="Contraseña" >
               <p class="mensaje"></p>
             </div>
-            <button type="submit" class="btn btn-primary" name="submit" id="btn-submit">Ingresar</button>
+            <button type="submit" class="btn btn-primary" name="submit" id="btn-submit">Iniciar sesión</button>
             <label class="btn-cuenta">¿Aún no tienes cuenta? </label><a href = "registro.php">Regístrate</a>
             <a href="../recuperacionContrasenia/v_recuperarContrasena.html">¿Olvidaste tu usuario y/o contraseña?</a>
             <?php 

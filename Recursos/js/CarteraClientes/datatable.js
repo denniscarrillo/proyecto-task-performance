@@ -3,6 +3,14 @@ import {estadoValidado as valido } from './ValidacionesModalEditarCliente.js';
 
 let tablaCarteraClientes = '';
 $(document).ready(function () {
+  let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
+  console.log($idObjetoSistema);
+  obtenerPermisos($idObjetoSistema, procesarPermisoActualizar);
+});
+//Recibe la respuesta de la peticion AJAX y la procesa
+let procesarPermisoActualizar = data => {
+  let permisos = JSON.parse(data);
+  // console.log(permisos);
   tablaCarteraClientes = $('#table-CarteraClientes').DataTable({
     "ajax": {
       "url": "../../../Vista/crud/carteraCliente/obtenerCarteraClientes.php",
@@ -21,12 +29,11 @@ $(document).ready(function () {
       { "data": "estadoContacto"},
       {
         "defaultContent":
-        '<div><button class="btns btn" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>' 
+        `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`
       }
     ]
   });
-
-});
+}
 
 //Crear nuevo usuario
 $('#form-carteraCliente').submit(function (e) {
@@ -62,9 +69,8 @@ $('#form-carteraCliente').submit(function (e) {
      $('#modalNuevoCliente').modal('hide');
     } 
 });
-
 //Editar Cliente
-$(document).on("click", "#btn_editar", function(){		        
+$(document).on('click', '#btn_editar', function(){		        
   let fila = $(this).closest("tr"),	        
   idcarteraCliente = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		            
   nombre = fila.find('td:eq(1)').text(),
@@ -123,6 +129,8 @@ $('#form-editar-carteraCliente').submit(function (e) {
     $('#modalEditarCliente').modal('hide');
    }
 });
+
+//Limpiar el modal de crear
 document.getElementById('btn-cerrar').addEventListener('click', ()=>{
   limpiarForm();
 })
@@ -149,4 +157,22 @@ let limpiarForm = () => {
     telefono.value = '';
     correo.value = '';
     direccion.value = ''; 
+}
+
+//Limpiar el modal de editar
+document.getElementById('button-cerrar').addEventListener('click', ()=>{
+  limpiarFormEdit();
+})
+document.getElementById('button-x').addEventListener('click', ()=>{
+  limpiarFormEdit();
+})
+let limpiarFormEdit = () => {
+  let $inputs = document.querySelectorAll('.mensaje_error');
+  let $mensajes = document.querySelectorAll('.mensaje');
+  $inputs.forEach($input => {
+    $input.classList.remove('mensaje_error');
+  });
+  $mensajes.forEach($mensaje =>{
+    $mensaje.innerText = '';
+  });
 }

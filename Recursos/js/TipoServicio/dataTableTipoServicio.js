@@ -1,9 +1,15 @@
  import {estadoValidado as validado} from './validacionesModalNuevoTipoServicio.js';
  import {estadoValidado as valido } from './validacionesModalEditarTipoServicio.js';
 let tablaTipoServicio = '';
-
 $(document).ready(function () {
-
+  let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
+  console.log($idObjetoSistema);
+  obtenerPermisos($idObjetoSistema, procesarPermisoActualizar);
+});
+//Recibe la respuesta de la peticion AJAX y la procesa
+let procesarPermisoActualizar = data => {
+  let permisos = JSON.parse(data);
+  // console.log(permisos);
     tablaTipoServicio = $('#table-TipoServicio').DataTable({
       "ajax": {
         "url": "../../../Vista/crud/TipoServicio/obtenerTipoServicio.php",
@@ -17,13 +23,21 @@ $(document).ready(function () {
         { "data": "servicio_Tecnico" },
         {
           "defaultContent":
-          "<button class='btns btn' id='btn_editar'><i class='fa-solid fa-pen-to-square'></i></button>"
+          `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`
         }
       ]
     });
-});
-
-
+}
+//Peticion  AJAX que trae los permisos
+let obtenerPermisos = function ($idObjeto, callback) { 
+  $.ajax({
+      url: "../../../Vista/crud/permiso/obtenerPermisos.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {idObjeto: $idObjeto},
+      success: callback
+    });
+}
   // Crear nuevo Tipo Servicio
   $('#form-TipoServicio').submit(function (e) {
     e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
@@ -91,6 +105,8 @@ $(document).ready(function () {
       $('#modalEditarTipoServicio').modal('hide');
      }
   });
+
+  //Limpiar modal de crear
   document.getElementById('btn-cerrar').addEventListener('click', ()=>{
     limpiarForm();
   })
@@ -109,5 +125,23 @@ $(document).ready(function () {
     let servicioTecnico = document.getElementById('servicio_Tecnico');
     //Vaciar campos cliente
       servicioTecnico.value = '';
+  }
+
+  //Limpiar modal de editar
+  document.getElementById('button-cerrar').addEventListener('click', ()=>{
+    limpiarFormEdit();
+  })
+  document.getElementById('button-x').addEventListener('click', ()=>{
+    limpiarFormEdit();
+  })
+  let limpiarFormEdit = () => {
+    let $inputs = document.querySelectorAll('.mensaje_error');
+    let $mensajes = document.querySelectorAll('.mensaje');
+    $inputs.forEach($input => {
+      $input.classList.remove('mensaje_error');
+    });
+    $mensajes.forEach($mensaje =>{
+      $mensaje.innerText = '';
+    });
   }
 

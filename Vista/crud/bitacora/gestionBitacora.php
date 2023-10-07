@@ -112,30 +112,24 @@ if (isset($_SESSION['usuario'])) {
           $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
           $urlPreguntas = '../pregunta/gestionPregunta.php';
           $urlParametros = '../parametro/gestionParametro.php';
-          $urlPermisos = '../permiso/gestionPermiso.php';
+          $urlPermisos = '../permiso/gestionPermisos.php';
           $urlRoles = '../rol/gestionRol.php';
           $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
           $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
           require_once '../../layout/sidebar.php';
         ?>
       </div>
-
-      
       <div class="conteiner-main">
-           
             <!-- Encabezado -->
           <div class= "encabezado">
             <div class="navbar-conteiner">
                 <!-- Aqui va la barra -->
                 <?php include_once '../../layout/navbar.php'?>                             
             </div>
-        
             <div class ="titulo">
                   <H1 class="title-dashboard-task">Bitacora</H1>
             </div>  
           </div>
-
-
           <div class="table-conteiner">
             <table class="table" id="table-Bitacora">
               <thead>
@@ -163,33 +157,16 @@ if (isset($_SESSION['usuario'])) {
               </tbody>
             </table>
           </div>
-
-        <!-- Footer -->
-        <div class="footer-conteiner">
-           <?php
-              require_once '../../layout/footer.php';
-           ?>
-        </div>
-
-      </div>
-
-      
+      </div> 
     </div>
-  
-      <?php
-      //require('modalNuevoUsuario.html');
-      //require('modalEditarUsuario.html');
-      ?>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-      <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
-      <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
-      <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-      <script src="../../../Recursos/js/bitacora/dataTableBitacora.js" type="module"></script>
-      <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-      <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
-      <!--<script src="../../../Recursos/js/validacionesModalNuevoUsuario.js"  type="module"></script>-->
-      <!--<script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+    <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
+    <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="../../../Recursos/js/bitacora/dataTableBitacora.js" type="module"></script>
+    <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
+    <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   </body>
 
 </html>
