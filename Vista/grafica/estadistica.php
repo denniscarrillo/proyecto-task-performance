@@ -1,4 +1,11 @@
-
+<?php
+    //Esto es por lo que no funcionaba, esto se pasara a un archivo aparte donde se manejara la bitcora
+    //TOMAR NOTA POR FAVOR
+    session_start();
+    require_once('../../db/Conexion.php');
+    require_once("../../Modelo/Bitacora.php");
+    require_once("../../Controlador/ControladorBitacora.php");
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -52,6 +59,7 @@
             $urlPreguntas = '../crud/pregunta/gestionPregunta.php';
             $urlParametros = '../crud/parametro/gestionParametro.php';
             $urlPermisos = '../crud/permiso/gestionPermisos.php';
+            $urlPermisos = '../crud/permiso/gestionPermisos.php';
             $urlRoles = '../crud/rol/gestionRol.php';
             $urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
             $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
@@ -65,7 +73,7 @@
             <div class= "encabezado">
                 <div class="navbar-conteiner">
                     <!-- Aqui va la barra -->
-                    <?php include_once '../layout/navbar.php'?>                             
+                    <?php require_once '../layout/navbar.php'?>                             
                 </div>        
                 <div class ="titulo">
                     <H2 class="title-dashboard-task">Graficas</H2>
@@ -103,41 +111,32 @@
                         data-bs-target="#modalTraerVendedores" disabled>Seleccionar...<i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i></button>
                     </div> 
                            <button type="button" class="btn btn-info" id="btnFiltrar">Filtrar <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i></button>
-
                     </div> 
-                
              <div class = "Graficas-Fechas" id="GraficasPorTarea">
-                 <div class="grafica_Tareas" >
-                        <canvas id="grafica"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
-                    </div>    
-                <div class= "graficosPorTareas">
-                    <div class="grafica_Llamada">
-                        <canvas id="grafica_llamada" style=" width: 1333px; height: 366px;" ></canvas>
-                    </div>   
-                    
-                    <div class="grafica_Lead">
-                        <canvas id="grafica_lead" style=" width: 1333px; height: 366px;" ></canvas>
-                    </div>
-                    
-                    <div class="grafica_Cotizacion">
-                        <canvas id="grafica_Cotizacion" style=" width: 1333px; height: 366px;" ></canvas>
-                    </div>
-                    <div class="grafica_Ventas">
-                        <canvas id="grafica_Ventas" style=" width: 1333px; height: 366px;" ></canvas>
-                    </div> 
+                <div class="grafica_Tareas" >
+                <canvas id="grafica"  style="display: flow-root; width: 1333px; height: 366px;" class="chartjs-render-monitor"></canvas>
+            </div>    
+            <div class= "graficosPorTareas">
+                <div class="grafica_Llamada">
+                    <canvas id="grafica_llamada" style=" width: 1333px; height: 366px;" ></canvas>
+                </div>   
+                
+                <div class="grafica_Lead">
+                    <canvas id="grafica_lead" style=" width: 1333px; height: 366px;" ></canvas>
                 </div>
-                <!-- Footer -->
-            <div class="footer-conteiner">
-                    <?php
-                    require_once '../layout/footer.php';
-                    ?>
+                
+                <div class="grafica_Cotizacion">
+                    <canvas id="grafica_Cotizacion" style=" width: 1333px; height: 366px;" ></canvas>
+                </div>
+                <div class="grafica_Ventas">
+                    <canvas id="grafica_Ventas" style=" width: 1333px; height: 366px;" ></canvas>
+                </div> 
             </div>
-            
         </div>
     </div>
     <?php
        require_once('modalFiltroVendedores.html');
-    ?>    
+    ?>
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
     <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
