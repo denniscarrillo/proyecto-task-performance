@@ -18,8 +18,10 @@
                 <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="220px">
             </div>
             <div>
-                <h2 style="font-size: 1.5rem;">Nombre de usuario</h2>
-                <div class="wrap-input mb-3">
+                <p class="line-space"></p>
+                <h2 class="title-form">Nombre de usuario</h2>
+                <p class="line-space"></p>
+                <div class="wrap-input mt-3">
                     <span class="conteiner-icon">
                         <i class="icon fa-solid fa-user"></i>
                     </span>
@@ -45,7 +47,7 @@
                     }
                     echo '<button type="submit" class="btn btn-primary btn-block" name="submit">'.$texto.'</button>';            
                 ?>
-                <a href="v_recuperarContrasena.html" class="btn btn-primary btn-block" style="margin-top: 0.8rem; background-color: #f68e3e;">Regresar</a>
+                <a href="v_recuperarContrasena.html" class="btn btn-secondary btn-cancel">Regresar</a>
             </div>
             <?php
             if($mensaje != ''){
@@ -58,6 +60,6 @@
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
     <script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
     <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-    <script src="../../Recursos/js/validacionCorreo.js" type="module"></script>
+    <script src="../../Recursos/js/validacionesSolicitarUsuario.js" type="module"></script>
 </body>
 </html>

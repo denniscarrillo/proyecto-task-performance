@@ -28,14 +28,6 @@ form {
     border-radius:8px;
     box-shadow: 20px 20px 15px 0px #d05d24 ;
 }
-
-.btn {
-    display: block;
-    margin: 0 auto;
-    width: 70%;
-    background-color: #da251c;
-    border:none;
-}
 .conteiner-icon{
     position: absolute;
     left: 0;
@@ -43,10 +35,6 @@ form {
     height: 50%;
     transform: translateY(-25%);
 }
-.btn:hover{
-    background-color: rgb(75, 73, 73);
-    color: #ffffff;
- }
 .icon {
     display: block;
     margin: 10px;
@@ -64,7 +52,7 @@ form {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .form-control {
-    padding-left: 45px;
+    padding-left: 1rem;
 }
 .link-recuperacion {
     display: block;
@@ -87,10 +75,6 @@ form {
 .check-conteiner label {
     font-size: 15px;
 }
-.btn-cuenta{
-    font-size: 12px;
-    margin-left: 35px;
-}
 a{
     font-size: 15px;
     padding-left: 5px;
@@ -98,7 +82,6 @@ a{
 /* Estilo para quitar el ojo por defecto que pone el input password. 
     Pseudoelemento
 */
-
 .margin-b {
     margin-bottom: 0.2rem;
 }
@@ -133,21 +116,6 @@ form {
     margin-top: 0.8rem;
     margin-bottom: 0.8rem;
 }
-.btn {
-    margin: 0.6rem auto;
-    color: white;
-    font-weight: 500;
-    font-size: 15px;
-}
-.btn-cancelar {
-    background-color: #e36b21;
-}
-.mensaje {
-    position: absolute;
-    margin-top: -20px;
-    color: red;
-    font-size: 17px;
-}
 .mensaje_error {
     box-shadow: 0 0 0 .15rem #e15e3eac;
     border-color: red;
@@ -168,4 +136,13 @@ form {
     display: flex;
     gap: 1rem;
     margin-bottom: 1.5rem;
+}
+.btn {
+    height: 42px;
+    margin: 0;
+    margin-top: 0.4rem;
+}
+.btn-cancel {
+    margin: 0;
+    margin-top: 0.4rem;
 }

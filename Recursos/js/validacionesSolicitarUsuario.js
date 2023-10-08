@@ -14,8 +14,6 @@ const $mensaje = document.getElementById('mensaje_P');
 
 // Función para validar el formulario
 $form.addEventListener('submit', e =>{
-
-
   if ($usuario.value.trim() === '') {
     let div = $usuario.parentElement;
     let mensaje = div.querySelector('p');
@@ -33,8 +31,6 @@ $form.addEventListener('submit', e =>{
     }
   
 });
-
-
 
 //Esta validacion convierte el usuario en letras mayusculas
 $usuario.addEventListener('focusout', () => {

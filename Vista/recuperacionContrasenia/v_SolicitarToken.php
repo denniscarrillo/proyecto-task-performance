@@ -18,8 +18,10 @@
                 <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="180px">
             </div>
             <div>
-                <h2 style="font-size: 1.5rem;">Digite su token</h2>
-                <div class="wrap-input mb-3">   
+                <p class="line-space"></p>
+                <h2 class="title-form">Digite su token</h2>
+                <p class="line-space"></p>
+                <div class="wrap-input mb-3 mt-3">   
                     <span class="conteiner-icon">
                         <i class="icon fa-sharp fa-solid fa-key" style="color: #ee7a1b;"></i>
                         <!-- <i class="icon fa-solid fa-lock-keyhole"></i> -->
@@ -28,7 +30,7 @@
                     
                 </div>
                 <button type="submit" class="btn btn-primary btn-block" name="submit">Validar</button>
-                <a href="v_recuperarContrasena.html" class="btn btn-primary btn-block" style="margin-top: 0.8rem; background-color: #f68e3e;">Cancelar</a>
+                <a href="v_recuperarContrasena.html" class="btn btn-secondary btn-cancel">Cancelar</a>
                 <?php 
                 if(!empty($mensaje)){
                     echo '<p class="mensaje-error">'.$mensaje.'</p>';

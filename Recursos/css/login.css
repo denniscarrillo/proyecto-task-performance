@@ -16,10 +16,7 @@ body {
 }
 .wrap-input {
     position: relative;
-    margin-bottom: 2.4rem !important;
-}
-.titulo-registro.metodo-rec {
-    margin: 1.2rem 1rem;
+    margin-bottom: 2.4rem;
 }
 form {
     padding: 20px;
@@ -57,6 +54,19 @@ form {
 .btn-cancel:active {
     background-color: #676262;
     color: white;
+}
+.title-form {
+    color: #292626;
+    margin-bottom: 0.4rem;
+    text-align: center;
+    font-size: 1.5rem;
+}
+.line-space {
+    margin: 0.2rem auto;
+    height: 0.2rem;
+    width: 100%;
+    background-color: #323030; /*color rojo del logo de la empresa*/
+    border-radius: 0.8rem;
 }
 .conteiner-icon{
     position: absolute;
@@ -110,6 +120,7 @@ form {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 0.8rem;
 }
 .check-conteiner input {
     margin: 5px;
@@ -130,7 +141,6 @@ a{
     margin-top: 3px;
     color: red;
     font-size: 15px;
-    /* margin-bottom: 0.7rem; */
 }
 .mensaje_error {
     box-shadow: 0 0 0 .15rem #e15e3eac;

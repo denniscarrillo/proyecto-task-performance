@@ -12,13 +12,13 @@
     session_start(); //Reanudamos la sesion
     if(isset($_SESSION['usuario'])){
         $usuario = $_SESSION['usuario'];
-        $respuestaContestada = ControladorUsuario::obtenerRespuesta($idPregunta, $usuario);
-        $cantFallidasParametro = ControladorUsuario::intentosFallidosRespuesta();
-        $cantFallidasRespuestas = ControladorUsuario::obtenerIntentosRespuestas($usuario);
         if (isset($_POST["submit"])){
+            $respuesta = $_POST["Respuesta"];
+            $idPregunta = $_POST["pregunta"];
+            $respuestaContestada = ControladorUsuario::obtenerRespuesta($idPregunta, $usuario);
+            $cantFallidasParametro = ControladorUsuario::intentosFallidosRespuesta();
+            $cantFallidasRespuestas = ControladorUsuario::obtenerIntentosRespuestas($usuario);
             if($cantFallidasRespuestas < $cantFallidasParametro){
-                $respuesta = $_POST["Respuesta"];
-                $idPregunta = $_POST["pregunta"];
                 if($respuesta == $respuestaContestada){
                     ControladorUsuario::reiniciarIntentosFallidosRespuesta($usuario);
                     header('location: v_nuevaContrasenia.php');
