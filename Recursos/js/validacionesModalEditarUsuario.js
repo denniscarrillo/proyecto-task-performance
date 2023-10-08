@@ -43,15 +43,20 @@ $form.addEventListener('submit', e => {
             e.preventDefault();
             estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
         } else {
+            estadoMasdeUnEspacio.estadoMasEspacioNombre = funciones.validarMasdeUnEspacio($name);
+            if(estadoMasdeUnEspacio.estadoMasEspacioNombre == false){
+                e.preventDefault();
+            } else{
+
             if(estadoCorreo == false || estadoSelect.estadoSelectEstado == false || estadoSelect.estadoSelectRol == false){
                 e.preventDefault();
                 estadoCorreo = funciones.validarCorreo($correo, validaciones.correo);
                 estadoSelect.estadoSelectEstado = funciones.validarCampoVacio($estado);
                 estadoSelect.estadoSelectRol = funciones.validarCampoVacio($rol);
-                // estadoMasdeUnEspacio.estadoMasEspacioNombre = funciones.validarMasdeUnEspacio($name);
             } else {
                 estadoValidado = true; // 
             }
+        }
       }
     }
 });
