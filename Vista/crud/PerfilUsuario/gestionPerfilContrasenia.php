@@ -151,16 +151,19 @@ if (isset($_SESSION['usuario'])) {
               <div class ="mb-3">
                 <input type="checkbox" id="checkbox"> Mostrar Contraseñas
               </div>
-              <div class="btn-guardar">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                          <button type="submit" name="submit" href="../PerfilUsuario/gestionPerfilUsuario.php"  class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
-              </div>
-            <?php 
+              <?php 
            // $mensaje = '';
               if(!$mensaje == ''){
-                echo '<h2 class="mensaje-error" style="margin-top: 8px;">'. $mensaje. '</h2>';
+                echo '<h2 class="mensaje" style="margin-left: 300px;">'. $mensaje. '</h2>';
+           
               }
             ?>
+              <div class="btn-guardar">
+            
+              <a href="../../index.php"><button type="button" class="btn btn-secondary" href="../index.php"> Cerrar</button>
+                          <button type="submit" name="submit" href="../PerfilUsuario/gestionPerfilUsuario.php"  class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+              </div>
+            
          </form>
          </div>
       <!-- Footer -->

@@ -686,7 +686,7 @@ class Usuario {
         return [$resultadoMin, $resultadoMax];
 
 
-    }    public static function obtenerDatosPerfilUsuario($userName){
+    }  public static function obtenerDatosPerfilUsuario($userName){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
         $query="SELECT u.nombre_Usuario, u.rtn, u.Correo_Electronico, u.telefono, u.direccion,r.id_Rol, r.rol

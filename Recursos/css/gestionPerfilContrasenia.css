@@ -22,10 +22,11 @@
     right:50%;
 }
 .btn-guardar {
-    position:absolute;
-    bottom: 1rem;
+    position: absolute;
+    bottom: 0.6rem; /* Cambiar este valor para ajustar la posición vertical del botón */
     left: 40%;
-    margin-right:60px;
+    margin-right: 60px;
+    
 }
 
 .img-content{
@@ -58,7 +59,10 @@
 .mensaje {
     position: absolute;
     color: red;
-    font-size: 12px;
+    font-size: 14px;
+     display: block;
+    margin: 0 auto; /* Centra horizontalmente */
+    text-align: center; /* Centra verticalmente */
 }
 .mensaje_error {
     box-shadow: 0 0 0 .15rem #e15e3eac;

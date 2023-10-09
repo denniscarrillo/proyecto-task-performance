@@ -18,4 +18,10 @@ class ControladorPregunta {
     public static function preguntaExiste($pregunta){
         return Pregunta::preguntaExistente($pregunta);
     }
+    public static function obtenerPreguntasXusuario($Usuario){
+        return Pregunta::obtenerPreguntasXusuario($Usuario);
+    }
+    public static function actualizarRespuesta($idUsuario, $respuestas){
+        Pregunta::actualizarRespuesta($idUsuario, $respuestas);
+    }
 }

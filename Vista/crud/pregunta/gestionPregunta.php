@@ -118,6 +118,8 @@ if (isset($_SESSION['usuario'])) {
           $urlRoles = '../rol/gestionRol.php';
           $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
           $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
+          $urlPerfilUsuarios='../PerfilUsuario/gestionPerfilUsuario.php';
+          $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
           require_once '../../layout/sidebar.php';
         ?>
       </div>

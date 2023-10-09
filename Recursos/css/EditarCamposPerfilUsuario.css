@@ -12,6 +12,15 @@
     position: relative;
 
 }
+#form-Edit-Preguntas {
+  
+    box-shadow: 0px 10px 15px 2px #a5a4a3b6 ;
+    display: flex;
+    padding: 1rem;
+    padding-bottom: 4rem;
+    position: relative;
+
+}
 
 .grupo-form {
     width: 30rem;  
