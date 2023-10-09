@@ -2,6 +2,12 @@ import {estadoValidado as valido } from './validacionesModalEditarParametro.js';
 
 let tablaParametro = '';
 $(document).ready(function () {
+  let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
+  obtenerPermisos($idObjetoSistema, procesarPermisoActualizar);
+});
+//Recibe la respuesta de la peticion AJAX y la procesa
+let procesarPermisoActualizar = data => {
+  let permisos = JSON.parse(data);
   tablaParametro = $('#table-Parametro').DataTable({
     "ajax": {
       "url": "../../../Vista/crud/parametro/obtenerParametro.php",
@@ -14,14 +20,24 @@ $(document).ready(function () {
       { "data": "id"},
       { "data": "parametro" },
       { "data": "valorParametro" },
+      { "data": "descripcionParametro"},
       { "data": "usuario" },
       {"defaultContent":
-          '<div><button class="btns btn" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button></div>'
+      `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`
       }
     ]
   });
-});
-
+}
+//Peticion  AJAX que trae los permisos
+let obtenerPermisos = function ($idObjeto, callback) { 
+  $.ajax({
+      url: "../../../Vista/crud/permiso/obtenerPermisos.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {idObjeto: $idObjeto},
+      success: callback
+    });
+}
 $(document).on("click", "#btn_editar", function(){		        
   let fila = $(this).closest("tr"),	        
   idParametro = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		            
@@ -49,9 +65,16 @@ $('#form-Edit-Parametro').submit(function (e) {
       data: {
        idParametro: idParametro,
        parametro: parametro,
-       valor: valor,
+       valor: valor
       },
-      success: function () {
+      success: function (data) {
+        if(data == '1'){
+          let elemento = document.getElementById('E_valor');
+          let mensaje = elemento.parentElement().querySelector('.mensaje');
+          mensaje.innerText = 'Se excede la cantidad de preguntas existentes';
+          mensaje.classList.add('mensaje_error');
+        }
+        console.log(data)
         //Mostrar mensaje de exito
         Swal.fire(
           'Actualizado!',
@@ -64,3 +87,21 @@ $('#form-Edit-Parametro').submit(function (e) {
     $('#modalEditarParametro').modal('hide');
    }
 });
+
+//Limpiar modal de editar
+document.getElementById('button-cerrar').addEventListener('click', ()=>{
+  limpiarFormEdit();
+})
+document.getElementById('button-x').addEventListener('click', ()=>{
+  limpiarFormEdit();
+})
+let limpiarFormEdit = () => {
+  let $inputs = document.querySelectorAll('.mensaje_error');
+  let $mensajes = document.querySelectorAll('.mensaje');
+  $inputs.forEach($input => {
+    $input.classList.remove('mensaje_error');
+  });
+  $mensajes.forEach($mensaje =>{
+    $mensaje.innerText = '';
+  });
+}

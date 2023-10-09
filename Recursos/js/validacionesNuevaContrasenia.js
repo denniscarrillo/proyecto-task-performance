@@ -12,19 +12,20 @@ $(document).ready(function () {
         }
     });
 });
+let limiteContrasenia = true;
 
 let estadoPasswordSegura ={
     estadoPassword : true
 }
 const expresiones = {
-    password : /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,15}$/
+    password : /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,16}$/
 }
 
 const $form = document.getElementById('formContrasenia');
 const $password = document.getElementById('password');
 const $password2= document.getElementById('confirmPassword');
 
-$form.addEventListener('submit', e => {  
+$form.addEventListener('submit', async e => {  
     let estadoInputPassword = funciones.validarCampoVacio($password);
     let estadoInputPassword2 = funciones.validarCampoVacio($password2);
 
@@ -33,7 +34,17 @@ $form.addEventListener('submit', e => {
     }else{
         if (estadoPasswordSegura.estadoPassword == false ) {
             estadoPasswordSegura.estadoPassword = funciones.validarPassword($password, expresiones.password);
-        }                
+         } else {
+            try{
+                limiteContrasenia = await funciones.cantidadParametrosContrasenia($password);
+                if(limiteContrasenia == false){
+                    e.preventDefault();
+                }
+            }catch(error){
+                console.log(e);
+             }
+         }
+
         }
     });
     $password2.addEventListener('keyup',() =>{
@@ -42,33 +53,56 @@ $form.addEventListener('submit', e => {
     });
     $password.addEventListener('keyup', () => {
         funciones.validarPassword($password, expresiones.password);
-        funciones.limitarCantidadCaracteres("password", 15);
+        funciones.limitarCantidadCaracteres("password", 20);
+    });
+    $password.addEventListener('focusout', () => {
+        limiteContrasenia = funciones.cantidadParametrosContrasenia($password);
     });
         
-$form.addEventListener('submit', e =>{
-    let mensaje = '';
-    let div = '';
-    if($password.value != $password2.value){
-        div = $password2.parentElement 
-        mensaje = div.querySelector('p');
-        mensaje.innerText = '*Las Contraseñas no coinciden';
-        $password2.classList.add('mensaje_error');
-    } 
-    else {
-        $password2.classList.remove('mensaje_error');
+    $form.addEventListener('submit', e =>{
+        let estado;
+        let mensaje = $password2.parentElement.querySelector('p');
+        if($password.value != $password2.value){
+            mensaje.innerText = '*Las Contraseña no coincide';
+            $password2.classList.add('mensaje_error');
+            estado = false;
+            } 
+        else {
+            $password2.classList.remove('mensaje_error');
+            mensaje.innerText = '';
+            estado = true;
+        }
+        if ($password.value != $password2.value) {
+            e.preventDefault();
+        }
+        return estado;
+    });
+//Validacion en la cual no deje hacer submit hasta que la contraseña sea robusta
+$form.addEventListener('submit', e => {
+    let estado;
+    let mensaje = $password.parentElement.querySelector('p');
+    if ($password.value.trim() === ''){
+        mensaje.innerText = '*Campo vacio';
+        $password.classList.add('mensaje_error');
+        estado = false;
+    } else {
+        $password.classList.remove('mensaje_error');
         mensaje.innerText = '';
+        estado = true;
     }
-    if ($password.value != $password2.value) {
+    if ($password.value.trim() === '') {
         e.preventDefault();
     }
+    return estado;
 });
 //Validacion en la cual no deje hacer submit hasta que la contraseña sea robusta
+
 $form.addEventListener('submit', e =>{
     let mensaje = '';
     let input = $password.value;
     if(!expresiones.password.test(input)){
         mensaje = $password.parentElement.querySelector('p');
-        mensaje.innerText = '*Campo Vacio.';
+        mensaje.innerText = '*Mínimo una mayúscula, minúscula, número y caracter especial.';
         $password.classList.add('mensaje_error');
     } 
     else {
@@ -79,23 +113,8 @@ $form.addEventListener('submit', e =>{
     if (!expresiones.password.test(input)) {
         e.preventDefault();
     }
-    $form.addEventListener('submit', e =>{
-            let mensaje = $password.parentElement.querySelector('p');
-            let estado;
-            let input = $password.value;
-            if (!expresiones.test(input)){
-                mensaje.innerText = '*Mínimo 8 caracteres, una mayúscula, minúscula, número y caracter especial.';
-                $password.classList.add('mensaje_error');
-                estado =  false;
-            } else {
-                mensaje.innerText = '';
-                $password.classList.remove('mensaje_error');
-                estado = true;
-            }
-            return estado;
-        }
-    );
+});
 
-}); 
+
 
 

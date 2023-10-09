@@ -75,12 +75,11 @@ if (isset($_SESSION['usuario'])) {
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
   <!-- Estilos personalizados -->
   <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
-
-  <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
-  <title> Estado De Solicitudes</title>
+  <title> Consulta solicitudes</title>
 </head>
 
 <body style="overflow: hidden;">
@@ -112,7 +111,7 @@ if (isset($_SESSION['usuario'])) {
         $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
         $urlPreguntas = '../pregunta/gestionPregunta.php';
         $urlParametros = '../parametro/gestionParametro.php';
-        $urlPermisos = '../permiso/gestionPermiso.php';
+        $urlPermisos = '../permiso/gestionPermisos.php';
         $urlRoles = '../rol/gestionRol.php';
         $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
         $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
@@ -133,7 +132,7 @@ if (isset($_SESSION['usuario'])) {
       </div>    
         <div class="table-conteiner">
           <div>
-            <a href="v_Solicitud.php" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro"><i class="fa-solid fa-circle-plus"></i> Generar solicitud</a>
+            <a href="./v_Solicitud.php" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro"><i class="fa-solid fa-circle-plus"></i> Generar solicitud</a>
             <a href="../../fpdf/ReporteRol.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> 
           </div>
           <table class="table" id="table-Solicitud">
@@ -152,12 +151,6 @@ if (isset($_SESSION['usuario'])) {
             </tbody>
           </table>
         </div>
-        <!-- Footer -->
-        <div class="footer-conteiner">
-            <?php
-            require_once '../../layout/footer.php';
-            ?>
-        </div>
       </div> <!-- Fin de la columna -->
     </div>
   </div>
@@ -168,7 +161,7 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
   <!-- Scripts propios -->
   <script src="../../../Recursos/js/DataTableSolicitud/dataTableSolicitud.js" type="module"></script>
-  <script src="../../../Recursos/js/permiso/gestionPermisos.js"></script>
+  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>

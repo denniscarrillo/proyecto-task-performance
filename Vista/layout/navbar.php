@@ -1,5 +1,3 @@
-
-
 <nav class="navbar">
   <div class="navbar-content">
     <div class="notifations-conteiner">

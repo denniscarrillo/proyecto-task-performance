@@ -15,6 +15,7 @@ class Usuario {
     public $telefono;
     public $direccion;
     public $idRol;
+    public $intentosRespuestas;
     public $idCargo;
     public $creadoPor;
     public $fechaCreacion;
@@ -56,6 +57,7 @@ class Usuario {
         $nombre = $nuevoUsuario->nombre;
         $idEstado = $nuevoUsuario->idEstado;
         $idRol = $nuevoUsuario->idRol;
+        $intentosRespuestas = $nuevoUsuario->intentosRespuestas;
         $contrasenia = $nuevoUsuario->contrasenia;
         $correo = $nuevoUsuario->correo;
         $cantIntentos = $nuevoUsuario->intentosFallidos;
@@ -63,9 +65,10 @@ class Usuario {
         $fechaCreacion = $nuevoUsuario->fechaCreacion;
         $cantPreguntasContestadas = $nuevoUsuario->preguntasContestadas;
         $fechaV = $nuevoUsuario->fechaV;
-        $query = "INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico, intentos_fallidos, 
-                                        id_Rol, preguntas_Contestadas, fecha_Vencimiento, Creado_Por, Fecha_Creacion) 
-                        VALUES ('$usuario','$nombre', '$idEstado', '$contrasenia', '$correo', '$cantIntentos', '$idRol', '$cantPreguntasContestadas', '$fechaV', '$creadoPor', '$fechaCreacion' )";
+        $query = "INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico, intentos_fallidos, id_Rol, 
+        preguntas_Contestadas, int_respuestasFallidas, fecha_Vencimiento, Creado_Por, Fecha_Creacion) 
+        VALUES ('$usuario','$nombre', '$idEstado', '$contrasenia', '$correo', '$cantIntentos', '$idRol', 
+        '$cantPreguntasContestadas', '$intentosRespuestas', '$fechaV', '$creadoPor', '$fechaCreacion');";
         $nuevoUsuario = sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $nuevoUsuario;
@@ -194,7 +197,7 @@ class Usuario {
     public static function obtenerPreguntasUsuario(){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $query = "SELECT id_pregunta, pregunta FROM tbl_ms_preguntas;";
+        $query = "  SELECT id_pregunta, pregunta FROM tbl_ms_preguntas WHERE estado = 'activa';";
         $preguntasUsuario = sqlsrv_query($conexion, $query);
         $preguntas = array();
         while($fila = sqlsrv_fetch_array($preguntasUsuario, SQLSRV_FETCH_ASSOC)){
@@ -206,7 +209,17 @@ class Usuario {
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $preguntas;
     }
-
+    public static function validarPreguntasUsuario($idPregunta, $usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "  SELECT pu.id_pregunta FROM tbl_MS_Preguntas_X_Usuario pu
+        INNER JOIN tbl_MS_Usuario u ON u.id_Usuario = pu.id_Usuario
+        WHERE u.usuario = '$usuario' AND pu.id_Pregunta = '$idPregunta';";
+        $resultado = sqlsrv_query($conexion, $query);
+        $existe = sqlsrv_has_rows($resultado);
+        sqlsrv_close($conexion);
+        return $existe;
+    }
     public static function guardarRespuestasUsuario($usuario, $idPregunta, $respuesta){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
@@ -325,15 +338,73 @@ class Usuario {
         sqlsrv_close($consulta); #Cerrar la conexión.
         return $existe; //Si se encuentra un usuario válido/existente retorna un entero mayor a 0.
     }
-    public static function obtenerRespuestaPregunta($idPregunta){
+    public static function intentosFallidosRespuesta(){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $cantRespuestasFallidas = 0;
+        $query ="SELECT valor FROM tbl_MS_Parametro WHERE parametro = 'INTEN RESPUESTAS';";
+        $ejecutar = sqlsrv_query($conexion, $query);
+        $fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC);
+        if(isset($fila["valor"])){
+            $cantRespuestasFallidas = intval($fila["valor"]);
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $cantRespuestasFallidas;
+    }
+    public static function obtenerIntentosRespuestas($usuario){
+        $cantRespuestas = '';
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
-        $query = "SELECT respuesta FROM tbl_ms_preguntas_x_usuario WHERE id_Pregunta = '$idPregunta';";
-        $respuesta = sqlsrv_query($consulta, $query);
-        $fila = sqlsrv_fetch_array($respuesta, SQLSRV_FETCH_ASSOC);
-        $respuesta = $fila['respuesta'];
+        $query = "SELECT int_respuestasFallidas FROM tbl_MS_Usuario WHERE usuario = '$usuario';";
+        $userCantRespuestas = sqlsrv_query($consulta, $query);
+        $fila = sqlsrv_fetch_array($userCantRespuestas, SQLSRV_FETCH_ASSOC);
+        if(isset($fila["int_respuestasFallidas"])){
+            $cantRespuestas = intval($fila["int_respuestasFallidas"]);
+        }
+        sqlsrv_close($consulta); #Cerrar la conexión.
+        return $cantRespuestas;
+    }
+    public static function reiniciarIntentosRespuesta($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query ="UPDATE tbl_MS_Usuario SET int_respuestasFallidas = 0 , id_Estado_Usuario = 2 WHERE usuario = '$usuario';";
+        $ejecutar = sqlsrv_query($conexion, $query);
+        // $fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC);
+        sqlsrv_close($conexion); #Cerramos la conexión.
+    }
+    public static function aumentarIntentosFallidosRespuesta($usuario, $intentosFallidos){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $incremento = 0;
+        $incremento = ($intentosFallidos + 1);
+        $query = "UPDATE tbl_MS_Usuario SET int_respuestasFallidas = '$incremento' WHERE usuario = '$usuario';";
+        sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $incremento;
+    }
+    // public static function 
+    public static function obtenerRespuestaPregunta($idPregunta, $usuario){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
+        $respuesta = 0;
+        $query = "SELECT pu.respuesta FROM tbl_ms_preguntas_x_usuario pu
+        INNER JOIN tbl_MS_Usuario us ON pu.id_Usuario = us.id_Usuario
+        WHERE pu.id_Pregunta = '$idPregunta' AND us.usuario = '$usuario';";
+        $ejecutar = sqlsrv_query($consulta, $query);
+        $fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC);
+        if(isset($fila['respuesta'])){
+            $respuesta = $fila['respuesta'];
+        }
         sqlsrv_close($consulta); #Cerrar la conexión.
         return $respuesta; 
+    }
+
+    public static function bloquearUsuarioMetodoPregunta($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "UPDATE tbl_MS_Usuario SET id_Estado_Usuario = 4 WHERE usuario = '$usuario'";
+        $ejecutar = sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion);
     }
     public static function correoUsuario($usuario){
         $correo = '';
@@ -349,25 +420,49 @@ class Usuario {
         sqlsrv_close($consulta); #Cerrar la conexión.
         return $correo;
     }
-    public static function guardarToken($user, $token, $creadoPor){
+    public static function guardarToken($user, $creadoPor){
+        $tokenListo = 0;
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
+        //Obtenemos el ID de usuario que inicio el proceso de recuperación contraseña
         $querySelectU = "SELECT id_Usuario FROM tbl_MS_Usuario WHERE usuario = '$user'";
         $usuario = sqlsrv_query($consulta, $querySelectU); #Ejecutamos la consulta (Recordset)
         $fila = sqlsrv_fetch_array($usuario, SQLSRV_FETCH_ASSOC);
-        $idUsuario = $fila['id_Usuario'];
+        $idUsuario = $fila['id_Usuario']; //Capturamos el ID
+        //Obtenemos el valor del parametro HORAS VIGENCIA TOKEN con el que asignamos el tiempo de expiración
         $queryVigenciaToken = "SELECT valor FROM tbl_MS_Parametro WHERE parametro = 'HORAS VIGENCIA TOKEN';";
         $vigenciaToken = sqlsrv_query($consulta, $queryVigenciaToken);
         $filaToken = sqlsrv_fetch_array($vigenciaToken, SQLSRV_FETCH_ASSOC);
         $horasVencimiento = "";
         if (isset($filaToken['valor'])) {
-            $horasVencimiento = $filaToken['valor'];
-        }              
-        $queryInsert = "INSERT INTO tbl_token (id_usuario, Token, fecha_expiracion, Creado_Por, Fecha_Creacion)
-                    VALUES ('$idUsuario','$token', DATEADD(MINUTE, $horasVencimiento, GETDATE()), '$creadoPor', GETDATE())";
-        $resultado = sqlsrv_query($consulta, $queryInsert);
+            $horasVencimiento = intval($filaToken['valor']);
+        } 
+        $tokenUsuario = "SELECT token FROM tbl_Token WHERE id_usuario = '$idUsuario';";
+        $ejecutar = sqlsrv_query($consulta, $tokenUsuario);
+        if(sqlsrv_has_rows($ejecutar)){
+            while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
+                $token = random_int(1000, 9999);
+                if($token != intval($fila['token'])){
+                    $queryInsert = "INSERT INTO tbl_token (id_usuario, Token, fecha_expiracion, Creado_Por, Fecha_Creacion)
+                    VALUES ('$idUsuario','$token', DATEADD(HOUR, $horasVencimiento, GETDATE()), '$creadoPor', GETDATE())";
+                    $resultado = sqlsrv_query($consulta, $queryInsert);
+                    if($resultado){
+                        $tokenListo = $token;
+                    }
+                break;
+                }
+            } 
+        } else {
+            $token = random_int(1000, 9999);
+            $queryInsert = "INSERT INTO tbl_token (id_usuario, Token, fecha_expiracion, Creado_Por, Fecha_Creacion)
+            VALUES ('$idUsuario','$token', DATEADD(HOUR, $horasVencimiento, GETDATE()), '$creadoPor', GETDATE())";
+            $resultado = sqlsrv_query($consulta, $queryInsert);
+            if($resultado){
+                $tokenListo = $token;
+            }
+        }      
         sqlsrv_close($consulta); #Cerrar la conexión.        
-        return $resultado;
+        return $tokenListo;
     }
     //Nos dice si existe o no un usuario
     public static function usuarioExistente($usuario){
@@ -471,7 +566,7 @@ class Usuario {
             sqlsrv_query($consulta, $query2);
         }            
         sqlsrv_close($consulta); #Cerrar la conexión.
-    }
+    } 
 
     public static function actualizaRContrasenia($usuario, $contrasenia){
         $conn = new Conexion();
@@ -498,24 +593,27 @@ class Usuario {
         return $creado;
     }
     public static function validarToken($usuario, $tokenUsuario){
-        $existe = false;
+        $vencido = 0; //Por defecto asumimos que el token no existe
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
         $query = "SELECT id_Usuario FROM tbl_MS_Usuario WHERE usuario = '$usuario'";
         $user = sqlsrv_query($consulta, $query);
         $fila = sqlsrv_fetch_array($user, SQLSRV_FETCH_ASSOC);
         $idUser = $fila['id_Usuario'];
-        $query2 = "SELECT token, fecha_expiracion FROM tbl_token WHERE id_usuario = '$idUser'";
-        $validar = sqlsrv_query($consulta, $query2);
-        while($row = sqlsrv_fetch_array($validar, SQLSRV_FETCH_ASSOC)){
-            date_default_timezone_set('America/Tegucigalpa');
-            if($tokenUsuario == $row['token'] && strtotime(date("Y-m-d H:i:s")->format('Y-m-d H:i:s')) < strtotime($row['fecha_expiracion']->format('Y-m-d H:i:s'))){
-                $existe = true;
-                break;
-            }
+        $query2 = "SELECT DATEDIFF(HOUR, GETDATE(), fecha_expiracion) AS vencimiento FROM tbl_token WHERE id_usuario = '$idUser' AND token = '$tokenUsuario'";
+        $resultado = sqlsrv_query($consulta, $query2);
+        $vencToken = sqlsrv_has_rows($resultado);
+        if($vencToken){ //Si el token existe entonces validamos su fecha de vencimiento
+            $row = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+            $FechaVenc = intval($row['vencimiento']);
+            if($FechaVenc < 1){
+                $vencido = 1; //Si ya vencio devolvemos 1
+            } else {
+                $vencido = 2; //Si no ha vencido devolvemos 2
+            }   
         }
         sqlsrv_close($consulta); #Cerramos la conexión.
-        return $existe;
+        return $vencido;
     }
     //Recibe un usuario y devuelve un id de usuario.
     public static function obtenerIdUsuario($usuario){
@@ -752,7 +850,6 @@ class Usuario {
         WHERE u.usuario = '$user';";
         $resultado = sqlsrv_query($conexion, $query);
         while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) { 
-            $cont++;
             $estadoContra = password_verify($contrasenia, $fila['contrasenia']);
             if ($estadoContra){
                 break;
@@ -761,7 +858,26 @@ class Usuario {
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $estadoContra;
     }
-
+    public static function depurarToken($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = " SELECT COUNT(tk.id_token) AS Cant FROM tbl_Token tk 
+        INNER JOIN tbl_MS_Usuario us ON tk.id_usuario = us.id_Usuario
+        WHERE us.usuario = '$usuario';";
+        $resultado = sqlsrv_query($conexion, $query);
+        $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+        if(intval($fila['Cant']) == 10){
+            $idToken = "SELECT tk.id_token FROM tbl_Token tk 
+            INNER JOIN tbl_MS_Usuario us ON tk.id_usuario = us.id_Usuario
+            WHERE tk.Fecha_Creacion = (SELECT MIN(tk.Fecha_Creacion) FROM tbl_Token tk) AND us.usuario = '$usuario';";
+            $resultado = sqlsrv_query($conexion, $idToken);
+            $filaIdToken = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+            $id = $filaIdToken['id_token'];
+            $query = "DELETE FROM tbl_Token WHERE id_token = '$id';";
+            $resultado = sqlsrv_query($conexion, $query);
+        }
+        sqlsrv_close($conexion);
+    }
 }#Fin de la clase
 
     

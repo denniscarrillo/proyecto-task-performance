@@ -51,7 +51,7 @@ require_once("validacionesComision.php");
         $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
         $urlPreguntas = '../crud/pregunta/gestionPregunta.php';
         $urlParametros = '../crud/parametro/gestionParametro.php';
-        $urlPermisos = '../crud/permiso/gestionPermiso.php';
+        $urlPermisos = '../crud/permiso/gestionPermisos.php';
         $urlRoles = '../crud/rol/gestionRol.php';
         $urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
         $urlImg = '../../Recursos/imagenes/Logo-E&C.png';
@@ -121,6 +121,7 @@ require_once("validacionesComision.php");
   <script src="../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script src="../../Recursos/js/comision/dataTableComision.js" type="module"></script>
+  <script src="../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <!-- <script src="../../Recursos/js/comision/validacionesEditarComision.js" type="module"></script> -->
   <script src="../../Recursos/js/permiso/gestionPermisos.js"></script>
   <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>

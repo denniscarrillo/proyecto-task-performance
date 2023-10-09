@@ -36,6 +36,7 @@
                 'Update' => 'Actualizacion',
                 'Delete' => 'Eliminacion',
                 'Login'  => 'Iniciar Sesion',
+                'BloqueoPreguntas' => 'recup. contraseña',
                 'Logout'  => 'Cerrar Session',
                 'income'  => 'Ingreso',
                 'fallido' => 'Ingreso fallido',

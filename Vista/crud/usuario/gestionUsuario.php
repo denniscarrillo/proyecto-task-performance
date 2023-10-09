@@ -74,11 +74,11 @@ if (isset($_SESSION['usuario'])) {
   <!-- Estilos personalizados -->
   <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
-  <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
-  <title> Prueba </title>
+  <title> Gestión usuarios </title>
 </head>
 
 <body>
@@ -110,7 +110,7 @@ if (isset($_SESSION['usuario'])) {
           $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
           $urlPreguntas = '../pregunta/gestionPregunta.php';
           $urlParametros = '../parametro/gestionParametro.php';
-          $urlPermisos = '../permiso/gestionPermiso.php';
+          $urlPermisos = '../permiso/gestionPermisos.php';
           $urlRoles = '../rol/gestionRol.php';
           $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
           $urlPerfilUsuarios='../PerfilUsuario/gestionPerfilUsuario.php';
@@ -154,12 +154,6 @@ if (isset($_SESSION['usuario'])) {
             </tbody>
           </table>
         </div>
-        <!-- Footer -->
-        <div class="footer-conteiner">
-                <?php
-                require_once '../../layout/footer.php';
-                ?>
-          </div>
       </div> <!-- Fin de la columna -->
     </div>
   </div>
@@ -171,13 +165,14 @@ if (isset($_SESSION['usuario'])) {
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
-  <!-- Scripts propios -->
-  <script src="../../../Recursos/js/dataTable.js" type="module"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
+  <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
+  <!-- Scripts propios -->
+  <script src="../../../Recursos/js/dataTableUsuario.js" type="module"></script>
+  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
+  <script src="../../../Recursos/js/validacionesSidebar.js"></script>
   <script src="../../../Recursos/js/validacionesModalNuevoUsuario.js" type="module"></script>
   <script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script>
-  <script src="../../../Recursos/js/permiso/gestionPermisos.js"></script>
-  <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
 </body>
 

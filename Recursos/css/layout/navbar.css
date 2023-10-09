@@ -9,6 +9,7 @@
 	padding: 0;
 	font-size: 2rem;
 	color: whitesmoke;
+	margin-bottom: 0.8rem;
 }
 .navbar-content {
 	display: flex;
@@ -197,18 +198,17 @@ body{
 .icon{
     font-size: 1rem; 
 }
-
-
-
-  .dropdow-divider {
+.dropdow-divider {
     height: 0;
     margin: 0.5rem 0;
     overflow: hidden;
     border-top: 1px solid #e9ecef;
 }
-
 div {
     display: block;
+}
+p {
+    margin-bottom: 0;
 }
 
 

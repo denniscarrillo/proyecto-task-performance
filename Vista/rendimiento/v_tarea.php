@@ -51,7 +51,7 @@ require_once('validacionesTarea.php');
         $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
         $urlPreguntas = '../crud/pregunta/gestionPregunta.php';
         $urlParametros = '../crud/parametro/gestionParametro.php';
-        $urlPermisos = '../crud/permiso/gestionPermiso.php';
+        $urlPermisos = '../crud/permiso/gestionPermisos.php';
         $urlRoles = '../crud/rol/gestionRol.php';
         $urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
         $urlImg = '../../Recursos/imagenes/Logo-E&C.png';
@@ -66,7 +66,7 @@ require_once('validacionesTarea.php');
       <!-- Cuerpo de la pagina -->
       <main class="main-tareas">
       <div class="encabezado">
-          <h2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('v_tarea.php');?>">Control de tareas</h2>
+          <h2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('v_tarea.php');?>">Tablero | Mis tareas</h2>
       </div>
         <div class="task-conteiner">
           <div class="colum-task-conteiner">
@@ -134,7 +134,7 @@ require_once('validacionesTarea.php');
   <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
   <script src="../../Recursos/js/librerias/Sortable.min.js"></script>
   <script src="../../Recursos/js/rendimiento/tarea.js"></script>
-  <script src="../../Recursos/js/permiso/gestionPermisos.js"></script>
+  <script src="../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../Recursos/js/index.js"></script>
   <script src="../../Recursos/js/rendimiento/guardarEvidencia.js"></script>
 </body>

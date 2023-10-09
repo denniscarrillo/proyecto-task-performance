@@ -114,7 +114,7 @@ if (isset($_SESSION['usuario'])) {
           $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
           $urlPreguntas = '../pregunta/gestionPregunta.php';
           $urlParametros = '../parametro/gestionParametro.php';
-          $urlPermisos = '../permiso/gestionPermiso.php';
+          $urlPermisos = '../permiso/gestionPermisos.php';
           $urlRoles = '../rol/gestionRol.php';
           $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
           $urlPerfilUsuarios='../PerfilUsuario/gestionPerfilUsuario.php';
@@ -131,7 +131,7 @@ if (isset($_SESSION['usuario'])) {
                 <?php include_once '../../layout/navbar.php'?>                             
             </div>        
             <div class ="titulo">
-                  <H2 class="title-dashboard-task">Gestión de Metricas</H2>
+                  <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionMetricas.php');?>">Gestión de Metricas</H2>
             </div>  
           </div>       
       
@@ -151,14 +151,7 @@ if (isset($_SESSION['usuario'])) {
             <tbody class="table-group-divider">
             </tbody>
           </table>
-        </div>
-
-          <!-- Footer -->
-          <div class="footer-conteiner">
-                <?php
-                require_once '../../layout/footer.php';
-                ?>
-          </div>        
+        </div>      
       </div>
     </div>
   </div>

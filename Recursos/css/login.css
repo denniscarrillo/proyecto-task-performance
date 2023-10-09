@@ -16,25 +16,57 @@ body {
 }
 .wrap-input {
     position: relative;
-    margin-bottom: 2rem !important;
+    margin-bottom: 2.4rem;
 }
 form {
     padding: 20px;
     background-color: white;
     height: min-content;
-    /* width: 30%; */
     width: fit-content;
     font-size: 20px;
     border-radius:8px;
-    box-shadow: 20px 20px 15px 0px #d05d24 ;
+    box-shadow: 20px 20px 15px 0px #da251c;
 }
-
 .btn {
     display: block;
+    font-size: 20px;
     margin: 0 auto;
     width: 70%;
     background-color: #da251c;
     border:none;
+    margin-bottom: 0.4rem;
+}
+.btn:hover{
+    background-color: #2b2929;
+    color: #ffffff;
+ }
+ .btn:active{
+    background-color: #676262 !important;
+ }
+.btn-cancel {
+    margin-top: 0.8rem; 
+    background-color: #ea8132;
+    color: white;
+}
+.btn-cancel:hover{
+    background-color: #f3ac58;
+}
+.btn-cancel:active {
+    background-color: #676262;
+    color: white;
+}
+.title-form {
+    color: #292626;
+    margin-bottom: 0.4rem;
+    text-align: center;
+    font-size: 1.5rem;
+}
+.line-space {
+    margin: 0.2rem auto;
+    height: 0.2rem;
+    width: 100%;
+    background-color: #323030; /*color rojo del logo de la empresa*/
+    border-radius: 0.8rem;
 }
 .conteiner-icon{
     position: absolute;
@@ -43,10 +75,6 @@ form {
     height: 50%;
     transform: translateY(-25%);
 }
-.btn:hover{
-    background-color: rgb(75, 73, 73);
-    color: #ffffff;
- }
 .icon {
     display: block;
     margin: 10px;
@@ -56,7 +84,9 @@ form {
     cursor: pointer;
 }
 .logo-empresa{
-    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
 }
 .form-label {
     margin-left: 10px;
@@ -89,16 +119,18 @@ form {
 .check-conteiner {
     display: flex;
     justify-content: center;
+    align-items: center;
+    margin-top: 0.8rem;
 }
 .check-conteiner input {
     margin: 5px;
 }
 .check-conteiner label {
-    font-size: 15px;
+    font-size: 1.1rem;
+    margin-right: 0.8rem;
 }
 .btn-cuenta{
-    font-size: 12px;
-    margin-left: 35px;
+    font-size: 1rem;
 }
 a{
     font-size: 15px;
@@ -108,7 +140,7 @@ a{
     position: absolute;
     margin-top: 3px;
     color: red;
-    font-size: 12px;
+    font-size: 15px;
 }
 .mensaje_error {
     box-shadow: 0 0 0 .15rem #e15e3eac;
@@ -126,4 +158,19 @@ a{
 }
 .margin-b {
     margin-bottom: 0.2rem;
+}
+#correo, #pregunta {
+    width: 1.2rem;
+    height:1.2rem;
+    font-size: 4rem;
+}
+
+/*ESTILOS PARA LOS TOAST*/
+.customizable-toast.swal2-icon-success {
+    margin-top: 1.5rem;
+    /* background-color: #57d359 !important; */
+}
+.swal2-title {
+    margin-left: 0.7rem;
+    color: #089321;
 }

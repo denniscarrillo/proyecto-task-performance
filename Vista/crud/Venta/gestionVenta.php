@@ -79,7 +79,6 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
-  <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
   <title> Ventas </title>
 </head>
 
@@ -112,7 +111,7 @@ if (isset($_SESSION['usuario'])) {
         $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
         $urlPreguntas = '../pregunta/gestionPregunta.php';
         $urlParametros = '../parametro/gestionParametro.php';
-        $urlPermisos = '../permiso/gestionPermiso.php';
+        $urlPermisos = '../permiso/gestionPermisos.php';
         $urlRoles = '../rol/gestionRol.php';
         $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
         $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
@@ -132,7 +131,6 @@ if (isset($_SESSION['usuario'])) {
                   <H2 class="title-dashboard-task">Ventas</H2>
             </div>  
           </div>
-
         <div class="table-conteiner">
           <table class="table" id="table-Ventas">
             <thead>
@@ -154,19 +152,9 @@ if (isset($_SESSION['usuario'])) {
             </tbody>
           </table>
         </div>
-        <!-- Footer -->
-        <div class="footer-conteiner">
-                <?php
-                require_once '../../layout/footer.php';
-                ?>
-          </div>
       </div>
     </div>
   </div>
-  <?php
-  //require('modalNuevoUsuario.html');
-  //require('modalEditarUsuario.html');
-  ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
@@ -175,8 +163,6 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/Ventas/datatable.js" type="module"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
-  <!--<script src="../../../Recursos/js/validacionesModalNuevoUsuario.js"  type="module"></script>-->
-  <!--<script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script>-->
 </body>
 
 </html>

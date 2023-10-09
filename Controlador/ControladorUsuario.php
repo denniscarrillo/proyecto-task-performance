@@ -37,6 +37,9 @@
         public static function obtenerPreguntasUsuario(){
             return Usuario::obtenerPreguntasUsuario();
         }
+        public static function validarPreguntasUsuario($idPregunta, $usuario){
+            return Usuario::validarPreguntasUsuario($idPregunta, $usuario);
+        }
         public static function guardarRespuestas($usuario, $idPreguntas, $respuestas){
             Usuario::guardarRespuestasUsuario($usuario, $idPreguntas, $respuestas);
         }
@@ -58,14 +61,29 @@
         public static function existeUsuario($userName){
             return Usuario::validarUsuario($userName); 
         }
-        public static function obtenerRespuesta($idPregunta){
-            return Usuario::obtenerRespuestaPregunta($idPregunta); 
+        public static function intentosFallidosRespuesta(){
+            return Usuario::intentosFallidosRespuesta();
+        }
+        public static function obtenerIntentosRespuestas($usuario){
+            return Usuario::obtenerIntentosRespuestas($usuario);
+        }
+        public static function reiniciarIntentosFallidosRespuesta($usuario){
+            Usuario::reiniciarIntentosRespuesta($usuario);
+        }
+        public static function aumentarIntentosFallidosRespuesta($usuario, $intentosFallidos){
+            return Usuario::aumentarIntentosFallidosRespuesta($usuario, $intentosFallidos);
+        }
+        public static function obtenerRespuesta($idPregunta, $usuario){
+            return Usuario::obtenerRespuestaPregunta($idPregunta, $usuario); 
+        }
+        public static function bloquearUsuarioMetodoPregunta($usuario){
+            Usuario::bloquearUsuarioMetodoPregunta($usuario);
         }
         public static function obCorreoUsuario($usuario){
             return Usuario::correoUsuario($usuario);
         } 
-        public static function almacenarToken($user, $token, $usuario){
-            return Usuario::guardarToken($user, $token, $usuario);
+        public static function almacenarToken($user, $creadoPor){
+            return Usuario::guardarToken($user, $creadoPor);
         }
         public static function usuarioExiste($usuario){
             return Usuario::usuarioExistente($usuario);
@@ -144,5 +162,8 @@
 
        public static function estadoValidacionContrasenas($user, $contrasenia) {
         return Usuario::estadoValidacionContrasenas($user, $contrasenia);
-    }
+       }
+       public static function depurarTokenUsuario($usuario){
+        Usuario::depurarToken($usuario);
+       }
     }

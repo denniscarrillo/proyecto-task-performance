@@ -3,6 +3,12 @@ import {estadoValidado as valido } from './ValidacionesModalEditarPorcentaje.js'
 
 let tablaPorcentajes = '';
 $(document).ready(function () {
+  let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
+  obtenerPermisos($idObjetoSistema, procesarPermisoActualizar);
+});
+//Recibe la respuesta de la peticion AJAX y la procesa
+let procesarPermisoActualizar = data => {
+  let permisos = JSON.parse(data);
   tablaPorcentajes = $('#table-Porcentajes').DataTable({
     "ajax": {
       "url": "../../../Vista/crud/Porcentajes/obtenerPorcentajes.php",
@@ -24,11 +30,21 @@ $(document).ready(function () {
       { "data": "descripcionPorcentaje" },
       { "data": "estadoPorcentaje" },
       {"defaultContent":
-          '<div><button class="btns btn" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button></div>'
+        `<div><button class="btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}"" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button></div>`
       }
     ]
   });
-});
+}
+//Peticion  AJAX que trae los permisos
+let obtenerPermisos = function ($idObjeto, callback) { 
+  $.ajax({
+      url: "../../../Vista/crud/permiso/obtenerPermisos.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {idObjeto: $idObjeto},
+      success: callback
+    });
+}
 $('#btn_nuevoRegistro').click(function () {
   // //Petición para obtener
 
@@ -104,8 +120,7 @@ $(document).on("click", "#btn_editar", function(){
 $('#form-Edit-Porcentaje').submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
    //Obtener datos del nuevo Cliente
-   let 
-   idPorcentaje = $('#E_idPorcentaje').val(),
+   let idPorcentaje = $('#E_idPorcentaje').val(),
    valorPorcentaje = $('#E_valorPorcentaje').val(),
    descripcionPorcentaje =  $('#E_descripcionPorcentaje').val(),
    estadoPorcentaje = $('#E_estadoPorcentaje').val();
@@ -133,6 +148,7 @@ $('#form-Edit-Porcentaje').submit(function (e) {
     $('#modalEditarPorcentaje').modal('hide');
    }
 });
+//Limpiar el formulario de crear
 document.getElementById('btn-cerrar').addEventListener('click', ()=>{
   limpiarForm();
 })
@@ -153,4 +169,22 @@ let limpiarForm = () => {
   //Vaciar campos cliente
     valorPorcentaje.value = '';
     descripcionPorcentaje.value = '';
+}
+
+//Limpiar el formulario de editar
+document.getElementById('button-cerrar').addEventListener('click', ()=>{
+  limpiarFormEdit();
+})
+document.getElementById('button-x').addEventListener('click', ()=>{
+  limpiarFormEdit();
+})
+let limpiarFormEdit = () => {
+  let $inputs = document.querySelectorAll('.mensaje_error');
+  let $mensajes = document.querySelectorAll('.mensaje');
+  $inputs.forEach($input => {
+    $input.classList.remove('mensaje_error');
+  });
+  $mensajes.forEach($mensaje =>{
+    $mensaje.innerText = '';
+  });
 }

@@ -14,8 +14,6 @@ const $mensaje = document.getElementById('mensaje_P');
 
 // Función para validar el formulario
 $form.addEventListener('submit', e =>{
-
-
   if ($usuario.value.trim() === '') {
     let div = $usuario.parentElement;
     let mensaje = div.querySelector('p');
@@ -34,17 +32,16 @@ $form.addEventListener('submit', e =>{
   
 });
 
-
-
 //Esta validacion convierte el usuario en letras mayusculas
 $usuario.addEventListener('focusout', () => {
   let usuarioMayus = $usuario.value.toUpperCase();
   $usuario.value = usuarioMayus;
-});
-$usuario.addEventListener('keyup', () => {
   let usuario = $('#usuario').val();
-      estadoExisteUsuario = obtenerUsuarioExiste(usuario);
+  estadoExisteUsuario = obtenerUsuarioExiste(usuario);
 });
+// $usuario.addEventListener('keyup', () => {
+  
+// });
 // Cuando se quiera enviar el formulario de correo, se validarán si los inputs no están vacíos
 /* $form.addEventListener('submit', e => {
   e.preventDefault(); // Prevenir el envío del formulario por defecto
@@ -67,7 +64,7 @@ let obtenerUsuarioExiste = ($usuario) => {
           let $objUsuario = JSON.parse(usuario);
           if ($objUsuario.estado == 'false') {
               document.getElementById('usuario').classList.add('mensaje_error');
-              document.getElementById('usuario').parentElement.querySelector('p').innerText = '*Usuario no existe';
+              document.getElementById('usuario').parentElement.querySelector('p').innerText = '*El usuario ingresado no existe';
               estadoUsuario = true; // el usuario no existe, es true
           } else {
               document.getElementById('usuario').classList.remove('mensaje_error');

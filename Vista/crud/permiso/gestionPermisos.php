@@ -112,7 +112,7 @@ if (isset($_SESSION['usuario'])) {
           $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
           $urlPreguntas = '../pregunta/gestionPregunta.php';
           $urlParametros = '../parametro/gestionParametro.php';
-          $urlPermisos = './gestionPermiso.php';
+          $urlPermisos = './gestionPermisos.php';
           $urlRoles = '../rol/gestionRol.php';
           $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
           $urlPerfilUsuarios='../PerfilUsuario/gestionPerfilUsuario.php';
@@ -174,12 +174,6 @@ if (isset($_SESSION['usuario'])) {
             </tbody>
           </table>
         </div>
-        <!-- Footer -->
-        <div class="footer-conteiner">
-                <?php
-                require_once '../../layout/footer.php';
-                ?>
-          </div>
       </div>
     </div>
   </div>
