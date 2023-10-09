@@ -56,19 +56,16 @@
     display: inline-block;
 }
 
-.mensaje {
+.mensaje-error {
     position: absolute;
     color: red;
     font-size: 14px;
-     display: block;
+    display: block;
     margin: 0 auto; /* Centra horizontalmente */
     text-align: center; /* Centra verticalmente */
 }
-.mensaje_error {
-    box-shadow: 0 0 0 .15rem #e15e3eac;
-    border-color: red;
-}
-.mensaje_error:focus {
+
+.mensaje-error:focus {
     box-shadow: 0 0 0 .25rem rgba(226, 73, 35, 0.455);
     border-color: red;
 }
@@ -78,3 +75,8 @@
 }
 
 
+.mensaje {
+    position: absolute;
+    color: red;
+    font-size: 15px;
+}
