@@ -3,6 +3,12 @@ import {estadoValidado as valido } from './ValidacionesModalEditarPorcentaje.js'
 
 let tablaPorcentajes = '';
 $(document).ready(function () {
+  let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
+  obtenerPermisos($idObjetoSistema, procesarPermisoActualizar);
+});
+//Recibe la respuesta de la peticion AJAX y la procesa
+let procesarPermisoActualizar = data => {
+  let permisos = JSON.parse(data);
   tablaPorcentajes = $('#table-Porcentajes').DataTable({
     "ajax": {
       "url": "../../../Vista/crud/Porcentajes/obtenerPorcentajes.php",
@@ -24,11 +30,21 @@ $(document).ready(function () {
       { "data": "descripcionPorcentaje" },
       { "data": "estadoPorcentaje" },
       {"defaultContent":
-          '<div><button class="btns btn" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button></div>'
+        `<div><button class="btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}"" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button></div>`
       }
     ]
   });
-});
+}
+//Peticion  AJAX que trae los permisos
+let obtenerPermisos = function ($idObjeto, callback) { 
+  $.ajax({
+      url: "../../../Vista/crud/permiso/obtenerPermisos.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {idObjeto: $idObjeto},
+      success: callback
+    });
+}
 $('#btn_nuevoRegistro').click(function () {
   // //Petición para obtener
 

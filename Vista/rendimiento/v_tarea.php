@@ -134,7 +134,7 @@ require_once('validacionesTarea.php');
   <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
   <script src="../../Recursos/js/librerias/Sortable.min.js"></script>
   <script src="../../Recursos/js/rendimiento/tarea.js"></script>
-  <script src="../../Recursos/js/permiso/gestionPermisos.js"></script>
+  <script src="../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../Recursos/js/index.js"></script>
   <script src="../../Recursos/js/rendimiento/guardarEvidencia.js"></script>
 </body>
