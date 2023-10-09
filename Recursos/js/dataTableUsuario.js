@@ -3,7 +3,7 @@ import {estadoValidado as valido } from './validacionesModalEditarUsuario.js';
 let tablaUsuarios = ''; //Variable dataTable
 $(document).ready(function () {
   let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
-  console.log($idObjetoSistema);
+  // console.log($idObjetoSistema);
   obtenerPermisos($idObjetoSistema, procesarPermisoActualizar);
 });
 //Recibe la respuesta de la peticion AJAX y la procesa
