@@ -117,7 +117,7 @@ if (isset($_SESSION['usuario'])) {
           $urlPorcentajes = './gestionPorcentajes.php';
           $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
           $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
-          $urlPerfilUsuarios='../PerfilUsuario/gestionPerfilUsuario.php';
+          $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
           $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
           require_once '../../layout/sidebar.php';
         ?>
