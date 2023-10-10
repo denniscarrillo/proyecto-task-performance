@@ -1,56 +1,64 @@
 import * as funciones from './funcionesValidaciones.js';
-/* VALIDACIONES FORMULARIO PREGUNTAS */
-
-let estadoMasdeUnEspacioRespuesta = true;
-
-let estadoPregunta = true;
+//Objeto manejo estado de validaciones
+let estadoValidaciones = {
+    MasdeUnEspacioEntrePalabras: false,
+    campoVacioPregunta: false,
+    campoVacioRespuesta: false
+}
 const $form = document.getElementById('formConfig');
 const $pregunta = document.getElementById('id_pregunta');
 const $respuesta = document.getElementById('respuesta');
+let $spanEstadoPregunta = document.querySelector('.estado-p-guardada');
+let $numPreguntaContestada = document.querySelector('.info-content');
 
 //Cuando se quiera enviar el formulario de login, primero se validaran si los inputs no estan vacios
 $form.addEventListener('submit', e => {
-    
-        let estadoInputRespuesta = funciones.validarCampoVacio($respuesta);
-    
-        if (estadoInputRespuesta == false) {
-            e.preventDefault();
-        } else {
-            if (estadoMasdeUnEspacioRespuesta == false) {
-                e.preventDefault();
-                estadoMasdeUnEspacioRespuesta = funciones.validarMasdeUnEspacio($respuesta);
-            // } else {
-            //     if(estadoPregunta == false){
-            //         e.preventDefault();
-            //         estadoPregunta = funciones.validarCampoVacio($pregunta);
-            //     }
+    if (estadoValidaciones.campoVacioPregunta == false || estadoValidaciones.campoVacioRespuesta == false) {
+        //Si no se han cumplido las validaciones volvemos a aplicarlas y evitamos que envie el formulario
+        estadoValidaciones.campoVacioRespuesta = funciones.validarCampoVacio($respuesta);
+        estadoValidaciones.campoVacioPregunta = funciones.validarCampoVacio($pregunta);
+        e.preventDefault();
+    } 
+    if (estadoValidaciones.MasdeUnEspacioEntrePalabras == false && estadoValidaciones.campoVacioRespuesta == true) {
+        e.preventDefault();
+        estadoValidaciones.MasdeUnEspacioEntrePalabras = funciones.validarMasdeUnEspacio($respuesta);
+    }
+});
+//Otros eventos
+$pregunta.addEventListener('focusout', ()=>{
+    estadoValidaciones.campoVacioPregunta = funciones.validarCampoVacio($pregunta);
+});
+$respuesta.addEventListener('focusout', ()=>{
+    estadoValidaciones.campoVacioRespuesta = funciones.validarCampoVacio($respuesta);
+    if(estadoValidaciones.campoVacioRespuesta){
+        estadoValidaciones.MasdeUnEspacioEntrePalabras = funciones.validarMasdeUnEspacio($respuesta);
+    }
+});
+$respuesta.addEventListener('keyup', ()=>{
+    funciones.limitarCantidadCaracteres("respuesta", 100);
+});
+
+let preguntaGuardada = (elemento) => {
+    if(elemento.id == '1'){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top',
+            customClass: { //Para agregar clases propias
+                popup: 'customizable-toast'
+              },
+            showConfirmButton: false,
+            timer: 5000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
-        }
-    });
-    $pregunta.addEventListener('change', ()=>{
-        funciones.validarCampoVacio($pregunta);
-    });
-    $respuesta.addEventListener('focusout', ()=>{
-        estadoMasdeUnEspacioRespuesta = funciones.validarMasdeUnEspacio($respuesta);
-    });
-    $respuesta.addEventListener('keyup', ()=>{
-        funciones.limitarCantidadCaracteres("respuesta", 100);
-    });
-    
-    /* $form.addEventListener('submit', e => {
-        let estado;
-        let mensaje = $respuesta.parentElement.querySelector('p');
-        if ($respuesta.value.trim() === ''){
-            mensaje.innerText = '*Campo vacio';
-            $respuesta.classList.add('mensaje_error');
-            estado = false;
-        } else {
-            $respuesta.classList.remove('mensaje_error');
-            mensaje.innerText = '';
-            estado = true;
-        }
-        if ($respuesta.value.trim() === '') {
-            e.preventDefault();
-        }
-        return estado;
-    }); */
+        });  
+        Toast.fire({
+            icon: 'success',
+            title: 'Tu Pregunta N°'+$numPreguntaContestada.id+' ha sido configurada'
+        });
+    }
+}
+preguntaGuardada($spanEstadoPregunta);
+ 

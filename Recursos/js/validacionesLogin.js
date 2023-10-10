@@ -31,7 +31,9 @@ $(document).ready(function(){
         return false;
     });
     //Detectar si viene de autoregistro y mostrar un Toast de confirmacion
-    if(document.querySelector('.registro-exitoso').id == '1'){
+    let $toastRegistro =  document.querySelector('.registro-exitoso');
+    if($toastRegistro.id == '1'){
+        $toastRegistro.id ='0';//Esto para que el mensaje se muestre solo cuando viene de registro
         //Creamos el toast que nos confirma la actualización de los permisos
         const Toast = Swal.mixin({
             toast: true,
@@ -98,6 +100,8 @@ $user.addEventListener('focusout', () => {
     }
     let usuarioMayus = $user.value.toUpperCase();
     $user.value = usuarioMayus;
+    // let URLactual = window.location;
+    // console.log(URLactual.replace('http://localhost:3000/Vista/login/login.php'));
 });
 //Evento que llama a la función que valida espacios entre caracteres.
 $user.addEventListener('keyup', () => {
@@ -117,3 +121,7 @@ $password.addEventListener('focusout',() => {
         estadoSoloLetras.estadoContrasenia = funciones.validarPassword($password, validaciones.password);
     }
 });
+// document.getElementById('btn-submit').addEventListener('focus', () => {
+//     let URLactual = window.location;
+//     console.log(URLactual.replace('http://localhost:3000/Vista/login/login.php'));
+// })

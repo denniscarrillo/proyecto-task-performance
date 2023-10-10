@@ -124,13 +124,26 @@ form {
     box-shadow: 0 0 0 .25rem rgba(226, 73, 35, 0.455);
     border-color: red;
 }
-.mensaje-instruccion{
-    padding: 5px;
-    margin: 5px;
-    font-size: 14px;
-    /* background-color: #9bbfe4; */
+.info-content {
+    margin: 0 auto;
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
     color: #036ed8;
-    text-align: center;
+    background-color: #a4ccf5;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+}
+.mensaje-instruccion{
+    font-weight: 500;
+    margin-bottom: 0;
+}
+.message-text {
+    font-size: 1rem;
+    margin-bottom: 0
 }
 .btn-container{
     display: flex;

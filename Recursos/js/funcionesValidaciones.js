@@ -67,7 +67,7 @@ export const validarCoincidirPassword = (password, password2) => {
     let estado;
     let mensaje = password2.parentElement.querySelector('p');
     if(password.value != password2.value){
-        mensaje.innerText = '*Las Contraseña no coincide';
+        mensaje.innerText = '*Las contraseñas no coinciden';
         password2.classList.add('mensaje_error');
         estado = false;
         } 

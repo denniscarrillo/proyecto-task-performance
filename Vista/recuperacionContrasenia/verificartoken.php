@@ -1,10 +1,19 @@
 <?php
+session_start(); //Reanudar sesion
 require_once('../../db/Conexion.php');
 require_once ("../../Modelo/Usuario.php");
 require_once("../../Controlador/ControladorUsuario.php");
 
 $user = '';
-session_start(); //Reanudar sesion
+$tokenSend = 0;
+if(isset($_SESSION['tokenSend'])){ //Cuando venimos de registro capturamos el valor para saberlo
+    $tokenSend  = $_SESSION['tokenSend'];
+    /*
+        Ahora eliminamos esa variable global para que el Toast que se muestra con javascript 
+        no se vuelva a mostrar cuando la pagina se refresque por cualquier motivo
+    */
+    $_SESSION['tokenSend'] = 0;
+}
 if(isset($_SESSION['usuario'])){
     $user = $_SESSION['usuario'];
 }
@@ -15,11 +24,11 @@ if (isset($_POST['submit'])){
         $estadoToken = ControladorUsuario::validarTokenUsuario($user, $token);
         switch($estadoToken){
             case 0: {
-                $mensaje = "Token inválido/incorrecto";
+                $mensaje = "El token ingresado es incorrecto";
                 break;
             }
             case 1: {
-                $mensaje = "Su token ha expirado";
+                $mensaje = "Este token ha expirado";
                 break;
             }
             case 2: {

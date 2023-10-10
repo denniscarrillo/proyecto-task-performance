@@ -48,10 +48,10 @@ if (isset($_SESSION['usuario'])) {
         </div>
         <?php 
           if(!empty($mensaje) && !empty($mensaje2)){
-            echo "<p class='mensaje-error'>".$mensaje."</p>";
-            echo "<p class='mensaje-instruccion'>".$mensaje2."</p>";
+            echo '<div class="message-container mensaje-error"><i class="fa-solid fa-circle-exclamation"></i><h2 class="message-text">'. $mensaje. '</h2></div>';
+            echo "<div class='info-content' style='margin-top: 0.3rem;'><i class='fa-solid fa-circle-info'></i><p class='mensaje-instruccion'>".$mensaje2."</p>";
           } else if(!empty($mensaje)) {
-            echo "<p class='mensaje-error'>".$mensaje."</p>";
+            echo '<div class="message-container mensaje-error"><i class="fa-solid fa-circle-exclamation"></i><h2 class="message-text">'. $mensaje. '</h2></div>';
           }
         ?>
       </div>

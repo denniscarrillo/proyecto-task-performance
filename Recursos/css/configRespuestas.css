@@ -32,8 +32,7 @@ form {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40%;
-    height: 36px;
+    width: 15rem;
     margin: 10px auto;
     background-color: #da251c;
     border:none;
@@ -74,7 +73,7 @@ form {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .form-control {
-    padding-left: 45px;
+    padding-left: 0.8rem;
 }
 .link-recuperacion {
     display: block;
@@ -141,7 +140,6 @@ form {
 }
 .select-preguntas {
     margin-top: 0.8rem;
-    margin-bottom: 0.8rem;
 }
 .mensaje {
     position: absolute;
@@ -157,20 +155,55 @@ form {
     box-shadow: 0 0 0 .25rem rgba(226, 73, 35, 0.455);
     border-color: red;
 }
-.line-space {
-    margin: 0.2rem auto;
-    height: 0.2rem;
-    width: 100%;
-    background-color: #da251c; /*color rojo del logo de la empresa*/
-    border-radius: 0.8rem;
-}
 /* Estilos del mensaje error del lado de PHP */
+.message-container {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    margin: 0 auto;
+    gap: 0.4rem;
+}
 .mensaje-error {
-    padding: 5px;
-    margin: 5px;
+    padding: 0.2rem 0.4rem;
+    margin-top: 0.8rem;
     text-align: center;
-    font-size: 15px;
-    text-transform: uppercase;
     background-color: #ebbcbc;
+    font-size: 1rem;
     color: red;
+    border-radius: 0.3rem;
+}
+.fa-circle-exclamation {
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+    font-size: 1rem;
+}
+.message-text {
+    font-size: 1rem;
+    margin-bottom: 0
+}
+.info-content {
+    margin: 0 auto;
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: #036ed8;
+    background-color: #a4ccf5;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+}
+.mensaje-instruccion{
+    font-weight: 500;
+    margin-bottom: 0;
+}
+/*ESTILOS PARA LOS TOAST*/
+.customizable-toast.swal2-icon-success {
+    margin-top: 1.5rem;
+    /* background-color: #57d359 !important; */
+}
+.swal2-title {
+    /* margin-left: 0.7rem; */
+    color: #222323;
 }

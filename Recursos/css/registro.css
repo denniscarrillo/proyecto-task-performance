@@ -22,28 +22,19 @@ form {
     background-color: white;
     height: fit-content;
     width: 60%;
-    /* font-size: 15px; */
     border-radius:8px;
     box-shadow: 20px 20px 15px 0px #d05d24 ;
 }
-/* .formulario__input-error {
-	font-size: 12px;
-	margin-bottom: 0;
-	display: none;
-} */
 .btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40%;
-    height: 36px;
+    width: 15rem;
     margin: 10px auto;
-    /* padding-bottom: 8px; */
     background-color: #da251c;
     border:none;
     font-size: 20px;
     font-family: Arial, Helvetica, sans-serif;
-    /* box-shadow: 5px 10px 10px 0px #909090; */
 }
 .btn label:hover {
     cursor: pointer;

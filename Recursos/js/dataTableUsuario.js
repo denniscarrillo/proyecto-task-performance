@@ -3,7 +3,6 @@ import {estadoValidado as valido } from './validacionesModalEditarUsuario.js';
 let tablaUsuarios = ''; //Variable dataTable
 $(document).ready(function () {
   let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
-  console.log($idObjetoSistema);
   obtenerPermisos($idObjetoSistema, procesarPermisoActualizar);
 });
 //Recibe la respuesta de la peticion AJAX y la procesa
@@ -100,9 +99,6 @@ $('#form-usuario').submit(async function (e) {
      $('#modalNuevoUsuario').modal('hide');
     } 
 });
-// $(document).on( async function(){
-// });
-
 
 //Eliminar usuario
 $(document).on("click", "#btn_eliminar", function() {
@@ -148,7 +144,8 @@ $(document).on("click", "#btn_eliminar", function() {
 
 $(document).on("click", "#btn_editar", async function(){		                
   let idUsuario = $(this).closest('tr').find('td:eq(0)').text(); //capturo el ID		            
-  let usuario = await obtenerUsuariosPorId(idUsuario)
+  let usuario = await obtenerUsuariosPorId(idUsuario);
+
   obtenerRoles('#E_rol', usuario.Id_Rol);
   obtenerEstadoUsuario('#E_estado', usuario.Id_Estado_Usuario);
   $("#E_IdUsuario").val(idUsuario);
@@ -219,7 +216,7 @@ let obtenerUsuariosPorId = async (idUsuario) => {
         IdUsuario: idUsuario
       }
     });
-    return datos
+    return datos; //Retornamos la data recibida por ajax
   } catch(err) {
     console.error(err)
   }

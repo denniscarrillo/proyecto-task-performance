@@ -1,93 +1,107 @@
 <?php
-    require_once ("../../db/Conexion.php");
-    require_once ("../../Modelo/Usuario.php");
-    require_once ("../../Modelo/Bitacora.php");
-    require_once("../../Controlador/ControladorUsuario.php");
-    require_once("../../Controlador/ControladorBitacora.php");
+session_start();
+require_once("../../db/Conexion.php");
+require_once("../../Modelo/Usuario.php");
+require_once("../../Modelo/Bitacora.php");
+require_once("../../Controlador/ControladorUsuario.php");
+require_once("../../Controlador/ControladorBitacora.php");
 
-    $mensaje = null;
-    $usuario = false;
-    $nuevoEstado = false;
-    $estadoUsuario = null;
-    $intentosMax = intval(ControladorUsuario::intentosLogin());
-    if(isset($_POST["submit"])){
-        $nombreUsuario = $_POST["userName"];
-        $intentosFallidos = ControladorUsuario::intentosFallidos($_POST["userName"]);
-        $estadoUsuario = ControladorUsuario::estadoUsuario($_POST["userName"]);
-        $rolUsuario = ControladorUsuario::obRolUsuario($_POST["userName"]);
-        if(empty($_POST["userName"]) or empty($_POST["userPassword"])){
-            $mensaje = 'Debe llenar ambos campos';
+$registro = 0;
+if (isset($_SESSION['registro'])) { //Cuando venimos de registro capturamos el valor para saberlo
+    $registro = $_SESSION['registro'];
+    /*
+        Ahora eliminamos esa variable global para que el Toast que se muestra con javascript 
+        no se vuelva a mostrar cuando la pagina se refresque por cualquier motivo
+    */
+    session_unset();
+    session_destroy();
+}
+$mensaje = null;
+$usuario = false;
+$nuevoEstado = false;
+$estadoUsuario = null;
+$intentosMax = intval(ControladorUsuario::intentosLogin());
+if (isset($_POST["submit"])) {
+    $nombreUsuario = $_POST["userName"];
+    $intentosFallidos = ControladorUsuario::intentosFallidos($_POST["userName"]);
+    $estadoUsuario = ControladorUsuario::estadoUsuario($_POST["userName"]);
+    $rolUsuario = ControladorUsuario::obRolUsuario($_POST["userName"]);
+    if (empty($_POST["userName"]) or empty($_POST["userPassword"])) {
+        $mensaje = 'Debe llenar ambos campos';
+    } else {
+        if ($estadoUsuario > 2 && $estadoUsuario < 5) {
+            switch ($estadoUsuario) {
+                case 3: {
+                        $mensaje = 'Su usuario está inactivo';
+                        break;
+                    }
+                case 4: {
+                        $mensaje = 'Su usuario está bloqueado';
+                        break;
+                    }
+                case 5: {
+                        $mensaje = 'Usted está de vacaciones';
+                        break;
+                    }
+                    ;
+            }
         } else {
-            if($estadoUsuario > 2 && $estadoUsuario < 5){
-                switch($estadoUsuario){
-                    case 3: {
-                        $mensaje = 'Usuario inactivo';
-                        break;
-                    }
-                    case 4: {
-                        $mensaje = 'Usuario bloqueado';
-                        break;
-                    }
-                    case 5: {
-                        $mensaje = 'Usuario de vacaciones';
-                        break;
-                    };
-                }
+            if ($rolUsuario == 1) {
+                $mensaje = 'Contacte con su administrador, aún no tiene rol asignado';
             } else {
-                if($rolUsuario == 1){
-                    $mensaje = 'Contacte con su administrador, no tiene rol asignado!';
-                } else {
-                    $existeUsuario = ControladorUsuario::login($_POST["userName"], $_POST["userPassword"]);
-                    if($existeUsuario){
-                        $estadoVencimiento = ControladorUsuario::estadoFechaVencimientoContrasenia($_POST["userName"]);
-                        if($estadoVencimiento){
-                            session_start();
-                            $_SESSION['usuario'] = $nombreUsuario;
-                            /* ========================= Capturar evento inicio sesión. =============================*/
-                            $newBitacora = new Bitacora();
-                            $accion = ControladorBitacora::accion_Evento();
-                            date_default_timezone_set('America/Tegucigalpa');
-                            $newBitacora->fecha = date("Y-m-d h:i:s"); 
-                            $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('login.php');
-                            $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-                            $newBitacora->accion = $accion['Login'];
-                            $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' ingresó al sistema exitosamente';
-                            ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-                            /* =======================================================================================*/
-                            switch($estadoUsuario){
-                                case 1: {
-                                    if($intentosFallidos > 0){
+                $existeUsuario = ControladorUsuario::login($_POST["userName"], $_POST["userPassword"]);
+                if ($existeUsuario) {
+                    $estadoVencimiento = ControladorUsuario::estadoFechaVencimientoContrasenia($_POST["userName"]);
+                    if ($estadoVencimiento) {
+                        session_start();
+                        $_SESSION['usuario'] = $nombreUsuario;
+                        /* ========================= Capturar evento inicio sesión. =============================*/
+                        $newBitacora = new Bitacora();
+                        $accion = ControladorBitacora::accion_Evento();
+                        date_default_timezone_set('America/Tegucigalpa');
+                        $newBitacora->fecha = date("Y-m-d h:i:s");
+                        $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('login.php');
+                        $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+                        $newBitacora->accion = $accion['Login'];
+                        $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó al sistema exitosamente';
+                        ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+                        /* =======================================================================================*/
+                        switch ($estadoUsuario) {
+                            case 1: {
+                                    if ($intentosFallidos > 0) {
                                         ControladorUsuario::resetearIntentos($_POST["userName"]);
                                     }
                                     header('location: configRespuestas.php');
-                                 break; 
-                                }   
-                                case 2: {
-                                    if($intentosFallidos > 0){
+                                    break;
+                                }
+                            case 2: {
+                                    if ($intentosFallidos > 0) {
                                         ControladorUsuario::resetearIntentos($_POST["userName"]);
                                     }
-                                    if($rolUsuario > 1){
+                                    if ($rolUsuario > 1) {
                                         header('location: ../index.php');
                                     }
-                                } 
-                            }
-                        }else{
-                            $mensaje = 'Contraseña vencida';
+                                }
                         }
                     } else {
-                        if ($intentosFallidos === false){
-                            $mensaje = 'Usuario no existe';
+                        $mensaje = 'Su contraseña ha vencido';
+                    }
+                } else {
+                    if ($intentosFallidos === false) {
+                        //Observacion, este escenario tambien se debe incluir en el conteo de INTENTO PERMITIDOS para bloquearlo cuando exceda
+                        $mensaje = 'El usuario ingresado no existe'; //Este mensaje solo se debe mostrar mientras este en DESARROLLO
+                        // $mensaje = 'Usuario y/o Contraseña incorrectos';
+                    } else {
+                        $incremento = ControladorUsuario::incrementarIntentos($_POST["userName"], $intentosFallidos);
+                        $nuevoEstado = Usuario::bloquearUsuario($intentosMax, $incremento, $_POST["userName"]);
+                        if ($nuevoEstado == true || $estadoUsuario == 4) {
+                            $mensaje = 'Uuario bloqueado por exceder limite de intentos';
                         } else {
-                            $incremento = ControladorUsuario::incrementarIntentos($_POST["userName"], $intentosFallidos);
-                            $nuevoEstado = Usuario::bloquearUsuario($intentosMax, $incremento, $_POST["userName"]); 
-                            if($nuevoEstado == true || $estadoUsuario == 4){
-                                $mensaje = 'Usuario bloqueado';
-                            } else {
-                                $mensaje = 'Usuario y/o Contraseña invalidos';
-                            }  
+                            $mensaje = 'Usuario y/o Contraseña incorrectos';
                         }
                     }
                 }
             }
         }
     }
+}

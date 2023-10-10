@@ -413,7 +413,7 @@ class Usuario {
         $query = "SELECT correo_Electronico FROM tbl_MS_Usuario WHERE usuario = '$usuario'";
         $resultEmail = sqlsrv_query($consulta, $query); #Ejecutamos la consulta (Recordset)
         $existe = sqlsrv_has_rows($resultEmail);
-        if($existe > 0){
+        if($existe){
             $fila = sqlsrv_fetch_array($resultEmail, SQLSRV_FETCH_ASSOC);
             $correo = $fila['correo_Electronico'];
         }
@@ -576,6 +576,7 @@ class Usuario {
         sqlsrv_close($consulta); #Cerrar la conexión.
         return $actualizar;
     }
+    //Esto para saber desde donde fue creado el usuario. Si es desde Gestion Usuario se le pedira cambiar contraseña
     public static function origenNuevoUsuario($usuario){
         $creado = null;
         $conn = new Conexion();
@@ -593,24 +594,27 @@ class Usuario {
         return $creado;
     }
     public static function validarToken($usuario, $tokenUsuario){
-        $vencido = 0; //Por defecto asumimos que el token no existe
+        $vencido = 0; //Por defecto asumimos que el token no existe.
+        $idUser = '';
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
         $query = "SELECT id_Usuario FROM tbl_MS_Usuario WHERE usuario = '$usuario'";
         $user = sqlsrv_query($consulta, $query);
         $fila = sqlsrv_fetch_array($user, SQLSRV_FETCH_ASSOC);
-        $idUser = $fila['id_Usuario'];
-        $query2 = "SELECT DATEDIFF(HOUR, GETDATE(), fecha_expiracion) AS vencimiento FROM tbl_token WHERE id_usuario = '$idUser' AND token = '$tokenUsuario'";
-        $resultado = sqlsrv_query($consulta, $query2);
-        $vencToken = sqlsrv_has_rows($resultado);
-        if($vencToken){ //Si el token existe entonces validamos su fecha de vencimiento
-            $row = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
-            $FechaVenc = intval($row['vencimiento']);
-            if($FechaVenc < 1){
-                $vencido = 1; //Si ya vencio devolvemos 1
-            } else {
-                $vencido = 2; //Si no ha vencido devolvemos 2
-            }   
+        if(isset($fila['id_Usuario'])){
+            $idUser = $fila['id_Usuario'];
+            $query2 = "SELECT DATEDIFF(HOUR, GETDATE(), fecha_expiracion) AS vencimiento FROM tbl_token WHERE id_usuario = '$idUser' AND token = '$tokenUsuario'";
+            $resultado = sqlsrv_query($consulta, $query2);
+            $vencToken = sqlsrv_has_rows($resultado);
+            if($vencToken){ //Si el token existe entonces validamos su fecha de vencimiento
+                $row = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+                $FechaVenc = intval($row['vencimiento']);
+                if($FechaVenc < 1){
+                    $vencido = 1; //Si ya vencio devolvemos 1
+                } else {
+                    $vencido = 2; //Si no ha vencido devolvemos 2
+                }   
+            }
         }
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $vencido;
