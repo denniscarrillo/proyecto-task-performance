@@ -8,7 +8,7 @@
     require_once("../../../Controlador/ControladorParametro.php");
     require_once("../../../Controlador/ControladorPregunta.php");
     require_once("../../../Controlador/ControladorBitacora.php");
-    $mensaje = '';
+  
 
     session_start(); //Reanudamos session
     if(isset($_SESSION['usuario']) && isset($_POST['idParametro'])){
@@ -20,15 +20,22 @@
         $nuevoParametro->ModificadoPor = $_SESSION['usuario'];    
             if ($_POST['parametro'] == 'ADMIN PREGUNTAS'){
                 $CantPreg = ControladorPregunta::obtenerCantPreguntas();
-                if (intval($_POST['valor']) > $CantPreg){                    
-                    $mensaje = 1;
-                    print json_encode ($mensaje);
+                if (intval($_POST['valor']) > $CantPreg){                                                         
+                    $respuesta = [
+                        'mensaje' => '*Se excede la cantidad de preguntas existentes',
+                        'estado' => false             
+                    ];
+                    print json_encode ($respuesta,JSON_UNESCAPED_UNICODE);
                 }
                 else{
                     ControladorParametro::editarParametroSistema($nuevoParametro);
+                    $respuesta = ['estado' => true];
+                    print json_encode ($respuesta,JSON_UNESCAPED_UNICODE);
                 }
             }else{
                 ControladorParametro::editarParametroSistema($nuevoParametro);
+                $respuesta = [ 'estado' => true];
+                print json_encode ($respuesta,JSON_UNESCAPED_UNICODE);
             }      
             if ($_POST['parametro'] == 'ADMIN VIGENCIA'){
                 $ArrayUsuarios = ControladorUsuario::obtenerIdUsuariosPassword();

@@ -6,7 +6,7 @@ $(document).ready(function () {
 let manejarPermisoInsertar = (permisos) => {
     let $idObjetoSistema = document.querySelector('.title-dashboard-task').id
     let objPermisos = JSON.parse(permisos);
-    console.log(objPermisos);
+    // console.log(objPermisos);
     //Valida los permisos de Insertar
     if(objPermisos.Insertar == 'Y'){
         if($idObjetoSistema == "5"){ //Para cuando sea la vista de kanban tareas

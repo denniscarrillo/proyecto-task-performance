@@ -5,6 +5,7 @@ class Pregunta {
     public $idPregunta;
     public $pregunta;
     public $estadoPregunta;
+    public $respuesta;
     public $CreadoPor;
     public $FechaCreacion;
     public $ModificadoPor;
@@ -88,11 +89,92 @@ class Pregunta {
     public static function obtenerCantPreguntas(){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query = "SELECT COUNT(id_Pregunta)as cantP FROM tbl_MS_Preguntas";
+        $query = "SELECT COUNT(id_Pregunta)as cantP FROM tbl_MS_Preguntas WHERE estado = 'Activa'";
         $result = sqlsrv_query($conexion, $query);
         $resultArray = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC);
         $CantPreguntas = $resultArray['cantP'];  
         sqlsrv_close($conexion);
         return $CantPreguntas;
     } 
+    
+
+    public static function obtenerPreguntasXusuario($Usuario) {
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT p.pregunta, pu.respuesta FROM tbl_MS_Preguntas AS p
+            INNER JOIN tbl_MS_Preguntas_X_Usuario AS pu ON p.id_Pregunta = pu.id_Pregunta
+            INNER JOIN tbl_MS_Usuario AS u ON u.id_Usuario = pu.id_Usuario
+            WHERE u.usuario = '$Usuario';";   
+        $listaP = sqlsrv_query($conexion, $query);
+        $listaPreguntas = array();
+        while ($arrayPreguntas = sqlsrv_fetch_array($listaP, SQLSRV_FETCH_ASSOC)) {
+            $listaPreguntas['preguntas'][] = $arrayPreguntas['pregunta'];
+            $listaPreguntas['respuestas'][]= $arrayPreguntas['respuesta'];
+            
+        }
+        sqlsrv_close($conexion); // Cerramos la conexión.
+        return $listaPreguntas;
+    }
+
+    //  public static function actualizarRespuesta($Usuario, $respuestas) {
+    //       $conn = new Conexion();
+    //    $conexion = $conn->abrirConexionDB();
+    //       $respuesta=$Usuario->respuesta;
+    //       $idPregunta=$Usuario->idPregunta;
+    //       $query = "UPDATE tbl_MS_Preguntas_X_Usuario SET respuesta = '$respuesta' 
+    //       WHERE Creado_Por = '$Usuario' AND id_Pregunta = '$idPregunta';";
+    //       sqlsrv_query($conexion, $query);
+    //       sqlsrv_close($conexion);
+    //   }
+      public static function actualizarRespuesta($Usuario, $respuestas) {
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+    
+        // Recorrer la matriz de respuestas y actualizar cada respuesta
+        foreach ($respuestas as $indice => $nuevaRespuesta) {
+            $idPregunta = $Usuario[$indice]['idPregunta']; // Supongo que tienes un índice para relacionar las respuestas con las preguntas
+    
+            // Realizar la actualización para cada respuesta
+            $query = "UPDATE tbl_MS_Preguntas_X_Usuario SET respuesta ='$respuesta'  WHERE Creado_Por = '$Usuario' AND id_Pregunta = '$idPregunta';";
+            $params = array($nuevaRespuesta, $Usuario, $idPregunta);
+    
+            $stmt = sqlsrv_prepare($conexion, $query, $params);
+            if (sqlsrv_execute($stmt)) {
+                // Éxito: la respuesta se actualizó correctamente
+            } else {
+                // Manejar errores en la actualización
+                echo "Error en la actualización: " . sqlsrv_errors();
+            }
+    
+            sqlsrv_free_stmt($stmt);
+        }
+    
+        sqlsrv_close($conexion);
+    }
+    
+
+
+
+
+    // public static function actualizarRespuesta($Usuario, $respuestas) {
+    //      $conn = new Conexion();
+    //      $conexion = $conn->abrirConexionDB();
+    
+    //      // Recorre las respuestas y actualiza cada una
+    //      foreach ($respuestas as $idPregunta => $respuesta) {
+    //          // Evita la posibilidad de inyección SQL utilizando sentencias preparadas
+    //          $query = "UPDATE tbl_MS_Preguntas_X_Usuario SET respuesta = '$respuesta' WHERE Creado_Por = '$Usuario' AND id_Pregunta = '$idPregunta';";
+    
+    //          $params = array($respuesta, $Usuario->usuario, $idPregunta);
+    
+    //          $stmt = sqlsrv_prepare($conexion, $query, $params);
+    
+    //          if (sqlsrv_execute($stmt) === false) {
+    //              die(print_r(sqlsrv_errors(), true)); // Manejo de errores
+    //          }
+    //      }
+    
+    //      sqlsrv_close($conexion);
+    //  }
+    
 }

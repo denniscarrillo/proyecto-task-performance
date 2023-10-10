@@ -3,13 +3,11 @@ import {estadoValidado as valido } from './validacionesModalEditarParametro.js';
 let tablaParametro = '';
 $(document).ready(function () {
   let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
-  console.log($idObjetoSistema);
   obtenerPermisos($idObjetoSistema, procesarPermisoActualizar);
 });
 //Recibe la respuesta de la peticion AJAX y la procesa
 let procesarPermisoActualizar = data => {
   let permisos = JSON.parse(data);
-  // console.log(permisos);
   tablaParametro = $('#table-Parametro').DataTable({
     "ajax": {
       "url": "../../../Vista/crud/parametro/obtenerParametro.php",
@@ -30,7 +28,16 @@ let procesarPermisoActualizar = data => {
     ]
   });
 }
-
+//Peticion  AJAX que trae los permisos
+let obtenerPermisos = function ($idObjeto, callback) { 
+  $.ajax({
+      url: "../../../Vista/crud/permiso/obtenerPermisos.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {idObjeto: $idObjeto},
+      success: callback
+    });
+}
 $(document).on("click", "#btn_editar", function(){		        
   let fila = $(this).closest("tr"),	        
   idParametro = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		            
@@ -61,23 +68,23 @@ $('#form-Edit-Parametro').submit(function (e) {
        valor: valor
       },
       success: function (data) {
-        if(data == '1'){
-          let elemento = document.getElementById('E_valor');
-          let mensaje = elemento.parentElement().querySelector('.mensaje');
-          mensaje.innerText = 'Se excede la cantidad de preguntas existentes';
+        let resp = JSON.parse(data) 
+        let mensaje = document.querySelector('#form-Edit-Parametro > div.grupo-form > div:nth-child(3) > p');
+        if(!resp.estado){                   
+          mensaje.innerText = resp.mensaje;
           mensaje.classList.add('mensaje_error');
-        }
-        console.log(data)
+          return;
+        }        
+        $('#modalEditarParametro').modal('hide');              
         //Mostrar mensaje de exito
         Swal.fire(
           'Actualizado!',
           'El usuario ha sido modificado!',
           'success',
         )
-        tablaParametro.ajax.reload(null, false);
-      }
-    });
-    $('#modalEditarParametro').modal('hide');
+        tablaParametro.ajax.reload(null, false);      
+      }     
+    });   
    }
 });
 

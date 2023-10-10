@@ -3,7 +3,7 @@ import {estadoValidado as valido } from './validacionesModalEditarRol.js';
 let tablaRol = '';
 $(document).ready(function () {
   let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
-  console.log($idObjetoSistema);
+  // console.log($idObjetoSistema);
   obtenerPermisos($idObjetoSistema, procesarPermisoActualizar);
 });
 let procesarPermisoActualizar = data => {

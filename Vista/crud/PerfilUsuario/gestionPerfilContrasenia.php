@@ -152,7 +152,7 @@ if (isset($_SESSION['usuario'])) {
                 <input type="checkbox" id="checkbox"> Mostrar Contraseñas
               </div>
               <div class="btn-guardar">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <a href="../../index.php"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                           <button type="submit" name="submit" href="../PerfilUsuario/gestionPerfilUsuario.php"  class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
               </div>
             <?php 

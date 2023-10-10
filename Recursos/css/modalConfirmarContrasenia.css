@@ -1,0 +1,35 @@
+.btn{
+    background-color: rgb(75, 73, 73);
+    color: #ffffff;
+}
+
+.btnUno-secondary:hover{
+    background-color: #c77a06;
+    border-color:#c77a06;
+
+}
+
+body{
+    background-color: #f0ede9;
+}
+.modal-dialog {
+    max-width: fit-content;
+    /* margin: 0 auto; */
+}
+.modal-header {
+    background-color: #ef904d;
+}
+.modal-title {
+    margin-left: 0.6rem;
+    color: #ef904d;
+}
+.modal-content{
+   min-width: 50rem;
+}
+
+
+.img{
+    display: block;
+    margin: 0 auto; /* Centra horizontalmente */
+    text-align: center; /* Centra verticalmente */
+ }

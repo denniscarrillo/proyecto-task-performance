@@ -73,7 +73,7 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-  <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
+  <link href="../../../Recursos/css/metricas.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
@@ -117,6 +117,8 @@ if (isset($_SESSION['usuario'])) {
           $urlPermisos = '../permiso/gestionPermisos.php';
           $urlRoles = '../rol/gestionRol.php';
           $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+          $urlPerfilUsuarios='../PerfilUsuario/gestionPerfilUsuario.php';
+          $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
           $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
           require_once '../../layout/sidebar.php';
         ?>
@@ -161,7 +163,6 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script src="../../../Recursos/js/Metricas/datatable.js" type="module"></script>
-  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>

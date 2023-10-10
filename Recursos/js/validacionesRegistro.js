@@ -19,7 +19,9 @@ let estadoSoloLetras = {
     estadoLetrasUsuario: true,
     estadoLetrasNombre: true,
 }
-let estadoMasEspacioNombre = true;
+let estadoMasdeUnEspacio = {
+    estadoMasEspacioNombre: true
+}
 
 
 // INPUTS
@@ -73,33 +75,33 @@ $form.addEventListener('submit', e => {
                 estadoValidacionesEspacio.estadoEspacioPassword = funciones.validarEspacios($password); 
                 estadoValidacionesEspacio.estadoEspacioPassword2 = funciones.validarEspacios($password2);
                     } else {
-                        if(estadoLetrasRepetidas.estadoLetrasRepetidasNombre == false || estadoLetrasRepetidas.estadoPassword == false ||
-                            estadoLetrasRepetidas.estadoLetrasRepetidasUsuario == false){
+                           estadoMasdeUnEspacio.estadoMasEspacioNombre = funciones.validarMasdeUnEspacio($nombre);
+                            console.log(estadoMasdeUnEspacio.estadoMasEspacioNombre);
+                        if (estadoMasdeUnEspacio.estadoMasEspacioNombre == false) {
                             e.preventDefault();
-                            estadoLetrasRepetidas.estadoLetrasRepetidasNombre = funciones.limiteMismoCaracter($nombre, expresiones.usuario);
-                            estadoLetrasRepetidas.estadoLetrasRepetidasUsuario = funciones.limiteMismoCaracter($usuario, expresiones.usuario);
-                            estadoLetrasRepetidas.estadoPassword = funciones.validarPassword($password, expresiones.password);
+                            console.log(estadoMasdeUnEspacio.estadoMasEspacioNombre);
+                            // return estadoMasdeUnEspacio.estadoMasEspacioNombre;
                         } else {
-                            if (estadoSoloLetras.estadoLetrasUsuario == false || estadoSoloLetras.estadoLetrasNombre == false) {
-                                e.preventDefault();
-                                estadoSoloLetras.estadoLetrasUsuario = funciones.validarSoloLetras($usuario, expresiones.user);
-                                estadoSoloLetras.estadoLetrasNombre = funciones.validarSoloLetras($nombre, expresiones.user);
-                            } else {
-                                estadoMasEspacioNombre = funciones.validarMasdeUnEspacio($nombre);
-                                console.log(estadoMasEspacioNombre);
-                                if (estadoMasEspacioNombre == false) {
-                                    e.preventDefault();
-                                    console.log(estadoMasEspacioNombre);
-                                    return estadoMasEspacioNombre;
+                               if (estadoExisteUsuario == false) { // Check for 'true' instead of 'false'
+                                    console.log(estadoExisteUsuario);
+                                    e.preventDefault(); // Prevent form submission if username exists
+                                    estadoExisteUsuario =  obtenerUsuarioExiste($('#usuario').val());
+                                    console.log(estadoExisteUsuario);
                                 } else {
-                                        if (estadoExisteUsuario == false) { // Check for 'true' instead of 'false'
-                                            console.log(estadoExisteUsuario);
-                                            e.preventDefault(); // Prevent form submission if username exists
-                                            estadoExisteUsuario =  obtenerUsuarioExiste($('#usuario').val());
-                                            console.log(estadoExisteUsuario);
-                                        }
-                                    }
-                                }
+                                    if(estadoLetrasRepetidas.estadoLetrasRepetidasNombre == false ||estadoLetrasRepetidas.estadoLetrasRepetidasUsuario == false ||
+                                        estadoLetrasRepetidas.estadoPassword == false){
+                                        e.preventDefault();
+                                        estadoLetrasRepetidas.estadoLetrasRepetidasNombre = funciones.limiteMismoCaracter($nombre, expresiones.usuario);
+                                        estadoLetrasRepetidas.estadoLetrasRepetidasUsuario = funciones.limiteMismoCaracter($usuario, expresiones.usuario);
+                                        estadoLetrasRepetidas.estadoPassword = funciones.validarPassword($password, expresiones.password);
+                                    } else {
+                                         if (estadoSoloLetras.estadoLetrasUsuario == false || estadoSoloLetras.estadoLetrasNombre == false) {
+                                              e.preventDefault();
+                                              estadoSoloLetras.estadoLetrasUsuario = funciones.validarSoloLetras($usuario, expresiones.user);
+                                              estadoSoloLetras.estadoLetrasNombre = funciones.validarSoloLetras($nombre, expresiones.user);
+                                } 
+                            }
+                         }
                     }
                 }
             }
@@ -119,7 +121,7 @@ $usuario.addEventListener('focusout', () => {
 });
 
 $nombre.addEventListener('focusout', () =>{
-    if(estadoMasEspacioNombre){
+    if(estadoMasdeUnEspacio.estadoMasEspacioNombre){
         funciones.validarMasdeUnEspacio($nombre);
     }
     let nombreMayus = $nombre.value.toUpperCase();
@@ -202,7 +204,7 @@ $form.addEventListener('submit', e =>{
 $form.addEventListener('submit', e =>{
     let mensaje = '';
     let input = $password.value;
-    if(!expresiones.pass.test(input)){
+    if(!expresiones.password.test(input)){
         mensaje = $password.parentElement.querySelector('p');
         mensaje.innerText = '*Mínimo una mayúscula, minúscula, número y caracter especial.';
         $password.classList.add('mensaje_error');
@@ -212,28 +214,11 @@ $form.addEventListener('submit', e =>{
         $password.classList.remove('mensaje_error');
         mensaje.innerText = '';
     }
-    if (!expresiones.pass.test(input)) {
+    if (!expresiones.password.test(input)) {
         e.preventDefault();
     }
 });
 
-$form.addEventListener('submit', e => {
-    let estado;
-    let mensaje = $nombre.parentElement.querySelector('p');
-    if ($nombre.value.trim() === ''){
-        mensaje.innerText = '*Campo vacio';
-        $nombre.classList.add('mensaje_error');
-        estado = false;
-    } else {
-        $nombre.classList.remove('mensaje_error');
-        mensaje.innerText = '';
-        estado = true;
-    }
-    if ($nombre.value.trim() === '') {
-        e.preventDefault();
-    }
-    return estado;
-});
 
 let obtenerUsuarioExiste = ($usuario) => {
     $.ajax({
