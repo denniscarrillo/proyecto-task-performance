@@ -54,7 +54,7 @@
             <label>ID comision</label>
             <input type="text" class="form-control">
           </div> -->
-          <div class="conteiner-id-comision form-element-btns"">
+          <div class="conteiner-id-comision form-element-btns">
             <label>Comisiones por vendedor</label>
             <input type=" text" class="form-control" id="id-comisionV">
             <button type="button" class="btn-call-modal btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalfiltroComisiones">
@@ -62,7 +62,7 @@
             </button>
           </div>
         </form>
-      </div>
+      </div>z
     </div>
   </div>
   <?php

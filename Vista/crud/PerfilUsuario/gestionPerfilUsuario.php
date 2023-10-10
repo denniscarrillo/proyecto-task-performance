@@ -7,10 +7,13 @@ require_once("../../../Modelo/Usuario.php");
 require_once("../../../Modelo/Bitacora.php");
 require_once("../../../Controlador/ControladorUsuario.php");
 require_once("../../../Controlador/ControladorBitacora.php");
-
-
+require_once("../../../Modelo/Pregunta.php");
+require_once("../../../Controlador/ControladorPregunta.php");
+require_once("obtenerContraseniaPerfil.php");
 
 $datos = ControladorUsuario::obtenerDatosPerfilUsuario($_SESSION['usuario']);
+$preguntas = ControladorPregunta::obtenerPreguntasXusuario($_SESSION['usuario']);
+
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
@@ -78,6 +81,7 @@ if (isset($_SESSION['usuario'])) {
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
   <!-- Estilos personalizados -->
   <link href="../../../Recursos/css/gestionPerfilUsuario.css" rel="stylesheet" />
+  <link href="../../../Recursos/css/modalConfirmarContrasenia.css" rel="stylesheet" />
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
@@ -140,7 +144,7 @@ if (isset($_SESSION['usuario'])) {
            <form  action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>"  method="post" id="form-Edit-DatosPerfil"> 
            
               <div class ="btn-editar"     >
-                <a href="../PerfilUsuario/EditarCamposPerfilUsuario.php"  class="btn btn-secondary"> <i class="fa-solid fa-pen-to-square"> </i>Editar Perfil</a>
+                <a href="#"  class="btn btn-secondary"  data-bs-toggle="modal" data-bs-target="#modalConfirmarContrasenia"><i class="fa-solid fa-pen-to-square"> </i>Editar Perfil</a>
               </div>
             <div class="grupo-form1">
               <div class="mb-3">
@@ -158,14 +162,7 @@ if (isset($_SESSION['usuario'])) {
                     <label ><?php echo $datos['rol_name'] ?></label>
                   
                   </div>
-              
-             
-              
-            </div>
-            
-            <div class="grupo-form" >
-
-              <div class="mb-3">
+                  <div class="mb-3">
                       <label  class="titulos"  for="rtn">RTN:</label>
                       <label ><?php echo $datos['rtn'] ?></label>
                     
@@ -180,28 +177,41 @@ if (isset($_SESSION['usuario'])) {
                       <label ><?php echo $datos['direccion'] ?></label>
                     
                 </div>
+              
+            </div>
+            
+            <div class="grupo-form" >
+
+              
                  <div class="mb-3">
                     <label  class="titulos" for="email">Email:</label>
                     <label ><?php echo $datos['correo'] ?></label>
                   
                   </div>
-
-                  
-
-            </div>
-            </form>
+                  <div class="mb-3">
+                  <label  class="titulos" for="pregunta">Preguntas:</label>
+                     <?php
+                     
+                      $totalPreguntas = count($preguntas['preguntas']);
+                      for ($i = 0; $i < $totalPreguntas; $i++) {
+                          $pregunta = $preguntas['preguntas'][$i];
+                      ?>
+                      <label><?php echo $pregunta; ?></label><br><br>
+                      <?php
+                      }
+                      ?>
+                  </div>
+      
             </div>
       <!-- Footer -->
-      <div class="footer-conteiner">
-                <?php
-                require_once '../../layout/footer.php';
-                ?>
-          </div>
+     
         </div>
     </div>
     </div>
   </div>
-    
+    <?php
+  require_once('modalConfirmarContrasenia.html');
+  ?>
 
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
@@ -212,7 +222,7 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
-
+  <script src="../../../Recursos/js/PerfilUsuario/validacionesModalconfirmarContrasenia.js" type="module"></script>
 </body>
 
 </html>

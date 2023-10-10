@@ -1,3 +1,5 @@
+
+
 <?php
  require_once("../../../db/Conexion.php");
  require_once("../../../Modelo/Usuario.php");
@@ -21,33 +23,16 @@
     /* =======================================================================================*/
    
     if (isset($_POST['submit'])){
-      $password = $_POST['password'];
-      $NewPass= $_POST['newPassword'];
       $ConfirmPass = $_POST['confirmPassword'];
       
       //session_start(); //Reanudamos sesion
       if(isset($_SESSION['usuario'])){
           $user = $_SESSION['usuario'];
-          $existeUsuario = ControladorUsuario::login($user, $_POST["password"]);
+          $existeUsuario = ControladorUsuario::login($user, $_POST["confirmPassword"]);
           if($existeUsuario){
-            if($NewPass == $ConfirmPass){
-              $encriptPassword = password_hash($NewPass, PASSWORD_DEFAULT);
-             
-              $estadoContra = ControladorUsuario::estadoValidacionContrasenas($user, $_POST['newPassword']);
-                  // print json_encode($estadoContra, JSON_UNESCAPED_UNICODE);
-                   if($estadoContra){
-                    $mensaje = 'Elija una contraseña diferente,ya existe';
-                   }else{ 
-                    ControladorUsuario::actualizarContrasenia($user, $encriptPassword);
-
-                    $respaldada = ControladorUsuario::respaldarContrasenia($user, "", $encriptPassword, 3); 
-                    ControladorUsuario::eliminarUltimaContrasena($_SESSION['usuario']);
-                    $mensaje = 'Contraseña Actualizada'; 
-                   }                 
-            } else {
-              $mensaje = 'Deben coincidir ambas contraseñas!';
-            }
+            header('location: EditarCamposPerfilUsuario.php');
           }else{
+            
             $mensaje = 'Su contraseña actual es incorrecta';
           }
           

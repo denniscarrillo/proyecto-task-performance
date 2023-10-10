@@ -23,4 +23,10 @@ class ControladorPregunta {
         return Pregunta::obtenerCantPreguntas();
     }
 
+    public static function obtenerPreguntasXusuario($Usuario){
+        return Pregunta::obtenerPreguntasXusuario($Usuario);
+    }
+    public static function actualizarRespuesta($idUsuario, $respuestas){
+        Pregunta::actualizarRespuesta($idUsuario, $respuestas);
+    }
 }
