@@ -68,23 +68,23 @@ $('#form-Edit-Parametro').submit(function (e) {
        valor: valor
       },
       success: function (data) {
-        if(data == '1'){
-          let elemento = document.getElementById('E_valor');
-          let mensaje = elemento.parentElement().querySelector('.mensaje');
-          mensaje.innerText = 'Se excede la cantidad de preguntas existentes';
+        let resp = JSON.parse(data) 
+        let mensaje = document.querySelector('#form-Edit-Parametro > div.grupo-form > div:nth-child(3) > p');
+        if(!resp.estado){                   
+          mensaje.innerText = resp.mensaje;
           mensaje.classList.add('mensaje_error');
-        }
-        console.log(data)
+          return;
+        }        
+        $('#modalEditarParametro').modal('hide');              
         //Mostrar mensaje de exito
         Swal.fire(
           'Actualizado!',
           'El usuario ha sido modificado!',
           'success',
         )
-        tablaParametro.ajax.reload(null, false);
-      }
-    });
-    $('#modalEditarParametro').modal('hide');
+        tablaParametro.ajax.reload(null, false);      
+      }     
+    });   
    }
 });
 

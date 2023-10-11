@@ -22,7 +22,6 @@ form {
     padding: 20px;
     background-color: white;
     height: min-content;
-    /* width: 30%; */
     width: fit-content;
     font-size: 20px;
     border-radius:8px;
@@ -32,7 +31,7 @@ form {
     display: block;
     font-size: 20px;
     margin: 0 auto;
-    width: 70%;
+    width: 15rem;
     background-color: #da251c;
     border:none;
     margin-bottom: 0.4rem;
@@ -88,15 +87,6 @@ form {
     text-align: center;
     font-size: 1.5rem;
 }
-.mensaje-error {
-    padding: 5px;
-    margin: 5px;
-    text-align: center;
-    font-size: 15px;
-    text-transform: uppercase;
-    background-color: #ebbcbc;
-    color: red;
-}
 .link-recuperacion {
     display: block;
     margin-top: 5px;
@@ -126,12 +116,17 @@ a{
     font-size: 15px;
     padding-left: 5px;
 }
-.line-space {
-    margin: 0.2rem auto;
-    height: 0.2rem;
-    width: 100%;
-    background-color: #323030; /*color rojo del logo de la empresa*/
-    border-radius: 0.8rem;
+.title-form {
+    color: #222020;
+    margin-bottom: 0.4rem;
+    padding: 0.6rem;
+    background-color: #f1eded7b;
+    border-color: #323030;
+    border-top: 0.4rem;
+    border-style: dotted;
+    border-radius: 0.4rem;
+    text-align: center;
+    font-size: 1.5rem;
 }
 .mensaje {
     position: absolute;
@@ -156,12 +151,29 @@ a{
     margin-bottom: 0.2rem;
 }
 /* Estilos del mensaje error del lado de PHP */
+.message-container {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    margin: 0 auto;
+    gap: 0.4rem;
+}
 .mensaje-error {
-    padding: 5px;
-    margin: 5px;
+    padding: 0.2rem 0.4rem;
+    margin-top: 0.8rem;
     text-align: center;
-    font-size: 15px;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     background-color: #ebbcbc;
+    font-size: 1rem;
     color: red;
+    border-radius: 0.3rem;
+}
+.message-text {
+    font-size: 1rem;
+    margin-bottom: 0
+}
+.fa-circle-exclamation {
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+    font-size: 1rem;
 }

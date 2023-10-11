@@ -89,7 +89,7 @@ class Pregunta {
     public static function obtenerCantPreguntas(){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query = "SELECT COUNT(id_Pregunta)as cantP FROM tbl_MS_Preguntas";
+        $query = "SELECT COUNT(id_Pregunta)as cantP FROM tbl_MS_Preguntas WHERE estado = 'Activa'";
         $result = sqlsrv_query($conexion, $query);
         $resultArray = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC);
         $CantPreguntas = $resultArray['cantP'];  

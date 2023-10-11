@@ -26,18 +26,23 @@
                 //Si el método es recuperación por correo
                 if($metodoRec == 'correo'){
                     $correo = ControladorUsuario::obCorreoUsuario($usuario);
-                    if($correo != ''){
+                    if(!empty($correo)){
                         //Valida si en la tabla token ya existen 10 token, entonces busca el mas antiguo y lo elimina
                         ControladorUsuario::depurarTokenUsuario($usuario);
                         //Generar y Almacenar token en la base de datos correspondiente al usuario
                         $tokenListo = ControladorUsuario::almacenarToken($usuario, $creadoPor);
                         if($tokenListo > 0){
                             $horasVigencia = ControladorParametro::obtenerVigenciaToken();
-                            enviarCorreo($correo, $tokenListo, $horasVigencia);
-                            header("location:v_SolicitarToken.php");
+                            $estadoEnvio = enviarCorreo($correo, $tokenListo, $horasVigencia);
+                            if($estadoEnvio){
+                                $_SESSION['tokenSend'] = 1;
+                                header("location:v_SolicitarToken.php");
+                            } else {
+                                $mensaje = "Lo sentimos, al parecer no se ha podido enviar el correo";
+                            }   
                         }
                     } else {
-                        $mensaje = "No tiene un correo configurado";
+                        $mensaje = "Su usuario no tiene un correo configurado";
                         unset($_SESSION['usuario']);//Eliminamos la variable
                     }
                 } else { //Si el método es recuperación por pregunta secreta
@@ -50,12 +55,12 @@
                         }
                         header("location: preguntasResponder.php");
                     } else {
-                        $mensaje = "No tiene preguntas contestadas";
+                        $mensaje = "Su usuario no tiene preguntas configuradas";
                         unset($_SESSION['usuario']); //Eliminamos la variable
                     }
                 } 
             } else {
-                $mensaje = "No existe el usuario";
+                $mensaje = "El usuario ingresado no existe";
                 unset($_SESSION['usuario']);//Eliminamos la variable
             }
         } else {

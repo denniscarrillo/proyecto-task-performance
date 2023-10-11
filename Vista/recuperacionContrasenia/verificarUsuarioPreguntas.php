@@ -24,7 +24,7 @@
                     header('location: v_nuevaContrasenia.php');
                 }else {
                     ControladorUsuario::aumentarIntentosFallidosRespuesta($usuario, $cantFallidasRespuestas);
-                    $mensaje = 'Respuesta no válida';
+                    $mensaje = 'Tu respuesta no ha sido correcta, intenta de nuevo';
                 }
             }else if($cantFallidasRespuestas == $cantFallidasParametro){
                 ControladorUsuario::bloquearUsuarioMetodoPregunta($usuario);
@@ -39,7 +39,7 @@
                 $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' ha sido bloqueado, acumuló '.$cantFallidasRespuestas.' intentos fallidos al recuperar su contraseña por preguntas';
                 ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
                 /* =======================================================================================================*/
-                $mensaje = 'El usuario ha sido bloqueado';
+                $mensaje = 'Su usuario ha sido bloqueado, excedió el limite de intentos';
                 $mensaje2 = 'Haga clic en "Cancelar" para intentarlo de nuevo';
             }    
         }

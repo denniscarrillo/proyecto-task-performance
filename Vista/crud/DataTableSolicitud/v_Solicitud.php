@@ -1,5 +1,14 @@
+<?php
+//Esto es por lo que no funcionaba, esto se pasara a un archivo aparte donde se manejara la bitcora
+//TOMAR NOTA POR FAVOR
+session_start();
+require_once('../../../db/Conexion.php');
+require_once("../../../Modelo/Bitacora.php");
+require_once("../../../Controlador/ControladorBitacora.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,11 +28,12 @@
     <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
     <title>Nueva solicitud</title>
 </head>
+
 <body>
-<div class="conteiner">
-    <div class="conteiner-global">
-        <div class="sidebar-conteiner">
-            <?php
+    <div class="conteiner">
+        <div class="conteiner-global">
+            <div class="sidebar-conteiner">
+                <?php
                 $urlIndex = '../../index.php';
                 // Rendimiento
                 $urlMisTareas = '../../rendimiento/v_tarea.php';
@@ -52,93 +62,95 @@
                 $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
                 $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
                 require_once '../../layout/sidebar.php';
-            ?>
-      </div>
-      <div class="conteiner-main">
-      <div class= "encabezado">
-            <div class="navbar-conteiner">
-                <!-- Aqui va la barra -->
-                <?php include_once '../../layout/navbar.php'?>                             
-            </div>        
-            <div class ="titulo">
-                  <H2 class="title-dashboard-task">Generar nueva solicitud</H2>
-            </div>  
-      </div>   
-        <div class="form-conteiner">
-            <div class="form-element">
-                <label>Tipo cliente solicitud: </label>
-                <label for="tipo-cliente-nuevo">Nuevo </label>
-                <input type="checkbox" id="tipo-cliente-nuevo">
-                <label for="tipo-cliente-frecuente">Frecuente </label>
-                <input type="checkbox" id="tipo-cliente-frecuente">
-                <label for="tipo-cliente-venta">venta </label>
-                <input type="checkbox" id="tipo-cliente-venta">
+                ?>
             </div>
-            <form action="" id="form-solicitud">
-                <div class="group-form">
-                    <div class="form-element input-conteiner">
-                        <label for="id-factura">N° Factura</label>
-                        <input type="text" id="id-factura" class="form-control">
+            <div class="conteiner-main">
+                <div class="encabezado">
+                    <div class="navbar-conteiner">
+                        <!-- Aqui va la barra -->
+                        <?php include_once '../../layout/navbar.php' ?>
                     </div>
-                    <div class="form-element input-conteiner">
-                        <label for="descripcion">Descripción</label>
-                        <input type="text" id="descripcion" class="form-control">
-                    </div>
-                    <div class="form-element input-conteiner">
-                        <label for="correo">Correo electronico</label>
-                        <input type="email" id="correo" class="form-control">
-                    </div>
-                    <div class="form-element input-conteiner">
-                        <label for="id-descripcion">Ubicación instalación</label>
-                        <input type="text" id="id-descripcion" class="form-control">
+                    <div class="titulo">
+                        <H2 class="title-dashboard-task">Generar nueva solicitud</H2>
                     </div>
                 </div>
-                <div class="group-form">
-                    <div class="form-element input-conteiner">
-                        <label for="fecha-solicitud">Fecha solicitud</label>
-                        <input type="date" id="fecha-solicitud" class="form-control">
+                <div class="form-conteiner">
+                    <div class="form-element">
+                        <label>Tipo cliente solicitud: </label>
+                        <label for="tipo-cliente-nuevo">Nuevo </label>
+                        <input type="checkbox" id="tipo-cliente-nuevo">
+                        <label for="tipo-cliente-frecuente">Frecuente </label>
+                        <input type="checkbox" id="tipo-cliente-frecuente">
+                        <label for="tipo-cliente-venta">venta </label>
+                        <input type="checkbox" id="tipo-cliente-venta">
                     </div>
-                    <div class="form-element input-conteiner">
-                        <label for="tipo-solicitud">Tipo solicitud</label>
-                        <input type="text" id="tipo-solicitud" class="form-control">
-                    </div>
-                    <div class="form-element input-conteiner">
-                        <label for="telefono">Teléfono</label>
-                        <input type="text" id="telefono" class="form-control">
-                    </div>
-                </div>
-                <!-- <div class="form-element">
+                    <form action="" id="form-solicitud">
+                        <div class="group-form">
+                            <div class="form-element input-conteiner">
+                                <label for="id-factura">N° Factura</label>
+                                <input type="text" id="id-factura" class="form-control">
+                            </div>
+                            <div class="form-element input-conteiner">
+                                <label for="descripcion">Descripción</label>
+                                <input type="text" id="descripcion" class="form-control">
+                            </div>
+                            <div class="form-element input-conteiner">
+                                <label for="correo">Correo electronico</label>
+                                <input type="email" id="correo" class="form-control">
+                            </div>
+                            <div class="form-element input-conteiner">
+                                <label for="id-descripcion">Ubicación instalación</label>
+                                <input type="text" id="id-descripcion" class="form-control">
+                            </div>
+                        </div>
+                        <div class="group-form">
+                            <div class="form-element input-conteiner">
+                                <label for="fecha-solicitud">Fecha solicitud</label>
+                                <input type="date" id="fecha-solicitud" class="form-control">
+                            </div>
+                            <div class="form-element input-conteiner">
+                                <label for="tipo-solicitud">Tipo solicitud</label>
+                                <input type="text" id="tipo-solicitud" class="form-control">
+                            </div>
+                            <div class="form-element input-conteiner">
+                                <label for="telefono">Teléfono</label>
+                                <input type="text" id="telefono" class="form-control">
+                            </div>
+                        </div>
+                        <!-- <div class="form-element">
                     <label for="id-descripcion"></label>
                     <input type="text" id="id-descripcion" class="form-control">
                 </div> -->
-            </form>
-            <div class="table-conteiner">
-							<div class="mb-3 conteiner-id-articulo">
-								<p class="titulo-articulo">Artículos Interés</p>
-								<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalArticulos" id="btn-articulos">
-									Seleccionar... <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
-								</button>
-							</div>
-							<table id="table-articulos" class="table table-striped">
-								<thead>
-									<tr>
-										<th scope="col">Id</th>
-										<th scope="col">Artículo</th>
-										<th scope="col">Marca</th>
-                                        <th scope="col">Cantidad</th>
-									</tr>
-								</thead>
-								<tbody id="list-articulos" class="table-group-divider">
-									<!-- Articulos de interes -->
-								</tbody>
-							</table>
-						</div>
+                    </form>
+                    <div class="table-conteiner">
+                        <div class="mb-3 conteiner-id-articulo">
+                            <p class="titulo-articulo">Artículos Interés</p>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#modalArticulos" id="btn-articulos">
+                                Seleccionar... <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
+                            </button>
+                        </div>
+                        <table id="table-articulos" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Artículo</th>
+                                    <th scope="col">Marca</th>
+                                    <th scope="col">Cantidad</th>
+                                </tr>
+                            </thead>
+                            <tbody id="list-articulos" class="table-group-divider">
+                                <!-- Articulos de interes -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-</div>
-<script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
-<script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+    <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
 </body>
+
 </html>

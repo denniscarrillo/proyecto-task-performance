@@ -59,7 +59,7 @@ class Parametro {
             $parametrosEmail = array();
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB();
-            $query = "SELECT valor FROM tbl_MS_Parametro WHERE id_Parametro IN(3,4,5,6);";
+            $query = "SELECT parametro, valor FROM tbl_MS_Parametro WHERE id_Parametro IN(2,3,4,5);";
             $resultado = sqlsrv_query($abrirConexion, $query);
             while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
                 $parametrosEmail[] = [

@@ -1,4 +1,5 @@
 <?php
+    session_start(); //Reanudamos la sesion
     require_once ("../../db/Conexion.php");
     require_once ("../../Modelo/Usuario.php");
     require_once("../../Controlador/ControladorUsuario.php");
@@ -27,6 +28,7 @@
         $nuevoUsuario->fechaV = $fecha_nueva;
         ControladorUsuario::registroUsuario($nuevoUsuario);
         ControladorUsuario::respaldarContrasenia("", $_POST["usuario"], $nuevoUsuario->contrasenia, 1);
-        header('location: login.php?registro=1');
+        $_SESSION['registro'] = 1;
+        header('location: login.php');
     }
     

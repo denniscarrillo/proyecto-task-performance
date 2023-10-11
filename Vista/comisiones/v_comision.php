@@ -3,6 +3,7 @@ require_once("validacionesComision.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,6 +23,7 @@ require_once("validacionesComision.php");
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
   <title> Comision </title>
 </head>
+
 <body style="overflow: hidden;">
   <div class="conteiner">
     <div class="conteiner-global">
@@ -58,22 +60,23 @@ require_once("validacionesComision.php");
         $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
         $urlImg = '../../Recursos/imagenes/Logo-E&C.png';
         require_once '../layout/sidebar.php';
-      ?>
+        ?>
       </div>
-       <!-- CONTENIDO DE LA PAGINA - 2RA PARTE -->
+      <!-- CONTENIDO DE LA PAGINA - 2RA PARTE -->
       <div class="conteiner-main">
 
-          <!-- Encabezado -->
-          <div class= "encabezado">
-            <div class="navbar-conteiner">
-                <!-- Aqui va la barra -->
-                <?php include_once '../layout/navbar.php'?>                             
-            </div>        
-            <div class ="titulo">
-              <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('v_comision.php');?>">Comisiones</H2>
-            </div>  
+        <!-- Encabezado -->
+        <div class="encabezado">
+          <div class="navbar-conteiner">
+            <!-- Aqui va la barra -->
+            <?php include_once '../layout/navbar.php' ?>
           </div>
-        <div class= "table-conteiner">
+          <div class="titulo">
+            <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('v_comision.php'); ?>">
+              Comisiones</H2>
+          </div>
+        </div>
+        <div class="table-conteiner">
           <div class="filtros">
             <div class="filtro-fecha">
               <label for="fechaDesde">Fecha desde:</label>
@@ -82,53 +85,49 @@ require_once("validacionesComision.php");
               <input type="date" id="fechaHastaf" name="fechaHastaf" class="form-control">
               <button type="button" class="btn btn-primary" id="btnFiltrar">Filtrar</button>
             </div>
-          <div>
-            <a href="v_nuevaComision.php" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro"><i class="fa-solid fa-circle-plus"></i> Generar comisión</a>
-            <a href="../fpdf/ReporteComision.php" class="btn_Pdf btn btn-primary"><i class="fas fa-file-pdf"></i> Generar Reportes</a>
-            <a href="ReporteComisionExcel.php" target="_blank" class="btn_Excel btn btn-primary "><i class="fa-solid fa-file-excel fa-sm"></i> Generar Excel</a>
+            <div>
+              <a href="v_nuevaComision.php" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro"><i
+                  class="fa-solid fa-circle-plus"></i> Generar comisión</a>
+              <a href="../fpdf/ReporteComision.php" class="btn_Pdf btn btn-primary"><i class="fas fa-file-pdf"></i>
+                Generar Reportes</a>
+              <a href="ReporteComisionExcel.php" target="_blank" class="btn_Excel btn btn-primary "><i
+                  class="fa-solid fa-file-excel fa-sm"></i> Generar Excel</a>
+            </div>
+            <table class="table" id="table-Comision">
+              <thead>
+                <tr>
+                  <th scope="col"> ID COMISION </th>
+                  <th scope="col"> FACTURA </th>
+                  <th scope="col"> TOTAL VENTA </th>
+                  <th scope="col"> PORCENTAJE </th>
+                  <th scope="col"> COMISION TOTAL </th>
+                  <th scope="col"> ESTADO </th>
+                  <th scope="col"> FECHA </th>
+                  <th scope="col"> ACCIONES </th>
+                </tr>
+              </thead>
+              <tbody class="table-group-divider">
+              </tbody>
+            </table>
           </div>
-          <table class="table" id="table-Comision">
-            <thead>
-              <tr>
-                <th scope="col"> ID COMISION </th>
-                <th scope="col"> FACTURA </th>
-                <th scope="col"> TOTAL VENTA </th>
-                <th scope="col"> PORCENTAJE </th>
-                <th scope="col"> COMISION TOTAL </th>
-                <th scope="col"> ESTADO </th>
-                <th scope="col"> FECHA </th>
-                <th scope="col"> ACCIONES </th>
-              </tr>
-            </thead>
-            <tbody class="table-group-divider">
-            </tbody>
-          </table>
         </div>
-
-          <!-- Footer -->
-          <div class="footer-conteiner">
-                <?php
-                require_once '../layout/footer.php';
-                ?>
-          </div>
       </div>
     </div>
-  </div>
-  <?php
+    <?php
     require('modalFiltroVenta.html');
     require('modalEditarComision.html');
-  ?>
-  <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
-  <script src="../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
-  <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-  <script src="../../Recursos/js/comision/dataTableComision.js" type="module"></script>
-  <script src="../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
-  <!-- <script src="../../Recursos/js/comision/validacionesEditarComision.js" type="module"></script> -->
-  <script src="../../Recursos/js/permiso/gestionPermisos.js"></script>
-  <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-  <script src="../../Recursos/bootstrap5/bootstrap.min.js"></script>
-  <script src="../../Recursos/js/index.js"></script>
+    ?>
+    <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+    <script src="../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
+    <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="../../Recursos/js/comision/dataTableComision.js" type="module"></script>
+    <script src="../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
+    <!-- <script src="../../Recursos/js/comision/validacionesEditarComision.js" type="module"></script> -->
+    <script src="../../Recursos/js/permiso/gestionPermisos.js"></script>
+    <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
+    <script src="../../Recursos/bootstrap5/bootstrap.min.js"></script>
+    <script src="../../Recursos/js/index.js"></script>
 </body>
 
 </html>

@@ -31,7 +31,8 @@ form {
     display: block;
     font-size: 20px;
     margin: 0 auto;
-    width: 70%;
+    width: 15rem;
+    height: 42px;
     background-color: #da251c;
     border:none;
     margin-bottom: 0.4rem;
@@ -56,17 +57,16 @@ form {
     color: white;
 }
 .title-form {
-    color: #292626;
+    color: #222020;
     margin-bottom: 0.4rem;
+    padding: 0.6rem;
+    background-color: #f1eded7b;
+    border-color: #323030;
+    border-top: 0.4rem;
+    border-style: dotted;
+    border-radius: 0.4rem;
     text-align: center;
     font-size: 1.5rem;
-}
-.line-space {
-    margin: 0.2rem auto;
-    height: 0.2rem;
-    width: 100%;
-    background-color: #323030; /*color rojo del logo de la empresa*/
-    border-radius: 0.8rem;
 }
 .conteiner-icon{
     position: absolute;
@@ -96,14 +96,11 @@ form {
 .form-control {
     padding-left: 45px;
 }
-.mensaje-error {
-    padding: 5px;
-    margin: 5px;
-    text-align: center;
-    font-size: 15px;
-    text-transform: uppercase;
-    background-color: #ebbcbc;
-    color: red;
+.center-token, .fa-key {
+    font-size: 1.5rem;
+}
+.fa-key {
+    margin-top: 1.2rem;
 }
 .link-recuperacion {
     display: block;
@@ -136,6 +133,32 @@ a{
     font-size: 15px;
     padding-left: 5px;
 }
+.message-container {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    margin: 0 auto;
+    gap: 0.4rem;
+}
+.mensaje-error {
+    padding: 0.2rem 0.4rem;
+    margin-top: 0.8rem;
+    text-align: center;
+    /* text-transform: uppercase; */
+    background-color: #ebbcbc;
+    font-size: 1rem;
+    color: red;
+    border-radius: 0.3rem;
+}
+.message-text {
+    font-size: 1rem;
+    margin-bottom: 0
+}
+.fa-circle-exclamation {
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+    font-size: 1rem;
+}
 .mensaje {
     position: absolute;
     margin-top: 3px;
@@ -164,13 +187,10 @@ a{
     height:1.2rem;
     font-size: 4rem;
 }
-
 /*ESTILOS PARA LOS TOAST*/
 .customizable-toast.swal2-icon-success {
     margin-top: 1.5rem;
-    /* background-color: #57d359 !important; */
 }
 .swal2-title {
-    margin-left: 0.7rem;
-    color: #089321;
+    color: #222323;
 }

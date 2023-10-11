@@ -7,25 +7,29 @@
 
     $user = '';
     $mensaje = '';
+    $p_guardada = 0;
+    $preguntas = '';
     session_start();
     if (isset($_SESSION['usuario'])) {
         $user = $_SESSION['usuario'];
         $preguntas = ControladorUsuario::obtenerPreguntasUsuario();
         $cantPreguntasParametro = ControladorUsuario::cantidadPreguntas(); //Cantidad de preguntas a contestar parámetro
-        $preguntasContestadasUsuario = ControladorUsuario::cantPreguntasContestadas($user);
-        $respuestasUsuario = array();
         if (isset($_POST['submit'])){
+            $preguntasContestadasUsuario = ControladorUsuario::cantPreguntasContestadas($user);
+            $respuestasUsuario = array();
             if($preguntasContestadasUsuario < $cantPreguntasParametro){
                 $idPregunta = $_POST['id_pregunta'];
                 $respuestaUsuario = $_POST['respuesta']; 
                 $existePregunta = ControladorUsuario::validarPreguntasUsuario($idPregunta, $user);
                 if(!$existePregunta){
                     ControladorUsuario::guardarRespuestas($user, $idPregunta, $respuestaUsuario);
+                    $p_guardada = 1;
                     ControladorUsuario::incrementarPregContestadas($user, $preguntasContestadasUsuario);
                     $contestadas = $preguntasContestadasUsuario + 1;
                     if($contestadas == $cantPreguntasParametro){
                         //Cambiar estado del usuario nuevo a Activo
                         ControladorUsuario::cambiarEstado($user);
+                        //Esto para saber desde donde fue creado el usuario. Si es desde Gestion Usuario se le pedira cambiar contraseña
                         $origen = ControladorUsuario::origenNuevoUsuario($user);
                         if($origen){
                             header ('location: login.php');
@@ -35,7 +39,7 @@
                         }
                     }
                 } else {
-                    $mensaje = "Esta pregunta ya ha sido configurada";
+                    $mensaje = "Por favor, elije otra pregunta, esta ya ha sido configurada";
                 }
                 /* ========================= Evento Responder pregunta. ======================*/
                 $newBitacora = new Bitacora();

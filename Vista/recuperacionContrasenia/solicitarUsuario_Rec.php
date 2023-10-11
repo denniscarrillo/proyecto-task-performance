@@ -7,8 +7,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link href="../../Recursos/css/metodoRecuperacion.css" rel="stylesheet" >
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1862/1862358.png">
+    <link href="../../Recursos/css/metodoRecuperacion.css" rel="stylesheet" >
     <title>Ingresar usuario</title>
 </head>
 <body class="container">
@@ -18,9 +18,7 @@
                 <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="220px">
             </div>
             <div>
-                <p class="line-space"></p>
-                <h2 class="title-form">Nombre de usuario</h2>
-                <p class="line-space"></p>
+                <h2 class="title-form">Ingrese su usuario</h2>
                 <div class="wrap-input mt-3">
                     <span class="conteiner-icon">
                         <i class="icon fa-solid fa-user"></i>
@@ -50,8 +48,8 @@
                 <a href="v_recuperarContrasena.html" class="btn btn-secondary btn-cancel">Regresar</a>
             </div>
             <?php
-            if($mensaje != ''){
-                echo '<p class="mensaje mensaje-error">' . $mensaje . '</p>';
+            if(!empty($mensaje)){
+                echo '<div class="message-container mensaje-error"><i class="fa-solid fa-circle-exclamation"></i><h2 class="message-text">'. $mensaje. '</h2></div>';
             }
             ?>
         </form>

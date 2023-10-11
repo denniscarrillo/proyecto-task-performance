@@ -1,11 +1,15 @@
 <?php
+session_start(); //Reanudamos sesion
 require_once('../../db/Conexion.php');
 require_once('../../Modelo/Tarea.php');
+require_once('../../Modelo/Bitacora.php');
 require_once('../../Controlador/ControladorTarea.php');
+require_once('../../Controlador/ControladorBitacora.php');
+
 $estadosTarea = array();
 $clasificacionLeads = array();
 $origenLeads = array();
-session_start(); //Reanudamos sesion
+
 if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
     $estadosTarea = ControladorTarea::traerEstadosTarea();
     $clasificacionLeads = ControladorTarea::obtenerClasificacionLead();
