@@ -56,6 +56,8 @@ require_once("validacionesComision.php");
         $urlPermisos = '../crud/permiso/gestionPermisos.php';
         $urlRoles = '../crud/rol/gestionRol.php';
         $urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
+        $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
+        $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
         $urlImg = '../../Recursos/imagenes/Logo-E&C.png';
         require_once '../layout/sidebar.php';
         ?>

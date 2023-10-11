@@ -34,7 +34,7 @@
                             
                         </li>
                         <li class="dropdown_list">
-                              <a class="btn_Cerrar" href="../../db/logout.php">Salir</a>
+                              <a class="btn_Cerrar" href="../../../db/logout.php">Salir</a>
                             
                         </li>
                     

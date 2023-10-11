@@ -94,37 +94,37 @@ if (isset($_SESSION['usuario'])) {
     <div class="conteiner-global">
       <div class="sidebar-conteiner">
         <?php
-        $urlIndex = '../../index.php';
-        // Rendimiento
-        $urlMisTareas = '../../rendimiento/v_tarea.php';
-        $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
-        $urlBitacoraTarea = ''; //PENDIENTE
-        $urlMetricas = '../Metricas/gestionMetricas.php';
-        $urlEstadisticas = '../../grafica/estadistica.php';
-        //Solicitud
-        $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
-        //Comisión
-        $urlComision = '../../comisiones/v_comision.php';
-        //Consulta
-        $urlClientes = '../cliente/gestionCliente.php';
-        $urlVentas = '../Venta/gestionVenta.php';
-        $urlArticulos = '../articulo/gestionArticulo.php';
-        $urlObjetos = '../DataTableObjeto/gestionDataTableObjeto.php';
-        $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
-        //Mantenimiento
-        $urlUsuarios = './gestionUsuario.php';
-        $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
-        $urlPreguntas = '../pregunta/gestionPregunta.php';
-        $urlParametros = '../parametro/gestionParametro.php';
-        $urlPermisos = '../permiso/gestionPermiso.php';
-        $urlRoles = '../rol/gestionRol.php';
-        $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
-        $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
-        $urlPerfilUsuarios = '../PerfilUsuario/gestionPerfilUsuario.php';
-        $urlPerfilContraseniaUsuarios = '../PerfilUsuario/gestionPerfilContrasenia.php';
-        $urlEditarCamposPerfil = '../PerfilUsuario/EditarCamposPerfilUsuario.php';
-        $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
-        require_once '../../layout/sidebar.php';
+          $urlIndex = '../../index.php';
+          // Rendimiento
+          $urlMisTareas = '../../rendimiento/v_tarea.php';
+          $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
+          $urlBitacoraTarea = ''; //PENDIENTE
+          $urlMetricas = '../Metricas/gestionMetricas.php';
+          $urlEstadisticas = '../../grafica/estadistica.php'; 
+          //Solicitud
+          $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
+          //Comisión
+          $urlComision = '../../comisiones/v_comision.php';
+          //Consulta
+          $urlClientes = '../cliente/gestionCliente.php';
+          $urlVentas = '../Venta/gestionVenta.php';
+          $urlArticulos = '../articulo/gestionArticulo.php';
+          $urlObjetos = '../DataTableObjeto/gestionDataTableObjeto.php';
+          $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
+          //Mantenimiento
+          $urlUsuarios = './gestionUsuario.php';
+          $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
+          $urlPreguntas = '../pregunta/gestionPregunta.php';
+          $urlParametros = '../parametro/gestionParametro.php';
+          $urlPermisos = '../permiso/gestionPermiso.php';
+          $urlRoles = '../rol/gestionRol.php';
+          $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
+          $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+          $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
+          $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
+          $urlEditarCamposPerfil='../PerfilUsuario/EditarCamposPerfilUsuario.php';
+          $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
+          require_once '../../layout/sidebar.php';
         ?>
       </div>
       <div class="conteiner-main">

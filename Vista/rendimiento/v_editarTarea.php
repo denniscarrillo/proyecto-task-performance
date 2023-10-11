@@ -54,6 +54,8 @@
 				$urlRoles = '../crud/rol/gestionRol.php';
 				$urlPorcentajes = '../crud/Porcentajes/gestionPorcentajes.php';
 				$urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
+				$urlPerfilUsuarios='../crud/PerfilUsuario/gestionPerfilUsuario.php';
+				$urlPerfilContraseniaUsuarios='../crud/PerfilUsuario/gestionPerfilContrasenia.php';
 				$urlImg = '../../Recursos/imagenes/Logo-E&C.png';
 				require_once '../layout/sidebar.php';
 			?>
