@@ -6,10 +6,10 @@ $(document).ready(function () {
 let manejarPermisoInsertar = (permisos) => {
     let $idObjetoSistema = document.querySelector('.title-dashboard-task').id
     let objPermisos = JSON.parse(permisos);
-    // console.log(objPermisos);
     //Valida los permisos de Insertar
     if(objPermisos.Insertar == 'Y'){
-        if($idObjetoSistema == "5"){ //Para cuando sea la vista de kanban tareas
+        let $objTarea = document.querySelector('.title-dashboard-task').getAttribute('name');
+        if($objTarea == 'v_tarea.php'){ //Para cuando sea la vista de kanban tareas
             let $btnsNuevaTarea = document.querySelectorAll('.btn_nuevoRegistro');
             $btnsNuevaTarea.forEach($btnNuevaTarea => {
                 $btnNuevaTarea.classList.remove('hidden');
