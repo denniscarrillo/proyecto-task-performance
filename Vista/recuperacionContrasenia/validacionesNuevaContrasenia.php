@@ -36,7 +36,9 @@
                     ControladorUsuario::actualizarContrasenia($user, $encriptPassword);
                     //Guardar contraseña anterior en la tabla historial contraseña.
                     $respaldada = ControladorUsuario::respaldarContrasenia($user, "", $encriptPassword, 3);
-                    ControladorUsuario::eliminarUltimaContrasena($user);                  
+                    ControladorUsuario::eliminarUltimaContrasena($user);   
+                    $idUsuario = ControladorUsuario::obtenerIdUsuario($user);
+                    ControladorUsuario::desbloquearUsuario($idUsuario);               
                     header('location: ../login/login.php');
                     session_destroy();
                    }                                                

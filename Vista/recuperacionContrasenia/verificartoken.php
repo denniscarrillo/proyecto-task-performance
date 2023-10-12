@@ -33,6 +33,7 @@ if (isset($_POST['submit'])){
             }
             case 2: {
                 header('location: v_nuevaContrasenia.php');
+                
                 break;
             }
         }

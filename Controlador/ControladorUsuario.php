@@ -166,4 +166,7 @@
        public static function depurarTokenUsuario($usuario){
         Usuario::depurarToken($usuario);
        }
+       public static function desbloquearUsuario($idUsuario){
+        Usuario::desbloquearUsuario($idUsuario);
+       }
     }

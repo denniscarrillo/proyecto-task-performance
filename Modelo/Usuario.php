@@ -882,6 +882,15 @@ class Usuario {
         }
         sqlsrv_close($conexion);
     }
+    public static function desbloquearUsuario($idUsuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $stadoUsuario = 2;
+        $intentosFallidos = 0;
+        $query = "UPDATE tbl_MS_Usuario SET id_Estado_Usuario = '$stadoUsuario', intentos_fallidos = '$intentosFallidos' WHERE id_Usuario = '$idUsuario';";
+        $ejecutar = sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion);
+    }
 }#Fin de la clase
 
     
