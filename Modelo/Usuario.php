@@ -882,6 +882,24 @@ class Usuario {
         }
         sqlsrv_close($conexion);
     }
+    public static function correoExiste($correo){
+        $existeCorreo = false;
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT correo_Electronico  FROM tbl_MS_Usuario WHERE correo_Electronico = '$correo'";
+        $user = sqlsrv_query($conexion, $query);
+        $existe = sqlsrv_has_rows($user);
+        if($existe){
+            $existeCorreo = true;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $existeCorreo;
+    }
+
+
+
+
+
 }#Fin de la clase
 
     
