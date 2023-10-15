@@ -1,0 +1,36 @@
+<div class="modal fade" id="modalCancelacionSolicitud" tabindex="-1" aria-labelledby="nuevoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="nuevoModalLabel">Cancelacion Estado Solicitud</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" id="form-Solicitud">
+                    <div class="grupo-form">
+                        
+                        <div class="mb-3" >
+                            <label for="idMetrica" class="form-label">Id Solicitud:</label>
+                            <input type="text" name="IdSolicitud" id="E_IdSolicitud" class="form-control" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="EstadoSolicitud" class="form-label">Estado Solicitud:</label>
+                            <input type="text" name="EstadoSolicitud" id="E_EstadoSolicitud" class="form-control" disabled>
+                            <p class="mensaje"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="MotivoCancelacion" class="form-label">Motivo Cancelación:</label>
+                            <input type="text" name="MotivoCancelacion" id="E_MotivoCancelacion" class="form-control">
+                            <p class="mensaje"></p>
+                        </div> 
+                    </div>
+                </div>
+                    <div class="btn-guardar">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit"  name="submit" class="btn btn-primary" id="btn-submit"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

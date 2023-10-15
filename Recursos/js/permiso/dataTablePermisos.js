@@ -15,7 +15,6 @@ btn_confirms.forEach((btn_confirm) => {
   });
 });
 
-
 let actualizarPermisos = function (elementoFila) {
   let $fila = elementoFila.closest("tr");
   let rol = $fila.find("td:eq(0)").text();
