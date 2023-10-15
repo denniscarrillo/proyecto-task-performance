@@ -14,37 +14,8 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="fechaEnvio" class="form-label">Fecha:</label>
-                            <input type="text" name="fechaEnvio" id="E_fechaEnvio" class="form-control">
-                            <p class="mensaje"></p>
-                        </div>
-                        
-                        <div class="mb-3">
                             <label for="descripcion" class="form-label">Descripcion:</label>
                             <input type="text" name="descripcion" id="E_descripcion" class="form-control">
-                            <p class="mensaje"></p>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="correo" class="form-label">Correo Usuario:</label>
-                            <input type="text" name="correo" id="E_correo" class="form-control">
-                            <p class="mensaje"></p>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="ubicacion" class="form-label">Ubicacion:</label>
-                            <input type="text" name="ubicacion" id="E_ubicacion" class="form-control">
-                            <p class="mensaje"></p>
-                        </div>
-
-                    </div>
-
-                    <div class="grupo-form">
-                        
-                        <div class="mb-3">
-                            <label for="idEstadoSolicitud" class="form-label">Estado:</label>
-                            <select name="idEstadoSolicitud" id="E_idEstadoSolicitud" class="form-control"> 
-                            </select>
                             <p class="mensaje"></p>
                         </div>
 
@@ -54,18 +25,56 @@
                             </select>
                             <p class="mensaje"></p>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="telefono_cliente" class="form-label">Telefono del Cliente:</label>
+                            <select name="telefono_cliente" id="E_telefono_cliente" class="form-control"> 
+                            </select>
+                            <p class="mensaje"></p>
+                        </div>
+                        
                         
                         <div class="mb-3">
-                            <label for="cliente" class="form-label">Cliente:</label>
-                            <input type="text" name="cliente" id="E_cliente" class="form-control">
+                            <label for="ubicacion" class="form-label">Ubicacion de instalacion:</label>
+                            <input type="text" name="ubicacion" id="E_ubicacion" class="form-control">
                             <p class="mensaje"></p>
                         </div>
 
                         <div class="mb-3">
-                            <label for="usuario" class="form-label">Usuario:</label>
+                            <label for="AvanceSolicitud" class="form-label">Avance de Solicitud:</label>
+                            <select name="AvanceSolicitud" id="E_AvanceSolicitud" class="form-control">
+                                <option value="PENDIENTE">PENDIENTE</option>
+                                <option value="EN PROCESO">EN PROCESO</option>
+                                <option value="COMPLETADO">COMPLETADO</option>
+                            </select>
+                            <p class="mensaje"></p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="idEstadoSolicitud" class="form-label">Estado de Solicitud:</label>
+                            <input type="text" name="ubicacion" id="E_ubicacion" class="form-control">
+                            <p class="mensaje"></p>
+                        </div>
+                        
+
+                        
+                    </div>
+
+                    <div class="grupo-form">
+                        
+                        <div class="mb-3">
+                            <label for="usuario" class="form-label">Motivo Cancelacion:</label>
                             <input type="text" name="usuario" id="E_idUsuario" class="form-control">
                             <p class="mensaje"></p>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="CreadoPor" class="form-label">Creado Por:</label>
+                            <input type="text" name="CreadoPor" id="E_CreadoPor" class="form-control">
+                            <p class="mensaje"></p>
+                        </div>
+                        
+                        
                         
                     </div>
                     <div class="btn-guardar">

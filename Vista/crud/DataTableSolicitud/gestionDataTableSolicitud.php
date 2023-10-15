@@ -6,7 +6,7 @@ require_once("../../../Controlador/ControladorDataTableSolicitud.php");
 require_once("../../../Controlador/ControladorBitacora.php");
 require_once('../../../Modelo/Usuario.php');
 require_once('../../../Controlador/ControladorUsuario.php');
-require_once("editarEstadoSolicitud.php");
+
 
 
 session_start(); //Reanudamos la sesion
@@ -143,7 +143,7 @@ if (isset($_SESSION['usuario'])) {
               <tr>
                 <th scope="col"> ID </th>
                 <th scope="col"> SERVICIO TECNICO</th>
-                <th scope="col"> NOMBRE </th>
+                <!-- <th scope="col"> NOMBRE </th> -->
                 <th scope="col"> TELEFONO</th>
                 <th scope="col"> AVANCE DE LA SOLICITUD </th>
                 <th scope="col"> ESTADO DE LA SOLICITUD</th>
@@ -161,6 +161,7 @@ if (isset($_SESSION['usuario'])) {
   </div>
   <?php
   require_once('modalCancelacionSolicitud.html');
+  require('modalEditarSolicitud.html');
   ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>

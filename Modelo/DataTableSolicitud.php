@@ -20,7 +20,7 @@ class DataTableSolicitud
             $abrirConexion = $con->abrirConexionDB();
             $query = "SELECT s.id_Solicitud, 
             t.servicio_Tecnico, 
-            cc.nombre_Cliente,
+            -- cc.nombre_Cliente,
             s.telefono_cliente,
             s.EstadoAvance,
             s.EstadoSolicitud,
@@ -28,9 +28,9 @@ class DataTableSolicitud
             s.Fecha_Creacion
             FROM tbl_Solicitud AS s
             INNER JOIN tbl_TipoServicio AS t ON t.id_TipoServicio = s.id_TipoServicio
-            INNER JOIN tbl_CarteraCliente AS cc ON cc.id_CarteraCliente = s.id_Solicitud
-            INNER JOIN View_FACTURASVENTA AS f ON f.NUMFACTURA = s.idFactura
-            INNER JOIN View_Clientes AS c ON c.CODCLIENTE = f.CODCLIENTE
+            -- INNER JOIN tbl_CarteraCliente AS cc ON cc.id_CarteraCliente = s.id_Solicitud
+            -- INNER JOIN View_FACTURASVENTA AS f ON f.NUMFACTURA = s.idFactura
+            -- INNER JOIN View_Clientes AS c ON c.CODCLIENTE = f.CODCLIENTE
             WHERE s.Creado_Por = '$User';";
 
            $resultado = sqlsrv_query($abrirConexion, $query);
@@ -39,7 +39,7 @@ class DataTableSolicitud
                 $SolicitudesUsuario[] = [
                     'id_Solicitud' => $fila['id_Solicitud'],
                     'servicio_Tecnico' => $fila['servicio_Tecnico'],
-                    'Nombre' => $fila['nombre_Cliente'],
+                    // 'Nombre' => $fila['nombre_Cliente'],
                     'telefono_cliente' => $fila['telefono_cliente'],
                     'EstadoAvance' => $fila['EstadoAvance'],
                     'EstadoSolicitud' => $fila['EstadoSolicitud'],
@@ -64,11 +64,11 @@ class DataTableSolicitud
             $EstadoSolicitud=$nuevaSolicitud->EstadoSolicitud;
             $MotivoCancelacion=$nuevaSolicitud->MotivoCancelacion;
             $modificadoPor=$nuevaSolicitud->modificadoPor;
-            date_default_timezone_set('America/Tegucigalpa'); 
-            $fechaModificado = date("Y-m-d h:i:s");
+            // date_default_timezone_set('America/Tegucigalpa'); 
+            // $fechaModificado = date("Y-m-d h:i:s");
             $query ="UPDATE tbl_Solicitud SET EstadoSolicitud='$EstadoSolicitud', motivo_cancelacion = '$MotivoCancelacion', 
             Modificado_Por='$modificadoPor', Fecha_Modificacion = GETDATE()
-            WHERE id_Solicitud='$nuevaSolicitud->id_Solicitud';";
+            WHERE id_Solicitud='$idSolicitud';";
             $nuevaSolicitud = sqlsrv_query($abrirConexion, $query);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
