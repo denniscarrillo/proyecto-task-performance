@@ -6,6 +6,7 @@ require_once("../../Controlador/ControladorUsuario.php");
 
 $user = '';
 $tokenSend = 0;
+$mensaje = "";
 if(isset($_SESSION['tokenSend'])){ //Cuando venimos de registro capturamos el valor para saberlo
     $tokenSend  = $_SESSION['tokenSend'];
     /*
@@ -16,28 +17,31 @@ if(isset($_SESSION['tokenSend'])){ //Cuando venimos de registro capturamos el va
 }
 if(isset($_SESSION['usuario'])){
     $user = $_SESSION['usuario'];
-}
-$mensaje = "";
-if (isset($_POST['submit'])){
-    if(!empty($_POST['token'])) {
-        $token = $_POST['token'];
-        $estadoToken = ControladorUsuario::validarTokenUsuario($user, $token);
-        switch($estadoToken){
-            case 0: {
-                $mensaje = "El token ingresado es incorrecto";
-                break;
+    if (isset($_POST['submit'])){
+        if(!empty($_POST['token'])) {
+            $token = $_POST['token'];
+            $estadoToken = ControladorUsuario::validarTokenUsuario($user, $token);
+            switch($estadoToken){
+                case 0: {
+                    $mensaje = "El token ingresado es incorrecto";
+                    break;
+                }
+                case 1: {
+                    $mensaje = "Este token ha expirado";
+                    break;
+                }
+                case 2: {
+                    header('location: v_nuevaContrasenia.php');
+                    
+                    break;
+                }
             }
-            case 1: {
-                $mensaje = "Este token ha expirado";
-                break;
-            }
-            case 2: {
-                header('location: v_nuevaContrasenia.php');
-                break;
-            }
+        } else {
+            $mensaje = "Debe digitar un token!";
         }
-    } else {
-        $mensaje = "Debe digitar un token!";
     }
-
+}else{
+    header("Location: ../login/login.php");
+    exit(); // Asegurarse de que el script termine aquí
 }
+

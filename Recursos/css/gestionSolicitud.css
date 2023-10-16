@@ -15,20 +15,28 @@ h1{
     font-weight: 500;
     
 }
-#form-comision, #form-Edit-Comision {
+#form-Edit-Solicitud {
     display: flex;
-    padding: 3rem;
-    padding-bottom: 3rem;
+    padding: 1rem;
+    padding-bottom: 5rem;
     position: relative;
-}
+} 
 .grupo-form {
-    width: 30rem;
+    width: 40rem;
     padding-left: 1.2rem;
     padding-right: 1.2rem;
 }
 .mb-3 {
     margin: 0.10rem;
 }
+
+.btn-guardar btn btn-secondary {
+    position: center;
+    bottom: 0.2rem;
+    left: 7.5%;
+    right:30%;
+}
+
 .btn-guardar {
     position: absolute;
     bottom: 0.2rem;
@@ -62,12 +70,7 @@ h1{
     font-size: 1.4rem;
     color: aliceblue;
 }
-#btn_ver{
-    background-color: rgb(86, 174, 86);
-}
-#btn_editar{
-    background-color: rgb(45, 111, 203);
-}
+
 .filtro-fecha{
     content: inherit;
     display: flex;
@@ -116,9 +119,7 @@ h1{
 .form-control {
     padding-left: 20px;
 }
-/* #btn_eliminar{
-    background-color: rgba(255, 0, 0, 0.855);
-} */
+
 .btns{
     margin-right: 0.6rem;
     padding: 0.3rem;
@@ -127,9 +128,12 @@ h1{
 }
 #btn_ver{
     background-color: rgb(86, 174, 86);
+    margin-left: -1rem;
+    margin-right: 0.1rem;
 }
 #btn_editar{
     background-color: rgb(45, 111, 203);
+    margin-right: 0.1rem;
 }
 #btn_eliminar{
     background-color: rgba(255, 0, 0, 0.855);

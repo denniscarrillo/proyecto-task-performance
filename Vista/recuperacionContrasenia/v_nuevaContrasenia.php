@@ -34,7 +34,7 @@
               <label class="label-text">Mostrar contraseñas</label>
             </div>
             <button type="submit" class="btn btn-primary" name="submit" id="btn-submit">Cambiar</button>
-            <a href="../login/login.php" class="btn btn-secondary btn-cancel">Cancelar</a>
+            <a href="./destruirSesionProceso.php?url=0" class="btn btn-secondary btn-cancel">Cancelar</a>
             <?php 
               if(!empty($mensaje)){
                 echo '<h2 class="mensaje-error" style="margin-top: 8px;">'. $mensaje. '</h2>';

@@ -43,7 +43,7 @@ if (isset($_SESSION['usuario'])) {
           <p class="mensaje"></p>
         </div>
         <div class="btn-container mt-4">
-          <a href="./v_recuperarContrasena.html" class="btn btn-secondary btn-cancel">Cancelar</a>
+          <a href="./destruirSesionProceso.php?url=1" class="btn btn-secondary btn-cancel">Cancelar</a>
           <button type="submit" class="btn btn-primary btn-block" name="submit">Responder</button>
         </div>
         <?php 

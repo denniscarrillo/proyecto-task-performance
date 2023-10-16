@@ -29,6 +29,7 @@ let procesarPermisoActualizar = data => {
       {"data":  'Fecha_Creacion.date' },
       {
         "defaultContent":
+         '<div><button class="btns btn" id="btn_ver"><i class="fa-solid fa-eye"></i></button>' +
         `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`+
         '<button class="btns btn" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button></div>'
       }
@@ -45,19 +46,25 @@ let obtenerPermisos = function ($idObjeto, callback) {
       success: callback
     });
 }
-$(document).on("click", "#btn_editar", function(){		
-  // // Obtener la fila más cercana al botón
-  // let fila = $(this).closest("tr");
-  // // Capturar el ID de la solicitud
-  // let idSolicitud = fila.find('td:eq(0)').text();
-  // // Establecer el estado de la solicitud
-  // let EstadoSolicitud = 'CANCELADO';
-  // // Obtener el motivo de cancelación
-  
-  // // Establecer valores en los campos del modal
-  // $("#E_IdSolicitud").val(idSolicitud);
-  // $("#E_EstadoSolicitud").val(EstadoSolicitud);
-  
+
+$(document).on("click", "#btn_editar", async function(){		 
+  // Obtener la fila más cercana al botón
+  let fila = $(this).closest("tr");
+  // Capturar el ID de la solicitud
+  let idSolicitud = fila.find('td:eq(0)').text();
+  let Solicitudes = await obtenerSolicitudesPorId(idSolicitud);
+  //LLenar Campos de modal Editar Solicitud
+  $("#E_IdSolicitud").val(idSolicitud);
+  $("#E_descripcion").val(Solicitudes['descripcion']);
+  $("#E_TipoServicio").val(Solicitudes['TipoServicio']);
+  $("#E_telefono_cliente").val(Solicitudes['telefono']);
+  $("#E_ubicacion").val(Solicitudes['ubicacion']);
+  $("#E_AvanceSolicitud").val(Solicitudes['EstadoAvance']);
+  $("#E_EstadoSolicitud").val(Solicitudes['EstadoSolicitud']);
+  $("#E_Motivo").val(Solicitudes['motivoCancelacion']);
+  $("#E_CreadoPor").val(Solicitudes['CreadoPor']);
+  let dateS = new Date(Solicitudes['FechaCreacion'].date)
+  $("#E_FechaCreacion").val(dateS.toISOString().slice(0, 10));
   // Estilizar el modal
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");
@@ -65,6 +72,57 @@ $(document).on("click", "#btn_editar", function(){
   $('#modalEditarSolicitud').modal('show');
 });
 
+//obtener datos para el modal editar
+let obtenerSolicitudesPorId = async (idSolicitud) => {
+  try {
+    let datosSolicitud = await $.ajax({
+      url: '../../../Vista/crud/DataTableSolicitud/obtenerDataTableSolicitudId.php',
+      type: 'GET',
+      dataType: 'JSON',
+      data: {
+        IdSolicitud: idSolicitud
+      }
+    });
+    return datosSolicitud; //Retornamos la data recibida por ajax
+  } catch(err) {
+    console.error(err)
+  }
+}
+
+$('#form-Edit-Solicitud').submit(function (e) { 
+  e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
+   //Obtener datos del nuevo Usuario
+   let idSolicitud = $('#E_IdSolicitud').val(),
+   descripcion =  $('#E_descripcion').val(),
+   telefono = $('#E_telefono_cliente').val(),
+   ubicacion = $('#E_ubicacion').val(),
+   EstadoAvance =  $('#E_AvanceSolicitud').val();
+    //valido
+    if(true){
+      $.ajax({
+        url: "../../../Vista/crud/DataTableSolicitud/editarDataTableSolicitud.php",
+        type: "POST",
+        datatype: "JSON",
+        data: {
+          idSolicitud: idSolicitud,
+          descripcion: descripcion,
+          telefono: telefono,
+          ubicacion: ubicacion,
+          EstadoAvance: EstadoAvance
+        },
+        success: function () {
+          //Mostrar mensaje de exito
+          Swal.fire(
+            'Actualizado!',
+            'La solicitud ha sido modificado!',
+            'success',
+          )
+          tablaDataTableSolicitud.ajax.reload(null, false);
+        }
+      });
+      $('#modalEditarSolicitud').modal('hide');
+   }
+});
 
 $(document).on("click", "#btn_eliminar", function(){		
   // Obtener la fila más cercana al botón
@@ -76,8 +134,8 @@ $(document).on("click", "#btn_eliminar", function(){
   // Obtener el motivo de cancelación
   
   // Establecer valores en los campos del modal
-  $("#E_IdSolicitud").val(idSolicitud);
-  $("#E_EstadoSolicitud").val(EstadoSolicitud);
+  $("#C_IdSolicitud").val(idSolicitud);
+  $("#C_EstadoSolicitud").val(EstadoSolicitud);
   
   // Estilizar el modal
   $(".modal-header").css("background-color", "#007bff");
@@ -89,9 +147,9 @@ $(document).on("click", "#btn_eliminar", function(){
 $('#form-Solicitud').submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
    //Obtener datos del nuevo Cliente
-   let idSolicitud = $('#E_IdSolicitud').val(),
-    EstadoSolicitud =  $('#E_EstadoSolicitud').val(),
-    MotivoCancelacion =  $('#E_MotivoCancelacion').val()
+   let idSolicitud = $('#C_IdSolicitud').val(),
+    EstadoSolicitud =  $('#C_EstadoSolicitud').val(),
+    MotivoCancelacion =  $('#C_MotivoCancelacion').val()
    Swal.fire({
     title: 'Estas seguro de cancelar la Solicitud?',
     icon: 'warning',
