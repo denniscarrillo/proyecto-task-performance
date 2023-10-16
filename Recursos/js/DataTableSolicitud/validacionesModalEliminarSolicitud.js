@@ -26,7 +26,7 @@ let estadoMasdeUnEspacio = {
 let estadoSelect = true;
 
 const $form = document.getElementById('form-Solicitud');
-const $MotivoCancelacion = document.getElementById('E_MotivoCancelacion');
+const $MotivoCancelacion = document.getElementById('C_MotivoCancelacion');
 
 
 
@@ -76,8 +76,7 @@ $MotivoCancelacion.addEventListener('focusout', ()=>{
     if(estadoMasdeUnEspacio.estadoMasEspacioMotivo){
         funciones.validarMasdeUnEspacio($MotivoCancelacion);
     }
-    let usuarioMayus = $MotivoCancelacion.value.toUpperCase();
-    $MotivoCancelacion.value = usuarioMayus;
+   
 });
 
 $MotivoCancelacion.addEventListener('change', ()=>{

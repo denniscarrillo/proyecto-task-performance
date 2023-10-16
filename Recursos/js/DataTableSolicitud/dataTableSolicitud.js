@@ -1,4 +1,6 @@
 import {estadoValidado as validado } from './validacionesModalEliminarSolicitud.js';
+import {estadoValidado as valido } from './validacionesModalEditarSolicitud.js';
+
 
 let tablaDataTableSolicitud = ''; 
 //Variable dataTable
@@ -98,7 +100,7 @@ $('#form-Edit-Solicitud').submit(function (e) {
    ubicacion = $('#E_ubicacion').val(),
    EstadoAvance =  $('#E_AvanceSolicitud').val();
     //valido
-    if(true){
+    if(valido){
       $.ajax({
         url: "../../../Vista/crud/DataTableSolicitud/editarDataTableSolicitud.php",
         type: "POST",
@@ -132,11 +134,11 @@ $(document).on("click", "#btn_eliminar", function(){
   // Establecer el estado de la solicitud
   let EstadoSolicitud = 'CANCELADO';
   // Obtener el motivo de cancelación
-  
+  let motivo = fila.find('td:eq(5)').text();
   // Establecer valores en los campos del modal
   $("#C_IdSolicitud").val(idSolicitud);
   $("#C_EstadoSolicitud").val(EstadoSolicitud);
-  
+  $("#C_MotivoCancelacion").val(motivo);
   // Estilizar el modal
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");
