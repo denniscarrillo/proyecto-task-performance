@@ -77,6 +77,50 @@ class DataTableSolicitud
 
     }
 
+    public static function obtenerSolicitudPorId($idSolicitud){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query="SELECT id_Solicitud, descripcion,t.servicio_Tecnico, telefono_cliente, ubicacion_instalacion, 
+		EstadoAvance, EstadoSolicitud, motivo_cancelacion, s.Creado_Por, s.Fecha_Creacion
+        FROM tbl_Solicitud as s 
+        inner join tbl_TipoServicio as t on t.id_TipoServicio = s.id_TipoServicio
+		where id_Solicitud = $idSolicitud;";
+        $resultado = sqlsrv_query($conexion, $query);
+        $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+        $datosSolicitud = [
+            'idSolicitud' => $fila['id_Solicitud'],
+            'descripcion' => $fila['descripcion'],
+            'TipoServicio' => $fila['servicio_Tecnico'],
+            'telefono' => $fila['telefono_cliente'],
+            'ubicacion' => $fila['ubicacion_instalacion'],
+            'EstadoAvance' => $fila['EstadoAvance'],
+            'EstadoSolicitud' => $fila['EstadoSolicitud'],
+            'motivoCancelacion' => $fila['motivo_cancelacion'],
+            'CreadoPor' => $fila['Creado_Por'],
+            'FechaCreacion' => $fila['Fecha_Creacion']  
+        ];
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $datosSolicitud;
+    }
+
+    public static function editarSolicitud($EditarSolicitud){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB();
+        $idSolicitud = $EditarSolicitud->idSolicitud;
+        $descripcion = $EditarSolicitud->descripcion;
+        $telefono = $EditarSolicitud->telefono;
+        $ubicacion = $EditarSolicitud->ubicacion;
+        $EstadoAvance = $EditarSolicitud->EstadoAvance;
+        $ModificadoPor = $EditarSolicitud->ModificadoPor;
+        $query = "UPDATE tbl_Solicitud SET descripcion = '$descripcion', telefono_cliente = '$telefono', 
+		ubicacion_instalacion = '$ubicacion', EstadoAvance ='$EstadoAvance',
+        Modificado_Por = '$ModificadoPor', Fecha_Modificacion = GETDATE()
+        WHERE id_Solicitud = '$idSolicitud';";
+        $EditarSolicitud = sqlsrv_query($consulta, $query);
+        sqlsrv_close($consulta); #Cerramos la conexión.
+        return $EditarSolicitud;
+    }
+
 
 
 }

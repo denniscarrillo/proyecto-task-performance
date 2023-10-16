@@ -11,5 +11,13 @@ class ControladorDataTableSolicitud {
         return DataTableSolicitud::actualizarEstadoSolicitud($nuevaSolicitud);
     }
 
+    public static function LlenarModalSolicitudEditar($idSolicitud){
+        return DataTableSolicitud::obtenerSolicitudPorId($idSolicitud);
+    }
+
+    public static function editarDataTableSolicitud($EditarSolicitud){
+        return DataTableSolicitud::editarSolicitud($EditarSolicitud);
+    }
+
     
 }
