@@ -100,7 +100,7 @@ class Usuario {
         //Obtenemos el valor de Intentos que viene de la DB
         $fila = sqlsrv_fetch_array($intentos, SQLSRV_FETCH_ASSOC);
         if(isset($fila["valor"])){
-            $intentos = $fila["valor"];
+            $intentos = intval($fila["valor"]);
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $intentos;
@@ -119,7 +119,7 @@ class Usuario {
             //Obtenemos el valor de Intentos que viene de la DB
             $fila = sqlsrv_fetch_array($intentosFallidos, SQLSRV_FETCH_ASSOC);
             if(isset($fila["intentos_fallidos"])){
-                $intentosFallidos = $fila["intentos_fallidos"]; 
+                $intentosFallidos = intval($fila["intentos_fallidos"]); 
             } 
         } 
         sqlsrv_close($conexion); #Cerramos la conexión.

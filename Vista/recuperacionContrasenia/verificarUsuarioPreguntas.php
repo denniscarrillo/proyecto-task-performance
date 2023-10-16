@@ -1,4 +1,5 @@
 <?php
+    session_start(); //Reanudamos la sesion
     require_once ("../../db/Conexion.php");
     require_once ("../../Modelo/Usuario.php");
     require_once("../../Controlador/ControladorUsuario.php");
@@ -9,7 +10,6 @@
     $mensaje2 = '';
     $idPregunta = '';
     $usuario = '';
-    session_start(); //Reanudamos la sesion
     if(isset($_SESSION['usuario'])){
         $usuario = $_SESSION['usuario'];
         if (isset($_POST["submit"])){
@@ -43,6 +43,9 @@
                 $mensaje2 = 'Haga clic en "Cancelar" para intentarlo de nuevo';
             }    
         }
+    } else {
+        header('location: ./v_recuperarContrasena.html');
+        die();
     }
     
     

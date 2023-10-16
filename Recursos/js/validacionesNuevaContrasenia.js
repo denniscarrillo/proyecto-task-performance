@@ -1,120 +1,133 @@
-import * as funciones from './funcionesValidaciones.js';
+import * as funciones from "./funcionesValidaciones.js";
+
+const expresiones = {
+  password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,16}$/,
+};
 
 //  Cambiar tipo del candado para mostrar/ocultar contraseña
 $(document).ready(function () {
-    $('#checkbox').click(function () {
-        if ($(this).is(':checked')) {
-            $('#password').attr('type', 'text');
-            $('#confirmPassword').attr('type', 'text');
-        } else {
-            $('#password').attr('type', 'password');
-            $('#confirmPassword').attr('type', 'password');
-        }
-    });
-});
-let limiteContrasenia = true;
-
-let estadoPasswordSegura ={
-    estadoPassword : true
-}
-const expresiones = {
-    password : /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,16}$/
-}
-
-const $form = document.getElementById('formContrasenia');
-const $password = document.getElementById('password');
-const $password2= document.getElementById('confirmPassword');
-
-$form.addEventListener('submit', async e => {  
-    let estadoInputPassword = funciones.validarCampoVacio($password);
-    let estadoInputPassword2 = funciones.validarCampoVacio($password2);
-
-    if (estadoInputPassword == false || estadoInputPassword2 == false){
-        e.preventDefault();
-    }else{
-        if (estadoPasswordSegura.estadoPassword == false ) {
-            estadoPasswordSegura.estadoPassword = funciones.validarPassword($password, expresiones.password);
-         } else {
-            try{
-                limiteContrasenia = await funciones.cantidadParametrosContrasenia($password);
-                if(limiteContrasenia == false){
-                    e.preventDefault();
-                }
-            }catch(error){
-                console.log(e);
-             }
-         }
-
-        }
-    });
-    $password2.addEventListener('keyup',() =>{
-        funciones.validarCoincidirPassword($password, $password2);
-        funciones.limitarCantidadCaracteres("confirmPassword", 15);
-    });
-    $password.addEventListener('keyup', () => {
-        funciones.validarPassword($password, expresiones.password);
-        funciones.limitarCantidadCaracteres("password", 20);
-    });
-    $password.addEventListener('focusout', () => {
-        limiteContrasenia = funciones.cantidadParametrosContrasenia($password);
-    });
-        
-    $form.addEventListener('submit', e =>{
-        let estado;
-        let mensaje = $password2.parentElement.querySelector('p');
-        if($password.value != $password2.value){
-            mensaje.innerText = '*Las contraseñas no coinciden';
-            $password2.classList.add('mensaje_error');
-            estado = false;
-            } 
-        else {
-            $password2.classList.remove('mensaje_error');
-            mensaje.innerText = '';
-            estado = true;
-        }
-        if ($password.value != $password2.value) {
-            e.preventDefault();
-        }
-        return estado;
-    });
-//Validacion en la cual no deje hacer submit hasta que la contraseña sea robusta
-$form.addEventListener('submit', e => {
-    let estado;
-    let mensaje = $password.parentElement.querySelector('p');
-    if ($password.value.trim() === ''){
-        mensaje.innerText = '*Campo vacio';
-        $password.classList.add('mensaje_error');
-        estado = false;
+  $("#checkbox").click(function () {
+    if ($(this).is(":checked")) {
+      $("#password").attr("type", "text");
+      $("#confirmPassword").attr("type", "text");
+      $("#current-password").attr("type", "text");
     } else {
-        $password.classList.remove('mensaje_error');
-        mensaje.innerText = '';
-        estado = true;
+      $("#password").attr("type", "password");
+      $("#confirmPassword").attr("type", "password");
+      $("#current-password").attr("type", "password");
     }
-    if ($password.value.trim() === '') {
-        e.preventDefault();
-    }
-    return estado;
+  });
 });
-//Validacion en la cual no deje hacer submit hasta que la contraseña sea robusta
+let estado = "false";
+let $currentPassword = null;
+let existeCurrentPassword = 0;
+if (document.getElementById("current-password") != null) {
+  $currentPassword = document.getElementById("current-password");
+  existeCurrentPassword = 1;
+}
+const $form = document.getElementById("formContrasenia");
+const $password = document.getElementById("password");
+const $password2 = document.getElementById("confirmPassword");
 
-$form.addEventListener('submit', e =>{
-    let mensaje = '';
-    let input = $password.value;
-    if(!expresiones.password.test(input)){
-        mensaje = $password.parentElement.querySelector('p');
-        mensaje.innerText = '*Mínimo una mayúscula, minúscula, número y caracter especial.';
-        $password.classList.add('mensaje_error');
-    } 
-    else {
-        mensaje = $password.parentElement.querySelector('p');
-        $password.classList.remove('mensaje_error');
-        mensaje.innerText = '';
+//Objeto estado de Validaciones
+let estadoValidaciones = {
+  campoVacioPassword: false,
+  campoVaciocurrentPassword: false,
+  existeCurrentPassword: false,
+  coincidirPassword: false,
+  robustezPassword: false,
+  minMaxPassword: false
+};
+//Cuando se hace SUBMIT verificamos que todas las validaciones se hayan cumplido, de lo contrario no evitará el envío del formulario
+$form.addEventListener("submit", async (e) => {
+  if (estadoValidaciones.campoVacioPassword == false || (estadoValidaciones.existeCurrentPassword == false && existeCurrentPassword == 1) 
+  || estadoValidaciones.robustezPassword == false || estadoValidaciones.minMaxPassword == false) {
+    e.preventDefault();
+    estadoValidaciones.campoVacioPassword = funciones.validarCampoVacio($password);
+    // estadoValidaciones.campoVacioPassword = true;
+    if(estadoValidaciones.campoVacioPassword == true) {
+      estadoValidaciones.minMaxPassword = await funciones.cantidadParametrosContrasenia($password);
+      if(estadoValidaciones.minMaxPassword == true){
+        estadoValidaciones.robustezPassword = funciones.validarPassword($password, expresiones.password);
+      }
     }
-    if (!expresiones.password.test(input)) {
-        e.preventDefault();
+    //Verificamos si es que existe el campo de Current Password para aplicar la validacion
+    if (existeCurrentPassword == 1) {
+      estadoValidaciones.campoVaciocurrentPassword = funciones.validarCampoVacio($currentPassword);
+      if (estadoValidaciones.campoVaciocurrentPassword) {
+          estadoValidaciones.existeCurrentPassword = validarCurrentPassword($currentPassword, estado);
+      }
     }
+  } else if (estadoValidaciones.coincidirPassword == false){
+    e.preventDefault();
+    estadoValidaciones.coincidirPassword = funciones.validarCoincidirPassword($password, $password2);
+   }
 });
 
+//Verificamos si es que existe el campo de Current Password para añadir el evento y aplicar las validaciones
+if (existeCurrentPassword == 1) {
+  $currentPassword.addEventListener("focusout", async () => {
+    let estadoCurrentPassword = await obtenerEstadoCurrentPassword(
+      $currentPassword.value
+    );
+    // Ya que esto es un relajo, tuvimos que hacer maniobras del mas allá para poder obtener el true o el false
+    estado = JSON.stringify(estadoCurrentPassword).split("n")[1].split('"')[0];
+    console.log(estado);
+    estadoValidaciones.existeCurrentPassword = validarCurrentPassword(
+      $currentPassword,
+      estado
+    );
+    funciones.limitarCantidadCaracteres(
+      "confirmPassword",
+      15
+    );
+  });
+}
+//Evento KEYUP para el campo Password
+$password.addEventListener("keyup", async () => {
+  estadoValidaciones.minMaxPassword = await funciones.cantidadParametrosContrasenia($password);
+});
+//Evento FOCUSOUT para el campo Password
+$password.addEventListener("focusout", () => {
+    //  estadoValidaciones.campoVacioPassword = funciones.validarCampoVacio($password);
+  if (estadoValidaciones.minMaxPassword) {
+    estadoValidaciones.robustezPassword = funciones.validarPassword($password, expresiones.password);
+  }
+});
+//Evento KEYUP para el campo Confirm Password
+$password2.addEventListener("keyup", () => {
+  if(estadoValidaciones.minMaxPassword == true && estadoValidaciones.robustezPassword == true){
+      estadoValidaciones.coincidirPassword = funciones.validarCoincidirPassword($password, $password2);
+  }
+  funciones.limitarCantidadCaracteres("confirmPassword", 16);
+});
 
-
-
+let validarCurrentPassword = (elemento, estadoCurrentPassword) => {
+  let estado = false;
+  let mensaje = elemento.parentElement.querySelector("p");
+  if (estadoCurrentPassword === "false") {
+    mensaje.innerText = "*Contraseña incorrecta";
+    elemento.classList.add("mensaje_error");
+  } else {
+    elemento.classList.remove("mensaje_error");
+    mensaje.innerText = "";
+    estado = true;
+  }
+  return estado;
+};
+//Obtenemos el estado de la contraseña actual del usuario
+let obtenerEstadoCurrentPassword = async (currentPassword) => {
+  try {
+    let userPassword = await $.ajax({
+      url: "../../../Vista/recuperacionContrasenia/obtenerContraseniaActual.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {
+        userPassword: currentPassword,
+      },
+    });
+    return userPassword;
+  } catch (err) {
+    console.error(err);
+  }
+};

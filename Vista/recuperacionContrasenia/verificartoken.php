@@ -16,6 +16,7 @@ if(isset($_SESSION['tokenSend'])){ //Cuando venimos de registro capturamos el va
 }
 if(isset($_SESSION['usuario'])){
     $user = $_SESSION['usuario'];
+    $_SESSION['configRespuestas'] = '0';
 }
 $mensaje = "";
 if (isset($_POST['submit'])){

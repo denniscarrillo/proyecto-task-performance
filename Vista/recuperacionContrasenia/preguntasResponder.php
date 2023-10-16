@@ -1,11 +1,10 @@
 <?php
 require_once('verificarUsuarioPreguntas.php');
 $preguntas = '';
-
-// session_start(); //Reanudar sesion
 if (isset($_SESSION['usuario'])) {
   $usuario = $_SESSION['usuario'];
   $preguntas = ControladorUsuario::getPreguntas($usuario);
+  $_SESSION['configRespuestas'] = '0';
 }
 ?>
 <!DOCTYPE html>

@@ -218,7 +218,7 @@ let obtenerUsuariosPorId = async (idUsuario) => {
     });
     return datos; //Retornamos la data recibida por ajax
   } catch(err) {
-    console.error(err)
+    console.error(err);
   }
 }
 
