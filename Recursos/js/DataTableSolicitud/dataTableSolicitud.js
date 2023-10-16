@@ -1,3 +1,4 @@
+import {estadoValidado as validado } from './validacionesModalEliminarSolicitud.js';
 
 let tablaDataTableSolicitud = ''; 
 //Variable dataTable
@@ -97,10 +98,9 @@ $('#form-Solicitud').submit(function (e) {
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Si, Cancelalo!'
-  }).then((result) => {
-    if (result.isConfirmed) { 
-      if(true){    
+    confirmButtonText: 'Si, Cancelalo!',
+   });
+      if(validado){    
       $.ajax({
         url: "../../../Vista/crud/DataTableSolicitud/editarEstadoSolicitud.php",
         type: "POST",
@@ -110,8 +110,8 @@ $('#form-Solicitud').submit(function (e) {
           EstadoSolicitud: EstadoSolicitud,
           MotivoCancelacion: MotivoCancelacion
         },    
-        success: function(data) {          
-          console.log(data);  
+        success: function() {          
+         // console.log(data);  
             Swal.fire(
               'Cancelada!',
               'La Solicitud ha sido Cancelada.',
@@ -122,9 +122,9 @@ $('#form-Solicitud').submit(function (e) {
         }); //Fin del AJAX
         $('#modalCancelacionSolicitud').modal('hide');
       }
-    }
+    
   });  
   
   
-});
+
    
