@@ -197,7 +197,7 @@ class Usuario {
     public static function obtenerPreguntasUsuario(){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $query = "  SELECT id_pregunta, pregunta FROM tbl_ms_preguntas WHERE estado = 'activa';";
+        $query = "SELECT id_pregunta, pregunta FROM tbl_ms_preguntas WHERE estado = 'activa';";
         $preguntasUsuario = sqlsrv_query($conexion, $query);
         $preguntas = array();
         while($fila = sqlsrv_fetch_array($preguntasUsuario, SQLSRV_FETCH_ASSOC)){
@@ -367,10 +367,16 @@ class Usuario {
     public static function reiniciarIntentosRespuesta($usuario){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query ="UPDATE tbl_MS_Usuario SET int_respuestasFallidas = 0 , id_Estado_Usuario = 2 WHERE usuario = '$usuario';";
+        $query ="UPDATE tbl_MS_Usuario SET int_respuestasFallidas = 0 WHERE usuario = '$usuario';";
         $ejecutar = sqlsrv_query($conexion, $query);
-        // $fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC);
         sqlsrv_close($conexion); #Cerramos la conexión.
+    }
+    public static function desbloquearUsuario($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "UPDATE tbl_MS_Usuario SET id_Estado_Usuario = 2 WHERE usuario = '$usuario';";
+        $ejecutar = sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion);
     }
     public static function aumentarIntentosFallidosRespuesta($usuario, $intentosFallidos){
         $conn = new Conexion();
@@ -882,16 +888,4 @@ class Usuario {
         }
         sqlsrv_close($conexion);
     }
-    public static function desbloquearUsuario($idUsuario){
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB();
-        $stadoUsuario = 2;
-        $intentosFallidos = 0;
-        $query = "UPDATE tbl_MS_Usuario SET id_Estado_Usuario = '$stadoUsuario', intentos_fallidos = '$intentosFallidos' WHERE id_Usuario = '$idUsuario';";
-        $ejecutar = sqlsrv_query($conexion, $query);
-        sqlsrv_close($conexion);
-    }
-}#Fin de la clase
-
-    
-
+}

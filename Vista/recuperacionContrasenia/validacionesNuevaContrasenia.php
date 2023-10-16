@@ -34,11 +34,12 @@
                    }else{                  
                     //Actualizar a la nueva contraseña en la tabla usuario.
                     ControladorUsuario::actualizarContrasenia($user, $encriptPassword);
+                    ControladorUsuario::reiniciarIntentosFallidosRespuesta($user);
+                    ControladorUsuario::desbloquearUsuario($user);  
                     //Guardar contraseña anterior en la tabla historial contraseña.
                     $respaldada = ControladorUsuario::respaldarContrasenia($user, "", $encriptPassword, 3);
                     ControladorUsuario::eliminarUltimaContrasena($user);   
-                    $idUsuario = ControladorUsuario::obtenerIdUsuario($user);
-                    ControladorUsuario::desbloquearUsuario($idUsuario);               
+                    $idUsuario = ControladorUsuario::obtenerIdUsuario($user);             
                     header('location: ../login/login.php');
                     session_destroy();
                    }                                                
@@ -58,5 +59,8 @@
           /* =======================================================================================*/
       }
     }
+  }else{
+    header("Location: ../login/login.php");
+    exit(); // Asegurarse de que el script termine aquí
   }
 
