@@ -2,6 +2,8 @@ import * as funciones from './funcionesValidaciones.js';
 //VARIABLES GLOBALES
 let estadoExisteUsuario = false;
 
+let estadoExisteCorreo = false;
+
 let limiteContrasenia = true;
 
 let estadoValidacionesEspacio = {
@@ -88,6 +90,10 @@ $form.addEventListener('submit', e => {
                                     estadoExisteUsuario =  obtenerUsuarioExiste($('#usuario').val());
                                     console.log(estadoExisteUsuario);
                                 } else {
+                                    if(estadoExisteCorreo == false){
+                                        e.preventDefault();
+                                        estadoExisteCorreo = obtenerCorreoExiste($('#correo').val());
+                                    } else {
                                     if(estadoLetrasRepetidas.estadoLetrasRepetidasNombre == false ||estadoLetrasRepetidas.estadoLetrasRepetidasUsuario == false ||
                                         estadoLetrasRepetidas.estadoPassword == false){
                                         e.preventDefault();
@@ -101,6 +107,7 @@ $form.addEventListener('submit', e => {
                                               estadoSoloLetras.estadoLetrasNombre = funciones.validarSoloLetras($nombre, expresiones.user);
                                 } 
                             }
+                          }
                          }
                     }
                 }
@@ -181,6 +188,10 @@ $password2.addEventListener('keyup',() =>{
 // $correo.addEventListener('focusout', () => {
 //     funciones.limitarCantidadCaracteres("correo", 50);
 // });
+$correo.addEventListener('focusout', () => {
+    let correo = $('#correo').val();
+    estadoExisteCorreo = obtenerCorreoExiste(correo);
+});
 
 $form.addEventListener('submit', e =>{
     let estado;
@@ -256,5 +267,28 @@ try {
         console.log(error);
     }
 });
+
+let obtenerCorreoExiste = ($correo) => {
+    $.ajax({
+        url: "../../../Vista/crud/usuario/correoExiste.php",
+        type: "POST",
+        datatype: "JSON",
+        data: {
+            correo: $correo
+        },
+        success: function (correo) {
+            let $objCorreo = JSON.parse(correo);
+            if ($objCorreo.estado == 'true') {
+                document.getElementById('correo').classList.add('mensaje_error');
+                document.getElementById('correo').parentElement.querySelector('p').innerText = '*Correo ya existente, agregue otro';
+                estadoExisteCorreo = false; // El correo existe, set to false
+            } else {
+                document.getElementById('correo').classList.remove('mensaje_error');
+                document.getElementById('correo').parentElement.querySelector('p').innerText = '';
+                estadoExisteCorreo = true; // El correo no existe, set to true
+            }
+        }
+    });
+}
 
 // || estadoMasdeUnEspacio.estadoMasEspacioNombre == true

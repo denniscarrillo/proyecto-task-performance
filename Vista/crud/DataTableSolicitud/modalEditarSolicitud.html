@@ -1,0 +1,84 @@
+<div class="modal fade" id="modalEditarSolicitud" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="editarModalLabel">Editar Solicitud</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" id="form-Edit-Solicitud">
+                    <div class="grupo-form">
+                        <div class="mb-3">
+                            <label for="IdSolicitud" class="form-label">ID:</label>
+                            <input type="text" name="IdSolicitud" id="E_IdSolicitud" class="form-control" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripcion:</label>
+                            <input type="text" name="descripcion" id="E_descripcion" class="form-control">
+                            <p class="mensaje"></p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="idTipoServicio" class="form-label">TipoServicio:</label>
+                            <input type="text" name="TipoServicio" id="E_TipoServicio" class="form-control" disabled>
+                            <p class="mensaje"></p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="telefono_cliente" class="form-label">Telefono del Cliente:</label>
+                            <input type="text" name="telefono_cliente" id="E_telefono_cliente" class="form-control">
+                            <p class="mensaje"></p>
+                        </div>
+                        
+                        
+                        <div class="mb-3">
+                            <label for="ubicacion" class="form-label">Ubicacion de instalacion:</label>
+                            <input type="text" name="ubicacion" id="E_ubicacion" class="form-control">
+                            <p class="mensaje"></p>
+                        </div>
+
+                    </div>    
+
+                    <div class="grupo-form"> 
+                        <div class="mb-3">
+                            <label for="AvanceSolicitud" class="form-label">Avance de Solicitud:</label>
+                            <select name="AvanceSolicitud" id="E_AvanceSolicitud" class="form-control">
+                                <option value="PENDIENTE">PENDIENTE</option>
+                                <option value="EN PROCESO">EN PROCESO</option>
+                                <option value="COMPLETADO">COMPLETADO</option>
+                            </select>
+                            <p class="mensaje"></p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="EstadoSolicitud" class="form-label">Estado de Solicitud:</label>
+                            <input type="text" name="EstadoSolicitud" id="E_EstadoSolicitud" class="form-control" disabled>
+                            <p class="mensaje"></p>
+                        </div>   
+                    
+                        <div class="mb-3">
+                            <label for="usuario" class="form-label">Motivo Cancelacion:</label>
+                            <input type="text" name="Motivo" id="E_Motivo" class="form-control" disabled>
+                            <p class="mensaje"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="CreadoPor" class="form-label">Creado Por:</label>
+                            <input type="text" name="CreadoPor" id="E_CreadoPor" class="form-control" disabled>
+                            <p class="mensaje"></p>
+                        </div> 
+                        <div class="mb-3">
+                            <label for="FechaCreacion" class="form-label">Fecha Solicitud:</label>
+                            <input type="date" name="FechaCreacion" id="E_FechaCreacion" class="form-control" disabled>
+                            <p class="mensaje"></p>
+                        </div>   
+                    </div>
+                    <div class="btn-guardar">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
