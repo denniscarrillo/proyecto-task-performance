@@ -16,14 +16,7 @@
     margin-bottom: 2rem !important;
 }
 
-    .btn-guardar {
-        position:absolute;
-       
-        bottom: 2rem;
-        left: 20%;
-        right:0%;
-    }
-
+   
     .modal-content{
         min-height: 25rem;
         

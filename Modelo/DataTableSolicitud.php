@@ -121,7 +121,46 @@ class DataTableSolicitud
         return $EditarSolicitud;
     }
 
-
+    public static function VerSolicitudesPorId ($idSolicitud){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query="SELECT id_Solicitud
+        ,idFactura,s.rtn_cliente,s.rtn_clienteCartera,
+        CASE
+          WHEN cc.nombre_Cliente IS NOT NULL THEN cc.nombre_Cliente COLLATE Modern_Spanish_CI_AS
+          ELSE c.NOMBRECLIENTE COLLATE Modern_Spanish_CI_AS
+        END AS NombreCliente
+        ,descripcion,t.servicio_Tecnico,s.correo,telefono_cliente,ubicacion_instalacion,EstadoAvance
+        ,EstadoSolicitud,motivo_cancelacion,s.Creado_Por,s.Fecha_Creacion,s.Modificado_Por,s.Fecha_Modificacion
+        FROM [tbl_Solicitud] as s
+        inner join tbl_TipoServicio as t on t.id_TipoServicio = s.id_TipoServicio
+        LEFT join View_Clientes as c on c.CIF COLLATE Modern_Spanish_CI_AS = s.rtn_cliente COLLATE Modern_Spanish_CI_AS
+        LEFT join tbl_CarteraCliente as cc on cc.rtn_Cliente = s.rtn_clienteCartera
+        Where id_Solicitud = $idSolicitud;";
+        $resultado = sqlsrv_query($conexion, $query);
+        $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+        $datosVerSolicitudes = [
+            'idSolicitud' => $fila['id_Solicitud'],
+            'idFactura' => $fila['idFactura'],
+            'rtnCliente' => $fila['rtn_cliente'],
+            'rtnClienteCartera' => $fila['rtn_clienteCartera'],
+            'NombreCliente' => $fila['NombreCliente'],
+            'Descripcion' => $fila['descripcion'],
+            'TipoServicio' => $fila['servicio_Tecnico'],
+            'Correo' => $fila['correo'],
+            'telefono' => $fila['telefono_cliente'],
+            'ubicacion' => $fila['ubicacion_instalacion'],
+            'EstadoAvance' => $fila['EstadoAvance'],
+            'EstadoSolicitud' => $fila['EstadoSolicitud'],
+            'motivoCancelacion' => $fila['motivo_cancelacion'],
+            'CreadoPor' => $fila['Creado_Por'],
+            'FechaCreacion' => $fila['Fecha_Creacion'],  
+            'ModificadoPor' => $fila['Modificado_Por'],
+            'FechaModificacion' => $fila['Fecha_Modificacion']  
+        ];
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $datosVerSolicitudes;
+    }
 
 }
 
