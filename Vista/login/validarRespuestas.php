@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require_once ("../../db/Conexion.php");
     require_once ("../../Modelo/Usuario.php");
     require_once ("../../Modelo/Bitacora.php");
@@ -9,7 +10,7 @@
     $mensaje = '';
     $p_guardada = 0;
     $preguntas = '';
-    session_start();
+    $_SESSION['configRespuestas'] = 'configRespuestas.php';
     if (isset($_SESSION['usuario'])) {
         $user = $_SESSION['usuario'];
         $preguntas = ControladorUsuario::obtenerPreguntasUsuario();

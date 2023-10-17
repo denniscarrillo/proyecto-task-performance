@@ -20,9 +20,9 @@ $mensaje = null;
 $usuario = false;
 $nuevoEstado = false;
 $estadoUsuario = null;
-$intentosMax = intval(ControladorUsuario::intentosLogin());
 if (isset($_POST["submit"])) {
     $nombreUsuario = $_POST["userName"];
+    $intentosMax = ControladorUsuario::intentosLogin();
     $intentosFallidos = ControladorUsuario::intentosFallidos($_POST["userName"]);
     $estadoUsuario = ControladorUsuario::estadoUsuario($_POST["userName"]);
     $rolUsuario = ControladorUsuario::obRolUsuario($_POST["userName"]);
@@ -32,11 +32,11 @@ if (isset($_POST["submit"])) {
         if ($estadoUsuario > 2 && $estadoUsuario <= 5) {
             switch ($estadoUsuario) {
                 case 3: {
-                        $mensaje = 'Su usuario está inactivo';
+                        $mensaje = 'Su usuario se encuentra inactivo';
                         break;
                     }
                 case 4: {
-                        $mensaje = 'Su usuario está bloqueado';
+                        $mensaje = 'Su usuario se encuntra bloqueado';
                         break;
                     }
                 case 5: {
@@ -93,7 +93,7 @@ if (isset($_POST["submit"])) {
                                 }
                         }
                     } else {
-                        $mensaje = 'Su contraseña ha vencido';
+                        $mensaje = 'Su contraseña ha vencido, por favor restablecerla';
                     }
                 } else {
                     if ($intentosFallidos === false) {
@@ -103,8 +103,10 @@ if (isset($_POST["submit"])) {
                     } else {
                         $incremento = ControladorUsuario::incrementarIntentos($_POST["userName"], $intentosFallidos);
                         $nuevoEstado = Usuario::bloquearUsuario($intentosMax, $incremento, $_POST["userName"]);
-                        if ($nuevoEstado == true || $estadoUsuario == 4) {
-                            $mensaje = 'Usuario bloqueado por exceder limite de intentos';
+                        if (($intentosFallidos + 1) == $intentosMax) {
+                            $mensaje = 'Ha alcanzado el limite de intentos fallidos, no debe equivocarse de nuevo';
+                        } else if ($nuevoEstado == true || $estadoUsuario == 4) {
+                            $mensaje = 'Su ussuario ha sido bloqueado por exceder el número de intentos fallidos';
                         } else {
                             $mensaje = 'Usuario y/o Contraseña incorrectos';
                         }

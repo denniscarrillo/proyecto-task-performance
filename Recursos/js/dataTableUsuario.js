@@ -26,7 +26,8 @@ let procesarPermisoActualizar = data => {
       { "data": "Rol" },
       {"defaultContent":
           '<div><button class="btns btn" id="btn_ver"><i class="fa-solid fa-eye"></i></button>' +
-          `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`
+          `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`+
+          '<button class="btn_eliminar btns btn" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button>'
       }
     ]
   });
@@ -120,24 +121,26 @@ $(document).on("click", "#btn_eliminar", function() {
           datatype:"json",    
           data:  { usuario: usuario},    
           success: function(data) {
-            // let estadoEliminado = data[0].estadoEliminado;
+            let estadoEliminado = data[0].estadoEliminado;
             // console.log(data);
-            // if(estadoEliminado == 'eliminado'){
+            if(estadoEliminado == 'eliminado'){
               tablaUsuarios.row(fila.parents('tr')).remove().draw();
               Swal.fire(
                 'Eliminado!',
                 'El usuario ha sido eliminado.',
                 'success'
-              )  
-            // } else {
-            //   Swal.fire(
-            //     'Lo sentimos!',
-            //     'El usuario no puede ser eliminado.',
-            //     'error'
-            //   );
-            // }           
+              ) 
+              tablaUsuarios.ajax.reload(null, false); 
+            } else {
+              Swal.fire(
+                'Lo sentimos!',
+                'El usuario no puede ser eliminado, se ha inactivado.',
+                'error'
+              );
+              tablaUsuarios.ajax.reload(null, false);
+            }           
           }
-          }); //Fin del AJAX
+        }); //Fin del AJAX
       }
     });                
 });
@@ -176,7 +179,6 @@ $('#form-Edit-Usuario').submit(function (e) {
    correo = $('#E_correo').val(),
    rol = document.getElementById('E_rol').value,
    estado = document.getElementById('E_estado').value;
-   /////////////////////////////////////////////////////////////////////////////
    console.log(valido)
    if(valido){
     $.ajax({
@@ -218,7 +220,7 @@ let obtenerUsuariosPorId = async (idUsuario) => {
     });
     return datos; //Retornamos la data recibida por ajax
   } catch(err) {
-    console.error(err)
+    console.error(err);
   }
 }
 

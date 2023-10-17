@@ -16,7 +16,7 @@ if(isset($_SESSION['tokenSend'])){ //Cuando venimos de registro capturamos el va
     $_SESSION['tokenSend'] = 0;
 }
 if(isset($_SESSION['usuario'])){
-    $user = $_SESSION['usuario'];
+    $user = $_SESSION['usuario']; //Capturamos el usuario de la sesión
     if (isset($_POST['submit'])){
         if(!empty($_POST['token'])) {
             $token = $_POST['token'];
@@ -32,7 +32,6 @@ if(isset($_SESSION['usuario'])){
                 }
                 case 2: {
                     header('location: v_nuevaContrasenia.php');
-                    
                     break;
                 }
             }
@@ -40,8 +39,7 @@ if(isset($_SESSION['usuario'])){
             $mensaje = "Debe digitar un token!";
         }
     }
-}else{
+} else {
     header("Location: ../login/login.php");
     exit(); // Asegurarse de que el script termine aquí
 }
-

@@ -9,8 +9,9 @@
         $data = array();
         if($estadoEliminado == false) {
             $data []= [
-                'estadoEliminado' => 'eliminado'
+                'estadoEliminado' => 'inactivado'
             ];
+            ControladorUsuario::SimularInactivarUsuario($usuario);
             print json_encode($data, JSON_UNESCAPED_UNICODE);
         }
     }
