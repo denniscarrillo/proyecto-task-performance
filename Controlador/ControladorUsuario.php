@@ -70,6 +70,9 @@
         public static function reiniciarIntentosFallidosRespuesta($usuario){
             Usuario::reiniciarIntentosRespuesta($usuario);
         }
+        public static function desbloquearUsuario($usuario){
+            Usuario::desbloquearUsuario($usuario);
+        }
         public static function aumentarIntentosFallidosRespuesta($usuario, $intentosFallidos){
             return Usuario::aumentarIntentosFallidosRespuesta($usuario, $intentosFallidos);
         }
@@ -165,5 +168,8 @@
        }
        public static function depurarTokenUsuario($usuario){
         Usuario::depurarToken($usuario);
+       }
+       public static function validarCorreoExiste($correo){
+        return Usuario::correoExiste($correo);
        }
     }

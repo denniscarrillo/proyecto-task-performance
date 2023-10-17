@@ -58,7 +58,7 @@ $form.addEventListener('submit', e => {
             estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
            
         }
-         if(estadoSoloNumeros.estadoNumerortn== false ){
+         if(estadoSoloNumeros.estadoNumerortn == false ){
             e.preventDefault();
             estadoSoloNumeros.estadoNumerortn = funciones.validarSoloNumeros($rtn, validaciones.soloNumeros);
             estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);

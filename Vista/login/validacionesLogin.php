@@ -29,7 +29,7 @@ if (isset($_POST["submit"])) {
     if (empty($_POST["userName"]) or empty($_POST["userPassword"])) {
         $mensaje = 'Debe llenar ambos campos';
     } else {
-        if ($estadoUsuario > 2 && $estadoUsuario < 5) {
+        if ($estadoUsuario > 2 && $estadoUsuario <= 5) {
             switch ($estadoUsuario) {
                 case 3: {
                         $mensaje = 'Su usuario se encuentra inactivo';
@@ -52,7 +52,6 @@ if (isset($_POST["submit"])) {
                 if ($existeUsuario) {
                     $estadoVencimiento = ControladorUsuario::estadoFechaVencimientoContrasenia($_POST["userName"]);
                     if ($estadoVencimiento) {
-                        session_start();
                         $_SESSION['usuario'] = $nombreUsuario;
                         /* ========================= Capturar evento inicio sesión. =============================*/
                         $newBitacora = new Bitacora();
@@ -65,21 +64,32 @@ if (isset($_POST["submit"])) {
                         $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó al sistema exitosamente';
                         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
                         /* =======================================================================================*/
+                        $cantPreguntasContestadas = ControladorUsuario::cantPreguntasContestadas($_SESSION['usuario']);
+                        $cantPreguntasParametro = ControladorUsuario::cantidadPreguntas();
                         switch ($estadoUsuario) {
                             case 1: {
                                     if ($intentosFallidos > 0) {
                                         ControladorUsuario::resetearIntentos($_POST["userName"]);
                                     }
-                                    header('location: configRespuestas.php');
+                                    if($cantPreguntasContestadas != $cantPreguntasParametro){
+                                        header('location: configRespuestas.php');
+                                    }else{
+                                        //Cambia el estado del usuario de nuevo a Activo
+                                        ControladorUsuario::desbloquearUsuario($_SESSION['usuario']);
+                                        header('location: ../index.php');
+                                    }
                                     break;
                                 }
                             case 2: {
                                     if ($intentosFallidos > 0) {
                                         ControladorUsuario::resetearIntentos($_POST["userName"]);
                                     }
-                                    if ($rolUsuario > 1) {
+                                    if ($rolUsuario > 1 && ($cantPreguntasContestadas == $cantPreguntasParametro)) {
                                         header('location: ../index.php');
+                                    }else{
+                                        header('location: configRespuestas.php');
                                     }
+                                    break;
                                 }
                         }
                     } else {
@@ -96,7 +106,7 @@ if (isset($_POST["submit"])) {
                         if (($intentosFallidos + 1) == $intentosMax) {
                             $mensaje = 'Ha alcanzado el limite de intentos fallidos, no debe equivocarse de nuevo';
                         } else if ($nuevoEstado == true || $estadoUsuario == 4) {
-                            $mensaje = 'Su usuario ha sido bloqueado por exceder el número de intentos fallidos';
+                            $mensaje = 'Su ussuario ha sido bloqueado por exceder el número de intentos fallidos';
                         } else {
                             $mensaje = 'Usuario y/o Contraseña incorrectos';
                         }

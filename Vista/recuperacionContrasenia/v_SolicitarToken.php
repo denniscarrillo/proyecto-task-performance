@@ -32,7 +32,7 @@
                     
                 </div>
                 <button type="submit" class="btn btn-primary btn-block" name="submit">Validar</button>
-                <a href="v_recuperarContrasena.html" class="btn btn-secondary btn-cancel">Cancelar</a>
+                <a href="./destruirSesionProceso.php?url=1" class="btn btn-secondary btn-cancel">Cancelar</a>
                 <?php 
                 if(!empty($mensaje)){
                     echo '<div class="message-container mensaje-error"><i class="fa-solid fa-circle-exclamation"></i><h2 class="message-text">'. $mensaje. '</h2></div>';

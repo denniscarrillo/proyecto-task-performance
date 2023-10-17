@@ -20,7 +20,6 @@
             $cantFallidasRespuestas = ControladorUsuario::obtenerIntentosRespuestas($usuario);
             if($cantFallidasRespuestas < $cantFallidasParametro){
                 if($respuesta == $respuestaContestada){
-                    ControladorUsuario::reiniciarIntentosFallidosRespuesta($usuario);
                     header('location: v_nuevaContrasenia.php');
                 }else {
                     ControladorUsuario::aumentarIntentosFallidosRespuesta($usuario, $cantFallidasRespuestas);
@@ -43,6 +42,9 @@
                 $mensaje2 = 'Haga clic en "Cancelar" para intentarlo de nuevo';
             }    
         }
+    }else{
+        header("Location: ../login/login.php");
+        exit(); // Asegurarse de que el script termine aquí
     } else {
         header('location: ./v_recuperarContrasena.html');
         die();
