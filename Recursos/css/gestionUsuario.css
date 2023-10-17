@@ -20,7 +20,7 @@ h1{
 #form-usuario, #form-Edit-Usuario {
     display: flex;
     padding: 2rem;
-    padding-bottom: 3rem;
+    padding-bottom: 4rem;
     position: relative;
 }
 .grupo-form {
