@@ -45,10 +45,7 @@
     }else{
         header("Location: ../login/login.php");
         exit(); // Asegurarse de que el script termine aquí
-    } else {
-        header('location: ./v_recuperarContrasena.html');
-        die();
-    }
+    } 
     
     
 
