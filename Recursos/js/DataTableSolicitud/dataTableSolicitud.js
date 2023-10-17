@@ -49,6 +49,55 @@ let obtenerPermisos = function ($idObjeto, callback) {
     });
 }
 
+
+
+$(document).on("click", "#btn_ver", async function (){
+   // Obtener la fila más cercana al botón
+  let fila = $(this).closest("tr");
+  // Capturar el ID de la solicitud
+  let idSolicitud = fila.find('td:eq(0)').text();
+  let SolicitudXid = await obtenerSolicitudesVerPorId(idSolicitud);
+  $("#V_IdSolicitud").val(idSolicitud);
+  $("#V_IdFactura").val(SolicitudXid['idFactura']);
+  $("#V_rtnCliente").val(SolicitudXid['rtnCliente']);
+  $("#V_rtnClienteCartera").val(SolicitudXid['rtnClienteCartera']);
+  $("#V_NombreC").val(SolicitudXid['NombreCliente']);
+  $("#V_descripcion").val(SolicitudXid['Descripcion']);
+  $("#V_idTipoServicio").val(SolicitudXid['TipoServicio']);
+  $("#V_correo").val(SolicitudXid['Correo']);
+  $("#V_telefono").val(SolicitudXid['telefono']);
+  $("#V_ubicacion").val(SolicitudXid['ubicacion']);
+  $("#V_AvanceSolicitud").val(SolicitudXid['EstadoAvance']);
+  $("#V_EstadoSolicitud").val(SolicitudXid['EstadoSolicitud']);
+  $("#V_Motivo").val(SolicitudXid['motivoCancelacion']);
+  $("#V_CreadoPor").val(SolicitudXid['CreadoPor']);
+  $("#V_FechaCreacion").val(SolicitudXid['FechaCreacion']);
+  $("#V_ModificadoPor").val(SolicitudXid['ModificadoPor']);
+  $("#V_FechaModificado").val(SolicitudXid['FechaModificacion']);
+   // Estilizar el modal
+   $(".modal-header").css("background-color", "#007bff");
+   $(".modal-header").css("color", "white");
+   // Mostrar el modal
+   $('#modalVerSolicitud').modal('show');
+});
+
+//obtener datos para el modal editar
+let obtenerSolicitudesVerPorId = async (idSolicitud) => {
+  try {
+    let datosVerSolicitud = await $.ajax({
+      url: '../../../Vista/crud/DataTableSolicitud/obtenerSolicitudesVerId.php',
+      type: 'GET',
+      dataType: 'JSON',
+      data: {
+        IdSolicitud: idSolicitud
+      }
+    });
+    return datosVerSolicitud; //Retornamos la data recibida por ajax
+  } catch(err) {
+    console.error(err)
+  }
+}
+
 $(document).on("click", "#btn_editar", async function(){		 
   // Obtener la fila más cercana al botón
   let fila = $(this).closest("tr");

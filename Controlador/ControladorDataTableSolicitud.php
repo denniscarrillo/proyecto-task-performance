@@ -19,5 +19,9 @@ class ControladorDataTableSolicitud {
         return DataTableSolicitud::editarSolicitud($EditarSolicitud);
     }
 
+    public static function VerSolicitudesPorId($idSolicitud){
+        return DataTableSolicitud::VerSolicitudesPorId($idSolicitud);
+    }
+
     
 }
