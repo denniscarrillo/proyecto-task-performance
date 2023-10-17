@@ -49,6 +49,9 @@
         public static function eliminarUsuario($usuario){
             return Usuario::eliminarUsuario($usuario);
         }
+        public static function SimularInactivarUsuario($usuario){
+            return Usuario::inactivarUsuario($usuario);
+        }
         public static function editarUsuario($nuevoUsuario){
             Usuario::editarUsuario($nuevoUsuario);
         }

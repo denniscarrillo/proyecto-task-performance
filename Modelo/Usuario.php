@@ -269,17 +269,24 @@ class Usuario {
     }
     // ========================================================================
     public static function eliminarUsuario($usuario){
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB();
-        $query = "SELECT id_Usuario FROM tbl_ms_usuario WHERE usuario = '$usuario'";
-        $consultaIdUsuario = sqlsrv_query($conexion, $query);
-        $fila = sqlsrv_fetch_array($consultaIdUsuario, SQLSRV_FETCH_ASSOC);
-        $idUsuario = $fila['id_Usuario'];
-        //Eliminamos el usuario
-        $qry = "DELETE FROM tbl_ms_usuario WHERE id_Usuario = $idUsuario;";
-        $estadoEliminado = sqlsrv_query($conexion, $qry);
+        try{
+            $conn = new Conexion();
+            $conexion = $conn->abrirConexionDB();
+            $query = "DELETE FROM tbl_MS_Usuario WHERE usuario = '$usuario';";
+            $estadoEliminado = sqlsrv_query($conexion, $query);
+        }catch (Exception $e) {
+            $estadoEliminado = 'Error SQL:' . $e;
+        }
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $estadoEliminado;
+    }
+    public static function inactivarUsuario($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query ="UPDATE tbl_MS_Usuario SET id_Estado_Usuario = 3 WHERE usuario = '$usuario';";
+        $estadoInactivo = sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estadoInactivo;
     }
     public static function editarUsuario($nuevoUsuario){
         $conn = new Conexion();
@@ -901,11 +908,6 @@ class Usuario {
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $existeCorreo;
     }
-
-
-
-
-
 }#Fin de la clase
 
     
