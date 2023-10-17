@@ -54,26 +54,48 @@ let obtenerPermisos = function ($idObjeto, callback) {
 $(document).on("click", "#btn_ver", async function (){
    // Obtener la fila más cercana al botón
   let fila = $(this).closest("tr");
-  // Capturar el ID de la solicitud
   let idSolicitud = fila.find('td:eq(0)').text();
   let SolicitudXid = await obtenerSolicitudesVerPorId(idSolicitud);
-  $("#V_IdSolicitud").val(idSolicitud);
-  $("#V_IdFactura").val(SolicitudXid['idFactura']);
-  $("#V_rtnCliente").val(SolicitudXid['rtnCliente']);
-  $("#V_rtnClienteCartera").val(SolicitudXid['rtnClienteCartera']);
-  $("#V_NombreC").val(SolicitudXid['NombreCliente']);
-  $("#V_descripcion").val(SolicitudXid['Descripcion']);
-  $("#V_idTipoServicio").val(SolicitudXid['TipoServicio']);
-  $("#V_correo").val(SolicitudXid['Correo']);
-  $("#V_telefono").val(SolicitudXid['telefono']);
-  $("#V_ubicacion").val(SolicitudXid['ubicacion']);
-  $("#V_AvanceSolicitud").val(SolicitudXid['EstadoAvance']);
-  $("#V_EstadoSolicitud").val(SolicitudXid['EstadoSolicitud']);
-  $("#V_Motivo").val(SolicitudXid['motivoCancelacion']);
-  $("#V_CreadoPor").val(SolicitudXid['CreadoPor']);
-  $("#V_FechaCreacion").val(SolicitudXid['FechaCreacion']);
-  $("#V_ModificadoPor").val(SolicitudXid['ModificadoPor']);
-  $("#V_FechaModificado").val(SolicitudXid['FechaModificacion']);
+
+  const idSolicitudLabel = document.getElementById('V_IdSolicitud');
+  idSolicitudLabel.innerText = SolicitudXid.idSolicitud;
+  const idFacturaLabel = document.getElementById('V_IdFactura');
+  idFacturaLabel.innerText = SolicitudXid.idFactura; 
+  const rtnClienteLabel = document.getElementById('V_rtnCliente');
+  rtnClienteLabel.innerText = SolicitudXid.rtnCliente;
+  const rtnClienteCarteraLabel = document.getElementById('V_rtnClienteCartera');
+  rtnClienteCarteraLabel.innerText = SolicitudXid.rtnClienteCartera;
+  const nombreLabel = document.getElementById('V_NombreC');
+  nombreLabel.innerText = SolicitudXid.NombreCliente;
+  const descripcionLabel = document.getElementById('V_descripcion');
+  descripcionLabel.innerText = SolicitudXid.Descripcion;
+  const idTipoServicioLabel = document.getElementById('V_idTipoServicio');
+  idTipoServicioLabel.innerText = SolicitudXid.TipoServicio;
+  const correoLabel = document.getElementById('V_correo');
+  correoLabel.innerText = SolicitudXid.Correo;
+  const telefonoLabel = document.getElementById('V_telefono');
+  telefonoLabel.innerText = SolicitudXid.telefono;
+  const ubicacionLabel = document.getElementById('V_ubicacion');
+  ubicacionLabel.innerText = SolicitudXid.ubicacion;
+  const AvanceSolicitudLabel = document.getElementById('V_AvanceSolicitud');
+  AvanceSolicitudLabel.innerText = SolicitudXid.EstadoAvance;
+  const EstadoSolicitudLabel = document.getElementById('V_EstadoSolicitud');
+  EstadoSolicitudLabel.innerText = SolicitudXid.EstadoSolicitud;
+  const MotivoLabel = document.getElementById('V_Motivo');
+  MotivoLabel.innerText = SolicitudXid.motivoCancelacion;
+  const CreadoPorLabel = document.getElementById('V_CreadoPor');
+  CreadoPorLabel.innerText = SolicitudXid.CreadoPor;
+  const FechaCreacionLabel = document.getElementById('V_FechaCreacion');
+  FechaCreacionLabel.innerText = SolicitudXid.FechaCreacion.date.slice(0, 10);
+  const ModificadoPorLabel = document.getElementById('V_ModificadoPor');
+  ModificadoPorLabel.innerText = SolicitudXid.ModificadoPor;
+  const FechaModificadoLabel = document.getElementById('V_FechaModificado');
+  if (SolicitudXid.FechaModificacion !== null) {
+    FechaModificadoLabel.innerText = SolicitudXid.FechaModificacion.date.slice(0, 10);
+  } else {
+    FechaModificadoLabel.innerText = '';
+  };
+
    // Estilizar el modal
    $(".modal-header").css("background-color", "#007bff");
    $(".modal-header").css("color", "white");
