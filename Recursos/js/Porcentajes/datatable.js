@@ -120,8 +120,10 @@ $(document).on("click", "#btn_editar", function(){
 $('#form-Edit-Porcentaje').submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
    //Obtener datos del nuevo Cliente
-  let idPorcentaje = $('#E_idPorcentaje').val();
-  let estadoPorcentaje = document.getElementById('E_estadoPorcentaje').value;
+   let idPorcentaje = $('#E_idPorcentaje').val(),
+   valorPorcentaje = $('#E_valorPorcentaje').val(),
+   descripcionPorcentaje =  $('#E_descripcionPorcentaje').val(),
+   estadoPorcentaje = $('#E_estadoPorcentaje').val();
    if(valido){
     $.ajax({
       url: "../../../Vista/crud/Porcentajes/editarPorcentaje.php",
@@ -129,6 +131,8 @@ $('#form-Edit-Porcentaje').submit(function (e) {
       datatype: "JSON",
       data: {
        idPorcentaje: idPorcentaje,
+       valorPorcentaje: valorPorcentaje,
+       descripcionPorcentaje: descripcionPorcentaje,
        estadoPorcentaje: estadoPorcentaje
       },
       success: function () {

@@ -9,7 +9,7 @@ require_once("validacionesComision.php");
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
-  <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" rel="stylesheet">
+  <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
   <!-- Boostrap5 -->
   <link href='../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
@@ -93,7 +93,7 @@ require_once("validacionesComision.php");
               <a href="ReporteComisionExcel.php" target="_blank" class="btn_Excel btn btn-primary "><i
                   class="fa-solid fa-file-excel fa-sm"></i> Generar Excel</a>
             </div>
-            <table class="display" id="table-Comision">
+            <table class="table" id="table-Comision">
               <thead>
                 <tr>
                   <th scope="col"> ID COMISION </th>
@@ -120,7 +120,7 @@ require_once("validacionesComision.php");
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
     <script src="../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+    <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="../../Recursos/js/comision/dataTableComision.js" type="module"></script>
     <script src="../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
     <!-- <script src="../../Recursos/js/comision/validacionesEditarComision.js" type="module"></script> -->
