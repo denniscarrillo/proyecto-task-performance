@@ -24,5 +24,9 @@ class ControladorPorcentajes
     {
         return Porcentajes::porcentajeExistente($valorPorcentaje);
     }
+    public static function traerPorcentaje($idPorcentaje)
+    {
+        return Porcentajes::obtenerEstadoPorcentaje($idPorcentaje);
+    }
 
 }

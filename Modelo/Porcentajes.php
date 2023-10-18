@@ -58,17 +58,8 @@ class Porcentajes {
     public static function editarPorcentaje($nuevoPorcentaje){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $idPorcentaje = $nuevoPorcentaje->idPorcentaje;
-        $valorPorcentaje = $nuevoPorcentaje->valorPorcentaje;
-        $descripcionPorcentaje =$nuevoPorcentaje->descripcionPorcentaje;
-        $estadoPorcentaje = $nuevoPorcentaje->estadoPorcentaje;
-        $ModificadoPor = $nuevoPorcentaje->ModificadoPor;
-        date_default_timezone_set('America/Tegucigalpa'); 
-        $FechaModificacion = date("Y-m-d");
-        $query = "UPDATE tbl_Porcentaje SET valor_Porcentaje='$valorPorcentaje', descripcion='$descripcionPorcentaje',
-        estado_Porcentaje ='$estadoPorcentaje', Modificado_Por = '$ModificadoPor', 
-        Fecha_Modificacion = '$FechaModificacion' WHERE id_Porcentaje='$idPorcentaje';";
-        $nuevoPorcentaje = sqlsrv_query($conexion, $query);
+        $query = "UPDATE tbl_Porcentaje SET  estado_Porcentaje = '$nuevoPorcentaje->estadoPorcentaje', Modificado_Por = '$nuevoPorcentaje->ModificadoPor', Fecha_Modificacion = '$nuevoPorcentaje->FechaModificacion' WHERE id_Porcentaje = '$nuevoPorcentaje->idPorcentaje'";
+        $editarPorcentaje = sqlsrv_query($conexion, $query);
         sqlsrv_close($conexion); #Cerramos la conexión.
     }
 
@@ -84,5 +75,27 @@ class Porcentajes {
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $existePorcentaje;
+    }
+    public static function obtenerEstadoPorcentaje($idPorcentaje){
+        $estadoP = null;
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT id_Porcentaje FROM tbl_Porcentaje WHERE  = 'Activo'";
+        $estadoPorcentaje = sqlsrv_query($conexion, $query);
+        $existe = sqlsrv_has_rows($estadoPorcentaje);
+        if($existe > 0){
+            $estadoP = true;
+        } else {
+            $estadoP = false;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estadoP;
+    }
+    public static function cambiarEstadoPorcentaje($idPorcentaje, $estadoPorcentaje){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "UPDATE tbl_Porcentaje SET estado_Porcentaje = '$estadoPorcentaje' WHERE id_Porcentaje = '$idPorcentaje'";
+        $porcentajes = sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion); #Cerramos la conexión.
     }
 }

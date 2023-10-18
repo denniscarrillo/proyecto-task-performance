@@ -42,6 +42,22 @@ let procesarPermisoActualizar = data => {
     ]
   });
 }
+// Configurar Child Rows para mostrar vendedores
+$('#table-Comision').on('click', 'td.details-control', function () {
+  var tr = $(this).closest('tr');
+  var row = tablaComision.row(tr);
+
+  if (row.child.isShown()) {
+    // Esta fila ya se ha expandido, por lo que la ocultamos
+    row.child.hide();
+    tr.removeClass('shown');
+  } else {
+    // Expandir esta fila para mostrar los vendedores
+    var vendedoresHTML = '<p>Aquí puedes listar los vendedores relacionados a esta comisión.</p>';
+    row.child(vendedoresHTML).show();
+    tr.addClass('shown');
+  }
+});
 //Peticion  AJAX que trae los permisos
 let obtenerPermisos = function ($idObjeto, callback) { 
   $.ajax({
