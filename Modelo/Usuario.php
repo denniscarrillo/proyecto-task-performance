@@ -584,7 +584,8 @@ class Usuario {
     public static function actualizaRContrasenia($usuario, $contrasenia){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
-        $query = "UPDATE tbl_MS_Usuario  SET contrasenia = '$contrasenia' WHERE usuario = '$usuario';";
+        $query = "UPDATE tbl_MS_Usuario  SET contrasenia = '$contrasenia', Modificado_Por = '$usuario', 
+                Fecha_Modificacion = GETDATE() WHERE usuario = '$usuario';";
         $actualizar = sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerrar la conexión.
         return $actualizar;

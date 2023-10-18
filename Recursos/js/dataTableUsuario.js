@@ -148,26 +148,34 @@ $(document).on("click", "#btn_eliminar", function() {
 $(document).on("click", "#btn_editar", async function(){		                
   let idUsuario = $(this).closest('tr').find('td:eq(0)').text(); //capturo el ID		            
   let usuario = await obtenerUsuariosPorId(idUsuario);
-
-  obtenerRoles('#E_rol', usuario.Id_Rol);
-  obtenerEstadoUsuario('#E_estado', usuario.Id_Estado_Usuario);
-  $("#E_IdUsuario").val(idUsuario);
-  $("#E_nombre").val(usuario['Nombre_Usuario']);
-  $("#E_usuario").val(usuario['Usuario']);
-  // $("#E_password").val(contrasenia);
-  $("#E_correo").val(usuario['Correo_Electronico']);
-  if (!!usuario['Fecha_Creacion']) {
-    let date = new Date(usuario['Fecha_Creacion'].date)
-    $("#E_fecha_C").val(date.toISOString().slice(0, 10));
-  }
-  if (!!usuario['Fecha_Vencimiento']) {
-    let dateV = new Date(usuario['Fecha_Vencimiento'].date)
-    $("#E_fecha_V").val(dateV.toISOString().slice(0, 10));
-  } else {
-    // Limpiar el valor del campo #E_fecha_V
-    $("#E_fecha_V").val('');
-}
-  $('#modalEditarUsuario').modal('show');		   
+  let ROL = $(this).closest('tr').find('td:eq(5)').text();;
+  if (ROL == 'Super Administrador'){
+    Swal.fire(
+      'Sin acceso!',
+      'Super Administrador no puede ser editado',
+      'error'
+    )
+  }else{
+      obtenerRoles('#E_rol', usuario.Id_Rol);
+      obtenerEstadoUsuario('#E_estado', usuario.Id_Estado_Usuario);
+      $("#E_IdUsuario").val(idUsuario);
+      $("#E_nombre").val(usuario['Nombre_Usuario']);
+      $("#E_usuario").val(usuario['Usuario']);
+      // $("#E_password").val(contrasenia);
+      $("#E_correo").val(usuario['Correo_Electronico']);
+      if (!!usuario['Fecha_Creacion']) {
+        let date = new Date(usuario['Fecha_Creacion'].date)
+        $("#E_fecha_C").val(date.toISOString().slice(0, 10));
+      }
+      if (!!usuario['Fecha_Vencimiento']) {
+        let dateV = new Date(usuario['Fecha_Vencimiento'].date)
+        $("#E_fecha_V").val(dateV.toISOString().slice(0, 10));
+      } else {
+        // Limpiar el valor del campo #E_fecha_V
+        $("#E_fecha_V").val('');
+      }
+    $('#modalEditarUsuario').modal('show');
+    }  		   
 });
 
 $('#form-Edit-Usuario').submit(function (e) { 
