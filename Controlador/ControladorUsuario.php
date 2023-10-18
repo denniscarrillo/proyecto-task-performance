@@ -175,4 +175,7 @@
        public static function validarCorreoExiste($correo){
         return Usuario::correoExiste($correo);
        }
+       public static function reiniciarIntentosFallidos($usuario){
+            Usuario::reiniciarIntentosFallidos($usuario);
+       }
     }

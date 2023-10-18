@@ -10,7 +10,7 @@ let estadoValidaciones = {
     campoVacioUser: true,
     campoVacioPassword: true,
     soloLetrasUser: true,
-    limiteEspaciosUser: false,
+    limiteEspaciosUser: true,
     espaciosUser: true,
     espaciosPassword: true
 }
@@ -22,6 +22,9 @@ let iconClass = document.querySelector('.type-lock');
 let icon_candado = document.querySelector('.lock');
 //No permitir copiar, pegar y dar click derecho.
 $(document).ready(function(){
+    //Validación con jQuery inputlimiter
+    funciones.limitarCantidadCaracteres("userName", 16);
+    funciones.limitarCantidadCaracteres("userPassword", 20);
     $('body').bind('cut copy paste', function(e){
         e.preventDefault();
     });
@@ -76,44 +79,42 @@ $form.addEventListener('submit', e => {
     if (estadoValidaciones.campoVacioUser  == false || estadoValidaciones.campoVacioPassword == false) {
         e.preventDefault();
         //Validamos que algún campo no esté vacío.
-        estadoValidaciones.campoVacioUser =  funciones.validarCampoVacio($user);
-        estadoValidaciones.campoVacioPassword = funciones.validarCampoVacio($password);
-        console.log('Entro')
+        if($user.value == ''){
+            estadoValidaciones.campoVacioUser =  funciones.validarCampoVacio($user);
+        }
+        if($password.value == ''){
+            estadoValidaciones.campoVacioPassword = funciones.validarCampoVacio($password);
+        }
+        console.log('Entro');
     } else 
     if(estadoValidaciones.espaciosUser == false || estadoValidaciones.espaciosPassword == false){ 
+        console.log(estadoValidaciones.espaciosUser+' '+estadoValidaciones.espaciosPassword);
         e.preventDefault();
         estadoValidaciones.espaciosUser = funciones.validarEspacios($password);
         estadoValidaciones.espaciosPassword = funciones.validarEspacios($user); 
-        console.log('Entro')
+        console.log('Entro');
     } else
     if(estadoValidaciones.soloLetrasUser == false){
+        console.log('Entro');
         e.preventDefault();
         estadoValidaciones.soloLetrasUser= funciones.validarSoloLetras($user, validaciones.user);
-        console.log('Entro')
     } 
 });
 //Evento que llama a la función que valida espacios entre caracteres.
 $user.addEventListener('keyup', () => {
-    estadoValidaciones.espaciosUser = funciones.validarEspacios($user);
-    //Validación con jQuery inputlimiter
-    funciones.limitarCantidadCaracteres("userName", 15);
+    estadoValidaciones.soloLetrasUser = funciones.validarSoloLetras($user, validaciones.user);
+    if(estadoValidaciones.soloLetrasUser){
+        estadoValidaciones.espaciosUser = funciones.validarEspacios($user);
+    }
 });
 // Convierte usuario en mayúsuculas antes de enviar.
 $user.addEventListener('focusout', () => {
-    // estadoValidaciones.campoVacioUser = funciones.validarCampoVacio($user);
-    if (estadoValidaciones.espaciosUser) {
-        estadoValidaciones.soloLetrasUser = funciones.validarSoloLetras($user, validaciones.user);
-    }
-    if(estadoValidaciones.soloLetrasUser){
-        estadoValidaciones.limiteEspaciosUser = funciones.validarMasdeUnEspacio($user);
-    }
     let usuarioMayus = $user.value.toUpperCase();
     $user.value = usuarioMayus;
 });
 //Evento que llama a la función que valida espacios entre caracteres.
 $password.addEventListener('keyup', () => {
     estadoValidaciones.espaciosPassword = funciones.validarEspacios($password);
-    funciones.limitarCantidadCaracteres("userPassword", 20);
 });
 $password.addEventListener('focusout', () => {
     if($password.value.trim() == ''){

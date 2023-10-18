@@ -36,7 +36,7 @@ if (isset($_POST["submit"])) {
                         break;
                     }
                 case 4: {
-                        $mensaje = 'Su usuario se encuntra bloqueado';
+                        $mensaje = 'Su usuario se encuentra bloqueado';
                         break;
                     }
                 case 5: {

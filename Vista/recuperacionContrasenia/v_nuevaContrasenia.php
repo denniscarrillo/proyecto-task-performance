@@ -27,23 +27,23 @@ require_once('validacionesNuevaContrasenia.php');
       <?php
       if (isset($_SESSION['configRespuestas']) && $_SESSION['configRespuestas'] == 'configRespuestas.php') {
         echo '
-        <div class="wrap-input mb mt-3">
+        <div class="wrap-input mt-1">
           <input type="password" class="form-control" name="current-password" id="current-password" placeholder="Actual contraseña">
           <p class="mensaje mb-0"></p>
        </div>';
       }
       ?>
-      <div class="wrap-input mb mt-3">
+      <div class="wrap-input mt-1">
         <input type="password" class="form-control" name="password" id="password"
           placeholder="Nueva contraseña">
         <p class="mensaje mb-0"></p>
       </div>
-      <div class="wrap-input mb-1">
+      <div class="wrap-input mb-0">
         <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
           placeholder="Confirmar contraseña">
         <p class="mensaje mb-0"></p>
       </div>
-      <div class="mb show-password-container">
+      <div class="show-password-container">
         <input type="checkbox" id="checkbox">
         <label class="label-text">Mostrar contraseñas</label>
       </div>
