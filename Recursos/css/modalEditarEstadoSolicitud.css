@@ -1,0 +1,50 @@
+body{
+    background-color: #f0ede9;
+}
+.modal-dialog {
+    max-width: fit-content;
+    /* margin: 0 auto; */
+}
+.modal-header {
+    background-color: #ef904d;
+}
+.modal-title {
+    margin-left: 0.6rem;
+    color: white;
+}
+.modal-content{
+   min-width: 50rem;
+}
+.col-sm-12 .table {
+    margin: 0 auto;
+    min-width: 100%;
+}
+.btn-close {
+    color: white;
+}
+
+#group-inputs {
+    display: flex;
+    min-width: fit-content;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.grupo-form {
+    min-width: inherit;
+    width: 45%;
+}
+
+/* Estilos para tabla de articulos */
+.table-conteiner {
+    margin: 2rem;
+    background-color: #ebe5e0;
+    padding: 0.6rem;
+    min-height: 6rem;
+    /* overflow-y: scroll; */
+}
+
+.btn-guardar {
+    text-align: center;
+}
+

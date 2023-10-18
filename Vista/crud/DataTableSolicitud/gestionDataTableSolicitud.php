@@ -7,6 +7,8 @@ require_once("../../../Controlador/ControladorBitacora.php");
 require_once('../../../Modelo/Usuario.php');
 require_once('../../../Controlador/ControladorUsuario.php');
 
+
+
 session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
@@ -74,11 +76,12 @@ if (isset($_SESSION['usuario'])) {
   <!-- <link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" rel="stylesheet"> -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
   <!-- Estilos personalizados -->
-  <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
+  <link href="../../../Recursos/css/gestionSolicitud.css" rel="stylesheet" />
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
+  <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <title> Consulta solicitudes</title>
 </head>
 
@@ -140,11 +143,13 @@ if (isset($_SESSION['usuario'])) {
               <tr>
                 <th scope="col"> ID </th>
                 <th scope="col"> SERVICIO TECNICO</th>
+                <!-- <th scope="col"> NOMBRE </th> -->
                 <th scope="col"> TELEFONO</th>
                 <th scope="col"> AVANCE DE LA SOLICITUD </th>
                 <th scope="col"> ESTADO DE LA SOLICITUD</th>
                 <th scope="col"> MOTIVO DE CANCELACION  </th>
                 <th scope="col"> FECHA DE CREACION  </th>
+                <th scope="col"> ACCIONES </th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -154,7 +159,11 @@ if (isset($_SESSION['usuario'])) {
       </div> <!-- Fin de la columna -->
     </div>
   </div>
- 
+  <?php
+  require_once('modalCancelacionSolicitud.html');
+  require('modalEditarSolicitud.html');
+  require('modalVerDataTableSolicitud.html');
+  ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
@@ -164,7 +173,10 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
+  <script src="../../../Recursos/js/DataTableSolicitud/validacionesModalEliminarSolicitud.js" type="module"></script>
+  <script src="../../../Recursos/js/DataTableSolicitud/validacionesModalEditarSolicitud.js" type="module"></script>
   <script src="../../../Recursos/js/index.js"></script>
+  
 </body>
 
 </html>

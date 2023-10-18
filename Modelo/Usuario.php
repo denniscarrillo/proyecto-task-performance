@@ -100,7 +100,7 @@ class Usuario {
         //Obtenemos el valor de Intentos que viene de la DB
         $fila = sqlsrv_fetch_array($intentos, SQLSRV_FETCH_ASSOC);
         if(isset($fila["valor"])){
-            $intentos = $fila["valor"];
+            $intentos = intval($fila["valor"]);
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $intentos;
@@ -119,7 +119,7 @@ class Usuario {
             //Obtenemos el valor de Intentos que viene de la DB
             $fila = sqlsrv_fetch_array($intentosFallidos, SQLSRV_FETCH_ASSOC);
             if(isset($fila["intentos_fallidos"])){
-                $intentosFallidos = $fila["intentos_fallidos"]; 
+                $intentosFallidos = intval($fila["intentos_fallidos"]); 
             } 
         } 
         sqlsrv_close($conexion); #Cerramos la conexión.
@@ -197,7 +197,7 @@ class Usuario {
     public static function obtenerPreguntasUsuario(){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $query = "  SELECT id_pregunta, pregunta FROM tbl_ms_preguntas WHERE estado = 'activa';";
+        $query = "SELECT id_pregunta, pregunta FROM tbl_ms_preguntas WHERE estado = 'activa';";
         $preguntasUsuario = sqlsrv_query($conexion, $query);
         $preguntas = array();
         while($fila = sqlsrv_fetch_array($preguntasUsuario, SQLSRV_FETCH_ASSOC)){
@@ -269,17 +269,24 @@ class Usuario {
     }
     // ========================================================================
     public static function eliminarUsuario($usuario){
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB();
-        $query = "SELECT id_Usuario FROM tbl_ms_usuario WHERE usuario = '$usuario'";
-        $consultaIdUsuario = sqlsrv_query($conexion, $query);
-        $fila = sqlsrv_fetch_array($consultaIdUsuario, SQLSRV_FETCH_ASSOC);
-        $idUsuario = $fila['id_Usuario'];
-        //Eliminamos el usuario
-        $qry = "DELETE FROM tbl_ms_usuario WHERE id_Usuario = $idUsuario;";
-        $estadoEliminado = sqlsrv_query($conexion, $qry);
+        try{
+            $conn = new Conexion();
+            $conexion = $conn->abrirConexionDB();
+            $query = "DELETE FROM tbl_MS_Usuario WHERE usuario = '$usuario';";
+            $estadoEliminado = sqlsrv_query($conexion, $query);
+        }catch (Exception $e) {
+            $estadoEliminado = 'Error SQL:' . $e;
+        }
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $estadoEliminado;
+    }
+    public static function inactivarUsuario($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query ="UPDATE tbl_MS_Usuario SET id_Estado_Usuario = 3 WHERE usuario = '$usuario';";
+        $estadoInactivo = sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estadoInactivo;
     }
     public static function editarUsuario($nuevoUsuario){
         $conn = new Conexion();
@@ -367,10 +374,16 @@ class Usuario {
     public static function reiniciarIntentosRespuesta($usuario){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query ="UPDATE tbl_MS_Usuario SET int_respuestasFallidas = 0 , id_Estado_Usuario = 2 WHERE usuario = '$usuario';";
+        $query ="UPDATE tbl_MS_Usuario SET int_respuestasFallidas = 0 WHERE usuario = '$usuario';";
         $ejecutar = sqlsrv_query($conexion, $query);
-        // $fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC);
         sqlsrv_close($conexion); #Cerramos la conexión.
+    }
+    public static function desbloquearUsuario($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "UPDATE tbl_MS_Usuario SET id_Estado_Usuario = 2 WHERE usuario = '$usuario';";
+        $ejecutar = sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion);
     }
     public static function aumentarIntentosFallidosRespuesta($usuario, $intentosFallidos){
         $conn = new Conexion();
@@ -895,11 +908,6 @@ class Usuario {
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $existeCorreo;
     }
-
-
-
-
-
 }#Fin de la clase
 
     

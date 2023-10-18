@@ -49,6 +49,9 @@
         public static function eliminarUsuario($usuario){
             return Usuario::eliminarUsuario($usuario);
         }
+        public static function SimularInactivarUsuario($usuario){
+            return Usuario::inactivarUsuario($usuario);
+        }
         public static function editarUsuario($nuevoUsuario){
             Usuario::editarUsuario($nuevoUsuario);
         }
@@ -69,6 +72,9 @@
         }
         public static function reiniciarIntentosFallidosRespuesta($usuario){
             Usuario::reiniciarIntentosRespuesta($usuario);
+        }
+        public static function desbloquearUsuario($usuario){
+            Usuario::desbloquearUsuario($usuario);
         }
         public static function aumentarIntentosFallidosRespuesta($usuario, $intentosFallidos){
             return Usuario::aumentarIntentosFallidosRespuesta($usuario, $intentosFallidos);

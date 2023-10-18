@@ -127,7 +127,7 @@ export const validarSoloNumeros = (elemento, objetoRegex) => {
 }
 export const limitarCantidadCaracteres = (elemento, cantMax) => {
     $('#'+elemento).inputlimiter({
-        limit: cantMax
+        limit: cantMax,
     });
 }
 
@@ -148,34 +148,33 @@ export const validarMasdeUnEspacio = elemento => {
     }
     return estado;
 };
-
-export const cantidadParametrosContrasenia = (elemento) => {
-    return new Promise(async (resolve, reject) => {
-        let mensaje = elemento.parentElement.querySelector('p');
-        try {
-            const data = await $.ajax({
-                url: "../../Vista/crud/usuario/validarParametrosContrasenia.php",
-                type: "POST",
-                dataType: "JSON",
-            });
-
-            let minLength = data[0];
-            let maxLength = data[1];
-
-            if (elemento.value.length < minLength || elemento.value.length > maxLength) {
-                mensaje.innerText = '*Mínimo ' + minLength + ', máximo ' + maxLength + ' caracteres.';
-                elemento.classList.add('mensaje_error');
-                resolve(false); // Resolve the promise with false
-            } else {
-                mensaje.innerText = '';
-                elemento.classList.remove('mensaje_error');
-                resolve(true); // Resolve the promise with true
-            }
-        } catch (error) {
-            console.log(error);
-            reject(error); // Reject the promise if there's an error
+export const cantidadParametrosContrasenia = async (elemento) => {
+    let estado = false;
+    let mensaje = elemento.parentElement.querySelector('p');
+    try {
+        const minMaxParametros = await $.ajax({
+            url: "../../Vista/crud/usuario/validarParametrosContrasenia.php",
+            type: "POST",
+            dataType: "JSON",
+        });
+        let minLength = minMaxParametros [0];
+        let maxLength = minMaxParametros [1];
+        if (elemento.value.length < minLength || elemento.value.length > maxLength) {
+            mensaje.innerText = '*Mínimo ' + minLength + ', máximo ' + maxLength + ' caracteres';
+            elemento.classList.add('mensaje_error');
+        } else {
+            mensaje.innerText = '';
+            elemento.classList.remove('mensaje_error');
+            estado = true;
         }
-    });
+        //Limitar cantidad de caracters maximo segun el parametro
+        $('#'+elemento.id).inputlimiter({
+            limit: maxLength
+        });
+    } catch (error) {
+        console.log(error);
+    }
+    return estado;
 };
 
     
