@@ -23,7 +23,7 @@ export const validarPassword = (elemento, objetoRegex) => {
     let estado;
     let input = elemento.value;
     if (!objetoRegex.test(input)){
-        mensaje.innerText = '*Minimo una mayúscula, minúscula, número y caracter especial.';
+        mensaje.innerText = '*Minimo una mayúscula, minúscula, número y caracter especial';
         elemento.classList.add('mensaje_error');
         estado =  false;
     } else {
@@ -38,7 +38,7 @@ export const validarSoloLetras = (elemento, objetoRegex) => {
     let estado;
     let input = elemento.value;
     if (objetoRegex.test(input)){
-        mensaje.innerText = '*Solo se permiten letras.';
+        mensaje.innerText = '*Solo se permiten letras';
         elemento.classList.add('mensaje_error');
         estado = false;
     } else {
@@ -128,6 +128,9 @@ export const validarSoloNumeros = (elemento, objetoRegex) => {
 export const limitarCantidadCaracteres = (elemento, cantMax) => {
     $('#'+elemento).inputlimiter({
         limit: cantMax,
+		remText: '',
+        limitText: '',
+		limitTextShow: true
     });
 }
 
@@ -167,10 +170,10 @@ export const cantidadParametrosContrasenia = async (elemento) => {
             elemento.classList.remove('mensaje_error');
             estado = true;
         }
-        //Limitar cantidad de caracters maximo segun el parametro
-        $('#'+elemento.id).inputlimiter({
-            limit: maxLength
-        });
+        // //Limitar cantidad de caracters maximo segun el parametro
+        // $('#'+elemento.id).inputlimiter({
+        //     limit: maxLength
+        // });
     } catch (error) {
         console.log(error);
     }

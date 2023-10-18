@@ -908,6 +908,13 @@ class Usuario {
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $existeCorreo;
     }
+    public static function reiniciarIntentosFallidos($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "UPDATE tbl_MS_Usuario SET intentos_fallidos = 0 WHERE usuario = '$usuario';";
+        $ejecutar = sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion); #Cerramos la conexión.
+     }
 }#Fin de la clase
 
     

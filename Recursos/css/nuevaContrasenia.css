@@ -7,9 +7,9 @@
 .form-control {
     padding-left: 20px;
 }
-/* .mensaje {
+.mensaje {
     position: relative;
-} */
+}
 .label-text {
     font-size: 0.8rem;
 }
@@ -18,7 +18,4 @@
     align-items: center;
     gap: 0.3rem;
     margin-bottom: 0.8rem;
-}
-.mb {
-    margin-bottom: 1.9rem;
 }
