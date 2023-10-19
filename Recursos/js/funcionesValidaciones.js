@@ -23,7 +23,7 @@ export const validarPassword = (elemento, objetoRegex) => {
     let estado;
     let input = elemento.value;
     if (!objetoRegex.test(input)){
-        mensaje.innerText = '*Mínimo 8 caracteres, una mayúscula, minúscula, número y caracter especial.';
+        mensaje.innerText = '*Minimo una mayúscula, minúscula, número y caracter especial';
         elemento.classList.add('mensaje_error');
         estado =  false;
     } else {
@@ -38,7 +38,7 @@ export const validarSoloLetras = (elemento, objetoRegex) => {
     let estado;
     let input = elemento.value;
     if (objetoRegex.test(input)){
-        mensaje.innerText = '*Solo se permiten letras.';
+        mensaje.innerText = '*Solo se permiten letras';
         elemento.classList.add('mensaje_error');
         estado = false;
     } else {
@@ -67,7 +67,7 @@ export const validarCoincidirPassword = (password, password2) => {
     let estado;
     let mensaje = password2.parentElement.querySelector('p');
     if(password.value != password2.value){
-        mensaje.innerText = '*Las Contraseña no coincide';
+        mensaje.innerText = '*Las contraseñas no coinciden';
         password2.classList.add('mensaje_error');
         estado = false;
         } 
@@ -93,6 +93,7 @@ export const limiteMismoCaracter = (elemento, objetoRegex) => {
     }
     return estado;
 }
+
 export const validarCorreo = (elemento, objetoRegex) => {
     let estado;
     let mensaje = elemento.parentElement.querySelector('p');
@@ -108,3 +109,78 @@ export const validarCorreo = (elemento, objetoRegex) => {
     }
     return estado;
 }
+
+export const validarSoloNumeros = (elemento, objetoRegex) => {
+    let mensaje = elemento.parentElement.querySelector('p');
+    let estado;
+    let input = elemento.value;
+    if (!objetoRegex.test(input)){
+        mensaje.innerText = '*Solo se permiten Numeros.';
+        elemento.classList.add('mensaje_error');
+        estado = false;
+    } else {
+        mensaje.innerText = '';
+        elemento.classList.remove('mensaje_error');
+        estado = true;        
+    }
+    return estado;
+}
+export const limitarCantidadCaracteres = (elemento, cantMax) => {
+    $('#'+elemento).inputlimiter({
+        limit: cantMax,
+		remText: '',
+        limitText: '',
+		limitTextShow: true
+    });
+}
+
+export const validarMasdeUnEspacio = elemento => {
+    let mensaje = elemento.parentElement.querySelector('p');
+    let estado;
+    let input = elemento.value;
+    let regex = /\s\s/g; //Expresión literal para saber si existen mas de un espacio en la cadena
+    if (regex.test(input.trim())){ //Evaluamos expresion vs la cadena
+        //Si existen especios mostramos mensaje de error
+        mensaje.innerText = '*No se permite más de un espacio entre palabras';
+        elemento.classList.add('mensaje_error');
+        estado = false;
+    } else {
+        elemento.classList.remove('mensaje_error');
+        mensaje.innerText = '';
+        estado = true;
+    }
+    return estado;
+};
+export const cantidadParametrosContrasenia = async (elemento) => {
+    let estado = false;
+    let mensaje = elemento.parentElement.querySelector('p');
+    try {
+        const minMaxParametros = await $.ajax({
+            url: "../../Vista/crud/usuario/validarParametrosContrasenia.php",
+            type: "POST",
+            dataType: "JSON",
+        });
+        let minLength = minMaxParametros [0];
+        let maxLength = minMaxParametros [1];
+        if (elemento.value.length < minLength || elemento.value.length > maxLength) {
+            mensaje.innerText = '*Mínimo ' + minLength + ', máximo ' + maxLength + ' caracteres';
+            elemento.classList.add('mensaje_error');
+        } else {
+            mensaje.innerText = '';
+            elemento.classList.remove('mensaje_error');
+            estado = true;
+        }
+        // //Limitar cantidad de caracters maximo segun el parametro
+        // $('#'+elemento.id).inputlimiter({
+        //     limit: maxLength
+        // });
+    } catch (error) {
+        console.log(error);
+    }
+    return estado;
+};
+
+    
+
+
+

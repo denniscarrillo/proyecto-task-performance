@@ -1,0 +1,34 @@
+<div class="modal fade" id="modalEditarRol" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="editarModalLabel">Editar Rol</h1>
+                <button type="button" class="btn-close" id ="button-x" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" id="form-Edit-Rol">
+                    <div class="grupo-form">
+                        <div class="mb-3" hidden="true">
+                            <label for="idRol" class="form-label">ID:</label>
+                            <input type="text" name="idRol" id="E_idRol" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="rol" class="form-label">Rol:</label>
+                            <input type="text" name="rol" id="E_rol" maxlength="45" class="form-control">
+                            <p class="mensaje"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripción:</label>
+                            <input type="text" name="descripcion" id="E_descripcion" maxlength="45" class="form-control">
+                            <p class="mensaje"></p>
+                        </div>
+                    </div>
+                    <div class="btn-guardar">
+                        <button type="button" class="btn btn-secondary" id="button-cerrar" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

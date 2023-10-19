@@ -1,10 +1,9 @@
-
-<div class="modal fade" id="modalEditarUsuario" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalEditarUsuario" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="editarModalLabel">Editar Usuario</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" id ="button-x" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form action="" method="post" id="form-Edit-Usuario">
@@ -33,23 +32,36 @@
                             <input type="text" name="correo" id="E_correo" class="form-control">
                             <p class="mensaje"></p>
                         </div>
-                    </div>
-                    <div class="grupo-form">
                         <div class="mb-3">
                             <label for="rol" class="form-label">Rol:</label>
                             <select name="rol" id="E_rol" class="form-control">
                             </select>
                             <p class="mensaje"></p>
                         </div>
+                    </div>
+                    <div class="grupo-form">
+                        
                         <div class="mb-3">
                             <label for="estado" class="form-label">Estado:</label>
                             <select name="estado" id="E_estado" class="form-control">
                             </select>
                             <p class="mensaje"></p>
                         </div>
+                        <div class="mb-3">
+                            <label for="fecha_C" class="form-label">Fecha de Creacion:</label>
+                            <input type="date" name="fecha_C" id="E_fecha_C" class="form-control" disabled >
+                            </select>
+                            <p class="mensaje"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fecha_V" class="form-label">Vencimiento de Contraseña:</label>
+                            <input type="date" name="fecha_V" id="E_fecha_V" class="form-control" disabled>
+                            </select>
+                            <p class="mensaje"></p>
+                        </div>
                     </div>
                     <div class="btn-guardar">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-secondary" id="button-cerrar" data-bs-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
                     </div>
                 </form>

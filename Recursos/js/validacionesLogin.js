@@ -6,30 +6,55 @@ const validaciones = {
     password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,15}$/
 }
 //VARIABLES GLOBALES
-let estadoEspacioInput = {
-    estadoEspacioUser: true,
-    estadoEspacioPassword: true,
-} 
-let estadoSoloLetras = {
-    estadoLetrasUser: true,
-    estadoContrasenia: true
+let estadoValidaciones = {
+    campoVacioUser: true,
+    campoVacioPassword: true,
+    soloLetrasUser: true,
+    limiteEspaciosUser: true,
+    espaciosUser: true,
+    espaciosPassword: true
 }
-const body = document.getElementById('body')
 const $form = document.getElementById('formLogin');
 const $user = document.getElementById('userName');
 const $password = document.getElementById('userPassword');
-const $btnSubmit = document.getElementById('btn-submit');
 //  Cambiar tipo del candado para mostrar/ocultar contraseña
 let iconClass = document.querySelector('.type-lock');
 let icon_candado = document.querySelector('.lock');
 //No permitir copiar, pegar y dar click derecho.
 $(document).ready(function(){
+    //Validación con jQuery inputlimiter
+    funciones.limitarCantidadCaracteres("userName", 16);
+    funciones.limitarCantidadCaracteres("userPassword", 20);
     $('body').bind('cut copy paste', function(e){
         e.preventDefault();
     });
     $('body').on('contextmenu', function(e){
         return false;
     });
+    //Detectar si viene de autoregistro y mostrar un Toast de confirmacion
+    let $toastRegistro =  document.querySelector('.registro-exitoso');
+    if($toastRegistro.id == '1'){
+        $toastRegistro.id ='0';//Esto para que el mensaje se muestre solo cuando viene de registro
+        //Creamos el toast que nos confirma la actualización de los permisos
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top',
+            customClass: { //Para agregar clases propias
+                popup: 'customizable-toast'
+              },
+            showConfirmButton: false,
+            timer: 3500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
+        Toast.fire({
+            icon: 'success',
+            title: 'Registro de cuenta exitoso!'
+        });
+    }
 });
 //Ocultar o mostrar contrasenia
 icon_candado.addEventListener('click', function() { 
@@ -48,54 +73,51 @@ icon_candado.addEventListener('click', function() {
     Antes de enviar datos del formulario, se comprobara que todas  
     las validaciones se hayan cumplido.
 */
-$form.addEventListener('submit', e => {   
-    //Validamos que algún campo no esté vacío.
-    let estadoInputUser =  funciones.validarCampoVacio($user);
-    let estadoInputPassword = funciones.validarCampoVacio($password);
-    // Comprobamos que todas las validaciones se hayan cumplido 
-    if (estadoInputUser  == false || estadoInputPassword == false) {
+$form.addEventListener('submit', e => {  
+    // console.log(estadoValidaciones.campoVacioUser, estadoValidaciones.campoVacioPassword);
+  //Comprobamos que todas las validaciones se hayan cumplido 
+    if (estadoValidaciones.campoVacioUser  == false || estadoValidaciones.campoVacioPassword == false) {
         e.preventDefault();
-    } else {
-        if(estadoEspacioInput.estadoEspacioUser == false || estadoEspacioInput.estadoEspacioPassword == false){ 
-            e.preventDefault();
-            estadoEspacioInput.estadoEspacioUser = funciones.validarEspacios($password);
-            estadoEspacioInput.estadoEspacioPassword = funciones.validarEspacios($user); 
-        } else {
-            if(estadoSoloLetras.estadoLetrasUser == false || estadoSoloLetras.estadoContrasenia == false){
-                e.preventDefault();
-                estadoSoloLetras.estadoLetrasUser = funciones.validarSoloLetras($user, validaciones.user);
-                estadoSoloLetras.estadoContrasenia = funciones.validarPassword($password, validaciones.password);
-            } 
+        //Validamos que algún campo no esté vacío.
+        if($user.value == ''){
+            estadoValidaciones.campoVacioUser =  funciones.validarCampoVacio($user);
         }
+        if($password.value == ''){
+            estadoValidaciones.campoVacioPassword = funciones.validarCampoVacio($password);
+        }
+        console.log('Entro');
+    } else 
+    if(estadoValidaciones.espaciosUser == false || estadoValidaciones.espaciosPassword == false){ 
+        console.log(estadoValidaciones.espaciosUser+' '+estadoValidaciones.espaciosPassword);
+        e.preventDefault();
+        estadoValidaciones.espaciosUser = funciones.validarEspacios($password);
+        estadoValidaciones.espaciosPassword = funciones.validarEspacios($user); 
+        console.log('Entro');
+    } else
+    if(estadoValidaciones.soloLetrasUser == false){
+        console.log('Entro');
+        e.preventDefault();
+        estadoValidaciones.soloLetrasUser= funciones.validarSoloLetras($user, validaciones.user);
+    } 
+});
+//Evento que llama a la función que valida espacios entre caracteres.
+$user.addEventListener('keyup', () => {
+    estadoValidaciones.soloLetrasUser = funciones.validarSoloLetras($user, validaciones.user);
+    if(estadoValidaciones.soloLetrasUser){
+        estadoValidaciones.espaciosUser = funciones.validarEspacios($user);
     }
 });
 // Convierte usuario en mayúsuculas antes de enviar.
 $user.addEventListener('focusout', () => {
-    if(estadoEspacioInput.estadoEspacioUser){
-        estadoSoloLetras.estadoLetrasUser = funciones.validarSoloLetras($user, validaciones.user);
-    }
     let usuarioMayus = $user.value.toUpperCase();
     $user.value = usuarioMayus;
 });
 //Evento que llama a la función que valida espacios entre caracteres.
-$user.addEventListener('keyup', () => {
-    estadoEspacioInput.estadoEspacioUser = funciones.validarEspacios($user);
-    //Validación con jQuery inputlimiter
-    $("#userName").inputlimiter({
-        limit: 15
-    });
-});
-//Evento que llama a la función que valida espacios entre caracteres.
 $password.addEventListener('keyup', () => {
-    estadoEspacioInput.estadoEspacioPassword= funciones.validarEspacios($password);
-    $("#userPassword").inputlimiter({
-        limit: 20
-    });
+    estadoValidaciones.espaciosPassword = funciones.validarEspacios($password);
 });
-////Evento que llama a la función para validar que la contraseña sea robusta.
-$password.addEventListener('focusout',() => {
-    //Mientras no se haya cumplido la validación de espacios no se ejecutara la de validar Password
-    if(estadoEspacioInput.estadoEspacioPassword){
-        estadoSoloLetras.estadoContrasenia = funciones.validarPassword($password, validaciones.password);
+$password.addEventListener('focusout', () => {
+    if($password.value.trim() == ''){
+        estadoValidaciones.campoVacioPassword = funciones.validarCampoVacio($password);
     }
 });

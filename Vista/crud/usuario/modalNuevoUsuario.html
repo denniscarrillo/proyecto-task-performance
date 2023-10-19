@@ -1,9 +1,9 @@
-<div class="modal fade" id="modalNuevoUsuario" tabindex="-1" aria-labelledby="nuevoModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalNuevoUsuario" tabindex="-1" aria-labelledby="nuevoModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="nuevoModalLabel">Crear Nuevo Usuario</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" id ="btn-x" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="" method="post" id="form-usuario">
@@ -11,7 +11,7 @@
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre:</label>
                                 <input type="text" name="nombre" id="nombre" class="form-control">
-                                <p class="mensaje"></p>
+                                <p class="mensaje" id="mensaje"></p>
                             </div>
                             <div class="mb-3">
                                 <label for="usuario" class="form-label">Usuario:</label>
@@ -20,20 +20,18 @@
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Contraseña:</label>
-                                <span class="lock conteiner-icon">
-                                <i class="icon type-lock fa-solid fa-lock"></i>
-                                </span>
+                                
                                 <input type="password" name="password" id="password" class="form-control">
                                 <p class="mensaje"></p>
-                            </div>
+                            </div>            
                             <div class="mb-3">
                                 <label for="password2" class="form-label">Confirmar Contraseña:</label>
-                                <span class="lock conteiner-icon">
-                                <i class="icon type-lock fa-solid fa-lock"></i>
-                                </span>
                                 <input type="password" name="password2" id="password2" class="form-control">
                                 <p class="mensaje"></p>
-                            </div>  
+                            </div> 
+                            <div>
+                                <input type="checkbox" id="checkbox"> Mostrar Contraseñas
+                            </div> 
                         </div>
                         <div class="grupo-form">
                             <div class="mb-3">
@@ -52,9 +50,17 @@
                                 <label for="estado" class="form-label">Estado:</label>
                                 <input type="text" class="form-control" name="estado" id="estado" placeholder="Nuevo" disabled>
                             </div>
+                            <div class="mb-3">
+                                <label for="fecha_C" class="form-label">Fecha de Creacion:</label>
+                                <input type="date" class="form-control" name="fecha_C" id="fecha_C"  disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="fecha_V" class="form-label">Vencimiento de Contraseña:</label>
+                                <input type="date" class="form-control" name="fecha_V" id="fecha_V"  disabled>
+                            </div>
                         </div>
                         <div class="btn-guardar">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn-cerrar">Cerrar</button>
                             <button type="submit" class="btn btn-primary" id="btn-submit"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
                         </div>
                     </form>

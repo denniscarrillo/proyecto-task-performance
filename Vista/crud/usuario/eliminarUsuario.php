@@ -3,6 +3,16 @@
     require_once ("../../../Modelo/Usuario.php");
     require_once("../../../Controlador/ControladorUsuario.php");
 
-    $usuario = $_POST['usuario'];
-    ControladorUsuario::eliminarUsuario($usuario);
+    if(isset($_POST['usuario'])){
+        $usuario = $_POST['usuario'];
+        $estadoEliminado = ControladorUsuario::eliminarUsuario($usuario);
+        $data = array();
+        if($estadoEliminado == false) {
+            $data []= [
+                'estadoEliminado' => 'inactivado'
+            ];
+            ControladorUsuario::SimularInactivarUsuario($usuario);
+            print json_encode($data, JSON_UNESCAPED_UNICODE);
+        }
+    }
 ?>

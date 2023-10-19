@@ -1,0 +1,20 @@
+<?php
+
+class ControladorParametro {
+    public static function obtenerParametroSistema(){
+        return Parametro::obtenerTodosLosParametros();
+    }
+    public static function editarParametroSistema($nuevoPorcentaje){
+        return Parametro::editarParametros($nuevoPorcentaje);
+    }
+
+    public static function obtenerVigencia(){
+        return Parametro::obtenerVigencia();
+    }
+    public static function getDataServerEmail(){
+        return Parametro::dataServerEmail();
+    }
+    public static function obtenerVigenciaToken(){
+        return Parametro::obtenerVigenciaToken();
+    }
+}

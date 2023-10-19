@@ -1,0 +1,122 @@
+.conteiner-global{
+    display: flex;
+    width: 100%;
+}
+
+.conteiner-main{
+    width: 100%;
+    overflow-y: scroll;
+    height: 100vh;
+    background-color: #cac7c3;
+}
+
+.footer-conteiner{
+    background-color: rgb(172, 172, 172);
+}
+
+.titulo {
+    position: sticky;
+    top: 0;
+    min-height: fit-content;
+    /* color: #ee9827;f5971d           gris    #615f5e*/
+    color: #f5971d;
+    background-color:  #6e6b6a;
+    font-weight: 500;
+
+    margin: 1%;
+    margin-bottom: 1rem;
+    border-radius: 1rem;
+
+}
+
+.title-dashboard-task{
+    text-align: left;
+    font-weight: 600;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    padding: 0.6rem;
+    padding-left: 1.5rem;
+    margin: 0;
+}
+
+.table-conteiner{
+    margin-top: -0.2%;  
+}
+.dataTables_wrapper .dataTables_length {
+    margin-bottom: 8px;
+}
+table.dataTable.no-footer{                           
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 2px #8f8f8f; 
+}
+.dataTables_wrapper .dataTables_length select {
+  background-color: #dbd2c0;
+}
+.dataTables_wrapper .dataTables_filter input {
+  background-color: #dbd2c0;
+}
+.table tbody td {   
+    background-color: #dbd2c0;
+} 
+.table thead tr th{   
+    background-color: #534f4a;
+    color: #c8bfbd;;    
+}  
+.dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_paginate{
+    margin-top: 8px;
+}
+.modal-body {
+    background-color: #9f9b97;;
+    color: white;
+}
+.modal-header{
+    background-color: #4d4b4a !important;
+    color: #ee9827;
+    height: 3rem;
+}
+.btn-guardar .btn-primary {
+    background-color: #f5971d;
+    border: none;
+    bottom: 0.2rem;
+    left: 40%;
+    right:30%;
+}
+.check-permiso {
+    border-color: #ee9827;
+    background-color: #ee9827;
+}
+.btn_confirm{
+    font-size: 1.5rem;
+    color: #f0854f;
+    cursor: pointer;
+}
+.btn_confirm:hover{
+    color: #6b6866;
+}
+.btn_confirm:active{
+    color: #549842;
+}
+.check-permisos{
+    width: 1.2rem;
+    height: 1.2rem;
+    display: block;
+    cursor: pointer;
+}
+/* .swal2-default-outline:focus {
+    
+} */
+.swal2-confirm {
+    outline: none;
+}
+.hidden {
+    display: none;
+}
+
+
+
+
+
+
+
+
+

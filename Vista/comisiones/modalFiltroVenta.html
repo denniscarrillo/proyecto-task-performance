@@ -1,0 +1,33 @@
+<!-- Modal -->
+<div class="modal fade" id="modalfiltroVenta" tabindex="-1" aria-labelledby="v_nuevaComision" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="v_nuevaComision">Buscar ventas</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!--  contenido interno del modal -->
+        <form>
+          <div>
+            <label>Desde</label>
+            <input type="date" class="form-control" id="fecha-desde" >
+            <!-- <button type="button" id="Fechainicio" class="btn btn-primary">Buscar</button> -->
+            <!-- <button type="button" id="Buscar" class="btn btn-primary">Buscar</button> -->
+          </div>
+          <br>
+          <div>
+            <label>Hasta</label>
+            <input type="date" class="form-control" id="fecha-hasta">
+            <!-- <button type="button" id="Fechafinal" class="btn btn-primary">Buscar</button> -->
+            <!-- <button type="button" id="Buscar" class="btn btn-primary">Buscar</button> -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary" id="btn-filtro">Filtrar ventas</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

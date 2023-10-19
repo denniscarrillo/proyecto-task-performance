@@ -1,0 +1,38 @@
+<div class="modal fade" id="modalEditarPregunta" tabindex="-1" aria-labelledby="nuevoModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="nuevoModalLabel">Editar Pregunta</h5>
+                <button type="button" class="btn-close" id ="button-x" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" id="form-Pregunta-Editar">
+                    <div class="grupo-form">
+                        <div class="mb-3">
+                            <label for="idPregunta" class="form-label">Id Pregunta:</label>
+                            <input type="text" name="idPregunta_E" id="idPregunta_E" class="form-control" disabled>
+                            <p class="mensaje"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="pregunta" class="form-label">Nueva pregunta:</label>
+                            <input type="text" name="pregunta_E" id="pregunta_E" class="form-control">
+                            <p class="mensaje"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="estado" class="form-label">Estado Pregunta:</label>
+                            <select name="estado" id="E_estado" class="form-control">
+                                <option>Activa</option>
+                                <option>Inactiva</option>
+                            </select>
+                            <p class="mensaje"></p>
+                        </div>
+                    </div>
+                    <div class="botones">
+                        <button type="button" class="btn btn-secondary" id="button-cerrar" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+.form-conteiner {
+    margin: 0 auto;
+    margin-top: 3rem;
+    width: 30rem;
+    height: fit-content;
+    background-color: #eef0f126;
+    padding: 2rem;
+    border-radius: 0.7rem;
+    box-shadow: 0px 10px 15px 2px #a5a4a3b6 ;
+}
+.conteiner-id-comision{
+    position: relative;
+}
+.btn-call-modal {
+    position: absolute;
+    right: 3px;
+    bottom: 3px;
+    height: 2rem;
+    width: 9rem;
+    margin-top: 0.5rem;
+    padding: 2px 8px;
+}
+.modal-active{
+    --bs-modal-width: fit-content;
+}
+/* .modal-comisiones{
+    width: 100%;
+} */
+
+#table-comisionesVendedor_wrapper .row{
+    min-height: -moz-fit-content;
+    min-height: fit-content;
+    align-content: space-between;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.row-conteiner{
+    margin: 0;
+    min-height: 100vh;
+}
+.col-height{
+    height: 100vh;
+}
+.fa-file-pdf{
+    font-size: 25px;
+    transition: color 0.1s ease 0.1s;
+    right: 3px;
+}
+.fa-file-pdf:hover{
+    color: #12d86e;
+}
+button:focus{
+    border: none;
+}
+.form-element-btns{
+    text-align: center;
+    margin-top: 2rem;
+}
+.title-form{
+    display: flex;
+    align-items: center;
+    background-color: rgb(242, 244, 246);
+    margin-bottom: 1rem;
+    padding: 0.7rem;
+    border-radius: 0.2rem;
+}
+.text-title-form{
+    margin-bottom: 0;
+    text-align: right;
+    font-size: 2rem;
+    color: #0E6251;
+}
+.img-content{
+   box-shadow: 0px 2px 2px 2px #d2d0cfb6;
+   padding: 0.3rem;
+   border-radius: 4px;
+}
+.text-title-form::before{
+    display: inline-block;
+    content: '|';
+    font-size: 2rem;
+    margin-right: 0.2rem;
+    margin-left: 0.5rem;
+    color: #ab7710;
+}
+#table-comisionesVendedor td{
+    min-width: 7rem;
+    max-width: 8rem;
+}

@@ -1,0 +1,123 @@
+.container{
+    width: 90%;
+    margin: 50px auto;
+}
+
+#form-Edit-PerfilUsuario {
+  
+    box-shadow: 0px 10px 15px 2px #a5a4a3b6 ;
+    display: flex;
+    padding: 1rem;
+    padding-bottom: 4rem;
+    position: relative;
+
+}
+#form-Edit-Preguntas {
+  
+    box-shadow: 0px 10px 15px 2px #a5a4a3b6 ;
+    display: flex;
+    padding: 1rem;
+    padding-bottom: 4rem;
+    position: relative;
+
+}
+
+.grupo-form {
+    width: 30rem;  
+ }
+
+
+label {
+    font-weight:bolder;
+}
+
+/* Personalizar colores de Bootstrap si es necesario */
+.btn-guardar {
+    position: absolute;
+    bottom: 1rem;
+    left: 40%;
+    right:30%;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+    
+   
+}
+.mb-3 {
+    margin: 0.5rem;
+   
+}
+.titulos{
+    font-weight:bold;
+}
+
+
+.img-content{
+    background-color:  #6e6b6a;
+    padding: 0.3rem;
+    border-radius: 4px;
+ }
+
+ .title-form{
+    display: flex;
+    align-items: center;
+    background-color:  #6e6b6a;
+    margin-bottom: 1rem;
+    padding: 0.7rem;
+    border-radius: 0.2rem;
+    background-color:  #6e6b6a;
+    
+
+}
+.text-title-form{
+    margin-bottom: 0;
+    text-align: right;
+    font-size: 2rem;
+    color: #f79414;
+    background-color:  #6e6b6a;
+    border-left-style: solid;
+    display: inline-block;
+}
+
+.mensaje {
+    position: absolute;
+    color: red;
+    font-size: 12px;
+}
+.mensaje_error {
+    box-shadow: 0 0 0 .15rem #e15e3eac;
+    border-color: red;
+}
+.mensaje_error:focus {
+    box-shadow: 0 0 0 .25rem rgba(226, 73, 35, 0.455);
+    border-color: red;
+}
+
+.btn-editar{
+    position:relative;
+    margin-left: 50%;
+    font-size: 2.6rem; 
+    margin: 0 auto;
+    width: 60%;
+    border:none;
+    display:block;
+    
+}
+.btn-uno:hover {
+    background-color: rgb(119, 118, 118);
+    
+}
+
+.btn-uno {
+   text-decoration:none;
+    font-size: 15px;
+    color: #f8f7f7;
+    background-color: rgb(75, 73, 73);
+  
+    
+}
+
+
+ 

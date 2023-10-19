@@ -3,10 +3,17 @@ export let estadoValidado = false;
 //Objeto con expresiones regulares para los inptus
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
-    password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,15}$/,
+    password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,16}$/,
+    pass: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])/,
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/
 }
 //VARIABLES GLOBALES
+let estadoExisteUsuario = false;
+
+let estadoExisteCorreo = false;
+
+let limiteContrasenia = true;
+
 let estadoEspacioInput = {
     estadoEspacioUser: true,
     estadoEspacioPassword: true, 
@@ -19,6 +26,9 @@ let estadoPassword = {
     estadoPassword1: true,
     estadoPassword2: true
 }
+let estadoMasdeUnEspacio = {
+    estadoMasEspacioNombre: true
+}
 let estadoSelect = true;
 let estadoCorreo = true;
 
@@ -29,20 +39,19 @@ const $password = document.getElementById('password');
 const $confirmarContrasenia = document.getElementById('password2');
 const $correo = document.getElementById('correo');
 const $rol = document.getElementById('rol');
-let iconClass = document.querySelector('.type-lock');
-let icon_candado = document.querySelector('.lock');
 
-//Ocultar o mostrar contrasenia
-icon_candado.addEventListener('click', function() { 
-    if(this.nextElementSibling.type === "password"){
-        this.nextElementSibling.type = "text";
-        iconClass.classList.remove('fa-lock');
-        iconClass.classList.add('fa-lock-open');
-    } else {
-        this.nextElementSibling.type = "password";
-        iconClass.classList.remove('fa-lock-open');
-        iconClass.classList.add('fa-lock');
-    }
+
+//Funcion para mostrar contraseña
+$(document).ready(function () {
+    $('#checkbox').click(function () {
+        if ($(this).is(':checked')) {
+            $('#password').attr('type', 'text');
+            $('#password2').attr('type', 'text');
+        } else {
+            $('#password').attr('type', 'password');
+            $('#password2').attr('type', 'password');
+        }
+    });
 });
 /* ---------------- VALIDACIONES FORMULARIO GESTION NUEVO USUARIO ----------------------*/
 /* 
@@ -67,32 +76,52 @@ $form.addEventListener('submit', e => {
             estadoEspacioInput.estadoEspacioPassword = funciones.validarEspacios($password); 
             estadoEspacioInput.estadoEspacioUser = funciones.validarEspacios($user);
         } else {
-            if(estadoSoloLetras.estadoLetrasUser == false || estadoSoloLetras.estadoLetrasName == false ||
-                estadoPassword.estadoPassword1 == false || estadoPassword.estadoPassword2 == false){
+            estadoMasdeUnEspacio.estadoMasEspacioNombre = funciones.validarMasdeUnEspacio($name);
+            console.log(estadoMasdeUnEspacio.estadoMasEspacioNombre);
+            if(estadoMasdeUnEspacio.estadoMasEspacioNombre == false){
                 e.preventDefault();
-                estadoSoloLetras.estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
-                estadoSoloLetras.estadoLetrasUser = funciones.validarSoloLetras($user, validaciones.soloLetras);
-                estadoPassword.estadoPassword1= funciones.validarPassword($password, validaciones.password);
-                estadoPassword.estadoPassword2= funciones.validarCoincidirPassword($password, $confirmarContrasenia);
+                console.log(estadoMasdeUnEspacio.estadoMasEspacioNombre);
             } else {
-                if(estadoCorreo == false || estadoSelect == false){
-                    e.preventDefault();
-                    estadoCorreo = funciones.validarCorreo($correo, validaciones.correo);
-                    estadoSelect = funciones.validarCampoVacio($rol);
+                if (estadoExisteUsuario == false) {
+                    e.preventDefault(); // Prevent form submission if username exists
+                    estadoExisteUsuario = obtenerUsuarioExiste($('#usuario').val());
                 } else {
-                    estadoValidado = true; // 
+                    if (estadoExisteCorreo == false) {
+                        e.preventDefault(); // Prevent form submission if username exists
+                        estadoExisteCorreo = obtenerCorreoExiste($('#correo').val());
+                    } else {
+                if(estadoSoloLetras.estadoLetrasUser == false || estadoSoloLetras.estadoLetrasName == false ||
+                    estadoPassword.estadoPassword1 == false || estadoPassword.estadoPassword2 == false){
+                    e.preventDefault();
+                    estadoSoloLetras.estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
+                    estadoSoloLetras.estadoLetrasUser = funciones.validarSoloLetras($user, validaciones.soloLetras);
+                    estadoPassword.estadoPassword1= funciones.validarPassword($password, validaciones.password);
+                    estadoPassword.estadoPassword2= funciones.validarCoincidirPassword($password, $confirmarContrasenia);
+                } else {
+                    if(estadoCorreo == false || estadoSelect == false){
+                         e.preventDefault();
+                        estadoCorreo = funciones.validarCorreo($correo, validaciones.correo);
+                        estadoSelect = funciones.validarCampoVacio($rol);
+                    } else {
+                            estadoValidado = true;
+                    }
                 }
+             }
             }
+          }
         }
     }
 });
+
+
 $name.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
-    $("#nombre").inputlimiter({
-        limit: 50
-    });
+    funciones.limitarCantidadCaracteres("nombre", 20 );
 });
 $name.addEventListener('focusout', ()=>{
+    if(estadoMasdeUnEspacio.estadoMasEspacioNombre){
+        funciones.validarMasdeUnEspacio($name);
+    }
     let usuarioMayus = $name.value.toUpperCase();
     $name.value = usuarioMayus;
 });
@@ -100,14 +129,16 @@ $name.addEventListener('focusout', ()=>{
 $user.addEventListener('keyup', () => {
     estadoEspacioInput.estadoEspacioUser = funciones.validarEspacios($user);
     //Validación con jQuery inputlimiter
-    $("#usuario").inputlimiter({
-        limit: 15
-    });
+    funciones.limitarCantidadCaracteres("usuario", 15 );
 });
 // Convierte usuario en mayúsuculas antes de enviar.
 $user.addEventListener('focusout', () => {
     if(estadoEspacioInput.estadoEspacioUser){
-        estadoSoloLetras.estadoLetrasUser = funciones.validarSoloLetras($user, validaciones.soloLetras);
+        let letras = funciones.validarSoloLetras($user, validaciones.soloLetras);
+    if(letras) {
+        let usuario = $('#usuario').val();
+        estadoExisteUsuario = obtenerUsuarioExiste(usuario); 
+       } 
     }
     let usuarioMayus = $user.value.toUpperCase();
     $user.value = usuarioMayus;
@@ -115,15 +146,19 @@ $user.addEventListener('focusout', () => {
 //Evento que llama a la función que valida espacios entre caracteres.
 $password.addEventListener('keyup', () => {
     estadoEspacioInput.estadoEspacioPassword= funciones.validarEspacios($password);
-    $("#password").inputlimiter({
-        limit: 20
-    });
+    if(estadoEspacioInput.estadoEspacioPassword){
+        estadoPassword.estadoPassword1 = funciones.validarPassword($password, validaciones.password);
+    }
+    funciones.limitarCantidadCaracteres("password", 20 );
 });
 //Evento que llama a la función para validar que la contraseña sea robusta.
 $password.addEventListener('focusout',() => {
     //Mientras no se haya cumplido la validación de espacios no se ejecutara la de validar Password
     if(estadoEspacioInput.estadoEspacioPassword){
-        estadoPassword.estadoPassword1 = funciones.validarPassword($password, validaciones.password);
+       let contrasenia = funciones.validarEspacios($password);
+         if(contrasenia){
+                limiteContrasenia = cantidadParametrosContrasenia($password);
+         }
     }
 });
 $confirmarContrasenia.addEventListener('focusout', ()=>{
@@ -132,12 +167,111 @@ $confirmarContrasenia.addEventListener('focusout', ()=>{
 $correo.addEventListener('keyup', ()=>{
     estadoCorreo = funciones.validarCorreo($correo, validaciones.correo);
 });
+$correo.addEventListener('focusout', ()=>{
+    if(estadoCorreo){
+        let validarCorreo = funciones.validarCorreo($correo, validaciones.correo);
+        if(validarCorreo){
+            estadoExisteCorreo = obtenerCorreoExiste($('#correo').val());
+        }
+    }
+});
+
 $rol.addEventListener('change', ()=>{
     estadoSelect = funciones.validarCampoVacio($rol);
 });
 
 
+let obtenerUsuarioExiste = ($usuario) => {
+    $.ajax({
+        url: "../../../Vista/crud/usuario/usuarioExistente.php",
+        type: "POST",
+        datatype: "JSON",
+        data: {
+            usuario: $usuario
+        },
+        success: function (usuario) {
+            let $objUsuario = JSON.parse(usuario);
+            if ($objUsuario.estado == 'true') {
+                document.getElementById('usuario').classList.add('mensaje_error');
+                document.getElementById('usuario').parentElement.querySelector('p').innerText = '*Usuario ya existe';
+                estadoExisteUsuario = false; // Username exists, set to false
+            } else {
+                document.getElementById('usuario').classList.remove('mensaje_error');
+                document.getElementById('usuario').parentElement.querySelector('p').innerText = '';
+                estadoExisteUsuario = true; // Username doesn't exist, set to true
+            }
+        }
+        
+    });
+}
 
+ const cantidadParametrosContrasenia = ($password) => {
+    return new Promise(async (resolve, reject) => {
+        let mensaje = $password.parentElement.querySelector('p');
+        try {
+            const data = await $.ajax({
+                url: "../../../Vista/crud/usuario/validarParametrosContrasenia.php",
+                type: "POST",
+                dataType: "JSON",
+            });
+
+            let minLength = data[0];
+            let maxLength = data[1];
+
+            if ($password.value.length < minLength || $password.value.length > maxLength) {
+                mensaje.innerText = '*Mínimo ' + minLength + ', máximo ' + maxLength + ' caracteres.';
+                $password.classList.add('mensaje_error');
+                resolve(false); // Resolve the promise with false
+            } else {
+                mensaje.innerText = '';
+                $password.classList.remove('mensaje_error');
+                resolve(true); // Resolve the promise with true
+            }
+        } catch (error) {
+            console.log(error);
+            reject(error); // Reject the promise if there's an error
+        }
+    });
+};
+
+$form.addEventListener('submit', async e => {
+    try {
+        limiteContrasenia =  await cantidadParametrosContrasenia($password); 
+        console.log(limiteContrasenia);
+        if (limiteContrasenia == false) {
+           console.log(limiteContrasenia);
+        e.preventDefault();
+        }
+        } catch (error) {
+            console.log(error);
+        }
+    });
+
+    let obtenerCorreoExiste = ($correo) => {
+        $.ajax({
+            url: "../../../Vista/crud/usuario/correoExiste.php",
+            type: "POST",
+            datatype: "JSON",
+            data: {
+                correo: $correo
+            },
+            success: function (correo) {
+                let $objCorreo = JSON.parse(correo);
+                if ($objCorreo.estado == 'true') {
+                    document.getElementById('correo').classList.add('mensaje_error');
+                    document.getElementById('correo').parentElement.querySelector('p').innerText = '*Correo ya existente, agregue otro';
+                    estadoExisteCorreo = false; // El correo existe, set to false
+                } else {
+                    document.getElementById('correo').classList.remove('mensaje_error');
+                    document.getElementById('correo').parentElement.querySelector('p').innerText = '';
+                    estadoExisteCorreo = true; // El correo no existe, set to true
+                }
+            }
+        });
+    }
+
+
+// || estadoMasdeUnEspacio.estadoMasEspacioNombre == true
 
 
 

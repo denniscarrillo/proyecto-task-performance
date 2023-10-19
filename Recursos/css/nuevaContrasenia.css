@@ -1,11 +1,21 @@
-.titulo {
-    font-size: 1.5rem;
-    text-align: center;
-    margin-bottom: 1rem;
-}
 #password::-ms-reveal {
     display: none;
 }
 #confirmPassword::-ms-reveal {
     display: none;
+}
+.form-control {
+    padding-left: 20px;
+}
+.mensaje {
+    position: relative;
+}
+.label-text {
+    font-size: 0.8rem;
+}
+.show-password-container {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-bottom: 0.8rem;
 }

@@ -1,0 +1,41 @@
+<style>
+    input::file-selector-button {
+        font-weight: 500;
+        margin-left: 1.5rem;
+        margin-right: 0.8rem;
+        color: #4c4c4e;
+        background-color: rgb(181, 179, 174);
+        padding: 0.4em 1rem;
+        border: none;
+        border-radius: 4px;
+        box-shadow: 0px 0px 10px rgba(245, 140, 69, 0.658);
+        transition: all ease 0.2s;
+    }
+    input[type="file"]::file-selector-button:hover{
+      background-color: #a8a7a5;
+      cursor: pointer;
+    }
+</style>
+<div class="modal fade" id="modal-evidencia" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Adjuntar evidencia</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" enctype="multipart/form-data" id="form-evidencia">
+                    <div class="file-select" id="src-file1">
+                        <input type="file" name="evidencia" id="evidencia">
+                    </div>
+                    <!-- Botones modal -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" id="btn-guardar-evidencia"
+                            data-bs-dismiss="modal">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

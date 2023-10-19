@@ -12,6 +12,9 @@ let estadoSelect = {
     estadoSelectRol: true,
     estadoSelectEstado: true,
 }
+let estadoMasdeUnEspacio = {
+    estadoMasEspacioNombre: true
+}
 
 let estadoCorreo = true;
 
@@ -26,7 +29,7 @@ const $estado = document.getElementById('E_estado');
     Antes de enviar datos del formulario, se comprobara que todas  
     las validaciones se hayan cumplido.
 */
-$form.addEventListener('submit', e => {   
+$form.addEventListener('submit', e => {
     //Validamos que algún campo no esté vacío.
     let estadoInputNombre = funciones.validarCampoVacio($name);
     let estadoInputCorreo = funciones.validarCampoVacio($correo);
@@ -35,11 +38,16 @@ $form.addEventListener('submit', e => {
     // Comprobamos que todas las validaciones se hayan cumplido 
     if (estadoInputNombre == false || estadoInputCorreo == false || estadoInputRol == false || estadoInputEstado == false) {
         e.preventDefault();
-    } else {
+    } else{
         if(estadoLetrasName == false){
             e.preventDefault();
             estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
         } else {
+            estadoMasdeUnEspacio.estadoMasEspacioNombre = funciones.validarMasdeUnEspacio($name);
+            if(estadoMasdeUnEspacio.estadoMasEspacioNombre == false){
+                e.preventDefault();
+            } else{
+
             if(estadoCorreo == false || estadoSelect.estadoSelectEstado == false || estadoSelect.estadoSelectRol == false){
                 e.preventDefault();
                 estadoCorreo = funciones.validarCorreo($correo, validaciones.correo);
@@ -49,15 +57,17 @@ $form.addEventListener('submit', e => {
                 estadoValidado = true; // 
             }
         }
+      }
     }
 });
 $name.addEventListener('keyup', ()=>{
     estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
-    $("E_nombre").inputlimiter({
-        limit: 50
-    });
+   funciones.limitarCantidadCaracteres("E_nombre", 50);
 });
 $name.addEventListener('focusout', ()=>{
+    if(estadoMasdeUnEspacio.estadoMasEspacioNombre){
+        funciones.validarMasdeUnEspacio($name);
+    }
     let usuarioMayus = $name.value.toUpperCase();
     $name.value = usuarioMayus;
 });
@@ -70,3 +80,4 @@ $rol.addEventListener('change', ()=>{
 $estado.addEventListener('change', ()=>{
     estadoSelect.estadoSelectEstado = funciones.validarCampoVacio($estado);
 });
+// || estadoMasdeUnEspacio.estadoMasEspacioNombre == true

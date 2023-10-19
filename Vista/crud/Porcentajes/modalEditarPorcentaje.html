@@ -1,0 +1,42 @@
+<div class="modal fade" id="modalEditarPorcentaje" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="editarModalLabel">Editar Porcentaje</h1>
+                <button type="button" class="btn-close" id ="button-x" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" id="form-Edit-Porcentaje">
+                    <div class="grupo-form">
+                        <div class="mb-3" hidden="true">
+                            <label for="idPorcentaje" class="form-label">Id Porcentaje:</label>
+                            <input type="text" name="idPorcentaje" id="E_idPorcentaje" class="form-control">
+                        </div>
+                        <div class="mb-3" >
+                            <label for="valorPorcentaje" class="form-label">Valor de Porcentaje:</label>
+                            <input type="text" name="valorPorcentaje" id="E_valorPorcentaje" class="form-control">
+                            <p class="mensaje"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="descripcionPorcentaje" class="form-label">Descripcion del Porcentaje:</label>
+                            <input type="text" name="descripcionPorcentaje" id="E_descripcionPorcentaje" class="form-control">
+                            <p class="mensaje"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="estadoPorcentaje" class="form-label">Estado del Porcentaje:</label>
+                            <select name="text" id="E_estadoPorcentaje" class="form-control">
+                                <option>Activo</option>
+                                <option>Inactivo</option>
+                            </select>
+                            <p class="mensaje"></p>
+                        </div>
+                    </div>
+                    <div class="btn-guardar">
+                        <button type="button" class="btn btn-secondary" id="button-cerrar" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

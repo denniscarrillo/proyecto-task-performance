@@ -2,6 +2,8 @@
     require_once ("../../db/Conexion.php");
     require_once ("../../Modelo/Usuario.php");
     require_once("../../Controlador/ControladorUsuario.php");
+    require_once "../../Modelo/Parametro.php";
+    require_once "../../Controlador/ControladorParametro.php";
     require_once("enviarCorreo.php");
 
     $opcion = '';
@@ -12,41 +14,72 @@
         $_SESSION['metodo'] = $_POST['radioOption'];
     }
     if(isset($_POST['submit'])){
-        if(isset($_POST['userName'])){
-            $_SESSION['usuario'] = $_POST['userName'];
+        if(isset($_POST['usuario'])){
+            $_SESSION['usuario'] = $_POST['usuario'];
         }
         if(isset($_SESSION['usuario']) && isset($_SESSION['metodo'])) {
             $usuario = $_SESSION['usuario'];
+            $creadoPor = $_SESSION['usuario'];
             $metodoRec = $_SESSION['metodo'];
             $userExiste = ControladorUsuario::usuarioExiste($usuario);
-            if($userExiste  > 0){
-                //Si el método es recuperación por correo
-                if($metodoRec == 'correo'){
-                    $correo = ControladorUsuario::obCorreoUsuario($usuario);
-                    if($correo != ''){
-                        //Generamos el token
-                        $token = random_int(1000, 9999);
-                        //Almacenar token en la base de datos correspondiente al usuario
-                        $almacenado = ControladorUsuario::almacenarToken($usuario, $token);
-                        if($almacenado){
-                            enviarCorreo($correo, $token);
-                            header("location:v_SolicitarToken.php");
+            $estadoUsuario = intval(ControladorUsuario::estadoUsuario($usuario));
+            if($userExiste){
+                if($estadoUsuario == 2 || $estadoUsuario == 4){
+                    //Si el método es recuperación por correo
+                    if($metodoRec == 'correo'){
+                        $correo = ControladorUsuario::obCorreoUsuario($usuario);
+                        if(!empty($correo)){
+                            //Valida si en la tabla token ya existen 10 token, entonces busca el mas antiguo y lo elimina
+                            ControladorUsuario::depurarTokenUsuario($usuario);
+                            //Generar y Almacenar token en la base de datos correspondiente al usuario
+                            $tokenListo = ControladorUsuario::almacenarToken($usuario, $creadoPor);
+                            if($tokenListo > 0){
+                                $horasVigencia = ControladorParametro::obtenerVigenciaToken();
+                                $estadoEnvio = enviarCorreo($correo, $tokenListo, $horasVigencia);
+                                if($estadoEnvio){
+                                    $_SESSION['tokenSend'] = 1;
+                                    header("location:v_SolicitarToken.php");
+                                } else {
+                                    $mensaje = "Lo sentimos, al parecer no se ha podido enviar el correo";
+                                }   
+                            }
+                        } else {
+                            $mensaje = "Su usuario no tiene un correo configurado";
+                            unset($_SESSION['usuario']);//Eliminamos la variable
                         }
-                    } else {
-                        $mensaje = "No tiene un correo configurado";
-                        unset($_SESSION['usuario']);//Eliminamos la variable
+                    } else { //Si el método es recuperación por pregunta secreta
+                        $cantPregContestadas = ControladorUsuario::cantPreguntasContestadas($usuario);
+                        if($cantPregContestadas  > 0){
+                            $cantFallidasRespuestas = ControladorUsuario::obtenerIntentosRespuestas($usuario);
+                            $cantFallidasParametro = ControladorUsuario::intentosFallidosRespuesta();
+                            if($cantFallidasRespuestas == $cantFallidasParametro){
+                                ControladorUsuario::reiniciarIntentosFallidosRespuesta($usuario);
+                            }
+                            header("location: preguntasResponder.php");
+                            ControladorUsuario::reiniciarIntentosFallidosRespuesta($usuario);
+                        } else {
+                            $mensaje = "Su usuario no tiene preguntas configuradas";
+                            unset($_SESSION['usuario']); //Eliminamos la variable
+                        }
+                    } 
+                }else{
+                    switch($estadoUsuario){
+                        case 1:{
+                            $mensaje = "El estado del usuario es nuevo, no puede continuar";
+                            break;
+                        }
+                        case 3:{
+                            $mensaje = "Su usuario está inactivo, no puede continuar";
+                            break;
+                        }
+                        case 5:{
+                            $mensaje = "Usuario está suspendido por vacaciones";
+                            break;
+                        }
                     }
-                } else { //Si el método es recuperación por pregunta secreta
-                    $cantPregContestadas = ControladorUsuario::cantPreguntasContestadas($usuario);
-                    if($cantPregContestadas  > 0){
-                        header("location: preguntasResponder.php");
-                    } else {
-                        $mensaje = "No tiene preguntas contestadas";
-                        unset($_SESSION['usuario']); //Eliminamos la variable
-                    }
-                } 
+                }
             } else {
-                $mensaje = "No existe el usuario";
+                $mensaje = "El usuario ingresado no existe";
                 unset($_SESSION['usuario']);//Eliminamos la variable
             }
         } else {
@@ -57,6 +90,3 @@
 
 
     
-
-
-

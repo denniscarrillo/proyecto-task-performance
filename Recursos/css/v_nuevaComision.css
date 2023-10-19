@@ -1,0 +1,138 @@
+.form-conteiner {
+    margin: 0 auto;
+    margin-top: 2rem;
+    width: 30rem;
+    height: fit-content;
+    background-color: #dddadade;
+    padding: 2rem;
+    border-radius: 0.7rem;
+    box-shadow: 0px 10px 15px 2px #a5a4a3b6 ;
+}
+.conteiner-id-venta{
+    position: relative;
+}
+.btn-call-modal {
+    position: absolute;
+    right: 3px;
+    bottom: 3px;
+    height: 2rem;
+    width: 9rem;
+    margin: 0;
+    padding: 2px 8px;
+}
+.modal-active{
+    --bs-modal-width: fit-content;
+}
+/* .modal-ventas{
+
+} */
+#table-ventas_wrapper .row{
+    min-height: -moz-fit-content;
+    min-height: fit-content;
+    align-content: space-between;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.row-conteiner{
+    margin: 0;
+    min-height: 100vh;
+}
+.col-height{
+    height: 100vh;
+}
+.fa-solid-icon{
+    font-size: 25px;
+    transition: color 0.1s ease 0.1s;
+}
+.fa-solid-icon:hover{
+    color: #1289d8;
+}
+button:focus{
+    border: none;
+}
+.form-element{
+    margin-bottom: 1rem;
+}
+.form-element-btns{
+    text-align: center;
+    margin-top: 2rem;
+}
+.conteiner-vendedores{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+    width: inherit;
+    height: fit-content;
+    border-radius: 0.2rem;
+    background-color: #ebf1f6b1;
+}
+.title-form{
+    display: flex;
+    align-items: center;
+    background-color: rgb(242, 244, 246);
+    margin-bottom: 1rem;
+    padding: 0.7rem;
+    border-radius: 0.2rem;
+    background-color:#dddadade;
+}
+.text-title-form{
+    margin-bottom: 0;
+    text-align: right;
+    font-size: 2rem;
+    color: #f79414;
+    background-color:#dddadade;
+}
+.img-content{
+   box-shadow: 0px 2px 2px 2px #d2d0cfb6;
+   padding: 0.3rem;
+   border-radius: 4px;
+}
+.text-title-form::before{
+    display: inline-block;
+    content: '|';
+    font-size: 2rem;
+    margin-right: 0.2rem;
+    margin-left: 0.5rem;
+    color: #f17c1b;
+}
+#table-ventas td{
+    min-width: 7rem;
+    max-width: 8rem;
+}
+.mensaje-tipo-cliente{
+    color: rgb(22, 150, 22);
+    background-color: #c6f1b4;
+    padding: 0.2rem;
+    float: right;
+    margin-bottom: 0.5rem;
+}
+.vendedores{
+    padding: 0.4rem;
+    background-color: rgb(171, 227, 208);
+    margin: 0.4rem;
+    margin-right:0.8rem;
+    border-radius: 4px;
+    font-weight: 600;
+    display: inline-block;
+    
+}
+.mensaje-estado{
+    color: rgb(209, 11, 11);
+    background-color: #f58282;
+    padding: 0.2rem;
+    float: right;
+    margin-bottom: 0.5rem;
+}
+.mensaje-estado-activo{
+    color: #035d10;
+    background-color: rgb(145, 227, 115);
+    padding: 0.2rem;
+    float: rigth;
+    margin-bottom: 0.5rem;
+}
+
+.footer-conteiner{
+    margin-top: 25px;
+}
