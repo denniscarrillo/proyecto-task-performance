@@ -21,11 +21,7 @@
     ?>
         <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post">
             <div class="logo-empresa">
-<<<<<<< HEAD
-                <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="px">
-=======
                 <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="200px">
->>>>>>> Prueba
             </div>
             <h3 class="titulo-bienvenida2">Por favor elija una pregunta e ingrese su respuesta:</h3>
             <select name="id_pregunta" class="select-preguntas form-select">
