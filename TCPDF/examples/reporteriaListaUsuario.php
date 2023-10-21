@@ -13,6 +13,8 @@ $datosParametro = ControladorParametro::obtenerDatosReporte();
 foreach($datosParametro  as $datos){
     $nombreP = $datos['NombreEmpresa'];
     $correoP = $datos['Correo'];
+    $direccionP = $datos['direccion'];
+    $sitioWedP = $datos['sitioWed'];
     $telefonoP = $datos['Telefono'];
 }
 
@@ -28,10 +30,10 @@ $pdf->setTitle('ListaUsuarios');
 $pdf->setSubject('TCPDF Tutorial');
 $pdf->setKeywords('TCPDF, PDF, example, test, guide');
 
-$width = 93; // Define el ancho que desea para su cadena de encabezado
+$width = 65; // Define el ancho que desea para su cadena de encabezado
 
 $PDF_HEADER_TITLE =  $nombreP;
-$PDF_HEADER_STRING = 'Correo: ' . $correoP .  "\nTeléfono: " . $telefonoP;
+$PDF_HEADER_STRING = $direccionP . "\n"  .'Correo: ' . $correoP ."\nTeléfono: " . $telefonoP;
 $PDF_HEADER_STRING .= str_repeat(' ', $width - strlen($fechaActual)) . $fechaActual;
 $PDF_HEADER_LOGO = 'LOGO-reporte.jpg';
 // set default header data

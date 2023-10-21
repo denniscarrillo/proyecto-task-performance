@@ -100,12 +100,16 @@ class Parametro {
         $conexion = $conn->abrirConexionDB();
         $query="SELECT (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='SYS NOMBRE')as NombreEmpresa,
         (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='ADMIN CORREO') as Correo,
-        (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='ADMIN TELEFONO') as Telefono";
+		(SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='ADMIN DIRECCION') as direccion,
+		(SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='ADMIN SITIO WED') as sitioWed,
+        (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='ADMIN TELEFONO') as Telefono;";
         $resultado = sqlsrv_query($conexion, $query);
         while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
             $datos [] = [
                 'NombreEmpresa' => $fila['NombreEmpresa'],
                 'Correo' => $fila['Correo'],
+                'direccion' => $fila['direccion'],
+                'sitioWed' => $fila['sitioWed'],
                 'Telefono' => $fila['Telefono']     
             ];
         }        
