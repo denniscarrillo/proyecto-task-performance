@@ -17,4 +17,8 @@ class ControladorParametro {
     public static function obtenerVigenciaToken(){
         return Parametro::obtenerVigenciaToken();
     }
+
+    public static function obtenerDatosReporte(){
+        return Parametro::obtenerDatosReporte();
+    }
 }

@@ -94,4 +94,22 @@ class Parametro {
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $vigencia;
     }
+
+    public static function obtenerDatosReporte(){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query="SELECT (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='SYS NOMBRE')as NombreEmpresa,
+        (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='ADMIN CORREO') as Correo,
+        (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='ADMIN TELEFONO') as Telefono";
+        $resultado = sqlsrv_query($conexion, $query);
+        while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+            $datos [] = [
+                'NombreEmpresa' => $fila['NombreEmpresa'],
+                'Correo' => $fila['Correo'],
+                'Telefono' => $fila['Telefono']     
+            ];
+        }        
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $datos;
+    }
 }
