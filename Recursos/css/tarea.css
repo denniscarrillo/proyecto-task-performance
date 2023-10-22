@@ -40,7 +40,7 @@
   gap: 1rem;
   height: 100vh;
   overflow-y: hidden;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 .colum-task-conteiner::-webkit-scrollbar{
   height: 0.5rem;
@@ -90,6 +90,15 @@ p {
 .title-task-label {
   margin: 0;
 }
+.label-title-task {
+  display: block; 
+  text-align: center;
+  margin-bottom: 2px;
+}
+#input-titulo-tarea {
+  background-color: #e4dfdf;
+  border: none;
+}
 .circle-count {
   display: flex;
   align-items: center;
@@ -109,9 +118,10 @@ p {
   gap: 1rem;
   overflow-y: auto;
   overflow-x: hidden;
-  width: 19rem;
-  max-height: 80%;
-  margin-bottom: 1.5rem;
+  width: 18.5rem;
+  height: 98%;
+  padding-top: 0.4rem;
+  padding-bottom: 2rem;
 }
 .container_tarea::-webkit-scrollbar {
   width: 0.3rem;
@@ -124,10 +134,11 @@ p {
 }
 .task-colum {
   position: relative;
-  border-radius: 2rem;
+  border-radius: 1rem;
   background-color: #302f2f;
   box-shadow: 4px 2px 5px 0px #00000014;
   height: 100%;
+  padding-bottom: 4.5rem;
 }
 .card_task {
   height: fit-content;
@@ -194,6 +205,7 @@ p {
 .conteiner-icons-task {
   display: flex;
   justify-content: flex-end;
+  align-items: end;
   background: #eee5e4;
   padding: 0.3rem;
 }
@@ -204,12 +216,10 @@ p {
   margin-left: 0.5rem;
   padding: 0.2rem;
   border-radius: 2px;
-  /* background-color: #ffffff; */
 }
 .fa-solid-btn:hover {
   color: #e66e23;
   cursor: pointer;
-  /* background-color: #e68b4a; */
 }
 .conteiner-text-task {
   padding: 0.4rem;
@@ -247,12 +257,10 @@ p {
   margin-bottom: 0;
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
-  /* border-radius:  0 01rem  1rem ; */
  }
 .card_task.seleccionado{
   transform: scale(1.02) rotate(-1deg);
   box-shadow: 0px 0px 10px rgba(245, 140, 69, 0.658);
-  /* background-color: rgba(245, 140, 69, 0.635); */
 }
 .card_task.drag{
   opacity: 0;

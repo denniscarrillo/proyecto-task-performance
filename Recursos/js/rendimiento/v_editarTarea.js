@@ -1,3 +1,4 @@
+let tableArticulos = '';
 $(document).ready(function(){
     setEstadoTarea();
 });
@@ -11,7 +12,7 @@ $('#btn-articulos').click(() => {
     if (document.getElementById('table-Articulos_wrapper') == null) {
       $('#table-Articulos').DataTable({
         "ajax": {
-          "url": "../../../Vista/articulos/obtenerArticulos.php",
+          "url": "../../../Vista/rendimiento/obtenerArticulos.php",
           "dataSrc": ""
         },
         "language": {
@@ -79,13 +80,14 @@ $('#btn-articulos').click(() => {
           id: $idArticulo,
           nombre: $nombreArticulo,
           marca: $marca
-        }
+        } 
         $Articulos.push($articulo);
       }
     });
     carritoArticulos($Articulos);
   }
   let carritoArticulos = ($productos) => {
+    console.log($productos);
     let productos = '';
     let $tableArticulos = document.getElementById('list-articulos');
     $productos.forEach((producto) => {
@@ -103,6 +105,23 @@ $('#btn-articulos').click(() => {
     idsProducto.forEach(function(idProducto){
       idProducto.setAttribute('disabled', 'true');
     });
+    // if(document.getElementById('table-articulos_wrapper')){
+    //   tableArticulos.destroy();
+    //   //Convertimos la tabla de productos de interes a DataTable
+    //   tableArticulos = $('#table-articulos').DataTable({
+    //     "language": {
+    //       "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+    //     },
+    //   });
+    // } else {
+    //   //Convertimos la tabla de productos de interes a DataTable
+    //   tableArticulos = $('#table-articulos').DataTable({
+    //     language: {
+    //       "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+    //     },
+    //     scrollY: "29vh"
+    //   });
+    // }
   }
   let setEstadoTarea = function(){
     let $select = document.getElementById('estados-tarea');

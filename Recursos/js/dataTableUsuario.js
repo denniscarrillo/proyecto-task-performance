@@ -52,8 +52,8 @@ $('#btn_nuevoRegistro').click(async function () {
   let fechaC = new Date().toISOString().slice(0, 10);
   $("#fecha_C").val(fechaC);
   //se obtiene la fecha de Vencimiento
-  let vigencia = await obtenerVigencia()
-  let fechaV = new Date()
+  let vigencia = await obtenerVigencia();
+  let fechaV = new Date();
   //se calcula la fecha de hoy + los dias de vigencia
   fechaV.setDate(fechaV.getDate() + parseInt(vigencia['Vigencia']))
   $("#fecha_V").val(fechaV.toISOString().slice(0, 10));
@@ -249,7 +249,7 @@ let obtenerVigencia = async () =>{
         type: 'GET',
         dataType: 'JSON'
       });
-      return dato
+      return dato;
     } catch(err) {
       console.error(err)
   }

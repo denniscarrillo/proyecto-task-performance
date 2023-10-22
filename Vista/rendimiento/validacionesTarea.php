@@ -11,10 +11,9 @@ require_once("../../Controlador/ControladorBitacora.php");
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
-  $permisoRol = ControladorUsuario::permisosRol($idRolUsuario);
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('v_tarea.php');
-  $objetoPermitido = ControladorUsuario::permisoSobreObjeto($_SESSION['usuario'], $idObjetoActual, $permisoRol);
-  if(!$objetoPermitido){
+  $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual);
+  if(!$permisoConsulta){
     /* ====================== Evento intento de ingreso sin permiso a mantenimiento de usuario. =====================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');

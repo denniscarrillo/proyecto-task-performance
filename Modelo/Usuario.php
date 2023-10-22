@@ -645,33 +645,30 @@ class Usuario {
         return $id;
     }
 
-    public static function permisosRol($idRolUser){
+    public static function permisoConsultaRol($idRolUser, $id_Objeto){
+        $permitido = false;
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query = "SELECT id_Objeto, permiso_Consultar, permiso_Insercion, permiso_Actualizacion, permiso_Eliminacion  
-        FROM tbl_MS_Permisos WHERE id_Rol = '$idRolUser';";
+        $query = "SELECT id_Objeto, permiso_Consultar FROM tbl_MS_Permisos WHERE id_Rol = '$idRolUser' and id_Objeto = '$id_Objeto';";
         $resultado = sqlsrv_query($conexion, $query);
-        while($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)){
-            $permisoRol [] = [
-                'idObjeto' => $fila['id_Objeto'],
-                'consulta' => $fila['permiso_Consultar'],
-                'insertar' => $fila['permiso_Insercion'],
-                'actualizar' => $fila['permiso_Actualizacion'],
-                'eliminar' => $fila['permiso_Eliminacion']
-            ];
+       $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+       if(isset($fila['permiso_Consultar']) && $fila['permiso_Consultar'] == 'Y'){
+            $permitido = true;
         }
+        // $permisoConsultarRol = [
+        //     'idObjeto' => $fila['id_Objeto'],
+        //     'consulta' => $fila['permiso_Consultar']
+        // ];
         sqlsrv_close($conexion); #Cerramos la conexión.
-        return $permisoRol;
+        return $permitido ;
     }
     //Metodo que valida los objetos y los permisos del usuario sobre ellos
-    public static function validarPermisoSobreObjeto($userName, $IdObjetoActual, $permisosRol) {
+    public static function validarPermisoSobreObjeto($IdObjetoActual, $permisoConsulta) {
         $permitido = false;
-        foreach ($permisosRol as $objeto) {
-            if($objeto['idObjeto'] == $IdObjetoActual && $objeto['consulta'] == 'Y'){
+            if(($permisoConsulta['idObjeto'] == $IdObjetoActual) && ($permisoConsulta['consulta'] == 'Y')){
                 $permitido = true;
-                break;
             }
-        }
+
         return $permitido;
     }
 

@@ -9,7 +9,6 @@
     require_once("../../../Controlador/ControladorPregunta.php");
     require_once("../../../Controlador/ControladorBitacora.php");
   
-
     session_start(); //Reanudamos session
     if(isset($_SESSION['usuario']) && isset($_POST['idParametro'])){
         $nuevoParametro = new Parametro();
@@ -32,15 +31,15 @@
                     $respuesta = ['estado' => true];
                     print json_encode ($respuesta,JSON_UNESCAPED_UNICODE);
                 }
-            }else{
+            } else {
                 ControladorParametro::editarParametroSistema($nuevoParametro);
                 $respuesta = [ 'estado' => true];
                 print json_encode ($respuesta,JSON_UNESCAPED_UNICODE);
             }      
-            if ($_POST['parametro'] == 'ADMIN VIGENCIA'){
+            if ($_POST['parametro'] == 'ADMIN VIGENCIA') {
                 $ArrayUsuarios = ControladorUsuario::obtenerIdUsuariosPassword();
                 $vigenciaPassword = ControladorParametro::obtenerVigencia();
-                $mensaje = ControladorUsuario::actualizarFechaVencimientoContrasena($ArrayUsuarios, $vigenciaPassword['Vigencia']);
+                ControladorUsuario::actualizarFechaVencimientoContrasena($ArrayUsuarios, $vigenciaPassword['Vigencia']);
             }      
         /* ========================= Evento Editar parámetro. ====================================*/
         $newBitacora = new Bitacora();
