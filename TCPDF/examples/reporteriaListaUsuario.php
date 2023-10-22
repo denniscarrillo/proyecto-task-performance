@@ -14,14 +14,15 @@ foreach($datosParametro  as $datos){
     $nombreP = $datos['NombreEmpresa'];
     $correoP = $datos['Correo'];
     $direccionP = $datos['direccion'];
-    $sitioWedP = $datos['sitioWed'];
+    // $sitioWebP = str_replace("http://", "", $datos['sitioWed']);
     $telefonoP = $datos['Telefono'];
+    $telefono2P = $datos['Telefono2'];
 }
 
 date_default_timezone_set('America/Tegucigalpa');
 $fechaActual = date('d/m/Y H:i:s'); // Obtén la fecha y hora actual en el formato deseado
 // create new PDF document
-$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+$pdf = new TCPDF('L', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
 // set document information
 $pdf->setCreator(PDF_CREATOR);
@@ -30,10 +31,10 @@ $pdf->setTitle('ListaUsuarios');
 $pdf->setSubject('TCPDF Tutorial');
 $pdf->setKeywords('TCPDF, PDF, example, test, guide');
 
-$width = 65; // Define el ancho que desea para su cadena de encabezado
+$width = 152; // Define el ancho que desea para su cadena de encabezado
 
 $PDF_HEADER_TITLE =  $nombreP;
-$PDF_HEADER_STRING = $direccionP . "\n"  .'Correo: ' . $correoP ."\nTeléfono: " . $telefonoP;
+$PDF_HEADER_STRING = $direccionP . "\n"  .'Correo: ' . $correoP ."\nTeléfono: +" . $telefonoP.  ", +" . $telefono2P ;
 $PDF_HEADER_STRING .= str_repeat(' ', $width - strlen($fechaActual)) . $fechaActual;
 $PDF_HEADER_LOGO = 'LOGO-reporte.jpg';
 // set default header data
@@ -52,7 +53,7 @@ $pdf->setHeaderMargin(PDF_MARGIN_HEADER);
 $pdf->setFooterMargin(PDF_MARGIN_FOOTER);
 
 // set auto page breaks
-$pdf->setAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+$pdf->setAutoPageBreak(TRUE, 10);
 
 // set image scale factor
 $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
@@ -74,10 +75,10 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de Usuarios</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center">ID</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 40px;">ID</td>
 <td style="background-color: #e54037;color: white; text-align: center">USUARIO</td>
-<td style="background-color: #e54037;color: white; text-align: center">NOMBRE</td>
-<td style="background-color: #e54037;color: white; text-align: center">CORREO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 220px;">NOMBRE</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 210px;">CORREO</td>
 <td style="background-color: #e54037;color: white; text-align: center">ESTADO</td>
 <td style="background-color: #e54037;color: white; text-align: center">ROL</td>
 </tr>
