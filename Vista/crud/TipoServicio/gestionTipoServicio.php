@@ -138,7 +138,7 @@ if (isset($_SESSION['usuario'])) {
         <div class="table-conteiner">
           <div>
             <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoTipoServicio"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
-            <a href="../../fpdf/ReporteTipoServicio.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> 
+            <a href="../../../TCPDF/examples/reporteServicioTecnico.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> 
           </div>
           <table class="table" id="table-TipoServicio">
             <thead>
