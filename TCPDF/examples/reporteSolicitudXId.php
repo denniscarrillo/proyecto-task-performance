@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 // Include the main TCPDF library (search for installation path).
 require_once('../tcpdf.php');
 require_once("../../db/Conexion.php");
@@ -6,7 +8,9 @@ require_once("../../Modelo/DataTableSolicitud.php");
 require_once("../../Controlador/ControladorDataTableSolicitud.php");
 require_once("../../Modelo/Parametro.php");
 require_once("../../Controlador/ControladorParametro.php");
+
 ob_start();
+
 
 //cargar el encabezado
 $datosParametro = ControladorParametro::obtenerDatosReporte();
@@ -22,7 +26,7 @@ foreach($datosParametro  as $datos){
 date_default_timezone_set('America/Tegucigalpa');
 $fechaActual = date('d/m/Y H:i:s'); // Obtén la fecha y hora actual en el formato deseado
 // create new PDF document
-$pdf = new TCPDF('L', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
 // set document information
 $pdf->setCreator(PDF_CREATOR);
@@ -31,7 +35,7 @@ $pdf->setTitle('ReporteSolicitud');
 $pdf->setSubject('TCPDF Tutorial');
 $pdf->setKeywords('TCPDF, PDF, example, test, guide');
 
-$width = 152; // Define el ancho que desea para su cadena de encabezado
+$width = 64; // Define el ancho que desea para su cadena de encabezado
 
 $PDF_HEADER_TITLE =  $nombreP;
 $PDF_HEADER_STRING = $direccionP . "\n"  .'Correo: ' . $correoP ."\nTeléfono: +" . $telefonoP.  ", +" . $telefono2P ;
@@ -72,46 +76,59 @@ $pdf->setFont('Helvetica', '', 11);
 $pdf->AddPage();
 // create some HTML content
 $html = '
-<P style="text-align: center; font-size: 18px;"><b>Reporte de la Solicitud</b></P>
+<P style="text-align: center; font-size: 18px;"><b>Reporte de la Solicitud id</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 40px;">ID</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 190px;">SERVICIO TECNICO</td>
-<td style="background-color: #e54037;color: white; text-align: center">TELEFONO</td>
-<td style="background-color: #e54037;color: white; text-align: center">AVANCE DE SOLICITUD</td>
-<td style="background-color: #e54037;color: white; text-align: center">ESTADO DE SOLICITUD</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 175px;">MOTIVO DE CANCELACION</td>
-<td style="background-color: #e54037;color: white; text-align: center">FECHA DE CREACIÓN</td>
+<td style="background-color: #e54037;color: white; text-align: center">ID</td>
+<td style="background-color: #e54037;color: white; text-align: center">IF FACTURA</td>
+<td style="background-color: #e54037;color: white; text-align: center">RTN</td>
+<td style="background-color: #e54037;color: white; text-align: center">RTN</td>
+<td style="background-color: #e54037;color: white; text-align: center">RTN</td>
+<td style="background-color: #e54037;color: white; text-align: center">RTN</td>
+<td style="background-color: #e54037;color: white; text-align: center">RTN</td>
 </tr>
 ';
- // Supongamos que $FechaSolicitud es un objeto DateTime
 
-// Formatear la fecha en un formato legible, por ejemplo, "d/m/Y H:i:s"
-
-$Solicitudes = ControladorDataTableSolicitud::DataTableSolicitud();
-foreach($Solicitudes as $solicitud){
-    $idSolicitud = $solicitud['id_Solicitud'];
-    $servicioTecnico = $solicitud['servicio_Tecnico'];
-    $telefono = $solicitud['telefono_cliente'];
-    $EstadoAvance = $solicitud['EstadoAvance'];
-    $EstadoSolicitud = $solicitud['EstadoSolicitud'];
-    $motivo = $solicitud['motivo_cancelacion'];
-    $FechaSolicitud = $solicitud['Fecha_Creacion'];
-    $fechaFormateada = $FechaSolicitud->format('Y/m/d');
-    $html .= '
-    <tr>
-    <td style="text-align: center">'.$idSolicitud.'</td>
-    <td >'.$servicioTecnico.'</td>
-    <td>'.$telefono.'</td>
-    <td style="text-align: center">'.$EstadoAvance.'</td>
-	<td style="text-align: center">'.$EstadoSolicitud.'</td>
-	<td>'.$motivo.'</td>
-    <td style="text-align: center">'.$fechaFormateada.'</td>
-    </tr>
-    ';
-}
+$id = 1;
+if(isset($_GET[2])){
+    $SolicitudesId = ControladorDataTableSolicitud::VerSolicitudesPorId(2);
+    foreach($SolicitudesId as $solicitudId){
+        $idSolicitud = $solicitudId['idSolicitud'];
+        $idFactura = $solicitudId['idFactura'];
+        $rtn_cliente = $solicitudId['rtn_cliente'];
+        $rtn_clienteCartera = $solicitudId['rtn_clienteCartera'];
+        $NombreCliente = $solicitudId['NombreCliente'];
+        $descripcion = $solicitudId['descripcion'];
+        $servicioTecnico = $solicitudId['servicio_Tecnico'];
+        // $correoS = $solicitudId['correo'];
+        // $telefono = $solicitudId['telefono_cliente'];
+        // $ubicacion = $solicitudId['ubicacion_instalacion'];
+        // $EstadoAvance = $solicitudId['EstadoAvance'];
+        // $EstadoSolicitud = $solicitudId['EstadoSolicitud'];
+        // $motivo = $solicitudId['motivo_cancelacion'];
+        // $creadoPor = $solicitudId['Creado_Por'];
+        // $FechaCreacion = $solicitudId['Fecha_Creacion'];
+        // $modifacadoPor = $solicitudId['Modificado_Por'];
+        // $FechaModificacion = $solicitudId['Fecha_Modificacion'];
+        // $fechaFormateada = $FechaCreacion->format('Y/m/d');
+        $html .= '
+        
+        <tr>
+        <td style="text-align: center">'.$idSolicitud.'</td>
+        <td >'.$idFactura.'</td>
+        <td>'.$rtn_cliente.'</td>
+        <td>'.$rtn_clienteCartera.'</td>
+        <td>'.$NombreCliente.'</td>
+        <td>'.$descripcion.'</td>
+        <td>'.$servicioTecnico.'</td>
+        </tr>
+        
+        ';
+    }
+ }
 
 $html.='
+        
 </table>
 ';
 
@@ -119,4 +136,4 @@ $html.='
 $pdf->writeHTML($html, true, false, true, false);
 //Close and output PDF document
 ob_end_clean();
-$pdf->Output('ReporteriaGeneralSolicitud.pdf', 'I');
+$pdf->Output('ReporteriaSolicitudes.pdf', 'I');

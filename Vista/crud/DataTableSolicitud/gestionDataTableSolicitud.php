@@ -143,13 +143,11 @@ if (isset($_SESSION['usuario'])) {
             <thead>
               <tr>
                 <th scope="col"> ID </th>
+                <th scope="col"> NOMBRE CLIENTE</th>
                 <th scope="col"> SERVICIO TECNICO</th>
-                <!-- <th scope="col"> NOMBRE </th> -->
                 <th scope="col"> TELEFONO</th>
                 <th scope="col"> AVANCE DE LA SOLICITUD </th>
-                <th scope="col"> ESTADO DE LA SOLICITUD</th>
-                <th scope="col"> MOTIVO DE CANCELACION  </th>
-                <th scope="col"> FECHA DE CREACION  </th>
+                <th scope="col"> FECHA CREACION</th>
                 <th scope="col"> ACCIONES </th>
               </tr>
             </thead>

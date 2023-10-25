@@ -18,33 +18,28 @@ class DataTableSolicitud
             $SolicitudesUsuario = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $query = "SELECT s.id_Solicitud, 
-            t.servicio_Tecnico, 
-            -- cc.nombre_Cliente,
-            s.telefono_cliente,
-            s.EstadoAvance,
-            s.EstadoSolicitud,
-            s.motivo_cancelacion,
-            s.Fecha_Creacion
-            FROM tbl_Solicitud AS s
-            INNER JOIN tbl_TipoServicio AS t ON t.id_TipoServicio = s.id_TipoServicio;";
-            // INNER JOIN tbl_CarteraCliente AS cc ON cc.id_CarteraCliente = s.id_Solicitud
-            // INNER JOIN View_FACTURASVENTA AS f ON f.NUMFACTURA = s.idFactura
-            // INNER JOIN View_Clientes AS c ON c.CODCLIENTE = f.CODCLIENTE
-            // WHERE s.Creado_Por = '$User';
-            
+            $query = "SELECT id_Solicitud,
+            CASE
+              WHEN cc.nombre_Cliente IS NOT NULL THEN cc.nombre_Cliente COLLATE Modern_Spanish_CI_AS
+              ELSE c.NOMBRECLIENTE COLLATE Modern_Spanish_CI_AS
+            END AS NombreCliente
+            ,t.servicio_Tecnico,telefono_cliente,EstadoAvance
+            ,s.Fecha_Creacion
+            FROM [tbl_Solicitud] as s
+            inner join tbl_TipoServicio as t on t.id_TipoServicio = s.id_TipoServicio
+            LEFT join View_Clientes as c on c.CIF COLLATE Modern_Spanish_CI_AS = s.rtn_cliente COLLATE Modern_Spanish_CI_AS
+            LEFT join tbl_CarteraCliente as cc on cc.rtn_Cliente = s.rtn_clienteCartera 
+			where EstadoSolicitud = 'ACTIVO';";
 
            $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
             while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
                 $SolicitudesUsuario[] = [
                     'id_Solicitud' => $fila['id_Solicitud'],
+                    'Nombre' => $fila['NombreCliente'],
                     'servicio_Tecnico' => $fila['servicio_Tecnico'],
-                    // 'Nombre' => $fila['nombre_Cliente'],
-                    'telefono_cliente' => $fila['telefono_cliente'],
+                    'telefono' => $fila['telefono_cliente'],
                     'EstadoAvance' => $fila['EstadoAvance'],
-                    'EstadoSolicitud' => $fila['EstadoSolicitud'],
-                    'motivo_cancelacion' => $fila['motivo_cancelacion'],
                     'Fecha_Creacion' => $fila['Fecha_Creacion']
                    
                 ];
@@ -76,32 +71,6 @@ class DataTableSolicitud
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
 
-    }
-
-    public static function obtenerSolicitudPorId($idSolicitud){
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB();
-        $query="SELECT id_Solicitud, descripcion,t.servicio_Tecnico, telefono_cliente, ubicacion_instalacion, 
-		EstadoAvance, EstadoSolicitud, motivo_cancelacion, s.Creado_Por, s.Fecha_Creacion
-        FROM tbl_Solicitud as s 
-        inner join tbl_TipoServicio as t on t.id_TipoServicio = s.id_TipoServicio
-		where id_Solicitud = $idSolicitud;";
-        $resultado = sqlsrv_query($conexion, $query);
-        $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
-        $datosSolicitud = [
-            'idSolicitud' => $fila['id_Solicitud'],
-            'descripcion' => $fila['descripcion'],
-            'TipoServicio' => $fila['servicio_Tecnico'],
-            'telefono' => $fila['telefono_cliente'],
-            'ubicacion' => $fila['ubicacion_instalacion'],
-            'EstadoAvance' => $fila['EstadoAvance'],
-            'EstadoSolicitud' => $fila['EstadoSolicitud'],
-            'motivoCancelacion' => $fila['motivo_cancelacion'],
-            'CreadoPor' => $fila['Creado_Por'],
-            'FechaCreacion' => $fila['Fecha_Creacion']  
-        ];
-        sqlsrv_close($conexion); #Cerramos la conexión.
-        return $datosSolicitud;
     }
 
     public static function editarSolicitud($EditarSolicitud){

@@ -76,11 +76,10 @@ $html = '
 <table border="1" cellpadding="4">
 <tr>
 <td style="background-color: #e54037;color: white; text-align: center; width: 40px;">ID</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 243px;">NOMBRE CLIENTE</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 190px;">SERVICIO TECNICO</td>
 <td style="background-color: #e54037;color: white; text-align: center">TELEFONO</td>
 <td style="background-color: #e54037;color: white; text-align: center">AVANCE DE SOLICITUD</td>
-<td style="background-color: #e54037;color: white; text-align: center">ESTADO DE SOLICITUD</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 175px;">MOTIVO DE CANCELACION</td>
 <td style="background-color: #e54037;color: white; text-align: center">FECHA DE CREACIÓN</td>
 </tr>
 ';
@@ -91,22 +90,20 @@ $html = '
 $Solicitudes = ControladorDataTableSolicitud::DataTableSolicitud();
 foreach($Solicitudes as $solicitud){
     $idSolicitud = $solicitud['id_Solicitud'];
+    $nombre = $solicitud['Nombre'];
     $servicioTecnico = $solicitud['servicio_Tecnico'];
-    $telefono = $solicitud['telefono_cliente'];
-    $EstadoAvance = $solicitud['EstadoAvance'];
-    $EstadoSolicitud = $solicitud['EstadoSolicitud'];
-    $motivo = $solicitud['motivo_cancelacion'];
+    $telefono = $solicitud['telefono'];
+    $EstadoAvance = $solicitud['EstadoAvance'];    
     $FechaSolicitud = $solicitud['Fecha_Creacion'];
     $fechaFormateada = $FechaSolicitud->format('Y/m/d');
     $html .= '
     <tr>
     <td style="text-align: center">'.$idSolicitud.'</td>
+    <td>'.$nombre.'</td>
     <td >'.$servicioTecnico.'</td>
     <td>'.$telefono.'</td>
     <td style="text-align: center">'.$EstadoAvance.'</td>
-	<td style="text-align: center">'.$EstadoSolicitud.'</td>
-	<td>'.$motivo.'</td>
-    <td style="text-align: center">'.$fechaFormateada.'</td>
+	<td style="text-align: center">'.$fechaFormateada.'</td>
     </tr>
     ';
 }

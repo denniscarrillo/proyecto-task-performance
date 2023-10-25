@@ -139,6 +139,11 @@ h1{
     margin-left: -1rem;
     margin-right: 0.1rem;
 }
+#btn_pdf{
+    background-color: rgb(255, 120, 47);
+    margin-left: -1rem; 
+    margin-right: 1.1rem;
+}
 #btn_editar{
     background-color: rgb(45, 111, 203);
     margin-right: 0.1rem;

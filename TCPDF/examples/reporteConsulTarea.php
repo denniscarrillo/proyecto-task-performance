@@ -3,7 +3,7 @@
 require_once('../tcpdf.php');
 require_once("../../db/Conexion.php");
 require_once("../../Modelo/Rol.php");
-require_once("../../Controlador/ControladorRol.php");
+require_once("../../Controlador/ControladorDataTableTarea.php");
 require_once("../../Modelo/Parametro.php");
 require_once("../../Controlador/ControladorParametro.php");
 ob_start();
@@ -27,7 +27,7 @@ $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8',
 // set document information
 $pdf->setCreator(PDF_CREATOR);
 $pdf->setAuthor('Nicola Asuni');
-$pdf->setTitle('ReporteRoles');
+$pdf->setTitle('ReporteTarea');
 $pdf->setSubject('TCPDF Tutorial');
 $pdf->setKeywords('TCPDF, PDF, example, test, guide');
 
@@ -72,29 +72,30 @@ $pdf->setFont('Helvetica', '', 11);
 $pdf->AddPage();
 // create some HTML content
 $html = '
-<P style="text-align: center; font-size: 18px;"><b>Reporte de Roles</b></P>
+<P style="text-align: center; font-size: 18px;"><b>Reporte de las Tareas</b></P>
 <table border="1" cellpadding="4">
 <tr>
 <td style="background-color: #e54037;color: white; text-align: center; width: 60px;">ID</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 220px;">ROL</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 360px;">DESCRIPCIÓN</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 220px;">NOMBRE</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 360px;">TITULO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 360px;">AVANCE DE LA TAREA</td>
 </tr>
 ';
-$Roles = ControladorRol::rolesUsuario();
-foreach($Roles as $Rol){
-    $id_Rol = $Rol['id_Rol'];
-    $NomRol = $Rol['rol'];
-    $descripcion = $Rol['descripcion'];
-
+$User = 2;
+$Tareas = ControladorDataTableTarea::DataTableTarea($User);
+foreach($Tareas as $tarea){
+    $idTarea = $tarea['id_Tarea'];
+    $titulo = $tarea['titulo'];
+    $descripcion = $tarea['descripcion'];
+    $estado = $tarea['estado_Finalizacion'];
     $html .= '
     <tr>
-    <td style="text-align: center">'.$id_Rol.'</td>
-    <td >'.$NomRol.'</td>
+    <td style="text-align: center">'.$idTarea.'</td>
+    <td >'.$titulo.'</td>
     <td>'.$descripcion.'</td>
+    <td>'.$estado.'</td>
     </tr>
     ';
-    
-
 }
 
 $html.='
@@ -105,4 +106,4 @@ $html.='
 $pdf->writeHTML($html, true, false, true, false);
 //Close and output PDF document
 ob_end_clean();
-$pdf->Output('ReporteRoles.pdf', 'I');
+$pdf->Output('ReporteTarea.pdf', 'I');
