@@ -22,17 +22,19 @@ let procesarPermisoActualizar = data => {
     },
     "columns": [
       { "data": 'id_Solicitud' },
+      { "data": 'Nombre' },
       { "data": 'servicio_Tecnico' },
-      // { "data": 'Nombre' },
-      { "data": 'telefono_cliente' },
+      { "data": 'telefono' },
       {"data":  'EstadoAvance' },
-      { "data": 'EstadoSolicitud' },
-      { "data": 'motivo_cancelacion' },
-      {"data":  'Fecha_Creacion.date' },
+      {"data": 'Fecha_Creacion.date',
+        "render": function(data) {
+          return data.slice(0, 10);
+        }
+      },
       {
         "defaultContent":
-         '<div><button class="btns btn" id="btn_ver"><i class="fa-solid fa-eye"></i></button>' +
-        `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`+
+        '<div><button class="btns btn" id="btn_ver"><i class="fa-solid fa-eye"></i></button>' +
+        `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`+  
         '<button class="btns btn" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button></div>'
       }
     ]
@@ -56,7 +58,7 @@ $(document).on("click", "#btn_ver", async function (){
   let fila = $(this).closest("tr");
   let idSolicitud = fila.find('td:eq(0)').text();
   let SolicitudXid = await obtenerSolicitudesVerPorId(idSolicitud);
-
+  
   const idSolicitudLabel = document.getElementById('V_IdSolicitud');
   idSolicitudLabel.innerText = SolicitudXid.idSolicitud;
   const idFacturaLabel = document.getElementById('V_IdFactura');
@@ -100,9 +102,14 @@ $(document).on("click", "#btn_ver", async function (){
    $(".modal-header").css("background-color", "#007bff");
    $(".modal-header").css("color", "white");
    // Mostrar el modal
-   $('#modalVerSolicitud').modal('show');
+   $('#modalVerSolicitud').modal('show');  
 });
 
+// $(document).on("click", "#btn_pdf", async function (){
+//   let fila = $(this).closest("tr");
+//   let idSolicitud = fila.find('td:eq(0)').text();
+//   await reporteSolicitudesPorId(idSolicitud);  
+//  });
 //obtener datos para el modal editar
 let obtenerSolicitudesVerPorId = async (idSolicitud) => {
   try {
@@ -119,6 +126,22 @@ let obtenerSolicitudesVerPorId = async (idSolicitud) => {
     console.error(err)
   }
 }
+//obtener datos para el modal editar
+let reporteSolicitudesPorId = async (idSolicitud) => {
+  try {
+    let reporteSolicitud = await $.ajax({
+      url: '../../../TCPDF/examples/reporteSolicitudXId.php',
+      type: 'POST',
+      dataType: 'JSON',
+      data: {
+        IdSolicitud: idSolicitud
+      }
+    });
+    return reporteSolicitud; //Retornamos la data recibida por ajax
+  } catch(err) {
+    console.error(err)
+  }
+}
 
 $(document).on("click", "#btn_editar", async function(){		 
   // Obtener la fila más cercana al botón
@@ -128,16 +151,25 @@ $(document).on("click", "#btn_editar", async function(){
   let Solicitudes = await obtenerSolicitudesPorId(idSolicitud);
   //LLenar Campos de modal Editar Solicitud
   $("#E_IdSolicitud").val(idSolicitud);
-  $("#E_descripcion").val(Solicitudes['descripcion']);
-  $("#E_TipoServicio").val(Solicitudes['TipoServicio']);
+  const idSolicitudLabel = document.getElementById('E_IdSolicitud');
+  idSolicitudLabel.innerText = Solicitudes.idSolicitud;
+  const nombreLabel = document.getElementById('E_NombreC');
+  nombreLabel.innerText = Solicitudes.NombreCliente;
+  $("#E_descripcion").val(Solicitudes['Descripcion']);
+  const idTipoServicioLabel = document.getElementById('E_TipoServicio');
+  idTipoServicioLabel.innerText = Solicitudes.TipoServicio;
   $("#E_telefono_cliente").val(Solicitudes['telefono']);
   $("#E_ubicacion").val(Solicitudes['ubicacion']);
-  $("#E_AvanceSolicitud").val(Solicitudes['EstadoAvance']);
-  $("#E_EstadoSolicitud").val(Solicitudes['EstadoSolicitud']);
-  $("#E_Motivo").val(Solicitudes['motivoCancelacion']);
-  $("#E_CreadoPor").val(Solicitudes['CreadoPor']);
-  let dateS = new Date(Solicitudes['FechaCreacion'].date)
-  $("#E_FechaCreacion").val(dateS.toISOString().slice(0, 10));
+  
+  const EstadoSolicitudLabel = document.getElementById('E_EstadoSolicitud');
+  EstadoSolicitudLabel.innerText = Solicitudes.EstadoSolicitud;
+  
+  const CreadoPorLabel = document.getElementById('E_CreadoPor');
+  CreadoPorLabel.innerText = Solicitudes.CreadoPor;
+  
+  const FechaCreacionLabel = document.getElementById('E_FechaCreacion');
+  FechaCreacionLabel.innerText = Solicitudes.FechaCreacion.date.slice(0, 10);
+
   // Estilizar el modal
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");
@@ -149,7 +181,7 @@ $(document).on("click", "#btn_editar", async function(){
 let obtenerSolicitudesPorId = async (idSolicitud) => {
   try {
     let datosSolicitud = await $.ajax({
-      url: '../../../Vista/crud/DataTableSolicitud/obtenerDataTableSolicitudId.php',
+      url: '../../../Vista/crud/DataTableSolicitud/obtenerSolicitudesVerId.php',
       type: 'GET',
       dataType: 'JSON',
       data: {
@@ -205,11 +237,11 @@ $(document).on("click", "#btn_eliminar", function(){
   // Establecer el estado de la solicitud
   let EstadoSolicitud = 'CANCELADO';
   // Obtener el motivo de cancelación
-  let motivo = fila.find('td:eq(5)').text();
+  //let motivo = fila.find('td:eq(5)').text();
   // Establecer valores en los campos del modal
   $("#C_IdSolicitud").val(idSolicitud);
   $("#C_EstadoSolicitud").val(EstadoSolicitud);
-  $("#C_MotivoCancelacion").val(motivo);
+  //$("#C_MotivoCancelacion").val(motivo);
   // Estilizar el modal
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");
@@ -255,7 +287,13 @@ $('#form-Solicitud').submit(function (e) {
       }
     
   });  
+
   
+
+      
+    
   
+
+
 
    

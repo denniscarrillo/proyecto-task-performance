@@ -238,9 +238,7 @@ let generarGraficas = function(data) {
     });
 }
 
-
 ////////////////////GRAFICA POR VENDENDOR////
-
 
 //funcion para llenar el modal de vendedores
 $(document).ready(function () {

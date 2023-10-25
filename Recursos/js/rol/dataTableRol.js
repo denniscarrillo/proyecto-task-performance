@@ -74,12 +74,21 @@ $(document).on("click", "#btn_editar", function(){
   id_Rol = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		            
   rol = fila.find('td:eq(1)').text(),
   descripcion = fila.find('td:eq(2)').text();
-  $("#E_idRol").val(id_Rol);
-  $("#E_rol").val(rol);
-  $("#E_descripcion").val(descripcion);
-  $(".modal-header").css("background-color", "#007bff");
-  $(".modal-header").css("color", "white");	
-  $('#modalEditarRol').modal('show');		   
+  if (rol == 'Super Administrador'){
+    Swal.fire(
+      'Sin acceso!',
+      'Super Administrador no puede ser editado',
+      'error'
+    )
+  }else{
+    $("#E_idRol").val(id_Rol);
+    $("#E_rol").val(rol);
+    $("#E_descripcion").val(descripcion);
+    $(".modal-header").css("background-color", "#007bff");
+    $(".modal-header").css("color", "white");	
+    $('#modalEditarRol').modal('show')
+  }
+ ;		   
 });
 
 $('#form-Edit-Rol').submit(function (e) {

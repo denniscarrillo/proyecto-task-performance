@@ -79,6 +79,7 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
+  <link href="../../../Recursos/css/modalVerSolicitud.css" rel="stylesheet">
   <title> Consulta solicitudes</title>
 </head>
 
@@ -133,19 +134,17 @@ if (isset($_SESSION['usuario'])) {
         <div class="table-conteiner">
           <div>
             <a href="./v_Solicitud.php" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro"><i class="fa-solid fa-circle-plus"></i> Generar solicitud</a>
-            <a href="../../fpdf/ReporteRol.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> 
+            <a href="../../../TCPDF/examples/reporteriaSolicitud.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> 
           </div>
           <table class="table" id="table-Solicitud">
             <thead>
               <tr>
                 <th scope="col"> ID </th>
+                <th scope="col"> NOMBRE CLIENTE</th>
                 <th scope="col"> SERVICIO TECNICO</th>
-                <!-- <th scope="col"> NOMBRE </th> -->
                 <th scope="col"> TELEFONO</th>
                 <th scope="col"> AVANCE DE LA SOLICITUD </th>
-                <th scope="col"> ESTADO DE LA SOLICITUD</th>
-                <th scope="col"> MOTIVO DE CANCELACION  </th>
-                <th scope="col"> FECHA DE CREACION  </th>
+                <th scope="col"> FECHA CREACION</th>
                 <th scope="col"> ACCIONES </th>
               </tr>
             </thead>
