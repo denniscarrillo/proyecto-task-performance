@@ -1,6 +1,37 @@
 let tableArticulos = '';
+let $idTarea = document.getElementById('id-Tarea').value;
 $(document).ready(function(){
     setEstadoTarea();
+    obtenerComentarios($idTarea);
+});
+
+/* ============================ Interaccion del SidePanel para mostrar y ocultar ============================ */
+let $sidePanelContainter = document.querySelector('.side-panel-container');
+let $sidePanelContent = document.querySelector('.side-panel-content');
+$sidePanelContainter.addEventListener('click', () => {
+  $sidePanelContent.setAttribute('style', 'right: -25%;');
+  setTimeout(()=> {
+    $sidePanelContainter.setAttribute('style', 'z-index: -10;');
+  }, 200);
+})
+document.getElementById('btn-comment').addEventListener('click', () => {
+  $sidePanelContainter.setAttribute('style', 'z-index: 10;');
+  $sidePanelContent.setAttribute('style', 'right: 0;');
+});
+document.getElementById('btn-close-comment').addEventListener('click', () => {
+  $sidePanelContent.setAttribute('style', 'right: -25%;');
+  setTimeout(()=> {
+    $sidePanelContainter.setAttribute('style', 'z-index: -10;');
+  }, 200);
+});
+// =============================================================================================================
+
+//En el evento submit llamamos a la función que enviara el comentario a la base de datos
+document.getElementById('form-comentario').addEventListener('submit', (e) => {
+  e.preventDefault();
+  let $comentario = document.getElementById('input-comentario').value;
+  nuevoComentario($idTarea,  $comentario);
+  obtenerComentarios($idTarea);
 });
 document.getElementById('form-Edit-Tarea').addEventListener('submit', function(e){
   // e.preventDefault();
@@ -289,6 +320,47 @@ let enviarProductosInteres = ($idTarea) => {
         'La tarea '+$idTarea+' ha sido editada!',
         'success',
       )
+    }
+  });//Fin AJAX
+}
+
+let nuevoComentario = ($idTarea,  $comentario) => {
+  document.getElementById('input-comentario').value = '';
+  //Enviamos el nuevo comentario a la base de datos
+  $.ajax({
+    url: "../../../Vista/rendimiento/nuevoComentario.php",
+    type: "POST",
+    datatype: "JSON",
+    data: {
+      "id_Tarea": $idTarea,
+      "comentario": $comentario 
+    }
+  });//Fin AJAX
+}
+let obtenerComentarios = ($idTarea) => {
+  //Enviamos el nuevo comentario a la base de datos
+  $.ajax({
+    url: "../../../Vista/rendimiento/obtenerComentarios.php",
+    type: "POST",
+    datatype: "JSON",
+    data: {
+      "id_Tarea": $idTarea
+    },
+    success: function(comentarios) {
+      let comments ='';
+      let ObjComentarios = JSON.parse(comentarios);
+      let conteinerComments = document.getElementById('comments-container-list');
+      ObjComentarios.forEach((comentario) => {
+        comments +=
+        `<div class="card-comment">
+        <section class="info-comment">
+          <section class="creadoPor-comment">${comentario.creadoPor}</section>
+          <section class="data-comment">${comentario.FechaCreacion.date.split('.')[0]}</section>
+        </section>
+          <section class="title-comment">${comentario.comentarioTarea}</section>
+        </div>`;
+      conteinerComments.innerHTML = comments;
+      });
     }
   });//Fin AJAX
 }

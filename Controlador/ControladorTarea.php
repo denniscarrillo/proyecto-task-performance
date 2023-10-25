@@ -57,4 +57,10 @@ class ControladorTarea {
     public static function obtenerDatosTarea ($tipoTarea, $idTarea) {
         return Tarea::obtenerDatosClienteTarea($tipoTarea, $idTarea);
     }
+    public static function agregarComentarioTarea($idTarea, $comentario, $CreadoPor){
+        Tarea::agregarComentarioTarea($idTarea, $comentario, $CreadoPor);
+    }
+    public static function mostrarComentariosTarea($idTarea){
+        return Tarea::mostrarComentariosTarea($idTarea);
+    }
 }

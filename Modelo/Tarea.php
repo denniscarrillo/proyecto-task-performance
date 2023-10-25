@@ -499,4 +499,27 @@ class Tarea
         sqlsrv_close($abrirConexion); //Cerrar conexion
         return $datosTarea;
     }
+    public static function agregarComentarioTarea($idTarea, $comentario, $CreadoPor){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "INSERT INTO tbl_Comentarios_Tarea (id_Tarea, Comentario, Creado_Por, Fecha_Creacion) VALUES ('$idTarea', '$comentario', '$CreadoPor', GETDATE());";
+        sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion);
+    }
+    public static function mostrarComentariosTarea($idTarea){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT Comentario, Creado_Por, Fecha_Creacion FROM tbl_Comentarios_Tarea WHERE id_Tarea = '$idTarea' ORDER BY Fecha_Creacion DESC;";
+        $resultado = sqlsrv_query($conexion, $query);
+        $comentariosTarea = array();
+        while($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)){
+            $comentariosTarea [] = [
+                'comentarioTarea' => $fila['Comentario'],
+                'creadoPor' => $fila['Creado_Por'],
+                'FechaCreacion' => $fila['Fecha_Creacion']
+            ];
+        }
+        sqlsrv_close($conexion);
+        return $comentariosTarea;
+    }
 }

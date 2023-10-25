@@ -20,6 +20,7 @@
 	<link rel='stylesheet' href='../../Recursos/css/layout/navbar.css'>
 	<link rel='stylesheet' href='../../Recursos/css/layout/footer.css'>
 	<link rel='stylesheet' href="../../Recursos/css/layout/sidebar.css">
+	<link rel='stylesheet' href="../../Recursos/css/layout/sidePanel.css">
 	<title>Editar tarea</title>
 </head>
 
@@ -65,8 +66,28 @@
 				<!-- Aqui va la barra -->
 				<?php include_once '../layout/navbar.php';?>
 			</div>
+			<div class="side-panel-container">
+			</div>
+			<div class="side-panel-content">
+				<div class="title-container">
+					<h2 class="title-text">Comentarios</h2>
+					<h2 class="title-text">Historial</h2>
+					<button type="button" id="btn-close-comment" class="btn-close" aria-label="Close"></button>
+				</div>
+				<div id="comments-container" class="comments-container">
+					<div class="comments-container-list" id="comments-container-list">
+					<!-- Aqui van todos los comentarios -->	
+					</div>
+					<form action="" id="form-comentario" class="container-chat">
+						<textarea id="input-comentario" class="input-comentario" placeholder="Escribe un comentario..."></textarea>
+						<button type="submit" id="btn-guardarComentario" class="btn btn-primary btn-Comentario"><i class="fa-solid fa-paper-plane"></i></button>
+					</form>
+				</div>
+				<div class="history-container"></div>
+			</div>
 			<!-- Cuerpo de la pagina -->
 			<main class="main">
+				<button id="btn-comment" title="Comentarios"><i class="fa-solid fa-comment-dots"></i></button>
 				<div class="conteiner-form">
 					<form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" id="form-Edit-Tarea">
 						<div class="encabezado-tarea">
