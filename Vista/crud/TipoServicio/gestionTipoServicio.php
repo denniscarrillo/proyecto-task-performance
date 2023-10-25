@@ -74,8 +74,8 @@ if (isset($_SESSION['usuario'])) {
   <!-- <link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" rel="stylesheet"> -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
   <!-- Estilos personalizados -->
-  <link href="../../../Recursos/css/gestionCarteraClientes.css" rel="stylesheet" />
-  <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
+  <link href="../../../Recursos/css/gestionServicioTecnico.css" rel="stylesheet" />
+  <!-- <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet"> -->
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
