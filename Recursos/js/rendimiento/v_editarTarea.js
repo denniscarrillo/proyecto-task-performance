@@ -1,30 +1,16 @@
+import {sidePanel_Interaction} from '../../components/js/sidePanel.js'; //importamos la funcion del sidePanel
+
 let tableArticulos = '';
 let $idTarea = document.getElementById('id-Tarea').value;
 $(document).ready(function(){
     setEstadoTarea();
     obtenerComentarios($idTarea);
 });
-
-/* ============================ Interaccion del SidePanel para mostrar y ocultar ============================ */
-let $sidePanelContainter = document.querySelector('.side-panel-container');
-let $sidePanelContent = document.querySelector('.side-panel-content');
-$sidePanelContainter.addEventListener('click', () => {
-  $sidePanelContent.setAttribute('style', 'right: -25%;');
-  setTimeout(()=> {
-    $sidePanelContainter.setAttribute('style', 'z-index: -10;');
-  }, 200);
-})
 document.getElementById('btn-comment').addEventListener('click', () => {
-  $sidePanelContainter.setAttribute('style', 'z-index: 10;');
-  $sidePanelContent.setAttribute('style', 'right: 0;');
+  obtenerComentarios($idTarea);
 });
-document.getElementById('btn-close-comment').addEventListener('click', () => {
-  $sidePanelContent.setAttribute('style', 'right: -25%;');
-  setTimeout(()=> {
-    $sidePanelContainter.setAttribute('style', 'z-index: -10;');
-  }, 200);
-});
-// =============================================================================================================
+//Función de que le da interacción del sidepanel
+sidePanel_Interaction(document.getElementById('btn-comment'), document.getElementById('btn-close-comment'));
 
 //En el evento submit llamamos a la función que enviara el comentario a la base de datos
 document.getElementById('form-comentario').addEventListener('submit', (e) => {

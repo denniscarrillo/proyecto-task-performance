@@ -20,6 +20,7 @@
 	<link rel='stylesheet' href='../../Recursos/css/layout/navbar.css'>
 	<link rel='stylesheet' href='../../Recursos/css/layout/footer.css'>
 	<link rel='stylesheet' href="../../Recursos/css/layout/sidebar.css">
+	<link rel='stylesheet' href="../../Recursos/components/css/sidePanel.css">
 	<link rel='stylesheet' href="../../Recursos/css/layout/sidePanel.css">
 	<title>Editar tarea</title>
 </head>
@@ -83,7 +84,9 @@
 						<button type="submit" id="btn-guardarComentario" class="btn btn-primary btn-Comentario"><i class="fa-solid fa-paper-plane"></i></button>
 					</form>
 				</div>
-				<div class="history-container"></div>
+				<div class="history-container">
+
+				</div>
 			</div>
 			<!-- Cuerpo de la pagina -->
 			<main class="main">
@@ -239,7 +242,7 @@
 	<script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
 	<script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
 	<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
-	<script src="../../Recursos/js/rendimiento/v_editarTarea.js"></script>
+	<script src="../../Recursos/js/rendimiento/v_editarTarea.js" type="module"></script>
 	<!-- <script src="../../Recursos/js/rendimiento/validacionesEditarTarea.js" ></script> -->
 </body>
 

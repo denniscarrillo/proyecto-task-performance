@@ -222,9 +222,9 @@ class Tarea
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             foreach($idVendedores as $idVendedor){
-                $id= $idVendedor['idVendedor'];
-                $insertUsuarioTarea = "INSERT INTO tbl_vendedores_tarea (id_Tarea, id_usuario_vendedor) 
-                                    VALUES ('$idTarea', '$id');";
+                $id = $idVendedor['idVendedor'];
+                $insertUsuarioTarea = "INSERT INTO tbl_vendedores_tarea (id_Tarea, id_usuario_vendedor, vend_Identificador) 
+                                    VALUES ('$idTarea', '$id', 'Agregado');";
                 sqlsrv_query($abrirConexion, $insertUsuarioTarea);
             }
         } catch (Exception $e) {
