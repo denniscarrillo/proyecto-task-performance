@@ -114,7 +114,7 @@ $form.addEventListener('submit', e => {
                     estadoSelect = funciones.validarCampoVacio($direccion);
                     estadoSelect = funciones.validarCampoVacio($rtn);
                     estadoSelect = funciones.validarCampoVacio($correo);
-                    estadoSelect = funciones.validarCampoVacio($telefono7);
+                    estadoSelect = funciones.validarCampoVacio($telefono);
                 } else {
                     estadoValidado = true; // 
                 }  
