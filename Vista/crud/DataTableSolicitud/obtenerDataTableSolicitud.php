@@ -6,7 +6,7 @@
    session_start();
    if(isset($_SESSION['usuario'])){
       
-      $data = ControladorDataTableSolicitud::DataTableSolicitud($_SESSION['usuario']);
+      $data = ControladorDataTableSolicitud::DataTableSolicitud();
       
       print json_encode($data, JSON_UNESCAPED_UNICODE);
    }

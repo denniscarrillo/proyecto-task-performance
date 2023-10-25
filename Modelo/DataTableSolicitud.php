@@ -11,7 +11,7 @@ class DataTableSolicitud
     public $MotivoCancelacion;
 
     // Obtener todas las tareas que le pertenecen a un usuario.
-    public static function obtenerSolicitud($User)
+    public static function obtenerSolicitud()
     {
         $SolicitudesUsuario = null;
         try {
@@ -27,11 +27,12 @@ class DataTableSolicitud
             s.motivo_cancelacion,
             s.Fecha_Creacion
             FROM tbl_Solicitud AS s
-            INNER JOIN tbl_TipoServicio AS t ON t.id_TipoServicio = s.id_TipoServicio
-            -- INNER JOIN tbl_CarteraCliente AS cc ON cc.id_CarteraCliente = s.id_Solicitud
-            -- INNER JOIN View_FACTURASVENTA AS f ON f.NUMFACTURA = s.idFactura
-            -- INNER JOIN View_Clientes AS c ON c.CODCLIENTE = f.CODCLIENTE
-            WHERE s.Creado_Por = '$User';";
+            INNER JOIN tbl_TipoServicio AS t ON t.id_TipoServicio = s.id_TipoServicio;";
+            // INNER JOIN tbl_CarteraCliente AS cc ON cc.id_CarteraCliente = s.id_Solicitud
+            // INNER JOIN View_FACTURASVENTA AS f ON f.NUMFACTURA = s.idFactura
+            // INNER JOIN View_Clientes AS c ON c.CODCLIENTE = f.CODCLIENTE
+            // WHERE s.Creado_Por = '$User';
+            
 
            $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.

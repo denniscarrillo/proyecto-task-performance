@@ -24,7 +24,7 @@ h1{
 #form-Ver-Solicitud {
     display: flex;
     padding: 1rem;
-    padding-bottom: 5rem;
+    padding-bottom: 3rem;
     position: relative;
 } 
 .grupo-form {
@@ -43,13 +43,6 @@ h1{
     border: 1px solid #ccc;
     border-radius: 5px;
 
-}
-
-.btn-guardar btn btn-secondary {
-    position: center;
-    bottom: 0.2rem;
-    left: 7.5%;
-    right:30%;
 }
 
 .btn-guardar {
