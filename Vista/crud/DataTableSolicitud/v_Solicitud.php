@@ -142,22 +142,22 @@ if (isset($_SESSION['usuario'])) {
                     <label for="cliente-existente" class="radio-label-solicitud">Existente</label>
                 </div>
                 <div class="radio-conteiner-nuevo">
-                    <input type="radio" name="radioOption" id="cliente-nuevo" class="radio-solicitud" value="Nuevo" >
-                    <label for="cliente-nuevo" id="radioClienteN" class="radio-label-solicitud">Nuevo</label>   
+                    <input type="radio" name="radioOption" id="clientenuevo" class="radio-solicitud" value="Nuevo" >
+                    <label for="cliente-nuevo" id="radioCliente" class="radio-label-solicitud">Nuevo</label>   
                 </div>
             </div>
         </div>
         <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post" id="form-solicitud">
           
         <div class="group-form">
-                <div class="form-element input-conteiner"  id="container-Factura-cliente">
+                <div class="form-element input-conteiner"  id="containerFacturacliente">
                     <label for="id-factura"  class="form-label">N° Factura</label>
-                    <input type="text" id="id-factura" name="numeroFactura" class="form-control">
+                    <input type="text" id="idfactura" name="numeroFactura" class="form-control">
                 </div>
-                <div class="form-element input-conteiner" id="container-rtn-cliente" >
+                <div class="form-element input-conteiner" id="containerrtncliente" >
                     <label for="rnt-cliente" class="form-label">RTN:</label>
                     <p id="mensaje"></p>
-                    <input type="text" id="rnt-cliente" name="rtnCliente" class="form-control">
+                    <input type="text" id="rntcliente" name="rtnCliente" class="form-control">
                 </div>
                 <div class="form-element input-conteiner">
                     <label for="telefono" class="form-label">nombre</label>
@@ -175,16 +175,16 @@ if (isset($_SESSION['usuario'])) {
                 <div class="group-form">
                     <div class="form-element input-conteiner">
                         <label for="fecha-solicitud" class="form-label">Fecha solicitud</label>
-                        <input type="date" id="fecha-solicitud" name="fechaSolicitud" class="form-control">
+                        <input type="date" id="fechasolicitud" name="fechaSolicitud" class="form-control">
                     </div>
                     <div class= "form-element input-conteiner">
                         <label for="tipo-solicitud" class="form-label">Tipo solicitud</label>
-                        <input type="text" id="tipo-solicitud" name="tipoSolicitud" class="form-control">
+                        <input type="text" id="tiposolicitud" name="tipoSolicitud" class="form-control">
                     </div>
             
                     <div class="form-element input-conteiner">
                         <label for="id-descripcion" class="form-label">Ubicación instalación</label>
-                        <input type="text" id="id-descripcion" name="ubicacionInstalacion" class="form-control">
+                        <input type="text" id="iddescripcion" name="ubicacionInstalacion" class="form-control">
                     </div>
                     <div class="form-element input-conteiner">
                         <label for="descripcion" class="form-label">Descripción</label>
@@ -199,7 +199,7 @@ if (isset($_SESSION['usuario'])) {
                             Seleccionar... <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
                                 </button>
                             </div>
-                            <table id="table-articulos" class="table table-striped">
+                            <table id="tablearticulos" class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th scope="col">Id</th>
@@ -208,15 +208,15 @@ if (isset($_SESSION['usuario'])) {
                                         <th scope="col">Cantidad</th>
                                         </tr>
                                 </thead>
-                                    <tbody id="list-articulos" class="table-group-divider">
+                                    <tbody id="listarticulos" class="table-group-divider">
                                             <!-- Articulos de interes -->
                                         </tbody>
                                     </table>
                                 </div>
 					<!-- Botones -->
 					<div class="btn-guardar">
-						<a href="./gestionDataTableSolicitud.php"><button type="button" id="btn-cerrar2" class="btn btn-secondary">Cancelar</button></a>
-						<button type="submit" id="btn-guardar" class="btn btn-primary" name="actualizarTarea"><i class="fa-solid fa-floppy-disk"></i>Guardar</button>
+						<a href="./gestionDataTableSolicitud.php"><button type="button" id="btncerrar2" class="btn btn-secondary">Cancelar</button></a>
+						<button type="submit" id="btnguardar" class="btn btn-primary" name="actualizarTarea"><i class="fa-solid fa-floppy-disk"></i>Guardar</button>
 					</div>
 				</form>
 			</div>

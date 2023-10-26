@@ -1,7 +1,8 @@
 
 
-$(document).on('click', '#cliente-existente', function () {
+$(document).on('click', '#clienteExistente', function () {
   obtenerClientes();
+ // $("#modalClienteFrecuente").modal("show");
 });
 let obtenerClientes = function () {
   if (document.getElementById('table-ClienteFrecuente_wrapper') == null) {
@@ -21,22 +22,22 @@ let obtenerClientes = function () {
         { "data": 'direccion' },
         {
           "defaultContent":
-            '<div><button class="btns btn" id="btn_select-cliente"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>'
+            '<div><button class="btns btn" id="btn_selectcliente"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>'
         }
       ]
     });
   }
 }
-$(document).on("click", "#btn_select-cliente", function () {
+$(document).on("click", "#btn_selectcliente", function () {
   let fila = $(this).closest("tr");
   let nombreCliente = fila.find("td:eq(1)").text();
   let rtnCliente = fila.find("td:eq(2)").text();
   let telefonoCliente = fila.find("td:eq(3)").text();
   let direccionCliente = fila.find("td:eq(4)").text();
   let nombre = document.getElementById("nombre");
-  let rtn = document.getElementById("rnt-cliente");
+  let rtn = document.getElementById("rntcliente");
   let telefono = document.getElementById("telefono");
-  let direccion = document.getElementById("id-descripcion");
+  let direccion = document.getElementById("iddescripcion");
 
   //Setear datos del cliente
   nombre.value = nombreCliente;
@@ -51,15 +52,15 @@ $(document).on("click", "#btn_select-cliente", function () {
 
 });
 
-let rtnCliente = document.getElementById('cliente-existente');
+let rtnCliente = document.getElementById('clienteExistente');
 rtnCliente.addEventListener('change', function () {
   limpiarForm();
-  let $containerRTN = document.getElementById('container-rtn-cliente');
-  if (document.getElementById('btn-clientes') == null) {
+  let $containerRTN = document.getElementById('containerrtncliente');
+  if (document.getElementById('btnclientes') == null) {
     let $btnBuscar = document.createElement('div')
-    $btnBuscar.classList.add('btn-buscar-cliente');
+    $btnBuscar.classList.add('btnbuscarcliente');
     $btnBuscar.innerHTML = `
-    <button type="button" class="btn btn-primary" id="btn-clientes" data-bs-toggle="modal" data-bs-target="#modalClienteFrecuente">
+    <button type="button" class="btn btn-primary" id="btnclientes" data-bs-toggle="modal" data-bs-target="#modalClienteFrecuente">
       Buscar <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
     </button>
     `;
@@ -68,16 +69,16 @@ rtnCliente.addEventListener('change', function () {
   
 });
 //Cuando el cliente es nuevo se oculta el buscador de existir.
-document.getElementById('cliente-nuevo').addEventListener('change', function () {
-  let $containerRTN = document.getElementById('container-rtn-cliente');
-  let $btnBuscarCliente = document.querySelector('.btn-buscar-cliente');
+document.getElementById('clientenuevo').addEventListener('change', function () {
+  let $containerRTN = document.getElementById('containerrtncliente');
+  let $btnBuscarCliente = document.querySelector('.btnbuscarcliente');
   if ($btnBuscarCliente) {
     $containerRTN.removeChild($btnBuscarCliente);
     limpiarForm();
   }
   
 });
-$('#btn-articulos').click(() => {
+$('#btnarticulos').click(() => {
   if (document.getElementById('table-ArticuloSolicitud_wrapper') == null) {
     $('#table-ArticuloSolicitud').DataTable({
       "ajax": {
@@ -94,14 +95,14 @@ $('#btn-articulos').click(() => {
         { "data": 'marcaArticulo' },
         {
           "defaultContent":
-            '<div><button class="btns btn" id="btn_select-article"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>'
+            '<div><button class="btns btn" id="btn_selectarticle"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>'
         }
       ]
     });
   }
 });
 
-$(document).on('click', '#btn_select-article', function () {
+$(document).on('click', '#btn_selectarticle', function () {
   selectArticulos(this);
   agregarArticulos();
   $('#modalArticulosSolicitud').modal('hide');
@@ -114,13 +115,13 @@ $(document).on('click', '#btn_select-article', function () {
 // });
 
 let selectArticulos = function ($elementoHtml) {
-  $elementoHtml.classList.toggle('select-articulo');
+  $elementoHtml.classList.toggle('selectarticulo');
 }
 let agregarArticulos = function () {
   let $Articulos = [];
-  let productosSeleccionados = document.querySelectorAll('.select-articulo');
+  let productosSeleccionados = document.querySelectorAll('.selectarticulo');
   productosSeleccionados.forEach(function (producto) {
-    if (producto.classList.contains('select-articulo')) {
+    if (producto.classList.contains('selectarticulo')) {
       let $idArticulo = $(producto).closest('tr').find('td:eq(0)').text();
       let $nombreArticulo = $(producto).closest('tr').find('td:eq(1)').text();
       let $marca = $(producto).closest('tr').find('td:eq(3)').text();
@@ -136,19 +137,19 @@ let agregarArticulos = function () {
 }
 let carritoArticulos = ($productos) => {
   let productos = '';
-  let $tableArticulos = document.getElementById('list-articulos');
+  let $tableArticulos = document.getElementById('listarticulos');
   $productos.forEach((producto) => {
     productos += `
     <tr>
-    <td><input type="text" value="${producto.id}" class="id-producto" name="id-producto"></td>
+    <td><input type="text" value="${producto.id}" class="idproducto" name="idproducto"></td>
       <td>${producto.nombre}</td>
       <td>${producto.marca}</td>
-      <td><input type="text" id="${producto.id}" class="cant-producto"></td>
+      <td><input type="text" id="${producto.id}" class="cantproducto"></td>
     </tr>
   `
   });
   $tableArticulos.innerHTML = productos;
-  let idsProducto = document.querySelectorAll('.id-producto');
+  let idsProducto = document.querySelectorAll('.idproducto');
   idsProducto.forEach(function(idProducto){
     idProducto.setAttribute('disabled', 'true');
   });
@@ -166,11 +167,11 @@ let limpiarForm = () => {
   let $mensaje = document.getElementById('mensaje');
   $mensaje.innerText = '';
   $mensaje.classList.remove('mensaje-existe-cliente');
-  let   rtn = document.getElementById('rnt-cliente'),
+  let   rtn = document.getElementById('rntcliente'),
   
     telefono = document.getElementById('telefono'),
-    direccion = document.getElementById('id-descripcion'),
-    Factura = document.getElementById("id-factura"),
+    direccion = document.getElementById('iddescripcion'),
+    Factura = document.getElementById("idfactura"),
      nombre = document.getElementById('nombre');
   //Vaciar campos cliente
     rtn.value = '';
@@ -188,42 +189,42 @@ let limpiarForm = () => {
 }
 
 
-let FacturaSolicitud = document.getElementById('cliente-existente');
+let FacturaSolicitud = document.getElementById('clienteExistente');
 FacturaSolicitud.addEventListener('change', function () {
   limpiarForm();
-  let $containerFact = document.getElementById('container-Factura-cliente');
-  if (document.getElementById('btn-factura') == null) {
+  let $containerFact = document.getElementById('containerFacturacliente');
+  if (document.getElementById('btnfactura') == null) {
     let $btnBuscar = document.createElement('div')
-    $btnBuscar.classList.add('btn-buscar-cliente');
+    $btnBuscar.classList.add('btnbuscarFactura');
     $btnBuscar.innerHTML = `
-    <button type="button" class="btn btn-primary" id="btn-factura"  data-bs-toggle='modal' data-bs-target='#modalFacturaSolicitud'>
+    <button type="button" class="btn btn-primary" id="btnfactura"  data-bs-toggle="modal "data-bs-target="#modalFacturaSolicitud">
       Buscar <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
     </button>
     `;
     $containerFact.appendChild($btnBuscar);
   }
-  let Factura = document.getElementById('container-Factura-cliente');
+  let Factura = document.getElementById('containerFacturacliente');
   Factura.removeAttribute('hidden', 'false');
  
 });
 
-document.getElementById('cliente-nuevo').addEventListener('change', function () {
-  let $containerRTN = document.getElementById('container-Factura-cliente');
-  let $btnBuscarCliente = document.querySelector('.btn-buscar-cliente');
+document.getElementById('clientenuevo').addEventListener('change', function () {
+  let $containerRTN = document.getElementById('containerFacturacliente');
+  let $btnBuscarCliente = document.querySelector('.btnbuscarFactura');
   if ($btnBuscarCliente) {
     $containerRTN.removeChild($btnBuscarCliente);
     limpiarForm();
   }
  
-  let Factura = document.getElementById('container-Factura-cliente');
+  let Factura = document.getElementById('containerFacturacliente');
   Factura.setAttribute('hidden', 'true');
 
 });
 
-$(document).on('click', '#btn-factura', function () {
+$(document).on('click', '#btnfactura', function () {
   obtenerFactura();  // Lógica para obtener la factura si es necesario
- // $('#modalArticulosSolicitud').modal('show');
- // $('#modalFacturaSolicitud').modal('show');  
+  //$('#modalArticulosSolicitud').modal('show');
+  $('#modalFacturaSolicitud').modal('show');  
 
 });
 
@@ -244,20 +245,20 @@ let obtenerFactura = function () {
         { "data": 'rtnCliente' },
         {
           "defaultContent":
-          '<div><button class="btns btn" id="btn_select-factura" ><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>'
+          '<div><button class="btns btn" id="btn_selectfactura" ><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>'
         }
       ]
     });
   }
 }
 
-$(document).on("click", "#btn_select-factura", function () {
+$(document).on("click", "#btn_selectfactura", function () {
   obtenerFactura();  // Lógica para obtener la factura si es necesario
  
  
   let fila = $(this).closest("tr");
   let FacturaCliente = fila.find("td:eq(0)").text();
-  let Factura = document.getElementById("id-factura");
+  let Factura = document.getElementById("idfactura");
   
   Factura.value = FacturaCliente;
  $("#modalFacturaSolicitud").modal("hide");
