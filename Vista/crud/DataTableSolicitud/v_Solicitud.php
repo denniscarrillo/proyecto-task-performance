@@ -135,7 +135,7 @@ if (isset($_SESSION['usuario'])) {
     </div>
     <div class="form-conteiner">
         <div class="form-element">
-            <label class="titulo-radios">Tipo solicitud: </label>
+            <label class="titulo-radios">Tipo de Cliente: </label>
             <div class="radio-conteiner-s">
                 <div class="radio-conteiner-existente">
                     <input type="radio" name="radioOption" id="clienteExistente"  class="radio-solicitud" value="Existente">
