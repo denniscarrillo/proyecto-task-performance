@@ -86,6 +86,39 @@ p {
   .conteiner-text-task>p {
     margin: 0.1rem;
   }
+
+#containerrtncliente{
+  position: relative;
+}
+#containerFacturacliente{
+  position: relative;
+}
+.btnbuscarFactura{
+  position: absolute;
+  right: 0px;
+  bottom: 0;
+  top: 38px;
+  height: fit-content; 
+}
+.btnbuscarcliente{
+    position: absolute;
+    right: 0px;
+    bottom: 0;
+    top: 38px;
+    height: fit-content; 
+}
+#btnclientes{
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+#btnfactura{
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
   #table-Articulos_wrapper .row {
     min-height: -moz-fit-content;
     min-height: fit-content;
