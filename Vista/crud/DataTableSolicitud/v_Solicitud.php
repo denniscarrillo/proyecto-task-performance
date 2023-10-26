@@ -15,10 +15,9 @@ session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
-  $permisoRol = ControladorUsuario::permisosRol($idRolUsuario);
-  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionSolicitud.php');
-  $objetoPermitido = ControladorUsuario::permisoSobreObjeto($_SESSION['usuario'], $idObjetoActual, $permisoRol);
-  if(!$objetoPermitido){
+  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('v_Solicitud.php');
+  $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual);
+  if(!$permisoConsulta){
     /* ====================== Evento intento de ingreso sin permiso a solicitud. ================================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
@@ -79,7 +78,7 @@ if (isset($_SESSION['usuario'])) {
     <!-- Estilos personalizados -->
     
     <link href="../../../Recursos/css/modalClienteFrecuente.css" rel="stylesheet">
-    <link href="../../../Recursos/css/modalEditarTarea.css" rel="stylesheet">
+    <!-- <link href="../../../Recursos/css/modalEditarTarea.css" rel="stylesheet"> -->
     <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
@@ -136,10 +135,16 @@ if (isset($_SESSION['usuario'])) {
     </div>
     <div class="form-conteiner">
         <div class="form-element">
-            <label>Tipo solicitud: </label>
-            <div class="radio-conteiner">
-			<input type="radio" name="radioOption" id="cliente-existente"  class="radio" value="Existente" ><label for="cliente-existente" class="radio-label form-label">Existente</label>
-			<input type="radio" name="radioOption" id="cliente-nuevo" class="radio" value="Nuevo" ><label for="cliente-nuevo" class="radio-label form-label">Nuevo</label>   
+            <label class="titulo-radios">Tipo solicitud: </label>
+            <div class="radio-conteiner-s">
+                <div class="radio-conteiner-existente">
+                    <input type="radio" name="radioOption" id="clienteExistente"  class="radio-solicitud" value="Existente">
+                    <label for="cliente-existente" class="radio-label-solicitud">Existente</label>
+                </div>
+                <div class="radio-conteiner-nuevo">
+                    <input type="radio" name="radioOption" id="cliente-nuevo" class="radio-solicitud" value="Nuevo" >
+                    <label for="cliente-nuevo" id="radioClienteN" class="radio-label-solicitud">Nuevo</label>   
+                </div>
             </div>
         </div>
         <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post" id="form-solicitud">
@@ -210,7 +215,7 @@ if (isset($_SESSION['usuario'])) {
                                 </div>
 					<!-- Botones -->
 					<div class="btn-guardar">
-						<a href="./v_tarea.php"><button type="button" id="btn-cerrar2" class="btn btn-secondary">Cancelar</button></a>
+						<a href="./gestionDataTableSolicitud.php"><button type="button" id="btn-cerrar2" class="btn btn-secondary">Cancelar</button></a>
 						<button type="submit" id="btn-guardar" class="btn btn-primary" name="actualizarTarea"><i class="fa-solid fa-floppy-disk"></i>Guardar</button>
 					</div>
 				</form>
