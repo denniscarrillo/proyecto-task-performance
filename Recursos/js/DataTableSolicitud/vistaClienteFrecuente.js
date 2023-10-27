@@ -285,6 +285,7 @@ $(document).on("click", "#btn_selectfactura", function () {
     });
     carritoArticulos($Articulos);
   }
+
   let carritoArticulos = ($productos) => {
     let productos = '';
     let $tableArticulos = document.getElementById('listarticulos');
@@ -308,9 +309,9 @@ $(document).on("click", "#btn_selectfactura", function () {
 
   $(document).on("click", "#btn_eliminar", function() {
     let fila = $(this);        
-      let idproducto = $(this).closest('tr').find('td:eq(1)').text();		    
+      let nombreProd = $(this).closest('tr').find('td:eq(1)').text();		    
       Swal.fire({
-        title: 'Estas seguro de eliminar el producto '+idproducto+'?',
+        title: 'Estas seguro de eliminar el producto '+nombreProd+'?',
         text: "No podras revertir esto!",
         icon: 'warning',
         showCancelButton: true,
@@ -320,15 +321,19 @@ $(document).on("click", "#btn_selectfactura", function () {
       }).then((result) => {
         if (result.isConfirmed) {      
           $.ajax({
-            url: "../../../Vista/crud/pregunta/eliminarPregunta.php",
-            type: "POST",
-            datatype:"json",    
-            data:  { pregunta: pregunta},    
+            // url: "../../../Vista/crud/pregunta/eliminarPregunta.php",
+            // type: "POST",
+            // datatype:"json",    
+            // data:  { pregunta: pregunta},    
             success: function() {
-              // let estadoEliminado = data[0].estadoEliminado;
-              // console.log(data);
-              // if(estadoEliminado == 'eliminado'){
-                tablaPregunta.row(fila.parents('tr')).remove().draw();
+              // let $tableArticulos = $('#tablearticulos').DataTable();
+              // let idProducto = $('#idsProducto').closest('tr').index();
+              // $tableArticulos.row(idProducto).remove().draw();
+              // //$tableArticulos.row(fila.parents('idsProducto')).remove().draw();
+              // //let estadoEliminado = data[0].estadoEliminado;
+              // // console.log(data);
+              // //if(estadoEliminado == 'eliminado'){
+                //$tableArticulos.row(fila.parents('tr')).remove().draw();
                 Swal.fire(
                   'Eliminado!',
                   'La pregunta ha sido eliminada.',
@@ -340,7 +345,7 @@ $(document).on("click", "#btn_selectfactura", function () {
               //     'la pregunta no puede ser eliminado.',
               //     'error'
               //   );
-              // }           
+              //}           
             }
             }); //Fin del AJAX
         }
