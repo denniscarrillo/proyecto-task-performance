@@ -145,6 +145,7 @@ let carritoArticulos = ($productos) => {
       <td>${producto.nombre}</td>
       <td>${producto.marca}</td>
       <td><input type="text" id="${producto.id}" class="cantproducto"></td>
+      <td><button class="btn_eliminar btns btn" id="btn_eliminar"><i class="fas fa-times"></i></button></td>
     </tr>
   `
   });
@@ -154,6 +155,46 @@ let carritoArticulos = ($productos) => {
     idProducto.setAttribute('disabled', 'true');
   });
 }
+$(document).on("click", "#btn_eliminar", function() {
+  let fila = $(this);        
+    let idproducto = $(this).closest('tr').find('td:eq(1)').text();		    
+    Swal.fire({
+      title: 'Estas seguro de eliminar el producto '+idproducto+'?',
+      text: "No podras revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, borralo!'
+    }).then((result) => {
+      if (result.isConfirmed) {      
+        $.ajax({
+          url: "../../../Vista/crud/pregunta/eliminarPregunta.php",
+          type: "POST",
+          datatype:"json",    
+          data:  { pregunta: pregunta},    
+          success: function() {
+            // let estadoEliminado = data[0].estadoEliminado;
+            // console.log(data);
+            // if(estadoEliminado == 'eliminado'){
+              tablaPregunta.row(fila.parents('tr')).remove().draw();
+              Swal.fire(
+                'Eliminado!',
+                'La pregunta ha sido eliminada.',
+                'success'
+              ) 
+            // } else {
+            //   Swal.fire(
+            //     'Lo sentimos!',
+            //     'la pregunta no puede ser eliminado.',
+            //     'error'
+            //   );
+            // }           
+          }
+          }); //Fin del AJAX
+      }
+    });                
+});
 
 
 /* ============= EVENTOS DE TIPO DE CLIENTE Y BOTON PARA BUSCAR EL CLIENTE, EN CASO SEA EXISTENTE ================== */
@@ -223,7 +264,7 @@ document.getElementById('clientenuevo').addEventListener('change', function () {
 
 $(document).on('click', '#btnfactura', function () {
   obtenerFactura();  // Lógica para obtener la factura si es necesario
-  //$('#modalArticulosSolicitud').modal('show');
+  $('#modalArticulosSolicitud').modal('show');
   $('#modalFacturaSolicitud').modal('show');  
 
 });
