@@ -152,16 +152,16 @@ if (isset($_SESSION['usuario'])) {
         <div class="group-form">
                 <div class="form-element input-conteiner"  id="containerFacturacliente">
                     <label for="id-factura"  class="form-label">N° Factura</label>
-                    <input type="text" id="idfactura" name="numeroFactura" class="form-control">
+                    <input type="text" id="idfactura" name="numeroFactura" class="form-control" readonly>
                 </div>
                 <div class="form-element input-conteiner" id="containerrtncliente" >
                     <label for="rnt-cliente" class="form-label">RTN:</label>
                     <p id="mensaje"></p>
-                    <input type="text" id="rntcliente" name="rtnCliente" class="form-control">
+                    <input type="text" id="rntcliente" name="rtnCliente" class="form-control" disabled>
                 </div>
                 <div class="form-element input-conteiner">
                     <label for="telefono" class="form-label">nombre</label>
-                    <input type="text" id="nombre" name="telefono" class="form-control">
+                    <input type="text" id="nombre" name="telefono" class="form-control" readonly>
                 </div>
                 <div class="form-element input-conteiner">
                     <label for="telefono" class="form-label">Teléfono</label>
@@ -169,26 +169,27 @@ if (isset($_SESSION['usuario'])) {
                 </div>
                 <div class="form-element input-conteiner">
             <label for="correo"class="form-label">Correo electrónico</label>
-            <input type="text" id="correo" name="correoElectronico" class="form-control" value="oaoproyecto@gmail.com" readonly>
+            <input type="text" id="correo" name="correoElectronico" class="form-control" readonly>
         </div>
             </div>
                 <div class="group-form">
                     <div class="form-element input-conteiner">
                         <label for="fecha-solicitud" class="form-label">Fecha solicitud</label>
-                        <input type="date" id="fechasolicitud" name="fechaSolicitud" class="form-control">
+                        <input type="date" id="fechasolicitud" name="fechaSolicitud" class="form-control" disabled>
                     </div>
                     <div class= "form-element input-conteiner">
-                        <label for="tipo-solicitud" class="form-label">Tipo solicitud</label>
-                        <input type="text" id="tiposolicitud" name="tipoSolicitud" class="form-control">
+                        <label for="tipo-servicio" class="form-label">Tipo Servicio: </label>
+                        <select name="tiposervicio" id="tiposervicio" class="form-control"> 
+                        </select>
                     </div>
             
                     <div class="form-element input-conteiner">
-                        <label for="id-descripcion" class="form-label">Ubicación instalación</label>
-                        <input type="text" id="iddescripcion" name="ubicacionInstalacion" class="form-control">
+                        <label for="direccion" class="form-label">Ubicación instalación</label>
+                        <input type="text" id="direccion" name="ubicacionInstalacion" class="form-control" disabled>
                     </div>
                     <div class="form-element input-conteiner">
                         <label for="descripcion" class="form-label">Descripción</label>
-                        <input type="text" id="descripcion" name="descripcion" class="form-control">
+                        <input type="text" id="descripcion" name="descripcion" class="form-control" disabled>
                     </div>
                 </div>
             </div>
@@ -227,6 +228,7 @@ if (isset($_SESSION['usuario'])) {
   require_once('modalClienteFrecuente.html');
   require_once('modalArticulosSolicitud.html');
   require_once('modalFacturaSolicitud.html');
+  
 ?>
  <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
@@ -237,7 +239,7 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
   <script src="../../../Recursos/js/DataTableSolicitud/vistaClienteFrecuente.js" type="module"></script>
-
+  
 </body>
 
 </html>
