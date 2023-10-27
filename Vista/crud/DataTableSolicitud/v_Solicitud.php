@@ -207,6 +207,7 @@ if (isset($_SESSION['usuario'])) {
                                         <th scope="col">Artículo</th>
                                         <th scope="col">Marca</th>
                                         <th scope="col">Cantidad</th>
+                                        <th scope="col"> Acciones </th>   
                                         </tr>
                                 </thead>
                                     <tbody id="listarticulos" class="table-group-divider">
