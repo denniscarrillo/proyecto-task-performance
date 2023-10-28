@@ -7,17 +7,8 @@ const validaciones = {
 }
 //VARIABLES GLOBALES
 
-let estadoSoloNumeros = {
-    estadoNumerosValorPorcentaje: true,
-}
-let estadoSoloLetras = {
-    estadoLetrasDescripcionPorcentaje: true,
-}
-
 
 const $form = document.getElementById('form-Edit-Porcentaje');
-const $valor = document.getElementById('E_valorPorcentaje');
-const $descripcion = document.getElementById('E_descripcionPorcentaje');
 const $estado = document.getElementById('E_estadoPorcentaje');
 
 /* ---------------- VALIDACIONES FORMULARIO GESTION NUEVO USUARIO ----------------------*/
@@ -27,27 +18,10 @@ const $estado = document.getElementById('E_estadoPorcentaje');
 */
 $form.addEventListener('submit', e => {   
     //Validamos que algún campo no esté vacío.
-    let estadoInputValor = funciones.validarCampoVacio($valor);
-    let estadoInputDescripcion = funciones.validarCampoVacio($descripcion);
     let estadoInputEstado = funciones.validarCampoVacio($estado);
     // Comprobamos que todas las validaciones se hayan cumplido 
-    if (estadoInputValor == false || estadoInputDescripcion == false || estadoInputEstado == false) {
+    if (estadoInputEstado == false) {
         e.preventDefault();
-    } else {
-        if(estadoSoloNumeros.estadoNumerosValorPorcentaje == false){
-            e.preventDefault();
-            estadoSoloNumeros.estadoNumerosValorPorcentaje = funciones.validarSoloNumeros($valor, validaciones.soloNumeros);           
-            } else{
-                if(estadoSoloLetras.estadoLetrasDescripcionPorcentaje== false){
-                    e.preventDefault();
-                    estadoSoloLetras.estadoLetrasDescripcionPorcentaje = funciones.validarSoloLetras($descripcion, validaciones.soloLetras);
-                }
-                 else {
+    } 
                         estadoValidado = true;
-                    }
-                
-            
-            }       
-            
-        }
 });

@@ -18,9 +18,9 @@ class Comision
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $listaComision =
             $query = "SELECT co.id_Comision, co.id_Venta, v.TOTALNETO, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, co.Fecha_Creacion
-            FROM tbl_comision AS co
-            INNER JOIN view_facturasventa AS v ON co.id_Venta = v.NUMFACTURA
-            INNER JOIN  tbl_porcentaje AS po ON co.id_Porcentaje = po.id_Porcentaje
+            FROM tbl_Comision AS co
+            INNER JOIN VIEW_FACTURASVENTA AS v ON co.id_Venta = v.NUMFACTURA
+            INNER JOIN  tbl_Porcentaje AS po ON co.id_Porcentaje = po.id_Porcentaje
 			WHERE v.TOTALNETO > 0;";
         $listaComision = sqlsrv_query($consulta, $query);
         $Comision = array();
@@ -44,21 +44,21 @@ class Comision
     public static function registroNuevaComision($nuevaComision)
     {
         $conn = new Conexion();
-        $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         // Preparamos la insercion en la base de datos
         $query = "INSERT INTO tbl_comision (id_Venta, id_Porcentaje, 
         comision_TotalVenta, estadoComision, Creado_Por, Fecha_Creacion)  
         VALUES ('$nuevaComision->idVenta','$nuevaComision->idPorcentaje','$nuevaComision->comisionTotal', '$nuevaComision->estadoComision', '$nuevaComision->creadoPor', '$nuevaComision->fechaComision')";
         // Ejecutamos la consulta y comprobamos si fue exitosa
-        $consulta = sqlsrv_query($consulta, $query);
-        $query = "SELECT SCOPE_IDENTITY() AS id_Comision";
-        $resultado = sqlsrv_query($consulta, $query);
-        $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+        sqlsrv_query($conexion, $query);
+        $query2 = "SELECT SCOPE_IDENTITY() AS id_Comision";
+        $resultadoId = sqlsrv_query($conexion, $query2);
+        $fila = sqlsrv_fetch_array($resultadoId, SQLSRV_FETCH_ASSOC);
 
         $idComision = $fila['id_Comision'];
 
 
-        sqlsrv_close($consulta); #Cerramos la conexión.
+        sqlsrv_close($conexion); #Cerramos la conexión.
         return $idComision;
     }
 
@@ -126,12 +126,12 @@ class Comision
         $comisionVendedor = $comisionVenta / count($vendedores);
         foreach ($vendedores as $vendedor) {
         $idVendedor = $vendedor['idVendedor'];
-        $insert = "INSERT INTO tbl_Comision_Por_Vendedor(id_Comision, id_usuario_vendedor, total_Comision, estadoComisionVendedor, Creado_Por, Fecha_Creacion) 
+        $insert = "INSERT INTO tbl_Comision_Por_Vendedor (id_Comision, id_usuario_vendedor, total_Comision, estadoComisionVendedor, Creado_Por, Fecha_Creacion) 
         VALUES ('$idComision', '$idVendedor', '$comisionVendedor', '$estadoComisionVendedor', '$user', '$fechaComision');";
-    
-        $insertComision = sqlsrv_query($abrirConexion, $insert);
+        sqlsrv_query($abrirConexion, $insert);
         }
-        sqlsrv_close($abrirConexion); #Cerramos la conexión.
+
+sqlsrv_close($abrirConexion);
     }
 
     public static function actualizarEstadoComisionVendedor($comision){

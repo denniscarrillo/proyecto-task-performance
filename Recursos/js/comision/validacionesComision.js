@@ -72,17 +72,6 @@ $(document).on("click", "#btn_seleccionar", function () {
   estadoClienteTarea(rtnClienteVenta);
   mostrarVendedores(idVenta); 
   obtenerEstadoComision(idVenta);
-  /* if(document.querySelector(".mensaje-estado") !== null){
-    document.getElementById("btn-guardar-comision").disabled = false;
-  }else{
-    document.getElementById("btn-guardar-comision").disabled = true;
-    
-  }; */
-  /* if (document.querySelector(".mensaje-estado") !== true) {
-    document.getElementById("btn-guardar-comision").disabled = false;
-  } else if (document.querySelector(".mensaje-estado") !== false) {  
-    document.getElementById("btn-guardar-comision").disabled = true;
-  }; */
   /* console.log(montoVenta); */
   $("#modalVentas").modal("hide");
 });
@@ -151,8 +140,8 @@ $selectPorcentaje.addEventListener("change", function () {
 });
 
 $('#form-Comision').submit(function (e) { //evita el comportambiento normal del submit, es decir, recarga total de la página
+  e.preventDefault();
   if(document.getElementById("mensaje").classList.contains("mensaje-estado")){
-    e.preventDefault();
       Swal.fire(
         'Error!',
         'Factura ya comisionada!',
