@@ -77,59 +77,78 @@ $pdf->AddPage();
 // create some HTML content
 $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de la Solicitud id</b></P>
-<table border="1" cellpadding="4">
-<tr>
-<td style="background-color: #e54037;color: white; text-align: center">ID</td>
-<td style="background-color: #e54037;color: white; text-align: center">IF FACTURA</td>
-<td style="background-color: #e54037;color: white; text-align: center">RTN</td>
-<td style="background-color: #e54037;color: white; text-align: center">RTN</td>
-<td style="background-color: #e54037;color: white; text-align: center">RTN</td>
-<td style="background-color: #e54037;color: white; text-align: center">RTN</td>
-<td style="background-color: #e54037;color: white; text-align: center">RTN</td>
-</tr>
 ';
 
-$id = 1;
-if(isset($_GET[2])){
-    $SolicitudesId = ControladorDataTableSolicitud::VerSolicitudesPorId(2);
-    foreach($SolicitudesId as $solicitudId){
-        $idSolicitud = $solicitudId['idSolicitud'];
-        $idFactura = $solicitudId['idFactura'];
-        $rtn_cliente = $solicitudId['rtn_cliente'];
-        $rtn_clienteCartera = $solicitudId['rtn_clienteCartera'];
-        $NombreCliente = $solicitudId['NombreCliente'];
-        $descripcion = $solicitudId['descripcion'];
-        $servicioTecnico = $solicitudId['servicio_Tecnico'];
-        // $correoS = $solicitudId['correo'];
-        // $telefono = $solicitudId['telefono_cliente'];
-        // $ubicacion = $solicitudId['ubicacion_instalacion'];
-        // $EstadoAvance = $solicitudId['EstadoAvance'];
-        // $EstadoSolicitud = $solicitudId['EstadoSolicitud'];
-        // $motivo = $solicitudId['motivo_cancelacion'];
-        // $creadoPor = $solicitudId['Creado_Por'];
-        // $FechaCreacion = $solicitudId['Fecha_Creacion'];
-        // $modifacadoPor = $solicitudId['Modificado_Por'];
-        // $FechaModificacion = $solicitudId['Fecha_Modificacion'];
-        // $fechaFormateada = $FechaCreacion->format('Y/m/d');
+
+$SolicitudesId = ControladorDataTableSolicitud::VerSolicitudesPorId($_GET['idSolicitud']);
+        $idSolicitud = $SolicitudesId['idSolicitud'];
+        $idFactura = $SolicitudesId['idFactura'];
+        $rtnCliente = $SolicitudesId['rtnCliente'];
+        $rtnClienteCartera = $SolicitudesId['rtnClienteCartera'];
+        $NombreCliente = $SolicitudesId['NombreCliente'];
+        $descripcion = $SolicitudesId['Descripcion'];
+        $servicioTecnico = $SolicitudesId['TipoServicio'];
+        $correoS = $SolicitudesId['Correo'];
+        $telefono = $SolicitudesId['telefono'];
+        $ubicacion = $SolicitudesId['ubicacion'];
+        $EstadoAvance = $SolicitudesId['EstadoAvance'];
+        $EstadoSolicitud = $SolicitudesId['EstadoSolicitud'];
+        $motivo = $SolicitudesId['motivoCancelacion'];
+        $creadoPor = $SolicitudesId['CreadoPor'];
+        $FechaCreacion = $SolicitudesId['FechaCreacion'];
+        $modifacadoPor = $SolicitudesId['ModificadoPor'];
+        $FechaModificacion = $SolicitudesId['FechaModificacion'];
+        $fechaFormateadaC = $FechaCreacion->format('Y/m/d');
+        $fechaFormateadaM = $FechaCreacion->format('Y/m/d');
         $html .= '
+
+        <dl>
+            <dt><b>ID:</b></dt>
+            <dd>'.$idSolicitud.'</dd><br>
+            <dt><b>ID FACTURA:</b></dt>
+            <dd>'.$idFactura.'</dd><br>
+            <dt><b>RTN CLIENTE FRECUENTE:</b></dt>
+            <dd>'.$rtnCliente.'</dd><br>
+            <dt><b>RTN CLIENTE NUEVO:</b></dt>
+            <dd>'.$rtnClienteCartera.'</dd><br>
+            <dt><b>NOMBRE CLIENTE:</b></dt>
+            <dd>'.$NombreCliente.'</dd><br>
+            <dt><b>DESCRIPCION:</b></dt>
+            <dd>'.$descripcion.'</dd><br>
+            <dt><b>SERVICIO TECNICO:</b></dt>
+            <dd>'.$servicioTecnico.'</dd><br>
+            <dt><b>CORREO:</b></dt>
+            <dd>'.$correoS.'</dd><br>
+            <dt><b>TELEFONO:</b></dt>
+            <dd>'.$telefono.'</dd><br>
+            <dt><b>UBICACIÓN:</b></dt>
+            <dd>'.$ubicacion.'</dd><br>
+            <dt><b>ESTADO AVANCE:</b></dt>
+            <dd>'.$EstadoAvance.'</dd><br>
+            <dt><b>ESTADO DE SOLICITUD:</b></dt>
+            <dd>'.$EstadoSolicitud.'</dd><br>
+            <dt><b>MOTIVO:</b></dt>
+            <dd>'.$motivo.'</dd><br>
+            <dt><b>CREADO POR:</b></dt>
+            <dd>'.$creadoPor.'</dd><br>
+            <dt><b>FECHA CREACIÓN:</b></dt>
+            <dd>'.$fechaFormateadaC.'</dd><br>
+            <dt><b>MODIFICADO POR:</b></dt>
+            <dd>'.$modifacadoPor.'</dd><br>
+            <dt><b>FECHA MODIFICACIÓN:</b></dt>
+            <dd>'.$fechaFormateadaC.'</dd><br>
+            <dt><b>FECHA MODIFICACIÓN:</b></dt>
+            <dd>'.$fechaFormateadaM.'</dd><br>
+        </dl>
         
-        <tr>
-        <td style="text-align: center">'.$idSolicitud.'</td>
-        <td >'.$idFactura.'</td>
-        <td>'.$rtn_cliente.'</td>
-        <td>'.$rtn_clienteCartera.'</td>
-        <td>'.$NombreCliente.'</td>
-        <td>'.$descripcion.'</td>
-        <td>'.$servicioTecnico.'</td>
-        </tr>
+        
         
         ';
-    }
- }
+  
+
 
 $html.='
-        
-</table>
+
 ';
 
 //output the HTML content

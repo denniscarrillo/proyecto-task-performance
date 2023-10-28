@@ -6,13 +6,12 @@
     width: 100%;
 }
 #form-solicitud {
-    display: flex;
-    justify-content: center;
-    gap: 0.6rem;
-    /* width: fit-content; */
-    border-radius: 1rem;
-     margin: 2rem;
-    padding: 5.7rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.9rem;
+  border-radius: 1rem;
+  margin: 1rem;
+  padding: 1.7rem;
 }
 .group-form {
     min-width: 400px;
@@ -25,6 +24,21 @@ p {
     margin-bottom: 0;
 }
 
+.titulo-radios{
+  font-size: larger;
+}
+
+.radio-conteiner-s{
+  margin-top: 5px;
+}
+
+.radio-conteiner-existente{
+  margin-right: 10px;
+  float:left
+}
+.radio-conteiner-nuevo{
+  overflow:hidden
+}
 .new-form>button {
     display: inline;
     text-align: center;
@@ -72,6 +86,39 @@ p {
   .conteiner-text-task>p {
     margin: 0.1rem;
   }
+
+#containerrtncliente{
+  position: relative;
+}
+#containerFacturacliente{
+  position: relative;
+}
+.btnbuscarFactura{
+  position: absolute;
+  right: 0px;
+  bottom: 0;
+  top: 38px;
+  height: fit-content; 
+}
+.btnbuscarcliente{
+    position: absolute;
+    right: 0px;
+    bottom: 0;
+    top: 38px;
+    height: fit-content; 
+}
+#btnclientes{
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+#btnfactura{
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
   #table-Articulos_wrapper .row {
     min-height: -moz-fit-content;
     min-height: fit-content;
@@ -122,5 +169,10 @@ p {
   }
   .hidden{
     display: none;
+  }
+
+  .btn-guardar{
+    margin-left: -1px;
+    margin-bottom: 1rem;
   }
 

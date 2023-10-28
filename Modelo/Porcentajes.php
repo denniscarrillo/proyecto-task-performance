@@ -59,14 +59,13 @@ class Porcentajes {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
         $idPorcentaje = $nuevoPorcentaje->idPorcentaje;
-        $valorPorcentaje = $nuevoPorcentaje->valorPorcentaje;
-        $descripcionPorcentaje =$nuevoPorcentaje->descripcionPorcentaje;
+        // $valorPorcentaje = $nuevoPorcentaje->valorPorcentaje;
+        // $descripcionPorcentaje =$nuevoPorcentaje->descripcionPorcentaje;
         $estadoPorcentaje = $nuevoPorcentaje->estadoPorcentaje;
         $ModificadoPor = $nuevoPorcentaje->ModificadoPor;
         date_default_timezone_set('America/Tegucigalpa'); 
         $FechaModificacion = date("Y-m-d");
-        $query = "UPDATE tbl_Porcentaje SET valor_Porcentaje='$valorPorcentaje', descripcion='$descripcionPorcentaje',
-        estado_Porcentaje ='$estadoPorcentaje', Modificado_Por = '$ModificadoPor', 
+        $query = "UPDATE tbl_Porcentaje SET estado_Porcentaje ='$estadoPorcentaje', Modificado_Por = '$ModificadoPor', 
         Fecha_Modificacion = '$FechaModificacion' WHERE id_Porcentaje='$idPorcentaje';";
         $nuevoPorcentaje = sqlsrv_query($conexion, $query);
         sqlsrv_close($conexion); #Cerramos la conexión.

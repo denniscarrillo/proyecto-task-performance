@@ -137,7 +137,7 @@ if (isset($_SESSION['usuario'])) {
 
           <div class="table-conteiner"  >
             <div>
-              <a href="../../fpdf/ReporteArticulo.php" class="btn_Pdf btn btn-primary" target="_blank"  id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
+              <a href="../../../TCPDF/examples/reporteriaArticulos.php" class="btn_Pdf btn btn-primary" target="_blank"  id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
             </div>
             <table class="table"  id="table-Articulos">
               <thead >

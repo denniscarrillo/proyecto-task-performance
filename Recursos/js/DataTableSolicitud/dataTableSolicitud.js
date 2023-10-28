@@ -48,7 +48,7 @@ let obtenerPermisos = function ($idObjeto, callback) {
       datatype: "JSON",
       data: {idObjeto: $idObjeto},
       success: callback
-    });
+});
 }
 
 
@@ -105,11 +105,6 @@ $(document).on("click", "#btn_ver", async function (){
    $('#modalVerSolicitud').modal('show');  
 });
 
-// $(document).on("click", "#btn_pdf", async function (){
-//   let fila = $(this).closest("tr");
-//   let idSolicitud = fila.find('td:eq(0)').text();
-//   await reporteSolicitudesPorId(idSolicitud);  
-//  });
 //obtener datos para el modal editar
 let obtenerSolicitudesVerPorId = async (idSolicitud) => {
   try {
@@ -126,22 +121,14 @@ let obtenerSolicitudesVerPorId = async (idSolicitud) => {
     console.error(err)
   }
 }
-//obtener datos para el modal editar
-let reporteSolicitudesPorId = async (idSolicitud) => {
-  try {
-    let reporteSolicitud = await $.ajax({
-      url: '../../../TCPDF/examples/reporteSolicitudXId.php',
-      type: 'POST',
-      dataType: 'JSON',
-      data: {
-        IdSolicitud: idSolicitud
-      }
-    });
-    return reporteSolicitud; //Retornamos la data recibida por ajax
-  } catch(err) {
-    console.error(err)
-  }
-}
+
+$(document).on("click", "#btn_pdf_id",  function (){
+  let idSolicitudR = document.querySelector('#V_IdSolicitud').innerText;
+
+  //console.log("hola")
+  window.open('../../../TCPDF/examples/reporteSolicitudXId.php?idSolicitud='+idSolicitudR, '_blank');
+  //await reporteSolicitudesPorId(idSolicitudR);  
+ });
 
 $(document).on("click", "#btn_editar", async function(){		 
   // Obtener la fila más cercana al botón
@@ -288,12 +275,12 @@ $('#form-Solicitud').submit(function (e) {
     
   });  
 
+
+
+  
+
+
+  
   
 
       
-    
-  
-
-
-
-   
