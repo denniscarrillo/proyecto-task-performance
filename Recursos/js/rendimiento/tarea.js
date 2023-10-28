@@ -125,14 +125,14 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
       //Recorremo arreglo de objetos con un forEach para mostrar tareas
       objData.forEach(tarea => {
         if (tarea.tipoTarea == tipoTarea) {
-          let fechaIni = tarea.fechaInicio.date.split(" ");
+          // let fechaIni = tarea.fechaInicio.date.split(" ");
           $tareas +=
             `<div class="card_task dragged-element" draggable="true" id="${tarea.id}">
               <div class="conteiner-text-task">
-                <p>${tarea.tituloTarea}</p>
-                <p>${fechaIni[0]}</p>
+                <p style="min-height: 2.5rem;">${tarea.tituloTarea}</p>
               </div>
               <div class="conteiner-icons-task">
+              <p style="margin-right: 3rem; font-size: 14px;"> Hace ${tarea.diasAntiguedad} días</p>
               <div>
                 <a href="#" class="btn-vendedor btn-vendedores" data-bs-toggle="modal" data-bs-target="#modalVendedores" id="${tarea.id}"><i class="fa-solid-btn fa-solid fa-user-plus"></i></a>
               </div>
@@ -152,16 +152,6 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
     }
   });
 }
-$(document).on('click', `#1`, function(){
-  let newFormulario = document.createElement("div");
-  newFormulario.setAttribute('class', 'nuevaTarea'); //Añadimos clase al div
-  newFormulario.innerHTML = `
-    <form action="" method="" id="" class="priority-menu">
-
-    </form>
-  `;
-  $('#1').append(newFormulario);
-});
 let crearNuevaTarea = ($contenedor, $idConteinerForm, $idForm, $placeholder, $tarea) => {
   // Validamos si no existe el formulrio para nueva tarea, solo entonces se agrega.
   if (document.getElementById($idForm) == null) {

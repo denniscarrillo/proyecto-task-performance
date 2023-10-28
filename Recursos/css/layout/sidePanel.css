@@ -1,0 +1,69 @@
+.comments-container{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+.comments-container-list {
+    width: 100%;
+    height: 80vh;
+    overflow-y: auto;
+}
+.card-comment {
+    padding: 1rem;
+    margin: 0.6rem;
+    border-radius: 0.4rem;
+    width: 85%;
+    height: fit-content;
+    background-color: #e7eaf0;
+    box-shadow: 4px 2px 5px 0px #00000014;
+}
+.container-chat {
+    display: flex;
+    width: 100%;
+    padding: 0.4rem;
+    padding-left: 1rem;
+    gap: 1rem;
+    align-items: center;
+    height: 12vh;
+}
+.comments-container-list::-webkit-scrollbar {
+    width: 0.4rem;
+    border-radius: 4px;
+}
+.comments-container-list::-webkit-scrollbar-thumb {
+    background: #ef904d;
+    border-radius: 4px;
+    padding: 0 0.8rem;
+    padding-right: 0.4rem;
+}
+.info-comment {
+    display: flex;
+    justify-content: start;
+    gap: 5rem;
+    padding-bottom: 0.1rem;
+    border-radius: 0.2rem;
+    font-weight: 500;
+}
+.data-comment {
+    padding-left: 2.4rem;
+}
+.btn-Comentario{
+    width: 6rem;
+    height: 3rem;
+}
+.fa-paper-plane {
+    font-size: 1.5rem;
+} 
+.input-comentario{
+    border: 0.8px solid #f2e0d4; 
+    border-radius: 0.2rem;
+    padding: 0.5rem;
+    min-height: 6rem;
+    max-height: 6rem;
+    width: 80%;
+    outline: none;
+    resize: none;
+}
+.input-comentario::-webkit-scrollbar {
+    display: none;
+}

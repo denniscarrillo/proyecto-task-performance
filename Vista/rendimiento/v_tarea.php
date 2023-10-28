@@ -124,21 +124,20 @@ require_once('validacionesTarea.php');
   </div>
   <div id="modals-container">
     <?php
-    require_once('modalSubirEvidencia.html');
     require_once('modalVendedores.html');
     ?>
   </div>
-  <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-  <script src="../../Recursos/bootstrap5/bootstrap.min.js "></script>
+  <script src="../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js" ></script>
+  <script src="../../Recursos/js/librerias/SweetAlert2.all.min.js"></script>
   <script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+  <script src="../../Recursos/js/librerias/dataTables.bootstrap5.min.js"></script>
   <script src="../../Recursos/js/librerias/Sortable.min.js"></script>
-  <script src="../../Recursos/js/rendimiento/tarea.js"></script>
+  <script src="../../Recursos/bootstrap5/bootstrap.min.js "></script>
+  <!-- Scripts personalizados -->
   <script src="../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../Recursos/js/index.js"></script>
-  <script src="../../Recursos/js/rendimiento/guardarEvidencia.js"></script>
+  <script src="../../Recursos/js/rendimiento/tarea.js"></script>
 </body>
 
 </html>

@@ -1,5 +1,23 @@
+import {sidePanel_Interaction} from '../../components/js/sidePanel.js'; //importamos la funcion del sidePanel
+
+let tableArticulos = '';
+let $idTarea = document.getElementById('id-Tarea').value;
 $(document).ready(function(){
     setEstadoTarea();
+    obtenerComentarios($idTarea);
+});
+document.getElementById('btn-comment').addEventListener('click', () => {
+  obtenerComentarios($idTarea);
+});
+//Función de que le da interacción del sidepanel
+sidePanel_Interaction(document.getElementById('btn-comment'), document.getElementById('btn-close-comment'));
+
+//En el evento submit llamamos a la función que enviara el comentario a la base de datos
+document.getElementById('form-comentario').addEventListener('submit', (e) => {
+  e.preventDefault();
+  let $comentario = document.getElementById('input-comentario').value;
+  nuevoComentario($idTarea,  $comentario);
+  obtenerComentarios($idTarea);
 });
 document.getElementById('form-Edit-Tarea').addEventListener('submit', function(e){
   // e.preventDefault();
@@ -11,7 +29,7 @@ $('#btn-articulos').click(() => {
     if (document.getElementById('table-Articulos_wrapper') == null) {
       $('#table-Articulos').DataTable({
         "ajax": {
-          "url": "../../../Vista/articulos/obtenerArticulos.php",
+          "url": "../../../Vista/rendimiento/obtenerArticulos.php",
           "dataSrc": ""
         },
         "language": {
@@ -79,13 +97,14 @@ $('#btn-articulos').click(() => {
           id: $idArticulo,
           nombre: $nombreArticulo,
           marca: $marca
-        }
+        } 
         $Articulos.push($articulo);
       }
     });
     carritoArticulos($Articulos);
   }
   let carritoArticulos = ($productos) => {
+    console.log($productos);
     let productos = '';
     let $tableArticulos = document.getElementById('list-articulos');
     $productos.forEach((producto) => {
@@ -103,6 +122,23 @@ $('#btn-articulos').click(() => {
     idsProducto.forEach(function(idProducto){
       idProducto.setAttribute('disabled', 'true');
     });
+    // if(document.getElementById('table-articulos_wrapper')){
+    //   tableArticulos.destroy();
+    //   //Convertimos la tabla de productos de interes a DataTable
+    //   tableArticulos = $('#table-articulos').DataTable({
+    //     "language": {
+    //       "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+    //     },
+    //   });
+    // } else {
+    //   //Convertimos la tabla de productos de interes a DataTable
+    //   tableArticulos = $('#table-articulos').DataTable({
+    //     language: {
+    //       "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+    //     },
+    //     scrollY: "29vh"
+    //   });
+    // }
   }
   let setEstadoTarea = function(){
     let $select = document.getElementById('estados-tarea');
@@ -270,6 +306,47 @@ let enviarProductosInteres = ($idTarea) => {
         'La tarea '+$idTarea+' ha sido editada!',
         'success',
       )
+    }
+  });//Fin AJAX
+}
+
+let nuevoComentario = ($idTarea,  $comentario) => {
+  document.getElementById('input-comentario').value = '';
+  //Enviamos el nuevo comentario a la base de datos
+  $.ajax({
+    url: "../../../Vista/rendimiento/nuevoComentario.php",
+    type: "POST",
+    datatype: "JSON",
+    data: {
+      "id_Tarea": $idTarea,
+      "comentario": $comentario 
+    }
+  });//Fin AJAX
+}
+let obtenerComentarios = ($idTarea) => {
+  //Enviamos el nuevo comentario a la base de datos
+  $.ajax({
+    url: "../../../Vista/rendimiento/obtenerComentarios.php",
+    type: "POST",
+    datatype: "JSON",
+    data: {
+      "id_Tarea": $idTarea
+    },
+    success: function(comentarios) {
+      let comments ='';
+      let ObjComentarios = JSON.parse(comentarios);
+      let conteinerComments = document.getElementById('comments-container-list');
+      ObjComentarios.forEach((comentario) => {
+        comments +=
+        `<div class="card-comment">
+        <section class="info-comment">
+          <section class="creadoPor-comment">${comentario.creadoPor}</section>
+          <section class="data-comment">${comentario.FechaCreacion.date.split('.')[0]}</section>
+        </section>
+          <section class="title-comment">${comentario.comentarioTarea}</section>
+        </div>`;
+      conteinerComments.innerHTML = comments;
+      });
     }
   });//Fin AJAX
 }

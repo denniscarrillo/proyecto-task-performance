@@ -9,8 +9,12 @@
                 <form action="" method="post" id="form-Edit-Solicitud">
                     <div class="grupo-form">
                         <div class="mb-3">
-                            <label for="IdSolicitud" class="form-label">ID:</label>
-                            <input type="text" name="IdSolicitud" id="E_IdSolicitud" class="form-control" disabled>
+                            <label for="IdSolicitud" class="form-label">ID:</label><br>
+                            <label id="E_IdSolicitud" class="form-label-V"></label>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Nombre" class="form-label">Nombre Cliente:</label><br>
+                            <label id="E_NombreC" class="form-label-V"></label>
                         </div>
 
                         <div class="mb-3">
@@ -20,9 +24,8 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="idTipoServicio" class="form-label">TipoServicio:</label>
-                            <input type="text" name="TipoServicio" id="E_TipoServicio" class="form-control" disabled>
-                            <p class="mensaje"></p>
+                            <label for="idTipoServicio" class="form-label">TipoServicio:</label><br>
+                            <label id="E_TipoServicio" class="form-label-V"></label>
                         </div>
 
                         <div class="mb-3">
@@ -52,25 +55,17 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="EstadoSolicitud" class="form-label">Estado de Solicitud:</label>
-                            <input type="text" name="EstadoSolicitud" id="E_EstadoSolicitud" class="form-control" disabled>
-                            <p class="mensaje"></p>
+                            <label for="EstadoSolicitud" class="form-label">Estado de Solicitud:</label><br>
+                            <label id="E_EstadoSolicitud" class="form-label-V"></label>
                         </div>   
                     
                         <div class="mb-3">
-                            <label for="usuario" class="form-label">Motivo Cancelacion:</label>
-                            <input type="text" name="Motivo" id="E_Motivo" class="form-control" disabled>
-                            <p class="mensaje"></p>
-                        </div>
-                        <div class="mb-3">
-                            <label for="CreadoPor" class="form-label">Creado Por:</label>
-                            <input type="text" name="CreadoPor" id="E_CreadoPor" class="form-control" disabled>
-                            <p class="mensaje"></p>
+                            <label for="CreadoPor" class="form-label">Creado Por:</label><br>
+                            <label id="E_CreadoPor" class="form-label-V"></label>
                         </div> 
                         <div class="mb-3">
-                            <label for="FechaCreacion" class="form-label">Fecha Solicitud:</label>
-                            <input type="date" name="FechaCreacion" id="E_FechaCreacion" class="form-control" disabled>
-                            <p class="mensaje"></p>
+                            <label for="FechaCreacion" class="form-label">Fecha Solicitud:</label><br>
+                            <label id="E_FechaCreacion" class="form-label-V"></label>
                         </div>   
                     </div>
                     <div class="btn-guardar">

@@ -8,13 +8,12 @@ require_once("../../../Controlador/ControladorUsuario.php");
 require_once("../../../Controlador/ControladorBitacora.php");
 
 session_start(); //Reanudamos la sesion
-if (isset($_SESSION['usuario'])) {
+if (isset($_SESSION['usuario'])) {  
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
-  $permisoRol = ControladorUsuario::permisosRol($idRolUsuario);
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionParametro.php');
-  $objetoPermitido = ControladorUsuario::permisoSobreObjeto($_SESSION['usuario'], $idObjetoActual, $permisoRol);
-  if(!$objetoPermitido){
+  $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual);
+  if(!$permisoConsulta){
     /* ==================== Evento intento de ingreso sin permiso a mantenimiento parametro. ==========================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
@@ -134,7 +133,7 @@ if (isset($_SESSION['usuario'])) {
       
           <div class="table-conteiner">
               <div>
-              <a href="../../fpdf/ReporteParametros.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
+              <a href="../../../TCPDF/examples/reporteParametros.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
               </div>
           <table class="table" id="table-Parametro">
             <thead>

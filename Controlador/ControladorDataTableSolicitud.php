@@ -3,8 +3,8 @@
 class ControladorDataTableSolicitud {
 
   
-    public static function DataTableSolicitud($User){
-        return DataTableSolicitud::obtenerSolicitud($User);
+    public static function DataTableSolicitud(){
+        return DataTableSolicitud::obtenerSolicitud();
     }
 
     public static function actualizarEstadoSolicitud($nuevaSolicitud){

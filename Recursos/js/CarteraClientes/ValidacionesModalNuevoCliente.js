@@ -5,8 +5,8 @@ let estadoExisteRtn = false;
 
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
-    correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/
-    // soloNumeros: /^[0-9]*$/
+    correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
+    soloNumeros: /^[0-9]*$/
 }
 //VARIABLES GLOBALES
 let estadoSoloLetras = {
@@ -19,6 +19,11 @@ let estasdoMasdeUnEspacio = {
     estadoMasEspacioNombre: true,
     estadoMasEspacioDireccion: true
 }
+let estadoSoloNumeros = {
+    estadoNumerortn :true,
+    estadoNumerotelefono :true,
+}
+
 
 
 const $form = document.getElementById('form-carteraCliente');
@@ -47,7 +52,12 @@ $form.addEventListener('submit', e => {
     } else {
             if(estadoSoloLetras.estadoLetrasName == false){
                 e.preventDefault();
-                estadoSoloLetras.estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);           
+                estadoSoloLetras.estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);  
+            }
+            if(estadoSoloNumeros.estadoNumerotelefono == false || estadoSoloNumeros.estadoNumerortn == false ){
+                e.preventDefault();
+                estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
+                estadoSoloNumeros.estadoNumerortn = funciones.validarSoloNumeros($rtn, validaciones.soloNumeros);         
             } else{
                 if(estadoCorreo == false){
                     e.preventDefault();
@@ -106,6 +116,15 @@ $rtn.addEventListener('focusout', ()=>{
     estadoExisteRtn = obtenerRtnExiste(rtn);
 });
 
+$telefono.addEventListener('keyup', ()=>{
+    estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
+   funciones.limitarCantidadCaracteres("telefono", 14);
+});
+
+$rtn.addEventListener('keyup', ()=>{
+    estadoSoloNumeros.estadoNumerortn = funciones.validarSoloNumeros($rtn, validaciones.soloNumeros);
+   funciones.limitarCantidadCaracteres("rtn", 14);
+});
 
 let obtenerRtnExiste = ($rtn) => {
   
