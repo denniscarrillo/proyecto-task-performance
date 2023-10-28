@@ -1,4 +1,4 @@
-import {sidePanel_Interaction} from '../../components/js/sidePanel.js'; //importamos la funcion del sidePanel
+import { sidePanel_Interaction } from '../../components/js/sidePanel.js'; //importamos la funcion del sidePanel
 
 let tableArticulos = '';
 let $idTarea = document.getElementById('id-Tarea').value;
@@ -8,9 +8,31 @@ $(document).ready(function(){
 });
 document.getElementById('btn-comment').addEventListener('click', () => {
   obtenerComentarios($idTarea);
+  obtenerHistorialTarea($idTarea);
 });
-//Función de que le da interacción del sidepanel
+
+/* ----------- Función de que le da interacción del sidepanel -------------------------*/
+let $tabComments = document.getElementById('tab-comment');
+let $tabHistory = document.getElementById('tab-history');
+let $commentsContainer = document.getElementById('comments-container-list');
+let $historyContainer = document.getElementById('history-container');
 sidePanel_Interaction(document.getElementById('btn-comment'), document.getElementById('btn-close-comment'));
+/* ------------------ Intercambio de tabs para el sidepanel  -------------------- */
+$tabHistory.addEventListener('click', () => {
+  $commentsContainer.setAttribute('style', 'z-index: -30; opacity: 0;');
+  $historyContainer.setAttribute('style', 'z-index: 20; opacity: 1;');
+  $tabComments.classList.remove('tab-selected')
+  $tabHistory.classList.add('tab-selected');
+});
+$tabComments.addEventListener('click', () => {
+  $tabHistory.classList.remove('tab-selected');
+  $tabComments.classList.add('tab-selected');
+  $commentsContainer.removeAttribute('style');
+  $historyContainer.removeAttribute('style');
+});
+
+
+/* ------------------------------------------------------------------------------------ */
 
 //En el evento submit llamamos a la función que enviara el comentario a la base de datos
 document.getElementById('form-comentario').addEventListener('submit', (e) => {
@@ -18,6 +40,7 @@ document.getElementById('form-comentario').addEventListener('submit', (e) => {
   let $comentario = document.getElementById('input-comentario').value;
   nuevoComentario($idTarea,  $comentario);
   obtenerComentarios($idTarea);
+  obtenerHistorialTarea($idTarea);
 });
 document.getElementById('form-Edit-Tarea').addEventListener('submit', function(e){
   // e.preventDefault();
@@ -336,9 +359,11 @@ let obtenerComentarios = ($idTarea) => {
       let comments ='';
       let ObjComentarios = JSON.parse(comentarios);
       let conteinerComments = document.getElementById('comments-container-list');
+      let $tabContainer = document.getElementById('tab-comment').getAttribute('name');
+      console.log($tabContainer);
       ObjComentarios.forEach((comentario) => {
         comments +=
-        `<div class="card-comment">
+        `<div class="card-comment ${($tabContainer == comentario.creadoPor)? 'align-right': ''}">
         <section class="info-comment">
           <section class="creadoPor-comment">${comentario.creadoPor}</section>
           <section class="data-comment">${comentario.FechaCreacion.date.split('.')[0]}</section>
@@ -346,6 +371,33 @@ let obtenerComentarios = ($idTarea) => {
           <section class="title-comment">${comentario.comentarioTarea}</section>
         </div>`;
       conteinerComments.innerHTML = comments;
+      });
+    }
+  });//Fin AJAX
+}
+let obtenerHistorialTarea = ($idTarea) => {
+  $.ajax({
+    url: "../../../Vista/rendimiento/obtenerBitacoraTarea.php",
+    type: "POST",
+    datatype: "JSON",
+    data: {
+      "id_Tarea": $idTarea
+    },
+    success: function(historial) {
+      let historialTarea = '';
+      let ObjHistorial = JSON.parse(historial);
+      let conteinerHistory = document.getElementById('history-container');
+      ObjHistorial.forEach((historial) => {
+        historialTarea +=
+        `<div class="card-history">
+          <section class="info-history">
+            <section class="creadoPor-history">${historial.usuarioTarea}</section>
+            <section class="action-history">${historial.accion}</section>
+            <section class="data-history">${historial.fecha.date.split('.')[0]}</section>
+          </section>
+          <section class="text-history">${historial.descripcion}</section>
+        </div>`;
+        conteinerHistory.innerHTML = historialTarea;
       });
     }
   });//Fin AJAX

@@ -1,0 +1,130 @@
+/* ---------- Estilos par elementos propios de comentarios e historial de tarea del componente sidePanel ------------------*/
+#comment-history-container{
+    position: relative;
+    /* background-color: #f6f8fb; */
+    background-color: #7c7e7e;
+}
+.history-container {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -20;
+    opacity: 0;
+    background-color: #7c7e7e;
+    color: #3b3b3a;
+    padding: 0.8rem;
+}
+.comments-container{
+    width: 100%;
+    height: 100vh;
+}
+.comments-container-list {
+    width: 100%;
+    height: 80vh;
+    padding: 0.8rem;
+    overflow-y: auto;
+}
+.card-comment {
+    padding: 0.5rem;
+    margin-bottom: 0.8rem;
+    border-radius: 0.4rem;
+    font-size: 0.9rem;
+    width: 85%;
+    height: fit-content;
+    color: #514f4f;
+    background-color: #6a6c6e;
+    color: #f3f8f8;
+    /* box-shadow: 2px 1px 2px 3px #00000014; */
+}
+.container-chat {
+    display: flex;
+    width: 100%;
+    padding: 0.4rem;
+    padding-left: 1rem;
+    gap: 1rem;
+    align-items: center;
+    height: 12vh;
+}
+.comments-container-list::-webkit-scrollbar {
+    width: 0.4rem;
+    border-radius: 4px;
+}
+.comments-container-list::-webkit-scrollbar-thumb {
+    background: #ef904d;
+    border-radius: 4px;
+    padding: 0 0.8rem;
+    padding-right: 0.4rem;
+}
+.info-comment {
+    display: flex;
+    justify-content: start;
+    gap: 5rem;
+    padding-bottom: 0.1rem;
+    border-radius: 0.2rem;
+    font-weight: 500;
+}
+.data-comment {
+    padding-left: 2.4rem;
+}
+.btn-Comentario{
+    width: 6rem;
+    height: 3rem;
+}
+.fa-paper-plane {
+    font-size: 1.5rem;
+} 
+.input-comentario{
+    border: 0.8px solid #f2e0d4; 
+    border-radius: 0.2rem;
+    padding: 0.5rem;
+    min-height: 6rem;
+    max-height: 6rem;
+    width: 80%;
+    background-color: #bec1c1;
+    outline: none;
+    resize: none;
+}
+.input-comentario::-webkit-scrollbar {
+    display: none;
+}
+/* ------------------------------------------------------------------------------------------- */
+.align-right {
+    margin-left: auto;
+    /* background-color: #ef904d; */
+    background-color: #4a5f5f;
+    color: #f0ecec;
+}
+.tab-selected {
+    color: #ffffff;
+}
+.info-history {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 500;
+}
+.card-history{
+    font-size: 0.9rem;
+    padding: 1rem;
+    margin-bottom: 0.3rem;
+    border-radius: 0.3rem;
+    box-shadow: -7px 3px 2px 1px #67666614;
+    /* background-color: #ebe6e3; */
+    color: #e4ecec;
+    background-color: #6a6c6e;
+}
+.history-container{
+    height: 95%;
+    padding-bottom: 2.5rem;
+    overflow-y: auto;
+}
+.history-container::-webkit-scrollbar{
+    width: 0.4rem;
+    border-radius: 4px;
+}
+.history-container::-webkit-scrollbar-thumb {
+    background: #ef904d;
+    border-radius: 4px;
+    padding: 0 0.8rem;
+    padding-right: 0.4rem;
+}

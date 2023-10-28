@@ -22,6 +22,8 @@ class Tarea
     public $Fecha_Creacion;
     public $Modificado_Por;
     public $Fecha_Modificacion;
+    public $accionEvento;
+    public $descripcionEvento;
 
 
     // Obtener todas las tareas que le pertenecen a un usuario.
@@ -521,5 +523,44 @@ class Tarea
         }
         sqlsrv_close($conexion);
         return $comentariosTarea;
+    }
+    public static function acciones_Evento_Tareas(){
+        $accionesTarea = [
+            'nuevoComentario' => 'Agrego un comentario',
+            'Update' => 'Actualizacion'
+        ];
+        return $accionesTarea;
+    }
+    /*
+    *** Método de captura los eventos sobre el modulo de RENDIMIENTO y los almacena en la base de datos
+    *** en la tabla TBL_BITACORA_TAREA
+    */
+    public static function SAVE_EVENT_TASKS_BITACORA($eventoTarea, $idUser){
+        //Recibir objeto y obtener parametros
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $ejecutarSQL = "INSERT INTO tbl_Bitacora_Tarea (id_Tarea, id_Usuario, accion, descripcion, fecha)
+        VALUES('$eventoTarea->idTarea', '$idUser', '$eventoTarea->accionEvento', '$eventoTarea->descripcionEvento', GETDATE());";
+        $ejecutarSQL = sqlsrv_query($conexion, $ejecutarSQL);
+        sqlsrv_close($conexion); #Cerramos la conexión.
+    }
+    public static function consultarBitacoraTarea($idTarea){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "  SELECT mu.usuario, bt.accion, bt.descripcion, bt.fecha FROM tbl_Bitacora_Tarea bt
+        INNER JOIN tbl_MS_Usuario mu ON bt.id_Usuario = mu.id_Usuario
+        WHERE bt.id_Tarea = '$idTarea' ORDER BY bt.fecha DESC;";
+        $ejecutar = sqlsrv_query($conexion, $query);
+        $historialTarea = array();
+        while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
+            $historialTarea[] = [
+                'usuarioTarea' => $fila['usuario'],
+                'accion' => $fila['accion'],
+                'descripcion' => $fila['descripcion'],
+                'fecha' => $fila['fecha']
+            ];
+        }
+        sqlsrv_close($conexion);
+        return $historialTarea;
     }
 }
