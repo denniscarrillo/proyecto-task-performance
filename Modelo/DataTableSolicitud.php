@@ -132,5 +132,31 @@ class DataTableSolicitud
         return $datosVerSolicitudes;
     }
 
+
+    public static function NuevaSolicitud($nuevaSolicitud){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $idFactura =$nuevaSolicitud->idFactura;
+        $rtnCliente = $nuevaSolicitud->rtnCliente;
+        $rtnClienteCartera = $nuevaSolicitud->rtnClienteC;
+        $Descripcion = $nuevaSolicitud->descripcion;
+        $TipoServicio = $nuevaSolicitud->tipoServicio;
+        $Correo = $nuevaSolicitud->correo;
+        $telefono = $nuevaSolicitud->telefono;
+        $ubicacion = $nuevaSolicitud->ubicacion;
+        $EstadoAvance = $nuevaSolicitud->estadoAvance;
+        $EstadoSolicitud = $nuevaSolicitud->estadoSolicitud;
+        $CreadoPor = $nuevaSolicitud->creadoPor;
+        
+        $query = "INSERT INTO tbl_Stbl_Solicitud(idFactura, rtn_cliente, rtn_clienteCartera, descripcion, 
+        id_TipoServicio, correo, telefono_cliente, ubicacion_instalacion, EstadoAvance, EstadoSolicitud, 
+        Creado_Por, Fecha_Creacion) 
+        VALUES ('$idFactura','$rtnCliente', '$rtnClienteCartera', '$Descripcion', '$TipoServicio', '$Correo',
+        '$telefono', '$ubicacion', '$EstadoAvance', '$EstadoSolicitud','$CreadoPor', GETDATE());";
+        $nuevaSolicitud = sqlsrv_query($consulta, $query);
+        sqlsrv_close($consulta); #Cerramos la conexión.
+        return $nuevaSolicitud;
+    }
+
 }
 

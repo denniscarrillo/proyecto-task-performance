@@ -1,8 +1,8 @@
 <?php
     require_once ("../../../db/Conexion.php");
-    require_once ("../../../Modelo/Solicitud.php");
+    require_once ("../../../Modelo/DataTableSolicitud.php");
     require_once ("../../../Modelo/Bitacora.php");
-    require_once("../../../Controlador/ControladorSolicitud.php");
+    require_once("../../../Controlador/ControladorDataTableSolicitud.php");
     require_once ("../../../Modelo/Usuario.php");
     require_once("../../../Controlador/ControladorUsuario.php");
     require_once("../../../Controlador/ControladorBitacora.php");
@@ -10,17 +10,20 @@
     session_start(); //Reanudamos session
     if(isset($_SESSION['usuario'])){
         $user = $_SESSION['usuario'];
-        $nuevaSolicitud = new Solicitud();
-        $nuevaSolicitud->idUsuario = $_POST['idUsuario'];
-        $nuevaSolicitud->idEstadoSolicitud = 1;
-        $nuevaSolicitud->idTipoServicio = $_POST['idTipoServicio'];
-        $nuevaSolicitud->idCliente = $_POST['idCliente'];
-        $nuevaSolicitud->fechaEnvio = $_POST['fechaEnvio'];
-        $nuevaSolicitud->titulo = $_POST['titulo'];
-        $nuevaSolicitud->correo = $_POST['correo'];
+        $nuevaSolicitud = new DataTableSolicitud();
+        $nuevaSolicitud->idFactura = $_POST['idFactura'];
+        $nuevaSolicitud->rtnCliente = $_POST['RTNcliente'];
+        $nuevaSolicitud->rtnClienteC = $_POST['RTNcliente'];
         $nuevaSolicitud->descripcion = $_POST['descripcion'];
+        $nuevaSolicitud->tipoServicio = $_POST['tipoServicio'];
+        $nuevaSolicitud->correo = $_POST['correo'];
+        $nuevaSolicitud->telefono = $_POST['telefono'];
         $nuevaSolicitud->ubicacion = $_POST['ubicacion'];
-        ControladorSolicitud::crearSolicitud($nuevaSolicitud);
+        $nuevaSolicitud->estadoAvance = 'PENDIENTE';
+        $nuevaSolicitud->estadoSolicitud = 'ACTIVO';
+        $nuevaSolicitud->creadoPor =  $user;
+        
+        ControladorDataTableSolicitud::NuevaSolicitud($nuevaSolicitud);
         /* ========================= Evento Creacion nueva solicitud. ======================
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();

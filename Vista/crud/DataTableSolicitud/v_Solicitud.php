@@ -160,7 +160,7 @@ if (isset($_SESSION['usuario'])) {
                     <input type="text" id="rntcliente" name="rtnCliente" class="form-control" disabled>
                 </div>
                 <div class="form-element input-conteiner">
-                    <label for="telefono" class="form-label">nombre</label>
+                    <label for="nombre" class="form-label">nombre</label>
                     <input type="text" id="nombre" name="telefono" class="form-control" readonly>
                 </div>
                 <div class="form-element input-conteiner">
@@ -168,8 +168,8 @@ if (isset($_SESSION['usuario'])) {
                     <input type="text" id="telefono" name="telefono" class="form-control">
                 </div>
                 <div class="form-element input-conteiner">
-            <label for="correo"class="form-label">Correo electrónico</label>
-            <input type="text" id="correo" name="correoElectronico" class="form-control" readonly>
+            <label for="correoL"class="form-label">Correo electrónico</label>
+            <input type="text" id="correo" name="correoElectronico" class="form-control" disabled>
         </div>
             </div>
                 <div class="group-form">
