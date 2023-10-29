@@ -309,7 +309,7 @@ $(document).on("click", "#btn_selectfactura", function () {
 
   $(document).on("click", "#btn_eliminar", function() {
     let nombreProd = $(this).closest('tr').find('td:eq(1)').text();
-    let idproducto = this.parentElement.parentElement; 
+    let filaproducto = this.parentElement.parentElement; 
       Swal.fire({
         title: 'Estas seguro de quitar el producto '+nombreProd+'?',
         text: "No podras revertir esto!",
@@ -319,9 +319,8 @@ $(document).on("click", "#btn_selectfactura", function () {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Si, borralo!'
       }).then((result) => {
-
         if (result.isConfirmed) {      
-          idproducto.remove();
+          filaproducto.remove();
                 Swal.fire(
                   'Eliminado!',
                   'La pregunta ha sido eliminada.',
