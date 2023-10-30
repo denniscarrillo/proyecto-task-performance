@@ -34,8 +34,12 @@
           <ul class="dropdown-menu__content__secundario">
             <li class="dropdown-menu__content__list__item">
               <a href="<?php echo $urlMisTareas; ?>" class="dropdown-menu__content__secundario__link">
-              <!-- <i class="fa-solid fa-list-check"></i> -->
                 <span>Mis Tareas</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlCotizacion; ?>" class="dropdown-menu__content__secundario__link">
+                <span>Cotizaciones</span>
               </a>
             </li>
             <li class="dropdown-menu__content__list__item">

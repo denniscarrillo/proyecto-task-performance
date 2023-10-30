@@ -72,4 +72,7 @@ class ControladorTarea {
     public static function consultarBitacoraTarea($idTarea){
         return Tarea::consultarBitacoraTarea($idTarea);
     }
+    public static function editarNuevoClienteTarea($editarClienteTarea){
+        Tarea::editarNuevoClienteTarea($editarClienteTarea);
+    }
 }
