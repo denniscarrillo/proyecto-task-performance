@@ -64,7 +64,6 @@ if (@file_exists(dirname(__FILE__).'/lang/spa.php')) {
     $pdf->setLanguageArray($l);
 }
 
-
 // set font
 $pdf->setFont('Helvetica', '', 11);
 
@@ -83,9 +82,6 @@ $html = '
 <td style="background-color: #e54037;color: white; text-align: center">FECHA DE CREACIÓN</td>
 </tr>
 ';
- // Supongamos que $FechaSolicitud es un objeto DateTime
-
-// Formatear la fecha en un formato legible, por ejemplo, "d/m/Y H:i:s"
 
 $Solicitudes = ControladorDataTableSolicitud::DataTableSolicitud();
 foreach($Solicitudes as $solicitud){
