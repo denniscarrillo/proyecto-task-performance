@@ -83,8 +83,7 @@ if (isset($_SESSION['usuario'])) {
     <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
-  
-  
+ 
     <title>Nueva solicitud</title>
 </head>
 
@@ -143,7 +142,7 @@ if (isset($_SESSION['usuario'])) {
                 </div>
                 <div class="radio-conteiner-nuevo">
                     <input type="radio" name="radioOption" id="clientenuevo" class="radio-solicitud" value="Nuevo" >
-                    <label for="cliente-nuevo" id="radioCliente" class="radio-label-solicitud">Nuevo</label>   
+                    <label for="cliente-nuevo" id="radioCliente" class="radio-label-solicitud"  >Nuevo</label>   
                 </div>
             </div>
         </div>
@@ -156,40 +155,52 @@ if (isset($_SESSION['usuario'])) {
                 </div>
                 <div class="form-element input-conteiner" id="containerrtncliente" >
                     <label for="rnt-cliente" class="form-label">RTN:</label>
-                    <p id="mensaje"></p>
                     <input type="text" id="rntcliente" name="rtnCliente" class="form-control" disabled>
+                    <p class="mensaje"></p>
                 </div>
                 <div class="form-element input-conteiner">
                     <label for="nombre" class="form-label">nombre</label>
-                    <input type="text" id="nombre" name="telefono" class="form-control" readonly>
+                    <input type="text" id="nombre" name="nombre" class="form-control" >
+                    <p class="mensaje"></p>
                 </div>
                 <div class="form-element input-conteiner">
                     <label for="telefono" class="form-label">Teléfono</label>
                     <input type="text" id="telefono" name="telefono" class="form-control">
+                    <p class="mensaje"></p>
                 </div>
                 <div class="form-element input-conteiner">
-            <label for="correoL"class="form-label">Correo electrónico</label>
-            <input type="text" id="correo" name="correoElectronico" class="form-control" disabled>
-        </div>
+                    <label for="correoL"class="form-label">Correo electrónico</label>
+                    <input type="text" id="correo" name="correoElectronico" class="form-control" >
+                    <p class="mensaje"></p>
+                </div>
+                <div class="form-element input-conteiner" id="containerCorreocliente" >
+                <label for="correoL" class="form-label">Correo electrónico Cliente</label>
+                    <input type="text" id="correoCliente" name="correoElectronico" class="form-control">
+                    <p class="mensaje"></p>
+                </div>
             </div>
                 <div class="group-form">
                     <div class="form-element input-conteiner">
                         <label for="fecha-solicitud" class="form-label">Fecha solicitud</label>
                         <input type="date" id="fechasolicitud" name="fechaSolicitud" class="form-control" disabled>
+                        <p class="mensaje"></p>
                     </div>
                     <div class= "form-element input-conteiner">
                         <label for="tipo-servicio" class="form-label">Tipo Servicio: </label>
                         <select name="tiposervicio" id="tiposervicio" class="form-control"> 
                         </select>
+                        <p class="mensaje"></p>
                     </div>
             
                     <div class="form-element input-conteiner">
                         <label for="direccion" class="form-label">Ubicación instalación</label>
                         <input type="text" id="direccion" name="ubicacionInstalacion" class="form-control" disabled>
+                        <p class="mensaje"></p>
                     </div>
                     <div class="form-element input-conteiner">
                         <label for="descripcion" class="form-label">Descripción</label>
                         <input type="text" id="descripcion" name="descripcion" class="form-control" disabled>
+                        <p class="mensaje"></p>
                     </div>
                 </div>
             </div>
@@ -218,7 +229,7 @@ if (isset($_SESSION['usuario'])) {
 					<!-- Botones -->
 					<div class="btn-guardar">
 						<a href="./gestionDataTableSolicitud.php"><button type="button" id="btncerrar2" class="btn btn-secondary">Cancelar</button></a>
-						<button type="submit" id="btnguardar" class="btn btn-primary" name="actualizarTarea"><i class="fa-solid fa-floppy-disk"></i>Guardar</button>
+						<button type="submit" id="submit" class="btn btn-primary" name="actualizarTarea"><i class="fa-solid fa-floppy-disk"></i>Guardar</button>
 					</div>
 				</form>
 			</div>
@@ -240,7 +251,6 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
   <script src="../../../Recursos/js/DataTableSolicitud/vistaClienteFrecuente.js" type="module"></script>
-  
-</body>
+  <!-- <script src="../../../Recursos/js/DataTableSolicitud/validacionesNuevaSolicitud.js" type="module"></script>  -->
 
 </html>
