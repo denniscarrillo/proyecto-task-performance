@@ -151,7 +151,7 @@ if (isset($_SESSION['usuario'])) {
           
         <div class="group-form">
                 <div class="form-element input-conteiner"  id="containerFacturacliente">
-                    <label for="id-factura"  class="form-label">N° Factura</label>
+                    <label for="id-factura"  class="form-label">N° Factura:</label>
                     <input type="text" id="idfactura" name="numeroFactura" class="form-control" readonly>
                 </div>
                 <div class="form-element input-conteiner" id="containerrtncliente" >
@@ -160,21 +160,21 @@ if (isset($_SESSION['usuario'])) {
                     <input type="text" id="rntcliente" name="rtnCliente" class="form-control" disabled>
                 </div>
                 <div class="form-element input-conteiner">
-                    <label for="nombre" class="form-label">nombre</label>
-                    <input type="text" id="nombre" name="telefono" class="form-control" readonly>
+                    <label for="nombre" class="form-label">Nombre Cliente:</label>
+                    <input type="text" id="nombre" name="nombre" class="form-control" disabled>
                 </div>
                 <div class="form-element input-conteiner">
-                    <label for="telefono" class="form-label">Teléfono</label>
-                    <input type="text" id="telefono" name="telefono" class="form-control">
+                    <label for="telefono" class="form-label">Teléfono:</label>
+                    <input type="text" id="telefono" name="telefono" class="form-control" disabled>
                 </div>
                 <div class="form-element input-conteiner">
-            <label for="correoL"class="form-label">Correo electrónico</label>
+            <label for="correoL"class="form-label">Correo electrónico destinado:</label>
             <input type="text" id="correo" name="correoElectronico" class="form-control" disabled>
         </div>
             </div>
                 <div class="group-form">
                     <div class="form-element input-conteiner">
-                        <label for="fecha-solicitud" class="form-label">Fecha solicitud</label>
+                        <label for="fecha-solicitud" class="form-label">Fecha solicitud:</label>
                         <input type="date" id="fechasolicitud" name="fechaSolicitud" class="form-control" disabled>
                     </div>
                     <div class= "form-element input-conteiner">
@@ -184,18 +184,18 @@ if (isset($_SESSION['usuario'])) {
                     </div>
             
                     <div class="form-element input-conteiner">
-                        <label for="direccion" class="form-label">Ubicación instalación</label>
+                        <label for="direccion" class="form-label">Ubicación instalación:</label>
                         <input type="text" id="direccion" name="ubicacionInstalacion" class="form-control" disabled>
                     </div>
                     <div class="form-element input-conteiner">
-                        <label for="descripcion" class="form-label">Descripción</label>
+                        <label for="descripcion" class="form-label">Descripción:</label>
                         <input type="text" id="descripcion" name="descripcion" class="form-control" disabled>
                     </div>
                 </div>
             </div>
                 <div class="table-conteiner">
                     <div class="mb-3 conteiner-id-articulo">
-                        <p class="titulo-articulo">Artículos Interés</p>
+                        <p class="titulo-articulo">Producto de Interés</p>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalArticulosSolicitud" id="btnarticulos">
                             Seleccionar... <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
                                 </button>

@@ -73,7 +73,7 @@ $pdf->setFont('Helvetica', '', 11);
 $pdf->AddPage();
 // create some HTML content
 $html = '
-<P style="text-align: center; font-size: 18px;"><b>Reporte de la Solicitud</b></P>
+<P style="text-align: center; font-size: 18px;"><b>REPORTE DE LA SOLICITUD</b></P>
 <table cellpadding="5"  border= "1" >
 ';
 

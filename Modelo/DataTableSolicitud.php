@@ -20,16 +20,18 @@ class DataTableSolicitud
             $abrirConexion = $con->abrirConexionDB();
             $query = "SELECT id_Solicitud,
             CASE
-              WHEN cc.nombre_Cliente IS NOT NULL THEN cc.nombre_Cliente COLLATE Modern_Spanish_CI_AS
-              ELSE c.NOMBRECLIENTE COLLATE Modern_Spanish_CI_AS
-            END AS NombreCliente
-            ,t.servicio_Tecnico,telefono_cliente,EstadoAvance
-            ,s.Fecha_Creacion
+                WHEN cc.nombre_Cliente IS NOT NULL AND cc.nombre_Cliente <> '' THEN cc.nombre_Cliente COLLATE Modern_Spanish_CI_AS
+                ELSE c.NOMBRECLIENTE COLLATE Modern_Spanish_CI_AS
+            END AS NombreCliente,
+            t.servicio_Tecnico,
+            telefono_cliente,
+            EstadoAvance,
+            s.Fecha_Creacion
             FROM [tbl_Solicitud] as s
-            inner join tbl_TipoServicio as t on t.id_TipoServicio = s.id_TipoServicio
-            LEFT join View_Clientes as c on c.CIF COLLATE Modern_Spanish_CI_AS = s.rtn_cliente COLLATE Modern_Spanish_CI_AS
-            LEFT join tbl_CarteraCliente as cc on cc.rtn_Cliente = s.rtn_clienteCartera 
-			where EstadoSolicitud = 'ACTIVO';";
+            INNER JOIN tbl_TipoServicio as t ON t.id_TipoServicio = s.id_TipoServicio
+            LEFT JOIN View_Clientes as c ON c.CIF COLLATE Modern_Spanish_CI_AS = s.rtn_cliente COLLATE Modern_Spanish_CI_AS
+            LEFT JOIN tbl_CarteraCliente as cc ON cc.rtn_Cliente = s.rtn_clienteCartera 
+            WHERE EstadoSolicitud = 'ACTIVO';";
 
            $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
@@ -97,7 +99,7 @@ class DataTableSolicitud
         $query="SELECT id_Solicitud
         ,idFactura,s.rtn_cliente,s.rtn_clienteCartera,
         CASE
-          WHEN cc.nombre_Cliente IS NOT NULL THEN cc.nombre_Cliente COLLATE Modern_Spanish_CI_AS
+        WHEN cc.nombre_Cliente IS NOT NULL AND cc.nombre_Cliente <> '' THEN cc.nombre_Cliente COLLATE Modern_Spanish_CI_AS
           ELSE c.NOMBRECLIENTE COLLATE Modern_Spanish_CI_AS
         END AS NombreCliente
         ,descripcion,t.servicio_Tecnico,s.correo,telefono_cliente,ubicacion_instalacion,EstadoAvance
@@ -148,7 +150,7 @@ class DataTableSolicitud
         $EstadoSolicitud = $nuevaSolicitud->estadoSolicitud;
         $CreadoPor = $nuevaSolicitud->creadoPor;
         
-        $query = "INSERT INTO tbl_Stbl_Solicitud(idFactura, rtn_cliente, rtn_clienteCartera, descripcion, 
+        $query = "INSERT INTO tbl_Solicitud(idFactura, rtn_cliente, rtn_clienteCartera, descripcion, 
         id_TipoServicio, correo, telefono_cliente, ubicacion_instalacion, EstadoAvance, EstadoSolicitud, 
         Creado_Por, Fecha_Creacion) 
         VALUES ('$idFactura','$rtnCliente', '$rtnClienteCartera', '$Descripcion', '$TipoServicio', '$Correo',
