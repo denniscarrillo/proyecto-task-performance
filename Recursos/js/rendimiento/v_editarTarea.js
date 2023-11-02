@@ -1,27 +1,88 @@
-import {sidePanel_Interaction} from '../../components/js/sidePanel.js'; //importamos la funcion del sidePanel
+import { sidePanel_Interaction } from '../../components/js/sidePanel.js'; //importamos la funcion del sidePanel
 
 let tableArticulos = '';
 let $idTarea = document.getElementById('id-Tarea').value;
-$(document).ready(function(){
+let $idEstadoTarea = document.querySelector('.id-estado-tarea').id;
+let estadoRTN = '';
+$(document).ready(async function(){
     setEstadoTarea();
     obtenerComentarios($idTarea);
+    obtenerDatosTarea($idTarea, $idEstadoTarea);
+    estadoRTN = await $.ajax({
+      url: "../../../Vista/rendimiento/cotizacion/obtenerRTN_Tarea.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {
+        "idTarea": $idTarea
+      }
+    });
 });
+
 document.getElementById('btn-comment').addEventListener('click', () => {
   obtenerComentarios($idTarea);
+  obtenerHistorialTarea($idTarea);
 });
-//Función de que le da interacción del sidepanel
+//Validar datos del cliente antes de redirigir al usuario a la vista cotización
+document.getElementById('link-nueva-cotizacion').addEventListener('click', (e) => {
+  console.log(JSON.parse(estadoRTN));
+  if(JSON.parse(estadoRTN) == false) {
+    e.preventDefault();
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top',
+      showConfirmButton: false,
+      timer: 5000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+    });
+    Toast.fire({
+        icon: 'warning',
+        title: 'Debe tener los datos del cliente'
+    });
+  }
+});
+
+/* ----------- Función de que le da interacción del sidepanel -------------------------*/
+let $tabComments = document.getElementById('tab-comment');
+let $tabHistory = document.getElementById('tab-history');
+let $commentsContainer = document.getElementById('comments-container-list');
+let $historyContainer = document.getElementById('history-container');
 sidePanel_Interaction(document.getElementById('btn-comment'), document.getElementById('btn-close-comment'));
+/* ------------------ Intercambio de tabs para el sidepanel  -------------------- */
+$tabHistory.addEventListener('click', () => {
+  $commentsContainer.setAttribute('style', 'z-index: -30; opacity: 0;');
+  $historyContainer.setAttribute('style', 'z-index: 20; opacity: 1;');
+  $tabComments.classList.remove('tab-selected')
+  $tabHistory.classList.add('tab-selected');
+});
+$tabComments.addEventListener('click', () => {
+  $tabHistory.classList.remove('tab-selected');
+  $tabComments.classList.add('tab-selected');
+  $commentsContainer.removeAttribute('style');
+  $historyContainer.removeAttribute('style');
+});
+
+/* ------------------------------------------------------------------------------------ */
 
 //En el evento submit llamamos a la función que enviara el comentario a la base de datos
 document.getElementById('form-comentario').addEventListener('submit', (e) => {
   e.preventDefault();
   let $comentario = document.getElementById('input-comentario').value;
-  nuevoComentario($idTarea,  $comentario);
+  nuevoComentario($idTarea, $comentario);
   obtenerComentarios($idTarea);
+  obtenerHistorialTarea($idTarea);
 });
 document.getElementById('form-Edit-Tarea').addEventListener('submit', function(e){
-  // e.preventDefault();
+  e.preventDefault();
   let $idTask = $('#id-Tarea').val();
+  let radioOption = document.getElementsByName('radioOption');
+  let tipoCliente = (radioOption[1].checked) ? radioOption[1].value : radioOption[0].value;
+  let $datosTarea = validarCamposEnviar(tipoCliente);
+  actualizarDatosTarea($datosTarea);
+  obtenerDatosTarea($idTarea, $idEstadoTarea);
   enviarProductosInteres($idTask); //Enviamos los productos de interes a almacenar
 });
 // CARGAR LOS ARTICULOS A AGREGAR A LA TAREA
@@ -142,7 +203,7 @@ $('#btn-articulos').click(() => {
   }
   let setEstadoTarea = function(){
     let $select = document.getElementById('estados-tarea');
-    let idTareaEstado = document.querySelector('.id-tarea');
+    let idTareaEstado = document.querySelector('.id-estado-tarea');
     let estado = idTareaEstado.getAttribute('id');
     //Setear tipo de tarea
     for (var i = 0; i < $select.length; i++) {
@@ -298,9 +359,7 @@ let enviarProductosInteres = ($idTarea) => {
       "idTarea": $idTarea,
       "productos": JSON.stringify(productos)
     },
-    success: function () {
-      //Redireccionamiento tras 5 segundos
-      // setTimeout( function() {window.location.href = "http://localhost:3000/Vista/rendimiento/v_tarea.php";}, 2000 );
+    success: function (resp) {
       Swal.fire(
         'Cambios guardados',
         'La tarea '+$idTarea+' ha sido editada!',
@@ -336,9 +395,11 @@ let obtenerComentarios = ($idTarea) => {
       let comments ='';
       let ObjComentarios = JSON.parse(comentarios);
       let conteinerComments = document.getElementById('comments-container-list');
+      let $tabContainer = document.getElementById('tab-comment').getAttribute('name');
+      // console.log($tabContainer);
       ObjComentarios.forEach((comentario) => {
         comments +=
-        `<div class="card-comment">
+        `<div class="card-comment ${($tabContainer == comentario.creadoPor)? 'align-right': ''}">
         <section class="info-comment">
           <section class="creadoPor-comment">${comentario.creadoPor}</section>
           <section class="data-comment">${comentario.FechaCreacion.date.split('.')[0]}</section>
@@ -349,4 +410,155 @@ let obtenerComentarios = ($idTarea) => {
       });
     }
   });//Fin AJAX
+}
+let obtenerHistorialTarea = ($idTarea) => {
+  $.ajax({
+    url: "../../../Vista/rendimiento/obtenerBitacoraTarea.php",
+    type: "POST",
+    datatype: "JSON",
+    data: {
+      "id_Tarea": $idTarea
+    },
+    success: function(historial) {
+      let historialTarea = '';
+      let ObjHistorial = JSON.parse(historial);
+      let conteinerHistory = document.getElementById('history-container');
+      ObjHistorial.forEach((historial) => {
+        historialTarea +=
+        `<div class="card-history">
+          <section class="info-history">
+            <section class="creadoPor-history">${historial.usuarioTarea}</section>
+            <section class="action-history">${historial.accion}</section>
+            <section class="data-history">${historial.fecha.date.split('.')[0]}</section>
+          </section>
+          <section class="text-history">${historial.descripcion}</section>
+        </div>`;
+        conteinerHistory.innerHTML = historialTarea;
+      });
+    }
+  });//Fin AJAX
+}
+let actualizarDatosTarea = ($datosTarea) => {
+  $.ajax({
+    url: "../../../Vista/rendimiento/validacionesEditarTarea.php",
+    type: "POST",
+    datatype: "JSON",
+    data: $datosTarea
+  });
+}
+
+let obtenerDatosTarea = ($idTarea, $idEstadoTarea) => {
+  $.ajax({
+    url: "../../../Vista/rendimiento/validacionesEditarTarea.php",
+    type: "POST",
+    datatype: "JSON",
+    data: {
+      "idTarea": $idTarea,
+      "idEstado": $idEstadoTarea
+    },
+    success: function($datosTarea){
+      let datos = JSON.parse($datosTarea);
+      console.log(datos);
+      (Object.keys(datos).length > 1) ? setearDatosTarea(datos) : document.getElementsByName('estadoEdicion')[0].id = datos.data;
+    }
+  });
+}
+let setearDatosTarea = ($datosTarea) => {
+    let nuevo = document.getElementById('cliente-nuevo');
+    let existe =  document.getElementById('cliente-existente');
+    let nombre = document.getElementById('nombre-cliente');
+    let rtn = document.getElementById('rnt-cliente'); 
+    let correo = document.getElementById('correo-cliente');
+    document.getElementById('input-titulo-tarea').value = $datosTarea.titulo;
+    rtn.value = $datosTarea.RTN_Cliente;
+    rtn.disabled =true;
+    nombre.value = $datosTarea.NOMBRECLIENTE;
+    nombre.disabled = true;
+    document.getElementById('telefono-cliente').value = $datosTarea.TELEFONO,
+    ($datosTarea.estado_Cliente_Tarea == 'Nuevo') ? correo.value = $datosTarea.correo: '';
+    // ($datosTarea.estado_Cliente_Tarea == 'Nuevo') ? document.getElementById('container-correo').removeAttribute('hidden'): '';
+    document.getElementById('direccion-cliente').value = $datosTarea.DIRECCION,
+    document.getElementById('clasificacion-lead').value = $datosTarea.id_ClasificacionLead,
+    document.getElementById('origen-lead').value = $datosTarea.id_OrigenLead,
+    document.getElementById('rubrocomercial').value = $datosTarea.rubro_Comercial,
+    document.getElementById('razonsocial').value = $datosTarea.razon_Social
+    if(($datosTarea.estado_Cliente_Tarea == 'Existente')) {
+      nuevo.removeAttribute('checked');
+      nuevo.disabled = true;
+      existe.setAttribute('checked', 'true');
+      existe.disabled = true;
+    }else{
+      existe.removeAttribute('checked');
+      existe.disabled = true;
+      nuevo.setAttribute('checked','true');
+      nuevo.disabled = true;
+    }
+}
+
+let validarCamposEnviar = (tipoCliente) => {
+  let $datosTarea;
+  if(document.getElementsByName('estadoEdicion')[0].id == 'false'){
+    if($idEstadoTarea == '2'){
+      $datosTarea = {
+        "idTarea": $idTarea,
+        "idEstado": $idEstadoTarea,
+        "tipoCliente": tipoCliente,
+        "titulo": document.getElementById('input-titulo-tarea').value,
+        "rtnCliente": document.getElementById('rnt-cliente').value,
+        "nombre": document.getElementById('nombre-cliente').value, 
+        "telefono": document.getElementById('telefono-cliente').value,
+        "correo": document.getElementById('correo-cliente').value,
+        "direccion": document.getElementById('direccion-cliente').value,
+        "clasificacionLead": document.getElementById('clasificacion-lead').value,
+        "origenLead": document.getElementById('origen-lead').value,
+        "rubrocomercial": document.getElementById('rubrocomercial').value,
+        "razonsocial": document.getElementById('razonsocial').value
+      };
+    } else {
+      $datosTarea = {
+        "idTarea": $idTarea,
+        "idEstado": $idEstadoTarea,
+        "tipoCliente": tipoCliente,
+        "titulo": document.getElementById('input-titulo-tarea').value,
+        "rtnCliente": document.getElementById('rnt-cliente').value,
+        "nombre": document.getElementById('nombre-cliente').value, 
+        "telefono": document.getElementById('telefono-cliente').value,
+        "correo": document.getElementById('correo-cliente').value,
+        "direccion": document.getElementById('direccion-cliente').value,
+        "rubrocomercial": document.getElementById('rubrocomercial').value,
+        "razonsocial": document.getElementById('razonsocial').value
+      };
+    }
+  } else {
+    if($idEstadoTarea == '2'){
+      $datosTarea = {
+        "idTarea": $idTarea,
+        "idEstado": $idEstadoTarea,
+        "tipoCliente": tipoCliente,
+        "titulo": document.getElementById('input-titulo-tarea').value,
+        "rtn": document.getElementById('rnt-cliente').value,
+        "telefono": document.getElementById('telefono-cliente').value,
+        "correo": document.getElementById('correo-cliente').value,
+        "direccion": document.getElementById('direccion-cliente').value,
+        "clasificacionLead": document.getElementById('clasificacion-lead').value,
+        "origenLead": document.getElementById('origen-lead').value,
+        "rubrocomercial": document.getElementById('rubrocomercial').value,
+        "razonsocial": document.getElementById('razonsocial').value
+      };
+    } else {
+      $datosTarea = {
+        "idTarea": $idTarea,
+        "idEstado": $idEstadoTarea,
+        "tipoCliente": tipoCliente,
+        "titulo": document.getElementById('input-titulo-tarea').value,
+        "rtn": document.getElementById('rnt-cliente').value,
+        "telefono": document.getElementById('telefono-cliente').value,
+        "correo": document.getElementById('correo-cliente').value,
+        "direccion": document.getElementById('direccion-cliente').value,
+        "rubrocomercial": document.getElementById('rubrocomercial').value,
+        "razonsocial": document.getElementById('razonsocial').value
+      };
+    }
+  }
+  return $datosTarea;
 }

@@ -63,4 +63,19 @@ class ControladorTarea {
     public static function mostrarComentariosTarea($idTarea){
         return Tarea::mostrarComentariosTarea($idTarea);
     }
+    public static function acciones_Evento_Tareas(){
+        return Tarea::acciones_Evento_Tareas();
+    }
+    public static function SAVE_EVENT_TASKS_BITACORA($eventoTarea, $idUser){
+        Tarea::SAVE_EVENT_TASKS_BITACORA($eventoTarea, $idUser);
+    }
+    public static function consultarBitacoraTarea($idTarea){
+        return Tarea::consultarBitacoraTarea($idTarea);
+    }
+    public static function editarNuevoClienteTarea($editarClienteTarea){
+        Tarea::editarNuevoClienteTarea($editarClienteTarea);
+    }
+    public static function obtenerRTN_Tarea($idTarea){
+        return Tarea::obtenerRtnClienteTarea($idTarea);
+    }
 }

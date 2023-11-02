@@ -8,9 +8,7 @@ require_once("../../Modelo/DataTableSolicitud.php");
 require_once("../../Controlador/ControladorDataTableSolicitud.php");
 require_once("../../Modelo/Parametro.php");
 require_once("../../Controlador/ControladorParametro.php");
-
 ob_start();
-
 
 //cargar el encabezado
 $datosParametro = ControladorParametro::obtenerDatosReporte();
@@ -68,7 +66,6 @@ if (@file_exists(dirname(__FILE__).'/lang/spa.php')) {
     $pdf->setLanguageArray($l);
 }
 
-
 // set font
 $pdf->setFont('Helvetica', '', 11);
 
@@ -76,9 +73,9 @@ $pdf->setFont('Helvetica', '', 11);
 $pdf->AddPage();
 // create some HTML content
 $html = '
-<P style="text-align: center; font-size: 18px;"><b>Reporte de la Solicitud id</b></P>
+<P style="text-align: center; font-size: 18px;"><b>Reporte de la Solicitud</b></P>
+<table cellpadding="5"  border= "1" >
 ';
-
 
 $SolicitudesId = ControladorDataTableSolicitud::VerSolicitudesPorId($_GET['idSolicitud']);
         $idSolicitud = $SolicitudesId['idSolicitud'];
@@ -100,59 +97,78 @@ $SolicitudesId = ControladorDataTableSolicitud::VerSolicitudesPorId($_GET['idSol
         $FechaModificacion = $SolicitudesId['FechaModificacion'];
         $fechaFormateadaC = $FechaCreacion->format('Y/m/d');
         $fechaFormateadaM = $FechaCreacion->format('Y/m/d');
+        
         $html .= '
-
-        <dl>
-            <dt><b>ID:</b></dt>
-            <dd>'.$idSolicitud.'</dd><br>
-            <dt><b>ID FACTURA:</b></dt>
-            <dd>'.$idFactura.'</dd><br>
-            <dt><b>RTN CLIENTE FRECUENTE:</b></dt>
-            <dd>'.$rtnCliente.'</dd><br>
-            <dt><b>RTN CLIENTE NUEVO:</b></dt>
-            <dd>'.$rtnClienteCartera.'</dd><br>
-            <dt><b>NOMBRE CLIENTE:</b></dt>
-            <dd>'.$NombreCliente.'</dd><br>
-            <dt><b>DESCRIPCION:</b></dt>
-            <dd>'.$descripcion.'</dd><br>
-            <dt><b>SERVICIO TECNICO:</b></dt>
-            <dd>'.$servicioTecnico.'</dd><br>
-            <dt><b>CORREO:</b></dt>
-            <dd>'.$correoS.'</dd><br>
-            <dt><b>TELEFONO:</b></dt>
-            <dd>'.$telefono.'</dd><br>
-            <dt><b>UBICACIÓN:</b></dt>
-            <dd>'.$ubicacion.'</dd><br>
-            <dt><b>ESTADO AVANCE:</b></dt>
-            <dd>'.$EstadoAvance.'</dd><br>
-            <dt><b>ESTADO DE SOLICITUD:</b></dt>
-            <dd>'.$EstadoSolicitud.'</dd><br>
-            <dt><b>MOTIVO:</b></dt>
-            <dd>'.$motivo.'</dd><br>
-            <dt><b>CREADO POR:</b></dt>
-            <dd>'.$creadoPor.'</dd><br>
-            <dt><b>FECHA CREACIÓN:</b></dt>
-            <dd>'.$fechaFormateadaC.'</dd><br>
-            <dt><b>MODIFICADO POR:</b></dt>
-            <dd>'.$modifacadoPor.'</dd><br>
-            <dt><b>FECHA MODIFICACIÓN:</b></dt>
-            <dd>'.$fechaFormateadaC.'</dd><br>
-            <dt><b>FECHA MODIFICACIÓN:</b></dt>
-            <dd>'.$fechaFormateadaM.'</dd><br>
-        </dl>
+        <tr>
+            <td style="background-color: #c9c9c9; width: 200px;"><b>ID:</b></td>
+            <td style="width: 440px;">'.$idSolicitud.'</td>       
+        </tr>
+        <tr>
+            <td style="background-color: #c9c9c9;"><b>ID FACTURA:</b></td>
+            <td >'.$idFactura.'</td>
+        </tr>
+        <tr>
+            <td style="background-color: #c9c9c9;"><b>RTN CLIENTE:</b></td>
+            <td>'.$rtnCliente.''.$rtnClienteCartera.'</td>
+            
+        </tr>        
+        <tr>
+            <td style="background-color: #c9c9c9;"><b>NOMBRE CLIENTE:</b></td>
+            <td>'.$NombreCliente.'</td>
+        </tr>        
+        <tr>
+            <td style="background-color: #c9c9c9;"><b>DESCRIPCION:</b></td>
+            <td>'.$descripcion.'</td>       
+        </tr>        
+        <tr>
+            <td style="background-color: #c9c9c9;"><b>SERVICIO TECNICO:</b></td>
+            <td>'.$servicioTecnico.'</td>
+        </tr>        
+        <!--<tr>
+             <td style="background-color: #c9c9c9;"><b>CORREO:</b></td>
+             <td>'.$correoS.'</td>                    
+        </tr>-->
+        <tr>
+            <td style="background-color: #c9c9c9;"><b>TELEFONO:</b></td>
+            <td>'.$telefono.'</td> 
+        </tr>       
+        <tr>
+            <td style="background-color: #c9c9c9;"><b>UBICACIÓN:</b></td>
+            <td>'.$ubicacion.'</td>
         
-        
-        
-        ';
-  
+        </tr>        
+        <tr>
+            <td style="background-color: #c9c9c9;"><b>ESTADO AVANCE:</b></td>
+            <td>'.$EstadoAvance.'</td>
+        </tr>       
+        <tr>
+            <td style="background-color: #c9c9c9;"><b>ESTADO DE SOLICITUD:</b></td>
+            <td>'.$EstadoSolicitud.'</td>
+        </tr>
+        <tr>
+            <td style="background-color: #c9c9c9;"><b>CREADO POR:</b></td>
+            <td>'.$creadoPor.'</td>
+        </tr>
+        <tr>
+            <td style="background-color: #c9c9c9;"><b>FECHA CREACIÓN:</b></td>
+            <td>'.$fechaFormateadaC.'</td>       
+        </tr>       
+        <tr>
+            <td style="background-color: #c9c9c9;"><b>MODIFICADO POR:</b></td>
+            <td>'.$modifacadoPor.'</td>
+        </tr>       
+        <tr>
+            <td style="background-color: #c9c9c9;"><b>FECHA MODIFICACIÓN:</b></td>
+            <td>'.$fechaFormateadaM.'</td>     
+        </tr>
 
-
-$html.='
-
-';
+        ';     
+$html .= '
+    </table>
+    ';      
 
 //output the HTML content
 $pdf->writeHTML($html, true, false, true, false);
 //Close and output PDF document
 ob_end_clean();
-$pdf->Output('ReporteriaSolicitudes.pdf', 'I');
+$pdf->Output('ReporteSolicitud'. $idSolicitud .'.pdf', 'I');

@@ -1,8 +1,21 @@
+//import {estadoValidado as valido } from './validacionesNuevaSolicitud.js';
 
 
 $(document).on('click', '#clienteExistente', function () {
   obtenerClientes();
  // $("#modalClienteFrecuente").modal("show");
+
+ let correoCliente = document.getElementById('containerCorreocliente');
+ correoCliente .setAttribute('hidden', 'false');
+
+});
+
+$(document).on('click', '#clientenuevo', function () {
+
+  let correoCliente = document.getElementById('containerCorreocliente');
+  correoCliente.removeAttribute('hidden');
+  containerCorreocliente.style.display = 'block';
+
 });
 let obtenerClientes = function () {
   if (document.getElementById('table-ClienteFrecuente_wrapper') == null) {
@@ -99,8 +112,8 @@ let limpiarForm = () => {
     rtn.value = '';
     telefono.value = ''
     direccion.value = '';
-   Factura.value = '';
-   nombre.value = '';
+    Factura.value = '';
+    nombre.value = '';
     // rtn.removeAttribute('disabled');
     telefono.removeAttribute('disabled');
     direccion.removeAttribute('disabled');
@@ -219,8 +232,10 @@ $(document).on("click", "#btn_selectfactura", function () {
         type: 'GET',
         dataType: 'JSON',
         success: function (data) {
-          let correo = data[0]['Correo'];  
-          $(idElemento).html(correo);   
+          let correo = data[0]['Correo'];
+          console.log('Correo obtenido:', correo);
+          $(idElemento).val(correo);   
+          console.log(correo);
         }        
     });
   }
@@ -252,26 +267,24 @@ $(document).on("click", "#btn_selectfactura", function () {
     }
   });
   
-  $(document).on('click', '#btn_selectarticle', function () {
-    selectArticulos(this);
+  $(document).on("click", '#btn_selectarticle', function () {
+    selectArticulo(this);
+  });
+
+  let selectArticulo = function ($selector) {
+    $selector.classList.toggle('select_articulo');
+  };
+
+  $('#btn_agregar').click(function () {
     agregarArticulos();
-    $('#modalArticulosSolicitud').modal('hide');
+    $('#modalArticulosSolicitud').modal('hide');  
   });
   
-  // $('#btn_agregar').click(function () {
-  //   agregarArticulos();
-  //   $('#modalArticulosSolicitud').modal('hide');
-    
-  // });
-  
-  let selectArticulos = function ($elementoHtml) {
-    $elementoHtml.classList.toggle('selectarticulo');
-  }
   let agregarArticulos = function () {
     let $Articulos = [];
-    let productosSeleccionados = document.querySelectorAll('.selectarticulo');
+    let productosSeleccionados = document.querySelectorAll('.select_articulo');
     productosSeleccionados.forEach(function (producto) {
-      if (producto.classList.contains('selectarticulo')) {
+      if (producto.classList.contains('select_articulo')) {
         let $idArticulo = $(producto).closest('tr').find('td:eq(0)').text();
         let $nombreArticulo = $(producto).closest('tr').find('td:eq(1)').text();
         let $marca = $(producto).closest('tr').find('td:eq(3)').text();
@@ -284,7 +297,7 @@ $(document).on("click", "#btn_selectfactura", function () {
       }
     });
     carritoArticulos($Articulos);
-  }
+  };
 
   let carritoArticulos = ($productos) => {
     let productos = '';
@@ -299,7 +312,7 @@ $(document).on("click", "#btn_selectfactura", function () {
         <td><button class="btn_eliminar btns btn" id="btn_eliminar"><i class="fas fa-times"></i></button></td>
       </tr>
     `
-    });
+  });
     $tableArticulos.innerHTML = productos;
     let idsProducto = document.querySelectorAll('.idproducto');
     idsProducto.forEach(function(idProducto){
@@ -308,10 +321,10 @@ $(document).on("click", "#btn_selectfactura", function () {
   }
 
   $(document).on("click", "#btn_eliminar", function() {
-    let fila = $(this);        
-      let nombreProd = $(this).closest('tr').find('td:eq(1)').text();		    
+    let nombreProd = $(this).closest('tr').find('td:eq(1)').text();
+    let filaproducto = this.parentElement.parentElement; 
       Swal.fire({
-        title: 'Estas seguro de eliminar el producto '+nombreProd+'?',
+        title: 'Estas seguro de quitar el producto '+nombreProd+'?',
         text: "No podras revertir esto!",
         icon: 'warning',
         showCancelButton: true,
@@ -320,36 +333,59 @@ $(document).on("click", "#btn_selectfactura", function () {
         confirmButtonText: 'Si, borralo!'
       }).then((result) => {
         if (result.isConfirmed) {      
-          $.ajax({
-            // url: "../../../Vista/crud/pregunta/eliminarPregunta.php",
-            // type: "POST",
-            // datatype:"json",    
-            // data:  { pregunta: pregunta},    
-            success: function() {
-              // let $tableArticulos = $('#tablearticulos').DataTable();
-              // let idProducto = $('#idsProducto').closest('tr').index();
-              // $tableArticulos.row(idProducto).remove().draw();
-              // //$tableArticulos.row(fila.parents('idsProducto')).remove().draw();
-              // //let estadoEliminado = data[0].estadoEliminado;
-              // // console.log(data);
-              // //if(estadoEliminado == 'eliminado'){
-                //$tableArticulos.row(fila.parents('tr')).remove().draw();
+          filaproducto.remove();
                 Swal.fire(
                   'Eliminado!',
                   'La pregunta ha sido eliminada.',
                   'success'
                 ) 
-              // } else {
-              //   Swal.fire(
-              //     'Lo sentimos!',
-              //     'la pregunta no puede ser eliminado.',
-              //     'error'
-              //   );
-              //}           
-            }
-            }); //Fin del AJAX
-        }
+            }; //Fin del AJAX
+        
       });                
   });
+
+///////////GUARDAR NUEVA SOLICITUD
+$('#form-solicitud').submit(function (e) {
+  e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
+     //Obtener datos del nuevo Usuario
+     let idFactura = $('#idfactura').val();
+     let rtncliente = $('#rntcliente').val();   
+     let correo = $('#correo').val();
+     let telefono = $('#telefono').val();
+     let tiposervicio = document.getElementById('tiposervicio').value;
+     let ubicacion = $('#direccion').val();
+     let descripcion = $('#descripcion').val();
+     //validado
+    if(valido){ 
+         
+      $.ajax({
+        url: "../../../Vista/crud/DataTableSolicitud/nuevaSolicitud.php",
+        type: "POST",
+        datatype: "JSON",
+        data: {
+          idFactura: idFactura,
+          RTNcliente: rtncliente,
+          telefono: telefono,
+          correo: correo,
+          tipoServicio: tiposervicio,
+          ubicacion: ubicacion,
+          descripcion: descripcion
+        },
+        success: function (data) {
+          //Mostrar mensaje de exito
+          console.log(data);
+          Swal.fire(
+           'Guardado!',
+           'Se le ha registrado la solicitud!',
+           'success',
+         )
+         //tablaUsuarios.ajax.reload(null, false);
+        }
+      });
+      //$('#modalNuevoUsuario').modal('hide');
+    } 
+});
+
+
 
 

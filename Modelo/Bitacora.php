@@ -44,7 +44,6 @@
             ];
             return $acciones;
         }
-
         public static function obtenerBitacorasUsuario(){
             $conn = new Conexion();
             $consulta = $conn->abrirConexionDB();

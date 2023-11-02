@@ -30,10 +30,10 @@
     padding: 0.6rem 1rem 0.6rem 1rem;
     font-size: 1.2rem;
     margin-bottom: 0;
-    color: #eff2f5;
+    color: #dedfe1;
 }
 .title-text:hover {
-    color: #ee6644;
+    color: #e8b595;
     cursor: pointer;
 }
 .btn-close {

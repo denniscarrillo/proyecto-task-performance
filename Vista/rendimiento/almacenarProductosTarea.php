@@ -18,6 +18,5 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
             'CantProducto'=> $productos[$i]['cant'],
         ];
     }
-    //var_dump($productosTarea);
-    ControladorTarea::almacenarProductosInteres($idTarea, $productosTarea, $CreadoPor, $fechaCreacion);
+    ControladorTarea::almacenarProductosInteres($idTarea, $productosTarea);
 }
