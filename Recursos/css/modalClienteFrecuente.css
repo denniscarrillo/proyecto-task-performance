@@ -259,6 +259,6 @@ body{
   .fa-solid-icon:hover {
     color: #1289d8;
   }
-  .select-factura, .select-cliente, .select-vendedor{
+  .select-factura, .select-cliente, .select_articulo{
     color: #1289d8;
   }

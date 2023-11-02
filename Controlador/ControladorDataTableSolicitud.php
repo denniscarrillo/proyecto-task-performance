@@ -23,5 +23,8 @@ class ControladorDataTableSolicitud {
         return DataTableSolicitud::VerSolicitudesPorId($idSolicitud);
     }
 
+    public static function NuevaSolicitud($nuevaSolicitud){
+        return DataTableSolicitud::NuevaSolicitud($nuevaSolicitud);
+    }
     
 }
