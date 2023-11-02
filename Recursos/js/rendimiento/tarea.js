@@ -137,7 +137,7 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
                 <a href="#" class="btn-vendedor btn-vendedores" data-bs-toggle="modal" data-bs-target="#modalVendedores" id="${tarea.id}"><i class="fa-solid-btn fa-solid fa-user-plus"></i></a>
               </div>
               <div>
-                <a href="../../../Vista/rendimiento/v_editarTarea.php?idTarea=${tarea.id}&estadoTarea=${tarea.idEstadoAvance}" class="btn-editar"><i class="fa-solid-btn fa-solid fa-pen-to-square"></i></a>
+                <a href="../../../Vista/rendimiento/v_editarTarea.php?idTarea=${tarea.id}&estadoTarea=${tarea.idEstadoAvance}&titulo=${tarea.tituloTarea}" class="btn-editar"><i class="fa-solid-btn fa-solid fa-pen-to-square"></i></a>
               </div>
               <i class="fa-solid-btn fa-solid fa-tag"></i>
               </div>
@@ -202,9 +202,7 @@ let guardarTarea = ($btnGuardar, $tarea, $actualizarTarea, $elementoPadre, $elem
         url: "../../../Vista/rendimiento/nuevaTarea.php",
         type: "POST",
         datatype: "JSON",
-        data: objTarea,
-        success: function () {
-        }
+        data: objTarea
       });
       /*
         LLamamos a la funcion correspondiente para obtener la actualizacion del contenedor de tarea,

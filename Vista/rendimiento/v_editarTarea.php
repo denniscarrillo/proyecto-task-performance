@@ -1,5 +1,13 @@
 <?php
-	require_once('./validacionesEditarTarea.php');
+	session_start(); //Reanudamos sesion
+	require_once('../../db/Conexion.php');
+	require_once('../../Modelo/Tarea.php');
+	require_once('../../Modelo/Bitacora.php');
+	require_once('../../Controlador/ControladorTarea.php');
+	require_once('../../Controlador/ControladorBitacora.php');
+	$clasificacionLeads = ControladorTarea::obtenerClasificacionLead();
+	$estadosTarea = ControladorTarea::traerEstadosTarea();
+	$origenLeads = ControladorTarea::obtenerOrigenLead();
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +26,6 @@
 	<link rel='stylesheet' href='../../Recursos/css/tarea.css'>
 	<link rel='stylesheet' href='../../Recursos/css/modalEditarTarea.css'>
 	<link rel='stylesheet' href='../../Recursos/css/layout/navbar.css'>
-	<link rel='stylesheet' href='../../Recursos/css/layout/footer.css'>
 	<link rel='stylesheet' href="../../Recursos/css/layout/sidebar.css">
 	<link rel='stylesheet' href="../../Recursos/components/css/sidePanel.css">
 	<link rel='stylesheet' href="../../Recursos/css/v_EditarTarea.css">
@@ -104,12 +111,11 @@
 							</div>
 							<div class="mb-3">
 								<label for="input-titulo-tarea" class="form-label label-title-task">Titulo de la tarea</label>
-								<input type="text" name="input-titulo-tarea" id="input-titulo-tarea" class="form-control" value="<?php echo (isset($datosTareaDB['titulo'])) ? $datosTareaDB['titulo'] : '';?>">
+								<input type="text" name="input-titulo-tarea" id="input-titulo-tarea" class="form-control" value="<?php echo $_GET['titulo']; ?>">
 							</div>
 							<div class="mb-3">
-								<label id="<?php echo $_GET['estadoTarea']; ?>" class="id-tarea" hidden="true"></label>
-								<input type="text" value="<?php echo $_GET['idTarea']; ?>" id="id-Tarea" class="id-tarea"
-									name="idTarea" hidden="true">
+								<label id="<?php echo $_GET['estadoTarea']; ?>" class="id-estado-tarea" hidden="true" name="estadoTarea"></label>
+								<input type="text" value="<?php echo $_GET['idTarea']; ?>" id="id-Tarea" class="id-tarea" name="idTarea" hidden="true">
 								<label for="estados-tarea" class="form-label"> Estado: </label>
 								<label id="estado-tarea"></label>
 								<select name="estadoTarea" id="estados-tarea" class="form-control">
@@ -127,29 +133,24 @@
 							<!-- Columna 1 -->
 							<div class="grupo-form">
 								<div class="mb-3" id="container-rtn-cliente">
-									<label for="rnt-cliente" class="form-label">RTN:</label>
+									<label for="rnt-cliente" class="form-label" name="estadoEdicion" id="true">RTN:</label>
 									<p id="mensaje"></p>
-									<input type="text" name="rtnCliente" id="rnt-cliente" class="form-control" value="<?php echo (isset($datosTareaDB['RTN_Cliente'])) ? $datosTareaDB['RTN_Cliente'] : '';?>">
+									<input type="text" name="rtnCliente" id="rnt-cliente" class="form-control">
 									<!-- Aqui va el boton del filtro de clientes -->
 								</div>
 								<div class="mb-3">
 									<label for="nombre" class="form-label">Nombre Cliente:</label>
-									<input type="text" name="nombre" id="nombre-cliente" class="form-control" 
-										value="<?php echo (isset($datosTareaDB['NOMBRECLIENTE']) || isset($datosTareaDB['nombre_Cliente']))
-										? 
-										((!isset($datosTareaDB['NOMBRECLIENTE'])) ? $datosTareaDB['nombre_Cliente']: $datosTareaDB['NOMBRECLIENTE'])
-										: 
-										''?>">
+									<input type="text" name="nombre" id="nombre-cliente" class="form-control" >
 									<p class="mensaje"></p>
 								</div>
 								<div class="mb-3">
 									<label for="telefono" class="form-label">Teléfono: </label>
-									<input type="text" name="telefono" id="telefono-cliente" class="form-control" value="<?php echo (isset($datosTareaDB['TELEFONO'])) ? $datosTareaDB['TELEFONO'] : '';?>">
+									<input type="text" name="telefono" id="telefono-cliente" class="form-control">
 									<p class="mensaje"></p>
 								</div>
 								<div class="mb-3" id="container-correo">
-									<label for="correo" class="form-label">Correo Electrónico: </label>
-									<input type="email" name="correo" id="correo-cliente" class="form-control" value="<?php echo (isset($datosTareaDB['correo'])) ? $datosTareaDB['correo'] : '';?>">
+									<label for="correo" class="form-label" id="label-correo">Correo Electrónico: </label>
+									<input type="email" name="correo" id="correo-cliente" class="form-control" >
 									<p class="mensaje"></p>
 								</div>
 							</div>
@@ -157,7 +158,7 @@
 							<div class="grupo-form">
 								<div class="mb-3">
 									<label for="direccion" class="form-label">Dirección: </label>
-									<input type="text" name="direccion" id="direccion-cliente" class="form-control" value="<?php echo (isset($datosTareaDB['DIRECCION'])) ? $datosTareaDB['DIRECCION'] : '';?>">
+									<input type="text" name="direccion" id="direccion-cliente" class="form-control">
 									<p class="mensaje"></p>
 								</div>
 								<div class="mb-3" id="container-clasificacion-lead" hidden="true">
@@ -188,14 +189,18 @@
 								</div>
 								<div class="mb-3">
 									<label for="rubrocomercial" class="form-label">Rubro Comercial: </label>
-									<input type="text" name="rubrocomercial" id="rubrocomercial" class="form-control" value="<?php echo (isset($datosTareaDB['rubro_Comercial'])) ? $datosTareaDB['rubro_Comercial'] : '';?>">
+									<input type="text" name="rubrocomercial" id="rubrocomercial" class="form-control">
 									<p class="mensaje"></p>
 								</div>
 								<div class="mb-3">
 									<label for="razonsocial" class="form-label">Razón Social: </label>
-									<input type="text" name="razonsocial" id="razonsocial" class="form-control" value="<?php echo (isset($datosTareaDB['razon_Social'])) ? $datosTareaDB['razon_Social'] : '';?>">
+									<input type="text" name="razonsocial" id="razonsocial" class="form-control">
 									<p class="mensaje"></p>
 								</div>
+								<a href="./cotizacion/v_cotizacion.php?idTarea=<?php echo $_GET['idTarea']?>" class="link-nueva-cotizacion" id="link-nueva-cotizacion">
+								<img src="https://cdn-icons-png.flaticon.com/128/7164/7164888.png" alt="icono-cotizacion" height="50px">
+									Generar cotización
+								</a>
 							</div>
 						</div>
 						<div class="table-conteiner">
@@ -224,8 +229,10 @@
 						<div class="btn-guardar">
 							<a href="./v_tarea.php"><button type="button" id="btn-cerrar2"
 									class="btn btn-secondary">Cancelar</button></a>
-							<button type="submit" id="btn-guardar" class="btn btn-primary" name="actualizarTarea"><i
-									class="fa-solid fa-floppy-disk"></i>Guardar</button>
+							<button type="submit" id="btn-guardar" class="btn btn-primary" name="actualizarTarea">
+								<i class="fa-solid fa-floppy-disk"></i>
+								Guardar
+							</button>
 						</div>
 					</form>
 				</div>
