@@ -141,6 +141,7 @@ if (isset($_SESSION['usuario'])) {
             <thead>
               <tr>
                 <th scope="col"> ID COMISION VENDEDOR</th>
+                <th scope="col"> ID COMISION </th>
                 <th scope="col"> ID VENDEDOR </th>
                 <th scope="col"> VENDEDOR </th>
                 <th scope="col"> ESTADO  </th>

@@ -20,6 +20,7 @@ require_once("validacionesComision.php");
   <link href='../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href='../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <link href='../../Recursos/css/layout/footer.css' rel='stylesheet'>
+  <link href='../../Recursos/css/modalVerIdComision.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
   <title> Comision </title>
 </head>
@@ -115,6 +116,7 @@ require_once("validacionesComision.php");
     </div>
     <?php
     require('modalFiltroVenta.html');
+    require_once('modalVerComisiones.html');
     require('modalEditarComision.html');
     ?>
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>

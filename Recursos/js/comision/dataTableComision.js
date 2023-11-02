@@ -36,8 +36,8 @@ let procesarPermisoActualizar = data => {
       { "data": "fechaComision.date" },
       {
         "defaultContent":
-          '<div><button class="btns btn" id="btn_ver"><i class="fas fa-file-pdf"></i></button>' +
-          `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`
+          '<div><button class="btns btn" id="btn_ver"><i class="fa-solid fa-eye"></i></button>' +
+          `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button> </div>`
       }
     ]
   });
@@ -105,6 +105,85 @@ document.getElementById("btnCerrar").addEventListener("click", function () {
   let estadoComision = document.getElementById("estadoComision_E").value;
   console.log('idComision: '+idComision+' estadoComision: '+estadoComision);
 });
+
+$(document).on("click", "#btn_ver", async function (){
+  let fila = $(this).closest("tr");
+  let idComision = fila.find('td:eq(0)').text();
+  let idComisionVer = await obtenerComisionId(idComision);
+  console.log(idComisionVer);
+
+  const idComisionLabel = document.getElementById('IdComision');
+  idComisionLabel.innerText = idComisionVer.idComision;
+  console.log(idComisionVer.idComision);
+  const idVentaLabel = document.getElementById('V_idFactura');
+  idVentaLabel.innerText = idComisionVer.idFactura;
+  const montoLabel = document.getElementById('V_Monto');
+  montoLabel.innerText = idComisionVer.ventaTotal;
+  const porcentajeLabel = document.getElementById('V_Porcentaje');
+  porcentajeLabel.innerText = idComisionVer.valorPorcentaje;
+  const comisionTotalLabel = document.getElementById('V_comisionTotal');
+  comisionTotalLabel.innerText = idComisionVer.comisionT;
+  const estadoComisionLabel = document.getElementById('V_Estado');
+  estadoComisionLabel.innerText = idComisionVer.estadoComision;
+  const CreadoPorLabel = document.getElementById('V_CreadoPor');
+  CreadoPorLabel.innerText = idComisionVer.CreadoPor;
+  const fechaComisionLabel = document.getElementById('V_fechaCreacion');
+  fechaComisionLabel.innerText = idComisionVer.FechaComision;
+  const ModificadoPorLabel = document.getElementById('V_ModificadoPor');
+  ModificadoPorLabel.innerText = idComisionVer.modificadoPor;
+  if(idComisionVer.modificadoPor !== null){
+    ModificadoPorLabel.innerText = idComisionVer.ModificadoPor;
+  }else{
+    ModificadoPorLabel.innerText = '';
+  }
+  const fechaModificacionLabel = document.getElementById('V_FechaModificado');
+  if(idComisionVer.FechaModificacion !== null){
+    fechaModificacionLabel.innerText = idComisionVer.fechaModificacion;
+  } else {
+    fechaModificacionLabel.innerText = '';
+    const vendedoresLabel = document.getElementById('V_Vendedores');
+    const vendedores = idComisionVer.vendedores; // Supongamos que los datos de los vendedores están en un arreglo
+    if (vendedores && vendedores.length > 0) {
+      // Construir una cadena con la información de los vendedores
+      const vendedoresInfo = vendedores.map(vendedor => `${vendedor.idVendedor} - ${vendedor.nombreVendedor} - ${vendedor.comisionVendedor}`).join(', ');
+      vendedoresLabel.innerText = vendedoresInfo;
+    } else {
+      vendedoresLabel.innerText = 'No hay vendedores disponibles';
+    }
+}
+  $(".modal-header").css("background-color", "#007bff");
+  $(".modal-header").css("color", "white");
+  // Mostrar el modal
+  $("#modalVerComision").modal("show");
+});
+
+let obtenerComisionId = async (idComision) => {
+  try{
+    let datosComision = await $.ajax({
+      url: '../../../Vista/comisiones/obtenerIdComision.php',
+      type: 'GET',
+      datatype: 'JSON',
+      data: {
+        IdComision: idComision
+      }
+    });
+    // console.log(datosComision);
+    // if (datosComision && datosComision.idComision) {
+    //   return datosComision; // Retornamos la data recibida por ajax
+    // } else {
+    //   console.error("Datos de comisión no válidos");
+      return datosComision;
+  } catch (err) {
+    console.error(err);
+  }
+}
+$(document).on("click", "#btn_pdf_id",  function (){
+  let idComisionR = document.querySelector('#V_IdComision').innerText;
+
+  //console.log("hola")
+  window.open('../../../TCPDF/examples/reporteComisionId.php?idComision='+idComisionR, '_blank');
+  //await reporteComisionId(idComisionR);  
+ });
 
 /* let obtenerEstadoComision = function (idElemento) {
   //Petición para obtener los estados de las comisiones
