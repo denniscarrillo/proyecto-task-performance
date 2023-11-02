@@ -589,4 +589,17 @@ class Tarea
         sqlsrv_query($conexion, $update);
         sqlsrv_close($conexion); //Cerrar conexion
     }
+    public static function obtenerRtnClienteTarea($idTarea){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $estadoRtn = "false";
+        $consulta = "SELECT RTN_Cliente FROM tbl_tarea WHERE id_Tarea='$idTarea';";
+        $ejecutar = sqlsrv_query($conexion, $consulta);
+        $fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC);
+        if($fila['RTN_Cliente'] != null || $fila['RTN_Cliente'] !=''){
+            $estadoRtn = "true";
+        }
+        sqlsrv_close($conexion);
+        return $estadoRtn;
+    }
 }
