@@ -1,8 +1,21 @@
+//import {estadoValidado as valido } from './validacionesNuevaSolicitud.js';
 
 
 $(document).on('click', '#clienteExistente', function () {
   obtenerClientes();
  // $("#modalClienteFrecuente").modal("show");
+
+ let correoCliente = document.getElementById('containerCorreocliente');
+ correoCliente .setAttribute('hidden', 'false');
+
+});
+
+$(document).on('click', '#clientenuevo', function () {
+
+  let correoCliente = document.getElementById('containerCorreocliente');
+  correoCliente.removeAttribute('hidden');
+  containerCorreocliente.style.display = 'block';
+
 });
 let obtenerClientes = function () {
   if (document.getElementById('table-ClienteFrecuente_wrapper') == null) {
@@ -99,8 +112,8 @@ let limpiarForm = () => {
     rtn.value = '';
     telefono.value = ''
     direccion.value = '';
-   Factura.value = '';
-   nombre.value = '';
+    Factura.value = '';
+    nombre.value = '';
     // rtn.removeAttribute('disabled');
     telefono.removeAttribute('disabled');
     direccion.removeAttribute('disabled');
@@ -339,9 +352,6 @@ $('#form-solicitud').submit(function (e) {
   e.preventDefault(); 
   
   let idFactura = $('#idfactura').val();
-  // if (idFactura == ""){
-  //   idFactura = "NULL";
-  // }
   let correo = $('#correo').val();
   let telefono = $('#telefono').val();
   let tiposervicio = document.getElementById('tiposervicio').value;

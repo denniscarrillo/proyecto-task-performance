@@ -75,4 +75,7 @@ class ControladorTarea {
     public static function editarNuevoClienteTarea($editarClienteTarea){
         Tarea::editarNuevoClienteTarea($editarClienteTarea);
     }
+    public static function obtenerRTN_Tarea($idTarea){
+        return Tarea::obtenerRtnClienteTarea($idTarea);
+    }
 }

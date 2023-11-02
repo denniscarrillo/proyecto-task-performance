@@ -40,4 +40,8 @@
         public static function editarEstadoComisionVendedor($comision){
             return Comision::actualizarEstadoComisionVendedor($comision);
         }
+
+        public static function traerIdComision($idComision){
+            return Comision::ComisionPorId($idComision);
+        }
     }

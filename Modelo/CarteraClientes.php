@@ -69,8 +69,7 @@ class CarteraClientes{
             $modificadoPor = $nuevoCliente->modificadoPor;
             date_default_timezone_set('America/Tegucigalpa');
             $fechaModificacion = date("Y-m-d");
-            $update = "UPDATE tbl_carteracliente SET nombre_Cliente='$nombre', rtn_Cliente='$rtn', telefono='$telefono',
-            correo='$correo', direccion='$direccion', estadoContacto = '$estadoContacto', Modificado_Por = '$modificadoPor', Fecha_Modificacion = '$fechaModificacion' WHERE id_CarteraCliente='$id' ";
+            $update = "UPDATE tbl_carteracliente SET  telefono='$telefono', correo='$correo', direccion='$direccion', estadoContacto = '$estadoContacto', Modificado_Por = '$modificadoPor', Fecha_Modificacion = '$fechaModificacion' WHERE id_CarteraCliente='$id' ";
             $nuevoCliente = sqlsrv_query($abrirConexion, $update);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;

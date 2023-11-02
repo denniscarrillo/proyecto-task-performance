@@ -161,6 +161,6 @@
 	<script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
 	<script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
 	<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>-->
-	<script src="../../Recursos/js/rendimiento/cotizacion/v_cotizacion.js"></script> 
+	<script src="../../../Recursos/js/rendimiento/cotizacion/v_cotizacion.js"></script> 
 </body>
 </html>

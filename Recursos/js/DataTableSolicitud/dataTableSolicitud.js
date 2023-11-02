@@ -2,6 +2,7 @@ import {estadoValidado as validado } from './validacionesModalEliminarSolicitud.
 import {estadoValidado as valido } from './validacionesModalEditarSolicitud.js';
 
 
+
 let tablaDataTableSolicitud = ''; 
 //Variable dataTable
 $(document).ready(function () {

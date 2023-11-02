@@ -3,15 +3,46 @@ import { sidePanel_Interaction } from '../../components/js/sidePanel.js'; //impo
 let tableArticulos = '';
 let $idTarea = document.getElementById('id-Tarea').value;
 let $idEstadoTarea = document.querySelector('.id-estado-tarea').id;
-$(document).ready(function(){
-    // (document.getElementById('cliente-nuevo').checked) ? document.getElementById('container-correo').removeAttribute('hidden'): '';
+let estadoRTN = '';
+$(document).ready(async function(){
     setEstadoTarea();
     obtenerComentarios($idTarea);
     obtenerDatosTarea($idTarea, $idEstadoTarea);
+    estadoRTN = await $.ajax({
+      url: "../../../Vista/rendimiento/cotizacion/obtenerRTN_Tarea.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {
+        "idTarea": $idTarea
+      }
+    });
 });
+
 document.getElementById('btn-comment').addEventListener('click', () => {
   obtenerComentarios($idTarea);
   obtenerHistorialTarea($idTarea);
+});
+//Validar datos del cliente antes de redirigir al usuario a la vista cotización
+document.getElementById('link-nueva-cotizacion').addEventListener('click', (e) => {
+  console.log(JSON.parse(estadoRTN));
+  if(JSON.parse(estadoRTN) == false) {
+    e.preventDefault();
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top',
+      showConfirmButton: false,
+      timer: 5000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+    });
+    Toast.fire({
+        icon: 'warning',
+        title: 'Debe tener los datos del cliente'
+    });
+  }
 });
 
 /* ----------- Función de que le da interacción del sidepanel -------------------------*/
@@ -427,6 +458,7 @@ let obtenerDatosTarea = ($idTarea, $idEstadoTarea) => {
     },
     success: function($datosTarea){
       let datos = JSON.parse($datosTarea);
+      console.log(datos);
       (Object.keys(datos).length > 1) ? setearDatosTarea(datos) : document.getElementsByName('estadoEdicion')[0].id = datos.data;
     }
   });
