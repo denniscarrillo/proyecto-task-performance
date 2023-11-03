@@ -1,4 +1,4 @@
-//import {estadoValidado as valido } from './validacionesNuevaSolicitud.js';
+import {estadoValidado as valido } from './validacionesNuevaSolicitud.js';
 
 
 $(document).on('click', '#clienteExistente', function () {
@@ -85,7 +85,7 @@ document.getElementById('clientenuevo').addEventListener('change', function () {
   let $btnBuscarCliente = document.querySelector('.btnbuscarcliente');
   if ($btnBuscarCliente) {
     $containerRTN.removeChild($btnBuscarCliente);
-    limpiarForm();
+   limpiarForm();
   }
   
 });
@@ -101,20 +101,21 @@ document.getElementById('clientenuevo').addEventListener('change', function () {
 
 let limpiarForm = () => {
   let $mensaje = document.getElementById('mensaje');
-  $mensaje.innerText = '';
-  $mensaje.classList.remove('mensaje-existe-cliente');
+  //$mensaje.innerText = '';
+  //$mensaje.classList.remove('mensaje-existe-cliente');
   let   rtn = document.getElementById('rntcliente'),
     telefono = document.getElementById('telefono'),
     direccion = document.getElementById('direccion'),
-    Factura = document.getElementById("idfactura"),
+    descripcion = document.getElementById("descripcion"),
      nombre = document.getElementById('nombre');
   //Vaciar campos cliente
     rtn.value = '';
     telefono.value = ''
     direccion.value = '';
-    Factura.value = '';
+    descripcion.value = '';
     nombre.value = '';
-    // rtn.removeAttribute('disabled');
+    descripcion.removeAttribute('disabled');
+    rtn.removeAttribute('disabled');
     telefono.removeAttribute('disabled');
     direccion.removeAttribute('disabled');
 }
@@ -197,6 +198,7 @@ $(document).on("click", "#btn_selectfactura", function () {
     direccion.disabled = false;
     descripcion.disabled = false;
     rntcliente.disabled = false;
+     nombre.disabled=false;
     let fechaC = new Date().toISOString().slice(0, 10);
     $("#fechasolicitud").val(fechaC); 
     obtenerAdminCorreo('#correo');
@@ -208,6 +210,7 @@ $(document).on("click", "#btn_selectfactura", function () {
     direccion.disabled = false;
     descripcion.disabled = false;
     rntcliente.disabled = false;
+    nombre.disabled=false;
     let fechaC = new Date().toISOString().slice(0, 10);
     $("#fechasolicitud").val(fechaC);
     obtenerAdminCorreo('#correo');
