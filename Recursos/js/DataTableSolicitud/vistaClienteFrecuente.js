@@ -349,7 +349,8 @@ $(document).on("click", "#btn_selectfactura", function () {
 
 ///////////GUARDAR NUEVA SOLICITUD
 $('#form-solicitud').submit(function (e) {
-  e.preventDefault();  
+  e.preventDefault(); 
+  
   let idFactura = $('#idfactura').val();
   let correo = $('#correo').val();
   let telefono = $('#telefono').val();
@@ -357,15 +358,17 @@ $('#form-solicitud').submit(function (e) {
   let ubicacion = $('#direccion').val();
   let descripcion = $('#descripcion').val();
   let rtncliente, rtnclienteC;
+
   var radio = document.getElementById("clienteExistente");
 if (radio.checked) {
-rtncliente = $('#rntcliente').val();
-   rtnclienteC = 'NULL'; 
- } else {
-rtnclienteC = $('#rntcliente').val();
-   rtncliente = 'NULL'; 
-//   idFactura = 'null';
+  rtncliente = $('#rntcliente').val() || null;
+  rtnclienteC = null; 
+} else {
+  rtnclienteC = $('#rntcliente').val() || null;
+  rtncliente = null; 
+  idFactura = null;
 }
+
   // Validación (debes implementar tu propia lógica de validación aquí)
   //idFactura && (rtncliente || rtnclienteC) && correo && telefono && tiposervicio && ubicacion && descripcion
   if (true) {
@@ -393,7 +396,6 @@ rtnclienteC = $('#rntcliente').val();
               );
               // Puedes realizar otras acciones después del éxito de la solicitud AJAX
           }
-          
       });
   } else {
       // Manejar la validación fallida, por ejemplo, mostrar un mensaje de error
@@ -403,40 +405,7 @@ rtnclienteC = $('#rntcliente').val();
           'error'
       );
   }
-  if ($('#clientenuevo').is(':checked')) {
-    let nombreN = $('#nombre').val();
-    let rtnN = $('#rntcliente').val();
-    let telefonoN = $('#telefono').val();
-    let correoN = $('#correoCliente').val();
-    let direccionN = $('#direccion').val();
-    //validado
-    if (true) {
-      $.ajax({
-        url: "../../../Vista/crud/carteraCliente/nuevoCliente.php",
-        type: "POST",
-        datatype: "JSON",
-        data: {
-          nombre: nombreN,
-          rtn: rtnN,
-          telefono: telefonoN,
-          correo: correoN,
-          direccion: direccionN
-        },
-        success: function () {
-        }
-      });
-  
-    }
-  }
 });
-
-
-//Guardar en Cartera Cliente
-// $('#form-solicitud').submit(function (e) {
-//   e.preventDefault(); // Evita el comportamiento normal del submit, es decir, la recarga total de la página
-//   // Verifica si el radio "Nuevo Cliente" está seleccionado
- 
-// });
 
 
 
