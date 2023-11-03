@@ -364,11 +364,11 @@ $('#form-solicitud').submit(function (e) {
 
   var radio = document.getElementById("clienteExistente");
 if (radio.checked) {
-  rtncliente = $('#rntcliente').val() || null;
-  rtnclienteC = null; 
+  rtncliente = $('#rntcliente').val();
+  rtnclienteC = 'NULL'; 
 } else {
-  rtnclienteC = $('#rntcliente').val() || null;
-  rtncliente = null; 
+  rtnclienteC = $('#rntcliente').val();
+  rtncliente = 'NULL'; 
   idFactura = null;
 }
 
@@ -409,6 +409,39 @@ if (radio.checked) {
       );
   }
 });
+
+$('#form-solicitud').submit(function (e) {
+  e.preventDefault(); // Evita el comportamiento normal del submit, es decir, la recarga total de la página
+  // Verifica si el radio "Nuevo Cliente" está seleccionado
+  if ($('#clientenuevo').is(':checked')) {
+    let nombreN = $('#nombre').val();
+    let rtnN = $('#rntcliente').val();
+    let telefonoN = $('#telefono').val();
+    let correoN = $('#correoCliente').val();
+    let direccionN = $('#direccion').val();
+    if (true) {
+      $.ajax({
+        url: "../../../Vista/crud/carteraCliente/nuevoCliente.php",
+        type: "POST",
+        datatype: "JSON",
+        data: {
+          nombre: nombreN,
+          rtn: rtnN,
+          telefono: telefonoN,
+          correo: correoN,
+          direccion: direccionN
+        },
+        success: function () {
+  
+        }
+      });
+
+    }
+  }
+});
+
+
+
 
 
 

@@ -26,5 +26,9 @@ class ControladorDataTableSolicitud {
     public static function NuevaSolicitud($nuevaSolicitud){
         return DataTableSolicitud::NuevaSolicitud($nuevaSolicitud);
     }
+
+    public static function NuevoProductoSolic($nuevoProductoS){
+        return DataTableSolicitud::NuevoProductoSolic($nuevoProductoS);
+    }
     
 }

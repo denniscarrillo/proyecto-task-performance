@@ -249,6 +249,6 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
   <script src="../../../Recursos/js/DataTableSolicitud/vistaClienteFrecuente.js" type="module"></script>
-  <script src="../../../Recursos/js/DataTableSolicitud/validacionesNuevaSolicitud.js" type="module"></script> 
+  <!-- <script src="../../../Recursos/js/DataTableSolicitud/validacionesNuevaSolicitud.js" type="module"></script>  -->
 
 </html>

@@ -160,5 +160,21 @@ class DataTableSolicitud
         return $nuevaSolicitud;
     }
 
+    public static function NuevoProductoSolic($nuevoProductoS){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $idSolicitud =$nuevoProductoS->idSolicitud;
+        $CodArticulo = $nuevoProductoS->CodArticulo;
+        $Cant = $nuevoProductoS->Cant;        
+        $query = "INSERT INTO tbl_ProductosSolicitud(id_Solicitud, Cod_Articulo, Cant) 
+        VALUES ('$idSolicitud',' $CodArticulo', ' $Cant');";
+        $nuevoProductoS = sqlsrv_query($consulta, $query);
+        sqlsrv_close($consulta); #Cerramos la conexión.
+        return $nuevoProductoS;
+    }
+
+
+
+
 }
 
