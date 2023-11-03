@@ -160,7 +160,7 @@ if (isset($_SESSION['usuario'])) {
                 </div>
                 <div class="form-element input-conteiner">
                     <label for="nombre" class="form-label">nombre</label>
-                    <input type="text" id="nombre" name="nombre" class="form-control" >
+                    <input type="text" id="nombre" name="nombre" class="form-control" disabled>
                     <p class="mensaje"></p>
                 </div>
                 <div class="form-element input-conteiner">
@@ -174,7 +174,7 @@ if (isset($_SESSION['usuario'])) {
                     <p class="mensaje"></p>
                 </div>
                 <div class="form-element input-conteiner" id="containerCorreocliente" >
-                <label for="correoL" class="form-label">Correo electrónico Cliente</label>
+                    <label for="correoL" class="form-label">Correo electrónico Cliente</label>
                     <input type="text" id="correoCliente" name="correoElectronico" class="form-control">
                     <p class="mensaje"></p>
                 </div>
@@ -251,6 +251,6 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
   <script src="../../../Recursos/js/DataTableSolicitud/vistaClienteFrecuente.js" type="module"></script>
-  <!-- <script src="../../../Recursos/js/DataTableSolicitud/validacionesNuevaSolicitud.js" type="module"></script>  -->
+  <script src="../../../Recursos/js/DataTableSolicitud/validacionesNuevaSolicitud.js" type="module"></script> 
 
 </html>
