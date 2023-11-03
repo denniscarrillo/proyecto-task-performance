@@ -96,7 +96,7 @@
               <li class="dropdown-menu__content__list__item">
                 <a href="<?php echo $urlComision; ?>" class="dropdown-menu__content__secundario__link">
                 <!-- <i class="fa-solid fa-list-check"></i> -->
-                  <span>Nueva Comisión</span>
+                  <span>Comisiones</span>
                 </a>
               </li>
               <li class="dropdown-menu__content__list__item">

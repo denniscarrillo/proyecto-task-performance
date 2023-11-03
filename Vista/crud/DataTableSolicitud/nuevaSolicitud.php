@@ -13,7 +13,7 @@
         $nuevaSolicitud = new DataTableSolicitud();
         $nuevaSolicitud->idFactura = $_POST['idFactura'];
         $nuevaSolicitud->rtnCliente = $_POST['RTNcliente'];
-        $nuevaSolicitud->rtnClienteC = $_POST['RTNcliente'];
+        $nuevaSolicitud->rtnClienteC = $_POST['RTNclienteC'];
         $nuevaSolicitud->descripcion = $_POST['descripcion'];
         $nuevaSolicitud->tipoServicio = $_POST['tipoServicio'];
         $nuevaSolicitud->correo = $_POST['correo'];
@@ -22,8 +22,9 @@
         $nuevaSolicitud->estadoAvance = 'PENDIENTE';
         $nuevaSolicitud->estadoSolicitud = 'ACTIVO';
         $nuevaSolicitud->creadoPor =  $user;
-        
+
         ControladorDataTableSolicitud::NuevaSolicitud($nuevaSolicitud);
+        print json_encode($nuevaSolicitud, JSON_UNESCAPED_UNICODE);
         /* ========================= Evento Creacion nueva solicitud. ======================
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();

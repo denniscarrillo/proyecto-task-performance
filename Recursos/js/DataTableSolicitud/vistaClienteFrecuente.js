@@ -194,6 +194,7 @@ $(document).on("click", "#btn_selectfactura", function () {
   // Agregar un controlador de eventos 'click' al elemento de radio
   clienteExistente.addEventListener("click", function() {
     obtenerTipoServicio('#tiposervicio');
+    telefono.disabled = false;
     direccion.disabled = false;
     descripcion.disabled = false;
     rntcliente.disabled = false;
@@ -204,6 +205,8 @@ $(document).on("click", "#btn_selectfactura", function () {
   });
   clientenuevo.addEventListener("click", function() {
     obtenerTipoServicio('#tiposervicio');
+    nombre.disabled = false;
+    telefono.disabled = false;
     direccion.disabled = false;
     descripcion.disabled = false;
     rntcliente.disabled = false;
@@ -349,44 +352,62 @@ $(document).on("click", "#btn_selectfactura", function () {
 
 ///////////GUARDAR NUEVA SOLICITUD
 $('#form-solicitud').submit(function (e) {
-  e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
-     //Obtener datos del nuevo Usuario
-     let idFactura = $('#idfactura').val();
-     let rtncliente = $('#rntcliente').val();   
-     let correo = $('#correo').val();
-     let telefono = $('#telefono').val();
-     let tiposervicio = document.getElementById('tiposervicio').value;
-     let ubicacion = $('#direccion').val();
-     let descripcion = $('#descripcion').val();
-     //validado
-    if(valido){ 
-         
+  e.preventDefault(); 
+  
+  let idFactura = $('#idfactura').val();
+  let correo = $('#correo').val();
+  let telefono = $('#telefono').val();
+  let tiposervicio = document.getElementById('tiposervicio').value;
+  let ubicacion = $('#direccion').val();
+  let descripcion = $('#descripcion').val();
+  let rtncliente, rtnclienteC;
+
+  var radio = document.getElementById("clienteExistente");
+if (radio.checked) {
+  rtncliente = $('#rntcliente').val() || null;
+  rtnclienteC = null; 
+} else {
+  rtnclienteC = $('#rntcliente').val() || null;
+  rtncliente = null; 
+  idFactura = null;
+}
+
+  // Validación (debes implementar tu propia lógica de validación aquí)
+  //idFactura && (rtncliente || rtnclienteC) && correo && telefono && tiposervicio && ubicacion && descripcion
+  if (true) {
       $.ajax({
-        url: "../../../Vista/crud/DataTableSolicitud/nuevaSolicitud.php",
-        type: "POST",
-        datatype: "JSON",
-        data: {
-          idFactura: idFactura,
-          RTNcliente: rtncliente,
-          telefono: telefono,
-          correo: correo,
-          tipoServicio: tiposervicio,
-          ubicacion: ubicacion,
-          descripcion: descripcion
-        },
-        success: function (data) {
-          //Mostrar mensaje de exito
-          console.log(data);
-          Swal.fire(
-           'Guardado!',
-           'Se le ha registrado la solicitud!',
-           'success',
-         )
-         //tablaUsuarios.ajax.reload(null, false);
-        }
+          url: "../../../Vista/crud/DataTableSolicitud/nuevaSolicitud.php",
+          type: "POST",
+          datatype: "JSON",
+          data: {
+              idFactura: idFactura,
+              RTNcliente: rtncliente,
+              RTNclienteC: rtnclienteC,
+              telefono: telefono,
+              correo: correo,
+              tipoServicio: tiposervicio,
+              ubicacion: ubicacion,
+              descripcion: descripcion
+          },
+          success: function (data) {
+              // Mostrar mensaje de éxito
+              console.log(idFactura);
+              Swal.fire(
+                  'Guardado!',
+                  'Se le ha registrado la solicitud!',
+                  'success'
+              );
+              // Puedes realizar otras acciones después del éxito de la solicitud AJAX
+          }
       });
-      //$('#modalNuevoUsuario').modal('hide');
-    } 
+  } else {
+      // Manejar la validación fallida, por ejemplo, mostrar un mensaje de error
+      Swal.fire(
+          'Error!',
+          'Por favor, cumpla todos los parámetros.',
+          'error'
+      );
+  }
 });
 
 

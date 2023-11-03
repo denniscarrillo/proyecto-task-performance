@@ -149,6 +149,7 @@ $('#form-Comision').submit(function (e) { //evita el comportambiento normal del 
       )
   }else{
     guardarNuevaComision();
+    window.location.href = "../../../Vista/comisiones/v_Comision.php";
   }
   
 });
