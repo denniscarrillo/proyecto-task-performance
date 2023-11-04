@@ -1,4 +1,4 @@
-import {estadoValidado as valido } from './validacionesNuevaSolicitud.js';
+//import {estadoValidado as valido } from './validacionesNuevaSolicitud.js';
 
 
 $(document).on('click', '#clienteExistente', function () {
@@ -361,7 +361,8 @@ $('#form-solicitud').submit(function (e) {
   let ubicacion = $('#direccion').val();
   let descripcion = $('#descripcion').val();
   let rtncliente, rtnclienteC;
-
+  // let codArticulo = $('#idproducto').val();
+  // let Cant = document.querySelectorAll('.cantproducto');
   var radio = document.getElementById("clienteExistente");
 if (radio.checked) {
   rtncliente = $('#rntcliente').val();
@@ -371,9 +372,20 @@ if (radio.checked) {
   rtncliente = 'NULL'; 
   idFactura = null;
 }
-
-  // Validación (debes implementar tu propia lógica de validación aquí)
-  //idFactura && (rtncliente || rtnclienteC) && correo && telefono && tiposervicio && ubicacion && descripcion
+let $idProductos = document.querySelectorAll('.idproducto');
+let $cantProducto = document.querySelectorAll('.cantproducto');
+let productos = [];
+$idProductos.forEach(id => {
+  $cantProducto.forEach(cant => {
+    if(id.value == cant.getAttribute('id')){
+      let objProducto = {
+        id: id.value,
+        cant: cant.value
+      }
+      productos.push(objProducto);
+    }
+  });
+});
   if (true) {
       $.ajax({
           url: "../../../Vista/crud/DataTableSolicitud/nuevaSolicitud.php",
@@ -387,17 +399,15 @@ if (radio.checked) {
               correo: correo,
               tipoServicio: tiposervicio,
               ubicacion: ubicacion,
-              descripcion: descripcion
+              descripcion: descripcion,
+              "productos": JSON.stringify(productos)
           },
-          success: function (data) {
-              // Mostrar mensaje de éxito
-              console.log(idFactura);
+          success: function () {
               Swal.fire(
                   'Guardado!',
                   'Se le ha registrado la solicitud!',
                   'success'
               );
-              // Puedes realizar otras acciones después del éxito de la solicitud AJAX
           }
       });
   } else {
@@ -439,6 +449,7 @@ $('#form-solicitud').submit(function (e) {
     }
   }
 });
+
 
 
 

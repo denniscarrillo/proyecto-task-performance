@@ -135,7 +135,7 @@ class DataTableSolicitud
     }
 
 
-    public static function NuevaSolicitud($nuevaSolicitud){
+    public static function NuevaSolicitud($nuevaSolicitud, $productosSolicitud){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $idFactura =$nuevaSolicitud->idFactura;
@@ -156,6 +156,18 @@ class DataTableSolicitud
         VALUES ('$idFactura','$rtnCliente', '$rtnClienteCartera', '$Descripcion', '$TipoServicio', '$Correo',
         '$telefono', '$ubicacion', '$EstadoAvance', '$EstadoSolicitud','$CreadoPor', GETDATE());";
         $nuevaSolicitud = sqlsrv_query($consulta, $query);
+
+        $query2 = "SELECT SCOPE_IDENTITY() AS id_Solicitud";
+        $resultado = sqlsrv_query($consulta, $query2);
+        $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+        $idSolicitud= $fila['id_Solicitud'];
+        foreach($productosSolicitud as $producto){
+            $CodArticulo = $producto['idProducto'];
+            $Cant = $producto['CantProducto'];
+            $insertProductoS = "INSERT INTO tbl_ProductosSolicitud(id_Solicitud, Cod_Articulo, Cant) 
+                                VALUES ( $idSolicitud, $CodArticulo, $Cant);";        
+            sqlsrv_query($consulta, $insertProductoS);
+        }
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $nuevaSolicitud;
     }
