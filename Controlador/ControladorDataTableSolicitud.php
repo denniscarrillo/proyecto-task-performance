@@ -23,12 +23,10 @@ class ControladorDataTableSolicitud {
         return DataTableSolicitud::VerSolicitudesPorId($idSolicitud);
     }
 
-    public static function NuevaSolicitud($nuevaSolicitud){
-        return DataTableSolicitud::NuevaSolicitud($nuevaSolicitud);
+    public static function NuevaSolicitud($nuevaSolicitud, $productosSolicitud){
+        return DataTableSolicitud::NuevaSolicitud($nuevaSolicitud, $productosSolicitud);
     }
 
-    public static function NuevoProductoSolic($nuevoProductoS){
-        return DataTableSolicitud::NuevoProductoSolic($nuevoProductoS);
-    }
+
     
 }
