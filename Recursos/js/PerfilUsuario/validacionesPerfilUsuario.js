@@ -50,7 +50,7 @@ let estadoSoloNumeros = {
     estadoNumerotelefono :true,
 }
 
-
+let estadoCorreo = true;
 
 
 const $form = document.getElementById('form-Edit-PerfilUsuario');

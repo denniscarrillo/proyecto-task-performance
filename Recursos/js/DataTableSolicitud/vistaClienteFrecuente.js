@@ -100,20 +100,24 @@ document.getElementById('clientenuevo').addEventListener('change', function () {
 
 
 let limpiarForm = () => {
-  let $mensaje = document.getElementById('mensaje');
+   //$mensaje = document.getElementById('mensaje');
   //$mensaje.innerText = '';
   //$mensaje.classList.remove('mensaje-existe-cliente');
   let   rtn = document.getElementById('rntcliente'),
     telefono = document.getElementById('telefono'),
     direccion = document.getElementById('direccion'),
     descripcion = document.getElementById("descripcion"),
-     nombre = document.getElementById('nombre');
+   nombre = document.getElementById('nombre'),
+   correoCliente = document.getElementById('correoCliente');
   //Vaciar campos cliente
     rtn.value = '';
     telefono.value = ''
     direccion.value = '';
     descripcion.value = '';
     nombre.value = '';
+    correoCliente.value = ''; 
+
+    correoCliente.removeAttribute('disabled');
     descripcion.removeAttribute('disabled');
     rtn.removeAttribute('disabled');
     telefono.removeAttribute('disabled');
@@ -374,7 +378,7 @@ if (radio.checked) {
 
   // Validación (debes implementar tu propia lógica de validación aquí)
   //idFactura && (rtncliente || rtnclienteC) && correo && telefono && tiposervicio && ubicacion && descripcion
-  if (true) {
+  if (valido) {
       $.ajax({
           url: "../../../Vista/crud/DataTableSolicitud/nuevaSolicitud.php",
           type: "POST",
@@ -419,7 +423,7 @@ $('#form-solicitud').submit(function (e) {
     let telefonoN = $('#telefono').val();
     let correoN = $('#correoCliente').val();
     let direccionN = $('#direccion').val();
-    if (true) {
+    if (valido) {
       $.ajax({
         url: "../../../Vista/crud/carteraCliente/nuevoCliente.php",
         type: "POST",

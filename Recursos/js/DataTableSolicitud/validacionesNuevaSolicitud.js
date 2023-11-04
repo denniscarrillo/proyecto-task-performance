@@ -36,8 +36,9 @@ let estadoSelect = {
     estadoSelectRtn:true,
     estadoSelecttipoServicio:true,
 }
+
 let estadoMasdeUnEspacio = {
-        estadoMasEspacioCorreo:true,
+        estadoMasEspacioCorreoCliente:true,
         estadoMasEspacioDireccion:true,
         estadoMasEspacioDescripcion:true,
         estadoMasEspaciotelefono:true,
@@ -49,20 +50,16 @@ let estadoMasdeUnEspacio = {
 }
 
 let estadoSoloLetras = {
-    estadoLetrasDireccion:true,
+   
     estadoLetrasName:true,
-    estadoLetrasDescripcion:true,
-  
-  
-
 }
 let estadoSoloNumeros = {
-    estadoNumerortn :true,
+
     estadoNumerotelefono :true,
 }
 
 
-
+let estadoCorreo = true;
 
 const $form = document.getElementById('form-solicitud');
 const $name = document.getElementById('nombre');
@@ -86,62 +83,54 @@ $form.addEventListener('submit', e => {
     let estadoInputName = funciones.validarCampoVacio($name);
     let estadoInputtelefono = funciones.validarCampoVacio($telefono);
     let estadoInputDireccion = funciones.validarCampoVacio($direccion);
-    let estadoInputRtn = funciones.validarCampoVacio($rtn);
-    let estadoInputfechaSolicitud = funciones.validarCampoVacio($fechaSolicitud);
-    let estadoInputtipoServicio = funciones.validarCampoVacio($tipoServicio);
     let estadoInputdescripcion = funciones.validarCampoVacio($descripcion);
+    let estadoInputCorreoCliente = funciones.validarCampoVacio($correoCliente);
+    let estadoInputTipoServicio= funciones.validarCampoVacio($tipoServicio);
     
     // Comprobamos que todas las validaciones se hayan cumplido 
-    if (estadoInputName == false || estadoInputdescripcion == false ||estadoInputfechaSolicitud == false || estadoInputtipoServicio == false ||estadoInputtelefono  == false || estadoInputRtn == false || estadoInputCorreo == false  || estadoInputDireccion == false) {
+    if (estadoInputName == false ||estadoInputTipoServicio == false || estadoInputCorreoCliente == false ||estadoInputdescripcion == false || estadoInputtelefono  == false ||  estadoInputCorreoCliente == false  || estadoInputDireccion == false) {
         e.preventDefault();
     }else{
-        if(estadoEspacioInput.estadoEspacioName == false || estadoEspacioInput.estadoEspaciodescripcion  == false || estadoEspacioInput.estadoEspaciotelefono  == false || estadoEspacioInput.estadoEspacioRtn== false || estadoEspacioInput.estadoEspacioCorreo == false || estadoEspacioInput.estadoEspacioDireccion == false){ 
+        if(estadoEspacioInput.estadoEspacioName == false || estadoEspacioInput.estadoEspaciodescripcion  == false || estadoEspacioInput.estadoEspaciotelefono  == false ||  estadoEspacioInput.estadoEspacioCorreoCliente == false || estadoEspacioInput.estadoEspacioDireccion == false){ 
             e.preventDefault();
             estadoEspacioInput.estadoEspacioName = funciones.validarEspacios($name);  
             estadoEspacioInput.estadoEspaciotelefono= funciones.validarEspacios($telefono);  
             estadoEspacioInput.estadoEspacioDireccion = funciones.validarEspacios($direccion);  
-            estadoEspacioInput.estadoEspacioCorreo = funciones.validarEspacios($correo); 
-            estadoEspacioInput.estadoEspacioRtn = funciones.validarEspacios($rtn); 
+            estadoEspacioInput.estadoEspacioCorreoCliente = funciones.validarEspacios($correoCliente); 
             estadoEspacioInput.estadoEspaciodescripcion = funciones.validarEspacios($descripcion);  
-            estadoEspacioInput.estadoEspaciofechaSolicitud = funciones.validarEspacios($fechaSolicitud); 
-            estadoEspacioInput.estadoEspaciotipoServicio = funciones.validarEspacios($tipoServicio);       
+              
         }
         estadoMasdeUnEspacio.estadoMasEspacioName= funciones.validarMasdeUnEspacio($name);
         estadoMasdeUnEspacio.estadoMasEspacioDescripcion= funciones.validarMasdeUnEspacio($descripcion);
         estadoMasdeUnEspacio.estadoMasEspaciotelefono= funciones.validarMasdeUnEspacio($telefono);
         estadoMasdeUnEspacio.estadoMasEspacioDireccion= funciones.validarMasdeUnEspacio($direccion);
-        estadoMasdeUnEspacio.estadoMasEspacioCorreo = funciones.validarMasdeUnEspacio($correoCliente);
-        estadoMasdeUnEspacio.estadoMasEspacioRtn = funciones.validarMasdeUnEspacio($rtn);
-        estadoMasdeUnEspacio.estadoMasEspaciofechaSolicitud = funciones.validarMasdeUnEspacio($fechaSolicitud);
-        estadoMasdeUnEspacio.estadoMasEspaciotipoServicio = funciones.validarMasdeUnEspacio($tipoServicio);
+        estadoMasdeUnEspacio.estadoMasEspacioCorreoCliente = funciones.validarMasdeUnEspacio($correoCliente);
        
-       
-        if(estadoMasdeUnEspacio.estadoMasEspacioName == false ||  estadoMasdeUnEspacio.estadoMasEspaciotipoServicio == false || estadoMasdeUnEspacio.estadoMasEspaciofechaSolicitud == false || estadoMasdeUnEspacio.estadoMasEspacioDescripcion == false ||  estadoMasdeUnEspacio.estadoMasEspaciotelefono == false || estadoMasdeUnEspacio.estadoMasEspacioDireccion== false || estadoMasdeUnEspacio.estadoMasEspacioRtn == false|| estadoMasdeUnEspacio.estadoMasEspacioCorreoCliente == false){
+        if(estadoMasdeUnEspacio.estadoMasEspacioName == false ||  estadoMasdeUnEspacio.estadoMasEspacioDescripcion == false ||  estadoMasdeUnEspacio.estadoMasEspaciotelefono == false || estadoMasdeUnEspacio.estadoMasEspacioDireccion== false || estadoMasdeUnEspacio.estadoMasEspacioCorreoCliente == false){
             e.preventDefault();
             console.log(estadoMasdeUnEspacio.estadoMasEspacioDireccion);
-            console.log(estadoMasdeUnEspacio.estadoMasEspacioubicacion);
+            console.log(estadoMasdeUnEspacio.estadoMasEspacioName);
         }else{
-            if(estadoSoloLetras.estadoLetrasName == false || estadoSoloLetras.estadoLetrasDescripcion == false ||  estadoSoloLetras.estadoLetrasDireccion == false ){
+            if(estadoSoloLetras.estadoLetrasName == false ){
                 e.preventDefault();
                 estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
-                 estadoLetrasDescripcion = funciones.validarSoloLetras($descripcion, validaciones.soloLetras);
-                estadoLetrasDireccion = funciones.validarSoloLetras($direccion, validaciones.soloLetras);
+                
             }
-             if(estadoSoloNumeros.estadoNumerotelefono == false || estadoSoloNumeros.estadoNumerortn == false ){
+             if(estadoSoloNumeros.estadoNumerotelefono == false ){
                 e.preventDefault();
                 estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
-                estadoSoloNumeros.estadoNumerortn = funciones.validarSoloNumeros($rtn, validaciones.soloNumeros);
+              
             }else{
                 if(estadoCorreo == false || estadoSelect == false ){
                     e.preventDefault();   
-                    estadoCorreo = funciones.validarCorreo($correoCliente, validaciones.correo);        
                     estadoSelect = funciones.validarCampoVacio($name);
                     estadoSelect = funciones.validarCampoVacio($direccion);
+                    estadoSelect = funciones.validarCampoVacio($tipoServicio);
                     estadoSelect = funciones.validarCampoVacio($telefono);
                     estadoSelect = funciones.validarCampoVacio($descripcion);
-                    estadoSelect = funciones.validarCampoVacio($tipoServicio);
-                      // estadoSelect = funciones.validarCampoVacio($rtn);
                     estadoSelect = funciones.validarCampoVacio($correoCliente);
+                    estadoCorreo = funciones.validarCorreo($correoCliente, validaciones.correo);      
+
                 } else {
                     estadoValidado = true; // 
                 }  
@@ -165,6 +154,11 @@ $form.addEventListener('submit', e => {
     estadoSoloLetras.estadoLetrasDescripcion = funciones.validarSoloLetras($descripcion, validaciones.soloLetras);
    funciones.limitarCantidadCaracteres("descripcion", 30);
  });
+
+ $correoCliente.addEventListener('keyup', ()=>{
+    estadoCorreo = funciones.validarCorreo($correoCliente, validaciones.correo);
+});
+
  $name.addEventListener('focusout', ()=>{
     if(estadoMasdeUnEspacio.estadoMasEspacioName){
          funciones.validarMasdeUnEspacio($name);
@@ -176,7 +170,7 @@ $form.addEventListener('submit', e => {
      }  
  });
  $correoCliente.addEventListener('focusout', ()=>{
-     if(estadoMasdeUnEspacio.estadoMasEspacioCorreo){
+     if(estadoMasdeUnEspacio.estadoMasEspacioCorreoCliente){
          funciones.validarMasdeUnEspacio($correoCliente);
     }  
  });
@@ -185,7 +179,11 @@ $form.addEventListener('submit', e => {
         funciones.validarMasdeUnEspacio($direccion);
      }  
  });
-
+$descripcion.addEventListener('focusout', ()=>{
+    if(estadoMasdeUnEspacio.estadoMasEspacioDescripcion){
+        funciones.validarMasdeUnEspacio($descripcion);
+     }  
+ });
  $name.addEventListener('change', ()=>{
      estadoSelect.estadoSelectName = funciones.validarCampoVacio($name);
  });
@@ -196,19 +194,16 @@ $form.addEventListener('submit', e => {
      estadoSelect.estadoSelectDireccion = funciones.validarCampoVacio($direccion);
  });
 
- $correoCliente.addEventListener('change', ()=>{
-    estadoSelect.estadoSelectCorreoCliente = funciones.validarCampoVacio($correoCliente);
- });
-
  $descripcion.addEventListener('change', ()=>{
     estadoSelect.estadoSelectDescripcion= funciones.validarCampoVacio($descripcion);
  });
-//  $telefono.addEventListener('keyup', ()=>{
-//      estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
-//     funciones.limitarCantidadCaracteres("telefono", 14);
-//  });
 
-//  $rtn.addEventListener('keyup', ()=>{
-//     estadoSoloNumeros.estadoNumerortn = funciones.validarSoloNumeros($rtn, validaciones.soloNumeros);
-//     funciones.limitarCantidadCaracteres("rntcliente", 14);
-//  });
+ $correoCliente.addEventListener('change', ()=>{
+    estadoSelect.estadoSelectCorreoCliente= funciones.validarCampoVacio($correoCliente);
+ });
+
+
+ $telefono.addEventListener('keyup', ()=>{
+     estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
+    funciones.limitarCantidadCaracteres("telefono", 14);
+  });

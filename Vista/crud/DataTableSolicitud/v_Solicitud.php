@@ -152,6 +152,7 @@ if (isset($_SESSION['usuario'])) {
                 <div class="form-element input-conteiner"  id="containerFacturacliente">
                     <label for="id-factura"  class="form-label">N° Factura:</label>
                     <input type="text" id="idfactura" name="numeroFactura" class="form-control" readonly>
+                    <p class="mensaje"></p>
                 </div>
                 <div class="form-element input-conteiner" id="containerrtncliente" >
                     <label for="rnt-cliente" class="form-label">RTN:</label>
@@ -161,10 +162,12 @@ if (isset($_SESSION['usuario'])) {
                 <div class="form-element input-conteiner">
                     <label for="nombre" class="form-label">Nombre Cliente:</label>
                     <input type="text" id="nombre" name="nombre" class="form-control" disabled>
+                    <p class="mensaje"></p>
                 </div>
                 <div class="form-element input-conteiner">
                     <label for="telefono" class="form-label">Teléfono:</label>
                     <input type="text" id="telefono" name="telefono" class="form-control" disabled>
+                    <p class="mensaje"></p>
                 </div>
                 <div class="form-element input-conteiner">
                     <label for="correoL"class="form-label">Correo electrónico destinado:</label>
@@ -249,6 +252,6 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
   <script src="../../../Recursos/js/DataTableSolicitud/vistaClienteFrecuente.js" type="module"></script>
-  <!-- <script src="../../../Recursos/js/DataTableSolicitud/validacionesNuevaSolicitud.js" type="module"></script>  -->
+  <script src="../../../Recursos/js/DataTableSolicitud/validacionesNuevaSolicitud.js" type="module"></script>  
 
 </html>
