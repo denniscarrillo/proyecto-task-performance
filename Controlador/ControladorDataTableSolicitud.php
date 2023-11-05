@@ -27,6 +27,7 @@ class ControladorDataTableSolicitud {
         return DataTableSolicitud::NuevaSolicitud($nuevaSolicitud, $productosSolicitud);
     }
 
-
-    
+    public static function obtenerProductosS($idSolicitud){
+        return DataTableSolicitud::obtenerArticuloS($idSolicitud);
+    }   
 }

@@ -185,8 +185,30 @@ class DataTableSolicitud
         return $nuevoProductoS;
     }
 
-
-
-
+    public static function obtenerArticuloS($idSolicitud){
+        $verArticulos = null;
+        try {
+            $verArticulos = array();
+            $conn = new Conexion();
+            $conexion = $conn->abrirConexionDB();
+            $query="SELECT id_Solicitud, Cod_Articulo, ARTICULO, Cant
+            FROM tbl_ProductosSolicitud as p
+            INNER JOIN view_ARTICULOS as a on a.CODARTICULO = p.Cod_Articulo
+            Where id_Solicitud = $idSolicitud;";
+            $resultado = sqlsrv_query($conexion, $query);
+            while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+                $verArticulos[] = [
+                    'idSolicitud' => $fila['id_Solicitud'],
+                    'CodArticulo' => $fila['Cod_Articulo'],
+                    'Articulo' => $fila['ARTICULO'],
+                    'Cant' => $fila['Cant']                
+                ];
+            }
+        } catch (Exception $e) {
+            $verArticulos = 'Error SQL:' . $e;
+        }    
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $verArticulos;
+    }
 }
 

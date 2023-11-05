@@ -97,7 +97,14 @@ $SolicitudesId = ControladorDataTableSolicitud::VerSolicitudesPorId($_GET['idSol
         $FechaModificacion = $SolicitudesId['FechaModificacion'];
         $fechaFormateadaC = $FechaCreacion->format('Y/m/d');
         $fechaFormateadaM = $FechaCreacion->format('Y/m/d');
-        
+        $ArticulosS = ControladorDataTableSolicitud::obtenerProductosS($_GET['idSolicitud']);
+        $articulos='';
+        foreach ($ArticulosS as $producto) {
+            $Articulo = $producto['Articulo'];
+            $Cant = $producto['Cant'];
+            $ListaArticulos .= '<li>'.$Cant.' - '. $Articulo .'</li>';
+        }   
+       
         $html .= '
         <tr>
             <td style="background-color: #c9c9c9; width: 200px;"><b>ID:</b></td>
@@ -160,6 +167,13 @@ $SolicitudesId = ControladorDataTableSolicitud::VerSolicitudesPorId($_GET['idSol
         <tr>
             <td style="background-color: #c9c9c9;"><b>FECHA MODIFICACIÓN:</b></td>
             <td>'.$fechaFormateadaM.'</td>     
+        </tr>
+        
+        <tr>
+            <td style="background-color: #c9c9c9;"><b>LISTA DE ARTICULOS:</b></td>
+            <td>                
+                <ul>'.$ListaArticulos.'</ul>
+          </td>
         </tr>
 
         ';     
