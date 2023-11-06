@@ -92,6 +92,7 @@ foreach($ventas as $venta){
     $nombreCliente = $venta['nombreCliente'];
     $RTN = $venta['rtnCliente'];
     $fechaEmision = $venta['fechaEmision'];
+    $fechaFormateada = $fechaEmision->format('Y/m/d');
     $totalBruto = $venta['totalBruto'];
     $totalImpuesto = $venta['totalImpuesto'];
     $totalVenta = $venta['totalNeto'];
@@ -102,7 +103,7 @@ foreach($ventas as $venta){
     <td >'.$IdCliente.'</td>
     <td >'.$nombreCliente.'</td>
     <td style="text-align: center>'.$RTN.'</td>
-	<td >'.$fechaEmision.'</td>
+	<td >'.$fechaFormateada.'</td>
     <td >'.$totalBruto.'</td>
     <td >'.$totalImpuesto.'</td>
     <td style="text-align: center">'.$totalVenta.'</td>

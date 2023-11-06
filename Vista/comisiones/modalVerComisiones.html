@@ -1,0 +1,71 @@
+<div class="modal fade" id="modalVerComision" tabindex="-1" aria-labelledby="verModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="VerModalLabel">Ver Comision a detalle</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" id="form-Ver-Comision">
+                    <div class="grupo-form">
+                        <div class="mb-3">
+                            <label for="IdComision" class="form-label">Id Comision:</label><br>
+                            <label id="IdComision" class="form-label-V"></label>
+                        </div>
+                        <div class="mb-3">
+                            <label for="IdFactura" class="form-label">N° Factura:</label><br>
+                            <label id="V_idFactura" class="form-label-V"></label>
+                        </div>
+                        <div class="mb-3">
+                            <label for="totalVenta" class="form-label">Venta Total:</label>
+                            <label id="V_Monto" class="form-label-V"></label>
+                        </div>
+                        <div class="mb-3">
+                            <label for="porcentaje" class="form-label">Porcentaje:</label><br>
+                            <label id="V_Porcentaje" class="form-label-V"></label>
+                        </div> 
+                        
+                        <div class="mb-3">
+                            <label for="comisionTotal" class="form-label">Comision Total:</label><br>
+                            <label id="V_comisionTotal" class="form-label-V"></label>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Estado" class="form-label">Estado Comision:</label><br>
+                            <label id="V_Estado" class="form-label-V"></label>
+                        </div>
+                    </div>    
+
+                    <div class="grupo-form"> 
+                        <div class="mb-3">
+                            <label for="Creado_Por" class="form-label">Creado_Por:</label><br>
+                            <label id="V_CreadoPor" class="form-label-V"></label>
+                        </div> 
+
+                        <div class="mb-3">
+                            <label for="fechaCreacion" class="form-label">Fecha de Creacion:</label><br>
+                            <label id="V_fechaCreacion" class="form-label-V"></label>
+                        </div> 
+                        <div class="mb-3">
+                            <label for="ModificadoPor" class="form-label">Modificado Por:</label><br>
+                            <label id="V_ModificadoPor" class="form-label-V"></label>
+                        </div> 
+                        <div class="mb-3">
+                            <label for="FechaModificado" class="form-label">Fecha de Modificacion:</label><br>
+                            <label id="V_FechaModificado" class="form-label-V"></label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Vendedores" class="form-label">Id Comision Vendedor:     Id Vendedor:      Vendedor:       Comision del vendedor: </label><br>
+                        <label id="V_Vendedores" class="form-label-V"></label>
+                    </div> 
+                    <div class="btn-guardar">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn_pdf btn btn-primary" id="btn_pdf_id"><i class="fas fa-file-pdf"> </i> Generar PDF</a> </button>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+ </div>
+</div>

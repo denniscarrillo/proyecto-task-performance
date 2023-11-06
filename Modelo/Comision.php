@@ -152,7 +152,7 @@ sqlsrv_close($abrirConexion);
     {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $query="SELECT vt.id_Comision_Por_Vendedor, vt.id_usuario_vendedor, u.usuario, vt.total_Comision, vt.estadoComisionVendedor, vt.Fecha_Creacion
+            $query="SELECT vt.id_Comision_Por_Vendedor, vt.id_Comision, vt.id_usuario_vendedor, u.usuario, vt.total_Comision, vt.estadoComisionVendedor, vt.Fecha_Creacion
             FROM tbl_ms_usuario AS u
             INNER JOIN tbl_comision_por_vendedor AS vt ON u.id_Usuario = vt.id_usuario_vendedor;";
         $listaComision= sqlsrv_query($consulta, $query);   
@@ -161,6 +161,7 @@ sqlsrv_close($abrirConexion);
         while ($fila = sqlsrv_fetch_array($listaComision, SQLSRV_FETCH_ASSOC)) {
             $ComisionVendedor[] = [
                 'idComisionVendedor' => $fila["id_Comision_Por_Vendedor"],
+                'idComision' => $fila["id_Comision"],
                 'idVendedor' => $fila["id_usuario_vendedor"],
                 'usuario' => $fila["usuario"],
                 'comisionTotal' => $fila["total_Comision"],
@@ -240,22 +241,40 @@ sqlsrv_close($abrirConexion);
         $editarComision = sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerramos la conexión.
     }
-    /* public static function obteniendoEstadoComision(){
+    public static function ComisionPorId($idComision){
         $conn = new Conexion();
-        $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $estadoComisionar = $consulta->query("SELECT estadoComision FROM tbl_comision;
-        ");
-        $fila = $estadoComisionar->fetch_assoc();
-        $estadoComision = array();
-        while ($fila = $estadoComisionar->fetch_assoc()) {
-            $estadoComision[] = [
-                'estadoComisionar' => $fila['estadoComision']
+        $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $query = "SELECT co.id_Comision, co.id_Venta, v.TOTALNETO, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, co.Creado_Por,
+        co.Fecha_Creacion, co.Modificado_Por, co.Fecha_Modificacion, cp.id_Comision_Por_Vendedor, cp.id_usuario_vendedor, u.usuario, cp.total_Comision
+       FROM tbl_Comision AS co
+       INNER JOIN VIEW_FACTURASVENTA AS v ON co.id_Venta = v.NUMFACTURA
+       INNER JOIN  tbl_Porcentaje AS po ON co.id_Porcentaje = po.id_Porcentaje
+       INNER JOIN tbl_Comision_Por_Vendedor AS cp ON co.id_Comision = cp.id_Comision
+       INNER JOIN tbl_MS_Usuario AS u ON cp.id_usuario_vendedor = u.id_Usuario
+       WHERE co.id_Comision = $idComision and TOTALNETO >0;";
+        $listaComision = sqlsrv_query($conexion, $query);
+        //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
+            $fila = sqlsrv_fetch_array($listaComision, SQLSRV_FETCH_ASSOC);
+            $ComisionVer = [
+                'idComision' => $fila["id_Comision"],
+                'idFactura' => $fila["id_Venta"],
+                'ventaTotal' => $fila["TOTALNETO"],
+                'valorPorcentaje' => $fila["valor_Porcentaje"],
+                'comisionT' => $fila["comision_TotalVenta"],
+                'estadoComision' => $fila["estadoComision"],
+                'CreadoPor' => $fila["Creado_Por"],
+                'FechaComision' => $fila["Fecha_Creacion"],
+                'ModificadoPor' => $fila["Modificado_Por"],
+                'FechaModificacion' => $fila["Fecha_Modificacion"],
+                'idComisionVendedor' => $fila["id_Comision_Por_Vendedor"],
+                'idVendedor' => $fila["id_usuario_vendedor"],
+                'nombreVendedor' => $fila["usuario"],
+                'comisionVendedor' => $fila["total_Comision"]
             ];
-        }
-        mysqli_close($consulta); #Cerramos la conexión.
-        return $estadoComision;
-
-    } */
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $ComisionVer;
+    }
+    
 }
     //convertir la fecha de comision totalm por vendedor en texto
 

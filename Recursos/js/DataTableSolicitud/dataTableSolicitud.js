@@ -2,6 +2,7 @@ import {estadoValidado as validado } from './validacionesModalEliminarSolicitud.
 import {estadoValidado as valido } from './validacionesModalEditarSolicitud.js';
 
 
+
 let tablaDataTableSolicitud = ''; 
 //Variable dataTable
 $(document).ready(function () {
@@ -97,6 +98,28 @@ $(document).on("click", "#btn_ver", async function (){
   } else {
     FechaModificadoLabel.innerText = '';
   };
+ 
+  let ProductosS = await obtenerProductosS(idSolicitud);
+  const productos = document.getElementById('ListaArticulos');
+  // Función para limpiar la lista
+  function limpiarLista(lista) {
+    while (lista.firstChild) {
+      lista.removeChild(lista.firstChild);
+    }
+  }
+  if (productos) {
+    // Limpiar la lista antes de agregar nuevos elementos
+    limpiarLista(productos);
+    // Agrega elementos de lista (li) para cada artículo y cantidad
+    for (var i = 0; i < ProductosS.length; i++) {
+      var item = ProductosS[i];
+      var li = document.createElement('li');
+      li.textContent = item.Articulo + ' - Cantidad: ' + item.Cant;
+      li.style.color = 'black';
+      productos.appendChild(li);
+    }
+  }
+
 
    // Estilizar el modal
    $(".modal-header").css("background-color", "#007bff");
@@ -119,6 +142,28 @@ let obtenerSolicitudesVerPorId = async (idSolicitud) => {
     return datosVerSolicitud; //Retornamos la data recibida por ajax
   } catch(err) {
     console.error(err)
+  }
+}
+
+//obtener datos para el modal editar
+let obtenerProductosS = async (idSolicitud) => {
+  try {
+    let datosProductS = await $.ajax({
+      url: '../../../Vista/crud/DataTableSolicitud/obtenerProductosS.php',
+      type: 'GET',
+      dataType: 'JSON',
+      data: {
+        IdSolicitud: idSolicitud
+      }
+      // success: function (data) {
+      //     console.log(data.Articulo)
+      // }
+    });
+    console.log(datosProductS);    
+    return datosProductS; //Retornamos la data recibida por ajax
+  } catch(err) {
+    console.error(err)
+    return null;
   }
 }
 

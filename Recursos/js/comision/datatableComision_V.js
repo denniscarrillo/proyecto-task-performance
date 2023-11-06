@@ -12,6 +12,7 @@ $(document).ready(function () {
     },
     "columns": [
       { "data": "idComisionVendedor"},
+      { "data": "idComision" },
       { "data": "idVendedor" },
       { "data": "usuario" },
       { "data": "comisionTotal" },

@@ -115,8 +115,7 @@ $('#form-editar-carteraCliente').submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
    //Obtener datos del nuevo Cliente
    let idcarteraCliente = $('#E_Cliente').val(),
-   nombre = $('#E_Nombre').val(),
-   rtn =  $('#E_Rtn').val(),
+  
    telefono = $('#E_Telefono').val(),
    correo = $('#E_Correo').val(),
    direccion = $('#E_Direccion').val(),
@@ -128,8 +127,6 @@ $('#form-editar-carteraCliente').submit(function (e) {
       datatype: "JSON",
       data: {
        id: idcarteraCliente,
-       nombre: nombre,
-       rtn: rtn,
        telefono: telefono,
        correo: correo,
        direccion: direccion,
@@ -196,3 +193,50 @@ let limpiarFormEdit = () => {
     $mensaje.innerText = '';
   });
 }
+
+
+//Eliminar usuario
+$(document).on("click", "#btn_eliminar", function() {
+  let fila = $(this);        
+    let  idcarteraCliente = $(this).closest('tr').find('td:eq(1)').text();
+      Swal.fire({
+        title: 'Estas seguro de eliminar a '+ idcarteraCliente+'?',
+        text: "No podras revertir esto!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, borralo!'
+      }).then((result) => {
+        if (result.isConfirmed) {      
+          $.ajax({
+            url: "../../../Vista/crud/usuario/eliminarUsuario.php",
+            type: "POST",
+            datatype:"json",    
+            data:  { usuario: usuario},    
+            success: function(data) {
+              let estadoEliminado = data[0].estadoEliminado;
+              // console.log(data);
+              if(estadoEliminado == 'eliminado'){
+                tablaUsuarios.row(fila.parents('tr')).remove().draw();
+                Swal.fire(
+                  'Eliminado!',
+                  'El usuario ha sido eliminado.',
+                  'success'
+                ) 
+                tablaUsuarios.ajax.reload(null, false); 
+              } else {
+                Swal.fire(
+                  'Lo sentimos!',
+                  'El usuario no puede ser eliminado, se ha inactivado.',
+                  'error'
+                );
+                tablaUsuarios.ajax.reload(null, false);
+              }           
+            }
+          }); //Fin del AJAX
+        }
+      });
+    	    
+                    
+});

@@ -1,8 +1,21 @@
+//import {estadoValidado as valido } from './validacionesNuevaSolicitud.js';
 
 
 $(document).on('click', '#clienteExistente', function () {
   obtenerClientes();
  // $("#modalClienteFrecuente").modal("show");
+
+ let correoCliente = document.getElementById('containerCorreocliente');
+ correoCliente .setAttribute('hidden', 'false');
+
+});
+
+$(document).on('click', '#clientenuevo', function () {
+
+  let correoCliente = document.getElementById('containerCorreocliente');
+  correoCliente.removeAttribute('hidden');
+  containerCorreocliente.style.display = 'block';
+
 });
 let obtenerClientes = function () {
   if (document.getElementById('table-ClienteFrecuente_wrapper') == null) {
@@ -72,7 +85,7 @@ document.getElementById('clientenuevo').addEventListener('change', function () {
   let $btnBuscarCliente = document.querySelector('.btnbuscarcliente');
   if ($btnBuscarCliente) {
     $containerRTN.removeChild($btnBuscarCliente);
-    limpiarForm();
+   limpiarForm();
   }
   
 });
@@ -87,21 +100,26 @@ document.getElementById('clientenuevo').addEventListener('change', function () {
 
 
 let limpiarForm = () => {
-  let $mensaje = document.getElementById('mensaje');
-  $mensaje.innerText = '';
-  $mensaje.classList.remove('mensaje-existe-cliente');
+   //$mensaje = document.getElementById('mensaje');
+  //$mensaje.innerText = '';
+  //$mensaje.classList.remove('mensaje-existe-cliente');
   let   rtn = document.getElementById('rntcliente'),
     telefono = document.getElementById('telefono'),
     direccion = document.getElementById('direccion'),
-    Factura = document.getElementById("idfactura"),
-     nombre = document.getElementById('nombre');
+    descripcion = document.getElementById("descripcion"),
+   nombre = document.getElementById('nombre'),
+   correoCliente = document.getElementById('correoCliente');
   //Vaciar campos cliente
     rtn.value = '';
     telefono.value = ''
     direccion.value = '';
-   Factura.value = '';
-   nombre.value = '';
-    // rtn.removeAttribute('disabled');
+    descripcion.value = '';
+    nombre.value = '';
+    correoCliente.value = ''; 
+
+    correoCliente.removeAttribute('disabled');
+    descripcion.removeAttribute('disabled');
+    rtn.removeAttribute('disabled');
     telefono.removeAttribute('disabled');
     direccion.removeAttribute('disabled');
 }
@@ -180,18 +198,23 @@ $(document).on("click", "#btn_selectfactura", function () {
   // Agregar un controlador de eventos 'click' al elemento de radio
   clienteExistente.addEventListener("click", function() {
     obtenerTipoServicio('#tiposervicio');
+    telefono.disabled = false;
     direccion.disabled = false;
     descripcion.disabled = false;
     rntcliente.disabled = false;
+     nombre.disabled=false;
     let fechaC = new Date().toISOString().slice(0, 10);
     $("#fechasolicitud").val(fechaC); 
     obtenerAdminCorreo('#correo');
   });
   clientenuevo.addEventListener("click", function() {
     obtenerTipoServicio('#tiposervicio');
+    nombre.disabled = false;
+    telefono.disabled = false;
     direccion.disabled = false;
     descripcion.disabled = false;
     rntcliente.disabled = false;
+    nombre.disabled=false;
     let fechaC = new Date().toISOString().slice(0, 10);
     $("#fechasolicitud").val(fechaC);
     obtenerAdminCorreo('#correo');
@@ -333,45 +356,110 @@ $(document).on("click", "#btn_selectfactura", function () {
 
 ///////////GUARDAR NUEVA SOLICITUD
 $('#form-solicitud').submit(function (e) {
-  e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
-     //Obtener datos del nuevo Usuario
-     let idFactura = $('#idfactura').val();
-     let rtncliente = $('#rntcliente').val();   
-     let correo = $('#correo').val();
-     let telefono = $('#telefono').val();
-     let tiposervicio = document.getElementById('tiposervicio').value;
-     let ubicacion = $('#direccion').val();
-     let descripcion = $('#descripcion').val();
-     //validado
-    if(true){ 
-         
+  e.preventDefault(); 
+  
+  let idFactura = $('#idfactura').val();
+  let correo = $('#correo').val();
+  let telefono = $('#telefono').val();
+  let tiposervicio = document.getElementById('tiposervicio').value;
+  let ubicacion = $('#direccion').val();
+  let descripcion = $('#descripcion').val();
+  let rtncliente, rtnclienteC;
+  // let codArticulo = $('#idproducto').val();
+  // let Cant = document.querySelectorAll('.cantproducto');
+  var radio = document.getElementById("clienteExistente");
+if (radio.checked) {
+  rtncliente = $('#rntcliente').val();
+  rtnclienteC = 'NULL'; 
+} else {
+  rtnclienteC = $('#rntcliente').val();
+  rtncliente = 'NULL'; 
+  idFactura = null;
+}
+let $idProductos = document.querySelectorAll('.idproducto');
+let $cantProducto = document.querySelectorAll('.cantproducto');
+let productos = [];
+$idProductos.forEach(id => {
+  $cantProducto.forEach(cant => {
+    if(id.value == cant.getAttribute('id')){
+      let objProducto = {
+        id: id.value,
+        cant: cant.value
+      }
+      productos.push(objProducto);
+    }
+  });
+});
+
+  // Validación (debes implementar tu propia lógica de validación aquí)
+  //idFactura && (rtncliente || rtnclienteC) && correo && telefono && tiposervicio && ubicacion && descripcion
+  if (valido) {
       $.ajax({
-        url: "../../../Vista/crud/DataTableSolicitud/nuevaSolicitud.php",
+          url: "../../../Vista/crud/DataTableSolicitud/nuevaSolicitud.php",
+          type: "POST",
+          datatype: "JSON",
+          data: {
+              idFactura: idFactura,
+              RTNcliente: rtncliente,
+              RTNclienteC: rtnclienteC,
+              telefono: telefono,
+              correo: correo,
+              tipoServicio: tiposervicio,
+              ubicacion: ubicacion,
+              descripcion: descripcion,
+              "productos": JSON.stringify(productos)
+          },
+          success: function () {
+              Swal.fire(
+                  'Guardado!',
+                  'Se le ha registrado la solicitud!',
+                  'success'
+              );
+          }
+      });
+  } else {
+      // Manejar la validación fallida, por ejemplo, mostrar un mensaje de error
+      Swal.fire(
+          'Error!',
+          'Por favor, cumpla todos los parámetros.',
+          'error'
+      );
+  }
+});
+
+$('#form-solicitud').submit(function (e) {
+  e.preventDefault(); // Evita el comportamiento normal del submit, es decir, la recarga total de la página
+  // Verifica si el radio "Nuevo Cliente" está seleccionado
+  if ($('#clientenuevo').is(':checked')) {
+    let nombreN = $('#nombre').val();
+    let rtnN = $('#rntcliente').val();
+    let telefonoN = $('#telefono').val();
+    let correoN = $('#correoCliente').val();
+    let direccionN = $('#direccion').val();
+    if (valido) {
+      $.ajax({
+        url: "../../../Vista/crud/carteraCliente/nuevoCliente.php",
         type: "POST",
         datatype: "JSON",
         data: {
-          idFactura: idFactura,
-          RTNcliente: rtncliente,
-          telefono: telefono,
-          correo: correo,
-          tipoServicio: tiposervicio,
-          ubicacion: ubicacion,
-          descripcion: descripcion
+          nombre: nombreN,
+          rtn: rtnN,
+          telefono: telefonoN,
+          correo: correoN,
+          direccion: direccionN
         },
-        success: function (data) {
-          //Mostrar mensaje de exito
-          console.log(data);
-          Swal.fire(
-           'Guardado!',
-           'Se le ha registrado la solicitud!',
-           'success',
-         )
-         //tablaUsuarios.ajax.reload(null, false);
+        success: function () {
+  
         }
       });
-      //$('#modalNuevoUsuario').modal('hide');
-    } 
+
+    }
+  }
 });
+
+
+
+
 
 
 
