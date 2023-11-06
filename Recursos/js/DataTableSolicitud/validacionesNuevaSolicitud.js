@@ -5,13 +5,13 @@ export let estadoValidado = false;
 
 
 const validaciones = {
-    soloLetras: /^(?=.*[^a-zA-Z\Ñós])/, //Solo letras
+    soloLetras: /^(?=.*[^a-zA-Z\/ Ñós])/, //Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
     soloNumeros: /^[0-9,-]*$/
 }
 //VARIABLES GLOBALES
 
-
+//let estadoExisteRtn = false;
 
 let estadoEspacioInput = {
     estadoEspacioName: true,
@@ -34,6 +34,7 @@ let estadoSelect = {
     estadoSelectDescripcion: true,
     estadoSelectName: true,
     estadoSelectRtn:true,
+    estadoSelectCantProducto:true,
     estadoSelecttipoServicio:true,
 }
 
@@ -71,6 +72,8 @@ const $direccion= document.getElementById('direccion');
 const $descripcion = document.getElementById('descripcion');
 const $fechaSolicitud = document.getElementById('fechaSolicitud');
 const $tipoServicio = document.getElementById('tiposervicio');
+const $cantProducto = document.getElementById('CantidadProducto');
+
 
 
 /* ---------------- VALIDACIONES FORMULARIO GESTION NUEVO USUARIO ----------------------*/
@@ -84,11 +87,11 @@ $form.addEventListener('submit', e => {
     let estadoInputtelefono = funciones.validarCampoVacio($telefono);
     let estadoInputDireccion = funciones.validarCampoVacio($direccion);
     let estadoInputdescripcion = funciones.validarCampoVacio($descripcion);
-    let estadoInputCorreoCliente = funciones.validarCampoVacio($correoCliente);
+   // let estadoInputCantProducto= funciones.validarCampoVacio($cantProducto);
     let estadoInputTipoServicio= funciones.validarCampoVacio($tipoServicio);
     
     // Comprobamos que todas las validaciones se hayan cumplido 
-    if (estadoInputName == false ||estadoInputTipoServicio == false || estadoInputCorreoCliente == false ||estadoInputdescripcion == false || estadoInputtelefono  == false ||  estadoInputCorreoCliente == false  || estadoInputDireccion == false) {
+    if (estadoInputName == false || estadoInputTipoServicio == false ||estadoInputdescripcion == false || estadoInputtelefono  == false ||   estadoInputDireccion == false) {
         e.preventDefault();
     }else{
         if(estadoEspacioInput.estadoEspacioName == false || estadoEspacioInput.estadoEspaciodescripcion  == false || estadoEspacioInput.estadoEspaciotelefono  == false ||  estadoEspacioInput.estadoEspacioCorreoCliente == false || estadoEspacioInput.estadoEspacioDireccion == false){ 
@@ -97,7 +100,8 @@ $form.addEventListener('submit', e => {
             estadoEspacioInput.estadoEspaciotelefono= funciones.validarEspacios($telefono);  
             estadoEspacioInput.estadoEspacioDireccion = funciones.validarEspacios($direccion);  
             estadoEspacioInput.estadoEspacioCorreoCliente = funciones.validarEspacios($correoCliente); 
-            estadoEspacioInput.estadoEspaciodescripcion = funciones.validarEspacios($descripcion);  
+            estadoEspacioInput.estadoEspaciodescripcion = funciones.validarEspacios($descripcion); 
+         
               
         }
         estadoMasdeUnEspacio.estadoMasEspacioName= funciones.validarMasdeUnEspacio($name);
@@ -116,10 +120,14 @@ $form.addEventListener('submit', e => {
                 estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
                 
             }
+            
              if(estadoSoloNumeros.estadoNumerotelefono == false ){
                 e.preventDefault();
                 estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
-              
+            if(estadoExisteRtn == false){
+                    e.preventDefault();
+                    estadoExisteRtn = obtenerRtnExiste($('#rntcliente').val());
+            }  
             }else{
                 if(estadoCorreo == false || estadoSelect == false ){
                     e.preventDefault();   
@@ -128,7 +136,8 @@ $form.addEventListener('submit', e => {
                     estadoSelect = funciones.validarCampoVacio($tipoServicio);
                     estadoSelect = funciones.validarCampoVacio($telefono);
                     estadoSelect = funciones.validarCampoVacio($descripcion);
-                    estadoSelect = funciones.validarCampoVacio($correoCliente);
+                 //   estadoSelect = funciones.validarCampoVacio($cantProducto);
+                  //  estadoSelect = funciones.validarCampoVacio($correoCliente);
                     estadoCorreo = funciones.validarCorreo($correoCliente, validaciones.correo);      
 
                 } else {
@@ -198,12 +207,24 @@ $descripcion.addEventListener('focusout', ()=>{
     estadoSelect.estadoSelectDescripcion= funciones.validarCampoVacio($descripcion);
  });
 
- $correoCliente.addEventListener('change', ()=>{
-    estadoSelect.estadoSelectCorreoCliente= funciones.validarCampoVacio($correoCliente);
- });
+//  $cantProducto.addEventListener('change', ()=>{
+//     estadoSelect.estadoSelectCantProducto= funciones.validarCampoVacio($cantProducto);
+//  });
 
+
+//  if (document.querySelector('#clientenuevo')) {
+//     // Verifica si el formulario es nuevo
+//     $correoCliente.addEventListener('change', () => {
+//       estadoSelect.estadoSelectCorreoCliente = funciones.validarCampoVacio($correoCliente);
+//     });
+//   }
 
  $telefono.addEventListener('keyup', ()=>{
      estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
     funciones.limitarCantidadCaracteres("telefono", 14);
   });
+
+//    $rtn.addEventListener('focusout', () => {
+//      let rtn = $('#rntcliente').val();
+//      estadoExisteRtn = obtenerRtnExiste(rtn);
+//  });

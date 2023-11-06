@@ -210,5 +210,23 @@ class DataTableSolicitud
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $verArticulos;
     }
+
+    public static function rtnExiste($rtn) {
+        $existeRTN = false;
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT rtn FROM tbl_MS_Usuario WHERE rtn = '$rtn'";
+        $user = sqlsrv_query($conexion, $query);
+        $existe = sqlsrv_has_rows($user);
+        
+        if ($existe) {
+            $existeRTN = true;
+        }
+        
+        sqlsrv_close($conexion); // Cerramos la conexión.
+        
+        return $existeRTN;
+    }
+    
 }
 

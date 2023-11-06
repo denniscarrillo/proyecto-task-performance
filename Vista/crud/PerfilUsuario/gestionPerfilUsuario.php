@@ -15,7 +15,7 @@ $preguntas = ControladorPregunta::obtenerPreguntasXusuario($_SESSION['usuario'])
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
-  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionPerfilUsuario.php');
+  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php','EditarCamposPerfilUsuario.php');
   $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario,$idObjetoActual);
   
   if (!$permisoConsulta) {

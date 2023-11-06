@@ -207,7 +207,7 @@ if (isset($_SESSION['usuario'])) {
             </div>
                 <div class="table-conteiner">
                     <div class="mb-3 conteiner-id-articulo">
-                        <p class="titulo-articulo">Producto de Interés</p>
+                        <p class="titulo-articulo">Productos Mantenimiento</p>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalArticulosSolicitud" id="btnarticulos">
                             Seleccionar... <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
                                 </button>
@@ -230,7 +230,7 @@ if (isset($_SESSION['usuario'])) {
 					<!-- Botones -->
 					<div class="btn-guardar">
 						<a href="./gestionDataTableSolicitud.php"><button type="button" id="btncerrar2" class="btn btn-secondary">Cancelar</button></a>
-						<button type="submit" id="submit" class="btn btn-primary" name="actualizarTarea"><i class="fa-solid fa-floppy-disk"></i>Guardar</button>
+						<button   type="submit" name="actualizarTarea"  class="btn btn-primary" ><i class="fa-solid fa-floppy-disk" ></i>Guardar</button>
 					</div>
 				</form>
 			</div>
@@ -252,6 +252,6 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
   <script src="../../../Recursos/js/DataTableSolicitud/vistaClienteFrecuente.js" type="module"></script>
-  <script src="../../../Recursos/js/DataTableSolicitud/validacionesNuevaSolicitud.js" type="module"></script>  
+  <script src="../../../Recursos/js/DataTableSolicitud/validacionesNuevaSolicitud.js" type="module"></script>   
 
 </html>

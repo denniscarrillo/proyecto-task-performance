@@ -23,15 +23,20 @@
         $nuevaSolicitud->estadoSolicitud = 'ACTIVO';
         $nuevaSolicitud->creadoPor =  $user;
         $productos = json_decode($_POST['productos'], true);
+       
         $productosSolicitud = array();
+
         for($i=0; $i < count($productos); $i++){
             $productosSolicitud [] = [
                 'idProducto'=> $productos[$i]['id'],
                 'CantProducto'=> $productos[$i]['cant'],
             ];
+           
         }
+      
         ControladorDataTableSolicitud::NuevaSolicitud($nuevaSolicitud,$productosSolicitud);
         print json_encode($nuevaSolicitud, JSON_UNESCAPED_UNICODE);
+       
         /* ========================= Evento Creacion nueva solicitud. ======================
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();
