@@ -30,6 +30,9 @@ class Tarea
     public $direccion;
 
 
+
+
+
     // Obtener todas las tareas que le pertenecen a un usuario.
     public static function obtenerTareas($idUser)
     {
@@ -70,7 +73,7 @@ class Tarea
             $insert = "INSERT INTO tbl_tarea (id_EstadoAvance, titulo, fecha_Inicio, estado_Finalizacion, Creado_Por, Fecha_Creacion) 
                             VALUES ('$tarea->idEstadoAvance','$tarea->titulo', 
                                     '$tarea->fechaInicio', '$estadoFinalizacion', '$tarea->Creado_Por', '$tarea->fechaInicio')"; 
-            $ejecutar_insert = sqlsrv_query($abrirConexion, $insert);
+            sqlsrv_query($abrirConexion, $insert);
             $query = "SELECT SCOPE_IDENTITY() AS id_Tarea";
             $resultado = sqlsrv_query($abrirConexion, $query);
             $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
@@ -601,5 +604,61 @@ class Tarea
         }
         sqlsrv_close($conexion);
         return $estadoRtn;
+    }
+    public static function obtenerDatos($idTarea, $estadoCliente){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $select = '';
+        if($estadoCliente == "Existente"){
+            $select = "SELECT vc.CIF AS RTN, vc.NOMBRECLIENTE AS NOMBRE, vc.TELEFONO1 AS TELEFONO, us.nombre_Usuario AS VENDEDOR FROM COCINAS_Y_EQUIPOS.dbo.View_Clientes vc 
+            INNER JOIN tbl_Tarea tr ON vc.CIF COLLATE Latin1_General_CS_AI = tr.RTN_Cliente
+            INNER JOIN tbl_MS_Usuario us ON us.usuario = tr.Creado_Por
+            WHERE tr.id_Tarea = '$idTarea';";
+        }else{
+            $select = "SELECT cc.rtn_Cliente AS RTN, cc.nombre_Cliente AS NOMBRE, cc.telefono AS TELEFONO, us.nombre_Usuario AS VENDEDOR FROM tbl_CarteraCliente cc
+            INNER JOIN tbl_Tarea tr ON cc.rtn_Cliente = tr.RTN_Cliente
+            INNER JOIN tbl_MS_Usuario us ON us.usuario = tr.Creado_Por
+            WHERE tr.id_Tarea = '$idTarea';";
+        }
+        $ejecutar = sqlsrv_query($conexion, $select);
+        $fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC);
+        //Obtenemos el valor del parametro dias vigencia cotizacion y lo agregamos al array datos del cliente para cotizacion
+        $ejecutarQuery = sqlsrv_query($conexion, "SELECT valor FROM tbl_MS_Parametro WHERE parametro = 'DIAS VIGENCIA COTIZACION';");
+        $parametroCotizacion = sqlsrv_fetch_array($ejecutarQuery, SQLSRV_FETCH_ASSOC);
+        $fila +=[
+            "vigencia"=>$parametroCotizacion['valor']
+        ];
+        sqlsrv_close($conexion);
+        return $fila;
+    }
+    public static function nuevaCotizacion($nuevaCotizacion, $creadoPor){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $idTarea = $nuevaCotizacion['idTarea'];
+        $validez = $nuevaCotizacion['validez'];
+        $subTotal = $nuevaCotizacion['subTotal'];
+        $descuento = $nuevaCotizacion['descuento'];
+        $subDescuento = $nuevaCotizacion['subDescuento'];
+        $isv = $nuevaCotizacion['isv'];
+        $totalCotizacion = $nuevaCotizacion['total'];
+        $insert = "INSERT INTO tbl_CotizacionTarea (id_Tarea, validez, subTotal, descuento, subDescuento, isv, total_Cotizacion, Creado_Por, Fecha_Creacion)
+        VALUES ('$idTarea', '$validez', '$subTotal', '$descuento', '$subDescuento', '$isv', '$totalCotizacion', ' $creadoPor', GETDATE());";
+        sqlsrv_query($conexion, $insert);
+        $idCotizacion = sqlsrv_fetch_array(sqlsrv_query($conexion, "SELECT SCOPE_IDENTITY() AS id_Cotizacion"), SQLSRV_FETCH_ASSOC);
+        sqlsrv_close($conexion);
+        return $idCotizacion;
+    }
+    public static function productosCotizacion($idCotizacion, $productosCotizacion, $creadoPor){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        foreach($productosCotizacion as $producto){
+            $item = $producto['item']; $descripcion = $producto['descripcion']; 
+            $marca = $producto['marca']; $cantidad = $producto['cantidad']; 
+            $precio = $producto['precio']; $total = $producto['total'];
+            $insert = "INSERT INTO tbl_ProductosCotizacion (id_Cotizacion, item, descripcion, marca, cantidad, precio, total, Creado_Por, Fecha_Creacion)
+                VALUES ('$idCotizacion', '$item', '$descripcion', '$marca', '$cantidad', '$precio', '$total', '$creadoPor', GETDATE());";
+            sqlsrv_query($conexion, $insert);
+        }
+        sqlsrv_close($conexion);
     }
 }
