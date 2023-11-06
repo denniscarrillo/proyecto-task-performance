@@ -55,7 +55,7 @@ if (isset($_SESSION['usuario'])) {
     /* =======================================================================================*/
   }
 } else {
-  header('location: ../../login/login.php');
+  header('location: ../login/login.php');
   die();
 }
 

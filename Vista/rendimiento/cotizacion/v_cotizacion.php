@@ -1,5 +1,6 @@
 <?php
     require_once('./validacionesCotizacion.php');
+    $datosCotizacion = ControladorTarea::obtenerDatos(intval($_GET['idTarea']), $_GET['estadoCliente']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,107 +61,113 @@
 			</div>
 			<!-- Cuerpo de la pagina -->
 			<main class="main">
-                <div class="encabezado">
-                    <h2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('v_tarea.php');?>" name='v_tarea.php' >Nueva Cotización</h2>
-                </div>
                 <div class="container-cotizacion">
+                <div class="encabezado" id="<?php echo $_GET['idTarea'] ?>">
+                    <h2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('v_tarea.php');?>" name='v_tarea.php'>Nueva Cotización</h2>
+                </div>
                     <div class="datos-cotizacion">
                         <div class="colum-horizontal">
                             <div class="input-cotizacion" id="input-cotizacion">
-                                <label for="n-cotizacion" class="" id="label-correo">Cotización N° </label>
-                                <label for="n-cotizacion" class="" id="label-correo">******************</label>
+                                <label for="n-cotizacion" class=" bold" id="label-correo" hidden>Cotización N° </label>
+                                <label for="n-cotizacion" class="" id="label-correo" hidden></label>
                             </div>
                             <div id="input-fecha">
-                                <label for="fecha" class="form-label" id="label-fecha">Fecha</label>
-                                <input type="date" name="fecha" id="fecha" class="form-control" >
+                                <label for="fecha" class="form-label bold" id="label-fecha">Fecha: </label>
+                                <label for="fecha" class="form-label" id="fecha"><?php  date_default_timezone_set('America/Tegucigalpa'); setlocale(LC_TIME, "Spanish_Honduras"); echo date('l jS \of F Y h:i:s A'); ?></label>
                                 <p class="mensaje"></p>
                             </div>
                         </div>
                         <div class="mb-3" id="input-cotizacion">
-                                    <label for="n-cotizacion" class="form-label" id="label-correo">Cliente: </label>
-                                    <label for="n-cotizacion" class="form-label" id="label-correo">**********************</label>
-                            </div>
-                            <div class="mb-3" id="input-telefono">
-                                <label for="telefono" class="form-label" id="label-correo">Teléfono</label>
-                                <label for="validez" class="form-label" id="label-correo">******************</label>
-                            </div>
-                            <div class="mb-3" id="input-vendedor">
-									<label for="vendedor" class="form-label" id="label-title-vendedor">Vendedor</label>
-                                    <label for="validez" class="form-label" id="label-vendedor">*****************</label>
-							</div>
-                            <div class="mb-3" id="input-validez">
-                                <label for="validez" class="form-label" id="label-correo">Validez</label>
-                                <input type="number" name="validez" id="validez" class="form-control" >
-                                <p class="mensaje"></p>
-                            </div>
-                    </div>
-                    <div class="productos-cotizacion">
-                        <div class="nuevo-producto">
-                            <input type="text" id="id-producto" class="fila-producto" placeholder="Id producto">
-                            <input type="text" name="descripcion" id="descripcion" class="fila-producto" placeholder="Descripción">
-                            <input type="text" name="marca" id="marca" class="fila-producto" placeholder="Marca">
-                            <input type="number" name="cantidad" id="cantidad" class="fila-producto" placeholder="Cantidad">
-                            <input type="text" name="precio" id="precio" class="fila-producto" placeholder="Precio">
-                            <input type="button" class="btn-agregar-producto" id="btn-agregar-producto" value="Agregar">
+                            <label for="n-cotizacion" class="form-label bold" id="label-correo">RTN/DNI:</label>
+                            <label for="n-cotizacion" class="form-label" id="nombre-cliente"><?php echo $datosCotizacion['RTN']?></label>
                         </div>
-                        <table id="productos-cotizacion" class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th class="th-col-row">ID PRODUCTO</th>
-                                    <th class="th-col-row">DESCRIPCION</th>
-                                    <th class="th-col-row">MARCA</th>
-                                    <th class="th-col-row">CANTIDAD</th>
-                                    <th class="th-col-row">PRECIO</th>
-                                    <th class="th-col-row">TOTAL</th>
-                                </tr>
-                            </thead>
-                            <tbody id="t-body">
-                                <tr class="table-footer">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="resumen-cotizacion">
-                            <div class="inputs">
-                                <div class="align-in-column" id="input-sub-total">
-                                    <label for="sub-total" class="" id="label-correo">SubTotal</label>
-                                    <input type="text" name="sub-total" id="sub-total" class="form-control" >
-                                </div>
-                                <div class="align-in-column" id="input-descuento">
-                                    <label for="descuento" class="form-label" id="label-correo">Descuento</label>
-                                    <input type="text" name="descuento" id="descuento" class="form-control" >
-                                </div>
-                                <div class="align-in-column" id="input-sub-descuento">
-                                    <label for="sub-descuento" class="form-label" id="label-correo">Sub Descuento</label>
-                                    <input type="text" name="sub-descuento" id="sub-descuento" class="form-control" >
-                                </div>
-                                <div class="align-in-column" id="input-impuesto">
-                                    <label for="impuesto" class="form-label" id="label-correo">15% I.S.V</label>
-                                    <input type="text" name="impuesto" id="impuesto" class="form-control" >
-                                </div>
-                                <div class="align-in-column" id="input-total">
-                                    <label for="total" class="form-label" id="label-correo">Total</label>
-                                    <input type="text" name="total" id="total" class="form-control" >
-                                </div>
-                            </div>
+                        <div class="mb-3" id="input-cotizacion">
+                            <label for="n-cotizacion" class="form-label bold" id="label-correo">Cliente:</label>
+                            <label for="n-cotizacion" class="form-label" id="nombre-cliente"><?php echo $datosCotizacion['NOMBRE']?></label>
+                        </div>
+                        <div class="mb-3" id="input-telefono">
+                            <label for="telefono" class="form-label bold" id="label-correo">Teléfono:</label>
+                            <label for="validez" class="form-label" id="correo-cliente"><?php echo $datosCotizacion['TELEFONO']?></label>
+                        </div>
+                        <div class="mb-3" id="input-vendedor">
+                            <label for="vendedor" class="form-label bold" id="label-title-vendedor">Vendedor:</label>
+                            <label for="validez" class="form-label" id="nombre-vendedor"><?php echo $datosCotizacion['VENDEDOR']?></label>
+                        </div>
+                        <div class="mb-3" id="input-validez">
+                            <label for="validez" class="form-label bold" id="label-correo">Válidez:</label>
+                            <label for="validez" class="form-label" id="validez-cotizacion"><?php echo $datosCotizacion['vigencia']. ' dias'?></label>
+                            <p class="mensaje"></p>
                         </div>
                     </div>
+                    <form id="form-cotizacion" accion="">
+                        <div class="productos-cotizacion">
+                            <div class="nuevo-producto">
+                                <!-- <input type="text" id="id-producto" class="fila-producto" placeholder="Id producto"> -->
+                                <input type="text" name="descripcion" id="descripcion" class="fila-producto" placeholder="Descripción">
+                                <input type="text" name="marca" id="marca" class="fila-producto" placeholder="Marca">
+                                <input type="number" name="cantidad" id="cantidad" class="fila-producto" placeholder="Cantidad">
+                                <input type="text" name="precio" id="precio" class="fila-producto" placeholder="Precio">
+                                <div id="button-container"></div>
+                                <button type="button" class="btn-agregar-producto" id="btn-agregar-producto"><i class="fa-solid fa-plus"></i> Agregar</button>
+                            </div>
+                            <table id="productos-cotizacion" class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="th-col-row">ITEM</th>
+                                        <th class="th-col-row">DESCRIPCION</th>
+                                        <th class="th-col-row">MARCA</th>
+                                        <th class="th-col-row">CANTIDAD</th>
+                                        <th class="th-col-row">PRECIO</th>
+                                        <th class="th-col-row">TOTAL</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="t-body">
+                                    <tr id="row-temp">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="resumen-cotizacion">
+                                <div class="inputs">
+                                    <div class="align-in-column" id="input-sub-total">
+                                        <label for="sub-total" class=" bold" id="label-correo">SubTotal</label>
+                                        <label name="sub-total" class="align-end" id="sub-total" >Lps. 0.00</label>
+                                    </div>
+                                    <div class="align-in-column" id="input-descuento">
+                                        <label for="descuento" class="bold" id="label-correo">Descuento</label>
+                                        <label name="descuento" class="align-end" id="descuento" >Lps. 0.00</label>
+                                    </div>
+                                    <div class="align-in-column" id="input-sub-descuento">
+                                        <label for="sub-descuento" class="bold" id="label-correo">Sub Descuento</label>
+                                        <label name="sub-descuento" class="align-end" id="sub-descuento" >Lps. 0.00</label>
+                                    </div>
+                                    <div class="align-in-column" id="input-impuesto">
+                                        <label for="impuesto" class="bold" id="label-correo">15% I.S.V</label>
+                                        <label name="impuesto" class="align-end" id="impuesto" >Lps. 0.00</label>
+                                    </div>
+                                    <div class="align-in-column" id="input-total">
+                                        <label for="total" class="bold" id="label-correo">Total</label>
+                                        <label name="total" class="align-end" id="total" >Lps. 0.00</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" id="btn-submit-cotizacion">Guardar</button>
+                    </form>
                 </div>
-
 			</main>
         </div>
 	</div>
 	<script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
+	<script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
 	<script src="../../../Recursos/bootstrap5/bootstrap.min.js "></script>
-	<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
-	<script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
-	<script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
-	<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>-->
+    <script src="../../../Recursos/js/librerias/SweetAlert2.all.min.js"></script>
+	<!-- <script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script> -->
 	<script src="../../../Recursos/js/rendimiento/cotizacion/v_cotizacion.js"></script> 
 </body>
 </html>

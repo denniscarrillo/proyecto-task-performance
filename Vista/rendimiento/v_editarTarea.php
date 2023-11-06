@@ -197,10 +197,12 @@
 									<input type="text" name="razonsocial" id="razonsocial" class="form-control">
 									<p class="mensaje"></p>
 								</div>
-								<a href="./cotizacion/v_cotizacion.php?idTarea=<?php echo $_GET['idTarea']?>" class="link-nueva-cotizacion" id="link-nueva-cotizacion">
-								<img src="https://cdn-icons-png.flaticon.com/128/7164/7164888.png" alt="icono-cotizacion" height="50px">
-									Generar cotización
-								</a>
+								<div hidden="true" id="btn-container-cotizacion">
+									<a href="./cotizacion/v_cotizacion.php?idTarea=" class="link-nueva-cotizacion" id="link-nueva-cotizacion" >
+									<img src="https://cdn-icons-png.flaticon.com/128/7164/7164888.png" alt="icono-cotizacion" height="50px" >
+										Generar cotización
+									</a>
+								</div>
 							</div>
 						</div>
 						<div class="table-conteiner">

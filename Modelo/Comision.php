@@ -173,30 +173,45 @@ sqlsrv_close($abrirConexion);
         return $ComisionVendedor;
     }
     //funcion que suma todas las comisiones de un vendedor
-    public static function sumarComisionesVendedor($fechaDesde, $fechaHasta)
-    {
-        $conn = new Conexion();
-        $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $query = "SELECT vt.id_usuario_vendedor, u.usuario, SUM(vt.Fecha_Creacion) AS Fecha_Creacion, SUM(vt.total_Comision) AS totalComision, vt.estadoComisionVendedor FROM tbl_comision_por_vendedor vt 
-        inner join tbl_ms_usuario AS u ON vt.id_usuario_vendedor = u.id_Usuario WHERE vt.estadoComisionVendedor = 'Activa' and vt.Fecha_Creacion BETWEEN '$fechaDesde' AND '$fechaHasta'
-        group by vt.id_usuario_vendedor, u.Usuario, vt.estadoComisionVendedor ORDER BY Fecha_Creacion, totalComision;
-        ";
-        $sumaComisiones = sqlsrv_query($consulta, $query);
-        /* $fila = $sumaComisiones->fetch_assoc(); */
-        $totalComision = array();
-        while ($fila = sqlsrv_fetch_array($sumaComisiones, SQLSRV_FETCH_ASSOC)) {
-            $totalComision[] = [
-                'idVendedor' => $fila['id_usuario_vendedor'],
-                'nombreVendedor' => $fila['usuario'],
-                'estadoComision' => $fila['estadoComisionVendedor'], //cambiar a estadoComision
-                'totalComision' => $fila['totalComision']
-                
-                
-            ];
-        }
-        sqlsrv_close($consulta); #Cerramos la conexión.
-        return $totalComision;
+    public static function sumarComisionesVendedor($fechaDesde, $fechaHasta) {
+    $conn = new Conexion();
+    $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+    
+    $query = "SELECT vt.id_usuario_vendedor, u.usuario, 
+        MIN(vt.Fecha_Creacion) AS Fecha_Inicial, MAX(vt.Fecha_Creacion) AS Fecha_Final, 
+        SUM(vt.total_Comision) AS totalComision
+        FROM tbl_comision_por_vendedor vt
+        INNER JOIN tbl_ms_usuario AS u ON vt.id_usuario_vendedor = u.id_Usuario
+        WHERE vt.estadoComisionVendedor = 'Activa' 
+          AND vt.Fecha_Creacion BETWEEN '$fechaDesde' AND '$fechaHasta'
+        GROUP BY vt.id_usuario_vendedor, u.Usuario
+        ORDER BY Fecha_Inicial, totalComision;";
+
+    $sumaComisiones = sqlsrv_query($consulta, $query);
+
+    if (!$sumaComisiones) {
+        echo "Error en la consulta SQL: " . sqlsrv_errors();
+        return null;
     }
+
+    $totalComision = array();
+    
+    while ($fila = sqlsrv_fetch_array($sumaComisiones, SQLSRV_FETCH_ASSOC)) {
+        $totalComision[] = [
+            'idVendedor' => $fila['id_usuario_vendedor'],
+            'nombreVendedor' => $fila['usuario'],
+            'fechaDesde' => $fila['Fecha_Inicial']->format('Y-m-d'),
+            'fechaHasta' => $fila['Fecha_Final']->format('Y-m-d'), // 'Y-m-d
+            // 'estadoComision' => $fila['estadoComisionVendedor'],
+            'totalComision' => $fila['totalComision']
+        ];
+    }
+    
+    sqlsrv_close($consulta); #Cerramos la conexión.
+    
+    return $totalComision;
+}
+
     public static function fechasComisiones ($fechaDesde, $fechaHasta){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
@@ -244,37 +259,46 @@ sqlsrv_close($abrirConexion);
     public static function ComisionPorId($idComision){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $query = "SELECT co.id_Comision, co.id_Venta, v.TOTALNETO, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, co.Creado_Por,
-        co.Fecha_Creacion, co.Modificado_Por, co.Fecha_Modificacion, cp.id_Comision_Por_Vendedor, cp.id_usuario_vendedor, u.usuario, cp.total_Comision
-       FROM tbl_Comision AS co
-       INNER JOIN VIEW_FACTURASVENTA AS v ON co.id_Venta = v.NUMFACTURA
-       INNER JOIN  tbl_Porcentaje AS po ON co.id_Porcentaje = po.id_Porcentaje
-       INNER JOIN tbl_Comision_Por_Vendedor AS cp ON co.id_Comision = cp.id_Comision
-       INNER JOIN tbl_MS_Usuario AS u ON cp.id_usuario_vendedor = u.id_Usuario
-       WHERE co.id_Comision = $idComision and TOTALNETO >0;";
-        $listaComision = sqlsrv_query($conexion, $query);
+        $query1 = "SELECT co.id_Comision, co.id_Venta, v.TOTALNETO, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, co.Creado_Por,
+            co.Fecha_Creacion, co.Modificado_Por, co.Fecha_Modificacion
+            FROM tbl_Comision AS co INNER JOIN VIEW_FACTURASVENTA AS v ON co.id_Venta = v.NUMFACTURA
+            INNER JOIN  tbl_Porcentaje AS po ON co.id_Porcentaje = po.id_Porcentaje
+            WHERE co.id_Comision = 30 and TOTALNETO >0;";
+        $listaComision = sqlsrv_query($conexion, $query1);
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
-            $fila = sqlsrv_fetch_array($listaComision, SQLSRV_FETCH_ASSOC);
-            $ComisionVer = [
-                'idComision' => $fila["id_Comision"],
-                'idFactura' => $fila["id_Venta"],
-                'ventaTotal' => $fila["TOTALNETO"],
-                'valorPorcentaje' => $fila["valor_Porcentaje"],
-                'comisionT' => $fila["comision_TotalVenta"],
-                'estadoComision' => $fila["estadoComision"],
-                'CreadoPor' => $fila["Creado_Por"],
-                'FechaComision' => $fila["Fecha_Creacion"],
-                'ModificadoPor' => $fila["Modificado_Por"],
-                'FechaModificacion' => $fila["Fecha_Modificacion"],
-                'idComisionVendedor' => $fila["id_Comision_Por_Vendedor"],
+        $fila = sqlsrv_fetch_array($listaComision, SQLSRV_FETCH_ASSOC);
+        $ComisionVer = [
+            'idComision' => $fila["id_Comision"],
+            'idFactura' => $fila["id_Venta"],
+            'ventaTotal' => $fila["TOTALNETO"],
+            'valorPorcentaje' => $fila["valor_Porcentaje"],
+            'comisionT' => $fila["comision_TotalVenta"],
+            'estadoComision' => $fila["estadoComision"],
+            'CreadoPor' => $fila["Creado_Por"],
+            'FechaComision' => $fila["Fecha_Creacion"],
+            'ModificadoPor' => $fila["Modificado_Por"],
+            'FechaModificacion' => $fila["Fecha_Modificacion"]
+        ];
+        $query2= "SELECT cp.id_usuario_vendedor, u.usuario, cp.total_Comision
+        FROM tbl_Comision_Por_Vendedor AS cp
+        INNER JOIN tbl_MS_Usuario AS u ON cp.id_usuario_vendedor = u.id_Usuario
+        WHERE cp.id_Comision = $idComision;";
+        $listaVendedores = sqlsrv_query($conexion, $query2);
+        $vendedores = array();
+        //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
+        while($fila = sqlsrv_fetch_array($listaVendedores , SQLSRV_FETCH_ASSOC)){
+            $vendedores [] = [
                 'idVendedor' => $fila["id_usuario_vendedor"],
                 'nombreVendedor' => $fila["usuario"],
                 'comisionVendedor' => $fila["total_Comision"]
             ];
+         }
         sqlsrv_close($conexion); #Cerramos la conexión.
+        $ComisionVer += [
+            'vendedores' => $vendedores
+        ];
         return $ComisionVer;
     }
-    
 }
     //convertir la fecha de comision totalm por vendedor en texto
 

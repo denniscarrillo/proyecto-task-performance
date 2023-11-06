@@ -3,10 +3,6 @@
   align-items: stretch;
   min-height: 100vh;
 }
-/* .sidebar-conteiner{
-  min-height: 100vh;
-  width: fit-content;
-} */
 .conteiner-main{
   display: flex;
   flex-direction: column;
@@ -44,8 +40,6 @@
   align-items: center;
   width: 18vw;
   height: 25vh;
-  /* width: 15rem;
-  height: 10rem; */
   border-radius: 0.3rem;
   background-color: #cb7a2dfa;
   text-decoration: none;
