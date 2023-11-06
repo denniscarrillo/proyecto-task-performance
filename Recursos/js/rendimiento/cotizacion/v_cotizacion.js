@@ -36,6 +36,7 @@ $btnAgregar.addEventListener('click', () => {
     let cantidad = $fila.appendChild(document.createElement('td'));
     let precio = $fila.appendChild(document.createElement('td'));
     let total = $fila.appendChild(document.createElement('td'));
+    total.setAttribute('class', 'total-producto');
 
     //Ahora agregamos los datos 
     item.append(document.createTextNode = contItem);
