@@ -3,8 +3,13 @@ import { sidePanel_Interaction } from '../../components/js/sidePanel.js'; //impo
 let tableArticulos = '';
 let $idTarea = document.getElementById('id-Tarea').value;
 let $idEstadoTarea = document.querySelector('.id-estado-tarea').id;
+const $btnCotizacion = document.getElementById('btn-container-cotizacion');
+let radioOption = document.getElementsByName('radioOption');
 let estadoRTN = '';
 $(document).ready(async function(){
+  if($idEstadoTarea == '3'){
+    $btnCotizacion.removeAttribute('hidden');
+  }
     setEstadoTarea();
     obtenerComentarios($idTarea);
     obtenerDatosTarea($idTarea, $idEstadoTarea);
@@ -16,6 +21,8 @@ $(document).ready(async function(){
         "idTarea": $idTarea
       }
     });
+    let tipoCliente = (radioOption[1].checked) ? radioOption[1].value : radioOption[0].value;
+    document.getElementById('link-nueva-cotizacion').setAttribute('href', `./cotizacion/v_cotizacion.php?idTarea=${$idTarea}&estadoCliente=${tipoCliente}`);
 });
 
 document.getElementById('btn-comment').addEventListener('click', () => {
@@ -24,7 +31,6 @@ document.getElementById('btn-comment').addEventListener('click', () => {
 });
 //Validar datos del cliente antes de redirigir al usuario a la vista cotización
 document.getElementById('link-nueva-cotizacion').addEventListener('click', (e) => {
-  console.log(JSON.parse(estadoRTN));
   if(JSON.parse(estadoRTN) == false) {
     e.preventDefault();
     const Toast = Swal.mixin({
@@ -458,7 +464,6 @@ let obtenerDatosTarea = ($idTarea, $idEstadoTarea) => {
     },
     success: function($datosTarea){
       let datos = JSON.parse($datosTarea);
-      console.log(datos);
       (Object.keys(datos).length > 1) ? setearDatosTarea(datos) : document.getElementsByName('estadoEdicion')[0].id = datos.data;
     }
   });

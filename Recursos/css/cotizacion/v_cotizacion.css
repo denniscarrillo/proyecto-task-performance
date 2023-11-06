@@ -1,27 +1,43 @@
+.encabezado {
+    position: sticky;
+    top: 0;
+    min-height: fit-content;
+    color: #f1d2c7;
+    background-color: #615f5e;
+    margin: 1rem;
+    margin-left: 0.4rem;
+    margin-bottom: 1rem;
+    border-radius: 1rem;
+}
+.title-dashboard-task {
+    text-align: left;
+    font-weight: 600;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    padding: 0.6rem;
+    padding-left: 1.5rem;
+    margin: 0;
+}
 .container-cotizacion {
+    position: relative;
     display: flex;
     flex-direction: column;
-    background-color: #ced2d6;
-    width: calc(100vw - 242px);
-    height: calc(100vh - 9rem);
+    width: 100%;
+    /* height: calc(100vh - 2.5rem); */
     padding: 1rem;
+    overflow: hidden;
 }
 .datos-cotizacion {
-    background-color: #faebd7;
-    /* margin-top: 1rem; */
-    padding: 1rem;
-}
-.productos-cotizacion {
-    margin-top: 2rem;
-    /* background-color: #b5e2f6 */
+    padding: 0.5rem;
 }
 /* ESTILOS PARA SECCION DATOS DEL CLIENTE */
 #input-fecha{
-    width: 20rem;
+    width: 35rem;
+    margin-left: auto;
 }
 #fecha {
     display: inline-block;
-    width: 10rem;
+    width: 25rem;
 }
 #input-validez{
     max-width:12rem;
@@ -39,7 +55,7 @@
 }
 .inputs {
     width: fit-content;
-    background-color: aliceblue;
+    /* background-color: aliceblue; */
     border-radius: 0.4rem;
 }
 .align-in-column {
@@ -47,9 +63,18 @@
     align-items: center;
     justify-content: end;
     gap: 1.5rem;
+    width: 27rem;
     max-width: 30rem;
+    padding: 0.5rem;
     padding-left: 1rem;
-    margin: 1rem;
+    /* margin: 0.4rem; */
+    border-radius: 0.4rem;
+    background-color: #dbd2c0;
+    border: 1.5px solid #efa173
+}
+.align-end {
+    display: flex;
+    justify-content: center;
 }
 #sub-total, #descuento, #sub-descuento, #impuesto, #total {
     width: 15rem;
@@ -93,6 +118,35 @@
 .btn-agregar-producto:hover {
     background-color: #ee9866;
 }
+.fa-pencil, .fa-circle-xmark{
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: color ease 0.6s;
+}
+.fa-pencil:hover{
+    color: #ee894f;
+}
+.fa-circle-xmark:hover{
+    color: #ee894f;
+}
+#btn-submit-cotizacion {
+    position: absolute;
+    bottom: 1rem;
+    left: 40%;
+    border: none;
+    width: 10rem;
+    height: 2.5rem;
+    border-radius: 0.4rem;
+    font-size: 1.1rem;
+    color: aliceblue;
+    background-color: #ee9866;
+    box-shadow: 1px 2px 2px 0px #9e9e9e;
+}
+#btn-submit-cotizacion:hover{
+    cursor: pointer;
+    color: aliceblue;
+    background-color: #ee894f;
+}
 #marca {
     width: 210px;
 }
@@ -104,4 +158,42 @@
 }
 .btn-agregar-producto {
     margin-left: 1rem;
+}
+.bold {
+    font-weight: 500;
+    color: #2d2c2c;
+}
+.icon-column {
+    display: flex;
+    align-items: center;
+    justify-self: end;
+}
+.icon-container{
+    float: left;
+    left: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-right: 1.5rem;
+}
+#button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    gap: 1rem;
+}
+.fa-circle-check {
+    cursor: pointer;
+    color: #0c9327
+}
+.fa-ban {
+    cursor: pointer;
+    color: #e43e24
+}
+.fa-circle-check:hover{
+    color: #0c9327
+}
+.fa-ban:hover {
+    color: #e43e24
 }

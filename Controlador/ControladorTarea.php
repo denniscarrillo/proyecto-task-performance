@@ -78,4 +78,13 @@ class ControladorTarea {
     public static function obtenerRTN_Tarea($idTarea){
         return Tarea::obtenerRtnClienteTarea($idTarea);
     }
+    public static function obtenerDatos($idTarea, $estadoCliente){
+        return Tarea::obtenerDatos($idTarea, $estadoCliente);
+    }
+    public static function nuevaCotizacion($nuevaCotizacion, $creadoPor){
+        return Tarea::nuevaCotizacion($nuevaCotizacion, $creadoPor);
+    }
+    public static function productosCotizacion($idCotizacion, $productosCotizacion, $creadoPor){
+        Tarea::productosCotizacion($idCotizacion, $productosCotizacion, $creadoPor);
+    }
 }
