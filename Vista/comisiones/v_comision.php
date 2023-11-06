@@ -115,18 +115,18 @@ require_once("validacionesComision.php");
       </div>
     </div>
     <?php
-    require('modalFiltroVenta.html');
-    require_once('modalVerComisiones.html');
+    require_once('modalFiltroVenta.html');
+    require('modalVerComisiones.html');
     require('modalEditarComision.html');
     ?>
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
     <script src="../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
-    <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
     <script src="../../Recursos/js/comision/dataTableComision.js" type="module"></script>
     <script src="../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
     <!-- <script src="../../Recursos/js/comision/validacionesEditarComision.js" type="module"></script> -->
-    <script src="../../Recursos/js/permiso/gestionPermisos.js"></script>
+    <!-- <script src="../../Recursos/js/permiso/dataTablePermisos.js"></script> -->
     <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
     <script src="../../Recursos/bootstrap5/bootstrap.min.js"></script>
     <script src="../../Recursos/js/index.js"></script>

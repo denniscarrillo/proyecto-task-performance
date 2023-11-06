@@ -17,7 +17,7 @@
                             <label id="V_idFactura" class="form-label-V"></label>
                         </div>
                         <div class="mb-3">
-                            <label for="totalVenta" class="form-label">Venta Total:</label>
+                            <label for="totalVenta" class="form-label">Venta Total:</label><br>
                             <label id="V_Monto" class="form-label-V"></label>
                         </div>
                         <div class="mb-3">
@@ -29,19 +29,16 @@
                             <label for="comisionTotal" class="form-label">Comision Total:</label><br>
                             <label id="V_comisionTotal" class="form-label-V"></label>
                         </div>
-
+                    </div>    
+                    <div class="grupo-form">
                         <div class="mb-3">
                             <label for="Estado" class="form-label">Estado Comision:</label><br>
                             <label id="V_Estado" class="form-label-V"></label>
                         </div>
-                    </div>    
-
-                    <div class="grupo-form"> 
                         <div class="mb-3">
                             <label for="Creado_Por" class="form-label">Creado_Por:</label><br>
                             <label id="V_CreadoPor" class="form-label-V"></label>
                         </div> 
-
                         <div class="mb-3">
                             <label for="fechaCreacion" class="form-label">Fecha de Creacion:</label><br>
                             <label id="V_fechaCreacion" class="form-label-V"></label>
@@ -56,9 +53,19 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="Vendedores" class="form-label">Id Comision Vendedor:     Id Vendedor:      Vendedor:       Comision del vendedor: </label><br>
-                        <label id="V_Vendedores" class="form-label-V"></label>
-                    </div> 
+                        <table class="table table-striped" id="table-vendedores">
+                            <thead>
+                                <tr> 
+                                    <th scope="col"> ID VENDEDOR </th>
+                                    <th scope="col"> VENDEDOR </th>
+                                    <th scope="col"> COMISION TOTAL </th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider" id="tbody-vendedores">
+                            </tbody>
+                        </table>
+                        <br>
+                    </div>
                     <div class="btn-guardar">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         <button type="button" class="btn_pdf btn btn-primary" id="btn_pdf_id"><i class="fas fa-file-pdf"> </i> Generar PDF</a> </button>
