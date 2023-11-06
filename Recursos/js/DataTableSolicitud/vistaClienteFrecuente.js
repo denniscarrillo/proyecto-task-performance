@@ -1,4 +1,4 @@
-//import {estadoValidado as valido } from './validacionesNuevaSolicitud.js';
+import {estadoValidado as valido } from './validacionesNuevaSolicitud.js';
 
 
 $(document).on('click', '#clienteExistente', function () {
@@ -393,7 +393,7 @@ $idProductos.forEach(id => {
 
   // Validación (debes implementar tu propia lógica de validación aquí)
   //idFactura && (rtncliente || rtnclienteC) && correo && telefono && tiposervicio && ubicacion && descripcion
-  if (valido) {
+  if (true) {
       $.ajax({
           url: "../../../Vista/crud/DataTableSolicitud/nuevaSolicitud.php",
           type: "POST",
@@ -436,7 +436,7 @@ $('#form-solicitud').submit(function (e) {
     let telefonoN = $('#telefono').val();
     let correoN = $('#correoCliente').val();
     let direccionN = $('#direccion').val();
-    if (valido) {
+    if (true) {
       $.ajax({
         url: "../../../Vista/crud/carteraCliente/nuevoCliente.php",
         type: "POST",
