@@ -6,6 +6,7 @@
     require_once ("../../../Modelo/Usuario.php");
     require_once("../../../Controlador/ControladorUsuario.php");
     require_once("../../../Controlador/ControladorBitacora.php");
+    require_once('enviarCorreoSolicitud.php');
     $user = '';
     session_start(); //Reanudamos session
     if(isset($_SESSION['usuario'])){
@@ -23,15 +24,20 @@
         $nuevaSolicitud->estadoSolicitud = 'ACTIVO';
         $nuevaSolicitud->creadoPor =  $user;
         $productos = json_decode($_POST['productos'], true);
+       
         $productosSolicitud = array();
+
         for($i=0; $i < count($productos); $i++){
             $productosSolicitud [] = [
                 'idProducto'=> $productos[$i]['id'],
                 'CantProducto'=> $productos[$i]['cant'],
             ];
-        }
+           
+        }        
+      
         ControladorDataTableSolicitud::NuevaSolicitud($nuevaSolicitud,$productosSolicitud);
         print json_encode($nuevaSolicitud, JSON_UNESCAPED_UNICODE);
+        enviarCorreoSolicitud($nuevaSolicitud->correo);
         /* ========================= Evento Creacion nueva solicitud. ======================
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();

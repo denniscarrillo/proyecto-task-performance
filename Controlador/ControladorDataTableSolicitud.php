@@ -30,4 +30,8 @@ class ControladorDataTableSolicitud {
     public static function obtenerProductosS($idSolicitud){
         return DataTableSolicitud::obtenerArticuloS($idSolicitud);
     }   
+
+    public static function validarRtnExiste($rtn){
+        return DataTableSolicitud::rtnExiste($rtn);
+       }
 }
