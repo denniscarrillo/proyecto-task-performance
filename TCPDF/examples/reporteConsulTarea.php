@@ -2,7 +2,7 @@
 // Include the main TCPDF library (search for installation path).
 require_once('../tcpdf.php');
 require_once("../../db/Conexion.php");
-require_once("../../Modelo/Rol.php");
+require_once("../../Modelo/DataTableTarea.php");
 require_once("../../Controlador/ControladorDataTableTarea.php");
 require_once("../../Modelo/Parametro.php");
 require_once("../../Controlador/ControladorParametro.php");
@@ -76,32 +76,38 @@ $html = '
 <table border="1" cellpadding="4">
 <tr>
 <td style="background-color: #e54037;color: white; text-align: center; width: 60px;">N°</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 220px;">NOMBRE</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 360px;">TITULO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 360px;">AVANCE DE LA TAREA</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 200px;">NOMBRE</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 200px;">TITULO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 180px;">AVANCE DE LA TAREA</td>
 </tr>
 ';
-$User = 2;
-$Tareas = ControladorDataTableTarea::DataTableTarea($User);
+session_start();
+if(isset($_SESSION['usuario'])){
+    $Tareas = ControladorDataTableTarea::DataTableTarea($_SESSION['usuario']);
+}
+
+$Cont = 1;  // Mueve la inicialización de $Cont aquí
+
 foreach($Tareas as $tarea){
     $idTarea = $tarea['id_Tarea'];
     $titulo = $tarea['titulo'];
     $descripcion = $tarea['descripcion'];
     $estado = $tarea['estado_Finalizacion'];
-    $Cont++;
+    
     $html .= '
     <tr>
-    <td style="text-align: center">'.$Cont.'</td>
-    <td >'.$titulo.'</td>
-    <td>'.$descripcion.'</td>
-    <td>'.$estado.'</td>
+        <td style="text-align: center">'.$Cont.'</td>
+        <td>'.$titulo.'</td>
+        <td>'.$descripcion.'</td>
+        <td>'.$estado.'</td>
     </tr>
     ';
+    
+    $Cont++;  
 }
 
-$html.='
-</table>
-';
+$html .= '</table>';
+
 
 //output the HTML content
 $pdf->writeHTML($html, true, false, true, false);
