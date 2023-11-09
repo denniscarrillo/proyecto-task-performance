@@ -75,7 +75,7 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de las Tareas</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 60px;">ID</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 60px;">N°</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 220px;">NOMBRE</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 360px;">TITULO</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 360px;">AVANCE DE LA TAREA</td>
@@ -88,9 +88,10 @@ foreach($Tareas as $tarea){
     $titulo = $tarea['titulo'];
     $descripcion = $tarea['descripcion'];
     $estado = $tarea['estado_Finalizacion'];
+    $Cont++;
     $html .= '
     <tr>
-    <td style="text-align: center">'.$idTarea.'</td>
+    <td style="text-align: center">'.$Cont.'</td>
     <td >'.$titulo.'</td>
     <td>'.$descripcion.'</td>
     <td>'.$estado.'</td>

@@ -83,14 +83,15 @@ $html = '
 ';
 $objetos = ControladorDataTableObjeto:: DataTableObjeto();
 foreach($objetos as $objeto){
-    $idObjeto = $objeto['id_Objeto'];
+    // $idObjeto = $objeto['id_Objeto'];
     $nombreObjeto = $objeto['objeto'];
     $Descripcion = $objeto['descripcion'];
     $Tipo = $objeto['tipo_Objeto'];
+    $Cont++ ;
 
     $html .= '
     <tr>
-    <td style="text-align: center">'.$idObjeto.'</td>
+    <td style="text-align: center">'.$Cont.'</td>
     <td style="text-align: center">'.$nombreObjeto.'</td>
     <td style="text-align: center">'.$Descripcion.'</td>
     <td style="text-align: center">'.$Tipo.'</td>
