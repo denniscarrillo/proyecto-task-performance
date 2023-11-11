@@ -33,6 +33,7 @@ let procesarPermisoActualizar = data => {
       },
       { "data": "comisionTotal" },
       { "data": "estadoComisionar" },
+      { "data": "estadoLiquidacion" },
       { "data": "fechaComision.date" },
       {
         "defaultContent":
@@ -62,13 +63,15 @@ $(document).on("click", "#btn_editar", function(){
     porcentaje = fila.find("td:eq(3)").text(),
     comisionTotal = fila.find("td:eq(4)").text(),
     estadoComisionar = fila.find("td:eq(5)").text(),
-    fechaComision = fila.find("td:eq(6)").text();
+    estadoLiquidacion = fila.find("td:eq(6)").text(),
+    fechaComision = fila.find("td:eq(7)").text();
   $("#idComision_E").val(idComision);
   $("#idVenta_E").val(idVenta);
   $("#monto_E").val(monto);
   $("#porcentaje-comision_E").val(porcentaje);
   $("#totalComsion_E").val(comisionTotal);
   /* $("#estadoComision_E").val(estadoComisionar); */
+  $("#estadoLiquidacion_E").val(estadoLiquidacion);
   $("#fecha_E").val(fechaComision);
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-title").css("color", "white");
@@ -80,13 +83,15 @@ $("#form-Edit-Comision").submit(function (e) {
   e.preventDefault();
   let idComision = $("#idComision_E").val();
   let estadoComision = document.getElementById("estadoComision_E").value;
+  let estadoLiquidacion = document.getElementById("estadoLiquidacion_E").value;
   $.ajax({
     url: "../../../Vista/comisiones/EditarComision.php",
     type: "POST",
     datatype: "JSON",
     data: {
       idComision: idComision,
-      estadoComision: estadoComision
+      estadoComision: estadoComision,
+      estadoLiquidacion: estadoLiquidacion,
     },
     success: function (data) {
       console.log(data);

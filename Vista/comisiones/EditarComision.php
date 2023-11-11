@@ -15,6 +15,7 @@ if (isset($_SESSION['usuario'])) {
         $nuevaComision = new Comision();
         $nuevaComision->idComision = intval($_POST['idComision']);
         $nuevaComision->estadoComision = $_POST['estadoComision'];
+        $nuevaComision->estadoLiquidacion = $_POST['estadoLiquidacion'];
         $nuevaComision->ModificadoPor = $user;
         date_default_timezone_set('America/Tegucigalpa');
         $nuevaComision->fechaModificacion = date("Y-m-d");

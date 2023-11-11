@@ -15,6 +15,7 @@ if(isset($_POST['idVenta']) || isset($_POST['idComision']) || isset($_POST['$Com
     $nuevaComision->idPorcentaje = intval($_POST['idPorcentaje']);
     $nuevaComision->comisionTotal = floatval($_POST['comisionTotal']);
     $nuevaComision->estadoComision = 'Activa';
+    $nuevaComision->estadoLiquidacion = 'Pendiente';
     $nuevaComision->creadoPor = $user;
     date_default_timezone_set('America/Tegucigalpa');
     $nuevaComision->fechaComision = date("Y-m-d", strtotime($_POST['fechaComision']));
