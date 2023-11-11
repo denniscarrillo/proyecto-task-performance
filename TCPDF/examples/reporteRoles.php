@@ -75,7 +75,7 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de Roles</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 60px;">ID</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 60px;">N°</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 220px;">ROL</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 360px;">DESCRIPCIÓN</td>
 </tr>
@@ -85,16 +85,14 @@ foreach($Roles as $Rol){
     $id_Rol = $Rol['id_Rol'];
     $NomRol = $Rol['rol'];
     $descripcion = $Rol['descripcion'];
-
+    $Cont++;
     $html .= '
     <tr>
-    <td style="text-align: center">'.$id_Rol.'</td>
+    <td style="text-align: center">'.$Cont.'</td>
     <td >'.$NomRol.'</td>
     <td>'.$descripcion.'</td>
     </tr>
     ';
-    
-
 }
 
 $html.='

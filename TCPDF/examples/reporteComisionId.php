@@ -79,63 +79,66 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de la Comision id</b></P>
 ';
 
-
 $ComisionId = ControladorComision::traerIdComision($_GET['idComision']);
-        $idComision = $ComisionId['idComision'];
-        $idFactura = $ComisionId['$idFactura'];
-        $VentaTotal = $ComisionId['ventaTotal'];
-        $valorPorcentaje = $ComisionId['valorPorcentaje'];
-        $ComisionT = $ComisionId['comisionT'];
-        $Estado = $ComisionId['estadoComision'];
-        $creadoPor = $ComisionId['CreadoPor'];
-        $fechaComision = $ComisionId['FechaCreacion'];
-        $fechaFormateadaC = $fechaComision->format('Y/m/d H:i:s');
-        $modifacadoPor = $ComisionId['ModificadoPor'];
-        $FechaModificacion = $ComisionId['FechaModificacion'];
-        $fechaFormateadaM = $FechaModificacion->format('Y/m/d H:i:s');
-        $idComisionVendedor = $ComisionId['idComisionVendedor'];
-        $idVendedor = $ComisionId['idVendedor'];
-        $nombreVendedor = $ComisionId['nombreVendedor'];
-        $comisionVendedor = $ComisionId['comisionVendedor'];
-        
-        $html .= '
+$idComision = $ComisionId['idComision'];
+$idFactura = $ComisionId['idFactura'];
+$VentaTotal = $ComisionId['ventaTotal'];
+$valorPorcentaje = $ComisionId['valorPorcentaje'] * 100;;
+$ComisionT = $ComisionId['comisionT'];
+$Estado = $ComisionId['estadoComision'];
+$creadoPor = $ComisionId['CreadoPor'];
+$fechaComision = $ComisionId['FechaComision'];
+$fechaFormateadaC = $fechaComision->format('Y/m/d');
+$modifacadoPor = $ComisionId['ModificadoPor'];
+if ($modifacadoPor == null) {
+    $modifacadoPor = "Sin modificaciones";
+}
+$fechaModificacion = $ComisionId['FechaModificacion'];
+if ($fechaModificacion !== null) {
+    $fechaFormateadaM = $fechaModificacion->format('Y/m/d');
+} else {
+    $fechaFormateadaM = "Sin modificaciones";
+}
 
-        <dl>
-            <dt><b>ID Comision:</b></dt>
-            <dd>'.$idComision.'</dd><br>
-            <dt><b>ID FACTURA:</b></dt>
-            <dd>'.$idFactura.'</dd><br>
-            <dt><b>VENTA TOTAL:</b></dt>
-            <dd>'.$VentaTotal.'</dd><br>
-            <dt><b>PORCENTAJE:</b></dt>
-            <dd>'.$valorPorcentaje.'</dd><br>
-            <dt><b>ESTADO COMISION:</b></dt>
-            <dd>'.$Estado.'</dd><br>
-            <dt><b>CREADO POR:</b></dt>
-            <dd>'.$creadoPor.'</dd><br>
-            <dt><b>FECHA DE CREACION:</b></dt>
-            <dd>'.$fechaFormateadaC.'</dd><br>
-            <dt><b>MODIFICADO POR:</b></dt>
-            <dd>'.$modifacadoPor.'</dd><br>
-            <dt><b>FECHA MODIFICACION:</b></dt>
-            <dd>'.$fechaFormateadaM.'</dd><br>
-            <dt><b>ID COMISION VENDEDOR:</b></dt>
-            <dd>'.$idComisionVendedor.'</dd><br>
-            <dt><b>VENDORES:</b></dt>
-            <dd>'.$idVendedor.'</dd><br>
-            <dt><b>NOMBRE DEL VENDEDOR:</b></dt>
-            <dd>'.$nombreVendedor.'</dd><br>
-            <dt><b>COMISION DEL VENDEDOR:</b></dt>
-            <dd>'.$comisionVendedor.'</dd><br>
-        </dl>
-        
-        
-        
-        ';
-  
+$html .= '
 
+<dl>
+<div style="flex: 1; text-align: left;"> <b> ID COMISION:  </b>' . $idComision . '</div>
+<div style="flex: 1; text-align: left;"> <b> N° FACTURA:  </b>' . $idFactura . '</div>
+<div style="flex: 1; text-align: left;"> <b> VENTA TOTAL:  </b>' . $VentaTotal . '</div>
+<div style="flex: 1; text-align: left;"> <b> PORCENTAJE:  </b>' . $valorPorcentaje . '%</div>
+<div style="flex: 1; text-align: left;"> <b> COMISION TOTAL:  </b>' . $ComisionT . '</div>
+<div style="flex: 1; text-align: left;"> <b> ESTADO:  </b>' . $Estado . '</div>
+<div style="flex: 1; text-align: left;"> <b> CREADO POR:  </b>' . $creadoPor . '</div>
+<div style="flex: 1; text-align: left;"> <b> FECHA DE CREACION:  </b>' . $fechaFormateadaC . '</div>
+<div style="flex: 1; text-align: left;"> <b> MODIFICADO POR:  </b>' . $modifacadoPor . '</div>
+<div style="flex: 1; text-align: left;"> <b> FECHA MODIFICACION:  </b>' . $fechaFormateadaM . '</div>
+</dl>
+    <br>
+    <table cellpadding="5"  border= "1" >
+    <tr>
+        <th scope="col" style="background-color: #e54037; color: white;">ID VENDEDOR</th>
+        <th scope="col" style="background-color: #e54037; color: white;">NOMBRE VENDEDOR</th>
+        <th scope="col" style="background-color: #e54037; color: white;">COMISION VENDEDOR</th>
+    </tr>';
+    
+    foreach ($ComisionId['vendedores'] as $vendedor) {
+        $idVendedor = $vendedor['idVendedor'];
+        $nombreVendedor = $vendedor['nombreVendedor'];
+        $comisionVendedor = $vendedor['comisionVendedor'];
+        
+        $html .= '<tr>';
+        $html .= '<td>'.$idVendedor.'</td>';
+        $html .= '<td>'.$nombreVendedor.'</td>';
+        $html .= '<td>'.$comisionVendedor.'</td>';
+        $html .= '</tr>';
+    }
 
-$html.='
+$html .= '
+    </table>
+</dl>';
+
+$html .= '
 
 ';
 

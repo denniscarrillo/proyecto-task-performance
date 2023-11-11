@@ -7,7 +7,29 @@
 .form-label-V{
     color: #3a3838; 
 }
+.grupo-form {
+    display: inline-block; /* Cambiamos el valor display a inline-block */
+    width: calc(50% - 1.2rem); /* Divide en dos columnas con un espacio de 1.2rem entre ellas */
+    padding: 1.2rem; /* Agregamos espacio alrededor del contenido */
+    box-sizing: border-box; /* Evita que el padding afecte el ancho total */
+    margin: 0; /* Eliminamos el margen anterior */
+}
 
+/* Agregamos un estilo a los elementos internos de grupo-form si es necesario */
+.grupo-form label {
+    font-weight: bold;
+}
+
+.grupo-form .mb-3 {
+    margin: 1rem 0; /* Estilo específico para los elementos con la clase mb-3 dentro de grupo-form */
+}
+.modal-body{
+    position: relative;
+}
 .btn-guardar {
-    left: 30%;
+    position: absolute;
+    margin-top: 3rem !important;
+    bottom: 0.2rem;
+    left: 7.5%;
+    right:30%;
 }

@@ -1,5 +1,5 @@
 /* import {estadoValidado as valido } from './validacionesEditarComision.js'; */
-
+let $vendedores = '';
 let tablaComision = "";
 $(document).ready(function () {
   let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
@@ -109,18 +109,26 @@ document.getElementById("btnCerrar").addEventListener("click", function () {
 $(document).on("click", "#btn_ver", async function (){
   let fila = $(this).closest("tr");
   let idComision = fila.find('td:eq(0)').text();
-  let idComisionVer = await obtenerComisionId(idComision);
+  let idComisionVer = JSON.parse(await obtenerComisionId(idComision));
   console.log(idComisionVer);
 
   const idComisionLabel = document.getElementById('IdComision');
   idComisionLabel.innerText = idComisionVer.idComision;
-  console.log(idComisionVer.idComision);
+  console.log(idComisionVer['idComision']);
   const idVentaLabel = document.getElementById('V_idFactura');
   idVentaLabel.innerText = idComisionVer.idFactura;
   const montoLabel = document.getElementById('V_Monto');
   montoLabel.innerText = idComisionVer.ventaTotal;
   const porcentajeLabel = document.getElementById('V_Porcentaje');
-  porcentajeLabel.innerText = idComisionVer.valorPorcentaje;
+  const porcentajeDecimal = idComisionVer.valorPorcentaje; // Supongamos que porcentaje es un decimal
+
+// Verificar si porcentajeDecimal es un número válido
+if (!isNaN(porcentajeDecimal)) {
+  // Convertir el porcentaje de decimal a entero
+  const porcentajeEntero = Math.round(porcentajeDecimal * 100);
+  // Mostrar el porcentaje con el símbolo de porcentaje
+  porcentajeLabel.innerText = porcentajeEntero + '%';
+}
   const comisionTotalLabel = document.getElementById('V_comisionTotal');
   comisionTotalLabel.innerText = idComisionVer.comisionT;
   const estadoComisionLabel = document.getElementById('V_Estado');
@@ -128,7 +136,7 @@ $(document).on("click", "#btn_ver", async function (){
   const CreadoPorLabel = document.getElementById('V_CreadoPor');
   CreadoPorLabel.innerText = idComisionVer.CreadoPor;
   const fechaComisionLabel = document.getElementById('V_fechaCreacion');
-  fechaComisionLabel.innerText = idComisionVer.FechaComision;
+  fechaComisionLabel.innerText = idComisionVer.FechaComision.date;
   const ModificadoPorLabel = document.getElementById('V_ModificadoPor');
   ModificadoPorLabel.innerText = idComisionVer.modificadoPor;
   if(idComisionVer.modificadoPor !== null){
@@ -138,19 +146,20 @@ $(document).on("click", "#btn_ver", async function (){
   }
   const fechaModificacionLabel = document.getElementById('V_FechaModificado');
   if(idComisionVer.FechaModificacion !== null){
-    fechaModificacionLabel.innerText = idComisionVer.fechaModificacion;
+    fechaModificacionLabel.innerText = idComisionVer.fechaModificacion.date;
   } else {
     fechaModificacionLabel.innerText = '';
-    const vendedoresLabel = document.getElementById('V_Vendedores');
-    const vendedores = idComisionVer.vendedores; // Supongamos que los datos de los vendedores están en un arreglo
-    if (vendedores && vendedores.length > 0) {
-      // Construir una cadena con la información de los vendedores
-      const vendedoresInfo = vendedores.map(vendedor => `${vendedor.idVendedor} - ${vendedor.nombreVendedor} - ${vendedor.comisionVendedor}`).join(', ');
-      vendedoresLabel.innerText = vendedoresInfo;
-    } else {
-      vendedoresLabel.innerText = 'No hay vendedores disponibles';
-    }
-}
+  }
+  let vendedores = idComisionVer.vendedores; // Supongamos que los datos de los vendedores están en un arreglo
+  vendedores.forEach(vendedor => {
+      $vendedores +=
+      `<tr>
+        <td>${vendedor.idVendedor}</td>
+        <td>${vendedor.nombreVendedor}</td>
+        <td>${vendedor.comisionVendedor}</td>
+      </tr>`;
+  });
+  document.getElementById('tbody-vendedores').innerHTML = $vendedores;
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");
   // Mostrar el modal
@@ -159,7 +168,7 @@ $(document).on("click", "#btn_ver", async function (){
 
 let obtenerComisionId = async (idComision) => {
   try{
-    let datosComision = await $.ajax({
+    let datosVerComision = await $.ajax({
       url: '../../../Vista/comisiones/obtenerIdComision.php',
       type: 'GET',
       datatype: 'JSON',
@@ -172,13 +181,13 @@ let obtenerComisionId = async (idComision) => {
     //   return datosComision; // Retornamos la data recibida por ajax
     // } else {
     //   console.error("Datos de comisión no válidos");
-      return datosComision;
+      return datosVerComision;
   } catch (err) {
     console.error(err);
   }
 }
 $(document).on("click", "#btn_pdf_id",  function (){
-  let idComisionR = document.querySelector('#V_IdComision').innerText;
+  let idComisionR = document.querySelector('#IdComision').innerText;
 
   //console.log("hola")
   window.open('../../../TCPDF/examples/reporteComisionId.php?idComision='+idComisionR, '_blank');

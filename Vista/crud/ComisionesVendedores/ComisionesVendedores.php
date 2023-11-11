@@ -76,6 +76,7 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link href="../../../Recursos/css/ComisionesVendedores.css" rel="stylesheet" />
   <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
   <!-- <link href="../../../Recursos/css/modalNuevaComision.css" rel="stylesheet"> -->
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
@@ -138,20 +139,29 @@ if (isset($_SESSION['usuario'])) {
             </div>  
           </div>    
         <div class="table-conteiner">
+          <div class="filtros">
+            <div class="filtro-fecha">
+              <label for="fechaDesde">Fecha desde:</label>
+              <input type="date" id="fechaDesdef" name="fechaDesdef" class="form-control">
+              <label for="fechaHasta">Fecha hasta:</label>
+              <input type="date" id="fechaHastaf" name="fechaHastaf" class="form-control">
+              <button type="button" class="btn btn-primary" id="btnFiltrar">Sumar Comisiones</button>
+            </div>
         <div>
             <!-- <a href="ComisionPorVendedor.php" class="btn_nuevoRegistro btn btn-primary"><i class="fa-solid fa-circle-plus"></i> Comision total por vendedor</a> -->
-            <a href="ReporteComisionExcel.php" class="btn_Excel btn btn-primary "><i class="fa-solid fa-file-excel fa-sm"></i> Generar Excel</a>
+            <a href="../../../TCPDF/examples/reporteriaComisionVendedores.php" class="btn_Pdf btn btn-primary"><i class="fas fa-file-pdf"></i>
+                Generar Reportes</a>
           </div>
           <table class="table" id="table-ComisionVendedor">
             <thead>
               <tr>
-                <th scope="col"> ID COMISION VENDEDOR</th>
-                <th scope="col"> ID COMISION </th>
-                <th scope="col"> ID VENDEDOR </th>
-                <th scope="col"> VENDEDOR </th>
-                <th scope="col"> ESTADO  </th>
-                <th scope="col"> COMISION TOTAL </th>
-                <th scope="col"> FECHA </th>
+                <th scope="col">ID COMISION VENDEDOR</th>
+                <th scope="col">ID COMISION</th>
+                <th scope="col">ID VENDEDOR</th>
+                <th scope="col">VENDEDOR</th>
+                <th scope="col">ESTADO</th>
+                <th scope="col">COMISION TOTAL</th>
+                <th scope="col">FECHA</th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -162,7 +172,8 @@ if (isset($_SESSION['usuario'])) {
     </div>
   </div>
   <?php
-    require('modalFiltroComisiones.html');
+    // require('modalFiltroComisiones.html');
+    require('modalComisionesV.html');
   ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>

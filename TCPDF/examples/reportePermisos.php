@@ -76,12 +76,13 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de Permisos</b></P>
 <table border="1" cellpadding="4">
 <tr>
+<td style="background-color: #e54037;color: white; text-align: center; width: 50px;">N°</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 200px;">ROL</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 265x;">OBJETO</td>   
-<td style="background-color: #e54037;color: white; text-align: center; width: 120px;">CONSULTAR</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 120px;">INSERTAR</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 120px;">ACTUALIZAR</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 120px;">ELIMINAR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 260x;">OBJETO</td>   
+<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">CONSULTAR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">INSERTAR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">ACTUALIZAR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">ELIMINAR</td>
 </tr>
 ';
 $permisos = ControladorPermiso::obtenerPermisosSistema();
@@ -92,9 +93,10 @@ foreach($permisos as $permiso){
     $insertar = $permiso['insertar'];
     $actualizar = $permiso['actualizar'];
     $eliminar = $permiso['eliminar'];
-
+    $Cont++;
     $html .= '
     <tr>
+    <td style="text-align: center">'.$Cont.'</td>
     <td >'.$rolUsuario.'</td>
     <td >'.$objetoSistema.'</td>
     <td style="text-align: center">'.$consultar.'</td>

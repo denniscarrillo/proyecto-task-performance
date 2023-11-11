@@ -77,20 +77,21 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de Metricas</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 70px;">ID</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 70px;">N°</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 420px;">METRICA</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 150px;">META</td>
 </tr>
 ';
 $Metricas = ControladorMetricas::obtenerMetricas();
 foreach($Metricas as $metrica){
-    $idMetrica = $metrica['idMetrica'];
+    // $idMetrica = $metrica['idMetrica'];
     $descripcion = $metrica['descripcion'];
     $meta = $metrica['meta'];
+    $Cont++;
    
     $html .= '
     <tr>
-    <td style="text-align: center">'.$idMetrica.'</td>
+    <td style="text-align: center">'.$Cont.'</td>
     <td >'.$descripcion.'</td>
     <td style="text-align: center">'.$meta.'</td>
     </tr>

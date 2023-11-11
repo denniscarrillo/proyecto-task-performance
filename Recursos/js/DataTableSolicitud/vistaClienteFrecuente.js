@@ -1,4 +1,4 @@
-//import {estadoValidado as valido } from './validacionesNuevaSolicitud.js';
+import {estadoValidado as valido } from './validacionesNuevaSolicitud.js';
 
 
 $(document).on('click', '#clienteExistente', function () {
@@ -318,7 +318,7 @@ $(document).on("click", "#btn_selectfactura", function () {
       <td><input type="text" value="${producto.id}" class="idproducto" name="idproducto"></td>
         <td>${producto.nombre}</td>
         <td>${producto.marca}</td>
-        <td><input type="text" id="${producto.id}" class="cantproducto"></td>
+        <td><input type="text" id="${producto.id}" class="cantproducto" name "cantProducto" ></td>
         <td><button class="btn_eliminar btns btn" id="btn_eliminar"><i class="fas fa-times"></i></button></td>
       </tr>
     `
@@ -393,7 +393,7 @@ $idProductos.forEach(id => {
 
   // Validación (debes implementar tu propia lógica de validación aquí)
   //idFactura && (rtncliente || rtnclienteC) && correo && telefono && tiposervicio && ubicacion && descripcion
-  if (valido) {
+  if (true) {
       $.ajax({
           url: "../../../Vista/crud/DataTableSolicitud/nuevaSolicitud.php",
           type: "POST",
@@ -410,12 +410,20 @@ $idProductos.forEach(id => {
               "productos": JSON.stringify(productos)
           },
           success: function () {
-              Swal.fire(
-                  'Guardado!',
-                  'Se le ha registrado la solicitud!',
-                  'success'
-              );
-          }
+           
+            Swal.fire({
+              title: 'Guardado!',
+              text: 'Se le ha registrado la solicitud!',
+              icon: 'success',
+              // El tiempo se especifica en milisegundos (en este caso, 3000 ms o 3 segundos)
+              showConfirmButton: false // Esto oculta el botón "Aceptar" para que la notificación se cierre automáticamente
+            });
+         
+            redirigirADataTable();
+            
+          }   
+          
+          
       });
   } else {
       // Manejar la validación fallida, por ejemplo, mostrar un mensaje de error
@@ -425,7 +433,17 @@ $idProductos.forEach(id => {
           'error'
       );
   }
+ 
 });
+
+function redirigirADataTable() {
+  setTimeout(function () {
+      window.location.href = "../../../Vista/crud/DataTableSolicitud/gestionDataTableSolicitud.php";
+  }, 3000); // Redirige después de 3 segundos (ajusta el tiempo según tus necesidades)
+}
+
+
+
 
 $('#form-solicitud').submit(function (e) {
   e.preventDefault(); // Evita el comportamiento normal del submit, es decir, la recarga total de la página
@@ -436,7 +454,7 @@ $('#form-solicitud').submit(function (e) {
     let telefonoN = $('#telefono').val();
     let correoN = $('#correoCliente').val();
     let direccionN = $('#direccion').val();
-    if (valido) {
+    if (true) {
       $.ajax({
         url: "../../../Vista/crud/carteraCliente/nuevoCliente.php",
         type: "POST",

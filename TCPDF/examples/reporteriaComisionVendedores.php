@@ -2,8 +2,8 @@
 // Include the main TCPDF library (search for installation path).
 require_once('../tcpdf.php');
 require_once("../../db/Conexion.php");
-require_once("../../Modelo/Bitacora.php");
-require_once("../../Controlador/ControladorBitacora.php");
+require_once("../../Modelo/Comision.php");
+require_once("../../Controlador/ControladorComision.php");
 require_once("../../Modelo/Parametro.php");
 require_once("../../Controlador/ControladorParametro.php");
 ob_start();
@@ -22,19 +22,19 @@ foreach($datosParametro  as $datos){
 date_default_timezone_set('America/Tegucigalpa');
 $fechaActual = date('d/m/Y H:i:s'); // Obtén la fecha y hora actual en el formato deseado
 // create new PDF document
-$pdf = new TCPDF('L', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
 // set document information
 $pdf->setCreator(PDF_CREATOR);
 $pdf->setAuthor('Nicola Asuni');
-$pdf->setTitle('Reporte Bitacora');
+$pdf->setTitle('ReporteComisionesVendedores');
 $pdf->setSubject('TCPDF Tutorial');
 $pdf->setKeywords('TCPDF, PDF, example, test, guide');
 
-$width = 152; // Define el ancho que desea para su cadena de encabezado
+$width = 64; // Define el ancho que desea para su cadena de encabezado
 
 $PDF_HEADER_TITLE =  $nombreP;
-$PDF_HEADER_STRING = $direccionP . "\n"  .'Correo: ' . $correoP ."\nTeléfono: +" . $telefonoP.  ", +" . $telefono2P ;
+$PDF_HEADER_STRING = $direccionP . "\n"  .'Correo: ' . $correoP ."\nTeléfono: +" . $telefonoP.  ", +" . $telefono2P;
 $PDF_HEADER_STRING .= str_repeat(' ', $width - strlen($fechaActual)) . $fechaActual;
 $PDF_HEADER_LOGO = 'LOGO-reporte.jpg';
 // set default header data
@@ -72,38 +72,40 @@ $pdf->setFont('Helvetica', '', 11);
 $pdf->AddPage();
 // create some HTML content
 $html = '
-<P style="text-align: center; font-size: 18px;"><b>Reporte de Bitacora</b></P>
+<P style="text-align: center; font-size: 18px;"><b>Reporte de comision por vendedores</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 40px;">N°</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 147px;">FECHA</td>
-<td style="background-color: #e54037;color: white; text-align: center">USUARIO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 170px;">OBJETO</td>
-<td style="background-color: #e54037;color: white; text-align: center">ACCION</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 277px;">DESCRIPCION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 40px">ID</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">ID COMISION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 105px;">ID VENDEDOR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 92px;">VENDEDOR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">ESTADO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 115px;">COMISION TOTAL</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">FECHA</td>
 </tr>
 ';
-
-$bitacoras = ControladorBitacora::bitacorasUsuario();
-foreach($bitacoras as $bitacora){
-    // $IdBitacora = $bitacora['id_Bitacora'];
-    $fecha = $bitacora['fecha'];
+$ComisionVendedor = ControladorComision::traerComisionesPorVendedor();
+foreach($ComisionVendedor as $ComisionV){
+    $IdComisionV = $ComisionV['idComisionVendedor'];
+    $IdComision = $ComisionV['idComision'];
+    $IdVendedor = $ComisionV['idVendedor'];
+    $usuario = $ComisionV['usuario'];
+    $Estado = $ComisionV['estadoComision'];
+    $comisionTotal = $ComisionV['comisionTotal'];
+    $fecha = $ComisionV['fechaComision'];
     $timestamp = $fecha->getTimestamp();
-    $fechaYHora = date('Y-m-d H:i:s', $timestamp);
-    $Usuario = $bitacora['Usuario'];
-    $Objeto = $bitacora['Objeto'];
-    $Accion = $bitacora['accion'];
-    $Descripcion = $bitacora['descripcion'];
-    $Cont++;
+    $fechaComision = date('Y-m-d', $timestamp);
+    
 
     $html .= '
     <tr>
-    <td style="text-align: center">'.$Cont.'</td>
-    <td >'.$fechaYHora.'</td>
-    <td>'.$Usuario.'</td>
-	<td style="text-align: center">'.$Objeto.'</td>
-	<td style="text-align: center">'.$Accion.'</td>
-    <td style="text-align: center">'.$Descripcion.'</td>
+    <td style="text-align: center">'.$IdComisionV.'</td>
+    <td style="text-align: center">'.$IdComision.'</td>
+    <td style="text-align: center">'.$IdVendedor.'</td>
+    <td style="text-align: center">'.$usuario.'</td>
+	<td style="text-align: center">'.$Estado.'</td>
+    <td style="text-align: center">'.$comisionTotal.'</td>
+    <td style="text-align: center">'.$fechaComision.'</td>
     </tr>
     ';
     
@@ -118,4 +120,4 @@ $html.='
 $pdf->writeHTML($html, true, false, true, false);
 //Close and output PDF document
 ob_end_clean();
-$pdf->Output('Reporte Bitacora.pdf', 'I');
+$pdf->Output('Reporte Clientes.pdf', 'I');
