@@ -12,7 +12,11 @@ if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionParametro.php');
-  $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual);
+  (!($_SESSION['usuario'] == 'SUPERADMIN'))? 
+    $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual)
+  : 
+    $permisoConsulta = true;
+  ;
   if(!$permisoConsulta){
     /* ==================== Evento intento de ingreso sin permiso a mantenimiento parametro. ==========================*/
     $accion = ControladorBitacora::accion_Evento();

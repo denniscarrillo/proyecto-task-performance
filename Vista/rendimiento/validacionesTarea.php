@@ -12,7 +12,12 @@ if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('v_tarea.php');
-  $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual);
+  //Se valida el usuario, si es SUPERADMIN por defecto tiene permiso caso contrario se valida el permiso vrs base de datos
+  (!($_SESSION['usuario'] == 'SUPERADMIN')) 
+    ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
+    : 
+      $permisoConsulta = true;
+    ;
   if(!$permisoConsulta){
     /* ====================== Evento intento de ingreso sin permiso a mantenimiento de usuario. =====================*/
     $accion = ControladorBitacora::accion_Evento();
@@ -28,7 +33,7 @@ if (isset($_SESSION['usuario'])) {
     /* =======================================================================================*/
     header('location: ../v_errorSinPermiso.php');
     die();
-  }else{
+  } else {
     if(isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])){
       /* ====================== Evento salir. =====================*/
       $accion = ControladorBitacora::accion_Evento();

@@ -147,12 +147,14 @@ class Permiso
             INNER JOIN tbl_MS_Usuario us ON pe.id_Rol = us.id_Rol
             WHERE us.usuario = '$usuario' AND pe.id_Objeto = '$idObjeto';";
             $resultado = sqlsrv_query($conexion, $query);
-            $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
-            $permisos = [
-                'Insertar' => $fila['permiso_Insercion'],
-                'Actualizar' => $fila['permiso_Actualizacion'],
-                'Eliminar' => $fila['permiso_Eliminacion']
-            ];
+            if(sqlsrv_has_rows($resultado)){
+                $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+                $permisos = [
+                    'Insertar' => $fila['permiso_Insercion'],
+                    'Actualizar' => $fila['permiso_Actualizacion'],
+                    'Eliminar' => $fila['permiso_Eliminacion']
+                ];
+            }
         }catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
