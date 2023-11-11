@@ -130,7 +130,7 @@ $(document).on("click", "#btn_eliminar", function() {
             data:  { usuario: usuario},    
             success: function(data) {
               let estadoEliminado = data[0].estadoEliminado;
-              // console.log(data);
+               console.log(data);
               if(estadoEliminado == 'eliminado'){
                 tablaUsuarios.row(fila.parents('tr')).remove().draw();
                 Swal.fire(

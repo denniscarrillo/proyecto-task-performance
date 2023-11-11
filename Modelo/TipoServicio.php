@@ -67,4 +67,17 @@ class TipoServicio {
         sqlsrv_close($abrirConexion); //Cerrar conexion
     }
 
+    public static function eliminarTipoServicio($TipoServicio){
+        try{
+            $conn = new Conexion();
+            $conexion = $conn->abrirConexionDB();
+            $query = "DELETE FROM tbl_TipoServicio WHERE id_TipoServicio = '$TipoServicio';";
+            $estadoEliminado = sqlsrv_query($conexion, $query);
+        }catch (Exception $e) {
+            $estadoEliminado = 'Error SQL:' . $e;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estadoEliminado;
+    }
+
 }//Fin de la clase

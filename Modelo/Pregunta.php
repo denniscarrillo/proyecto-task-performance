@@ -59,17 +59,25 @@ class Pregunta {
     }
 
     public static function eliminarPregunta($pregunta){
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB();
-        $query = "SELECT id_Pregunta FROM tbl_ms_preguntas WHERE pregunta = '$pregunta'";
-        $consultaIdPregunta = sqlsrv_query($conexion, $query);
-        $fila = sqlsrv_fetch_array($consultaIdPregunta, SQLSRV_FETCH_ASSOC);
-        $idPregunta = $fila['id_Pregunta'];
-        //Eliminamos la pregunta
-        $query2 = "DELETE FROM tbl_ms_preguntas WHERE id_Pregunta = '$idPregunta'";
-        $estadoEliminado = sqlsrv_query($conexion, $query2);
+        try{
+            $conn = new Conexion();
+            $conexion = $conn->abrirConexionDB();
+            $query = "DELETE FROM tbl_MS_Preguntas WHERE id_Pregunta = '$pregunta';";
+            $estadoEliminado = sqlsrv_query($conexion, $query);
+        }catch (Exception $e) {
+            $estadoEliminado = 'Error SQL:' . $e;
+        }
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $estadoEliminado;
+    }
+
+    public static function inactivarPregunta($pregunta){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query ="UPDATE tbl_MS_Preguntas SET estado = 'inactivo' WHERE id_Pregunta ='$pregunta';";
+        $estadoInactivo = sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estadoInactivo;
     }
 
     public static function preguntaExistente($pregunta){

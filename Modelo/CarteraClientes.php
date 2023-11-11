@@ -94,5 +94,18 @@ class CarteraClientes{
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $existeRtn;
     }
+
+    public static function eliminarCarteraCliente($carteraCliente){
+        try{
+            $conn = new Conexion();
+            $conexion = $conn->abrirConexionDB();
+            $query = "DELETE FROM tbl_CarteraCliente WHERE id_CarteraCliente = '$CarteraCliente';";
+            $estadoEliminado = sqlsrv_query($conexion, $query);
+        }catch (Exception $e) {
+            $estadoEliminado = 'Error SQL:' . $e;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estadoEliminado;
+    }
 }#Fin de la clase
 

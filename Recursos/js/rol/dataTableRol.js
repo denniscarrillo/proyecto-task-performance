@@ -23,7 +23,8 @@ let procesarPermisoActualizar = data => {
       { "data": 'descripcion' },
       {
         "defaultContent":
-        `<button class="btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`
+        `<button class="btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`+
+        '<button class="btns btn" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button></div>'
       }
     ]
   });
@@ -161,3 +162,57 @@ let limpiarFormEdit = () => {
     $mensaje.innerText = '';
   });
 }
+
+
+//Eliminar parametro
+$(document).on("click", "#btn_eliminar", function() {
+  let fila = $(this);        
+    let idrol= $(this).closest('tr').find('td:eq(1)').text();		
+    let ROL = $(this).closest('tr').find('td:eq(1)').text();
+    if (ROL == 'Super Administrador'){
+      Swal.fire(
+        'Sin acceso!',
+        'Super Administrador no puede ser eliminado',
+        'error'
+      )
+      }else{
+        Swal.fire({
+          title: 'Estas seguro de eliminar el Rol '+idrol+'?',
+          text: "No podras revertir esto!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, cancelalo!'
+    }).then((result) => {
+      if (result.isConfirmed) {      
+        $.ajax({
+          url: "../../../Vista/crud/rol/eliminarRol.php",
+          type: "POST",
+          datatype:"json",    
+          data:  { idrol: idrol},    
+          success: function(data) {
+            let estadoEliminado = data[0].estadoEliminado;
+             console.log(data);
+             if(estadoEliminado == 'eliminado'){
+              tablaRol.row(fila.parents('tr')).remove().draw();
+              Swal.fire(
+                'Eliminado!',
+                'El Rol ha sido eliminada.',
+                'success'
+              ) 
+              tablaRol.ajax.reload(null, false);
+            } else {
+               Swal.fire(
+                 'Lo sentimos!',
+                 'El Rol no puede ser eliminado.',
+                 'error'
+               );
+               tablaRol.ajax.reload(null, false);
+             }           
+          }
+          }); //Fin del AJAX
+      }
+    });  
+  }              
+});

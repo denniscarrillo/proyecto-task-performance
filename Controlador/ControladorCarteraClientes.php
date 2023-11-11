@@ -16,6 +16,11 @@
         public static function rtnExiste($rtn){
             return CarteraClientes::rtnExistente($rtn);
         }
+
+        public static function eliminandoCarteraCliente($CarteraCliente){
+            return CarteraClientes::eliminarCarteraCliente($CarteraCliente);
+        }
+    
     }
 
     
