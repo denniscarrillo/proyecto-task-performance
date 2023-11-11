@@ -89,7 +89,7 @@ table.dataTable.no-footer {
 .btn_confirm:active{
     color: #549842;
 }
-.fa-check-circleD:before, .fa-check-circleD:before {
+.fa-check-circle:before, .fa-check-circle:before {
     font-size: 1.5rem;
     color: #ada8a8;
 }

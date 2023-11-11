@@ -17,6 +17,7 @@ foreach($datosParametro  as $datos){
     // $sitioWebP = str_replace("http://", "", $datos['sitioWed']);
     $telefonoP = $datos['Telefono'];
     $telefono2P = $datos['Telefono2'];
+    
 }
 
 date_default_timezone_set('America/Tegucigalpa');
@@ -75,10 +76,11 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de Articulos</b></P>
 <table border="1" cellpadding="4">
 <tr>
+<td style="background-color: #e54037;color: white; text-align: center; width: 40px">N°</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 120px">CODARTICULO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 217px;">ARTICULO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 210px;">DETALLE</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 95px;">MARCA</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 200px;">ARTICULO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 200px;">DETALLE</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 80px;">MARCA</td>
 </tr>
 ';
 $articulos = ControladorArticulo:: obtenerTodosArticulos();
@@ -87,12 +89,14 @@ foreach($articulos as $articulo){
     $nombreArticulo = $articulo['articulo'];
     $Detalle = $articulo['detalle'];
     $Marca = $articulo['marcaArticulo'];
+    $Cont++;
 
     $html .= '
     <tr>
+    <td style="text-align: center">'.$Cont.'</td>
     <td style="text-align: center">'.$IdArticulo.'</td>
-    <td style="text-align: center">'.$nombreArticulo.'</td>
-    <td style="text-align: center">'.$Detalle.'</td>
+    <td >'.$nombreArticulo.'</td>
+    <td >'.$Detalle.'</td>
     <td style="text-align: center">'.$Marca.'</td>
     </tr>
     ';

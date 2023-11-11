@@ -75,7 +75,7 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de Clientes</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 40px">ID</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 40px">N°</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 220px;">CLIENTE</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 105px;">RTN</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 92px;">TELEFONO</td>
@@ -84,15 +84,16 @@ $html = '
 ';
 $clientes = ControladorVistaClientes::getClientes();
 foreach($clientes as $cliente){
-    $IdCliente = $cliente['codCliente'];
+    // $IdCliente = $cliente['codCliente'];
     $nombreCliente = $cliente['nombreCliente'];
     $RTN = $cliente['rtnCliente'];
     $Telefono = $cliente['telefono'];
     $Direccion = $cliente['direccion'];
+    $Cont++;
 
     $html .= '
     <tr>
-    <td style="text-align: center">'.$IdCliente.'</td>
+    <td style="text-align: center">'.$Cont.'</td>
     <td >'.$nombreCliente.'</td>
     <td>'.$RTN.'</td>
     <td>'.$Telefono.'</td>

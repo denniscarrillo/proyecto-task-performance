@@ -655,10 +655,6 @@ class Usuario {
        if(isset($fila['permiso_Consultar']) && $fila['permiso_Consultar'] == 'Y'){
             $permitido = true;
         }
-        // $permisoConsultarRol = [
-        //     'idObjeto' => $fila['id_Objeto'],
-        //     'consulta' => $fila['permiso_Consultar']
-        // ];
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $permitido ;
     }

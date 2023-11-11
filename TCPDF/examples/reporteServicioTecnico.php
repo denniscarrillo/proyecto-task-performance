@@ -75,19 +75,20 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de Servicio Técnico</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 80px;">ID</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 80px;">N°</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 560px;">SERVICIO TÉCNICO</td>
 </tr>
 ';
 $ServicioTecnico = ControladorTipoServicio::obtenerTipoServicio();
 foreach($ServicioTecnico as $Servicio){
-    $id = $Servicio['id_TipoServicio'];
+    // $id = $Servicio['id_TipoServicio'];
     $servicio_Tecnico = $Servicio['servicio_Tecnico'];
+    $Cont++ ;
  
 
     $html .= '
     <tr>
-    <td style="text-align: center">'.$id.'</td>
+    <td style="text-align: center">'.$Cont.'</td>
     <td >'.$servicio_Tecnico.'</td>
     </tr>
     ';

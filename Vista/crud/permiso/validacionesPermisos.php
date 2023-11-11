@@ -8,11 +8,15 @@ require_once("../../../Controlador/ControladorUsuario.php");
 require_once("../../../Controlador/ControladorBitacora.php");
 
 session_start(); //Reanudamos la sesion
-if (isset($_SESSION['usuario'])) {
+if (isset($_SESSION['usuario'])){
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionPermisos.php');
-  $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual);
+  (!($_SESSION['usuario'] == 'SUPERADMIN'))
+  ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
+  : 
+    $permisoConsulta = true;
+  ;
   if(!$permisoConsulta){
     /* ==================== Evento intento de ingreso sin permiso a mantenimiento permiso. ==========================*/
     $accion = ControladorBitacora::accion_Evento();
@@ -58,28 +62,23 @@ if (isset($_SESSION['usuario'])) {
 }
 
 function imprimirPermisos($permisos){
-    //Obtener el permiso del rol sobre este objetoPermisos.php
-    $permisoEditar = ControladorPermiso::obtenerPermisosUsuarioObjeto($_SESSION['usuario'], ControladorBitacora::obtenerIdObjeto('gestionPermisos.php'));
-
     //Se recorre el array de permisos que llega desde la base de datos
-    foreach($permisos as $permiso){
-        //Esto se hace para reflejar los permisos en los checkbox segun la base de datos
-        $permisoConsultar = ($permiso['consultar'] == 'Y') ? "checked" : "";
-        $permisoInsertar = ($permiso['insertar'] == 'Y') ? "checked" : "";
-        $permisoActualizar = ($permiso['actualizar'] == 'Y') ? "checked" : "";
-        $permisoEliminar = ($permiso['eliminar'] == 'Y') ? "checked" : "";
-        //Si los permisos corresponden al rol Super Administrador por defecto se deshabilitan ya que nadie podra editar, solo verlos
-        $deshabilitarCheck = (($permiso['rolUsuario'] == "Super Administrador") || ($permisoEditar['Actualizar'] == 'N')) ? "disabled": "";
-        
-        //Se imprimen los permisos con su validaciones ya hechas
-        echo '<tr class="tr-permisos">'.
-          '<td class="td-permisos">'.$permiso['rolUsuario'].'</td>'.
-          '<td class="td-permisos">'.$permiso['objetoSistema'].'</td>'.
-          '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoConsultar.' '.$deshabilitarCheck.'></td>'.
-          '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoInsertar.' '.$deshabilitarCheck.'></td>'.
-          '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoActualizar.' '.$deshabilitarCheck.'></td>'.
-          '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoEliminar.' '.$deshabilitarCheck.'></td>'.
-          '<td class="td-permisos"><i class="fa-solid fa-circle-check btn_confirm"></i></td>'.
-          '</tr>';
+  foreach($permisos as $permiso){
+    //Esto se hace para reflejar los permisos en los checkbox segun la base de datos
+    $permisoConsultar = ($permiso['consultar'] == 'Y') ? "checked" : "";
+    $permisoInsertar = ($permiso['insertar'] == 'Y') ? "checked" : "";
+    $permisoActualizar = ($permiso['actualizar'] == 'Y') ? "checked" : "";
+    $permisoEliminar = ($permiso['eliminar'] == 'Y') ? "checked" : "";
+
+    //Se imprimen los permisos con su validaciones ya hechas
+    echo '<tr class="tr-permisos">'.
+      '<td class="td-permisos">'.$permiso['rolUsuario'].'</td>'.
+      '<td class="td-permisos">'.$permiso['objetoSistema'].'</td>'.
+      '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoConsultar.'></td>'.
+      '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoInsertar.'></td>'.
+      '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoActualizar.'></td>'.
+      '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoEliminar.'></td>'.
+      '<td class="td-permisos"><i class="fa-solid fa-circle-check btn_confirm"></i></td>'.
+      '</tr>';
     }
 }

@@ -13,6 +13,31 @@ let $columnaCotizaciones = document.getElementById('conteiner-cotizacion');
 let $columnaVentas = document.getElementById('conteiner-venta');
 let $ArticulosInteres = [];
 let $idTarea = '';
+let item = 0;
+
+// new Sortable(document.getElementById('conteiner-llamada'), {
+//   group: 'shared', // set both lists to same group
+//   animation: 200,
+//   easing: "cubic-bezier(1, 0, 0, 1)",
+//   chosenClass: 'seleccionado',
+//   dragClass: 'drag',
+//   onEnd: () => {
+//     actualizarContadores();
+//     $('#modal-evidencia').modal('show');
+//   },
+//   group: "list-llamadas",
+//   store: {
+//     set: (sortable) => {
+//       const orden = sortable.toArray();
+//       console.log(orden);
+//       localStorage.setItem(sortable.options.group.name, orden.join('|'));
+//     },
+//     get: (sortable) => {
+//       const orden = localStorage.getItem(sortable.options.group.name);
+//       return orden ? orden.split('|') : [];
+//     }
+//   }
+// });
 
 //Una vez este cargado el documento o pagina web se va a ejecutar lo que esta dentro
 $(document).ready(function () {
@@ -32,6 +57,18 @@ $(document).ready(function () {
       actualizarContadores();
       $('#modal-evidencia').modal('show');
     }
+    // group: "list-llamadas",
+    // store: {
+    //   set: (sortable) => {
+    //     const orden = sortable.toArray();
+    //     console.log(orden);
+    //     localStorage.setItem('list-llamadas', orden.join('|'));
+    //   }
+      // get: (sortable) => {
+      //   const orden = localStorage.getItem('list-llamadas');
+      //   return orden ? orden.split('|') : [];
+      // }
+    // }
   });
   new Sortable(document.getElementById('conteiner-lead'), {
     group: 'shared',
@@ -42,7 +79,7 @@ $(document).ready(function () {
     onEnd: () => {
       actualizarContadores();
       $('#modal-evidencia').modal('show');
-    }
+    },
   });
   new Sortable(document.getElementById('conteiner-cotizacion'), {
     group: 'shared',
@@ -53,7 +90,7 @@ $(document).ready(function () {
     onEnd: () => {
       actualizarContadores();
       $('#modal-evidencia').modal('show');
-    }
+    },
   });
   new Sortable(document.getElementById('conteiner-venta'), {
     group: 'shared',
@@ -64,7 +101,7 @@ $(document).ready(function () {
     onEnd: () => {
       actualizarContadores();
       $('#modal-evidencia').modal('show');
-    }
+    },
   });
 });
 //Evento
@@ -125,9 +162,16 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
       //Recorremo arreglo de objetos con un forEach para mostrar tareas
       objData.forEach(tarea => {
         if (tarea.tipoTarea == tipoTarea) {
+          // const orden = localStorage.getItem('list-llamadas').split('|');
+          // console.log(orden);
+          // orden.forEach(position => {
+          //   position
+          // });
           // let fechaIni = tarea.fechaInicio.date.split(" ");
+          // data-id="${item+=1}"
           $tareas +=
-            `<div class="card_task dragged-element" draggable="true" id="${tarea.id}">
+          // `<div class="card_task dragged-element" draggable="true" id="${tarea.id}" >
+            `<div class="card_task dragged-element" draggable="true" data-id="${item+=1}" style="order: ${item+=1}">
               <div class="conteiner-text-task">
                 <p style="min-height: 2.5rem;">${tarea.tituloTarea}</p>
               </div>
