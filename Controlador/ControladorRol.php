@@ -27,4 +27,8 @@ class ControladorRol {
         return Rol::rolExistente($rol);
     }
 
+    public static function eliminandoRol($rol){
+        return Rol::eliminarRol($rol);
+    }
+
 }

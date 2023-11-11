@@ -4,10 +4,10 @@ $(document).ready(function () {
     obtenerPermisos($idObjetoSistema, manejarPermisoInsertar);
 });
 let manejarPermisoInsertar = (permisos) => {
-    let $idObjetoSistema = document.querySelector('.title-dashboard-task').id
+    let user = document.getElementById('username').textContent;
     let objPermisos = JSON.parse(permisos);
     //Valida los permisos de Insertar
-    if(objPermisos.Insertar == 'Y'){
+    if((objPermisos.Insertar == 'Y') || (user == 'SUPERADMIN')){
         let $objTarea = document.querySelector('.title-dashboard-task').getAttribute('name');
         if($objTarea == 'v_tarea.php'){ //Para cuando sea la vista de kanban tareas
             let $btnsNuevaTarea = document.querySelectorAll('.btn_nuevoRegistro');
@@ -18,6 +18,7 @@ let manejarPermisoInsertar = (permisos) => {
             document.getElementById('btn_nuevoRegistro').classList.remove('hidden');
         }
     }
+    
 }
 //Peticion  AJAX que trae los permisos
 let obtenerPermisos = function ($idObjeto, callback) { 

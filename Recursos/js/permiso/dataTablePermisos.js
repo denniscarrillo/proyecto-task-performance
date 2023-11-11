@@ -1,6 +1,6 @@
 let permisos = '';
 let tablaPermisos = '';
-$(document).ready(async function () {
+$(document).ready(function () {
   tablaPermisos = $('#table-Permisos').DataTable({
     "language":{
       "url":"//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
@@ -84,17 +84,21 @@ let obtenerPermisos = async function(){
       console.error(error);
   }
 }
-let validarPermisos = async function (btn_confirms) {
-  let permisoActualizar = await obtenerPermisos();
+let validarPermisos = function (btn_confirms) {
+  let user = document.getElementById('username').textContent;
+  let permisoActualizar = 'N';
+  if(user != 'SUPERADMIN'){
+    permisoActualizar = obtenerPermisos();
+  }
   btn_confirms.forEach((btn_confirm) => {
-    let rol = btn_confirm.parentElement.parentElement.firstChild.outerText;
-    if((rol != 'Super Administrador') && (permisoActualizar == 'Y')) {
+    if((permisoActualizar == 'Y') || (user == 'SUPERADMIN')){
       btn_confirm.addEventListener('click', function(){
         actualizarPermisos($(this));
       });
     } else {
       btn_confirm.classList.remove('btn_confirm');
-      btn_confirm.classList.add('fa-check-circleD');
+      btn_confirm.classList.add('fa-check-circle');
     }
+    
   });
 }

@@ -86,7 +86,7 @@ $html = '
 
 $bitacoras = ControladorBitacora::bitacorasUsuario();
 foreach($bitacoras as $bitacora){
-    $IdBitacora = $bitacora['id_Bitacora'];
+    // $IdBitacora = $bitacora['id_Bitacora'];
     $fecha = $bitacora['fecha'];
     $timestamp = $fecha->getTimestamp();
     $fechaYHora = date('Y-m-d H:i:s', $timestamp);
@@ -94,10 +94,11 @@ foreach($bitacoras as $bitacora){
     $Objeto = $bitacora['Objeto'];
     $Accion = $bitacora['accion'];
     $Descripcion = $bitacora['descripcion'];
+    $Cont++;
 
     $html .= '
     <tr>
-    <td style="text-align: center">'.$IdBitacora.'</td>
+    <td style="text-align: center">'.$Cont.'</td>
     <td >'.$fechaYHora.'</td>
     <td>'.$Usuario.'</td>
 	<td style="text-align: center">'.$Objeto.'</td>

@@ -66,7 +66,7 @@
           <div class= "encabezado">
             <div class="navbar-conteiner">
                 <!-- Aqui va la barra -->
-                <?php include_once '../../layout/navbar.php'?>                             
+                <?php include_once '../../layout/navbar.php'?>
             </div>        
             <div class ="titulo">
                 <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionPermisos.php');?>">Gestión de Permisos</H2>

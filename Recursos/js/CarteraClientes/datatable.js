@@ -29,7 +29,8 @@ let procesarPermisoActualizar = data => {
       { "data": "estadoContacto"},
       {
         "defaultContent":
-        `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`
+        `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`+
+        '<button class="btns btn" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button></div>'
       }
     ]
   });
@@ -198,7 +199,7 @@ let limpiarFormEdit = () => {
 //Eliminar usuario
 $(document).on("click", "#btn_eliminar", function() {
   let fila = $(this);        
-    let  idcarteraCliente = $(this).closest('tr').find('td:eq(1)').text();
+  let idcarteraCliente = $(this).closest('tr').find('td:eq(1)').text();		
       Swal.fire({
         title: 'Estas seguro de eliminar a '+ idcarteraCliente+'?',
         text: "No podras revertir esto!",
@@ -210,28 +211,28 @@ $(document).on("click", "#btn_eliminar", function() {
       }).then((result) => {
         if (result.isConfirmed) {      
           $.ajax({
-            url: "../../../Vista/crud/usuario/eliminarUsuario.php",
+            url: "../../../Vista/crud/CarteraCliente/eliminarCarteraCliente.php",
             type: "POST",
             datatype:"json",    
-            data:  { usuario: usuario},    
+            data:  { idCarteraCliente: idcarteraCliente},    
             success: function(data) {
               let estadoEliminado = data[0].estadoEliminado;
-              // console.log(data);
+               console.log(data);
               if(estadoEliminado == 'eliminado'){
-                tablaUsuarios.row(fila.parents('tr')).remove().draw();
+                tablaCarteraClientes.row(fila.parents('tr')).remove().draw();
                 Swal.fire(
                   'Eliminado!',
-                  'El usuario ha sido eliminado.',
+                  'La Cartera Cliente ha sido eliminado.',
                   'success'
                 ) 
-                tablaUsuarios.ajax.reload(null, false); 
+                tablaCarteraClientes.ajax.reload(null, false); 
               } else {
                 Swal.fire(
                   'Lo sentimos!',
-                  'El usuario no puede ser eliminado, se ha inactivado.',
+                  'la Cartera Cliente no puede ser eliminado',
                   'error'
                 );
-                tablaUsuarios.ajax.reload(null, false);
+                tablaCarteraClientes.ajax.reload(null, false);
               }           
             }
           }); //Fin del AJAX

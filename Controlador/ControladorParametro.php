@@ -21,4 +21,7 @@ class ControladorParametro {
     public static function obtenerDatosReporte(){
         return Parametro::obtenerDatosReporte();
     }
+    public static function eliminandoParametro($parametro){
+        return Parametro::eliminarParametro($parametro);
+    }
 }

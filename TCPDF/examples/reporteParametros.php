@@ -75,7 +75,7 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de Parámetros</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 60px;">ID</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 60px;">N°</td>
 <td style="background-color: #e54037;color: white; text-align: center">PARAMETROS</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 180px;">VALOR</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 327px;">DESCRIPCION</td>
@@ -89,9 +89,10 @@ foreach($parametros as $parametro){
     $valor = $parametro['valorParametro'];
     $descripcion = $parametro['descripcionParametro'];
     $usuario = $parametro['usuario'];
+    $Cont++;
     $html .= '
     <tr>
-    <td style="text-align: center">'.$IdParametro.'</td>
+    <td style="text-align: center">'.$Cont.'</td>
     <td >'.$NomParametro.'</td>
     <td >'.$valor.'</td>
     <td >'.$descripcion.'</td>

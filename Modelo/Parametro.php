@@ -118,4 +118,17 @@ class Parametro {
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $datos;
     }
+
+    public static function eliminarParametro($parametro){
+        try{
+            $conn = new Conexion();
+            $conexion = $conn->abrirConexionDB();
+            $query = "DELETE FROM tbl_MS_Parametro WHERE id_Parametro = '$parametro';";
+            $estadoEliminado = sqlsrv_query($conexion, $query);
+        }catch (Exception $e) {
+            $estadoEliminado = 'Error SQL:' . $e;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estadoEliminado;
+    }
 }
