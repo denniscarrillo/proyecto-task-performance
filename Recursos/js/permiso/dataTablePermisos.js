@@ -18,7 +18,7 @@ let actualizarPermisos = function (elementoFila) {
   let insertar = ($fila.find("td:eq(3)").find('input')[0].checked == true) ? 'Y' : 'N'; 
   let actualizar = ($fila.find("td:eq(4)").find('input')[0].checked == true) ? 'Y' : 'N'; 
   let eliminar =  ($fila.find("td:eq(5)").find('input')[0].checked == true) ? 'Y' : 'N'; 
-
+  let reporte =  ($fila.find("td:eq(6)").find('input')[0].checked == true) ? 'Y' : 'N'; 
   Swal.fire({
     title: '¿Esta seguro?',
     text: "Se actualizaran los permisos",
@@ -42,7 +42,8 @@ let actualizarPermisos = function (elementoFila) {
           "consultar": consultar,
           "insertar": insertar,
           "actualizar": actualizar,
-          "eliminar": eliminar
+          "eliminar": eliminar,
+          "reporte": reporte,
         },
         success: function () {
           //Creamos el toast que nos confirma la actualización de los permisos
@@ -84,11 +85,11 @@ let obtenerPermisos = async function(){
       console.error(error);
   }
 }
-let validarPermisos = function (btn_confirms) {
+let validarPermisos = async function (btn_confirms) {
   let user = document.getElementById('username').textContent;
   let permisoActualizar = 'N';
   if(user != 'SUPERADMIN'){
-    permisoActualizar = obtenerPermisos();
+    permisoActualizar = await obtenerPermisos();
   }
   btn_confirms.forEach((btn_confirm) => {
     if((permisoActualizar == 'Y') || (user == 'SUPERADMIN')){

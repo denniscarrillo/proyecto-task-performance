@@ -96,7 +96,6 @@ if (isset($_SESSION['usuario'])) {
           // Rendimiento
           $urlMisTareas = '../../rendimiento/v_tarea.php';
           $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
-          $urlBitacoraTarea = ''; //PENDIENTE
           $urlMetricas = '../Metricas/gestionMetricas.php';
           $urlEstadisticas = '../../grafica/estadistica.php'; 
           //Solicitud

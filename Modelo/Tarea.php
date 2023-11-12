@@ -661,4 +661,38 @@ class Tarea
         }
         sqlsrv_close($conexion);
     }
+
+    public static function obtenerDatosCotizacion($idTarea){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $datosCotizacion = array();
+        $selectCot = "SELECT ct.id_Cotizacion, ct.subTotal, ct.descuento, ct.subDescuento, ct.isv, ct.total_Cotizacion FROM tbl_CotizacionTarea ct WHERE id_Tarea = '$idTarea';";
+        $resultCot = sqlsrv_query($conexion, $selectCot);
+        if(sqlsrv_has_rows($resultCot)){
+            $fila = sqlsrv_fetch_array($resultCot, SQLSRV_FETCH_ASSOC);
+            $datosCotizacion = [
+                'detalle' => $fila,
+            ];
+            $idCot = intval($fila['id_Cotizacion']);
+            $selectCotProductos = "SELECT pc.item, pc.descripcion, pc.marca, pc.cantidad, pc.precio, pc.total FROM tbl_ProductosCotizacion pc
+                                    WHERE id_Cotizacion = '$idCot';";
+            $resultCot = sqlsrv_query($conexion, $selectCotProductos);
+            $productos = array();
+            while($fila = sqlsrv_fetch_array($resultCot, SQLSRV_FETCH_ASSOC)){
+                $productos[] = [
+                    'item' => $fila['item'],
+                    'descripcion' => $fila['descripcion'],
+                    'marca' => $fila['marca'],
+                    'cantidad' => $fila['cantidad'],
+                    'precio' => $fila['precio'],
+                    'total' => $fila['total']
+                ];
+            }
+            $datosCotizacion += [
+                'productos' => $productos
+            ];
+        }
+        sqlsrv_close($conexion);
+        return $datosCotizacion;
+    }
 }

@@ -6,7 +6,7 @@ require_once("../../../Modelo/Bitacora.php");
 require_once("../../../Controlador/ControladorPermiso.php");
 require_once("../../../Controlador/ControladorUsuario.php");
 require_once("../../../Controlador/ControladorBitacora.php");
-
+$idObjetoActual = '';
 session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])){
   $newBitacora = new Bitacora();
@@ -61,7 +61,12 @@ if (isset($_SESSION['usuario'])){
   die();
 }
 
-function imprimirPermisos($permisos){
+function imprimirPermisos($permisos, $idObjetoActual){
+  $hidden = '';
+  if(!($_SESSION['usuario'] == 'SUPERADMIN')){
+    $permisosRol = ControladorPermiso::obtenerPermisosUsuarioObjeto($_SESSION['usuario'], intval($idObjetoActual));
+    $hidden = ($permisosRol['Actualizar'] == 'N') ? 'disabled' : '';
+  }
     //Se recorre el array de permisos que llega desde la base de datos
   foreach($permisos as $permiso){
     //Esto se hace para reflejar los permisos en los checkbox segun la base de datos
@@ -69,15 +74,17 @@ function imprimirPermisos($permisos){
     $permisoInsertar = ($permiso['insertar'] == 'Y') ? "checked" : "";
     $permisoActualizar = ($permiso['actualizar'] == 'Y') ? "checked" : "";
     $permisoEliminar = ($permiso['eliminar'] == 'Y') ? "checked" : "";
+    $permisoReporte = ($permiso['reporte'] == 'Y') ? "checked" : "";
 
     //Se imprimen los permisos con su validaciones ya hechas
     echo '<tr class="tr-permisos">'.
       '<td class="td-permisos">'.$permiso['rolUsuario'].'</td>'.
       '<td class="td-permisos">'.$permiso['objetoSistema'].'</td>'.
-      '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoConsultar.'></td>'.
-      '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoInsertar.'></td>'.
-      '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoActualizar.'></td>'.
-      '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoEliminar.'></td>'.
+      '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoConsultar.' '. $hidden.'></td>'.
+      '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoInsertar.' '. $hidden.'></td>'.
+      '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoActualizar.' '. $hidden.'></td>'.
+      '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoEliminar.' '. $hidden.'></td>'.
+      '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoReporte.' '. $hidden.'></td>'.
       '<td class="td-permisos"><i class="fa-solid fa-circle-check btn_confirm"></i></td>'.
       '</tr>';
     }

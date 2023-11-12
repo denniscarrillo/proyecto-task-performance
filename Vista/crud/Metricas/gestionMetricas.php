@@ -98,7 +98,6 @@ if (isset($_SESSION['usuario'])) {
           // Rendimiento
           $urlMisTareas = '../../rendimiento/v_tarea.php';
           $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
-          $urlBitacoraTarea = ''; //PENDIENTE
           $urlMetricas = '../Metricas/gestionMetricas.php';
           $urlEstadisticas = '../../grafica/estadistica.php'; 
           //Solicitud
@@ -141,7 +140,7 @@ if (isset($_SESSION['usuario'])) {
       
         <div class="table-conteiner">
           <div>
-            <a href="../../../TCPDF/examples/reporteMetrica.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
+            <a href="../../../TCPDF/examples/reporteMetrica.php" target="_blank" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
           </div>
           <table class="table" id="table-Metricas">
             <thead>
@@ -167,6 +166,7 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script src="../../../Recursos/js/Metricas/datatable.js" type="module"></script>
+  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>

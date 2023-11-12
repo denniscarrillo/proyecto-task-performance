@@ -87,4 +87,7 @@ class ControladorTarea {
     public static function productosCotizacion($idCotizacion, $productosCotizacion, $creadoPor){
         Tarea::productosCotizacion($idCotizacion, $productosCotizacion, $creadoPor);
     }
+    public static function obtenerDatosCotizacion($idTarea){
+        return Tarea::obtenerDatosCotizacion($idTarea);
+    }
 }
