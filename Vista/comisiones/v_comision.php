@@ -103,6 +103,7 @@ require_once("validacionesComision.php");
                   <th scope="col"> PORCENTAJE </th>
                   <th scope="col"> COMISION TOTAL </th>
                   <th scope="col"> ESTADO </th>
+                  <th scope="col"> LIQUIDACION </th>
                   <th scope="col"> FECHA </th>
                   <th scope="col"> ACCIONES </th>
                 </tr>
