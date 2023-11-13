@@ -357,7 +357,8 @@ $(document).on("click", "#btn_selectfactura", function () {
 ///////////GUARDAR NUEVA SOLICITUD
 $('#form-solicitud').submit(function (e) {
   e.preventDefault(); 
-  
+  //para reporte
+  let nombre = document.getElementById("nombre");
   let idFactura = $('#idfactura').val();
   let correo = $('#correo').val();
   let telefono = $('#telefono').val();
@@ -365,8 +366,6 @@ $('#form-solicitud').submit(function (e) {
   let ubicacion = $('#direccion').val();
   let descripcion = $('#descripcion').val();
   let rtncliente, rtnclienteC;
-  // let codArticulo = $('#idproducto').val();
-  // let Cant = document.querySelectorAll('.cantproducto');
   var radio = document.getElementById("clienteExistente");
 if (radio.checked) {
   rtncliente = $('#rntcliente').val();
@@ -390,10 +389,7 @@ $idProductos.forEach(id => {
     }
   });
 });
-
-  // Validación (debes implementar tu propia lógica de validación aquí)
-  //idFactura && (rtncliente || rtnclienteC) && correo && telefono && tiposervicio && ubicacion && descripcion
-  if (true) {
+  if (valido) {
       $.ajax({
           url: "../../../Vista/crud/DataTableSolicitud/nuevaSolicitud.php",
           type: "POST",
@@ -407,6 +403,7 @@ $idProductos.forEach(id => {
               tipoServicio: tiposervicio,
               ubicacion: ubicacion,
               descripcion: descripcion,
+              nombre: nombre.value,
               "productos": JSON.stringify(productos)
           },
           success: function () {
@@ -417,13 +414,9 @@ $idProductos.forEach(id => {
               icon: 'success',
               // El tiempo se especifica en milisegundos (en este caso, 3000 ms o 3 segundos)
               showConfirmButton: false // Esto oculta el botón "Aceptar" para que la notificación se cierre automáticamente
-            });
-         
-            redirigirADataTable();
-            
-          }   
-          
-          
+            });        
+            redirigirADataTable();           
+          }                      
       });
   } else {
       // Manejar la validación fallida, por ejemplo, mostrar un mensaje de error
@@ -433,7 +426,6 @@ $idProductos.forEach(id => {
           'error'
       );
   }
- 
 });
 
 function redirigirADataTable() {
@@ -454,7 +446,7 @@ $('#form-solicitud').submit(function (e) {
     let telefonoN = $('#telefono').val();
     let correoN = $('#correoCliente').val();
     let direccionN = $('#direccion').val();
-    if (true) {
+    if (valido) {
       $.ajax({
         url: "../../../Vista/crud/carteraCliente/nuevoCliente.php",
         type: "POST",

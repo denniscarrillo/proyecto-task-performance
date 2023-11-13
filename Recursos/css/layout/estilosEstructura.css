@@ -105,3 +105,21 @@ table.dataTable.no-footer {
 .hidden {
     display: none;
 }
+
+.dataTables_wrapper .dataTables_length {
+    margin-top: 14px;
+    margin-left: 15px;
+}
+
+
+
+div.dt-buttons {
+    position: relative;
+    margin-bottom: -17px;
+}
+
+.dataTables_wrapper .dataTables_filter {
+    float: right;
+    text-align: right;
+    margin-bottom: 15px;
+}
