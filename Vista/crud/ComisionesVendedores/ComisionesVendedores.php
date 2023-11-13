@@ -12,7 +12,12 @@ if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('ComisionesVendedores.php');
-  $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual);
+  //Se valida el usuario, si es SUPERADMIN por defecto tiene permiso caso contrario se valida el permiso vrs base de datos
+  (!($_SESSION['usuario'] == 'SUPERADMIN'))
+  ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
+  : 
+    $permisoConsulta = true;
+  ;
   if(!$permisoConsulta){
     /* ====================== Evento intento de ingreso sin permiso a la vista comisiones por vendedor. ================================*/
     $accion = ControladorBitacora::accion_Evento();
@@ -144,7 +149,7 @@ if (isset($_SESSION['usuario'])) {
             </div>
         <div>
             <!-- <a href="ComisionPorVendedor.php" class="btn_nuevoRegistro btn btn-primary"><i class="fa-solid fa-circle-plus"></i> Comision total por vendedor</a> -->
-            <a href="../../../TCPDF/examples/reporteriaComisionVendedores.php" class="btn_Pdf btn btn-primary"><i class="fas fa-file-pdf"></i>
+            <a href="../../../TCPDF/examples/reporteriaComisionVendedores.php" class="btn_Pdf btn btn-primary hidden" id= "btn_Pdf"><i class="fas fa-file-pdf"></i>
                 Generar Reportes</a>
           </div>
           <table class="table" id="table-ComisionVendedor">
@@ -154,8 +159,9 @@ if (isset($_SESSION['usuario'])) {
                 <th scope="col">ID COMISION</th>
                 <th scope="col">ID VENDEDOR</th>
                 <th scope="col">VENDEDOR</th>
-                <th scope="col">ESTADO</th>
                 <th scope="col">COMISION TOTAL</th>
+                <th scope="col">ESTADO</th>
+                <th scope="col">LIQUIDACION</th>
                 <th scope="col">FECHA</th>
               </tr>
             </thead>
@@ -175,6 +181,7 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script src="../../../Recursos/js/comision/dataTableComision_V.js" type="module"></script>
+  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>

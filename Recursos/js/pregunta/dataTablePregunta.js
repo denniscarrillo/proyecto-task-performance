@@ -24,7 +24,8 @@ let procesarPermisoActualizar = data => {
       { "data": 'estadoPregunta' },
       {
         "defaultContent":
-        `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>` 
+        `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`+
+        `<button class="btn_eliminar btns btn ${(permisos.Eliminar == 'N')? 'hidden': ''}" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button>`
       }
     ]
   });
@@ -123,7 +124,7 @@ $(document).on("click", "#btn_eliminar", function() {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, borralo!'
+      confirmButtonText: 'Si, cancelalo!'
     }).then((result) => {
       if (result.isConfirmed) {      
         $.ajax({
@@ -131,23 +132,25 @@ $(document).on("click", "#btn_eliminar", function() {
           type: "POST",
           datatype:"json",    
           data:  { pregunta: pregunta},    
-          success: function() {
-            // let estadoEliminado = data[0].estadoEliminado;
-            // console.log(data);
-            // if(estadoEliminado == 'eliminado'){
+          success: function(data) {
+            let estadoEliminado = data[0].estadoEliminado;
+             console.log(data);
+             if(estadoEliminado == 'eliminado'){
               tablaPregunta.row(fila.parents('tr')).remove().draw();
               Swal.fire(
                 'Eliminado!',
                 'La pregunta ha sido eliminada.',
                 'success'
               ) 
-            // } else {
-            //   Swal.fire(
-            //     'Lo sentimos!',
-            //     'la pregunta no puede ser eliminado.',
-            //     'error'
-            //   );
-            // }           
+              tablaPregunta.ajax.reload(null, false);
+            } else {
+               Swal.fire(
+                 'Lo sentimos!',
+                 'La pregunta no puede ser eliminada.',
+                 'error'
+               );
+               tablaPregunta.ajax.reload(null, false);
+             }           
           }
           }); //Fin del AJAX
       }

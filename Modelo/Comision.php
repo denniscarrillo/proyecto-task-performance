@@ -7,6 +7,7 @@ class Comision
     public $idPorcentaje;
     public $comisionTotal;
     public $estadoComision;
+    public $estadoLiquidacion;
     public $creadoPor;
     public $ModificadoPor;
     public $fechaComision;
@@ -17,7 +18,7 @@ class Comision
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $listaComision =
-            $query = "SELECT co.id_Comision, co.id_Venta, v.TOTALNETO, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, co.Fecha_Creacion
+            $query = "SELECT co.id_Comision, co.id_Venta, v.TOTALNETO, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, co.estado_Liquidacion, co.Fecha_Creacion
             FROM tbl_Comision AS co
             INNER JOIN VIEW_FACTURASVENTA AS v ON co.id_Venta = v.NUMFACTURA
             INNER JOIN  tbl_Porcentaje AS po ON co.id_Porcentaje = po.id_Porcentaje
@@ -33,6 +34,7 @@ class Comision
                 'porcentaje' => $fila["valor_Porcentaje"],
                 'comisionTotal' => $fila["comision_TotalVenta"],
                 'estadoComisionar' => $fila["estadoComision"],
+                'estadoLiquidacion' => $fila["estado_Liquidacion"],
                 'fechaComision' => $fila["Fecha_Creacion"]
             ];
         }
@@ -47,8 +49,8 @@ class Comision
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         // Preparamos la insercion en la base de datos
         $query = "INSERT INTO tbl_comision (id_Venta, id_Porcentaje, 
-        comision_TotalVenta, estadoComision, Creado_Por, Fecha_Creacion)  
-        VALUES ('$nuevaComision->idVenta','$nuevaComision->idPorcentaje','$nuevaComision->comisionTotal', '$nuevaComision->estadoComision', '$nuevaComision->creadoPor', '$nuevaComision->fechaComision')";
+        comision_TotalVenta, estadoComision, estado_Liquidacion, Creado_Por, Fecha_Creacion)  
+        VALUES ('$nuevaComision->idVenta','$nuevaComision->idPorcentaje','$nuevaComision->comisionTotal', '$nuevaComision->estadoComision', '$nuevaComision->estadoLiquidacion', '$nuevaComision->creadoPor', '$nuevaComision->fechaComision')";
         // Ejecutamos la consulta y comprobamos si fue exitosa
         sqlsrv_query($conexion, $query);
         $query2 = "SELECT SCOPE_IDENTITY() AS id_Comision";
@@ -123,11 +125,12 @@ class Comision
         $conn = new Conexion();
         $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $estadoComisionVendedor = 'Activa';
+        $estadoLiquidacion = 'Pendiente';
         $comisionVendedor = $comisionVenta / count($vendedores);
         foreach ($vendedores as $vendedor) {
         $idVendedor = $vendedor['idVendedor'];
-        $insert = "INSERT INTO tbl_Comision_Por_Vendedor (id_Comision, id_usuario_vendedor, total_Comision, estadoComisionVendedor, Creado_Por, Fecha_Creacion) 
-        VALUES ('$idComision', '$idVendedor', '$comisionVendedor', '$estadoComisionVendedor', '$user', '$fechaComision');";
+        $insert = "INSERT INTO tbl_Comision_Por_Vendedor (id_Comision, id_usuario_vendedor, total_Comision, estadoComisionVendedor, estado_Liquidacion, Creado_Por, Fecha_Creacion) 
+        VALUES ('$idComision', '$idVendedor', '$comisionVendedor', '$estadoComisionVendedor', '$estadoLiquidacion', '$user', '$fechaComision');";
         sqlsrv_query($abrirConexion, $insert);
         }
 
@@ -152,7 +155,7 @@ sqlsrv_close($abrirConexion);
     {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $query="SELECT vt.id_Comision_Por_Vendedor, vt.id_Comision, vt.id_usuario_vendedor, u.usuario, vt.total_Comision, vt.estadoComisionVendedor, vt.Fecha_Creacion
+            $query="SELECT vt.id_Comision_Por_Vendedor, vt.id_Comision, vt.id_usuario_vendedor, u.usuario, vt.total_Comision, vt.estadoComisionVendedor, vt.estado_Liquidacion, vt.Fecha_Creacion
             FROM tbl_ms_usuario AS u
             INNER JOIN tbl_comision_por_vendedor AS vt ON u.id_Usuario = vt.id_usuario_vendedor;";
         $listaComision= sqlsrv_query($consulta, $query);   
@@ -166,6 +169,7 @@ sqlsrv_close($abrirConexion);
                 'usuario' => $fila["usuario"],
                 'comisionTotal' => $fila["total_Comision"],
                 'estadoComision' => $fila["estadoComisionVendedor"],
+                'estadoLiquidacion' => $fila["estado_Liquidacion"],
                 'fechaComision' => $fila["Fecha_Creacion"]
             ];
         }
@@ -182,7 +186,7 @@ sqlsrv_close($abrirConexion);
         SUM(vt.total_Comision) AS totalComision
         FROM tbl_comision_por_vendedor vt
         INNER JOIN tbl_ms_usuario AS u ON vt.id_usuario_vendedor = u.id_Usuario
-        WHERE vt.estadoComisionVendedor = 'Activa' 
+        WHERE vt.estadoComisionVendedor = 'Activa' AND vt.estado_Liquidacion = 'Liquidada' 
           AND vt.Fecha_Creacion BETWEEN '$fechaDesde' AND '$fechaHasta'
         GROUP BY vt.id_usuario_vendedor, u.Usuario
         ORDER BY Fecha_Inicial, totalComision;";
@@ -251,9 +255,14 @@ sqlsrv_close($abrirConexion);
     public static function editarComision ($nuevaComision) {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $query = "UPDATE tbl_comision SET estadoComision = '$nuevaComision->estadoComision', Modificado_Por ='$nuevaComision->ModificadoPor', 
-        Fecha_Creacion ='$nuevaComision->fechaModificacion' WHERE id_Comision = '$nuevaComision->idComision';";
+        $query = "UPDATE tbl_comision SET estado_Liquidacion = '$nuevaComision->estadoLiquidacion', 
+        Modificado_Por ='$nuevaComision->ModificadoPor', Fecha_Creacion ='$nuevaComision->fechaModificacion'
+        WHERE id_Comision = '$nuevaComision->idComision';";
         $editarComision = sqlsrv_query($consulta, $query);
+        $query2 = "UPDATE tbl_comision_por_vendedor SET estado_Liquidacion = '$nuevaComision->estadoLiquidacion',
+        Modificado_Por ='$nuevaComision->ModificadoPor', Fecha_Modificacion ='$nuevaComision->fechaModificacion'
+        WHERE id_Comision = '$nuevaComision->idComision';";
+        sqlsrv_query($consulta, $query2);
         sqlsrv_close($consulta); #Cerramos la conexión.
     }
     public static function ComisionPorId($idComision){
@@ -298,6 +307,34 @@ sqlsrv_close($abrirConexion);
             'vendedores' => $vendedores
         ];
         return $ComisionVer;
+    }
+    public static function eliminarComision($idComision){
+        try{
+            $conn = new Conexion();
+            $conexion = $conn->abrirConexionDB();
+            $query = "DELETE FROM tbl_Comision WHERE id_Comision = '$idComision';";
+            $estadoEliminado = sqlsrv_query($conexion, $query);
+        }catch (Exception $e) {
+            $estadoEliminado = 'Error SQL:' . $e;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estadoEliminado;
+    }
+    public static function anularComision($idComision){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query ="UPDATE tbl_Comision SET estadoComision = 'Anulada' WHERE id_Comision = '$idComision';";
+        $estadoAnulada = sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estadoAnulada;
+    }
+    public static function anularComisionPorVendedor($idComision){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query ="UPDATE tbl_Comision_Por_Vendedor SET estadoComisionVendedor = 'Anulada' WHERE id_Comision = '$idComision';";
+        $estadoAnulada = sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estadoAnulada;
     }
 }
     //convertir la fecha de comision totalm por vendedor en texto

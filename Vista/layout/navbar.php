@@ -10,7 +10,7 @@
                
                 <div class="nav__container">
                     <div class="notifations-conteiner">
-                        <p><?php echo $_SESSION['usuario']; ?></p><span class="notification-conteiner"></span> 
+                        <p id="username"><?php echo $_SESSION['usuario']; ?></p><span class="notification-conteiner"></span> 
                     </div>
                     <a href="#menu" class="nav__menu">
                     <span class="notification-conteiner"><i class="nb fa-solid fa-circle-user"></i></span>

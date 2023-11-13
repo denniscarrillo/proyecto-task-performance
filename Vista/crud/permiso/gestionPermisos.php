@@ -32,7 +32,6 @@
           // Rendimiento
           $urlMisTareas = '../../rendimiento/v_tarea.php';
           $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
-          $urlBitacoraTarea = ''; //PENDIENTE
           $urlMetricas = '../Metricas/gestionMetricas.php';
           $urlEstadisticas = '../../grafica/estadistica.php'; 
           //Solicitud
@@ -66,15 +65,15 @@
           <div class= "encabezado">
             <div class="navbar-conteiner">
                 <!-- Aqui va la barra -->
-                <?php include_once '../../layout/navbar.php'?>                             
+                <?php include_once '../../layout/navbar.php'?>
             </div>        
             <div class ="titulo">
-                <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionPermisos.php');?>">Gestión de Permisos</H2>
+                <H2 class="title-dashboard-task" id="<?php echo $idObjetoActual; ?>">Gestión de Permisos</H2>
             </div>  
           </div>
         <div class="table-conteiner">
         <div>
-            <a href="../../../TCPDF/examples/reportePermisos.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
+            <a href="../../../TCPDF/examples/reportePermisos.php" target="_blank" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
           </div>
           <table class="table" id="table-Permisos">
             <thead>
@@ -85,12 +84,13 @@
                 <th scope="col"> INSERTAR </th>
                 <th scope="col"> ACTUALIZAR </th>
                 <th scope="col"> ELIMINAR </th>
+                <th scope="col"> REPORTE </th>
                 <th scope="col"> ACCION </th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
               <?php
-                imprimirPermisos(ControladorPermiso::obtenerPermisosSistema());
+                imprimirPermisos(ControladorPermiso::obtenerPermisosSistema(), $idObjetoActual);
               ?>
             </tbody>
           </table>
@@ -105,6 +105,7 @@
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/permiso/dataTablePermisos.js" type="module"></script>
+  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
 </body>
 

@@ -5,7 +5,7 @@ export let estadoValidado = false;
 
 
 const validaciones = {
-    soloLetras: /^(?=.*[^a-zA-Z\/ Ñós])/, //Solo letras
+    soloLetras: /^(?=.*[^a-zA-Z\/ .Ñós])/, //Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
     soloNumeros: /^[0-9,-]*$/
 }
@@ -16,7 +16,6 @@ const validaciones = {
 let estadoEspacioInput = {
     estadoEspacioName: true,
     estadoEspaciotelefono: true,
-    estadoEspacioDireccion: true,
     estadoEspaciodescripcion: true,
     estadoEspacioRtn: true,
     estadoEspacioCorreo: true,

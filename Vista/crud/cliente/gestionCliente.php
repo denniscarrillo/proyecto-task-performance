@@ -12,7 +12,12 @@ if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionCliente.php');
-  $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual);
+  //Se valida el usuario, si es SUPERADMIN por defecto tiene permiso caso contrario se valida el permiso vrs base de datos
+  (!($_SESSION['usuario'] == 'SUPERADMIN')) 
+  ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
+  : 
+    $permisoConsulta = true;
+  ;
   if(!$permisoConsulta){
     /* ====================== Evento intento de ingreso sin permiso a vista cliente. ================================*/
     $accion = ControladorBitacora::accion_Evento();
@@ -92,7 +97,6 @@ if (isset($_SESSION['usuario'])) {
         // Rendimiento
         $urlMisTareas = '../../rendimiento/v_tarea.php';
         $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
-        $urlBitacoraTarea = ''; //PENDIENTE
         $urlMetricas = '../Metricas/gestionMetricas.php';
         $urlEstadisticas = '../../grafica/estadistica.php'; 
         //Solicitud
@@ -147,7 +151,7 @@ if (isset($_SESSION['usuario'])) {
               </tr>
             </thead>
             <div class ="text-left mb-2">
-            <a href="../../../TCPDF/examples/reporteriaClientes.php" target="_blank" class="btn btn-success" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
+            <a href="../../../TCPDF/examples/reporteriaClientes.php" target="_blank" class="btn btn-success hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
             </div>
             <tbody class="table-group-divider">
             </tbody>
@@ -162,7 +166,7 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script src="../../../Recursos/js/VistaClientes/dataTable.js" type="module"></script>
-  <script src="../../../Recursos/js/permiso/gestionPermisos.js"></script>
+  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>

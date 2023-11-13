@@ -1,6 +1,6 @@
 let permisos = '';
 let tablaPermisos = '';
-$(document).ready(async function () {
+$(document).ready(function () {
   tablaPermisos = $('#table-Permisos').DataTable({
     "language":{
       "url":"//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
@@ -18,7 +18,7 @@ let actualizarPermisos = function (elementoFila) {
   let insertar = ($fila.find("td:eq(3)").find('input')[0].checked == true) ? 'Y' : 'N'; 
   let actualizar = ($fila.find("td:eq(4)").find('input')[0].checked == true) ? 'Y' : 'N'; 
   let eliminar =  ($fila.find("td:eq(5)").find('input')[0].checked == true) ? 'Y' : 'N'; 
-
+  let reporte =  ($fila.find("td:eq(6)").find('input')[0].checked == true) ? 'Y' : 'N'; 
   Swal.fire({
     title: '¿Esta seguro?',
     text: "Se actualizaran los permisos",
@@ -42,7 +42,8 @@ let actualizarPermisos = function (elementoFila) {
           "consultar": consultar,
           "insertar": insertar,
           "actualizar": actualizar,
-          "eliminar": eliminar
+          "eliminar": eliminar,
+          "reporte": reporte,
         },
         success: function () {
           //Creamos el toast que nos confirma la actualización de los permisos
@@ -85,16 +86,20 @@ let obtenerPermisos = async function(){
   }
 }
 let validarPermisos = async function (btn_confirms) {
-  let permisoActualizar = await obtenerPermisos();
+  let user = document.getElementById('username').textContent;
+  let permisoActualizar = 'N';
+  if(user != 'SUPERADMIN'){
+    permisoActualizar = await obtenerPermisos();
+  }
   btn_confirms.forEach((btn_confirm) => {
-    let rol = btn_confirm.parentElement.parentElement.firstChild.outerText;
-    if((rol != 'Super Administrador') && (permisoActualizar == 'Y')) {
+    if((permisoActualizar == 'Y') || (user == 'SUPERADMIN')){
       btn_confirm.addEventListener('click', function(){
         actualizarPermisos($(this));
       });
     } else {
       btn_confirm.classList.remove('btn_confirm');
-      btn_confirm.classList.add('fa-check-circleD');
+      btn_confirm.classList.add('fa-check-circle');
     }
+    
   });
 }

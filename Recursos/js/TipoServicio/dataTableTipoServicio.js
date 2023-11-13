@@ -23,7 +23,8 @@ let procesarPermisoActualizar = data => {
         { "data": "servicio_Tecnico" },
         {
           "defaultContent":
-          `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`
+          `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`+
+          `<button class="btn_eliminar btns btn ${(permisos.Eliminar == 'N')? 'hidden': ''}" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button>`
         }
       ]
     });
@@ -144,4 +145,51 @@ let obtenerPermisos = function ($idObjeto, callback) {
       $mensaje.innerText = '';
     });
   }
+
+
+  //Eliminar usuario
+$(document).on("click", "#btn_eliminar", function() {
+  let fila = $(this);        
+  let idTipoServicio = $(this).closest('tr').find('td:eq(1)').text();		
+      Swal.fire({
+        title: 'Estas seguro de eliminar a '+ idTipoServicio +'?',
+        text: "No podras revertir esto!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, borralo!'
+      }).then((result) => {
+        if (result.isConfirmed) {      
+          $.ajax({
+            url: "../../../Vista/crud/TipoServicio/eliminarTipoServicio.php",
+            type: "POST",
+            datatype:"json",    
+            data:  { idTipoServicio : idTipoServicio },    
+            success: function(data) {
+              let estadoEliminado = data[0].estadoEliminado;
+               console.log(data);
+              if(estadoEliminado == 'eliminado'){
+                tablaTipoServicio.row(fila.parents('tr')).remove().draw();
+                Swal.fire(
+                  'Eliminado!',
+                  'El tipo de Servicio ha sido eliminado.',
+                  'success'
+                ) 
+                tablaTipoServicio.ajax.reload(null, false); 
+              } else {
+                Swal.fire(
+                  'Lo sentimos!',
+                  'El tipo de Servicio no puede ser eliminado',
+                  'error'
+                );
+                tablaTipoServicio.ajax.reload(null, false);
+              }           
+            }
+          }); //Fin del AJAX
+        }
+      });
+    	    
+                    
+});
 

@@ -1,5 +1,10 @@
 <?php
-    require_once('./validacionesCotizacion.php');
+    session_start(); //Reanudamos sesion
+    require_once('../../../db/Conexion.php');
+    require_once('../../../Modelo/Bitacora.php');
+    require_once('../../../Controlador/ControladorBitacora.php');
+    require_once('../../../Modelo/Tarea.php');
+    require_once('../../../Controlador/ControladorTarea.php');
     $datosCotizacion = ControladorTarea::obtenerDatos(intval($_GET['idTarea']), $_GET['estadoCliente']);
 ?>
 <!DOCTYPE html>
@@ -163,11 +168,10 @@
 			</main>
         </div>
 	</div>
-	<script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
 	<script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
+	<script src="../../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js"></script>
 	<script src="../../../Recursos/bootstrap5/bootstrap.min.js "></script>
     <script src="../../../Recursos/js/librerias/SweetAlert2.all.min.js"></script>
-	<!-- <script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script> -->
-	<script src="../../../Recursos/js/rendimiento/cotizacion/v_cotizacion.js"></script> 
+	<script src="../../../Recursos/js/rendimiento/cotizacion/v_cotizacion.js"></script>
 </body>
 </html>

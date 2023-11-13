@@ -84,7 +84,9 @@ if (isset($_POST["submit"])) {
                                     if ($intentosFallidos > 0) {
                                         ControladorUsuario::resetearIntentos($_POST["userName"]);
                                     }
-                                    if ($rolUsuario > 1 && ($cantPreguntasContestadas == $cantPreguntasParametro)) {
+                                    if ($rolUsuario > 1 && ($cantPreguntasContestadas == $cantPreguntasParametro) 
+                                                        //Si el usuario es SUPERADMIN no necesitara de ningun ROL para poder interactuar con acceso a todos los modulos
+                                                        || ($_POST["userName"] == 'SUPERADMIN') && ($cantPreguntasContestadas == $cantPreguntasParametro)) {
                                         header('location: ../index.php');
                                     }else{
                                         header('location: configRespuestas.php');
