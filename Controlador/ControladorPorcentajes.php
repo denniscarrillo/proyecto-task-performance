@@ -25,4 +25,9 @@ class ControladorPorcentajes
         return Porcentajes::porcentajeExistente($valorPorcentaje);
     }
 
+    public static function eliminarPorcentaje($eliminarPorcentaje){
+        return porcentajes::eliminarPorcentaje($eliminarPorcentaje);
+   }
+   
+
 }

@@ -30,7 +30,8 @@ let procesarPermisoActualizar = data => {
       { "data": "descripcionPorcentaje" },
       { "data": "estadoPorcentaje" },
       {"defaultContent":
-        `<div><button class="btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}"" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button></div>`
+        `<div><button class="btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}"" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button></div>`+
+        '<button class="btns btn" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button></div>' 
       }
     ]
   });
@@ -186,3 +187,45 @@ let limpiarFormEdit = () => {
     $mensaje.innerText = '';
   });
 }
+
+//Eliminar porcentajes
+$(document).on("click", "#btn_eliminar", function() {
+  let fila = $(this).closest("tr"),
+     idPorcentaje = $(this).closest('tr').find('td:eq(0)').text(), 
+     porcentaje = fila.find('td:eq(1)').text(),
+     estado = 'Inactivo';
+     
+    Swal.fire({
+      title: 'Estas seguro de eliminar el pocentaje'+porcentaje+'?',
+      text: "No podras revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borralo!'
+      
+    }).then((result) => {
+      if (result.isConfirmed) {      
+        $.ajax({
+          url: "../../../Vista/crud/Porcentajes/eliminarPorcentajes.php",
+          type: "POST",
+          datatype: "JSON",
+          data: { 
+            idPorcentaje: idPorcentaje,
+            estado: estado,
+          },
+          success: function (data) {
+            console.log(data);
+            Swal.fire(
+              'Lo sentimos!',
+              'El porcentaje no puede ser eliminado, se ha Inactivado.',
+              'error'
+            );
+            tablaPorcentajes.ajax.reload(null, false);
+          }
+        });
+      
+      }//Fin del AJAX
+      
+    });                
+});

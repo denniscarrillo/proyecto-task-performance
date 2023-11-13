@@ -3,18 +3,29 @@
     require_once ("../../../Modelo/Pregunta.php");
     require_once("../../../Controlador/ControladorPregunta.php");
     require_once ("../../../Modelo/Usuario.php");
-    require_once("../../../Controlador/ControladorUsuario.php");
-
-    if(isset($_POST['Pregunta'])){
-        $pregunta = $_POST['Pregunta'];
-        $estadoEliminado = ControladorPregunta::eliminarPregunta($pregunta);
-        $data = array();
-        if($estadoEliminado == false) {
-            $data []= [
-                'estadoEliminado' => 'inactivado'
-            ];
-            ControladorPregunta::SimularInactivarPregunta($pregunta);
-            print json_encode($data, JSON_UNESCAPED_UNICODE);
-        }
+    require_once ("../../../Controlador/ControladorUsuario.php");
+    
+    $user = '';
+    session_start();
+    if(isset($_SESSION['usuario'])){
+        $user = $_SESSION['usuario'];
+        $insertarPregunta = new Pregunta();
+        $insertarPregunta->idPregunta = ($_POST['idPregunta']);
+        $insertarPregunta->pregunta = ($_POST['pregunta']);
+        $insertarPregunta->estado = ($_POST['estado']);
+        $insertarPregunta->ModificadoPor = $user;
+        ControladorPregunta::actualizarPregunta($insertarPregunta);
+        /* ========================= Evento Editar pregunta. ====================================*/
+        $newBitacora = new Bitacora();
+        $accion = ControladorBitacora::accion_Evento();
+        date_default_timezone_set('America/Tegucigalpa');
+        $newBitacora->fecha = date("Y-m-d h:i:s"); 
+        $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionPregunta.php');
+        $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+        $newBitacora->accion = $accion['Update'];
+        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' modificó la pregunta '.$_POST['pregunta'];
+        ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+        /* =======================================================================================*/
     }
+
 ?>

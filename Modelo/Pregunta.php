@@ -58,27 +58,30 @@ class Pregunta {
         return $insertarPregunta;
     }
 
-    public static function eliminarPregunta($pregunta){
-        try{
-            $conn = new Conexion();
-            $conexion = $conn->abrirConexionDB();
-            $query = "DELETE FROM tbl_MS_Preguntas WHERE id_Pregunta = '$pregunta';";
-            $estadoEliminado = sqlsrv_query($conexion, $query);
-        }catch (Exception $e) {
-            $estadoEliminado = 'Error SQL:' . $e;
-        }
-        sqlsrv_close($conexion); #Cerramos la conexión.
-        return $estadoEliminado;
-    }
-
-    public static function inactivarPregunta($pregunta){
+     public static function eliminarPregunta($pregunta){
+        try {
+            
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query ="UPDATE tbl_MS_Preguntas SET estado = 'inactivo' WHERE id_Pregunta ='$pregunta';";
-        $estadoInactivo = sqlsrv_query($conexion, $query);
-        sqlsrv_close($conexion); #Cerramos la conexión.
-        return $estadoInactivo;
-    }
+        $queryExiste = "SELECT id_Pregunta FROM tbl_MS_Preguntas_X_Usuario WHERE id_Pregunta = '$pregunta';";
+        $resultCheck = sqlsrv_query($conexion, $queryExiste);
+          if ($resultCheck && sqlsrv_has_rows($resultCheck)) {
+                // La pregunta existe en tbl_MS_Preguntas_X_Usuario, enviar mensaje
+                 $queryupdate= "UPDATE tbl_MS_Preguntas SET estado = 'Inactivo' WHERE id_Pregunta = '$pregunta';";
+                $estadoPregunta = false;
+         } else {
+                 // La pregunta no existe en tbl_MS_Preguntas_X_Usuario, proceder con la eliminación
+                 $queryDelete = "DELETE FROM tbl_MS_Preguntas WHERE id_Pregunta = '$pregunta';";
+                 $estadoPregunta = true;
+                    sqlsrv_query($conexion, $queryDelete);
+                 }
+     } catch (Exception $e) {
+            $estadoPregunta = 'Error SQL:' . $e;
+    } finally {
+        sqlsrv_close($conexion); # Cerramos la conexión.
+         }    
+         return $estadoPregunta;
+  }
 
     public static function preguntaExistente($pregunta){
         $existePregunta = false;
@@ -160,6 +163,38 @@ class Pregunta {
         sqlsrv_close($conexion);
     }
     
+    // ControladorPregunta.php
+
+
+
+
+    // public static function verificarPreguntaActiva($idPregunta) {
+    //     try {
+    //         $conn = new Conexion();
+    //         $conexion = $conn->abrirConexionDB();
+
+    //         $query = "SELECT estado FROM tbl_MS_Preguntas WHERE id_Pregunta = '$idPregunta';";
+
+    //         $stmt = sqlsrv_prepare($conexion, $query, array(&$idPregunta));
+
+    //         if (sqlsrv_execute($stmt)) {
+    //             if ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+    //                 $estado = $row['estado'];
+    //                 return $estado == 'Activo';
+    //             }
+    //         }
+    //     } catch (Exception $e) {
+    //         // Manejar el error, loggearlo, etc.
+    //     } finally {
+    //         sqlsrv_close($conexion);
+    //     }
+
+    //     return false;
+    // }
+
+    // ...
+
+
 
 
 

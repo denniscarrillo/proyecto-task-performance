@@ -24,7 +24,8 @@ let procesarPermisoActualizar = data => {
       { "data": "meta"},
       {
         "defaultContent":
-        `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`
+        `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`+
+        '<button class="btns btn" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button></div>' 
       }
     ]
   });
@@ -97,3 +98,41 @@ let limpiarFormEdit = () => {
     $mensaje.innerText = '';
   });
 }
+
+//Eliminar Rol
+$(document).on("click", "#btn_eliminar", function() {
+     
+  let fila = $(this).closest("tr"),	        
+    id_Metrica = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		            
+    metrica = $(this).closest('tr').find('td:eq(1)').text();
+
+        Swal.fire({
+          title: 'Estas seguro de eliminar la metrica  '+metrica+'?',
+          text: "No podras revertir esto!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, borralo!'
+    }).then((result) => {
+      if (result.isConfirmed) {      
+        $.ajax({
+          url: "../../../Vista/crud/Metricas/eliminarMetricas.php",
+          type: "POST",
+          datatype:"json",    
+          data:  { id_Metrica: id_Metrica},    
+          success: function(data) {
+            console.log(data)
+               Swal.fire(
+                 'Lo sentimos!',
+                 'La metrica no puede ser eliminada.',
+                 'error'
+               );
+               tablaMetricas.ajax.reload(null, false);
+                      
+            }
+          }); //Fin del AJAX
+      }
+    });  
+            
+});

@@ -79,6 +79,21 @@ class Metricas{
         return $meta;
     }
 
+    public static function eliminarMetrica($metrica){
+        try{
+            $conn = new Conexion();
+            $conexion = $conn->abrirConexionDB();
+            $query = "DELETE FROM tbl_Metrica WHERE id_Metrica = '$metrica';";
+            $estadoEliminado = sqlsrv_query($conexion, $query);
+        }catch (Exception $e) {
+            $estadoEliminado = 'Error SQL:' . $e;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estadoEliminado;
+    }
+    
+
+
 }#Fin de la clase
 
 

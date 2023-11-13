@@ -96,7 +96,6 @@ $('#form-Edit-Rol').submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
    //Obtener datos del nuevo Usuario
    let idRol = $('#E_idRol').val(),
-   rol =  $('#E_rol').val(),
    descripcion = $('#E_descripcion').val();
    if(valido){
     $.ajax({
@@ -105,7 +104,6 @@ $('#form-Edit-Rol').submit(function (e) {
       datatype: "JSON",
       data: {
        idRol: idRol,
-       rol: rol,
        descripcion: descripcion
       },
       success: function () {
@@ -164,11 +162,12 @@ let limpiarFormEdit = () => {
 }
 
 
-//Eliminar parametro
+//Eliminar Rol
 $(document).on("click", "#btn_eliminar", function() {
-  let fila = $(this);        
-    let idrol= $(this).closest('tr').find('td:eq(1)').text();		
-    let ROL = $(this).closest('tr').find('td:eq(1)').text();
+     
+  let fila = $(this).closest("tr"),	        
+    id_Rol = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		            
+    ROL = $(this).closest('tr').find('td:eq(1)').text();
     if (ROL == 'Super Administrador'){
       Swal.fire(
         'Sin acceso!',
@@ -177,20 +176,20 @@ $(document).on("click", "#btn_eliminar", function() {
       )
       }else{
         Swal.fire({
-          title: 'Estas seguro de eliminar el Rol '+idrol+'?',
+          title: 'Estas seguro de eliminar el Rol '+ROL+'?',
           text: "No podras revertir esto!",
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
-          confirmButtonText: 'Si, cancelalo!'
+          confirmButtonText: 'Si, borralo!'
     }).then((result) => {
       if (result.isConfirmed) {      
         $.ajax({
           url: "../../../Vista/crud/rol/eliminarRol.php",
           type: "POST",
           datatype:"json",    
-          data:  { idrol: idrol},    
+          data:  { id_Rol : id_Rol},    
           success: function(data) {
             let estadoEliminado = data[0].estadoEliminado;
              console.log(data);

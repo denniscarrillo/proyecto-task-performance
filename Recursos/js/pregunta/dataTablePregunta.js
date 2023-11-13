@@ -115,8 +115,11 @@ $('#form-Pregunta-Editar').submit(function (e) {
 
 //Eliminar pregunta
 $(document).on("click", "#btn_eliminar", function() {
-  let fila = $(this);        
-    let pregunta = $(this).closest('tr').find('td:eq(1)').text();		    
+  let fila = $(this).closest("tr"),
+     idPregunta = $(this).closest('tr').find('td:eq(0)').text(), 
+     pregunta = fila.find('td:eq(1)').text(),
+     estado = 'Inactiva';
+     
     Swal.fire({
       title: 'Estas seguro de eliminar la pregunta '+pregunta+'?',
       text: "No podras revertir esto!",
@@ -124,36 +127,31 @@ $(document).on("click", "#btn_eliminar", function() {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, cancelalo!'
+      confirmButtonText: 'Si, Borralo!'
+      
     }).then((result) => {
       if (result.isConfirmed) {      
         $.ajax({
           url: "../../../Vista/crud/pregunta/eliminarPregunta.php",
           type: "POST",
-          datatype:"json",    
-          data:  { pregunta: pregunta},    
-          success: function(data) {
-            let estadoEliminado = data[0].estadoEliminado;
-             console.log(data);
-             if(estadoEliminado == 'eliminado'){
-              tablaPregunta.row(fila.parents('tr')).remove().draw();
-              Swal.fire(
-                'Eliminado!',
-                'La pregunta ha sido eliminada.',
-                'success'
-              ) 
-              tablaPregunta.ajax.reload(null, false);
-            } else {
-               Swal.fire(
-                 'Lo sentimos!',
-                 'La pregunta no puede ser eliminada.',
-                 'error'
-               );
-               tablaPregunta.ajax.reload(null, false);
-             }           
+          datatype: "JSON",
+          data: { 
+            idPregunta: idPregunta,
+            pregunta: pregunta,
+            estado: estado
+          },
+          success: function () {
+            Swal.fire(
+              'Lo sentimos!',
+              'La pregunta no puede ser eliminada, se ha Inactivado.',
+              'error'
+            );
+            tablaPregunta.ajax.reload(null, false);
           }
-          }); //Fin del AJAX
-      }
+        });
+      
+      }//Fin del AJAX
+      
     });                
 });
 

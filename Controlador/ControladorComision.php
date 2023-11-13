@@ -44,4 +44,8 @@
         public static function traerIdComision($idComision){
             return Comision::ComisionPorId($idComision);
         }
+
+        public static function eliminarComision($idComision){
+            return Comision::eliminarComision($idComision);
+        }
     }

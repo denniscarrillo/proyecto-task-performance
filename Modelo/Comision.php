@@ -256,6 +256,15 @@ sqlsrv_close($abrirConexion);
         $editarComision = sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerramos la conexión.
     }
+
+    public static function eliminarComision ($idComision) {
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $query = "UPDATE tbl_comision SET estadoComision = '$idComision->estadoComision', Modificado_Por ='$idComision->ModificadoPor', 
+        Fecha_Creacion ='$idComision->fechaModificacion' WHERE id_Comision = '$idComision->idComision';";
+        $eliminarComision = sqlsrv_query($consulta, $query);
+        sqlsrv_close($consulta); #Cerramos la conexión.
+    }
     public static function ComisionPorId($idComision){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.

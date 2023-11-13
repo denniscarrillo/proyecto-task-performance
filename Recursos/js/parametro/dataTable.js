@@ -118,7 +118,7 @@ $(document).on("click", "#btn_eliminar", function() {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, cancelalo!'
+      confirmButtonText: 'Si, Borralo!'
     }).then((result) => {
       if (result.isConfirmed) {      
         $.ajax({

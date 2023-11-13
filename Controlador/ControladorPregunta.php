@@ -27,11 +27,13 @@ class ControladorPregunta {
     public static function actualizarRespuesta($idUsuario, $respuestas){
         Pregunta::actualizarRespuesta($idUsuario, $respuestas);
     }
-    public static function eliminandoPregunta($pregunta){
-        return Pregunta::eliminarPregunta($pregunta);
+    public static function eliminarPregunta($pregunta){
+         return Pregunta::eliminarPregunta($pregunta);
     }
-    public static function SimularInactivarPregunta($pregunta){
-        return Pregunta::inactivarPregunta($pregunta);
-    }
+
+    public static function verificarPreguntaActiva($idPregunta){
+        return Pregunta::verificarPreguntaActiva($idPregunta);
+   }
+   
     
 }
