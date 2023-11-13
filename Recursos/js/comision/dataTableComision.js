@@ -73,7 +73,7 @@ $(document).on("click", "#btn_editar", function(){
   $("#monto_E").val(monto);
   $("#porcentaje-comision_E").val(porcentaje);
   $("#totalComsion_E").val(comisionTotal);
-  /* $("#estadoComision_E").val(estadoComisionar); */
+  $("#estadoComision_E").val(estadoComisionar);
   $("#estadoLiquidacion_E").val(estadoLiquidacion);
   $("#fecha_E").val(fechaComision);
   $(".modal-header").css("background-color", "#007bff");
@@ -85,7 +85,7 @@ $(document).on("click", "#btn_editar", function(){
 $("#form-Edit-Comision").submit(function (e) {
   e.preventDefault();
   let idComision = $("#idComision_E").val();
-  let estadoComision = document.getElementById("estadoComision_E").value;
+  // let estadoComision = document.getElementById("estadoComision_E").value;
   let estadoLiquidacion = document.getElementById("estadoLiquidacion_E").value;
   $.ajax({
     url: "../../../Vista/comisiones/EditarComision.php",
@@ -93,7 +93,7 @@ $("#form-Edit-Comision").submit(function (e) {
     datatype: "JSON",
     data: {
       idComision: idComision,
-      estadoComision: estadoComision,
+      // estadoComision: estadoComision,
       estadoLiquidacion: estadoLiquidacion,
     },
     success: function (data) {
@@ -110,8 +110,7 @@ $("#form-Edit-Comision").submit(function (e) {
 });
 document.getElementById("btnCerrar").addEventListener("click", function () {
   let idComision = $("#idComision_E").val();
-  let estadoComision = document.getElementById("estadoComision_E").value;
-  console.log('idComision: '+idComision+' estadoComision: '+estadoComision);
+  console.log('idComision: '+idComision);
 });
 
 $(document).on("click", "#btn_ver", async function (){
@@ -202,6 +201,53 @@ $(document).on("click", "#btn_pdf_id",  function (){
   //await reporteComisionId(idComisionR);  
  });
 
+
+
+ //Eliminar Comision
+ $(document).on("click", "#btn_eliminar", function() {
+  let fila = $(this);        
+    let idComision = $(this).closest('tr').find('td:eq(0)').text();
+      Swal.fire({
+        title: 'Estas seguro de eliminar la comision N° '+idComision+'?',
+        text: "No podras revertir esto!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, borrala!'
+      }).then((result) => {
+        if (result.isConfirmed) {      
+          $.ajax({
+            url: "../../../Vista/comisiones/eliminarComision.php",
+            type: "POST",
+            datatype:"json",    
+            data:  { idComision: idComision},    
+            success: function(data) {
+              let estadoEliminado = data[0].estadoEliminado;
+               console.log(data);
+              if(estadoEliminado == 'eliminado'){
+                tablaComision.row(fila.parents('tr')).remove().draw();
+                Swal.fire(
+                  'Eliminada!',
+                  'La Comision ha sido eliminada.',
+                  'success'
+                ) 
+                tablaComision.ajax.reload(null, false); 
+              } else {
+                Swal.fire(
+                  'Lo sentimos!',
+                  'La Comision no puede ser eliminado, en su lugar ha sido anulada.',
+                  'error'
+                );
+                tablaComision.ajax.reload(null, false);
+              }           
+            }
+          }); //Fin del AJAX
+        }
+      });
+    });
+
+    
 /* let obtenerEstadoComision = function (idElemento) {
   //Petición para obtener los estados de las comisiones
   $.ajax({

@@ -38,4 +38,16 @@ class Articulo
         sqlsrv_close($abrirConexion); //Cerrar conexion
         return $articulo;
     }
+
+
+    public static function obtenerArticuloxId($CodArt){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $query = "SELECT ARTICULO FROM view_articulos where CODARTICULO = $CodArt;";
+        $resultado = sqlsrv_query($consulta, $query);
+        $articulo = sqlsrv_fetch($resultado, SQLSRV_FETCH_ASSOC);
+        sqlsrv_close($consulta); #Cerramos la conexión.
+        return $articulo;
+    }
+
 }

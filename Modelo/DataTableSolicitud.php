@@ -30,8 +30,7 @@ class DataTableSolicitud
             FROM [tbl_Solicitud] as s
             INNER JOIN tbl_TipoServicio as t ON t.id_TipoServicio = s.id_TipoServicio
             LEFT JOIN View_Clientes as c ON c.CIF COLLATE Modern_Spanish_CI_AS = s.rtn_cliente COLLATE Modern_Spanish_CI_AS
-            LEFT JOIN tbl_CarteraCliente as cc ON cc.rtn_Cliente = s.rtn_clienteCartera 
-            WHERE EstadoSolicitud = 'ACTIVO';";
+            LEFT JOIN tbl_CarteraCliente as cc ON cc.rtn_Cliente = s.rtn_clienteCartera ;";
 
            $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
@@ -169,7 +168,7 @@ class DataTableSolicitud
             sqlsrv_query($consulta, $insertProductoS);
         }
         sqlsrv_close($consulta); #Cerramos la conexión.
-        return $nuevaSolicitud;
+        return array('nuevaSolicitud' => $nuevaSolicitud, 'idSolicitud' => $idSolicitud);
     }
 
     public static function NuevoProductoSolic($nuevoProductoS){
