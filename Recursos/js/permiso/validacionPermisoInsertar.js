@@ -15,7 +15,8 @@ let manejarPermisoInsertar = (permisos) => {
                 $btnNuevaTarea.classList.remove('hidden');
             });
         }else{
-            document.getElementById('btn_nuevoRegistro').classList.remove('hidden');
+            (document.getElementById('btn_nuevoRegistro') != null) ?  document.getElementById('btn_nuevoRegistro').classList.remove('hidden') : '';
+           
         }
     }
     if((objPermisos.Reporte == 'Y') || (user == 'SUPERADMIN')){

@@ -168,8 +168,8 @@
 			</main>
         </div>
 	</div>
-	<script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
 	<script src="../../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js"></script>
+	<script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
 	<script src="../../../Recursos/bootstrap5/bootstrap.min.js "></script>
     <script src="../../../Recursos/js/librerias/SweetAlert2.all.min.js"></script>
 	<script src="../../../Recursos/js/rendimiento/cotizacion/v_cotizacion.js"></script>

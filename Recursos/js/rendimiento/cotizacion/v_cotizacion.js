@@ -1,10 +1,13 @@
-
 const $tbody = document.getElementById('t-body');
 const $btnAgregar = document.getElementById('btn-agregar-producto');
-$(document).ready(() => {
-    validarDatosCotizacion();
+$(document).ready( async () => {
+    await validarDatosCotizacion();
 });
 let contItem = 0;
+let itemProdDB = [];
+let estadoCot = 'Nueva';
+let prodEliminar = [];
+let prodModificar = [];
 let $addProduct = {
     descripcion: document.getElementById('descripcion'),
     marca: document.getElementById('marca'),
@@ -25,7 +28,12 @@ $btnAgregar.addEventListener('click', () => {
     //Con el ultimo parametro indicamos desde donde se va a llenar los productos a la tabla, en este de la misma vista lo hara el usaurio
     insertarNewProduct(contItem, $addProduct, $tbody, 0);
     agregarEventoPencil();
-    agregarEventoBorrar();
+    let xBtns = document.querySelectorAll('.fa-circle-xmark');
+    xBtns.forEach((xbtn, index) => {
+        if(index == (xBtns.length - 1)){
+            agregarEventoBorrar([xBtns[index]]);
+        }
+    });
     // Obtener suma de totales
     calcularResumenCotizacion(document.querySelectorAll('.total-producto'), totalSuma);
     $addProduct.descripcion.value = '';
@@ -46,7 +54,11 @@ document.getElementById('form-cotizacion').addEventListener('submit', (event) =>
         total: document.getElementById('total').textContent.split(' ')[1]
     }
     //Capturamos los productos
-    let $productosCot = document.querySelectorAll('.new-product');
+    let classProduct = '.new-product';
+    if(estadoCot == 'Existente') {
+        classProduct = '.addNewProduct';
+    }
+    let $productosCot = document.querySelectorAll(classProduct);
     let $arrayProductosCot = Array();
     $productosCot.forEach((producto) => {
         let $newProduct = {
@@ -59,8 +71,35 @@ document.getElementById('form-cotizacion').addEventListener('submit', (event) =>
         }
         $arrayProductosCot.push($newProduct);
     });
+    console.log($arrayProductosCot);
+    document.querySelectorAll('.update-product').forEach(producto => {
+        let $updateProduct = {
+            item: producto.children[0].children[0].children[1].id,
+            descripcion: producto.children[1].textContent,
+            marca: producto.children[2].textContent,
+            cantidad: producto.children[3].textContent,
+            precio: producto.children[4].textContent,
+            total: producto.children[5].textContent
+        };
+        if(prodModificar.length == 0) {
+            prodModificar.push($updateProduct);
+        } else {
+            let existe = false;
+            for(let i = 0; i < prodModificar.length; i++) {
+                // console.log(prodModificar[i]);
+                if(prodModificar[i].item == $updateProduct.item) {
+                    existe = true;
+                    break;  
+                }   
+            } 
+            (!existe) ? prodModificar.push($updateProduct) : '';
+        }
+    });
+    console.log(prodModificar);
+    prodEliminar = [];
+    prodModificar = [];
     //Llamamos a la funcion que envia la cotizacion al servidor y recibe estos parametros
-    enviarNuevaCotizacion($datosCotizacion, $arrayProductosCot);
+    // enviarNuevaCotizacion($datosCotizacion, $arrayProductosCot);
 });
 // 
 let calcularResumenCotizacion = (elementosSumar, acumTotalSuma) => {
@@ -68,7 +107,6 @@ let calcularResumenCotizacion = (elementosSumar, acumTotalSuma) => {
         let totalInt = parseFloat(total.textContent);
         acumTotalSuma = acumTotalSuma + totalInt;
     });
-    // calcularResumenCotizacion(totalSuma);
     $resumenCotizacion.subtotal.textContent = `Lps. ${acumTotalSuma.toFixed(2)}`;
     $resumenCotizacion.descuento.textContent = `Lps. ${(acumTotalSuma * 0.03).toFixed(2)}`;
     $resumenCotizacion.subdescuento.textContent = `Lps. ${(acumTotalSuma - parseFloat($resumenCotizacion.descuento.textContent.split(' ')[1])).toFixed(2)}`;
@@ -101,14 +139,13 @@ let enviarNuevaCotizacion = ($datosCotizacion, $productosCotizacion) => {
               Toast.fire({
                   icon: 'success',
                   title: 'La cotización ha sido generada'
-              });
+            });
         }
     });
 }
 let agregarEventoPencil = () => {
     let totalSuma = 0;
     let $editPencils = document.querySelectorAll('.fa-pencil');
-    console.log($editPencils);
     if(!($editPencils == null)) {
         $editPencils.forEach((pencil) => {
             pencil.addEventListener('click', () => {
@@ -120,7 +157,6 @@ let agregarEventoPencil = () => {
                     total: pencil.parentElement.parentElement.parentElement.children[5]
                 };
                 setearEditProduct($addProduct, editProduct);
-    
                 let divButtons = document.getElementById('button-container');
                 divButtons.innerHTML = `
                     <i class="fa-regular fa-circle-check" id="btn-save" title="Guardar"></i>
@@ -150,6 +186,8 @@ let agregarEventoPencil = () => {
                         $addProduct.marca.value = '';
                         $addProduct.cantidad.value = '';
                         $addProduct.precio.value = '';
+                        let trProd = pencil.parentElement.parentElement.parentElement;
+                        ((estadoCot == "Existente") && (!trProd.classList.contains('addNewProduct'))) ? trProd.classList.add('update-product') : '';
                     });
                 }
             });
@@ -162,36 +200,45 @@ let setearEditProduct = (inputs, values) => {
     inputs.cantidad.value = values.cantidad.textContent;
     inputs.precio.value = values.precio.textContent;
 }
-let agregarEventoBorrar = () => {
+let agregarEventoBorrar = ($deleteButtons) => {
     let totalSuma = 0;
-    let $deleteButtons = document.querySelectorAll('.fa-circle-xmark');
     if(!($deleteButtons == null)){
         $deleteButtons.forEach((button) => {
             button.addEventListener('click', () => {
+                let itemP = parseInt(button.nextSibling.id);
+                itemProdDB.forEach(item => {
+                    (itemP == item) ? prodEliminar.push(itemP) : '';
+                });
                 button.parentElement.parentElement.parentElement.remove();
                 calcularResumenCotizacion(document.querySelectorAll('.total-producto'), totalSuma);
                 document.querySelectorAll('.item-num').forEach((item, index) => {
-                    contItem = index + 1;
+                    contItem = index+1;
                     item.textContent = contItem;
                 });
-            })
-        });  
+                console.log(prodEliminar);
+            });
+        });
     }
 }
 let validarDatosCotizacion = async () => {
     const data = await obtenerDatosCotizacion(document.querySelector('.encabezado').id);
-    if(!(data[0] == false)) {
+    if(!(data[0] == false)){
+        estadoCot = 'Existente';
         data.productos.forEach((product, index) => {
-            console.log(product);
-            insertarNewProduct(index+1, product, $tbody, 1);
+            contItem = index+1;
+            insertarNewProduct(contItem, product, $tbody, 1);
+            itemProdDB.push(product.item);
         });
-        // calcularResumenCotizacion(totalSuma);
+        agregarEventoPencil();
+        agregarEventoBorrar(document.querySelectorAll('.fa-circle-xmark'));
+
         $resumenCotizacion.subtotal.textContent = `Lps. ${data.detalle.subTotal}`;
         $resumenCotizacion.descuento.textContent = `Lps. ${data.detalle.descuento}`;
         $resumenCotizacion.subdescuento.textContent = `Lps. ${data.detalle.subDescuento}`;
         $resumenCotizacion.impuesto.textContent = `Lps. ${data.detalle.isv}`;
         $resumenCotizacion.total.textContent = `Lps. ${data.detalle.total_Cotizacion}`;
     }
+    // console.log(itemProdDB);
 }
 let obtenerDatosCotizacion = async ($idTarea) => {
     let dataCotizacion = '';
@@ -215,6 +262,7 @@ let insertarNewProduct = (contItem, $addProduct, $tbody, referencia) => {
     //Creamos la fila para agregar los datos del neuvo producto
     let $fila = document.createElement('tr');
     $fila.setAttribute('class','new-product');
+    ((estadoCot == 'Existente') && (referencia == 0)) ? $fila.classList.add('addNewProduct') : '';
     let item = $fila.appendChild(document.createElement('td'));
     /*------------------- Agregamos el div con los iconos y sus clases a la columna de items ------------------*/
     item.setAttribute('class','icon-column');
@@ -222,17 +270,7 @@ let insertarNewProduct = (contItem, $addProduct, $tbody, referencia) => {
     let label = item.appendChild(document.createElement('label'));
     label.setAttribute('class', 'item-num');
     divIcons.setAttribute('class', 'icon-container');
-    // divIcons.appendChild(document.createElement('i')).setAttribute('class', 'fa-regular fa-circle-xmark icon');
-    if(referencia == 0) {
-        divIcons.innerHTML = `
-        <i class="fa-regular fa-circle-xmark icon"></i>
-        <i class="fa-solid fa-pencil icon" id="${contItem}"></i>
-    `
-    }
-    // let iconPencil = divIcons.appendChild(document.createElement('i'));
-    // iconPencil.setAttribute('class', 'fa-solid fa-pencil icon');
-    // iconPencil.setAttribute('id', ''+contItem);
-    
+    divIcons.innerHTML = `<i class="fa-regular fa-circle-xmark icon"></i><i class="fa-solid fa-pencil icon" id="${contItem}"></i>`
     /*---------------------------------------------------------------------------------------------------------*/ 
     let descripcion = $fila.appendChild(document.createElement('td'));
     let marca = $fila.appendChild(document.createElement('td'));
@@ -243,7 +281,7 @@ let insertarNewProduct = (contItem, $addProduct, $tbody, referencia) => {
 
     if(referencia == 0) {
         //Ahora agregamos los datos 
-        label.append(document.createTextNode = contItem);
+        label.append(document.createTextNode(contItem));
         descripcion.textContent = $addProduct.descripcion.value
         marca.textContent = $addProduct.marca.value
         cantidad.textContent = $addProduct.cantidad.value
@@ -251,7 +289,7 @@ let insertarNewProduct = (contItem, $addProduct, $tbody, referencia) => {
         total.textContent = Number(($addProduct.cantidad.value * $addProduct.precio.value).toFixed(2))
         $tbody.appendChild($fila);
     } else {
-        label.append(document.createTextNode =  $addProduct.item);
+        label.append(document.createTextNode($addProduct.item));
         descripcion.textContent = $addProduct.descripcion
         marca.textContent = $addProduct.marca
         cantidad.textContent = $addProduct.cantidad
