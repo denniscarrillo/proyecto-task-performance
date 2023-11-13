@@ -81,7 +81,13 @@ $SolicitudesId = ControladorDataTableSolicitud::VerSolicitudesPorId($_GET['idSol
         $idSolicitud = $SolicitudesId['idSolicitud'];
         $idFactura = $SolicitudesId['idFactura'];
         $rtnCliente = $SolicitudesId['rtnCliente'];
+        if ($rtnCliente == 'NULL') {
+            $rtnCliente = '';
+          };
         $rtnClienteCartera = $SolicitudesId['rtnClienteCartera'];
+        if ($rtnClienteCartera == 'NULL') {
+            $rtnClienteCartera = '';
+          };
         $NombreCliente = $SolicitudesId['NombreCliente'];
         $descripcion = $SolicitudesId['Descripcion'];
         $servicioTecnico = $SolicitudesId['TipoServicio'];
@@ -94,11 +100,16 @@ $SolicitudesId = ControladorDataTableSolicitud::VerSolicitudesPorId($_GET['idSol
         $creadoPor = $SolicitudesId['CreadoPor'];
         $FechaCreacion = $SolicitudesId['FechaCreacion'];
         $modifacadoPor = $SolicitudesId['ModificadoPor'];
-        $FechaModificacion = $SolicitudesId['FechaModificacion'];
         $fechaFormateadaC = $FechaCreacion->format('Y/m/d');
-        $fechaFormateadaM = $FechaCreacion->format('Y/m/d');
+        $FechaModificacion = $SolicitudesId['FechaModificacion'];       
+        if ($FechaModificacion !== null) {
+            $fechaFormateadaM = $FechaModificacion->format('Y/m/d');
+          } else {
+            $fechaFormateadaM = '';
+          };
+        
         $ArticulosS = ControladorDataTableSolicitud::obtenerProductosS($_GET['idSolicitud']);
-        $articulos='';
+        
         foreach ($ArticulosS as $producto) {
             $Articulo = $producto['Articulo'];
             $Cant = $producto['Cant'];

@@ -24,7 +24,8 @@
         $nuevaSolicitud->estadoSolicitud = 'ACTIVO';
         $nuevaSolicitud->creadoPor =  $user;
         $productos = json_decode($_POST['productos'], true);
-       
+        $nombrePDF =  $_POST['nombre'];
+    
         $productosSolicitud = array();
 
         for($i=0; $i < count($productos); $i++){
@@ -34,10 +35,14 @@
             ];
            
         }        
-      
-        ControladorDataTableSolicitud::NuevaSolicitud($nuevaSolicitud,$productosSolicitud);
+    
+        $data = ControladorDataTableSolicitud::NuevaSolicitud($nuevaSolicitud,$productosSolicitud);
         print json_encode($nuevaSolicitud, JSON_UNESCAPED_UNICODE);
-        enviarCorreoSolicitud($nuevaSolicitud->correo);
+        // Acceder a los valores devueltos
+        $idSolicitud = $data['idSolicitud'];
+        print json_encode($productosSolicitud, JSON_UNESCAPED_UNICODE);
+        $CorreoT = 'tchenriquez15@gmail.com';
+        enviarCorreoSolicitud($CorreoT, $nuevaSolicitud, $productosSolicitud, $idSolicitud, $nombrePDF);
         /* ========================= Evento Creacion nueva solicitud. ======================
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();

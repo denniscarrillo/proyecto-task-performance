@@ -16,6 +16,7 @@ $(document).ready(function () {
       { "data": 'usuario'},
       { "data": 'comisionTotal'},
       { "data": 'estadoComision'},
+      { "data": 'estadoLiquidacion'},
       { "data": 'fechaComision.date',
       "render": function(data) {
         return data.slice(0, 10); },
@@ -67,14 +68,22 @@ let iniciarDataTable = function (fechaDesde, fechaHasta) {
     columns: [
       { data: "idVendedor" },
       { data: "nombreVendedor" },
-      { data: "fechaDesde" },
-      { data: "fechaHasta" },
+      // { data: "fechaDesde" },
+      // { data: "fechaHasta" },
       // { data: "estadoComision" },
       { data: "totalComision" },
     ],
     response : true,
-  });
-  $("#modalComisionesV").modal("show");
+    initComplete: function () {
+      // Obtener las fechas de la primera fila
+      var fechaDesde = $tablaComisionesV.row(0).data().fechaDesde;
+      var fechaHasta = $tablaComisionesV.row(0).data().fechaHasta;
+
+      // Asumiendo que tengas un elemento con el id "fechasLabel" para mostrar las fechas
+      $("#fechasLabel").text('Desde el: ' + fechaDesde +' Hasta el: ' + fechaHasta);
+  },
+});
+$("#modalComisionesV").modal("show");
 };
 
 

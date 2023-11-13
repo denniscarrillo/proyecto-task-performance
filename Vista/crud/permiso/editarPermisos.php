@@ -14,6 +14,7 @@ if(isset($_POST['rol'])){
     $permisos->permisoInsercion = $_POST['insertar'];
     $permisos->permisoActualizacion = $_POST['actualizar'];
     $permisos->permisoEliminacion = $_POST['eliminar'];
+    $permisos->permisoReporte = $_POST['reporte'];
     $permisos->Moficado_Por = $_SESSION['usuario'];
     //Ahora enviamos el objeto al metodo y actualizamos los permisos en la DB
     ControladorPermiso::actualizarPermisosRol($permisos);

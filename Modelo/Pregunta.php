@@ -146,7 +146,7 @@ class Pregunta {
             $idPregunta = $Usuario[$indice]['idPregunta']; // Supongo que tienes un índice para relacionar las respuestas con las preguntas
     
             // Realizar la actualización para cada respuesta
-            $query = "UPDATE tbl_MS_Preguntas_X_Usuario SET respuesta ='$respuesta'  WHERE Creado_Por = '$Usuario' AND id_Pregunta = '$idPregunta';";
+            $query = "UPDATE tbl_MS_Preguntas_X_Usuario SET respuesta ='$respuestas'  WHERE Creado_Por = '$Usuario' AND id_Pregunta = '$idPregunta';";
             $params = array($nuevaRespuesta, $Usuario, $idPregunta);
     
             $stmt = sqlsrv_prepare($conexion, $query, $params);

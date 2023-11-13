@@ -49,12 +49,6 @@
               </a>
             </li>
             <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo $urlBitacoraTarea; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Bitácora Tarea</span>
-              </a>
-            </li>
-            <li class="dropdown-menu__content__list__item">
               <a href="<?php echo $urlMetricas; ?>" class="dropdown-menu__content__secundario__link">
                 <i class=""></i>
                 <span>Metrícas</span>

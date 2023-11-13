@@ -34,9 +34,9 @@ let procesarPermisoActualizar = data => {
       },
       {
         "defaultContent":
-        '<div><button class="btns btn" id="btn_ver"><i class="fa-solid fa-eye"></i></button>' +
-        `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`+  
-        '<button class="btns btn" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button></div>'
+        `<div><button class="btns btn" id="btn_ver"><i class="fa-solid fa-eye"></i></button>
+        <button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>  
+        <button class="btn_eliminar btns btn ${(permisos.Eliminar == 'N')? 'hidden': ''}" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button>`
       }
     ]
   });

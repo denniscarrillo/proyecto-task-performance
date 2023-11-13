@@ -96,7 +96,6 @@ if (isset($_SESSION['usuario'])) {
           // Rendimiento
           $urlMisTareas = '../../rendimiento/v_tarea.php';
           $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
-          $urlBitacoraTarea = ''; //PENDIENTE
           $urlMetricas = '../Metricas/gestionMetricas.php';
           $urlEstadisticas = '../../grafica/estadistica.php'; 
           //Solicitud
@@ -157,7 +156,7 @@ if (isset($_SESSION['usuario'])) {
                  <input type="datetime-local" id="fecha-hasta">
                 </div>
               <a target="_blank" class="btn btn-success" id="btn_depurar"> <i class="fa-solid fa-trash"></i> Depurar Bitácora</a>
-              <a href="../../../TCPDF/examples/reporteriaBitacora.php" target="_blank" class="btn btn-success" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
+              <a href="../../../TCPDF/examples/reporteriaBitacora.php" target="_blank" class="btn btn-success hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
               </div>
               <tbody class="table-group-divider">
               </tbody>
@@ -171,6 +170,7 @@ if (isset($_SESSION['usuario'])) {
     <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
     <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="../../../Recursos/js/bitacora/dataTableBitacora.js" type="module"></script>
+    <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
     <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
     <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   </body>
