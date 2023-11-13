@@ -255,11 +255,11 @@ sqlsrv_close($abrirConexion);
     public static function editarComision ($nuevaComision) {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $query = "UPDATE tbl_comision SET estadoComision = '$nuevaComision->estadoComision', estado_Liquidacion = '$nuevaComision->estadoLiquidacion', 
+        $query = "UPDATE tbl_comision SET estado_Liquidacion = '$nuevaComision->estadoLiquidacion', 
         Modificado_Por ='$nuevaComision->ModificadoPor', Fecha_Creacion ='$nuevaComision->fechaModificacion'
         WHERE id_Comision = '$nuevaComision->idComision';";
         $editarComision = sqlsrv_query($consulta, $query);
-        $query2 = "UPDATE tbl_comision_por_vendedor SET estadoComisionVendedor = '$nuevaComision->estadoComision', estado_Liquidacion = '$nuevaComision->estadoLiquidacion',
+        $query2 = "UPDATE tbl_comision_por_vendedor SET estado_Liquidacion = '$nuevaComision->estadoLiquidacion',
         Modificado_Por ='$nuevaComision->ModificadoPor', Fecha_Modificacion ='$nuevaComision->fechaModificacion'
         WHERE id_Comision = '$nuevaComision->idComision';";
         sqlsrv_query($consulta, $query2);
@@ -307,6 +307,34 @@ sqlsrv_close($abrirConexion);
             'vendedores' => $vendedores
         ];
         return $ComisionVer;
+    }
+    public static function eliminarComision($idComision){
+        try{
+            $conn = new Conexion();
+            $conexion = $conn->abrirConexionDB();
+            $query = "DELETE FROM tbl_Comision WHERE id_Comision = '$idComision';";
+            $estadoEliminado = sqlsrv_query($conexion, $query);
+        }catch (Exception $e) {
+            $estadoEliminado = 'Error SQL:' . $e;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estadoEliminado;
+    }
+    public static function anularComision($idComision){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query ="UPDATE tbl_Comision SET estadoComision = 'Anulada' WHERE id_Comision = '$idComision';";
+        $estadoAnulada = sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estadoAnulada;
+    }
+    public static function anularComisionPorVendedor($idComision){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query ="UPDATE tbl_Comision_Por_Vendedor SET estadoComisionVendedor = 'Anulada' WHERE id_Comision = '$idComision';";
+        $estadoAnulada = sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estadoAnulada;
     }
 }
     //convertir la fecha de comision totalm por vendedor en texto

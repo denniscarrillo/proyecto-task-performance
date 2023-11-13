@@ -44,4 +44,13 @@
         public static function traerIdComision($idComision){
             return Comision::ComisionPorId($idComision);
         }
+        public static function eliminandoComision($idComision){
+            return Comision::eliminarComision($idComision);
+        }
+        public static function SimularAnularComision($idComision){
+            return Comision::anularComision($idComision);
+        }
+        public static function SimularAnularComisionVendedor($idComision){
+            return Comision::anularComisionPorVendedor($idComision);
+        }
     }
