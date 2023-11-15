@@ -81,7 +81,7 @@ $html = '
 <td style="background-color: #e54037;color: white; text-align: center; width: 100px;">ESTADO</td>
 </tr>
 ';
-$preguntas = ControladorPregunta::preguntasUsuario();
+$preguntas = ControladorPregunta::obtenerPreguntasUsuarioPDF($_GET['buscar']);
 foreach($preguntas as $pregunta){
     $IdPregunta = $pregunta['id_Pregunta'];
     $preguntaP = $pregunta['pregunta'];

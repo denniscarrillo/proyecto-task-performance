@@ -20,6 +20,10 @@
         public static function eliminarCliente($CarteraCliente){
             return CarteraClientes::eliminarCliente($CarteraCliente);
         }
+
+        public static function obtenerCarteraClientesPDF($buscar){
+            return CarteraClientes::obtenerCarteraClientesPDF($buscar);
+        }
     
     }
 

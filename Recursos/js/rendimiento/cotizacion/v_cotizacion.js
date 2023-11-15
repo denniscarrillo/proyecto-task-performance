@@ -99,7 +99,7 @@ document.getElementById('form-cotizacion').addEventListener('submit', (event) =>
     prodEliminar = [];
     prodModificar = [];
     //Llamamos a la funcion que envia la cotizacion al servidor y recibe estos parametros
-    // enviarNuevaCotizacion($datosCotizacion, $arrayProductosCot);
+    enviarNuevaCotizacion($datosCotizacion, $arrayProductosCot);
 });
 // 
 let calcularResumenCotizacion = (elementosSumar, acumTotalSuma) => {

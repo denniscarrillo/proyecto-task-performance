@@ -111,15 +111,3 @@ table.dataTable.no-footer {
     margin-left: 15px;
 }
 
-
-
-div.dt-buttons {
-    position: relative;
-    margin-bottom: -17px;
-}
-
-.dataTables_wrapper .dataTables_filter {
-    float: right;
-    text-align: right;
-    margin-bottom: 15px;
-}

@@ -82,7 +82,8 @@ $html = '
 <td style="background-color: #e54037;color: white; text-align: center">USUARIO</td>
 </tr>
 ';
-$parametros = ControladorParametro::obtenerParametroSistema();
+
+$parametros = ControladorParametro::obtenerLosParametrosPDF($_GET['buscar']);
 foreach($parametros as $parametro){
     $IdParametro = $parametro['id'];
     $NomParametro = $parametro['parametro'];

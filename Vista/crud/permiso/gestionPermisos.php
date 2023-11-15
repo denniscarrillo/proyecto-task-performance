@@ -73,7 +73,8 @@
           </div>
         <div class="table-conteiner">
         <div>
-            <a href="../../../TCPDF/examples/reportePermisos.php" target="_blank" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
+            <!-- <a href="../../../TCPDF/examples/reportePermisos.php" target="_blank" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> -->
+            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
           </div>
           <table class="table" id="table-Permisos">
             <thead>

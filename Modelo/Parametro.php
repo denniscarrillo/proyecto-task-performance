@@ -131,4 +131,35 @@ class Parametro {
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $estadoEliminado;
     }
+
+    //Método para generar reporte.
+    public static function obtenerLosParametrosPDF($buscar){
+        $parametros = null;
+        try {
+            $parametros = array();
+            $con = new Conexion();
+            $abrirConexion = $con->abrirConexionDB();
+            $query = "SELECT p.id_Parametro, p.parametro, p.valor, p.descripcion, u.usuario 
+            FROM tbl_ms_parametro p
+            INNER JOIN tbl_ms_usuario u ON p.id_Usuario = u.id_Usuario
+            WHERE CONCAT(p.id_Parametro, p.parametro, p.valor, p.descripcion, u.usuario) LIKE '%' + '$buscar' + '%';";
+            $resultado = sqlsrv_query($abrirConexion, $query);
+            //Recorremos el resultado de tareas y almacenamos en el arreglo.
+            while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+                $parametros[] = [
+                    'id' => $fila['id_Parametro'],
+                    'parametro' => $fila['parametro'],
+                    'valorParametro' => $fila['valor'],
+                    'descripcionParametro' => $fila['descripcion'],
+                    'usuario' => $fila['usuario'],
+                ];
+            }
+        } catch (Exception $e) {
+            $parametros = 'Error SQL:' . $e;
+        }
+       sqlsrv_close($abrirConexion); //Cerrar conexion
+        return $parametros;
+    }
+
+
 }

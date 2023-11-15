@@ -246,3 +246,9 @@ $(document).on("click", "#btn_eliminar", function() {
       
     });                
 });
+
+//Generar reporte PDF
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-CarteraClientes_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reporteriaCarteraCliente.php?buscar='+buscar, '_blank');
+}); 

@@ -24,4 +24,9 @@ class ControladorParametro {
     public static function eliminandoParametro($parametro){
         return Parametro::eliminarParametro($parametro);
     }
+    public static function obtenerLosParametrosPDF($buscar){
+        return Parametro::obtenerLosParametrosPDF($buscar);
+    }
+    
+
 }

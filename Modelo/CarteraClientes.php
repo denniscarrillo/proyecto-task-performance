@@ -111,5 +111,29 @@ class CarteraClientes{
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
     }
+
+    //Método para obtener todos los clientes que existen.
+    public static function obtenerCarteraClientesPDF($buscar){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB();
+        $obtenerCarteraCliente = "SELECT id_CarteraCliente, nombre_Cliente, rtn_Cliente, telefono, correo, 
+        direccion, estadoContacto FROM tbl_CarteraCliente
+        WHERE CONCAT(id_CarteraCliente, nombre_Cliente, rtn_Cliente, telefono, correo, direccion, estadoContacto) LIKE '%' + '$buscar' + '%';";
+        $resultado = sqlsrv_query($consulta, $obtenerCarteraCliente);
+        $carteraCliente = array();
+        while($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)){
+            $carteraCliente [] = [
+                'idcarteraCliente' => $fila["id_CarteraCliente"],
+                'nombre' => $fila["nombre_Cliente"],
+                'rtn' => $fila["rtn_Cliente"],
+                'telefono' => $fila["telefono"],
+                'correo' => $fila["correo"],
+                'direccion' => $fila["direccion"],
+                'estadoContacto' => $fila["estadoContacto"]
+            ];
+        }
+        sqlsrv_close($consulta); #Cerramos la conexión.
+        return $carteraCliente;
+    }
 }#Fin de la clase
 
