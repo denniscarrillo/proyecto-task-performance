@@ -27,7 +27,7 @@ $pdf = new TCPDF('L', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 // set document information
 $pdf->setCreator(PDF_CREATOR);
 $pdf->setAuthor('Nicola Asuni');
-$pdf->setTitle('ReporteRoles');
+$pdf->setTitle('ReporteVentas');
 $pdf->setSubject('TCPDF Tutorial');
 $pdf->setKeywords('TCPDF, PDF, example, test, guide');
 
@@ -75,12 +75,11 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de Ventas</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 60px;">N°</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 60px;">ID</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">CODIGO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 220px;">NOMBRE</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">N° FACTURA</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 85px;">CODIGO CLIENTE</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 250px;">NOMBRE CLIENTE</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 130px;">RTN</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">FECHA</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">FECHA</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 90px;">TOTAL BRUTO</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 90px;">IMPUESTO</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 90px;">TOTAL</td>
@@ -100,12 +99,11 @@ foreach($Ventas as $Venta){
     $Cont++;
     $html .= '
     <tr>
-    <td style="text-align: center">'.$Cont.'</td>
     <td style="text-align: center">'.$idVenta.'</td>
     <td style="text-align: center">'.$idCliente.'</td>
     <td>'.$nombre.'</td>
     <td>'.$RTN.'</td>
-    <td>'.$fechaFormateada.'</td>
+    <td style="text-align: center">'.$fechaFormateada.'</td>
     <td style="text-align: center">'.$totalBruto.'</td>
     <td style="text-align: center">'.$totalImpuesto.'</td>
     <td style="text-align: center; background-color: #b7b7b7">'.$totalVenta.'</td>

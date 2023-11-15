@@ -92,11 +92,11 @@ class Venta {
     public static function obtenerlasventasPDF($buscar){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.        
-        $query = "SELECT v.NUMFACTURA, v.CODCLIENTE, c.NOMBRECLIENTE, c.CIF, v.FECHA, v.TOTALBRUTO, v.TOTALIMPUESTOS, v.TOTALNETO
+        $query = "		SELECT v.NUMFACTURA, v.CODCLIENTE, c.NOMBRECLIENTE, c.CIF, v.FECHA, v.TOTALBRUTO, v.TOTALIMPUESTOS, v.TOTALNETO
         FROM View_Clientes AS c
         INNER JOIN View_FACTURASVENTA AS v ON c.CODCLIENTE = v.CODCLIENTE
-        WHERE CONCAT(v.NUMFACTURA, v.CODCLIENTE, c.NOMBRECLIENTE, c.CIF, v.FECHA, v.TOTALBRUTO, v.TOTALIMPUESTOS, v.TOTALNETO) 
-        LIKE '%' + '$buscar' + '%';";
+        WHERE CONCAT(v.NUMFACTURA, v.CODCLIENTE, c.NOMBRECLIENTE, c.CIF, CONVERT(NVARCHAR, v.FECHA, 23), v.TOTALBRUTO, v.TOTALIMPUESTOS, v.TOTALNETO) 
+        LIKE '%' + '$buscar' + '%' ORDER BY v.NUMFACTURA;";
         $listaVentas = sqlsrv_query($consulta, $query);
         $ventas = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
