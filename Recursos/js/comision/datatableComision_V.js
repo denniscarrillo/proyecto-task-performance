@@ -139,3 +139,8 @@ let obtenerComisionesFiltradas = function (fechaDesde, fechaHasta) {
     },
   });
 }
+
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-ComisionVendedor_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reporteriaComisionVendedores.php?buscar='+buscar, '_blank');
+});

@@ -52,5 +52,34 @@ class DataTableObjeto
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
         return $idObjeto;
+    }
+    public static function obtenerObjetosPdf($buscar)
+    {
+        $ObjetoUsuario = null;
+        try {
+            
+            $con = new Conexion();
+            $abrirConexion = $con->abrirConexionDB();
+            $query = "SELECT id_Objeto, objeto, descripcion, tipo_Objeto
+            FROM tbl_MS_Objetos
+            WHERE CONCAT(id_Objeto, objeto, descripcion, tipo_Objeto)
+            LIKE '%' + '$buscar' + '%';";
+           $resultado = sqlsrv_query($abrirConexion, $query);
+           $ObjetoUsuario = array();
+            //Recorremos el resultado de tareas y almacenamos en el arreglo.
+            while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+                $ObjetoUsuario[] = [
+                    'id_Objeto' => $fila['id_Objeto'],
+                    'objeto' => $fila['objeto'],
+                    'descripcion' => $fila['descripcion'],
+                    'tipo_Objeto' => $fila['tipo_Objeto']
+
+                ];
+            }
+        } catch (Exception $e) {
+            $ObjetoUsuario = 'Error SQL:' . $e;
+        }
+        sqlsrv_close($abrirConexion); //Cerrar conexion
+        return $ObjetoUsuario;
     } 
 }

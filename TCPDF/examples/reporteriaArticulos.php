@@ -83,7 +83,7 @@ $html = '
 <td style="background-color: #e54037;color: white; text-align: center; width: 80px;">MARCA</td>
 </tr>
 ';
-$articulos = ControladorArticulo:: obtenerTodosArticulos();
+$articulos = ControladorArticulo:: obtenerArticuloPdf($_GET['buscar']);
 foreach($articulos as $articulo){
     $IdArticulo = $articulo['codigo'];
     $nombreArticulo = $articulo['articulo'];

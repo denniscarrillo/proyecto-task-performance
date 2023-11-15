@@ -247,6 +247,10 @@ $(document).on("click", "#btn_pdf_id",  function (){
       });
     });
 
+    $(document).on("click", "#btn_Pdf", function() {
+      let buscar = $('#table-Comision_filter > label > input[type=search]').val();
+      window.open('../../../TCPDF/examples/reporteriaComision.php?buscar='+buscar, '_blank');
+    });
     
 /* let obtenerEstadoComision = function (idElemento) {
   //Petición para obtener los estados de las comisiones
@@ -324,45 +328,4 @@ $selectPorcentaje.addEventListener("change", function () {
   });
 }); */
 
-
-//Eliminar porcentajes
-$(document).on("click", "#btn_eliminar", function() {
-  let fila = $(this).closest("tr"),
-     idComision = $(this).closest('tr').find('td:eq(0)').text(), 
-     comision = fila.find('td:eq(1)').text(),
-     estado = 'Anulada';
-     
-    Swal.fire({
-      title: 'Estas seguro de eliminar la comision ' +comision+'?',
-      text: "No podras revertir esto!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, Borralo!'
-      
-    }).then((result) => {
-      if (result.isConfirmed) {      
-        $.ajax({
-          url: "../../Vista/comisiones/eliminarComisiones.php",
-          type: "POST",
-          datatype: "JSON",
-          data: { 
-            idComision: idComision,
-            estado: estado,
-          },
-          success: function (data) {
-            console.log(data);
-            Swal.fire(
-              'Lo sentimos!',
-              'La comisión no puede ser eliminada, se ha Anulado.',
-              'error'
-            );
-            tablaComision.ajax.reload(null, false);
-          }
-        });
-      
-      }//Fin del AJAX
-      
-    });                
-});
+// 

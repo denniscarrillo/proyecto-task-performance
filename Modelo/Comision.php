@@ -265,15 +265,6 @@ sqlsrv_close($abrirConexion);
         sqlsrv_query($consulta, $query2);
         sqlsrv_close($consulta); #Cerramos la conexión.
     }
-
-    public static function eliminarComision ($idComision) {
-        $conn = new Conexion();
-        $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $query = "UPDATE tbl_comision SET estadoComision = '$idComision->estadoComision', Modificado_Por ='$idComision->ModificadoPor', 
-        Fecha_Creacion ='$idComision->fechaModificacion' WHERE id_Comision = '$idComision->idComision';";
-        $eliminarComision = sqlsrv_query($consulta, $query);
-        sqlsrv_close($consulta); #Cerramos la conexión.
-    }
     public static function ComisionPorId($idComision){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
@@ -344,6 +335,62 @@ sqlsrv_close($abrirConexion);
         $estadoAnulada = sqlsrv_query($conexion, $query);
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $estadoAnulada;
+    }
+    public static function obtenerTodasLasComisionesPdf($buscar)
+    {
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $listaComision =
+            $query = "SELECT co.id_Comision, co.id_Venta, v.TOTALNETO, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, co.estado_Liquidacion, co.Fecha_Creacion
+            FROM tbl_Comision AS co
+            INNER JOIN VIEW_FACTURASVENTA AS v ON co.id_Venta = v.NUMFACTURA
+            INNER JOIN  tbl_Porcentaje AS po ON co.id_Porcentaje = po.id_Porcentaje
+            WHERE CONCAT(co.id_Comision, co.id_Venta, v.TOTALNETO, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, co.estado_Liquidacion, co.Fecha_Creacion)
+            LIKE '%' + '$buscar' + '%' AND v.TOTALNETO > 0;";
+        $listaComision = sqlsrv_query($consulta, $query);
+        $Comision = array();
+        //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
+        while ($fila = sqlsrv_fetch_array($listaComision, SQLSRV_FETCH_ASSOC)) {
+            $Comision[] = [
+                'idComision' => $fila["id_Comision"],
+                'factura' => $fila["id_Venta"],
+                'totalVenta' => $fila["TOTALNETO"],
+                'porcentaje' => $fila["valor_Porcentaje"],
+                'comisionTotal' => $fila["comision_TotalVenta"],
+                'estadoComisionar' => $fila["estadoComision"],
+                'estadoLiquidacion' => $fila["estado_Liquidacion"],
+                'fechaComision' => $fila["Fecha_Creacion"]
+            ];
+        }
+        sqlsrv_close($consulta); #Cerramos la conexión.
+        return $Comision;
+    }
+    public static function obtenerComisionesPorVendedorPdf($buscar)
+    {
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $query="SELECT vt.id_Comision_Por_Vendedor, vt.id_Comision, vt.id_usuario_vendedor, u.usuario, vt.total_Comision, vt.estadoComisionVendedor, vt.estado_Liquidacion, vt.Fecha_Creacion
+            FROM tbl_ms_usuario AS u
+            INNER JOIN tbl_comision_por_vendedor AS vt ON u.id_Usuario = vt.id_usuario_vendedor
+            WHERE CONCAT(vt.id_Comision_Por_Vendedor, vt.id_Comision, vt.id_usuario_vendedor, u.usuario, vt.total_Comision, vt.estadoComisionVendedor, vt.estado_Liquidacion, vt.Fecha_Creacion)
+            LIKE '%' + '$buscar' + '%';";
+        $listaComision= sqlsrv_query($consulta, $query);   
+        $ComisionVendedor = array();
+        //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
+        while ($fila = sqlsrv_fetch_array($listaComision, SQLSRV_FETCH_ASSOC)) {
+            $ComisionVendedor[] = [
+                'idComisionVendedor' => $fila["id_Comision_Por_Vendedor"],
+                'idComision' => $fila["id_Comision"],
+                'idVendedor' => $fila["id_usuario_vendedor"],
+                'usuario' => $fila["usuario"],
+                'comisionTotal' => $fila["total_Comision"],
+                'estadoComision' => $fila["estadoComisionVendedor"],
+                'estadoLiquidacion' => $fila["estado_Liquidacion"],
+                'fechaComision' => $fila["Fecha_Creacion"]
+            ];
+        }
+        sqlsrv_close($consulta); #Cerramos la conexión.
+        return $ComisionVendedor;
     }
 }
     //convertir la fecha de comision totalm por vendedor en texto

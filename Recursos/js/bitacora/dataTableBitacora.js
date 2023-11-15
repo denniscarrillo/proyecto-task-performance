@@ -51,3 +51,8 @@ $(document).on("click", "#btn_depurar", function() {
     }
     }); //Fin del AJAX               
 });
+
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-Bitacora_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reporteriaBitacora.php?buscar='+buscar, '_blank');
+});

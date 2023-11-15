@@ -84,7 +84,7 @@ $html = '
 </tr>
 ';
 
-$bitacoras = ControladorBitacora::bitacorasUsuario();
+$bitacoras = ControladorBitacora::getBitacoraPdf($_GET['buscar']);
 foreach($bitacoras as $bitacora){
     // $IdBitacora = $bitacora['id_Bitacora'];
     $fecha = $bitacora['fecha'];

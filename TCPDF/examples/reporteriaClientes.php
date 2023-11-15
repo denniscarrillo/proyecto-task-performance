@@ -82,7 +82,7 @@ $html = '
 <td style="background-color: #e54037;color: white; text-align: center; width: 190px;">DIRECCION</td>
 </tr>
 ';
-$clientes = ControladorVistaClientes::getClientes();
+$clientes = ControladorVistaClientes::getClientesPdf($_GET['buscar']);
 foreach($clientes as $cliente){
     // $IdCliente = $cliente['codCliente'];
     $nombreCliente = $cliente['nombreCliente'];
