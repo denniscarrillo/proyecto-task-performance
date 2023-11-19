@@ -764,7 +764,7 @@ class Tarea
         $conexion = $conn->abrirConexionDB();
         $query = "SELECT DATEDIFF(day, Fecha_Creacion, GETDATE()) AS dias_Transcurridos, 
                     (SELECT valor FROM tbl_MS_Parametro WHERE parametro = 'DIAS VIGENCIA COTIZACION') AS vigencia
-                        FROM tbl_CotizacionTarea WHERE id_Cotizacion = 1;";
+                        FROM tbl_CotizacionTarea WHERE id_Cotizacion = '$idCotizacion';";
         $fila = sqlsrv_fetch_array(sqlsrv_query($conexion, $query));
         if(intval($fila['dias_Transcurridos']) > intval($fila['vigencia'])){
             $estado = true;

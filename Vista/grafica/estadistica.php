@@ -37,10 +37,10 @@
             $urlIndex = '../index.php';
             // Rendimiento
             $urlMisTareas = '../rendimiento/v_tarea.php';
-            $urlConsultarTareas = '../crud/DataTableTarea/gestionDataTableTarea.php'; //PENDIENTE
-            $urlBitacoraTarea = ''; //PENDIENTE
+            $urlCotizacion = '../rendimiento/cotizacion/gestionCotizacion.php';
+            $urlConsultarTareas = '../crud/DataTableTarea/gestionDataTableTarea.php'; 
             $urlMetricas = '../crud/Metricas/gestionMetricas.php';
-            $urlEstadisticas = './estadistica.php'; //PENDIENTE
+            $urlEstadisticas = './estadistica.php'; 
             //Solicitud
             $urlSolicitud = '../crud/DataTableSolicitud/gestionDataTableSolicitud.php';
             //Comisión

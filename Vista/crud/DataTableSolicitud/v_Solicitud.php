@@ -100,10 +100,10 @@ if (isset($_SESSION['usuario'])) {
                 $urlIndex = '../../index.php';
                 // Rendimiento
                 $urlMisTareas = '../../rendimiento/v_tarea.php';
-                $urlConsultarTareas = './'; //PENDIENTE
-                $urlBitacoraTarea = ''; //PENDIENTE
+                $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
+                $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
                 $urlMetricas = '../Metricas/gestionMetricas.php';
-                $urlEstadisticas = '../../grafica/estadistica.php'; //PENDIENTE
+                $urlEstadisticas = '../../grafica/estadistica.php';
                 //Solicitud
                 $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
                 //Comisión
@@ -120,7 +120,7 @@ if (isset($_SESSION['usuario'])) {
                 $urlPreguntas = '../pregunta/gestionPregunta.php';
                 $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
                 $urlParametros = '../parametro/gestionParametro.php';
-                $urlPermisos = '../permiso/gestionPermiso.php';
+                $urlPermisos = '../permiso/gestionPermisos.php';
                 $urlRoles = '../rol/gestionRol.php';
                 $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
                 $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';

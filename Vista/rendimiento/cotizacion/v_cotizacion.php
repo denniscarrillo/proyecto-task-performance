@@ -31,8 +31,8 @@
                 $urlIndex = '../../index.php';
                 // Rendimiento
                 $urlMisTareas = '../v_tarea.php';
+                $urlCotizacion = './gestionCotizacion.php';
                 $urlConsultarTareas = '../../crud/DataTableTarea/gestionDataTableTarea.php';
-                $urlBitacoraTarea = ''; //PENDIENTE
                 $urlMetricas = '../../crud/Metricas/gestionMetricas.php';
                 $urlEstadisticas = '../../grafica/estadistica.php';
                 //Solicitud
@@ -50,7 +50,7 @@
                 $urlCarteraCliente = '../../crud/carteraCliente/gestionCarteraClientes.php';
                 $urlPreguntas = '../../crud/pregunta/gestionPregunta.php';
                 $urlParametros = '../../crud/parametro/gestionParametro.php';
-                $urlPermisos = '../../crud/permiso/gestionPermiso.php';
+                $urlPermisos = '../../crud/permiso/gestionPermisos.php';
                 $urlRoles = '../../crud/rol/gestionRol.php';
                 $urlPorcentajes = '../../crud/Porcentajes/gestionPorcentajes.php';
                 $urlServiciosTecnicos = '../../crud/TipoServicio/gestionTipoServicio.php';

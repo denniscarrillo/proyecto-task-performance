@@ -39,13 +39,13 @@
             </li>
             <li class="dropdown-menu__content__list__item">
               <a href="<?php echo $urlCotizacion; ?>" class="dropdown-menu__content__secundario__link">
-                <span>Cotizaciones</span>
+                <span>Ver Cotizaciones</span>
               </a>
             </li>
             <li class="dropdown-menu__content__list__item">
               <a href="<?php echo $urlConsultarTareas; ?>" class="dropdown-menu__content__secundario__link">
                 <i class=""></i>
-                <span>Consultar Tareas</span>
+                <span>Ver Tareas</span>
               </a>
             </li>
             <li class="dropdown-menu__content__list__item">

@@ -66,10 +66,9 @@ if (isset($_SESSION['usuario'])) {
       // Rendimiento
       $urlMisTareas = './rendimiento/v_tarea.php';
       $urlCotizacion = './rendimiento/cotizacion/gestionCotizacion.php';
-      $urlConsultarTareas = './crud/DataTableTarea/gestionDataTableTarea.php'; //PENDIENTE
-      $urlBitacoraTarea = ''; //PENDIENTE
+      $urlConsultarTareas = './crud/DataTableTarea/gestionDataTableTarea.php'; 
       $urlMetricas = './crud/Metricas/gestionMetricas.php';
-      $urlEstadisticas = './grafica/estadistica.php'; //PENDIENTE
+      $urlEstadisticas = './grafica/estadistica.php'; 
       //Solicitud
       $urlSolicitud = './crud/DataTableSolicitud/gestionDataTableSolicitud.php';
       //Comisión
