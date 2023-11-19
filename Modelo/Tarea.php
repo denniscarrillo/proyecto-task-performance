@@ -610,12 +610,12 @@ class Tarea
         $conexion = $conn->abrirConexionDB();
         $select = '';
         if($estadoCliente == "Existente"){
-            $select = "SELECT vc.CIF AS RTN, vc.NOMBRECLIENTE AS NOMBRE, vc.TELEFONO1 AS TELEFONO, us.nombre_Usuario AS VENDEDOR FROM COCINAS_Y_EQUIPOS.dbo.View_Clientes vc 
+            $select = "SELECT vc.CIF AS RTN, vc.NOMBRECLIENTE AS NOMBRE, vc.TELEFONO1 AS TELEFONO, us.nombre_Usuario AS VENDEDOR, us.telefono AS TELVENDEDOR FROM COCINAS_Y_EQUIPOS.dbo.View_Clientes vc 
             INNER JOIN tbl_Tarea tr ON vc.CIF COLLATE Latin1_General_CS_AI = tr.RTN_Cliente
             INNER JOIN tbl_MS_Usuario us ON us.usuario = tr.Creado_Por
             WHERE tr.id_Tarea = '$idTarea';";
         }else{
-            $select = "SELECT cc.rtn_Cliente AS RTN, cc.nombre_Cliente AS NOMBRE, cc.telefono AS TELEFONO, us.nombre_Usuario AS VENDEDOR FROM tbl_CarteraCliente cc
+            $select = "SELECT cc.rtn_Cliente AS RTN, cc.nombre_Cliente AS NOMBRE, cc.telefono AS TELEFONO, us.nombre_Usuario AS VENDEDOR, us.telefono AS TELVENDEDOR FROM tbl_CarteraCliente cc
             INNER JOIN tbl_Tarea tr ON cc.rtn_Cliente = tr.RTN_Cliente
             INNER JOIN tbl_MS_Usuario us ON us.usuario = tr.Creado_Por
             WHERE tr.id_Tarea = '$idTarea';";

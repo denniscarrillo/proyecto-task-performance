@@ -25,7 +25,7 @@ date_default_timezone_set('America/Tegucigalpa'); // Establecer la zona horaria 
 
 $fechaActual = date('Y-m-d'); // Obtener la fecha actual en formato ISO 8601
 $horaActual = date('h:i:s A'); // Obtener la hora actual en formato de 12 horas con AM/PM
-$fechaFormateada = ucfirst(strftime('%A, %d de %B del %Y a las ', strtotime($fechaActual)));
+$fechaFormateada = ucfirst(strftime('%A, %d de %B del %Y ', strtotime($fechaActual)));
 $nombreDiaEnIngles = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 $nombreDiaEnEspañol = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
 $nombreMesEnIngles = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -93,8 +93,8 @@ $datosCotGenerales = ControladorTarea::obtenerDatos(intval($_GET['idTarea']), $_
 $html = '
 
 <div style="display">
-    <div>' . $fechaFormateada . '</div>
-    <div>Cotización #: <b>' . $datosCotizacion['detalle']['id_Cotizacion'] . '</b>   
+    <div style="text-align: right;">' . $fechaFormateada . '</div>
+    <div><b style="text-align: center;">COTIZACIÓN # ' . $datosCotizacion['detalle']['id_Cotizacion'] . '</b>   
     <br><br>Por medio de la presente le hago cotización para:
     <br>
     <div><b>'.$datosCotGenerales['NOMBRE'].'</b>
@@ -186,7 +186,8 @@ $html.='
     <br><br>Atentamente, 
     <br><b>'.$datosCotGenerales['VENDEDOR'].'</b>
     <br>Cocinas y Equipos
-    <br>Apoyo Tecnico
+    <br>Apoyo Técnico
+    <br>'.$datosCotGenerales['TELVENDEDOR'].'
 
     </div>
 
