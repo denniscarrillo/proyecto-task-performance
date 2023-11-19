@@ -22,7 +22,7 @@ foreach($datosParametro  as $datos){
 date_default_timezone_set('America/Tegucigalpa');
 $fechaActual = date('d/m/Y H:i:s'); // Obtén la fecha y hora actual en el formato deseado
 // create new PDF document
-$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+$pdf = new TCPDF('L', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
 // set document information
 $pdf->setCreator(PDF_CREATOR);
@@ -75,13 +75,14 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de comision por vendedores</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 40px">N°</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">ID COMISION</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 105px;">ID VENDEDOR</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 92px;">VENDEDOR</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">ESTADO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 118px;">COMISION TOTAL</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">FECHA</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 60px">N°</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 120px;">ID COMISION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 125px;">ID VENDEDOR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 120px;">VENDEDOR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 120px;">ESTADO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 140px;">COMISION TOTAL</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 120px;">FECHA</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 140px;">FECHA LIQUIDAR</td>
 </tr>
 ';
 $ComisionVendedor = ControladorComision::getComisionesVendedorPdf($_GET['buscar']);
@@ -95,6 +96,9 @@ foreach($ComisionVendedor as $ComisionV){
     $fecha = $ComisionV['fechaComision'];
     $timestamp = $fecha->getTimestamp();
     $fechaComision = date('Y-m-d', $timestamp);
+    $fechaLiqui = $ComisionV['fechaLiquidacion'];
+    $timestampLiqui = $fechaLiqui->getTimestamp();
+    $fechaLiquidacion = date('Y-m-d', $timestampLiqui);
     $Cont++;
     
 
@@ -107,6 +111,7 @@ foreach($ComisionVendedor as $ComisionV){
 	<td style="text-align: center">'.$Estado.'</td>
     <td style="text-align: center">'.$comisionTotal.'</td>
     <td style="text-align: center">'.$fechaComision.'</td>
+    <td style="text-align: center">'.$fechaLiquidacion.'</td>
     </tr>
     ';
     

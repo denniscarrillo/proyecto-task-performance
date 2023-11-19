@@ -131,6 +131,9 @@ h1{
     font-family: "Poppins", sans-serif;
     text-shadow: black 0.1em 0.1em 0.2em;
 }
+.hidden{
+    display:flex !important;
+}
 /* #btn_eliminar{
     background-color: rgba(255, 0, 0, 0.855);
 } */

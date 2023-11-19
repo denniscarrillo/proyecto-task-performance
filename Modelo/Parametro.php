@@ -161,5 +161,18 @@ class Parametro {
         return $parametros;
     }
 
+    public static function obtenerVigenciaLiquidacion(){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query="SELECT valor FROM  tbl_MS_Parametro where parametro = 'ADMINLIQUIDACION'";
+        $resultado = sqlsrv_query($conexion, $query);
+        $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+        $liquidacion = [
+            'liquidacion' => $fila['valor']   
+        ];
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $liquidacion;
+    }
+
 
 }

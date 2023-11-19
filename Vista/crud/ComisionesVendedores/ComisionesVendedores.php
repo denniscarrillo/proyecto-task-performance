@@ -164,6 +164,7 @@ if (isset($_SESSION['usuario'])) {
                 <th scope="col">ESTADO</th>
                 <th scope="col">LIQUIDACION</th>
                 <th scope="col">FECHA</th>
+                <th scope="col">FECHA LIQUIDAR</th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
