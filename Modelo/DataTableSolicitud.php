@@ -10,7 +10,7 @@ class DataTableSolicitud
     public $FechaCreacion;
     public $MotivoCancelacion;
 
-    // Obtener todas las tareas que le pertenecen a un usuario.
+    // Obtener todas las solicitudes .
     public static function obtenerSolicitud()
     {
         $SolicitudesUsuario = null;
@@ -210,22 +210,67 @@ class DataTableSolicitud
         return $verArticulos;
     }
 
-    public static function rtnExiste($rtn) {
-        $existeRTN = false;
+    public static function validarRtnExiste($rtn) {
+        $validarRtnExiste= false;
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query = "SELECT rtn FROM tbl_MS_Usuario WHERE rtn = '$rtn'";
-        $user = sqlsrv_query($conexion, $query);
-        $existe = sqlsrv_has_rows($user);
-        
-        if ($existe) {
-            $existeRTN = true;
+        $query = "SELECT rtn_Cliente FROM tbl_CarteraCliente WHERE rtn_Cliente = '$rtn'";
+        $rtnCliente = sqlsrv_query($conexion, $query);
+        $query2 = "SELECT rtn_Cliente FROM tbl_CarteraCliente WHERE (rtn_Cliente= '$rtn' AND rtn_Cliente IS NOT NULL AND rtn_Cliente != '')
+        OR (rtn_Cliente IS NOT NULL AND rtn_Cliente!= '' AND '$rtn' IS NULL)";
+        $rtnCliente2 = sqlsrv_query($conexion, $query2);
+        $existe = sqlsrv_has_rows($rtnCliente);
+        $existe2 = sqlsrv_has_rows($rtnCliente2);
+        if($existe || $existe2){
+            $validarRtnExiste= true;
         }
-        
-        sqlsrv_close($conexion); // Cerramos la conexión.
-        
-        return $existeRTN;
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $validarRtnExiste;
     }
+
+    // Obtener todas las solicitudes .
+    public static function obtenerSolicitudPDF($buscar)
+    {
+        $SolicitudesUsuario = null;
+        try {
+            $SolicitudesUsuario = array();
+            $con = new Conexion();
+            $abrirConexion = $con->abrirConexionDB();
+            $query = "SELECT 
+            id_Solicitud,
+            CASE
+                WHEN cc.nombre_Cliente IS NOT NULL AND cc.nombre_Cliente <> '' THEN cc.nombre_Cliente COLLATE Modern_Spanish_CI_AS
+                ELSE c.NOMBRECLIENTE COLLATE Modern_Spanish_CI_AS
+            END AS NombreCliente, t.servicio_Tecnico, telefono_cliente, EstadoAvance, s.Fecha_Creacion
+        FROM 
+            tbl_Solicitud as s
+        INNER JOIN tbl_TipoServicio as t ON t.id_TipoServicio = s.id_TipoServicio
+        LEFT JOIN View_Clientes as c ON c.CIF COLLATE Modern_Spanish_CI_AS = s.rtn_cliente COLLATE Modern_Spanish_CI_AS
+        LEFT JOIN tbl_CarteraCliente as cc ON cc.rtn_Cliente = s.rtn_clienteCartera 
+        WHERE CONCAT( id_Solicitud,  cc.nombre_Cliente, c.NOMBRECLIENTE, t.servicio_Tecnico, 
+                telefono_cliente, EstadoAvance, s.Fecha_Creacion) 
+                COLLATE Modern_Spanish_CI_AS LIKE '%' + '$buscar' + '%' COLLATE Modern_Spanish_CI_AS 
+                ORDER BY id_Solicitud;";
+
+           $resultado = sqlsrv_query($abrirConexion, $query);
+            //Recorremos el resultado de tareas y almacenamos en el arreglo.
+            while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+                $SolicitudesUsuario[] = [
+                    'id_Solicitud' => $fila['id_Solicitud'],
+                    'Nombre' => $fila['NombreCliente'],
+                    'servicio_Tecnico' => $fila['servicio_Tecnico'],
+                    'telefono' => $fila['telefono_cliente'],
+                    'EstadoAvance' => $fila['EstadoAvance'],
+                    'Fecha_Creacion' => $fila['Fecha_Creacion']
+                   
+                ];
+            }
+        } catch (Exception $e) {
+            $SolicitudesUsuario = 'Error SQL:' . $e;
+        }
+        sqlsrv_close($abrirConexion); //Cerrar conexion
+        return $SolicitudesUsuario;
+    } 
     
 }
 

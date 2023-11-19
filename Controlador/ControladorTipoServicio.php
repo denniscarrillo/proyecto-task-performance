@@ -28,4 +28,8 @@ class ControladorTipoServicio {
         return TipoServicio::obtenerTipoServicioPDF($buscar);
     }
 
+    public static function obtenerTipoServicioID($id){
+        return TipoServicio::obtenerTipoServicioID($id);
+       } 
+
 }

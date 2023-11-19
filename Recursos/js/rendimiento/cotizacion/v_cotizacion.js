@@ -151,7 +151,7 @@ let calcularResumenCotizacion = (elementosSumar, acumTotalSuma) => {
     $resumenCotizacion.descuento.textContent = `Lps. ${(acumTotalSuma * 0.03).toFixed(2)}`;
     $resumenCotizacion.subdescuento.textContent = `Lps. ${(acumTotalSuma - parseFloat($resumenCotizacion.descuento.textContent.split(' ')[1])).toFixed(2)}`;
     $resumenCotizacion.impuesto.textContent = `Lps. ${(parseFloat($resumenCotizacion.subdescuento.textContent.split(' ')[1]) * 0.15).toFixed(2)}`;
-    $resumenCotizacion.total.textContent = `Lps. ${(parseFloat($resumenCotizacion.subdescuento.textContent.split(' ')[1]) - parseFloat($resumenCotizacion.impuesto.textContent.split(' ')[1])).toFixed(2)}`;
+    $resumenCotizacion.total.textContent = `Lps. ${(parseFloat($resumenCotizacion.subdescuento.textContent.split(' ')[1]) + parseFloat($resumenCotizacion.impuesto.textContent.split(' ')[1])).toFixed(2)}`;
 }
 
 //nueva Cotizacion
@@ -214,6 +214,8 @@ let validarDatosCotizacion = async () => {
         return data.detalle.id_Cotizacion
     }
 }
+
+
 let obtenerDatosCotizacion = async ($idTarea) => {
     let dataCotizacion = '';
     try {
@@ -388,3 +390,11 @@ let mostrarElementosNuevaCotizacion = (estado) => {
         });
     }
 }
+
+
+$(document).on("click", "#btn_Pdf",  function (){
+    let idTarea = document.querySelector('.encabezado').id;
+    let estadoCliente = document.querySelector('.datos-cotizacion').id;
+    window.open('../../../TCPDF/examples/reporteCotizacion.php?idTarea='+idTarea+'&estadoCliente='+estadoCliente,'_blank');
+    console.log('Estado del cliente:'+estadoCliente)
+   });

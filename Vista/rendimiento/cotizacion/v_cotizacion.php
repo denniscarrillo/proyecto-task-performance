@@ -71,7 +71,7 @@
                 <div class="encabezado" id="<?php echo $_GET['idTarea'] ?>">
                     <h2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('v_tarea.php');?>" name='v_tarea.php'>Nueva Cotización</h2>
                 </div>
-                    <div class="datos-cotizacion">
+                    <div class="datos-cotizacion" id="<?php echo $_GET['estadoCliente'] ?>">
                         <div class="colum-horizontal">
 
                             <div id="input-fecha">
@@ -106,7 +106,8 @@
                     <div class="container-btns-cotizacion">
                         <a href="#" class="btn_nuevoRegistro btn btn-primary exist hidden" id="btn-nueva-cot"><i class="fa-solid fa-circle-plus"></i> Nueva Cotización</a>
                         <!-- <button id="btn-anular-cot" class="btn btn-primary">Nueva cotización</button> -->
-                        <a href="../../../TCPDF/examples/reporteCotizacion.php" target="_blank" class="btn_Pdf btn btn-primary exist hidden" id="btn_Pdf"><i class="fas fa-file-pdf"> </i> Generar PDF</a>
+                        <!-- <a href="../../../TCPDF/examples/reporteCotizacion.php" target="_blank" class="btn_Pdf btn btn-primary exist hidden" id="btn_Pdf"><i class="fas fa-file-pdf"> </i> Generar PDF</a> -->
+                        <button class="btn_Pdf btn btn-primary exist hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
                     </div>
                     <form id="form-cotizacion" accion="">
                         <div class="productos-cotizacion">

@@ -7,11 +7,12 @@ $data = array(
     'estado' => 'false'
 );
 
-if(ControladorUsuario::validarRtnExiste($_POST['rntcliente']))
+if(ControladorDataTableSolicitud::validarRtnExiste($_POST['rtnCliente']))
 {
     $data = array(
         'estado' => 'true'
     );
+    
 }
 
 
