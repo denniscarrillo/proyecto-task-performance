@@ -65,6 +65,7 @@ if (isset($_SESSION['usuario'])) {
       $urlIndex = './index.php';
       // Rendimiento
       $urlMisTareas = './rendimiento/v_tarea.php';
+      $urlCotizacion = './rendimiento/cotizacion/gestionCotizacion.php';
       $urlConsultarTareas = './crud/DataTableTarea/gestionDataTableTarea.php'; //PENDIENTE
       $urlBitacoraTarea = ''; //PENDIENTE
       $urlMetricas = './crud/Metricas/gestionMetricas.php';

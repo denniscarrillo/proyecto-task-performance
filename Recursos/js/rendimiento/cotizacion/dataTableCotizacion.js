@@ -7,7 +7,7 @@ $(document).ready(function () {
 });
 //Recibe la respuesta de la peticion AJAX y la procesa
 let procesarPermisoActualizar = data => {
-//   let permisos = JSON.parse(data);
+  let permisos = JSON.parse(data);
   tablaCotizacion = $('#table-Cotizacion').DataTable({
     "ajax": {
       "url": "../../../../Vista/rendimiento/cotizacion/obtenerCotizaciones.php",
@@ -26,7 +26,7 @@ let procesarPermisoActualizar = data => {
       { "data": "estado"},
       {
         "defaultContent":
-        `<button class="btn-editar btns btn 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`
+        `<button class="btn-editar btns btn ${(permisos.Reporte == 'N')?'hidden':''}" id="btn_editar"><i class="fas fa-file-pdf"> </i></button>`
       }
     ]  
   });
@@ -40,4 +40,4 @@ let obtenerPermisos = function ($idObjeto, callback) {
         data: {idObjeto: $idObjeto},
         success: callback
       });
-  }
+}

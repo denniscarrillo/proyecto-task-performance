@@ -8,58 +8,58 @@ require_once("../../../Modelo/Usuario.php");
 require_once("../../../Controlador/ControladorUsuario.php");
 
 session_start(); //Reanudamos la sesion
-// if (isset($_SESSION['usuario'])) {
-//   $newBitacora = new Bitacora();
-//   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
-//   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionPregunta.php');
-//   (!($_SESSION['usuario'] == 'SUPERADMIN'))
-//   ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
-//   : 
-//     $permisoConsulta = true;
-//   ;
-//   if(!$permisoConsulta){
-//     /* ==================== Evento intento de ingreso sin permiso a mantenimiento pregunta. ==========================*/
-//     $accion = ControladorBitacora::accion_Evento();
-//     date_default_timezone_set('America/Tegucigalpa');
-//     $newBitacora->fecha = date("Y-m-d h:i:s");
-//     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionPregunta.php');
-//     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-//     $newBitacora->accion = $accion['fallido'];
-//     $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a mantenimiento pregunta';
-//     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-//     /* ===============================================================================================================*/
-//     header('location: ../../v_errorSinPermiso.php');
-//     die();
-//   }else{
-//     if(isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])){
-//       /* ====================== Evento salir. ================================================*/
-//       $accion = ControladorBitacora::accion_Evento();
-//       date_default_timezone_set('America/Tegucigalpa');
-//       $newBitacora->fecha = date("Y-m-d h:i:s");
-//       $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
-//       $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-//       $newBitacora->accion = $accion['Exit'];
-//       $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de '.$_SESSION['descripcionObjeto'];
-//       ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-//     /* =======================================================================================*/
-//     }
-//     /* ====================== Evento ingreso a mantenimiento pregunta. ========================*/
-//     $accion = ControladorBitacora::accion_Evento();
-//     date_default_timezone_set('America/Tegucigalpa');
-//     $newBitacora->fecha = date("Y-m-d h:i:s");
-//     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionPregunta.php');
-//     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-//     $newBitacora->accion = $accion['income'];
-//     $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a mantenimiento pregunta';
-//     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-//     $_SESSION['objetoAnterior'] = 'gestionPregunta.php';
-//     $_SESSION['descripcionObjeto'] = 'mantenimiento pregunta';
-//     /* =======================================================================================*/
-//   }
-// } else {
-//   header('location: ../../login/login.php');
-//   die();
-// }
+if (isset($_SESSION['usuario'])) {
+  $newBitacora = new Bitacora();
+  $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
+  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionCotizacion.php');
+  (!($_SESSION['usuario'] == 'SUPERADMIN'))
+  ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
+  : 
+    $permisoConsulta = true;
+  ;
+  if(!$permisoConsulta){
+    /* ==================== Evento intento de ingreso sin permiso a mantenimiento pregunta. ==========================*/
+    $accion = ControladorBitacora::accion_Evento();
+    date_default_timezone_set('America/Tegucigalpa');
+    $newBitacora->fecha = date("Y-m-d h:i:s");
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionCotizacion.php');
+    $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+    $newBitacora->accion = $accion['fallido'];
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a gestión cotización';
+    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+    /* ===============================================================================================================*/
+    header('location: ../../v_errorSinPermiso.php');
+    die();
+  }else{
+    if(isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])){
+      /* ====================== Evento salir. ================================================*/
+      $accion = ControladorBitacora::accion_Evento();
+      date_default_timezone_set('America/Tegucigalpa');
+      $newBitacora->fecha = date("Y-m-d h:i:s");
+      $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
+      $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+      $newBitacora->accion = $accion['Exit'];
+      $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de '.$_SESSION['descripcionObjeto'];
+      ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+    /* =======================================================================================*/
+    }
+    /* ====================== Evento ingreso a mantenimiento pregunta. ========================*/
+    $accion = ControladorBitacora::accion_Evento();
+    date_default_timezone_set('America/Tegucigalpa');
+    $newBitacora->fecha = date("Y-m-d h:i:s");
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionCotizacion.php');
+    $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+    $newBitacora->accion = $accion['income'];
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a gestión cotización';
+    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+    $_SESSION['objetoAnterior'] = 'gestionPregunta.php';
+    $_SESSION['descripcionObjeto'] = 'gestión cotización';
+    /* =======================================================================================*/
+  }
+} else {
+  header('location: ../../login/login.php');
+  die();
+}
 
 ?>
 <!DOCTYPE html>
@@ -139,6 +139,9 @@ session_start(); //Reanudamos la sesion
           </div>
 
         <div class="table-conteiner">
+        <div>
+            <a href="../../../TCPDF/examples/reporteCotizacion.php" target="_blank" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> 
+          </div>
           <table class="table" id="table-Cotizacion">
             <thead>
               <tr>
@@ -166,6 +169,7 @@ session_start(); //Reanudamos la sesion
         <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
         <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
         <script src="../../../Recursos/js/rendimiento/cotizacion/dataTableCotizacion.js" type="module"></script>
+        <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
         <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
         <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
 </body>

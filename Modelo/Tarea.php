@@ -778,23 +778,90 @@ class Tarea
     public static function obtenerCotizacionesUsuario($usuario){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query = "SELECT id_Cotizacion, (SELECT nombre_Usuario FROM tbl_MS_Usuario WHERE usuario IN(SELECT Creado_Por FROM tbl_CotizacionTarea)) AS creado_Por,
-                    (SELECT nombre_Cliente FROM tbl_CarteraCliente WHERE rtn_Cliente IN(SELECT RTN_Cliente FROM tbl_Tarea)) AS nombre_Cliente,
-                    subDescuento, isv, total_Cotizacion, estado_Cotizacion FROM tbl_CotizacionTarea WHERE Creado_Por = '$usuario';";
-        $ejecutar = sqlsrv_query($conexion, $query);
+        $select = '';
         $cotizaciones = array();
-        while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
-            $cotizaciones[] = [
-                'id' => $fila['id_Cotizacion'],
-                'creadoPor' => $fila['creado_Por'],
-                'cliente' =>$fila['nombre_Cliente'],
-                'subDescuento' => $fila['subDescuento'],
-                'impuesto' => $fila['isv'],
-                'total' => $fila['total_Cotizacion'],
-                'estado' => $fila['estado_Cotizacion']
-            ];
+        if($usuario == 'SUPERADMIN'){
+            $select = "SELECT ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
+                FROM tbl_CotizacionTarea ct
+                INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
+                INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente
+                INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario;";
+                $ejecutar = sqlsrv_query($conexion, $select);
+                if(sqlsrv_has_rows($ejecutar)){
+                    while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
+                        $cotizaciones[] = [
+                            'id' => $fila['id_Cotizacion'],
+                            'creadoPor' => $fila['nombre_Usuario'],
+                            'cliente' =>$fila['nombre_Cliente'],
+                            'subDescuento' => $fila['subDescuento'],
+                            'impuesto' => $fila['isv'],
+                            'total' => $fila['total_Cotizacion'],
+                            'estado' => $fila['estado_Cotizacion']
+                        ];
+                    }
+                }
+            $select = "SELECT ct.id_Cotizacion, us.nombre_Usuario, cc.NOMBRECLIENTE AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
+                FROM tbl_CotizacionTarea ct
+                INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
+                INNER JOIN View_Clientes cc ON ta.RTN_Cliente = cc.CIF COLLATE Latin1_General_CS_AI
+                INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario;";
+                $ejecutar = sqlsrv_query($conexion, $select);
+                if(sqlsrv_has_rows($ejecutar)){
+                    while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
+                        $cotizaciones[] = [
+                            'id' => $fila['id_Cotizacion'],
+                            'creadoPor' => $fila['nombre_Usuario'],
+                            'cliente' =>$fila['nombre_Cliente'],
+                            'subDescuento' => $fila['subDescuento'],
+                            'impuesto' => $fila['isv'],
+                            'total' => $fila['total_Cotizacion'],
+                            'estado' => $fila['estado_Cotizacion']
+                        ];
+                    }
+                }
+        }else{
+            $select = "SELECT ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
+                FROM tbl_CotizacionTarea ct
+                INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
+                INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente
+                INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario
+                WHERE ct.Creado_Por = '$usuario';";
+                $ejecutar = sqlsrv_query($conexion, $select);
+                if(sqlsrv_has_rows($ejecutar)){
+                    while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
+                        $cotizaciones[] = [
+                            'id' => $fila['id_Cotizacion'],
+                            'creadoPor' => $fila['nombre_Usuario'],
+                            'cliente' =>$fila['nombre_Cliente'],
+                            'subDescuento' => $fila['subDescuento'],
+                            'impuesto' => $fila['isv'],
+                            'total' => $fila['total_Cotizacion'],
+                            'estado' => $fila['estado_Cotizacion']
+                        ];
+                    }
+                }
+            $select = "SELECT ct.id_Cotizacion, us.nombre_Usuario, cc.NOMBRECLIENTE AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
+                FROM tbl_CotizacionTarea ct
+                INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
+                INNER JOIN View_Clientes cc ON ta.RTN_Cliente = cc.CIF COLLATE Latin1_General_CS_AI
+                INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario
+				WHERE ct.Creado_Por = '$usuario';";
+                $ejecutar = sqlsrv_query($conexion, $select);
+                if(sqlsrv_has_rows($ejecutar)){
+                    while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
+                        $cotizaciones[] = [
+                            'id' => $fila['id_Cotizacion'],
+                            'creadoPor' => $fila['nombre_Usuario'],
+                            'cliente' =>$fila['nombre_Cliente'],
+                            'subDescuento' => $fila['subDescuento'],
+                            'impuesto' => $fila['isv'],
+                            'total' => $fila['total_Cotizacion'],
+                            'estado' => $fila['estado_Cotizacion']
+                        ];
+                    }
+                }
         }
         sqlsrv_close($conexion);
-        return $$cotizaciones;
+        return $cotizaciones;
     }
 }
