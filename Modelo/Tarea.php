@@ -642,7 +642,7 @@ class Tarea
         $isv = $nuevaCotizacion['isv'];
         $totalCotizacion = $nuevaCotizacion['total'];
         $insert = "INSERT INTO tbl_CotizacionTarea (estado_Cotizacion, id_Tarea, validez, subTotal, descuento, subDescuento, isv, total_Cotizacion, Creado_Por, Fecha_Creacion)
-        VALUES ('Vigente', '$idTarea', '$validez', '$subTotal', '$descuento', '$subDescuento', '$isv', '$totalCotizacion', ' $creadoPor', GETDATE());";
+        VALUES ('Vigente', '$idTarea', '$validez', '$subTotal', '$descuento', '$subDescuento', '$isv', '$totalCotizacion', '$creadoPor', GETDATE());";
         sqlsrv_query($conexion, $insert);
         $idCotizacion = sqlsrv_fetch_array(sqlsrv_query($conexion, "SELECT SCOPE_IDENTITY() AS id_Cotizacion"), SQLSRV_FETCH_ASSOC);
         sqlsrv_close($conexion);
@@ -774,4 +774,94 @@ class Tarea
     }
     // public static function actualizarEstadoCotizacion(){
     // }
+
+    public static function obtenerCotizacionesUsuario($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $select = '';
+        $cotizaciones = array();
+        if($usuario == 'SUPERADMIN'){
+            $select = "SELECT ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
+                FROM tbl_CotizacionTarea ct
+                INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
+                INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente
+                INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario;";
+                $ejecutar = sqlsrv_query($conexion, $select);
+                if(sqlsrv_has_rows($ejecutar)){
+                    while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
+                        $cotizaciones[] = [
+                            'id' => $fila['id_Cotizacion'],
+                            'creadoPor' => $fila['nombre_Usuario'],
+                            'cliente' =>$fila['nombre_Cliente'],
+                            'subDescuento' => $fila['subDescuento'],
+                            'impuesto' => $fila['isv'],
+                            'total' => $fila['total_Cotizacion'],
+                            'estado' => $fila['estado_Cotizacion']
+                        ];
+                    }
+                }
+            $select = "SELECT ct.id_Cotizacion, us.nombre_Usuario, cc.NOMBRECLIENTE AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
+                FROM tbl_CotizacionTarea ct
+                INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
+                INNER JOIN View_Clientes cc ON ta.RTN_Cliente = cc.CIF COLLATE Latin1_General_CS_AI
+                INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario;";
+                $ejecutar = sqlsrv_query($conexion, $select);
+                if(sqlsrv_has_rows($ejecutar)){
+                    while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
+                        $cotizaciones[] = [
+                            'id' => $fila['id_Cotizacion'],
+                            'creadoPor' => $fila['nombre_Usuario'],
+                            'cliente' =>$fila['nombre_Cliente'],
+                            'subDescuento' => $fila['subDescuento'],
+                            'impuesto' => $fila['isv'],
+                            'total' => $fila['total_Cotizacion'],
+                            'estado' => $fila['estado_Cotizacion']
+                        ];
+                    }
+                }
+        }else{
+            $select = "SELECT ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
+                FROM tbl_CotizacionTarea ct
+                INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
+                INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente
+                INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario
+                WHERE ct.Creado_Por = '$usuario';";
+                $ejecutar = sqlsrv_query($conexion, $select);
+                if(sqlsrv_has_rows($ejecutar)){
+                    while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
+                        $cotizaciones[] = [
+                            'id' => $fila['id_Cotizacion'],
+                            'creadoPor' => $fila['nombre_Usuario'],
+                            'cliente' =>$fila['nombre_Cliente'],
+                            'subDescuento' => $fila['subDescuento'],
+                            'impuesto' => $fila['isv'],
+                            'total' => $fila['total_Cotizacion'],
+                            'estado' => $fila['estado_Cotizacion']
+                        ];
+                    }
+                }
+            $select = "SELECT ct.id_Cotizacion, us.nombre_Usuario, cc.NOMBRECLIENTE AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
+                FROM tbl_CotizacionTarea ct
+                INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
+                INNER JOIN View_Clientes cc ON ta.RTN_Cliente = cc.CIF COLLATE Latin1_General_CS_AI
+                INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario
+				WHERE ct.Creado_Por = '$usuario';";
+                $ejecutar = sqlsrv_query($conexion, $select);
+                if(sqlsrv_has_rows($ejecutar)){
+                    while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
+                        $cotizaciones[] = [
+                            'id' => $fila['id_Cotizacion'],
+                            'creadoPor' => $fila['nombre_Usuario'],
+                            'cliente' =>$fila['nombre_Cliente'],
+                            'subDescuento' => $fila['subDescuento'],
+                            'impuesto' => $fila['isv'],
+                            'total' => $fila['total_Cotizacion'],
+                            'estado' => $fila['estado_Cotizacion']
+                        ];
+                    }
+                }
+        }
+        sqlsrv_close($conexion);
+        return $cotizaciones;
+    }
 }
