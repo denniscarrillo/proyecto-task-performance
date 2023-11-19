@@ -127,7 +127,7 @@ let calcularResumenCotizacion = (elementosSumar, acumTotalSuma) => {
     $resumenCotizacion.descuento.textContent = `Lps. ${(acumTotalSuma * 0.03).toFixed(2)}`;
     $resumenCotizacion.subdescuento.textContent = `Lps. ${(acumTotalSuma - parseFloat($resumenCotizacion.descuento.textContent.split(' ')[1])).toFixed(2)}`;
     $resumenCotizacion.impuesto.textContent = `Lps. ${(parseFloat($resumenCotizacion.subdescuento.textContent.split(' ')[1]) * 0.15).toFixed(2)}`;
-    $resumenCotizacion.total.textContent = `Lps. ${(parseFloat($resumenCotizacion.subdescuento.textContent.split(' ')[1]) - parseFloat($resumenCotizacion.impuesto.textContent.split(' ')[1])).toFixed(2)}`;
+    $resumenCotizacion.total.textContent = `Lps. ${(parseFloat($resumenCotizacion.subdescuento.textContent.split(' ')[1]) + parseFloat($resumenCotizacion.impuesto.textContent.split(' ')[1])).toFixed(2)}`;
 }
 
 //nueva Cotizacion

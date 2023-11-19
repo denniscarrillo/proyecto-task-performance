@@ -642,7 +642,7 @@ class Tarea
         $isv = $nuevaCotizacion['isv'];
         $totalCotizacion = $nuevaCotizacion['total'];
         $insert = "INSERT INTO tbl_CotizacionTarea (estado_Cotizacion, id_Tarea, validez, subTotal, descuento, subDescuento, isv, total_Cotizacion, Creado_Por, Fecha_Creacion)
-        VALUES ('Vigente', '$idTarea', '$validez', '$subTotal', '$descuento', '$subDescuento', '$isv', '$totalCotizacion', ' $creadoPor', GETDATE());";
+        VALUES ('Vigente', '$idTarea', '$validez', '$subTotal', '$descuento', '$subDescuento', '$isv', '$totalCotizacion', '$creadoPor', GETDATE());";
         sqlsrv_query($conexion, $insert);
         $idCotizacion = sqlsrv_fetch_array(sqlsrv_query($conexion, "SELECT SCOPE_IDENTITY() AS id_Cotizacion"), SQLSRV_FETCH_ASSOC);
         sqlsrv_close($conexion);
@@ -774,4 +774,27 @@ class Tarea
     }
     // public static function actualizarEstadoCotizacion(){
     // }
+
+    public static function obtenerCotizacionesUsuario($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT id_Cotizacion, (SELECT nombre_Usuario FROM tbl_MS_Usuario WHERE usuario IN(SELECT Creado_Por FROM tbl_CotizacionTarea)) AS creado_Por,
+                    (SELECT nombre_Cliente FROM tbl_CarteraCliente WHERE rtn_Cliente IN(SELECT RTN_Cliente FROM tbl_Tarea)) AS nombre_Cliente,
+                    subDescuento, isv, total_Cotizacion, estado_Cotizacion FROM tbl_CotizacionTarea WHERE Creado_Por = '$usuario';";
+        $ejecutar = sqlsrv_query($conexion, $query);
+        $cotizaciones = array();
+        while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
+            $cotizaciones[] = [
+                'id' => $fila['id_Cotizacion'],
+                'creadoPor' => $fila['creado_Por'],
+                'cliente' =>$fila['nombre_Cliente'],
+                'subDescuento' => $fila['subDescuento'],
+                'impuesto' => $fila['isv'],
+                'total' => $fila['total_Cotizacion'],
+                'estado' => $fila['estado_Cotizacion']
+            ];
+        }
+        sqlsrv_close($conexion);
+        return $$cotizaciones;
+    }
 }
