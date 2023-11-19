@@ -9,6 +9,8 @@ require_once ("../../../Modelo/Parametro.php");
 require_once("../../../Controlador/ControladorParametro.php");
 require_once ("../../../Modelo/Articulo.php");
 require_once("../../../Controlador/ControladorArticulo.php");
+require_once("../../../Modelo/TipoServicio.php");
+require_once("../../../Controlador/ControladorTipoServicio.php");
 require_once('../../../TCPDF/tcpdf.php');
 
 function enviarCorreoSolicitud($destinario, $nuevaSolicitud, $productosSolicitud, $idSolicitud, $nombrePDF){
@@ -87,6 +89,7 @@ function enviarCorreoSolicitud($destinario, $nuevaSolicitud, $productosSolicitud
         //$NombreCliente = $nuevaSolicitud->NombreCliente;
         $descripcion = $nuevaSolicitud->descripcion;
         $servicioTecnico = $nuevaSolicitud->tipoServicio;
+        $tipoServ = ControladorTipoServicio::obtenerTipoServicioID($servicioTecnico);
         $correoS = $nuevaSolicitud->correo;
         $telefono = $nuevaSolicitud->telefono;
         $ubicacion = $nuevaSolicitud->ubicacion;
@@ -97,13 +100,7 @@ function enviarCorreoSolicitud($destinario, $nuevaSolicitud, $productosSolicitud
         $fechaHoy = new DateTime();
         $fechaFormateadaC = $fechaHoy->format('Y-m-d');
         
-        $ListaArticulos = ''; 
-        foreach ($productosSolicitud as $producto) {
-            $IdProducto = $producto['idProducto'];
-            //$ArticulosS = ControladorDataTableSolicitud::obtenerProductosS($IdProducto);
-            $Cant = $producto['CantProducto'];       
-            $ListaArticulos .= '<li>'.$Cant.' - '. $IdProducto .'</li>';
-        } 
+        
   
        
         $html .= '
@@ -132,7 +129,7 @@ function enviarCorreoSolicitud($destinario, $nuevaSolicitud, $productosSolicitud
         </tr>        
         <tr>
             <td style="background-color: #c9c9c9;"><b>SERVICIO TECNICO:</b></td>
-            <td>'.$servicioTecnico.'</td>
+            <td>'. $tipoServ[0]['servicioTec'].'</td>
         </tr>        
         <!--<tr>
              <td style="background-color: #c9c9c9;"><b>CORREO:</b></td>
@@ -164,20 +161,39 @@ function enviarCorreoSolicitud($destinario, $nuevaSolicitud, $productosSolicitud
             <td>'.$fechaFormateadaC.'</td>       
         </tr>       
         
-        <tr>
-            <td style="background-color: #c9c9c9;"><b>LISTA DE ARTICULOS:</b></td>
-            <td>                
-                <ul>'.$ListaArticulos.'</ul>
-          </td>
-        </tr>
+      
 
             ';     
     $html .= '
-        </table>
-        ';      
+            </table>
+                
+            <table border="1" cellpadding="4">
+            <tr> 
+                <td style="background-color: #e54037; text-align: center;"><b>LISTA DE ARTICULOS</b></td>
+            </tr>
+            <tr >
+                <td style="background-color: #c9c9c9; text-align: center;width: 80px;">Cant</td>
+                <td style="background-color: #c9c9c9; text-align: center;width: 100px;">Codigo</td>
+                <td style="background-color: #c9c9c9; text-align: center;width: 458px;">Descripción</td>
+            </tr>
+            ';
+            $ListaArticulos = ''; 
+            foreach ($productosSolicitud as $producto) {
+                $Cant = $producto['CantProducto']; 
+                $IdProducto = $producto['idProducto'];      
+                $NombreP = ControladorArticulo::obtenerArticuloxId($IdProducto);
+                $html .= '
+            <tr>
+                <td style="text-align: center;">'.$Cant.'</td>
+                <td style="text-align: center;">'.$IdProducto.'</td>
+                <td>'.$NombreP[0]['articulo'].'</td>
+            </tr>
+        ';
+        }
+        $html.='
+        </table>       
 
-
-
+        ';
     $pdf->writeHTML($html, true, false, true, false);
     //$pdf->Cell(0, 10, 'Contenido del PDF', 0, 1, 'C');
 

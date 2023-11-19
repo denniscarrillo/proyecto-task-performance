@@ -14,7 +14,7 @@ $formEvidencia.addEventListener('submit', (event) => {
 
 let subirEvidencia = function($form){
     let ajax = new XMLHttpRequest();
-    let urlPHP = '../../../Vista/rendimiento/guardarEvidencia.php';
+    let urlPHP = '../../../Vista/crud/DataTableSolicitud/guardarEvidencia.php';
     ajax.open('post', urlPHP)
     ajax.send(new FormData($form));
 }
