@@ -210,21 +210,22 @@ class DataTableSolicitud
         return $verArticulos;
     }
 
-    public static function rtnExiste($rtn) {
-        $existeRTN = false;
+    public static function validarRtnExiste($rtn) {
+        $validarRtnExiste= false;
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query = "SELECT rtn FROM tbl_MS_Usuario WHERE rtn = '$rtn'";
-        $user = sqlsrv_query($conexion, $query);
-        $existe = sqlsrv_has_rows($user);
-        
-        if ($existe) {
-            $existeRTN = true;
+        $query = "SELECT rtn_Cliente FROM tbl_CarteraCliente WHERE rtn_Cliente = '$rtn'";
+        $rtnCliente = sqlsrv_query($conexion, $query);
+        $query2 = "SELECT rtn_Cliente FROM tbl_CarteraCliente WHERE (rtn_Cliente= '$rtn' AND rtn_Cliente IS NOT NULL AND rtn_Cliente != '')
+        OR (rtn_Cliente IS NOT NULL AND rtn_Cliente!= '' AND '$rtn' IS NULL)";
+        $rtnCliente2 = sqlsrv_query($conexion, $query2);
+        $existe = sqlsrv_has_rows($rtnCliente);
+        $existe2 = sqlsrv_has_rows($rtnCliente2);
+        if($existe || $existe2){
+            $validarRtnExiste= true;
         }
-        
-        sqlsrv_close($conexion); // Cerramos la conexión.
-        
-        return $existeRTN;
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $validarRtnExiste;
     }
     
 }

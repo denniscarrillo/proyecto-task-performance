@@ -8,6 +8,12 @@ $(document).on('click', '#clienteExistente', function () {
  let correoCliente = document.getElementById('containerCorreocliente');
  correoCliente .setAttribute('hidden', 'false');
 
+ let Factura  = document.getElementById('containerFacturacliente');
+ Factura .removeAttribute('hidden');
+ containerFacturacliente.style.display = 'block';
+
+
+ 
 });
 
 $(document).on('click', '#clientenuevo', function () {
@@ -15,6 +21,10 @@ $(document).on('click', '#clientenuevo', function () {
   let correoCliente = document.getElementById('containerCorreocliente');
   correoCliente.removeAttribute('hidden');
   containerCorreocliente.style.display = 'block';
+
+  let Factura = document.getElementById('containerFacturacliente');
+  Factura.setAttribute('hidden', 'false');
+
 
 });
 let obtenerClientes = function () {
@@ -48,7 +58,7 @@ $(document).on("click", "#btn_selectcliente", function () {
   let telefonoCliente = fila.find("td:eq(3)").text();
   let direccionCliente = fila.find("td:eq(4)").text();
   let nombre = document.getElementById("nombre");
-  let rtn = document.getElementById("rntcliente");
+  let rtn = document.getElementById("rtnCliente");
   let telefono = document.getElementById("telefono");
   let direccion = document.getElementById("direccion");
   //Setear datos del cliente
@@ -64,7 +74,9 @@ $(document).on("click", "#btn_selectcliente", function () {
 });
 
 let rtnCliente = document.getElementById('clienteExistente');
+//let rtnCliente = document.getElementById('rtnCliente');
 rtnCliente.addEventListener('change', function () {
+
   limpiarForm();
   let $containerRTN = document.getElementById('containerrtncliente');
   if (document.getElementById('btnclientes') == null) {
@@ -103,7 +115,7 @@ let limpiarForm = () => {
    //$mensaje = document.getElementById('mensaje');
   //$mensaje.innerText = '';
   //$mensaje.classList.remove('mensaje-existe-cliente');
-  let   rtn = document.getElementById('rntcliente'),
+  let   rtn = document.getElementById('rtnCliente'),
     telefono = document.getElementById('telefono'),
     direccion = document.getElementById('direccion'),
     descripcion = document.getElementById("descripcion"),
@@ -139,8 +151,7 @@ FacturaSolicitud.addEventListener('change', function () {
     `;
     $containerFact.appendChild($btnBuscar);
   }
-  let Factura = document.getElementById('containerFacturacliente');
-  Factura.removeAttribute('hidden', 'false');
+  
  
 });
 
@@ -151,8 +162,7 @@ document.getElementById('clientenuevo').addEventListener('change', function () {
     $containerRTN.removeChild($btnBuscarCliente);
     limpiarForm();
   }
-  let Factura = document.getElementById('containerFacturacliente');
-  Factura.setAttribute('hidden', 'true');
+ 
 });
 
 $(document).on('click', '#btnfactura', function () {
@@ -201,7 +211,7 @@ $(document).on("click", "#btn_selectfactura", function () {
     telefono.disabled = false;
     direccion.disabled = false;
     descripcion.disabled = false;
-    rntcliente.disabled = false;
+    rtnCliente.disabled = false;
      nombre.disabled=false;
     let fechaC = new Date().toISOString().slice(0, 10);
     $("#fechasolicitud").val(fechaC); 
@@ -213,7 +223,7 @@ $(document).on("click", "#btn_selectfactura", function () {
     telefono.disabled = false;
     direccion.disabled = false;
     descripcion.disabled = false;
-    rntcliente.disabled = false;
+    rtnCliente.disabled = false;
     nombre.disabled=false;
     let fechaC = new Date().toISOString().slice(0, 10);
     $("#fechasolicitud").val(fechaC);
@@ -245,7 +255,7 @@ $(document).on("click", "#btn_selectfactura", function () {
           let correo = data[0]['Correo'];
           console.log('Correo obtenido:', correo);
           $(idElemento).val(correo);   
-          console.log(correo);
+          //console.log(correo);
         }        
     });
   }
@@ -318,7 +328,8 @@ $(document).on("click", "#btn_selectfactura", function () {
       <td><input type="text" value="${producto.id}" class="idproducto" name="idproducto"></td>
         <td>${producto.nombre}</td>
         <td>${producto.marca}</td>
-        <td><input type="text" id="${producto.id}" class="cantproducto" name "cantProducto" ></td>
+        <td><input type="text" id="${producto.id}" class="cantproducto" name "cantProducto" >
+        <p class="mensaje"></p></td>
         <td><button class="btn_eliminar btns btn" id="btn_eliminar"><i class="fas fa-times"></i></button></td>
       </tr>
     `
@@ -329,6 +340,7 @@ $(document).on("click", "#btn_selectfactura", function () {
       idProducto.setAttribute('disabled', 'true');
     });
   }
+  
 
   $(document).on("click", "#btn_eliminar", function() {
     let nombreProd = $(this).closest('tr').find('td:eq(1)').text();
@@ -368,10 +380,10 @@ $('#form-solicitud').submit(function (e) {
   let rtncliente, rtnclienteC;
   var radio = document.getElementById("clienteExistente");
 if (radio.checked) {
-  rtncliente = $('#rntcliente').val();
+  rtncliente = $('#rtnCliente').val();
   rtnclienteC = 'NULL'; 
 } else {
-  rtnclienteC = $('#rntcliente').val();
+  rtnclienteC = $('#rtnCliente').val();
   rtncliente = 'NULL'; 
   idFactura = null;
 }
@@ -442,7 +454,7 @@ $('#form-solicitud').submit(function (e) {
   // Verifica si el radio "Nuevo Cliente" está seleccionado
   if ($('#clientenuevo').is(':checked')) {
     let nombreN = $('#nombre').val();
-    let rtnN = $('#rntcliente').val();
+    let rtnN = $('#rtnCliente').val();
     let telefonoN = $('#telefono').val();
     let correoN = $('#correoCliente').val();
     let direccionN = $('#direccion').val();
@@ -466,11 +478,6 @@ $('#form-solicitud').submit(function (e) {
     }
   }
 });
-
-
-
-
-
 
 
 
