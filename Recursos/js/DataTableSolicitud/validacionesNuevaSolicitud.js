@@ -2,8 +2,6 @@ import * as funciones from '../funcionesValidaciones.js';
 export let estadoValidado = false;
 //Objeto con expresiones regulares para los inptus
 
-
-
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-Z\/ .Ñós])/, //Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
@@ -11,12 +9,12 @@ const validaciones = {
 }
 //VARIABLES GLOBALES
 
-//let estadoExisteRtn = false;
 
 let estadoEspacioInput = {
     estadoEspacioName: true,
     estadoEspaciotelefono: true,
     estadoEspaciodescripcion: true,
+    estadoEspacioDireccion: true,
     estadoEspacioRtn: true,
     estadoEspacioCorreo: true,
     estadoEspacioCorreoCliente: true,
@@ -58,7 +56,7 @@ let estadoSoloNumeros = {
     estadoNumerotelefono :true,
 }
 
-
+let estadoExisteRtn = false;
 let estadoCorreo = true;
 
 const $form = document.getElementById('form-solicitud');
@@ -71,7 +69,7 @@ const $direccion= document.getElementById('direccion');
 const $descripcion = document.getElementById('descripcion');
 const $fechaSolicitud = document.getElementById('fechaSolicitud');
 const $tipoServicio = document.getElementById('tiposervicio');
-const $cantProducto = document.getElementById('CantidadProducto');
+
 
 
 
@@ -123,10 +121,8 @@ $form.addEventListener('submit', e => {
              if(estadoSoloNumeros.estadoNumerotelefono == false ){
                 e.preventDefault();
                 estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
-            if(estadoExisteRtn == false){
-                    e.preventDefault();
-                    estadoExisteRtn = obtenerRtnExiste($('#rntcliente').val());
-            }  
+             
+            
             }else{
                 if(estadoCorreo == false || estadoSelect == false ){
                     e.preventDefault();   
@@ -137,13 +133,19 @@ $form.addEventListener('submit', e => {
                     estadoSelect = funciones.validarCampoVacio($descripcion);
                  //   estadoSelect = funciones.validarCampoVacio($cantProducto);
                   //  estadoSelect = funciones.validarCampoVacio($correoCliente);
-                    estadoCorreo = funciones.validarCorreo($correoCliente, validaciones.correo);      
+                    estadoCorreo = funciones.validarCorreo($correoCliente, validaciones.correo);
+                      
 
-                } else {
-                    estadoValidado = true; // 
-                }  
+                }else{
+                    if(estadoExisteRtn == false){
+                        e.preventDefault();
+                        estadoExisteRtn = obtenerRtnExiste($('#rtnCliente').val());
+                    } else {
+                estadoValidado = true;
+                    }
+                }
+                   
             }
-        
         } 
     }
 });
@@ -206,24 +208,61 @@ $descripcion.addEventListener('focusout', ()=>{
     estadoSelect.estadoSelectDescripcion= funciones.validarCampoVacio($descripcion);
  });
 
-//  $cantProducto.addEventListener('change', ()=>{
-//     estadoSelect.estadoSelectCantProducto= funciones.validarCampoVacio($cantProducto);
-//  });
+//  $rtn.addEventListener('focusout', ()=>{
+//     let $rtn = $('#rtnCliente').val();
+//     estadoExisteRtn = obtenerValidarRtnExiste($rtn);
+// });
 
-
-//  if (document.querySelector('#clientenuevo')) {
-//     // Verifica si el formulario es nuevo
-//     $correoCliente.addEventListener('change', () => {
-//       estadoSelect.estadoSelectCorreoCliente = funciones.validarCampoVacio($correoCliente);
-//     });
-//   }
 
  $telefono.addEventListener('keyup', ()=>{
      estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
     funciones.limitarCantidadCaracteres("telefono", 14);
   });
 
-//    $rtn.addEventListener('focusout', () => {
-//      let rtn = $('#rntcliente').val();
-//      estadoExisteRtn = obtenerRtnExiste(rtn);
-//  });
+
+
+
+let obtenerValidarRtnExiste = (rtn) => {
+  // Puedes dejar que la función maneje el caso de rtn null sin necesidad de verificarlo aquí.
+  $.ajax({
+      url: "../../../Vista/crud/DataTableSolicitud/ExisteRTN.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {
+          rtnCliente:rtn
+      },
+      success: function (rtn) {
+          let $objRtn = JSON.parse(rtn);
+
+          if ($objRtn.estado == 'true') {
+              document.getElementById('rtnCliente').classList.add('mensaje_error');
+              document.getElementById('rtnCliente').parentElement.querySelector('p').innerText = '*Este rtn ya existe, en Cartera Clientes';
+              estadoExisteRtn = false; // Rtn es existente, es false
+          } else {
+              document.getElementById('rtnCliente').classList.remove('mensaje_error');
+              document.getElementById('rtnCliente').parentElement.querySelector('p').innerText = '';
+              estadoExisteRtn = true; // Rtn no existe, es true
+          }
+      }
+  });
+};
+
+/* ---------------- VALIDACIONES FORMULARIO GESTION NUEVO USUARIO ----------------------*/
+/* 
+    Antes de enviar datos del formulario, se comprobara que todas  
+    las validaciones se hayan cumplido.
+*/
+
+
+
+$rtn.addEventListener('focusout', () => {
+  let rtnValue = $('#rtnCliente').val();
+  obtenerValidarRtnExiste(rtnValue);
+  console.log(rtnValue);
+});
+
+
+
+
+
+
