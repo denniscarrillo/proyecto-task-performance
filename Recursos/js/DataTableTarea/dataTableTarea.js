@@ -18,3 +18,9 @@ $(document).ready(function () {
     ]
   });
 });
+
+//Generar reporte PDF
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-Tareas_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reporteConsulTarea.php?buscar='+buscar, '_blank');
+});

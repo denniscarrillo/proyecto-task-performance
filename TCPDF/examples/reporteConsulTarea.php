@@ -83,7 +83,7 @@ $html = '
 ';
 session_start();
 if(isset($_SESSION['usuario'])){
-    $Tareas = ControladorDataTableTarea::DataTableTarea($_SESSION['usuario']);
+    $Tareas = ControladorDataTableTarea::obtenerTareasPDF($_SESSION['usuario'], $_GET['buscar']);
 }
 
 $Cont = 1;  // Mueve la inicialización de $Cont aquí

@@ -21,3 +21,9 @@ $(document).ready(function () {
   });
 });
 
+//Generar reporte PDF
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-Ventas_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reporteriaVentas.php?buscar='+buscar, '_blank');
+});
+

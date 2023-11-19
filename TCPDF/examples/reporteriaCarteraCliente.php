@@ -85,7 +85,7 @@ $html = '
 <td style="background-color: #e54037;color: white; text-align: center">ESTADO CONTACTO</td>
 </tr>
 ';
-$carteraCliente = ControladorCarteraClientes::obtenerCarteraClientes();
+$carteraCliente = ControladorCarteraClientes::obtenerCarteraClientesPDF($_GET['buscar']);
 foreach($carteraCliente as $cliente){
     $IdCliente = $cliente['idcarteraCliente'];
     $nombre = $cliente['nombre'];

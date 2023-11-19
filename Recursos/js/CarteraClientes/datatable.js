@@ -196,48 +196,59 @@ let limpiarFormEdit = () => {
 }
 
 
-//Eliminar usuario
+//Eliminar Cartera Cliente
 $(document).on("click", "#btn_eliminar", function() {
-  let fila = $(this);        
-  let idcarteraCliente = $(this).closest('tr').find('td:eq(1)').text();		
-      Swal.fire({
-        title: 'Estas seguro de eliminar a '+ idcarteraCliente+'?',
-        text: "No podras revertir esto!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si, borralo!'
-      }).then((result) => {
-        if (result.isConfirmed) {      
-          $.ajax({
-            url: "../../../Vista/crud/CarteraCliente/eliminarCarteraCliente.php",
-            type: "POST",
-            datatype:"json",    
-            data:  { idCarteraCliente: idcarteraCliente},    
-            success: function(data) {
-              let estadoEliminado = data[0].estadoEliminado;
-               console.log(data);
-              if(estadoEliminado == 'eliminado'){
-                tablaCarteraClientes.row(fila.parents('tr')).remove().draw();
-                Swal.fire(
-                  'Eliminado!',
-                  'La Cartera Cliente ha sido eliminado.',
-                  'success'
-                ) 
-                tablaCarteraClientes.ajax.reload(null, false); 
-              } else {
-                Swal.fire(
-                  'Lo sentimos!',
-                  'la Cartera Cliente no puede ser eliminado',
-                  'error'
-                );
-                tablaCarteraClientes.ajax.reload(null, false);
-              }           
-            }
-          }); //Fin del AJAX
-        }
-      });
-    	    
-                    
+  let fila = $(this).closest("tr"),
+     id= $(this).closest('tr').find('td:eq(0)').text(), 
+     carteraCliente= fila.find('td:eq(1)').text(),
+     rtn = fila.find('td:eq(2)').text(),
+     telefono = fila.find('td:eq(3)').text(),
+     correo = fila.find('td:eq(4)').text(),
+     direccion = fila.find('td:eq(5)').text(),
+     estado = 'Finalización';
+     
+    Swal.fire({
+      title: 'Estas seguro de eliminar la carteraCliente '+carteraCliente+'?',
+      text: "No podras revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borralo!'
+      
+    }).then((result) => {
+      if (result.isConfirmed) {      
+        $.ajax({
+          url: "../../../Vista/crud/carteraCliente/eliminarCarteraCliente.php",
+          type: "POST",
+          datatype: "JSON",
+          data: { 
+            id: id,
+            carteraCliente:carteraCliente,
+            rtn:rtn,
+            telefono: telefono,
+            correo: correo,
+            direccion: direccion,
+            estado: estado
+          },
+          success: function (data) {
+            console.log(data)
+            Swal.fire(
+              'Lo sentimos!',
+              'La carteraCliente no puede ser eliminada, se ha Finalizado.',
+              'error'
+            );
+            tablaCarteraClientes.ajax.reload(null, false);
+          }
+        });
+      
+      }//Fin del AJAX
+      
+    });                
 });
+
+//Generar reporte PDF
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-CarteraClientes_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reporteriaCarteraCliente.php?buscar='+buscar, '_blank');
+}); 

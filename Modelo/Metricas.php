@@ -79,6 +79,45 @@ class Metricas{
         return $meta;
     }
 
+    public static function eliminarMetrica($metrica){
+        try{
+            $conn = new Conexion();
+            $conexion = $conn->abrirConexionDB();
+            $query = "DELETE FROM tbl_Metrica WHERE id_Metrica = '$metrica';";
+            $estadoEliminado = sqlsrv_query($conexion, $query);
+        }catch (Exception $e) {
+            $estadoEliminado = 'Error SQL:' . $e;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estadoEliminado;
+    }
+    
+    public static function obtenerLasMetricasPDF($buscar){
+        $metricas = null;
+        try {
+            $metricas = array();
+            $con = new Conexion();
+            $abrirConexion = $con->abrirConexionDB();
+            $query = "SELECT m.id_Metrica,e.descripcion,m.meta FROM tbl_metrica as m
+            inner join tbl_estadoavance AS e ON m.id_EstadoAvance = e.id_EstadoAvance
+            WHERE CONCAT(m.id_Metrica,e.descripcion,m.meta) LIKE '%' + '$buscar' + '%';";
+            $resultado = sqlsrv_query($abrirConexion, $query);
+            //Recorremos el resultado de tareas y almacenamos en el arreglo.
+            while ($fila = sqlsrv_fetch_array( $resultado, SQLSRV_FETCH_ASSOC)) {
+                $metricas[] = [
+                    'idMetrica' => $fila['id_Metrica'],
+                    'descripcion' => $fila['descripcion'],
+                    'meta' => $fila['meta'],
+                ];
+            }
+        } catch (Exception $e) {
+            $metricas = 'Error SQL:' . $e;
+        }
+        sqlsrv_close($abrirConexion); //Cerrar conexion
+        return $metricas;
+    }
+
+
 }#Fin de la clase
 
 

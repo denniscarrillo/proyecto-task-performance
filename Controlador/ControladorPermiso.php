@@ -22,4 +22,7 @@ class ControladorPermiso {
     public static function obtenerPermisosUsuarioObjeto($usuario, $idObjeto){
         return Permiso::obtenerPermisosObjeto($usuario, $idObjeto);
     }
+    public static function obtenerPermisosPDF($buscar){
+        return Permiso::obtenerPermisosPDF($buscar);
+    }
 }

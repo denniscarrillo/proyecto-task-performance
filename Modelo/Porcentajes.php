@@ -33,8 +33,8 @@ class Porcentajes {
         return $Porcent;
     }
 
-    //Método para crear nuevo registro
-    public static function registroNuevoPorcentaje($nuevoPorcentaje){
+    //Método para crear eliminar registro
+    public static function registroPorcentaje($nuevoPorcentaje){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB
         $valorPorcentaje = $nuevoPorcentaje->valorPorcentaje;
@@ -83,5 +83,39 @@ class Porcentajes {
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $existePorcentaje;
+    }
+    public static function eliminarPorcentaje($eliminarPorcentaje){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $idPorcentaje = $eliminarPorcentaje->idPorcentaje;
+        $estadoPorcentaje = $eliminarPorcentaje->estadoPorcentaje;
+        $ModificadoPor = $eliminarPorcentaje->ModificadoPor;
+        date_default_timezone_set('America/Tegucigalpa'); 
+        $FechaModificacion = date("Y-m-d");
+        $query = "UPDATE tbl_Porcentaje SET estado_Porcentaje ='$estadoPorcentaje', Modificado_Por = '$ModificadoPor', 
+        Fecha_Modificacion = '$FechaModificacion' WHERE id_Porcentaje='$idPorcentaje';";
+        $eliminarPorcentaje = sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion); #Cerramos la conexión.
+    }
+    public static function obtenerPorcentajesPdf($buscar){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $query = "SELECT id_Porcentaje,valor_Porcentaje, descripcion, estado_Porcentaje
+        FROM tbl_Porcentaje 
+        WHERE CONCAT(id_Porcentaje,valor_Porcentaje, descripcion, estado_Porcentaje)
+        LIKE '%' + '$buscar' + '%'";
+        $listaPorcentajes = sqlsrv_query($consulta, $query);
+        $Porcent = array();
+        //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
+        while($fila = sqlsrv_fetch_array($listaPorcentajes, SQLSRV_FETCH_ASSOC)){
+            $Porcent [] = [
+                'idPorcentaje' => $fila["id_Porcentaje"],
+                'valorPorcentaje' => $fila["valor_Porcentaje"],
+                'descripcionPorcentaje'=> $fila["descripcion"],
+                'estadoPorcentaje' => $fila["estado_Porcentaje"]
+            ];
+        }
+        sqlsrv_close($consulta); #Cerramos la conexión.
+        return $Porcent;
     }
 }

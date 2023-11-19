@@ -189,3 +189,50 @@ let limpiarFormEdit = () => {
     $mensaje.innerText = '';
   });
 }
+
+//Eliminar porcentajes
+$(document).on("click", "#btn_eliminar", function() {
+  let fila = $(this).closest("tr"),
+     idPorcentaje = $(this).closest('tr').find('td:eq(0)').text(), 
+     porcentaje = fila.find('td:eq(1)').text(),
+     estado = 'Inactivo';
+     
+    Swal.fire({
+      title: 'Estas seguro de eliminar el pocentaje'+porcentaje+'?',
+      text: "No podras revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borralo!'
+      
+    }).then((result) => {
+      if (result.isConfirmed) {      
+        $.ajax({
+          url: "../../../Vista/crud/Porcentajes/eliminarPorcentajes.php",
+          type: "POST",
+          datatype: "JSON",
+          data: { 
+            idPorcentaje: idPorcentaje,
+            estado: estado,
+          },
+          success: function (data) {
+            console.log(data);
+            Swal.fire(
+              'Lo sentimos!',
+              'El porcentaje no puede ser eliminado, se ha Inactivado.',
+              'error'
+            );
+            tablaPorcentajes.ajax.reload(null, false);
+          }
+        });
+      
+      }//Fin del AJAX
+      
+    });                
+});
+
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-Porcentajes_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reporteriaPorcentaje.php?buscar='+buscar, '_blank');
+});

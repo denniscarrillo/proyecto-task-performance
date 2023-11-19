@@ -151,7 +151,8 @@ if (isset($_SESSION['usuario'])) {
               </tr>
             </thead>
             <div class ="text-left mb-2">
-            <a href="../../../TCPDF/examples/reporteriaClientes.php" target="_blank" class="btn btn-success hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
+            <!-- <a href="../../../TCPDF/examples/reporteriaClientes.php" target="_blank" class="btn btn-success hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> -->
+            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
             </div>
             <tbody class="table-group-divider">
             </tbody>

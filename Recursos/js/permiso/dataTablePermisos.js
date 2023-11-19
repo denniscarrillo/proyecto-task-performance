@@ -103,3 +103,9 @@ let validarPermisos = async function (btn_confirms) {
     
   });
 }
+
+//Generar reporte PDF
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-Permisos_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reportePermisos.php?buscar='+buscar, '_blank');
+});  

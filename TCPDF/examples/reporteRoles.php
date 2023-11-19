@@ -80,7 +80,7 @@ $html = '
 <td style="background-color: #e54037;color: white; text-align: center; width: 360px;">DESCRIPCIÓN</td>
 </tr>
 ';
-$Roles = ControladorRol::rolesUsuario();
+$Roles = ControladorRol::obtenerRolesUsuarioPDF($_GET['buscar']);
 foreach($Roles as $Rol){
     $id_Rol = $Rol['id_Rol'];
     $NomRol = $Rol['rol'];

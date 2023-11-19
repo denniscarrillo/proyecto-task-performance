@@ -120,7 +120,7 @@ $(document).on("click", "#btn_eliminar", function() {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, cancelalo!'
+      confirmButtonText: 'Si, Borralo!'
     }).then((result) => {
       if (result.isConfirmed) {      
         $.ajax({
@@ -152,3 +152,10 @@ $(document).on("click", "#btn_eliminar", function() {
       }
     });                
 });
+
+//Generar Pdf 
+
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-Parametro_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reporteParametros.php?buscar='+buscar, '_blank');
+});                

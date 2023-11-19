@@ -83,7 +83,7 @@ $html = '
 <td style="background-color: #e54037;color: white; text-align: center">ROL</td>
 </tr>
 ';
-$usuarios = ControladorUsuario::getUsuarios();
+$usuarios = ControladorUsuario::obtenerLosUsuariosPDF($_GET['buscar']);
 foreach($usuarios as $usuario){
     $IdUsuario = $usuario['IdUsuario'];
     $nombreUsuario = $usuario['usuario'];

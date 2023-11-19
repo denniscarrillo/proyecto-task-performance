@@ -9,7 +9,7 @@ class ControladorPorcentajes
 
     public static function registroNuevoPorcentaje($nuevoPorcentaje)
     {
-        return Porcentajes::registroNuevoPorcentaje($nuevoPorcentaje);
+        return Porcentajes::registroPorcentaje($nuevoPorcentaje);
     }
     public static function dividiendoPorcentaje($porcentaje)
     {
@@ -24,5 +24,13 @@ class ControladorPorcentajes
     {
         return Porcentajes::porcentajeExistente($valorPorcentaje);
     }
+
+    public static function eliminarPorcentaje($eliminarPorcentaje){
+        return porcentajes::eliminarPorcentaje($eliminarPorcentaje);
+   }
+   public static function obtenerPorcentajePdf($buscar){
+    return Porcentajes::obtenerPorcentajesPdf($buscar);
+   }
+   
 
 }

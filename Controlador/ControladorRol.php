@@ -31,4 +31,8 @@ class ControladorRol {
         return Rol::eliminarRol($rol);
     }
 
+    public static function obtenerRolesUsuarioPDF($buscar){
+        return Rol::obtenerRolesUsuarioPDF($buscar);
+    }
+
 }

@@ -247,6 +247,10 @@ $(document).on("click", "#btn_pdf_id",  function (){
       });
     });
 
+    $(document).on("click", "#btn_Pdf", function() {
+      let buscar = $('#table-Comision_filter > label > input[type=search]').val();
+      window.open('../../../TCPDF/examples/reporteriaComision.php?buscar='+buscar, '_blank');
+    });
     
 /* let obtenerEstadoComision = function (idElemento) {
   //Petición para obtener los estados de las comisiones
@@ -323,3 +327,5 @@ $selectPorcentaje.addEventListener("change", function () {
     },
   });
 }); */
+
+// 

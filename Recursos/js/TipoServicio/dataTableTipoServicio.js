@@ -193,3 +193,8 @@ $(document).on("click", "#btn_eliminar", function() {
                     
 });
 
+//Generar reporte PDF
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-TipoServicio_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reporteServicioTecnico.php?buscar='+buscar, '_blank');
+}); 

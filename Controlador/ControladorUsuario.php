@@ -178,4 +178,8 @@
        public static function reiniciarIntentosFallidos($usuario){
             Usuario::reiniciarIntentosFallidos($usuario);
        }
+
+       public static function obtenerLosUsuariosPDF($buscar){
+        return Usuario::obtenerLosUsuariosPDF($buscar);
+   }
     }

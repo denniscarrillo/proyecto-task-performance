@@ -112,7 +112,7 @@ if (isset($_SESSION['usuario'])) {
               class="fa-solid fa-file-invoice-dollar icon-size"></i>
             <p>Comisiones</p>
           </a>
-          <a class="card-link" href="crud/solicitud/gestionSolicitud.php"><i
+          <a class="card-link" href="crud/DataTableSolicitud/gestionDataTableSolicitud.php"><i
               class="fa-solid fa-envelopes-bulk icon-size"></i>
             <p>Solicitud</p>
           </a>

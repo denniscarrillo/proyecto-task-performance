@@ -17,3 +17,8 @@ $(document).ready(function () {
     ]
   });
 });
+
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-VistaClientes_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reporteriaClientes.php?buscar='+buscar, '_blank');
+});

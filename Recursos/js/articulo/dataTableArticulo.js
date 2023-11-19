@@ -19,3 +19,8 @@ $(document).ready(function () {
     ]
   });
 });
+
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-Articulos_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reporteriaArticulos.php?buscar='+buscar, '_blank');
+});

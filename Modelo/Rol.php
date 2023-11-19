@@ -94,4 +94,22 @@ class Rol {
         return $estadoEliminado;
     }
 
+    public static function obtenerRolesUsuarioPDF($buscar){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB();
+        $query = "SELECT id_Rol, rol, descripcion FROM tbl_ms_roles
+        WHERE CONCAT(id_Rol, rol, descripcion) LIKE '%' + '$buscar' + '%';";
+        $obtenerRoles = sqlsrv_query($consulta, $query);
+        $roles = array();
+        while($fila = sqlsrv_fetch_array($obtenerRoles, SQLSRV_FETCH_ASSOC)){
+            $roles [] = [
+                'id_Rol' => $fila["id_Rol"],
+                'rol' => $fila["rol"],
+                'descripcion' => $fila["descripcion"]
+            ];
+        }
+        sqlsrv_close($consulta); #Cerramos la conexión.
+        return $roles;
+    }
+
 }

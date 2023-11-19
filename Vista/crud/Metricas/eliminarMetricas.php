@@ -1,11 +1,11 @@
 <?php
     require_once ("../../../db/Conexion.php");
-    require_once ("../../../Modelo/Rol.php");
-    require_once("../../../Controlador/ControladorRol.php");
+    require_once ("../../../Modelo/Metricas.php");
+    require_once("../../../Controlador/ControladorMetricas.php");
 
    
-        $rol = $_POST['id_Rol'];
-        $estadoEliminado = ControladorRol::eliminarRol($rol);
+        $metrica = $_POST['id_Metrica'];
+     //   $estadoEliminado = ControladorMetricas::eliminarMetrica($metrica);
         $data = array();
         if($estadoEliminado == false) {
             $data []= [

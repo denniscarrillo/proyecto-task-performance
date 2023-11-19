@@ -346,6 +346,11 @@ let limpiarFormEdit = () => {
   });
 }
 
+//Generar reporte PDF
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-Usuarios_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reporteriaListaUsuario.php?buscar='+buscar, '_blank');
+});     
 
 
 

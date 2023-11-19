@@ -197,7 +197,7 @@ if (isset($_SESSION['usuario'])) {
         <div class="table-conteiner">
           <div>
             <!-- <a href="../../../TCPDF/examples/reporteMetrica.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> -->
-            
+            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
           </div>
           <table class="table" id="table-Metricas">
             <thead>
@@ -235,11 +235,6 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
   <script src="../../../Recursos/js/Metricas/validacionesModalEditarMetrica.js" type="module"></script>
-
-  <script src="//cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
-  <script src="//cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.8/pdfmake.min.js" integrity="sha512-uVTNNXu6Z1rrgpMLuErTMferac7mGwfA7/oXfuGbpSmBqcopa8jCURWE1rBF3LMg7Zir+avOX807eGwHaL7akA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.8/vfs_fonts.js" integrity="sha512-nNkHPz+lD0Wf0eFGO0ZDxr+lWiFalFutgVeGkPdVgrG4eXDYUnhfEj9Zmg1QkrJFLC0tGs8ZExyU/1mjs4j93w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 </body>
 </html>
