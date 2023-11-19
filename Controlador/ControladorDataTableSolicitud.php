@@ -37,5 +37,5 @@ class ControladorDataTableSolicitud {
 
        public static function obtenerSolicitudPDF($buscar){
         return DataTableSolicitud::obtenerSolicitudPDF($buscar);
-       }   
+       } 
 }
