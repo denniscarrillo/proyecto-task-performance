@@ -1,7 +1,7 @@
 .encabezado {
     position: sticky;
     top: 0;
-    min-height: fit-content;
+    /* min-height: fit-content; */
     color: #f1d2c7;
     background-color: #615f5e;
     margin: 1rem;
@@ -112,7 +112,7 @@
     width: 150px;
     border-radius: 0.4rem;
     border: none;
-    background-color: #efa173;
+    background-color: #ee9866;
     color: white;
 }
 .btn-agregar-producto:hover {
@@ -206,9 +206,6 @@
 .table .new-product .selected{
     background-color: #6aa5c366;
 }
-/* .btn_article:checked {
-    outline: none;
-} */
 .btn_article i {
     color: #615f5e;
     font-size: 1.2rem;
@@ -219,9 +216,6 @@
 .select-articulo { 
     color: #ee894f !important;
 }
-/* .new-product td :nth-child(4){
-    margin-bottom: 2rem;
-} */
 .input-cant {
     max-height: 1.4rem;
     max-width: 6rem;
@@ -251,6 +245,26 @@
     position: relative;
     height: 1rem;
 }
+.btn-salir-cotizacion {
+    position: fixed;
+    bottom: 1rem;
+    padding: 0.4rem;
+    border-radius: 0.4rem;
+    text-decoration: none;
+    color: #fffdfa;
+}
+.btn-primary {
+    background-color: #534f4a;
+    border-color: #534f4a;
+}
+.btn-primary:hover {
+    background-color: #ee9866;
+    border-color: #ee9866;
+}
+.btn-primary:active {
+    background-color: #ee9827 !important;
+    border-color: #ee9827 !important;
+}
 #btn_Pdf {
     position: absolute;
     right: 0;
@@ -258,4 +272,31 @@
     background-color: #992505;
     border-color: #ff4e2f;
     font-size: 1rem;
+}
+#id-cotizacion {
+    margin-left: 0.2rem;
+}
+.modal-Productos, #table-productos{
+    min-width: 100%;
+}
+#table-productos {
+    margin: 0 auto;
+}
+.modal-dialog {
+    min-width: 40%;
+}
+.table-conteiner-productos{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#btn_agregar {
+    display: inline-block;
+    margin:  0 auto;
+}
+.btn-agregar-producto:active {
+    background-color: #ee9827;
+}
+.btn-salir-cotizacion label {
+    cursor: pointer;
 }

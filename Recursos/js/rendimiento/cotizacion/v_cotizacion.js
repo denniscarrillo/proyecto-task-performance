@@ -1,8 +1,23 @@
 const $tbody = document.getElementById('t-body');
 const $btnAgregar = document.getElementById('btn-agregar-producto');
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top',
+    showConfirmButton: false,
+    timer: 5000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  });
 $(document).ready( async () => {
-    await validarDatosCotizacion();
+   let idCotizacion = await validarDatosCotizacion();
     alternarHiddenBotones();
+    if(estadoCot == 'Existente'){
+        let nCotizacion = `<label>Cotización N°</label><label id="id-cotizacion">${idCotizacion}</label>`;
+        document.querySelector('.title-dashboard-task').innerHTML =  nCotizacion;
+    }
 });
 let contItem = 0;
 let itemProdDB = [];
@@ -34,6 +49,15 @@ $btnAgregar.addEventListener('click', () => {
         datatype: 'JSON',
         data: {
             nuevoProducto: $newProduct
+        },
+        success: () => {
+            $addNewProduct.descripcion.value = '';
+            $addNewProduct.marca.value = '';
+            $addNewProduct.precio.value = '';
+              Toast.fire({
+                  icon: 'success',
+                  title: '¡Producto guardado!'
+            });
         }
     });
 });
@@ -175,7 +199,6 @@ let agregarEventoBorrar = ($deleteButton) => {
 let validarDatosCotizacion = async () => {
     const data = await obtenerDatosCotizacion(document.querySelector('.encabezado').id);
     if(!(data[0] == false)){
-        document.getElementById('id-cotizacion').textContent = data.detalle.id_Cotizacion;
         document.getElementById('estado-cot').textContent = data.detalle.estado_Cotizacion;
         estadoCot = 'Existente';
         data.productos.forEach((product, index) => {
@@ -188,6 +211,7 @@ let validarDatosCotizacion = async () => {
         $resumenCotizacion.subdescuento.textContent = `Lps. ${data.detalle.subDescuento}`;
         $resumenCotizacion.impuesto.textContent = `Lps. ${data.detalle.isv}`;
         $resumenCotizacion.total.textContent = `Lps. ${data.detalle.total_Cotizacion}`;
+        return data.detalle.id_Cotizacion
     }
 }
 let obtenerDatosCotizacion = async ($idTarea) => {
@@ -289,6 +313,8 @@ $('#btn-productos').click(() => {
   document.getElementById('btn-nueva-cot').addEventListener('click', () => {
     let estado = document.getElementById('estado-cot').textContent;
     let mensaje = "Se anulará la cotización actual, no podrás revertir esto";
+    let btnCancel = document.getElementById('btn-salir-cotizacion');
+    // btnCancel.href = 'location.reload()';
     if(estado == 'Anulada' || estado =='Vencida'){
         mensaje = "Ahora, podrás generar una nueva cotización";
     }
@@ -302,12 +328,18 @@ $('#btn-productos').click(() => {
         confirmButtonText: 'Si, continuar'
       }).then(async (result) => {
         if (result.isConfirmed) {
+            btnCancel.children[1].textContent = 'Cancelar';
+            btnCancel.addEventListener('click', (e) => {
+                e.preventDefault();
+                location.reload();
+            });
             if(estado == 'Vigente') {
                 estado = await anularCotizacion(document.getElementById('id-cotizacion').textContent);
                 estado = JSON.parse(estado);
             } else {
                 estado = true;
             }
+            document.querySelector('.title-dashboard-task').innerHTML =  "Nueva Cotización";
             mostrarElementosNuevaCotizacion(estado);
         }
       });
@@ -329,18 +361,6 @@ let anularCotizacion = async ($idCotizacion) => {
 }
 let mostrarElementosNuevaCotizacion = (estado) => {
     estadoCot = 'Nueva';
-    //Creamos el toast que nos confirma la actualización de los permisos
-    const Toast = Swal.mixin({
-        toast: true,
-        position: 'top',
-        showConfirmButton: false,
-        timer: 2500,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-      })
     if(estado){
         document.querySelectorAll('.new').forEach((elemento) => {
             elemento.classList.remove('hidden');

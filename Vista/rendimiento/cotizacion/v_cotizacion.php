@@ -73,10 +73,7 @@
                 </div>
                     <div class="datos-cotizacion">
                         <div class="colum-horizontal">
-                            <div class="input-cotizacion" id="input-cotizacion">
-                                <label class="bold exist hidden">Cotización N°</label>
-                                <label class="exist hidden" id="id-cotizacion"></label>
-                            </div>
+
                             <div id="input-fecha">
                                 <label for="fecha" class="form-label bold" id="label-fecha">Fecha: </label>
                                 <label for="fecha" class="form-label" id="fecha"><?php  date_default_timezone_set('America/Tegucigalpa'); setlocale(LC_TIME, "Spanish_Honduras"); echo date('l jS \of F Y h:i:s A'); ?></label>
@@ -171,6 +168,10 @@
                                 </div>
                             </div>
                         </div>
+                        <a href="../v_tarea.php" class="btn-primary btn-salir-cotizacion" id="btn-salir-cotizacion">
+                            <i class="fa-solid fa-chevron-left"></i>
+                            <label> Regresar a tareas</label>
+                        </a>
                         <button type="submit" id="btn-submit-cotizacion" class="new hidden">Guardar</button>
                     </form>
                 </div>
