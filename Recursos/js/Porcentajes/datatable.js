@@ -231,3 +231,8 @@ $(document).on("click", "#btn_eliminar", function() {
       
     });                
 });
+
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-Porcentajes_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reporteriaPorcentaje.php?buscar='+buscar, '_blank');
+});

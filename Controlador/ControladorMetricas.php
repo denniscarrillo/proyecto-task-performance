@@ -19,4 +19,8 @@
         public static function eliminarMetrica($metrica){
             return Metricas::eliminarMetrica($metrica);
         }
+
+        public static function obtenerLasMetricasPDF($buscar){
+            return Metricas::obtenerLasMetricasPDF($buscar);
+        }
     }

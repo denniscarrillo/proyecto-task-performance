@@ -164,4 +164,39 @@ class Permiso
         sqlsrv_close($conexion);
         return $permisos;
     }
+
+    // Obtener todas las permisos del rol sobre los objetos del sistema.
+    public static function obtenerPermisosPDF($buscar){
+        $permisos = null;
+        try {
+            $permisos = array();
+            $con = new Conexion();
+            $abrirConexion = $con->abrirConexionDB();
+            $query="SELECT r.rol, o.objeto, p.permiso_Consultar, p.permiso_Insercion, 
+            p.permiso_Actualizacion, p.permiso_Eliminacion, p.permiso_Reporte FROM tbl_ms_permisos p
+            INNER JOIN tbl_ms_objetos o ON o.id_Objeto = p.id_Objeto
+            INNER JOIN tbl_ms_roles r ON p.id_Rol = r.id_Rol
+            WHERE CONCAT(r.rol, o.objeto, p.permiso_Consultar, p.permiso_Insercion, 
+            p.permiso_Actualizacion, p.permiso_Eliminacion, p.permiso_Reporte) LIKE '%' + '$buscar' + '%';";
+            $resultado = sqlsrv_query($abrirConexion, $query);
+            //Recorremos el resultado de tareas y almacenamos en el arreglo.
+            while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+                $permisos[] = [
+                    'rolUsuario' => $fila['rol'],
+                    'objetoSistema' => $fila['objeto'],
+                    'consultar' => $fila['permiso_Consultar'],
+                    'insertar' => $fila['permiso_Insercion'],
+                    'actualizar' => $fila['permiso_Actualizacion'],
+                    'eliminar' => $fila['permiso_Eliminacion'],
+                    'reporte' => $fila['permiso_Reporte']
+                ];
+            }
+        } catch (Exception $e) {
+            $permisos = 'Error SQL:' . $e;
+        }
+        sqlsrv_close($abrirConexion); //Cerrar conexion
+        return $permisos;
+    }
+
+
 }

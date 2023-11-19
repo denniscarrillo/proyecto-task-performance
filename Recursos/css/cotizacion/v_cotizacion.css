@@ -157,7 +157,13 @@
     width: 205px;
 }
 .btn-agregar-producto {
-    margin-left: 1rem;
+    margin-right: 1.2rem;
+    max-height: 2.2rem;
+    min-width: 8rem;
+}
+#btn-productos {
+    min-width: 4rem;
+    max-height: 2.1rem;
 }
 .bold {
     font-weight: 500;
@@ -199,4 +205,57 @@
 }
 .table .new-product .selected{
     background-color: #6aa5c366;
+}
+/* .btn_article:checked {
+    outline: none;
+} */
+.btn_article i {
+    color: #615f5e;
+    font-size: 1.2rem;
+}
+.btn_article i:hover {
+    color: #ee894f;
+}
+.select-articulo { 
+    color: #ee894f !important;
+}
+/* .new-product td :nth-child(4){
+    margin-bottom: 2rem;
+} */
+.input-cant {
+    max-height: 1.4rem;
+    max-width: 6rem;
+    padding: 0.1rem;
+    padding-left: 0.5rem;
+    border: none;
+    background-color: #e8e0d2;
+    border-radius: 0.1rem;
+}
+.input-cant:focus {
+    outline: none;
+}
+.input-cant::placeholder{
+    font-size: 13px;
+}
+#btn-nueva-cot {
+    position: absolute;
+    right: 10rem;
+}
+.estado-cot {
+    margin-left: 0.3rem;
+}
+.btn-pdf-cotizacion {
+   position: relative;
+}
+.container-btns-cotizacion {
+    position: relative;
+    height: 1rem;
+}
+#btn_Pdf {
+    position: absolute;
+    right: 0;
+    font-size: 1.2rem;
+    background-color: #992505;
+    border-color: #ff4e2f;
+    font-size: 1rem;
 }

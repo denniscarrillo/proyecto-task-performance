@@ -85,7 +85,7 @@ $html = '
 <td style="background-color: #e54037;color: white; text-align: center; width: 110px;">ELIMINAR</td>
 </tr>
 ';
-$permisos = ControladorPermiso::obtenerPermisosSistema();
+$permisos = ControladorPermiso::obtenerPermisosPDF($_GET['buscar']);
 foreach($permisos as $permiso){
     $rolUsuario = $permiso['rolUsuario'];
     $objetoSistema = $permiso['objetoSistema'];

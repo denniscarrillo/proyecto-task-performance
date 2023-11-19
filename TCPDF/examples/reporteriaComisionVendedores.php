@@ -75,18 +75,18 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de comision por vendedores</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 40px">ID</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 40px">N°</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 100px;">ID COMISION</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 105px;">ID VENDEDOR</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 92px;">VENDEDOR</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 90px;">ESTADO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 115px;">COMISION TOTAL</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">FECHA</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 118px;">COMISION TOTAL</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">FECHA</td>
 </tr>
 ';
-$ComisionVendedor = ControladorComision::traerComisionesPorVendedor();
+$ComisionVendedor = ControladorComision::getComisionesVendedorPdf($_GET['buscar']);
 foreach($ComisionVendedor as $ComisionV){
-    $IdComisionV = $ComisionV['idComisionVendedor'];
+    // $IdComisionV = $ComisionV['idComisionVendedor'];
     $IdComision = $ComisionV['idComision'];
     $IdVendedor = $ComisionV['idVendedor'];
     $usuario = $ComisionV['usuario'];
@@ -95,11 +95,12 @@ foreach($ComisionVendedor as $ComisionV){
     $fecha = $ComisionV['fechaComision'];
     $timestamp = $fecha->getTimestamp();
     $fechaComision = date('Y-m-d', $timestamp);
+    $Cont++;
     
 
     $html .= '
     <tr>
-    <td style="text-align: center">'.$IdComisionV.'</td>
+    <td style="text-align: center">'.$Cont.'</td>
     <td style="text-align: center">'.$IdComision.'</td>
     <td style="text-align: center">'.$IdVendedor.'</td>
     <td style="text-align: center">'.$usuario.'</td>
@@ -120,4 +121,4 @@ $html.='
 $pdf->writeHTML($html, true, false, true, false);
 //Close and output PDF document
 ob_end_clean();
-$pdf->Output('Reporte Clientes.pdf', 'I');
+$pdf->Output('Reporte Comisiones por vendedores.pdf', 'I');

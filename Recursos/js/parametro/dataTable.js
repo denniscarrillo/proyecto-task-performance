@@ -152,3 +152,10 @@ $(document).on("click", "#btn_eliminar", function() {
       }
     });                
 });
+
+//Generar Pdf 
+
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-Parametro_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reporteParametros.php?buscar='+buscar, '_blank');
+});                

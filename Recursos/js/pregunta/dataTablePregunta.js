@@ -193,3 +193,9 @@ let limpiarFormEdit = () => {
     $mensaje.innerText = '';
   });
 }
+
+//Generar reporte PDF
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-Pregunta_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reportePreguntas.php?buscar='+buscar, '_blank');
+});     

@@ -24,5 +24,8 @@ class ControladorTipoServicio {
         return TipoServicio::eliminarTipoServicio($TipoServicio);
     }
 
+    public static function obtenerTipoServicioPDF($buscar){
+        return TipoServicio::obtenerTipoServicioPDF($buscar);
+    }
 
 }

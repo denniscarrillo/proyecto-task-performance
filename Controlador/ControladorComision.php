@@ -52,7 +52,13 @@
             return Comision::anularComisionPorVendedor($idComision);
         }
 
-        public static function eliminarComision($idComision){
+        public static function eliminandoComision($idComision){
             return Comision::eliminarComision($idComision);
+        }
+        public static function getComisionesPdf($buscar){
+            return Comision::obtenerTodasLasComisionesPdf($buscar);
+        }
+        public static function getComisionesVendedorPdf($buscar){
+            return Comision::obtenerComisionesPorVendedorPdf($buscar);
         }
     }

@@ -75,13 +75,13 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte objetos del sistema</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 40px">ID</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 40px">N°</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 230px;">OBJETO</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 270px;">DESCRIPCION</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 95px;">TIPO</td>
 </tr>
 ';
-$objetos = ControladorDataTableObjeto:: DataTableObjeto();
+$objetos = ControladorDataTableObjeto:: obtenerObjetosPdf($_GET['buscar']);
 foreach($objetos as $objeto){
     // $idObjeto = $objeto['id_Objeto'];
     $nombreObjeto = $objeto['objeto'];

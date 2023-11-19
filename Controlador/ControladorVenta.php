@@ -9,4 +9,7 @@
         public static function obtenerIdVentas($numFactura){
             return Venta::obtenerIdVenta($numFactura);
         }
+        public static function obtenerlasventasPDF($buscar){
+            return Venta::obtenerlasventasPDF($buscar);
+        }
     }

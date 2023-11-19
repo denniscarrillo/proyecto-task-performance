@@ -909,6 +909,33 @@ class Usuario {
         $ejecutar = sqlsrv_query($conexion, $query);
         sqlsrv_close($conexion); #Cerramos la conexión.
      }
+
+
+    //Método para generar el reporte de usuarios.
+    public static function obtenerLosUsuariosPDF($buscar){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $query = "SELECT u.id_Usuario, u.usuario, u.nombre_Usuario, u.correo_Electronico, e.descripcion, r.rol
+        FROM tbl_ms_usuario AS u
+        INNER JOIN tbl_estado_usuario AS e ON u.id_Estado_Usuario = e.id_Estado_Usuario 
+        INNER JOIN tbl_ms_roles AS r ON u.id_Rol = r.id_Rol
+        WHERE CONCAT(u.id_Usuario, u.usuario, u.nombre_Usuario, u.correo_Electronico, e.descripcion, r.rol) LIKE '%' + '$buscar' + '%';";
+        $listaUsuarios = sqlsrv_query($consulta, $query);
+        $usuarios = array();
+        //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
+        while ($fila = sqlsrv_fetch_array($listaUsuarios, SQLSRV_FETCH_ASSOC)) {
+            $usuarios[] = [
+                'IdUsuario' => $fila["id_Usuario"],
+                'usuario' => $fila["usuario"],
+                'nombreUsuario' => $fila["nombre_Usuario"],
+                'correo' => $fila["correo_Electronico"],
+                'Estado' => $fila["descripcion"],
+                'Rol' => $fila["rol"]
+            ];
+        }
+        sqlsrv_close($consulta); #Cerramos la conexión.
+        return $usuarios;
+    }
 }#Fin de la clase
 
     

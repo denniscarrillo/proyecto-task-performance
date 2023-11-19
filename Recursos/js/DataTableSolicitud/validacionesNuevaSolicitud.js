@@ -153,7 +153,7 @@ $form.addEventListener('submit', e => {
 
  $name.addEventListener('keyup', ()=>{
      estadoSoloLetras.estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
-    funciones.limitarCantidadCaracteres("nombre", 30);
+    funciones.limitarCantidadCaracteres("nombre", 50);
 });
 
  $direccion.addEventListener('keyup', ()=>{

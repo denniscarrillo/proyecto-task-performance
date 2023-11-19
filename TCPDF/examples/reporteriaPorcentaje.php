@@ -75,22 +75,23 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de Porcentajes</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 127px;">ID PORCENTAJE</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">PORCENTAJE</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 280px;">DESCRIPCION</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 120px;">ESTADO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 40px;">N°</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 160px;">PORCENTAJE</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 300px;">DESCRIPCION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 137px;">ESTADO</td>
 </tr>
 ';
-$porcentajes = ControladorPorcentajes::getPorcentaje();
+$porcentajes = ControladorPorcentajes::obtenerPorcentajePdf($_GET['buscar']);
 foreach($porcentajes as $porcentaje){
-    $IdPorcentaje = $porcentaje['idPorcentaje'];
+    // $IdPorcentaje = $porcentaje['idPorcentaje'];
     $valorPorcentaje = $porcentaje['valorPorcentaje'] * 100;
     $descripcion = $porcentaje['descripcionPorcentaje'];
     $estado = $porcentaje['estadoPorcentaje'];
+    $Cont++ ;
 
     $html .= '
     <tr>
-    <td style="text-align: center">'.$IdPorcentaje.'</td>
+    <td style="text-align: center">'.$Cont.'</td>
     <td style="text-align: center">'.number_format($valorPorcentaje).'%</td>
     <td>'.$descripcion.'</td>
     <td style="text-align: center">'.$estado.'</td>
@@ -108,4 +109,4 @@ $html.='
 $pdf->writeHTML($html, true, false, true, false);
 //Close and output PDF document
 ob_end_clean();
-$pdf->Output('Reporte Clientes.pdf', 'I');
+$pdf->Output('Reporte Porcentajes.pdf', 'I');

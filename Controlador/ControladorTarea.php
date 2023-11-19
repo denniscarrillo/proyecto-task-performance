@@ -90,4 +90,19 @@ class ControladorTarea {
     public static function obtenerDatosCotizacion($idTarea){
         return Tarea::obtenerDatosCotizacion($idTarea);
     }
+    public static function almacenarProducto($producto) {
+        return Tarea::almacenarProductoCotizacion($producto);
+    }
+    public static function consultarProductosCotizados(){
+        return Tarea::obtenerProductosCotizados();
+    }
+    public static function insertarPrecioProducto($idProducto, $precio){
+        return Tarea::insertarPrecioProducto($idProducto, $precio);
+    }
+    public static function anularCotizacion($idCotizacion, $modificadoPor){
+        return Tarea::anularCotizacion($idCotizacion, $modificadoPor);
+    }
+    public static function calcularVencimientoCotizacion($idCotizacion){
+        return Tarea::calcularVencimientoCotizacion($idCotizacion);
+    }
 }

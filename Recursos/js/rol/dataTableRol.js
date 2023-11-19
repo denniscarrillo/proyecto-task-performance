@@ -215,3 +215,9 @@ $(document).on("click", "#btn_eliminar", function() {
     });  
   }              
 });
+
+//Generar reporte PDF
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-Rol_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reporteRoles.php?buscar='+buscar, '_blank');
+}); 

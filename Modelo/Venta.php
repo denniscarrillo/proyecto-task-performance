@@ -87,24 +87,33 @@ class Venta {
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $idVenta;
     }
-    //obtener el id de la venta
-    /* public static function obtenerIdVentaPorFecha($numFactura, $fechaEmision){
+
+    //Método para obtener todas las ventas que existen.
+    public static function obtenerlasventasPDF($buscar){
         $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $consulta = $conexion->query("SELECT id_Venta FROM tbl_facturaventa WHERE num_Factura = '$numFactura' AND fecha_Emision = '$fechaEmision';");
-        $fila = $consulta->fetch_assoc();
-        $idVenta = $fila['id_Venta'];
-        mysqli_close($conexion); #Cerramos la conexión.
-        return $idVenta;
+        $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.        
+        $query = "SELECT v.NUMFACTURA, v.CODCLIENTE, c.NOMBRECLIENTE, c.CIF, v.FECHA, v.TOTALBRUTO, v.TOTALIMPUESTOS, v.TOTALNETO
+        FROM View_Clientes AS c
+        INNER JOIN View_FACTURASVENTA AS v ON c.CODCLIENTE = v.CODCLIENTE
+        WHERE CONCAT(v.NUMFACTURA, v.CODCLIENTE, c.NOMBRECLIENTE, c.CIF, v.FECHA, v.TOTALBRUTO, v.TOTALIMPUESTOS, v.TOTALNETO) 
+        LIKE '%' + '$buscar' + '%';";
+        $listaVentas = sqlsrv_query($consulta, $query);
+        $ventas = array();
+        //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
+        while($fila = sqlsrv_fetch_array($listaVentas, SQLSRV_FETCH_ASSOC)){
+            $ventas [] = [
+                'numFactura' => $fila["NUMFACTURA"],
+                'codCliente' => $fila["CODCLIENTE"],
+                'nombreCliente'=> $fila["NOMBRECLIENTE"],
+                'rtnCliente' => $fila["CIF"],
+                'fechaEmision'=> $fila["FECHA"],
+                'totalBruto' => $fila["TOTALBRUTO"],
+                'totalImpuesto' => $fila["TOTALIMPUESTOS"],     
+                'totalNeto' => $fila["TOTALNETO"]    
+            ];
+        }
+        sqlsrv_close($consulta); #Cerramos la conexión.
+        return $ventas;
     }
-    //obtener el id de la venta
-    public static function obtenerIdVentaPorFechaCliente($numFactura, $fechaEmision, $rtnCliente){
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $consulta = $conexion->query("SELECT id_Venta FROM tbl_facturaventa WHERE num_Factura = '$numFactura' AND fecha_Emision = '$fechaEmision' AND RTN_Cliente = '$rtnCliente';");
-        $fila = $consulta->fetch_assoc();
-        $idVenta = $fila['id_Venta'];
-        mysqli_close($conexion); #Cerramos la conexión.
-        return $idVenta;
-    } */
+
 }#Fin de la clase
