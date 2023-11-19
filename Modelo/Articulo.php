@@ -45,7 +45,13 @@ class Articulo
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $query = "SELECT ARTICULO FROM view_articulos where CODARTICULO = $CodArt;";
         $resultado = sqlsrv_query($consulta, $query);
-        $articulo = sqlsrv_fetch($resultado, SQLSRV_FETCH_ASSOC);
+        $articulo = array();
+        //Recorremos el resultado de tareas y almacenamos en el arreglo.
+        while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+            $articulo[] = [
+                'articulo' => $fila['ARTICULO'],
+            ];
+        }
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $articulo;
     }

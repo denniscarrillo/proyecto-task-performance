@@ -81,6 +81,28 @@ class TipoServicio {
     }
 
     //Generado por PDF
+    public static function obtenerTipoServicioID($id){
+        $tipoServicio = array();
+        try{
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB();
+            $query = "SELECT servicio_Tecnico FROM tbl_TipoServicio
+            WHERE id_TipoServicio = '$id';";
+            $obtenerTipoServicio = sqlsrv_query($abrirConexion, $query);
+            //Recorremos el resultado de tareas y almacenamos en el arreglo.
+            while ($fila = sqlsrv_fetch_array( $obtenerTipoServicio, SQLSRV_FETCH_ASSOC)) {
+                $tipoServicio[] = [
+                    'servicioTec' => $fila["servicio_Tecnico"]
+                ];
+            }
+        } catch (Exception $e) {
+            $tipoServicio = 'Error SQL:' .$e;
+        }
+        sqlsrv_close($abrirConexion); //Cerrar conexion
+        return $tipoServicio;
+    }
+
+    //Generado por PDF
     public static function obtenerTipoServicioPDF($buscar){
         $tipoServicio = array();
         try{

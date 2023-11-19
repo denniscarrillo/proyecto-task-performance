@@ -83,7 +83,7 @@ $html = '
 </tr>
 ';
 
-$Solicitudes = ControladorDataTableSolicitud::DataTableSolicitud();
+$Solicitudes = ControladorDataTableSolicitud::obtenerSolicitudPDF($_GET['buscar']);
 foreach($Solicitudes as $solicitud){
     $idSolicitud = $solicitud['id_Solicitud'];
     $nombre = $solicitud['Nombre'];

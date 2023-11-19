@@ -100,10 +100,10 @@ if (isset($_SESSION['usuario'])) {
                 $urlIndex = '../../index.php';
                 // Rendimiento
                 $urlMisTareas = '../../rendimiento/v_tarea.php';
-                $urlConsultarTareas = './'; //PENDIENTE
-                $urlBitacoraTarea = ''; //PENDIENTE
+                $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
+                $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
                 $urlMetricas = '../Metricas/gestionMetricas.php';
-                $urlEstadisticas = '../../grafica/estadistica.php'; //PENDIENTE
+                $urlEstadisticas = '../../grafica/estadistica.php';
                 //Solicitud
                 $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
                 //Comisión
@@ -120,7 +120,7 @@ if (isset($_SESSION['usuario'])) {
                 $urlPreguntas = '../pregunta/gestionPregunta.php';
                 $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
                 $urlParametros = '../parametro/gestionParametro.php';
-                $urlPermisos = '../permiso/gestionPermiso.php';
+                $urlPermisos = '../permiso/gestionPermisos.php';
                 $urlRoles = '../rol/gestionRol.php';
                 $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
                 $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
@@ -160,8 +160,8 @@ if (isset($_SESSION['usuario'])) {
                     <p class="mensaje"></p>
                 </div>
                 <div class="form-element input-conteiner" id="containerrtncliente" >
-                    <label for="rnt-cliente" class="form-label">RTN:</label>
-                    <input type="text" id="rntcliente" name="rtnCliente" class="form-control" disabled>
+                    <label for="rtn-cliente" class="form-label">RTN:</label>
+                    <input type="text" id="rtnCliente" name="rtnCliente" class="form-control">
                     <p class="mensaje"></p>
                 </div>
                 <div class="form-element input-conteiner">
@@ -193,8 +193,7 @@ if (isset($_SESSION['usuario'])) {
                     </div>
                     <div class= "form-element input-conteiner">
                         <label for="tipo-servicio" class="form-label">Tipo Servicio: </label>
-                        <select name="tiposervicio" id="tiposervicio" class="form-control"> 
-                        </select>
+                        <select name="tiposervicio" id="tiposervicio" class="form-control"></select>
                         <p class="mensaje"></p>
                     </div>
             

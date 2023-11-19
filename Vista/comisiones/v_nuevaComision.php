@@ -31,10 +31,10 @@ require_once('obtenerEstadoComision.php');
         $urlIndex = '../index.php';
         // Rendimiento
         $urlMisTareas = '../rendimiento/v_tarea.php';
+        $urlCotizacion = '../rendimiento/cotizacion/gestionCotizacion.php';
         $urlConsultarTareas = '../crud/DataTableTarea/gestionDataTableTarea.php';
-        $urlBitacoraTarea = ''; //PENDIENTE
         $urlMetricas = '../crud/Metricas/gestionMetricas.php';
-        $urlEstadisticas = '../grafica/estadistica.php'; //PENDIENTE
+        $urlEstadisticas = '../grafica/estadistica.php';
         //Solicitud
         $urlSolicitud = '../crud/DataTableSolicitud/gestionDataTableSolicitud.php';
         //Comisión

@@ -1,7 +1,7 @@
 <?php
 require_once("../../../db/Conexion.php");
-require_once("../../../Modelo/Pregunta.php");
-require_once("../../../Controlador/ControladorPregunta.php");
+require_once("../../../Modelo/Tarea.php");
+require_once("../../../Controlador/ControladorTarea.php");
 require_once("../../../Modelo/Bitacora.php");
 require_once("../../../Controlador/ControladorBitacora.php");
 require_once("../../../Modelo/Usuario.php");
@@ -11,7 +11,7 @@ session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
-  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionPregunta.php');
+  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionCotizacion.php');
   (!($_SESSION['usuario'] == 'SUPERADMIN'))
   ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
   : 
@@ -22,10 +22,10 @@ if (isset($_SESSION['usuario'])) {
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
     $newBitacora->fecha = date("Y-m-d h:i:s");
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionPregunta.php');
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionCotizacion.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['fallido'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a mantenimiento pregunta';
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a gestión cotización';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     /* ===============================================================================================================*/
     header('location: ../../v_errorSinPermiso.php');
@@ -47,13 +47,13 @@ if (isset($_SESSION['usuario'])) {
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
     $newBitacora->fecha = date("Y-m-d h:i:s");
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionPregunta.php');
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionCotizacion.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['income'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a mantenimiento pregunta';
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a gestión cotización';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     $_SESSION['objetoAnterior'] = 'gestionPregunta.php';
-    $_SESSION['descripcionObjeto'] = 'mantenimiento pregunta';
+    $_SESSION['descripcionObjeto'] = 'gestión cotización';
     /* =======================================================================================*/
   }
 } else {
@@ -83,7 +83,7 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
-  <title> Pregunta </title>
+  <title> Comisiones </title>
 </head>
 
 <body style="overflow: hidden;">
@@ -95,34 +95,34 @@ if (isset($_SESSION['usuario'])) {
       <?php
           $urlIndex = '../../index.php';
           // Rendimiento
-          $urlMisTareas = '../../rendimiento/v_tarea.php';
-          $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
-          $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
-          $urlMetricas = '../Metricas/gestionMetricas.php';
+          $urlMisTareas = '../v_tarea.php';
+          $urlCotizacion = './gestionCotizacion.php';
+          $urlConsultarTareas = '../../crud/DataTableTarea/gestionDataTableTarea.php';
+          $urlMetricas = '../../crud/Metricas/gestionMetricas.php';
           $urlEstadisticas = '../../grafica/estadistica.php'; 
           //Solicitud
-          $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
+          $urlSolicitud = '../../crud/DataTableSolicitud/gestionDataTableSolicitud.php';
           //Comisión
           $urlComision = '../../comisiones/v_comision.php';
-          $comisionVendedor = '../ComisionesVendedores/ComisionesVendedores.php';
-          $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
+          $comisionVendedor = '../../crud/ComisionesVendedores/ComisionesVendedores.php';
+          $urlPorcentajes = '../../crud/Porcentajes/gestionPorcentajes.php';
           //Consulta
-          $urlClientes = '../cliente/gestionCliente.php';
-          $urlVentas = '../Venta/gestionVenta.php';
-          $urlArticulos = '../articulo/gestionArticulo.php';
-          $urlObjetos = '../DataTableObjeto/gestionDataTableObjeto.php';
-          $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
+          $urlClientes = '../../crud/cliente/gestionCliente.php';
+          $urlVentas = '../../crud/Venta/gestionVenta.php';
+          $urlArticulos = '../../crud/articulo/gestionArticulo.php';
+          $urlObjetos = '../../crud/DataTableObjeto/gestionDataTableObjeto.php';
+          $urlBitacoraSistema = '../../crud/bitacora/gestionBitacora.php';
           //Mantenimiento
-          $urlUsuarios = '../usuario/gestionUsuario.php';
-          $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
-          $urlPreguntas = './gestionPregunta.php';
-          $urlParametros = '../parametro/gestionParametro.php';
-          $urlPermisos = '../permiso/gestionPermisos.php';
-          $urlRoles = '../rol/gestionRol.php';
-          $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+          $urlUsuarios = '../../crud/usuario/gestionUsuario.php';
+          $urlCarteraCliente = '../../crud/carteraCliente/gestionCarteraClientes.php';
+          $urlPreguntas = '../../crud/pregunta/gestionPregunta.php';
+          $urlParametros = '../../crud/parametro/gestionParametro.php';
+          $urlPermisos = '../../crud/permiso/gestionPermisos.php';
+          $urlRoles = '../../crud/rol/gestionRol.php';
+          $urlServiciosTecnicos = '../../crud/TipoServicio/gestionTipoServicio.php';
           $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
-          $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
-          $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
+          $urlPerfilUsuario='../../crud/PerfilUsuario/gestionPerfilUsuario.php';
+          $urlPerfilContraseniaUsuarios='../../crud/PerfilUsuario/gestionPerfilContrasenia.php';
           require_once '../../layout/sidebar.php';
         ?>
       </div>
@@ -135,23 +135,25 @@ if (isset($_SESSION['usuario'])) {
                 <?php include_once '../../layout/navbar.php'?>                             
             </div>        
             <div class ="titulo">
-              <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionPregunta.php');?>">Gestión de Preguntas</H2>
+              <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionCotizacion.php');?>">Gestión de Cotización</H2>
             </div>  
           </div>
 
         <div class="table-conteiner">
-          <div>
-            <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevaPregunta"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
-            <!-- <a href="../../../TCPDF/examples/reportePreguntas.php" target="_blank" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>  -->
-            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
+        <div>
+            <a href="../../../TCPDF/examples/reporteCotizacion.php" target="_blank" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> 
           </div>
-          <table class="table" id="table-Pregunta">
+          <table class="table" id="table-Cotizacion">
             <thead>
               <tr>
                 <th scope="col"> N° </th>
-                <th scope="col"> PREGUNTA </th>
+                <th scope="col"> CREADO POR </th>
+                <th scope="col"> CLIENTE </th>
+                <th scope="col"> SUB DESCUENTO </th>
+                <th scope="col"> ISV % </th>
+                <th scope="col"> TOTAL COTIZACION </th>
                 <th scope="col"> ESTADO </th>
-                <th scope="col"> ACCIONES </th>
+                <th scope="col"> ACCION </th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -162,20 +164,15 @@ if (isset($_SESSION['usuario'])) {
     </div>
   </div>
         <?php
-        require('modalNuevaPregunta.html');
-        require('modalEditarPregunta.html');
         ?>
         <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
         <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
         <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-        <script src="../../../Recursos/js/pregunta/dataTablePregunta.js" type="module"></script>
+        <script src="../../../Recursos/js/rendimiento/cotizacion/dataTableCotizacion.js" type="module"></script>
         <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
-        <script src="../../../Recursos/js/pregunta/validacionesModalNuevaPregunta.js" type="module"></script>
-        <script src="../../../Recursos/js/pregunta/validacionesModalEditarPregunta.js" type="module"></script>
         <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
         <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
-        <!--<script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script>-->
 </body>
 
 </html>

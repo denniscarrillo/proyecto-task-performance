@@ -32,6 +32,10 @@ class ControladorDataTableSolicitud {
     }   
 
     public static function validarRtnExiste($rtn){
-        return DataTableSolicitud::rtnExiste($rtn);
+        return DataTableSolicitud::validarRtnExiste($rtn);
        }
+
+       public static function obtenerSolicitudPDF($buscar){
+        return DataTableSolicitud::obtenerSolicitudPDF($buscar);
+       } 
 }

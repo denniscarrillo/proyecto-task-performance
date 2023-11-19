@@ -93,6 +93,7 @@ if (isset($_SESSION['usuario'])) {
         $urlIndex = '../../index.php';
         // Rendimiento
         $urlMisTareas = '../../rendimiento/v_tarea.php';
+        $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
         $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
         $urlMetricas = '../Metricas/gestionMetricas.php';
         $urlEstadisticas = '../../grafica/estadistica.php'; 

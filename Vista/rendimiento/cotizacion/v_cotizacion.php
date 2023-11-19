@@ -16,6 +16,7 @@
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/6889/6889345.png" >
     <!-- Hojas de estilos externas -->
     <link rel="stylesheet" href="../../../Recursos/bootstrap5/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../Recursos/bootstrap5/bootstrap.min.css">
     <!-- Hojas de estilos personalizadas -->
     <link rel='stylesheet' href='../../../Recursos/css/layout/estilosEstructura.css'>
     <link rel='stylesheet' href="../../../Recursos/css/layout/sidebar.css">
@@ -30,8 +31,8 @@
                 $urlIndex = '../../index.php';
                 // Rendimiento
                 $urlMisTareas = '../v_tarea.php';
+                $urlCotizacion = './gestionCotizacion.php';
                 $urlConsultarTareas = '../../crud/DataTableTarea/gestionDataTableTarea.php';
-                $urlBitacoraTarea = ''; //PENDIENTE
                 $urlMetricas = '../../crud/Metricas/gestionMetricas.php';
                 $urlEstadisticas = '../../grafica/estadistica.php';
                 //Solicitud
@@ -49,7 +50,7 @@
                 $urlCarteraCliente = '../../crud/carteraCliente/gestionCarteraClientes.php';
                 $urlPreguntas = '../../crud/pregunta/gestionPregunta.php';
                 $urlParametros = '../../crud/parametro/gestionParametro.php';
-                $urlPermisos = '../../crud/permiso/gestionPermiso.php';
+                $urlPermisos = '../../crud/permiso/gestionPermisos.php';
                 $urlRoles = '../../crud/rol/gestionRol.php';
                 $urlPorcentajes = '../../crud/Porcentajes/gestionPorcentajes.php';
                 $urlServiciosTecnicos = '../../crud/TipoServicio/gestionTipoServicio.php';
@@ -70,12 +71,9 @@
                 <div class="encabezado" id="<?php echo $_GET['idTarea'] ?>">
                     <h2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('v_tarea.php');?>" name='v_tarea.php'>Nueva Cotización</h2>
                 </div>
-                    <div class="datos-cotizacion">
+                    <div class="datos-cotizacion" id="<?php echo $_GET['estadoCliente'] ?>">
                         <div class="colum-horizontal">
-                            <div class="input-cotizacion" id="input-cotizacion">
-                                <label for="n-cotizacion" class=" bold" id="label-correo" hidden>Cotización N° </label>
-                                <label for="n-cotizacion" class="" id="label-correo" hidden></label>
-                            </div>
+
                             <div id="input-fecha">
                                 <label for="fecha" class="form-label bold" id="label-fecha">Fecha: </label>
                                 <label for="fecha" class="form-label" id="fecha"><?php  date_default_timezone_set('America/Tegucigalpa'); setlocale(LC_TIME, "Spanish_Honduras"); echo date('l jS \of F Y h:i:s A'); ?></label>
@@ -103,17 +101,26 @@
                             <label for="validez" class="form-label" id="validez-cotizacion"><?php echo $datosCotizacion['vigencia']. ' dias'?></label>
                             <p class="mensaje"></p>
                         </div>
+                        <label class="form-label bold label-estado-cot exist hidden">Estado: </label><label class="estado-cot exist hidden" id="estado-cot"></label>
+                    </div>
+                    <div class="container-btns-cotizacion">
+                        <a href="#" class="btn_nuevoRegistro btn btn-primary exist hidden" id="btn-nueva-cot"><i class="fa-solid fa-circle-plus"></i> Nueva Cotización</a>
+                        <!-- <button id="btn-anular-cot" class="btn btn-primary">Nueva cotización</button> -->
+                        <!-- <a href="../../../TCPDF/examples/reporteCotizacion.php" target="_blank" class="btn_Pdf btn btn-primary exist hidden" id="btn_Pdf"><i class="fas fa-file-pdf"> </i> Generar PDF</a> -->
+                        <button class="btn_Pdf btn btn-primary exist hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
                     </div>
                     <form id="form-cotizacion" accion="">
                         <div class="productos-cotizacion">
                             <div class="nuevo-producto">
-                                <!-- <input type="text" id="id-producto" class="fila-producto" placeholder="Id producto"> -->
-                                <input type="text" name="descripcion" id="descripcion" class="fila-producto" placeholder="Descripción">
-                                <input type="text" name="marca" id="marca" class="fila-producto" placeholder="Marca">
-                                <input type="number" name="cantidad" id="cantidad" class="fila-producto" placeholder="Cantidad">
-                                <input type="text" name="precio" id="precio" class="fila-producto" placeholder="Precio">
+                                <button type="button" class="btn btn-primary new hidden" data-bs-toggle="modal" data-bs-target="#modalProductosCotizados" id="btn-productos">
+									<i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
+								</button>
+                                <input type="text" name="descripcion" id="descripcion" class="fila-producto new hidden" placeholder="Descripción">
+                                <input type="text" name="marca" id="marca" class="fila-producto new hidden" placeholder="Marca">
+                                <input type="text" name="precio" id="precio" class="fila-producto new hidden" placeholder="Precio">
+                                <button type="button" class="btn-agregar-producto new hidden" id="btn-agregar-producto"><i class="fa-solid fa-plus"></i> Producto</button>
+                                <!-- <input type="number" name="cantidad" id="cantidad" class="fila-producto" placeholder="Cantidad"> -->
                                 <div id="button-container"></div>
-                                <button type="button" class="btn-agregar-producto" id="btn-agregar-producto"><i class="fa-solid fa-plus"></i> Agregar</button>
                             </div>
                             <table id="productos-cotizacion" class="table table-hover">
                                 <thead>
@@ -162,15 +169,24 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" id="btn-submit-cotizacion">Guardar</button>
+                        <a href="../v_tarea.php" class="btn-primary btn-salir-cotizacion" id="btn-salir-cotizacion">
+                            <i class="fa-solid fa-chevron-left"></i>
+                            <label> Regresar a tareas</label>
+                        </a>
+                        <button type="submit" id="btn-submit-cotizacion" class="new hidden">Guardar</button>
                     </form>
                 </div>
 			</main>
         </div>
+        <?php
+        require_once('modalProductosCotizados.html');
+	    ?>
 	</div>
 	<script src="../../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js"></script>
 	<script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
-	<script src="../../../Recursos/bootstrap5/bootstrap.min.js "></script>
+	<script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
+    <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
+    <script src="../../../Recursos/js/librerias/dataTables.bootstrap5.min.js"></script>
     <script src="../../../Recursos/js/librerias/SweetAlert2.all.min.js"></script>
 	<script src="../../../Recursos/js/rendimiento/cotizacion/v_cotizacion.js"></script>
 </body>
