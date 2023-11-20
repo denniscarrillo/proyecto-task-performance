@@ -53,20 +53,19 @@ class DataTableSolicitud
     } 
 
 
-    public static function actualizarEstadoSolicitud($nuevaSolicitud){
+    public static function actualizarEstadoSolicitud($cancelarSolicitud){
         try {
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $idSolicitud=$nuevaSolicitud->idSolicitud;
-            $EstadoSolicitud=$nuevaSolicitud->EstadoSolicitud;
-            $MotivoCancelacion=$nuevaSolicitud->MotivoCancelacion;
-            $modificadoPor=$nuevaSolicitud->modificadoPor;
-            // date_default_timezone_set('America/Tegucigalpa'); 
-            // $fechaModificado = date("Y-m-d h:i:s");
-            $query ="UPDATE tbl_Solicitud SET EstadoSolicitud='$EstadoSolicitud', motivo_cancelacion = '$MotivoCancelacion', 
+            $idSolicitud=$cancelarSolicitud->idSolicitud;
+            $EstadoAvance = $cancelarSolicitud->EstadoAvance;
+            $EstadoSolicitud=$cancelarSolicitud->EstadoSolicitud;
+            $MotivoCancelacion=$cancelarSolicitud->MotivoCancelacion;
+            $modificadoPor=$cancelarSolicitud->modificadoPor;
+            $query ="UPDATE tbl_Solicitud SET EstadoAvance='$EstadoAvance', EstadoSolicitud='$EstadoSolicitud', motivo_cancelacion = '$MotivoCancelacion', 
             Modificado_Por='$modificadoPor', Fecha_Modificacion = GETDATE()
             WHERE id_Solicitud='$idSolicitud';";
-            $nuevaSolicitud = sqlsrv_query($abrirConexion, $query);
+            $cancelarSolicitud = sqlsrv_query($abrirConexion, $query);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }

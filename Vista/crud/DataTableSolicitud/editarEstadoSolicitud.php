@@ -9,12 +9,13 @@
     session_start();
     if(isset($_SESSION['usuario'])){
         $user = $_SESSION['usuario'];
-        $nuevaSolicitud = new DataTableSolicitud();
-        $nuevaSolicitud->idSolicitud= $_POST['idSolicitud'];
-        $nuevaSolicitud->EstadoSolicitud= $_POST['EstadoSolicitud'];
-        $nuevaSolicitud->MotivoCancelacion= $_POST['MotivoCancelacion'];
-        $nuevaSolicitud->modificadoPor= $user;
-        ControladorDataTableSolicitud::actualizarEstadoSolicitud($nuevaSolicitud);
+        $cancelarSolicitud = new DataTableSolicitud();
+        $cancelarSolicitud->idSolicitud= $_POST['idSolicitud'];
+        $cancelarSolicitud->EstadoAvance= $_POST['EstadoAvance'];
+        $cancelarSolicitud->EstadoSolicitud= $_POST['EstadoSolicitud'];       
+        $cancelarSolicitud->MotivoCancelacion= $_POST['MotivoCancelacion'];
+        $cancelarSolicitud->modificadoPor= $user;
+        ControladorDataTableSolicitud::actualizarEstadoSolicitud($cancelarSolicitud);
     }
    
 ?>

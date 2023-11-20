@@ -84,6 +84,9 @@ $(document).on("click", "#btn_ver", async function (){
   AvanceSolicitudLabel.innerText = SolicitudXid.EstadoAvance;
   const EstadoSolicitudLabel = document.getElementById('V_EstadoSolicitud');
   EstadoSolicitudLabel.innerText = SolicitudXid.EstadoSolicitud;
+  if (SolicitudXid.EstadoSolicitud === 'CANCELADO') {
+    EstadoSolicitudLabel.style.color = 'red';
+  }
   const MotivoLabel = document.getElementById('V_Motivo');
   MotivoLabel.innerText = SolicitudXid.motivoCancelacion;
   const CreadoPorLabel = document.getElementById('V_CreadoPor');
@@ -175,12 +178,24 @@ $(document).on("click", "#btn_pdf_id",  function (){
   //await reporteSolicitudesPorId(idSolicitudR);  
  });
 
-$(document).on("click", "#btn_editar", async function(){		 
+$(document).on("click", "#btn_editar", async function(){	
+  
   // Obtener la fila más cercana al botón
   let fila = $(this).closest("tr");
   // Capturar el ID de la solicitud
   let idSolicitud = fila.find('td:eq(0)').text();
   let Solicitudes = await obtenerSolicitudesPorId(idSolicitud);
+
+  if (Solicitudes.EstadoSolicitud === 'CANCELADO') {
+    // Aquí puedes mostrar un mensaje o tomar alguna acción específica
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "No se puede editar una solicitud cancelada!",
+    });
+    //alert('No se puede editar una solicitud cancelada');
+    return; // Detiene la ejecución si la solicitud está cancelada
+  }	 
   //LLenar Campos de modal Editar Solicitud
   $("#E_IdSolicitud").val(idSolicitud);
   const idSolicitudLabel = document.getElementById('E_IdSolicitud');
@@ -191,17 +206,13 @@ $(document).on("click", "#btn_editar", async function(){
   const idTipoServicioLabel = document.getElementById('E_TipoServicio');
   idTipoServicioLabel.innerText = Solicitudes.TipoServicio;
   $("#E_telefono_cliente").val(Solicitudes['telefono']);
-  $("#E_ubicacion").val(Solicitudes['ubicacion']);
-  
+  $("#E_ubicacion").val(Solicitudes['ubicacion']); 
   const EstadoSolicitudLabel = document.getElementById('E_EstadoSolicitud');
-  EstadoSolicitudLabel.innerText = Solicitudes.EstadoSolicitud;
-  
+  EstadoSolicitudLabel.innerText = Solicitudes.EstadoSolicitud; 
   const CreadoPorLabel = document.getElementById('E_CreadoPor');
   CreadoPorLabel.innerText = Solicitudes.CreadoPor;
-  
   const FechaCreacionLabel = document.getElementById('E_FechaCreacion');
   FechaCreacionLabel.innerText = Solicitudes.FechaCreacion.date.slice(0, 10);
-
   // Estilizar el modal
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");
@@ -261,15 +272,25 @@ $('#form-Edit-Solicitud').submit(function (e) {
    }
 });
 
-$(document).on("click", "#btn_eliminar", function(){		
+$(document).on("click", "#btn_eliminar", async function(){		
   // Obtener la fila más cercana al botón
   let fila = $(this).closest("tr");
   // Capturar el ID de la solicitud
   let idSolicitud = fila.find('td:eq(0)').text();
+  let SolicitudesC = await obtenerSolicitudesPorId(idSolicitud);
+  if (SolicitudesC.EstadoSolicitud === 'CANCELADO') {
+    // Aquí puedes mostrar un mensaje o tomar alguna acción específica
+    Swal.fire({
+      icon: "error",
+      title: "La solicitud ya fue cancelada!",     
+    });
+    //alert('No se puede editar una solicitud cancelada');
+    return; // Detiene la ejecución si la solicitud está cancelada
+  }	 
   // Establecer el estado de la solicitud
   let EstadoSolicitud = 'CANCELADO';
   // Obtener el motivo de cancelación
-  //let motivo = fila.find('td:eq(5)').text();
+  //let EstadoAvance = 'CANCELADO';
   // Establecer valores en los campos del modal
   $("#C_IdSolicitud").val(idSolicitud);
   $("#C_EstadoSolicitud").val(EstadoSolicitud);
@@ -302,6 +323,7 @@ $('#form-Solicitud').submit(function (e) {
         datatype:"JSON",    
         data:{ 
           idSolicitud: idSolicitud,
+          EstadoAvance: 'CANCELADO',
           EstadoSolicitud: EstadoSolicitud,
           MotivoCancelacion: MotivoCancelacion
         },    
