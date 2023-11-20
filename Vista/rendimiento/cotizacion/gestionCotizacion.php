@@ -83,7 +83,7 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
-  <title> Comisiones </title>
+  <title> Ver Cotizaciones </title>
 </head>
 
 <body style="overflow: hidden;">
@@ -149,9 +149,9 @@ if (isset($_SESSION['usuario'])) {
                 <th scope="col"> N° </th>
                 <th scope="col"> CREADO POR </th>
                 <th scope="col"> CLIENTE </th>
-                <th scope="col"> SUB DESCUENTO </th>
+                <th scope="col"> SUB TOTAL </th>
                 <th scope="col"> ISV % </th>
-                <th scope="col"> TOTAL COTIZACION </th>
+                <th scope="col"> TOTAL </th>
                 <th scope="col"> ESTADO </th>
                 <th scope="col"> ACCION </th>
               </tr>

@@ -84,7 +84,7 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
-  <title> Avance Tareas </title>
+  <title> Ver Tareas </title>
 </head>
 
 <body style="overflow: hidden;">
@@ -133,23 +133,25 @@ if (isset($_SESSION['usuario'])) {
                   <?php include_once '../../layout/navbar.php'?>                             
               </div>        
               <div class ="titulo">
-                    <H2 class="title-dashboard-task">Avance de Tareas</H2>
-              </div>  
+              <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionConsultaTarea.php');?>">Gestión Tareas</H2>
+            </div> 
             </div>
 
         <div class="table-conteiner">
           <div>
-            
-            <a href="../../../TCPDF/examples/reporteConsulTarea.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> 
-            <!-- <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button> -->
+            <a href="../../../TCPDF/examples/reporteConsulTarea.php" target="_blank" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> 
           </div>
           <table class="table" id="table-Tareas">
             <thead>
               <tr>
                 <th scope="col"> ID </th>
-                <th scope="col"> NOMBRE </th>
+                <th scope="col"> TIPO </th>
+                <th scope="col"> RTN </th>
+                <th scope="col"> CLIENTE </th>
                 <th scope="col"> TITULO </th>
-                <th scope="col"> AVANCE DE LA TAREA </th>
+                <th scope="col"> CREADO POR </th>
+                <th scope="col"> ANTIGÜEDAD(DIAS)</th>
+                <th scope="col"> ACCION </th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -166,6 +168,7 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
   <!-- Scripts propios -->
   <script src="../../../Recursos/js/DataTableTarea/dataTableTarea.js" type="module"></script>
+  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
