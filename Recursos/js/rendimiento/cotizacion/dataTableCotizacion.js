@@ -1,5 +1,3 @@
-// import {estadoValidado as valido } from './validacionesModalEditarMetrica.js';
-
 let tablaCotizacion = '';
 $(document).ready(function () {
   let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;

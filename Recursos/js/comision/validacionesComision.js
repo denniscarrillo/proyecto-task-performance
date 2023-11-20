@@ -12,6 +12,8 @@ $(document).ready(function () {
   //Que muetre la fecha actual en el input de fecha
   document.getElementById("fecha-comision").value = now;
   document.getElementById("fecha-comision").setAttribute("disabled", "true");
+  document.getElementById("fecha_V").value = now;
+  document.getElementById("fecha_V").setAttribute("disabled", "true");
   document.getElementById("id-venta").setAttribute("disabled", "true");
   document.getElementById("monto-total").setAttribute("disabled", "true");
   document.getElementById("comision-total").setAttribute("disabled", "true");
@@ -154,12 +156,27 @@ $('#form-Comision').submit(function (e) { //evita el comportambiento normal del 
   
 });
 
-let guardarNuevaComision = function(){
+let guardarNuevaComision = function () {
   let fechaComision = document.getElementById('fecha-comision').value;
   let idVenta = document.getElementById('id-venta').value;
   let montoTotal = document.getElementById('monto-total').value;
   let porcentaje = document.getElementById('porcentaje-comision').value;
   let comisionTotal = document.getElementById('comision-total').value;
+
+  // // Obtener la cantidad de días de vigencia desde la función obtenerLiquidacion
+  // let vigencia = obtenerLiquidacion();
+
+  // // Convertir la fecha de texto a un objeto Date
+  // let fechaV = new Date(fechaComision);
+
+  // // Sumar la cantidad de días de vigencia a la fecha
+  // fechaV.setDate(fechaV.getDate() + parseInt(vigencia['liquidacion']));
+
+  // // Actualizar el valor del campo fecha_V con la nueva fecha
+  // $("#fecha_V").val(fechaV.toISOString().slice(0, 10));
+  // let fechaLiqui = fechaV.getTime();
+
+  // Continuar con el resto de tu código...
   $.ajax({
     url: "../../../Vista/comisiones/insertarNuevaComision.php",
     type: "POST",
@@ -170,6 +187,7 @@ let guardarNuevaComision = function(){
       montoTotal: montoTotal,
       idPorcentaje: porcentaje,
       comisionTotal: comisionTotal
+      // fechaV: fechaLiqui
     },
     success: function () {
       Swal.fire(
@@ -178,8 +196,10 @@ let guardarNuevaComision = function(){
         'success',
       )
     }
-});
+  });
 }
+
+// }
 
 let obtenerEstadoComision = ($idVenta) => {
   $.ajax({
@@ -203,7 +223,19 @@ let obtenerEstadoComision = ($idVenta) => {
       }
     }
   });
- } //Fin AJAX
+ } 
+ let obtenerLiquidacion = async () =>{
+  try {
+    let dato = await $.ajax({
+      url: '../../../Vista/comisiones/obtenerfechaLiquidacion.php',
+      type: 'GET',
+      dataType: 'JSON'
+    });
+    return dato;
+  } catch(err) {
+    console.error(err)
+}
+}//Fin AJAX
 /* let $btnGuardarComision = document.getElementById('btn-guardar-comision');
   $btnGuardarComision.addEventListener('click', function(){
   let $idVenta = document.getElementById('monto-total').value;

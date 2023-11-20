@@ -4,7 +4,7 @@
    require_once("../../../Controlador/ControladorDataTableTarea.php");
    session_start();
    if(isset($_SESSION['usuario'])){
-      $data = ControladorDataTableTarea::DataTableTarea($_SESSION['usuario']);
+      $data = ControladorDataTableTarea::obtenerTareasUsuario($_SESSION['usuario']);
       print json_encode($data, JSON_UNESCAPED_UNICODE);
    }
    

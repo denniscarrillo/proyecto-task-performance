@@ -30,9 +30,8 @@ require_once('validacionesTarea.php');
         $urlIndex = '../index.php';
         // Rendimiento
         $urlMisTareas = './v_tarea.php';
-        $urlCotizacion = './cotizacion/v_cotizacion.php';
-        $urlConsultarTareas = '../crud/DataTableTarea/gestionDataTableTarea.php'; 
-        $urlBitacoraTarea = ''; //PENDIENTE
+        $urlCotizacion = './cotizacion/gestionCotizacion.php';
+        $urlConsultarTareas = '../crud/DataTableTarea/gestionDataTableTarea.php';
         $urlMetricas = '../crud/Metricas/gestionMetricas.php';
         $urlEstadisticas = '../grafica/estadistica.php'; 
         //Solicitud

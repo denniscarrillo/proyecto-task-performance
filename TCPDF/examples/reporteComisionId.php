@@ -86,9 +86,12 @@ $VentaTotal = $ComisionId['ventaTotal'];
 $valorPorcentaje = $ComisionId['valorPorcentaje'] * 100;;
 $ComisionT = $ComisionId['comisionT'];
 $Estado = $ComisionId['estadoComision'];
+$EstadoL = $ComisionId['estadoLiquidacion'];
 $creadoPor = $ComisionId['CreadoPor'];
 $fechaComision = $ComisionId['FechaComision'];
 $fechaFormateadaC = $fechaComision->format('Y/m/d');
+$fechaLiquidacion = $ComisionId['FechaLiquidacion'];
+$fechaFormateadaL = $fechaLiquidacion->format('Y/m/d');
 $modifacadoPor = $ComisionId['ModificadoPor'];
 if ($modifacadoPor == null) {
     $modifacadoPor = "Sin modificaciones";
@@ -109,8 +112,10 @@ $html .= '
 <div style="flex: 1; text-align: left;"> <b> PORCENTAJE:  </b>' . $valorPorcentaje . '%</div>
 <div style="flex: 1; text-align: left;"> <b> COMISION TOTAL:  </b>' . $ComisionT . '</div>
 <div style="flex: 1; text-align: left;"> <b> ESTADO:  </b>' . $Estado . '</div>
+<div style="flex: 1; text-align: left;"> <b> ESTADO LIQUIDACION:  </b>' . $EstadoL . '</div>
 <div style="flex: 1; text-align: left;"> <b> CREADO POR:  </b>' . $creadoPor . '</div>
 <div style="flex: 1; text-align: left;"> <b> FECHA DE CREACION:  </b>' . $fechaFormateadaC . '</div>
+<div style="flex: 1; text-align: left;"> <b> FECHA DE LIQUIDACION:  </b>' . $fechaFormateadaL . '</div>
 <div style="flex: 1; text-align: left;"> <b> MODIFICADO POR:  </b>' . $modifacadoPor . '</div>
 <div style="flex: 1; text-align: left;"> <b> FECHA MODIFICACION:  </b>' . $fechaFormateadaM . '</div>
 </dl>
