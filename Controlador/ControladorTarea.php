@@ -108,4 +108,13 @@ class ControladorTarea {
     public static function obtenerCotizacionesUsuario($usuario){
         return Tarea::obtenerCotizacionesUsuario($usuario);
     }
+
+    public static function obtenerCotizacionesUsuarioPDF($usuario, $buscar){
+        return Tarea::obtenerCotizacionesUsuarioPDF($usuario, $buscar);
+    }
+
+    public static function obtenerCotizacionXId($idCotizacion){
+        return Tarea::obtenerCotizacionXId($idCotizacion);
+    }
+
 }
