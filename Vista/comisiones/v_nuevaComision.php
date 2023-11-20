@@ -99,6 +99,7 @@ require_once('obtenerEstadoComision.php');
             <label id="mensaje-estado"></label>
             <p class="mensaje" id= "mensaje"></p>
           </div>
+
           <div class="form-element">
             <label>Monto</label>
             <input type="text" class="form-control" id="monto-total">
@@ -122,6 +123,9 @@ require_once('obtenerEstadoComision.php');
             <label>Comisión venta</label>
             <input type="text" class="form-control" id="comision-total">
           </div>
+          <!-- <div class="form-element">
+            <label>Fecha de liquidación</label>
+            <input type="text" class="form-control" id="fecha_V" value=""> -->
           <div class="form-element">
             <label>Vendedores:</label>
             <div class="conteiner-vendedores" id="conteiner-vendedores">

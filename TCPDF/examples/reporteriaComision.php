@@ -77,12 +77,13 @@ $html = '
 <tr>
 <td style="background-color: #e54037;color: white; text-align: center; width: 60px;">N°</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 110px;">FACTURA</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 140px;">TOTAL VENTA</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 140px;">PORCENTAJE</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 160px;">COMISION TOTAL</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">ESTADO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 125px;">LIQUIDACION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">TOTAL VENTA</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">PORCENTAJE</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 115px;">COMISION TOTAL</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">ESTADO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 115px;">LIQUIDACION</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 100px;">FECHA</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 125px;">FECHA LIQUIDAR </td>
 </tr>
 ';
 $Comisiones = ControladorComision::getComisionesPdf($_GET['buscar']);
@@ -97,6 +98,9 @@ foreach($Comisiones as $Comision){
     $fecha = $Comision['fechaComision'];
     $timestamp = $fecha->getTimestamp();
     $fechaComision = date('Y-m-d', $timestamp);
+    $fechaL = $Comision['fechaLiquidacion'];
+    $timestamp = $fechaL->getTimestamp();
+    $fechaLiquidacion = date('Y-m-d', $timestamp);
     $Cont++;
 
     $html .= '
@@ -109,6 +113,7 @@ foreach($Comisiones as $Comision){
     <td style="text-align: center">'.$estado.'</td>
     <td style="text-align: center">'.$liquidacion.'</td>
     <td style="text-align: center">'.$fechaComision.'</td>
+    <td style="text-align: center">'.$fechaLiquidacion.'</td>
     </tr>
     ';
 }

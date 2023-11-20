@@ -28,5 +28,7 @@ class ControladorParametro {
         return Parametro::obtenerLosParametrosPDF($buscar);
     }
     
-
+    public static function obtenerVigenciaLiquidar(){
+        return Parametro::obtenerVigenciaLiquidacion();
+    }
 }

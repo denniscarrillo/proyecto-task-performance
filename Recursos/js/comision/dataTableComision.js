@@ -34,7 +34,14 @@ let procesarPermisoActualizar = data => {
       { "data": "comisionTotal" },
       { "data": "estadoComisionar" },
       { "data": "estadoLiquidacion" },
-      { "data": "fechaComision.date" },
+      { "data": 'fechaComision.date',
+      "render": function(data) {
+        return data.slice(0, 10); },
+      },
+      { "data": 'fechaLiquidacion.date',
+      "render": function(data) {
+        return data.slice(0, 10); },
+      },
       {
         "defaultContent":
           `<div>
@@ -60,14 +67,15 @@ let obtenerPermisos = function ($idObjeto, callback) {
 //Editar Comision
 $(document).on("click", "#btn_editar", function(){
   let fila = $(this).closest("tr"),
-    idComision = $(this).closest('tr').find('td:eq(0)').text(),
+    idComision = fila.find('td:eq(0)').text(),
     idVenta = fila.find("td:eq(1)").text(),
     monto = fila.find("td:eq(2)").text(),
     porcentaje = fila.find("td:eq(3)").text(),
     comisionTotal = fila.find("td:eq(4)").text(),
     estadoComisionar = fila.find("td:eq(5)").text(),
     estadoLiquidacion = fila.find("td:eq(6)").text(),
-    fechaComision = fila.find("td:eq(7)").text();
+    fechaComision = fila.find("td:eq(7)").text(),
+    fechaLiquidacion = fila.find("td:eq(8)").text(); // Agregar punto y coma aquí
   $("#idComision_E").val(idComision);
   $("#idVenta_E").val(idVenta);
   $("#monto_E").val(monto);
@@ -76,10 +84,12 @@ $(document).on("click", "#btn_editar", function(){
   $("#estadoComision_E").val(estadoComisionar);
   $("#estadoLiquidacion_E").val(estadoLiquidacion);
   $("#fecha_E").val(fechaComision);
+  $("#fecha_EV").val(fechaLiquidacion);
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-title").css("color", "white");
   $("#modalEditarComision").modal("show");
 });
+
 
 //Envio de datos para editar
 $("#form-Edit-Comision").submit(function (e) {
@@ -140,6 +150,10 @@ if (!isNaN(porcentajeDecimal)) {
   comisionTotalLabel.innerText = idComisionVer.comisionT;
   const estadoComisionLabel = document.getElementById('V_Estado');
   estadoComisionLabel.innerText = idComisionVer.estadoComision;
+  const estadoLiquidacionLabel = document.getElementById('V_EstadoLiquidar');
+  estadoLiquidacionLabel.innerText = idComisionVer.estadoLiquidacion;
+  const fechaLiquidacionLabel = document.getElementById('V_fechaLiquidacion');
+  fechaLiquidacionLabel.innerText = idComisionVer.FechaLiquidacion.date;
   const CreadoPorLabel = document.getElementById('V_CreadoPor');
   CreadoPorLabel.innerText = idComisionVer.CreadoPor;
   const fechaComisionLabel = document.getElementById('V_fechaCreacion');
