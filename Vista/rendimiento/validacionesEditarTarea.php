@@ -19,6 +19,7 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
         $id_Tarea = $_POST['idTarea'];
         $Creado_Por = $_SESSION['usuario'];
         $Modificador_Por = $_SESSION['usuario'];
+        $evidencia = $_POST['evidencia'];
         $rtn = '';
         $nombre = '';
         if($_POST['tipoCliente'] == 'Nuevo'){
@@ -45,6 +46,9 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
             }
             if(count($tarea) > 0){
                 ControladorTarea::actualizarTarea($id_Tarea, $tipo_Tarea, $tarea);
+                if(isset($_POST['evidencia'])){
+                    ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia);
+                }
                 if(!isset($datosTareaDB['RTN_Cliente']) && (isset($_POST['nombre']) && isset($_POST['rtnCliente']))){
                     $nombre = $_POST['nombre'];
                     $rtn = $_POST['rtnCliente'];
@@ -80,6 +84,9 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
             } 
             if(count($tarea) > 0){
                 ControladorTarea::actualizarTarea($id_Tarea, $tipo_Tarea, $tarea);
+                if(isset($_POST['evidencia'])){
+                    ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia);
+                }
             }
         }
     }

@@ -316,6 +316,13 @@ class Tarea
         }
        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
+    public static function guardarFacturaTarea($idTarea, $evidencia){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "INSERT INTO tbl_AdjuntoEvidencia VALUES('$idTarea', '$evidencia');";
+        sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion);
+    }
     public static function obtenerClasificacionLead() {
         try{
             $clasificacion = array();

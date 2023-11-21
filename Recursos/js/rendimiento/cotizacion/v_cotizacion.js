@@ -1,5 +1,8 @@
+import  {validarCampoVacio} from "../../funcionesValidaciones.js";
+
 const $tbody = document.getElementById('t-body');
 const $btnAgregar = document.getElementById('btn-agregar-producto');
+let $optionDescuento = document.getElementById('estado-desc');
 const Toast = Swal.mixin({
     toast: true,
     position: 'top',
@@ -23,6 +26,7 @@ let contItem = 0;
 let itemProdDB = [];
 let estadoCot = 'Nueva';
 let tableProductos = '';
+let estadoCant = false;
 let $addNewProduct = {
     descripcion: document.getElementById('descripcion'),
     marca: document.getElementById('marca'),
@@ -84,52 +88,104 @@ document.getElementById('btn_agregar').addEventListener('click', () => {
         agregarEventoBorrar(xmark);
     })  
     $('#modalProductosCotizados').modal('hide');
+    let $inputs = document.querySelectorAll('.input-cant');
+    validarCantidad($inputs);
 });
 $(document).on('keyup', '.input-cant', function () {
     let totalSuma = 0;
     let cant = parseInt(this.value);
+    let $inputs = document.querySelectorAll('.input-cant');
+    validarCantidad($inputs);
     let precio = parseFloat(this.parentElement.nextSibling.textContent.split(' ')[1]);
-    console.log();
-    this.parentElement.nextSibling.nextSibling.textContent = `Lps. ${parseFloat((cant * precio).toFixed(2))}`;
+    this.parentElement.nextSibling.nextSibling.textContent = (isNaN(cant) || cant < 1) ? 'Lps. 0.00' : `Lps. ${parseFloat((cant * precio).toFixed(2))}`;
     let arrayTotales = [];
     document.querySelectorAll('.total-producto').forEach(element => {
         arrayTotales.push(element.textContent.split(' ')[1]);
     });
+    $optionDescuento[0].selected = true;
+    if(document.getElementById('valor-descuento') != null) {
+        document.querySelector('.container-input-cant-desc').innerHTML = '';
+        document.getElementById('input-descuento').classList.add('hidden');
+        document.getElementById('input-sub-descuento').classList.add('hidden');
+    }
     calcularResumenCotizacion(arrayTotales, totalSuma);
 });
+let validarCantidad = function($inputs){
+    let totalSuma = 0;
+    for (let i = 0; i < $inputs.length; i++) {
+        // $inputs[i].value = 1
+        if((parseInt($inputs[i].value) < 1) || ($inputs[i].value == '')){
+            $optionDescuento[0].selected = true;
+            document.getElementById('estado-desc').setAttribute('disabled', 'true');
+            document.querySelector('.container-input-cant-desc').innerHTML = '';
+            let arrayTotales = [];
+            document.querySelectorAll('.total-producto').forEach(element => {
+                arrayTotales.push(element.textContent.split(' ')[1]);
+            });
+            document.getElementById('input-descuento').classList.add('hidden');
+            document.getElementById('input-sub-descuento').classList.add('hidden');
+            calcularResumenCotizacion(arrayTotales, totalSuma);
+            estadoCant = false;
+            break;
+        } else {
+            document.getElementById('estado-desc').removeAttribute('disabled');
+            estadoCant = true;
+        } 
+    }
+}
 document.getElementById('form-cotizacion').addEventListener('submit', async (event) => {
     event.preventDefault();
-    //Capturamos los datos de la cotizacion y producto a enviar
-    let $datosCotizacion = {
-        idTarea: document.querySelector('.encabezado').id,
-        validez: document.getElementById('validez-cotizacion').textContent.split(' ')[0],
-        subTotal: document.getElementById('sub-total').textContent.split(' ')[1],
-        descuento: document.getElementById('descuento').textContent.split(' ')[1],
-        subDescuento: document.getElementById('sub-descuento').textContent.split(' ')[1],
-        isv: document.getElementById('impuesto').textContent.split(' ')[1],
-        total: document.getElementById('total').textContent.split(' ')[1]
-    }
-    let $productosCot = document.querySelectorAll('.new-product');
-    let $arrayProductosCot = [];
-    $productosCot.forEach(producto => {
-       let $newProduct = {
-            id: producto.getAttribute('class').split(' ')[1],
-            item: producto.children[0].textContent,
-            cantidad: producto.children[3].children[0].value,
-            idPrecio: producto.children[4].id,
-            total: producto.children[5].textContent.split(' ')[1]
+    let estadoValidaciones = true;
+    if(document.getElementById('valor-descuento') != null) {
+        let inputs = {
+            valorDescuento: document.getElementById('valor-descuento')
         }
-        $arrayProductosCot.push($newProduct);
-    });
-    //Llamamos a la funcion que envia la cotizacion al servidor y recibe estos parametros
-    enviarNuevaCotizacion($datosCotizacion, $arrayProductosCot);
-    estadoCot = 'Existente';
-    alternarHiddenBotones();
-    document.querySelectorAll('.new').forEach((elemento) => {
-        elemento.classList.add('hidden');
-    });
-    $tbody.innerHTML = '';
-    await validarDatosCotizacion();
+        estadoValidaciones = validacionInputs(inputs);
+    }
+    if(!estadoValidaciones){
+        event.preventDefault();
+    } else {
+        //Capturamos los datos de la cotizacion y producto a enviar
+        let $datosCotizacion = {
+            idTarea: document.querySelector('.encabezado').id,
+            validez: document.getElementById('validez-cotizacion').textContent.split(' ')[0],
+            subTotal: document.getElementById('sub-total').textContent.split(' ')[1],
+            descuento: document.getElementById('descuento').textContent.split(' ')[1],
+            subDescuento: document.getElementById('sub-descuento').textContent.split(' ')[1],
+            isv: document.getElementById('impuesto').textContent.split(' ')[1],
+            total: document.getElementById('total').textContent.split(' ')[1]
+        }
+        let $productosCot = document.querySelectorAll('.new-product');
+        let $arrayProductosCot = [];
+        $productosCot.forEach(producto => {
+        let $newProduct = {
+                id: producto.getAttribute('class').split(' ')[1],
+                item: producto.children[0].textContent,
+                cantidad: producto.children[3].children[0].value,
+                idPrecio: producto.children[4].id,
+                total: producto.children[5].textContent.split(' ')[1]
+            }
+            $arrayProductosCot.push($newProduct);
+        });
+        //Llamamos a la funcion que envia la cotizacion al servidor y recibe estos parametros
+        enviarNuevaCotizacion($datosCotizacion, $arrayProductosCot);
+        $optionDescuento[0].selected = true;
+        document.getElementById('estado-desc').setAttribute('disabled', 'true');
+        document.querySelector('.container-input-cant-desc').innerHTML = '';
+        estadoCot = 'Existente';
+        alternarHiddenBotones();
+        document.querySelectorAll('.new').forEach((elemento) => {
+            elemento.classList.add('hidden');
+        });
+        $tbody.innerHTML = '';
+        let idCotizacion = await validarDatosCotizacion();
+        if(estadoCot == 'Existente'){
+            let nCotizacion = `<label>Cotización N°</label><label id="id-cotizacion">${idCotizacion}</label>`;
+            document.querySelector('.title-dashboard-task').innerHTML =  nCotizacion;
+        }
+        let btnCancel = document.getElementById('btn-salir-cotizacion');
+        btnCancel.children[1].textContent = 'Refrescar...';
+    }
 });
 let alternarHiddenBotones = () => {
     if(estadoCot=='Nueva'){
@@ -148,12 +204,24 @@ let calcularResumenCotizacion = (elementosSumar, acumTotalSuma) => {
         acumTotalSuma = acumTotalSuma + totalInt;
     });
     $resumenCotizacion.subtotal.textContent = `Lps. ${acumTotalSuma.toFixed(2)}`;
-    $resumenCotizacion.descuento.textContent = `Lps. ${(acumTotalSuma * 0.03).toFixed(2)}`;
+    let desc = '';
+    if(document.getElementById('valor-descuento') != null){
+        let $valDesc = parseInt(document.getElementById('valor-descuento').value);
+        if($optionDescuento.value == 'Aplica' && ($valDesc > 0 && !isNaN($valDesc))) {
+            $resumenCotizacion.descuento.textContent = `Lps. ${(acumTotalSuma * ($valDesc/100)).toFixed(2)}`;
+        } else {
+            desc = $resumenCotizacion.descuento.textContent = "Lps. 0.00";
+        }
+    } else {
+        desc = $resumenCotizacion.descuento.textContent = "Lps. 0.00";
+    }
     $resumenCotizacion.subdescuento.textContent = `Lps. ${(acumTotalSuma - parseFloat($resumenCotizacion.descuento.textContent.split(' ')[1])).toFixed(2)}`;
     $resumenCotizacion.impuesto.textContent = `Lps. ${(parseFloat($resumenCotizacion.subdescuento.textContent.split(' ')[1]) * 0.15).toFixed(2)}`;
     $resumenCotizacion.total.textContent = `Lps. ${(parseFloat($resumenCotizacion.subdescuento.textContent.split(' ')[1]) + parseFloat($resumenCotizacion.impuesto.textContent.split(' ')[1])).toFixed(2)}`;
 }
-
+let validacionInputs = (inputs) => {
+   return validarCampoVacio(inputs.valorDescuento);
+}
 //nueva Cotizacion
 let enviarNuevaCotizacion = ($datosCotizacion, $productosCotizacion) => {
     $.ajax({
@@ -188,7 +256,11 @@ let agregarEventoBorrar = ($deleteButton) => {
     if(!($deleteButton == null)){
         $deleteButton.addEventListener('click', () => {
             $deleteButton.parentElement.parentElement.parentElement.remove();
-            calcularResumenCotizacion(document.querySelectorAll('.total-producto'), totalSuma);
+            let arrayTotales = [];
+            document.querySelectorAll('.total-producto').forEach(element => {
+                arrayTotales.push(element.textContent.split(' ')[1]);
+            });
+            calcularResumenCotizacion(arrayTotales, totalSuma);
             document.querySelectorAll('.item-num').forEach((item, index) => {
                 contItem = index+1;
                 item.textContent = contItem;
@@ -206,7 +278,12 @@ let validarDatosCotizacion = async () => {
             insertarNewProduct(contItem, product, $tbody, 1);
             itemProdDB.push(product.item);
         });
+        
         $resumenCotizacion.subtotal.textContent = `Lps. ${data.detalle.subTotal}`;
+        if(parseFloat(data.detalle.descuento) > 0){
+            document.getElementById('input-descuento').classList.remove('hidden');
+            document.getElementById('input-sub-descuento').classList.remove('hidden');
+        }
         $resumenCotizacion.descuento.textContent = `Lps. ${data.detalle.descuento}`;
         $resumenCotizacion.subdescuento.textContent = `Lps. ${data.detalle.subDescuento}`;
         $resumenCotizacion.impuesto.textContent = `Lps. ${data.detalle.isv}`;
@@ -214,7 +291,53 @@ let validarDatosCotizacion = async () => {
         return data.detalle.id_Cotizacion
     }
 }
-
+$optionDescuento.addEventListener('click', () => {
+    if(estadoCant == false) {
+        document.getElementById('estado-desc').setAttribute('disabled', 'true');
+    }
+});
+//Parte del descuento para que se aplique solo si se necesita
+$optionDescuento.addEventListener('change', () => {
+    // if(document.getElementById('valor-descuento') != null) {
+    //     let inputs = {
+    //         valorDescuento: document.getElementById('valor-descuento')
+    //     }
+    //     validacionInputs(inputs);
+    // }
+    let totalSuma = 0;
+    let container = document.querySelector('.container-input-cant-desc');
+    if($optionDescuento.value == 'Aplica') {
+        container.innerHTML = `
+        <input type="number" id="valor-descuento">
+        <p class="mensaje"></p>`;
+        document.getElementById('input-descuento').classList.remove('hidden');
+        document.getElementById('input-sub-descuento').classList.remove('hidden');
+        agregarEventoDescuento(totalSuma);
+    } else {
+        document.getElementById('input-descuento').classList.add('hidden');
+        document.getElementById('input-sub-descuento').classList.add('hidden');
+        container.innerHTML = '';
+        let arrayTotales = [];
+        document.querySelectorAll('.total-producto').forEach(element => {
+            arrayTotales.push(element.textContent.split(' ')[1]);
+        });
+        calcularResumenCotizacion(arrayTotales, totalSuma);
+    }
+});
+let agregarEventoDescuento = (totalSuma) => {
+    let arrayTotales = [];
+    document.querySelectorAll('.total-producto').forEach(element => {
+        arrayTotales.push(element.textContent.split(' ')[1]);
+    });
+    //Activamos la actualizacion del calculo resumen cotizacion en el evento keyup
+    document.getElementById('valor-descuento').addEventListener('keyup', () => {
+        calcularResumenCotizacion(arrayTotales, totalSuma);
+    });
+    //Activamos la actualizacion del calculo resumen cotizacion en el evento keyup
+    document.getElementById('valor-descuento').addEventListener('change', () => {
+        calcularResumenCotizacion(arrayTotales, totalSuma);
+    });
+}
 
 let obtenerDatosCotizacion = async ($idTarea) => {
     let dataCotizacion = '';
@@ -279,6 +402,8 @@ let insertarNewProduct = (contItem, $addProduct, $tbody, referencia) => {
         total.textContent = `Lps. ${$addProduct.total}`;
         $tbody.appendChild($fila);
     }
+    let $inputs = document.querySelectorAll('.input-cant');
+    validarCantidad($inputs);
 }
 $('#btn-productos').click(() => {
     if (document.getElementById('table-productos_wrapper') == null) {
@@ -316,7 +441,6 @@ $('#btn-productos').click(() => {
     let estado = document.getElementById('estado-cot').textContent;
     let mensaje = "Se anulará la cotización actual, no podrás revertir esto";
     let btnCancel = document.getElementById('btn-salir-cotizacion');
-    // btnCancel.href = 'location.reload()';
     if(estado == 'Anulada' || estado =='Vencida'){
         mensaje = "Ahora, podrás generar una nueva cotización";
     }
@@ -330,6 +454,7 @@ $('#btn-productos').click(() => {
         confirmButtonText: 'Si, continuar'
       }).then(async (result) => {
         if (result.isConfirmed) {
+            let totalSuma = 0;
             btnCancel.children[1].textContent = 'Cancelar';
             btnCancel.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -343,6 +468,13 @@ $('#btn-productos').click(() => {
             }
             document.querySelector('.title-dashboard-task').innerHTML =  "Nueva Cotización";
             mostrarElementosNuevaCotizacion(estado);
+            document.getElementById('input-descuento').classList.add('hidden');
+            document.getElementById('input-sub-descuento').classList.add('hidden');
+            let arrayTotales = [];
+            document.querySelectorAll('.total-producto').forEach(element => {
+                arrayTotales.push(element.textContent.split(' ')[1]);
+            });
+            calcularResumenCotizacion(arrayTotales, totalSuma);
         }
       });
   });
@@ -377,11 +509,14 @@ let mostrarElementosNuevaCotizacion = (estado) => {
             xmark.removeAttribute('hidden');
             agregarEventoBorrar(xmark);
         });
-          //Mostramos el toast
-          Toast.fire({
-            icon: 'success',
-            title: '¡La cotización ha sido anulada!'
-          })
+        //Para que el Toast de anulacion solo se muestre cuando la cotizacion sea Vigente
+        if(document.getElementById('estado-cot').textContent == 'Vigente'){
+            //Mostramos el toast
+            Toast.fire({
+              icon: 'success',
+              title: '¡Cotización anulada!'
+            });
+        }
     } else {
         //Mostramos el toast
         Toast.fire({
@@ -391,10 +526,8 @@ let mostrarElementosNuevaCotizacion = (estado) => {
     }
 }
 
-
 $(document).on("click", "#btn_Pdf",  function (){
     let idTarea = document.querySelector('.encabezado').id;
     let estadoCliente = document.querySelector('.datos-cotizacion').id;
     window.open('../../../TCPDF/examples/reporteCotizacion.php?idTarea='+idTarea+'&estadoCliente='+estadoCliente,'_blank');
-    console.log('Estado del cliente:'+estadoCliente)
    });
