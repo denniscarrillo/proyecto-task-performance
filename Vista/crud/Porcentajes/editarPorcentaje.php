@@ -15,8 +15,8 @@
         $nuevoPorcentaje->idPorcentaje = $_POST['idPorcentaje'];
         $nuevoPorcentaje->estadoPorcentaje = $_POST['estadoPorcentaje'];
         $nuevoPorcentaje->ModificadoPor = $user;
-        date_default_timezone_set('America/Tegucigalpa');
-        $nuevoPorcentaje->fechaModificacion = date("Y-m-d");
+        // date_default_timezone_set('America/Tegucigalpa');
+        // $nuevoPorcentaje->fechaModificacion = date("Y-m-d");
         ControladorPorcentajes::editarPorcentaje($nuevoPorcentaje);
         // Porcentajes::editarPorcentaje($nuevoPorcentaje);
         /* ========================= Evento editar porcentaje. ======================*/

@@ -82,25 +82,41 @@ $html = '
 $ComisionId = ControladorComision::traerIdComision($_GET['idComision']);
 $idComision = $ComisionId['idComision'];
 $idFactura = $ComisionId['idFactura'];
-$VentaTotal = $ComisionId['ventaTotal'];
-$valorPorcentaje = $ComisionId['valorPorcentaje'] * 100;;
-$ComisionT = $ComisionId['comisionT'];
+$VentaTotal = 'Lps. ' . number_format($ComisionId['ventaTotal'], 2, '.', ',');
+$valorPorcentaje = $ComisionId['valorPorcentaje'] * 100;
+$ComisionT =  'Lps. ' . number_format($ComisionId['comisionT'], 2, '.', ',');
 $Estado = $ComisionId['estadoComision'];
 $EstadoL = $ComisionId['estadoLiquidacion'];
 $creadoPor = $ComisionId['CreadoPor'];
-$fechaComision = $ComisionId['FechaComision'];
-$fechaFormateadaC = $fechaComision->format('Y/m/d');
-$fechaLiquidacion = $ComisionId['FechaLiquidacion'];
-$fechaFormateadaL = $fechaLiquidacion->format('Y/m/d');
-$modifacadoPor = $ComisionId['ModificadoPor'];
-if ($modifacadoPor == null) {
-    $modifacadoPor = "Sin modificaciones";
-}
-$fechaModificacion = $ComisionId['FechaModificacion'];
-if ($fechaModificacion !== null) {
-    $fechaFormateadaM = $fechaModificacion->format('Y/m/d');
+// Verificar si $fecha está definido y no es null
+if (isset($ComisionId['FechaComision']) && $ComisionId['FechaComision'] !== null) {
+    $fecha = $ComisionId['FechaComision'];
+    $timestamp = $fecha->getTimestamp();
+    // Verificar si la fecha es no nula antes de formatearla
+    $fechaComision = date('Y-m-d H:i:s', $timestamp);
 } else {
-    $fechaFormateadaM = "Sin modificaciones";
+    $fechaComision = ''; // Otra acción si $fechaComision es nulo
+}
+
+if (isset($ComisionId['FechaLiquidacion']) && $ComisionId['FechaLiquidacion'] !== null) {
+    $fechaL = $ComisionId['FechaLiquidacion'];
+    $timestamp = $fechaL->getTimestamp();
+    // Verificar si la fecha es no nula antes de formatearla
+    $fechaLiquidacion = date('Y-m-d H:i:s', $timestamp);
+} else {
+    $fechaLiquidacion = 'Sin Liquidar'; // Otra acción si $fechaLiquidacion es nulo
+}
+$modificadoPor = $ComisionId['ModificadoPor'];
+if ($modificadoPor == null) {
+    $modificadoPor = "Sin modificaciones";
+}
+if (isset($ComisionId['FechaModificacion']) && $ComisionId['FechaModificacion'] !== null) {
+    $fechaL = $ComisionId['FechaModificacion'];
+    $timestamp = $fechaL->getTimestamp();
+    // Verificar si la fecha es no nula antes de formatearla
+    $fechaModificacion = date('Y-m-d H:i:s', $timestamp);
+} else {
+    $fechaModificacion = 'Sin modificaciones'; // Otra acción si $fechaLiquidacion es nulo
 }
 
 $html .= '
@@ -114,10 +130,10 @@ $html .= '
 <div style="flex: 1; text-align: left;"> <b> ESTADO:  </b>' . $Estado . '</div>
 <div style="flex: 1; text-align: left;"> <b> ESTADO LIQUIDACION:  </b>' . $EstadoL . '</div>
 <div style="flex: 1; text-align: left;"> <b> CREADO POR:  </b>' . $creadoPor . '</div>
-<div style="flex: 1; text-align: left;"> <b> FECHA DE CREACION:  </b>' . $fechaFormateadaC . '</div>
-<div style="flex: 1; text-align: left;"> <b> FECHA DE LIQUIDACION:  </b>' . $fechaFormateadaL . '</div>
-<div style="flex: 1; text-align: left;"> <b> MODIFICADO POR:  </b>' . $modifacadoPor . '</div>
-<div style="flex: 1; text-align: left;"> <b> FECHA MODIFICACION:  </b>' . $fechaFormateadaM . '</div>
+<div style="flex: 1; text-align: left;"> <b> FECHA DE CREACION:  </b>' . $fechaComision . '</div>
+<div style="flex: 1; text-align: left;"> <b> FECHA DE LIQUIDACION:  </b>' . $fechaLiquidacion . '</div>
+<div style="flex: 1; text-align: left;"> <b> MODIFICADO POR:  </b>' . $modificadoPor . '</div>
+<div style="flex: 1; text-align: left;"> <b> FECHA MODIFICACION:  </b>' . $fechaModificacion . '</div>
 </dl>
     <br>
     <table cellpadding="5"  border= "1" >
@@ -130,7 +146,7 @@ $html .= '
     foreach ($ComisionId['vendedores'] as $vendedor) {
         $idVendedor = $vendedor['idVendedor'];
         $nombreVendedor = $vendedor['nombreVendedor'];
-        $comisionVendedor = $vendedor['comisionVendedor'];
+        $comisionVendedor = 'Lps. ' . number_format($vendedor['comisionVendedor'], 2, '.', ',');
         
         $html .= '<tr>';
         $html .= '<td>'.$idVendedor.'</td>';

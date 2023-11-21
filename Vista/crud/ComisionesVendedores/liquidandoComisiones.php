@@ -3,18 +3,15 @@
 
 require_once("../../../db/Conexion.php");
 require_once("../../../Modelo/Comision.php");
+require_once("../../../Modelo/Usuario.php");
+require_once("../../../Controlador/ControladorUsuario.php");
 require_once("../../../Controlador/ControladorComision.php");
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $fechaDesde = isset($_POST['fechaDesde']) ? $_POST['fechaDesde'] : null;
-    $fechaHasta = isset($_POST['fechaHasta']) ? $_POST['fechaHasta'] : null;
-
-    if ($fechaDesde !== null && $fechaHasta !== null) {
-        $mensaje = ControladorComision::liquidandoComisiones($fechaDesde, $fechaHasta);
-        print json_encode(['success' => true, 'message' => $mensaje], JSON_UNESCAPED_UNICODE);
-    }
+if(isset($_POST['fechaDesde']) && isset($_POST['fechaHasta'])){
+    $fechaDesde = $_POST['fechaDesde'];
+    $fechaHasta = $_POST['fechaHasta'];
+    ControladorComision::liquidandoComisiones($fechaDesde, $fechaHasta);
 }
-
 ?>
 
 

@@ -157,7 +157,7 @@ $('#form-Comision').submit(function (e) { //evita el comportambiento normal del 
 });
 
 let guardarNuevaComision = function () {
-  let fechaComision = document.getElementById('fecha-comision').value;
+  // let fechaComision = document.getElementById('fecha-comision').value;
   let idVenta = document.getElementById('id-venta').value;
   let montoTotal = document.getElementById('monto-total').value;
   let porcentaje = document.getElementById('porcentaje-comision').value;
@@ -182,7 +182,7 @@ let guardarNuevaComision = function () {
     type: "POST",
     datatype: "JSON",
     data: {
-      fechaComision: fechaComision,
+      // fechaComision: fechaComision,
       idVenta: idVenta,
       montoTotal: montoTotal,
       idPorcentaje: porcentaje,

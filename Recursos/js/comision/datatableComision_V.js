@@ -14,16 +14,17 @@ $(document).ready(function () {
       { "data": 'idComision'},
       { "data": 'idVendedor'},
       { "data": 'usuario'},
-      { "data": 'comisionTotal'},
+      { "data": 'comisionTotal', 
+      "render": $.fn.dataTable.render.number( ',', '.', 2, ' Lps. ' )},
       { "data": 'estadoComision'},
       { "data": 'estadoLiquidacion'},
       { "data": 'fechaComision.date',
       "render": function(data) {
-        return data.slice(0, 10); },
+        return data.slice(0, 19); },
       },
       { "data": 'fechaLiquidacion.date',
       "render": function(data) {
-        return data.slice(0, 10); },
+        return data ? data.slice(0, 19) : '' },
       },
     ]
   });
@@ -31,14 +32,14 @@ $(document).ready(function () {
 let $btnFiltrar = document.getElementById("btnFiltrar");
 let $tablaComisionesV = "";
 
-$(document).ready(function () {
-  let now = new Date().toLocaleString("en-US", {
-    timeZone: "America/Tegucigalpa",
-    hour12: true,
-    dateStyle: "short",
-  });
-  // document.getElementById("fecha-comision").value = now;
-});
+// $(document).ready(function () {
+//   let now = new Date().toLocaleString("en-US", {
+//     timeZone: "America/Tegucigalpa",
+//     hour12: true,
+//     dateStyle: "short",
+//   });
+//   // document.getElementById("fecha-comision").value = now;
+// });
 
 $btnFiltrar.addEventListener("click", function () {
   let $fechaDesde = document.getElementById("fechaDesdef");
@@ -62,7 +63,7 @@ let iniciarDataTable = function (fechaDesde, fechaHasta) {
       datatype: "JSON",
       data: {
         fecha_Desde: fechaDesde,
-        fecha_Hasta: fechaHasta,
+        fecha_Hasta: fechaHasta
       },
       dataSrc: "",
     },
@@ -75,24 +76,27 @@ let iniciarDataTable = function (fechaDesde, fechaHasta) {
       // { data: "fechaDesde" },
       // { data: "fechaHasta" },
       // { data: "estadoComision" },
-      { data: "totalComision" },
+      { data: "totalComision",
+      "render": $.fn.dataTable.render.number(',', '.', 2, ' Lps. ') }
     ],
 });
 $("#btn_liquidar").on("click", function () {
   // Obtén el rango de fechas desde los datos de la tabla (ajusta esto según tu estructura de datos)
-  let fechaDesde = tablaComisionVendedor.rows().data()[0].fechaComision;
-  let fechaHasta = tablaComisionVendedor.rows().data().slice(-1)[0].fechaComision;
+  let fechaDesdeL = tablaComisionVendedor.rows().data()[0].fechaDesde;
+  let fechaHastaL = tablaComisionVendedor.rows().data()[0].fechaHasta;
 
   // Realiza la solicitud AJAX para llamar al método PHP
   $.ajax({
-      type: "POST",
       url: "../../../Vista/crud/ComisionesVendedores/liquidandoComisiones.php",
-      data: { fechaDesde: fechaDesde, fechaHasta: fechaHasta },
-      dataType: "json",
-      success: function (response) {
+      type: "POST",
+      dataType: "JSON",
+      data: { fechaDesde: fechaDesdeL,
+              fechaHasta: fechaHastaL },
+      success: function (data) {
+          console.log(data);
           // Maneja la respuesta del servidor (muestra la alerta)
           Swal.fire({
-              icon: response.success ? 'success' : 'error',
+              icon: 'success',
               title: 'Comisiones liquidadas correctamente',
               showConfirmButton: false,
               timer: 1500  // La alerta se cerrará automáticamente después de 1.5 segundos

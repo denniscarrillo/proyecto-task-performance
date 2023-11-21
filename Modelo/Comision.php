@@ -50,9 +50,9 @@ class Comision
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         // Preparamos la insercion en la base de datos
         $query = "INSERT INTO tbl_comision (id_Venta, id_Porcentaje, 
-        comision_TotalVenta, estadoComision, estado_Liquidacion, fecha_Liquidacion, Creado_Por, Fecha_Creacion)  
+        comision_TotalVenta, estadoComision, estado_Liquidacion, Creado_Por, Fecha_Creacion)  
         VALUES ('$nuevaComision->idVenta','$nuevaComision->idPorcentaje','$nuevaComision->comisionTotal', '$nuevaComision->estadoComision',
-         '$nuevaComision->estadoLiquidacion', '$nuevaComision->fechaLiquidacion', '$nuevaComision->creadoPor', '$nuevaComision->fechaComision')";
+         '$nuevaComision->estadoLiquidacion', '$nuevaComision->creadoPor', GETDATE())";
         // Ejecutamos la consulta y comprobamos si fue exitosa
         sqlsrv_query($conexion, $query);
         $query2 = "SELECT SCOPE_IDENTITY() AS id_Comision";
@@ -122,7 +122,7 @@ class Comision
         return $comision;
 
     }
-    public static function dividirComisionVendedores($comisionTotal, $idComision, $vendedores, $user, $fechaComision, $fechaLiquidacion)
+    public static function dividirComisionVendedores($comisionTotal, $idComision, $vendedores, $user)
 {
     $conn = new Conexion();
     $abrirConexion = $conn->abrirConexionDB();
@@ -134,8 +134,8 @@ class Comision
     foreach ($vendedores as $vendedor) {
         $idVendedor = $vendedor['idVendedor'];
 
-        $insert = "INSERT INTO tbl_Comision_Por_Vendedor (id_Comision, id_usuario_vendedor, total_Comision, estadoComisionVendedor, estado_Liquidacion, fecha_Liquidacion, Creado_Por, Fecha_Creacion) 
-                    VALUES ('$idComision', '$idVendedor', '$comisionVendedor', '$estadoComisionVendedor', '$estadoLiquidacion', '$fechaLiquidacion', '$user', '$fechaComision');";
+        $insert = "INSERT INTO tbl_Comision_Por_Vendedor (id_Comision, id_usuario_vendedor, total_Comision, estadoComisionVendedor, estado_Liquidacion, Creado_Por, Fecha_Creacion) 
+                    VALUES ('$idComision', '$idVendedor', '$comisionVendedor', '$estadoComisionVendedor', '$estadoLiquidacion', '$user', GETDATE());";
 
         sqlsrv_query($abrirConexion, $insert);
     }
@@ -195,7 +195,7 @@ class Comision
         FROM tbl_comision_por_vendedor vt
         INNER JOIN tbl_ms_usuario AS u ON vt.id_usuario_vendedor = u.id_Usuario
         WHERE vt.estadoComisionVendedor = 'Activa' AND vt.estado_Liquidacion = 'Pendiente'
-          AND vt.Fecha_Creacion BETWEEN '$fechaDesde' AND '$fechaHasta'
+          AND vt.Fecha_Creacion BETWEEN '$fechaDesde 00:00:00:00' AND '$fechaHasta 23:59:59:59'
         GROUP BY vt.id_usuario_vendedor, u.Usuario
         ORDER BY Fecha_Inicial, totalComision;";
 
@@ -264,11 +264,11 @@ class Comision
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $query = "UPDATE tbl_comision SET estado_Liquidacion = '$nuevaComision->estadoLiquidacion', 
-        Modificado_Por ='$nuevaComision->ModificadoPor', Fecha_Creacion ='$nuevaComision->fechaModificacion'
+        Modificado_Por ='$nuevaComision->ModificadoPor', Fecha_Modificacion = GETDATE()
         WHERE id_Comision = '$nuevaComision->idComision';";
         $editarComision = sqlsrv_query($consulta, $query);
         $query2 = "UPDATE tbl_comision_por_vendedor SET estado_Liquidacion = '$nuevaComision->estadoLiquidacion',
-        Modificado_Por ='$nuevaComision->ModificadoPor', Fecha_Modificacion ='$nuevaComision->fechaModificacion'
+        Modificado_Por ='$nuevaComision->ModificadoPor', Fecha_Modificacion = GETDATE()
         WHERE id_Comision = '$nuevaComision->idComision';";
         sqlsrv_query($consulta, $query2);
         sqlsrv_close($consulta); #Cerramos la conexión.
@@ -333,7 +333,7 @@ class Comision
     public static function anularComision($idComision){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query ="UPDATE tbl_Comision SET estadoComision = 'Anulada' WHERE id_Comision = '$idComision';";
+        $query ="UPDATE tbl_Comision SET estadoComision = 'Anulada', estado_Liquidacion = 'Cancelada' WHERE id_Comision = '$idComision';";
         $estadoAnulada = sqlsrv_query($conexion, $query);
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $estadoAnulada;
@@ -341,7 +341,7 @@ class Comision
     public static function anularComisionPorVendedor($idComision){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query ="UPDATE tbl_Comision_Por_Vendedor SET estadoComisionVendedor = 'Anulada' WHERE id_Comision = '$idComision';";
+        $query ="UPDATE tbl_Comision_Por_Vendedor SET estadoComisionVendedor = 'Anulada', estado_Liquidacion = 'Cancelada' WHERE id_Comision = '$idComision';";
         $estadoAnulada = sqlsrv_query($conexion, $query);
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $estadoAnulada;
@@ -409,16 +409,52 @@ class Comision
         $abrirConexion = $conn->abrirConexionDB();
         $estadoLiquidacion = 'Liquidada';
     
-        // Actualiza el estado de liquidación en la tabla tbl_comision
-        $query = "UPDATE tbl_comision SET estado_Liquidacion = '$estadoLiquidacion' WHERE fecha_Creacion BETWEEN '$fechaDesde' AND '$fechaHasta';";
-        sqlsrv_query($abrirConexion, $query);
+        try {
+            // Configura el manejo de fechas de SQL Server
+            $querySetDateFormat = "SET DATEFORMAT ymd;";
+            sqlsrv_query($abrirConexion, $querySetDateFormat);
     
-        // Actualiza el estado de liquidación en la tabla tbl_comision_por_vendedor
-        $query2 = "UPDATE tbl_comision_por_vendedor SET estado_Liquidacion = '$estadoLiquidacion' WHERE fecha_Creacion BETWEEN '$fechaDesde' AND '$fechaHasta';";
-        sqlsrv_query($abrirConexion, $query2);
+            // Inicia una transacción
+            sqlsrv_begin_transaction($abrirConexion);
     
-        sqlsrv_close($abrirConexion);
+            // Actualiza el estado de liquidación en la tabla tbl_comision
+            $query1 = "UPDATE tbl_comision 
+                       SET estado_Liquidacion = '$estadoLiquidacion', fecha_Liquidacion = GETDATE() 
+                       WHERE fecha_Creacion >= '$fechaDesde' AND fecha_Creacion <= '$fechaHasta';";
+    
+            $params1 = array($estadoLiquidacion, $fechaDesde, $fechaHasta);
+    
+            $result1 = sqlsrv_query($abrirConexion, $query1, $params1);
+    
+            // Actualiza el estado de liquidación en la tabla tbl_comision_por_vendedor
+            $query2 = "UPDATE tbl_comision_por_vendedor 
+                       SET estado_Liquidacion = '$estadoLiquidacion', fecha_Liquidacion = GETDATE() 
+                       WHERE fecha_Creacion >= '$fechaDesde' AND fecha_Creacion <= '$fechaHasta';";
+    
+            $params2 = array($estadoLiquidacion, $fechaDesde, $fechaHasta);
+    
+            $result2 = sqlsrv_query($abrirConexion, $query2, $params2);
+    
+            // Si ambos updates fueron exitosos, confirma la transacción
+            if ($result1 && $result2) {
+                sqlsrv_commit($abrirConexion);
+                echo "Comisiones liquidadas correctamente";
+            } else {
+                // Si hubo algún problema, revierte la transacción
+                sqlsrv_rollback($abrirConexion);
+                echo "Error al liquidar comisiones";
+            }
+        } catch (Exception $e) {
+            // Maneja excepciones
+            echo "Error: " . $e->getMessage();
+            sqlsrv_rollback($abrirConexion);
+        } finally {
+            // Cierra la conexión después de la transacción
+            sqlsrv_close($abrirConexion);
+        }
     }
+    
+    
     
 }
     //convertir la fecha de comision totalm por vendedor en texto

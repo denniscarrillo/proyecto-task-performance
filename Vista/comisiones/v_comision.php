@@ -92,8 +92,8 @@ require_once("validacionesComision.php");
               <!-- <a href="../../../TCPDF/examples/reporteriaComision.php" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"><i class="fas fa-file-pdf"></i>
                 Generar Reportes</a> -->
                 <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
-              <a href="ReporteComisionExcel.php" target="_blank" class="btn_Excel btn btn-primary "><i
-                  class="fa-solid fa-file-excel fa-sm"></i> Generar Excel</a>
+              <!-- <a href="ReporteComisionExcel.php" target="_blank" class="btn_Excel btn btn-primary "><i
+                  class="fa-solid fa-file-excel fa-sm"></i> Generar Excel</a> -->
             </div>
             <table class="table" id="table-Comision">
               <thead>
