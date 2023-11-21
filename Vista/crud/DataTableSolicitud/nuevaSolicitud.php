@@ -41,8 +41,7 @@
         // Acceder a los valores devueltos
         $idSolicitud = $data['idSolicitud'];
         print json_encode($productosSolicitud, JSON_UNESCAPED_UNICODE);
-        $CorreoT = 'tchenriquez15@gmail.com';
-        enviarCorreoSolicitud($CorreoT, $nuevaSolicitud, $productosSolicitud, $idSolicitud, $nombrePDF);
+        enviarCorreoSolicitud($nuevaSolicitud, $productosSolicitud, $idSolicitud, $nombrePDF);
         /* ========================= Evento Creacion nueva solicitud. ======================
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();

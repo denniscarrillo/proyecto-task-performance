@@ -31,4 +31,9 @@ class ControladorParametro {
     public static function obtenerVigenciaLiquidar(){
         return Parametro::obtenerVigenciaLiquidacion();
     }
+
+    public static function obtenerCorreoDestino(){
+        return Parametro::obtenerCorreoDestino();
+    }
+    
 }
