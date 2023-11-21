@@ -43,7 +43,9 @@ class ControladorTarea {
     public static function almacenarProductosInteres($idTarea, $productos){
         Tarea::guardarProductosInteres($idTarea, $productos);
     }
-
+    public static function guardarFacturaTarea($idTarea, $evidencia){
+        Tarea::guardarFacturaTarea($idTarea, $evidencia);
+    }
     public static function obtenerCantTareas($FechaDesde, $FechaHasta){
         return Tarea::obtenerCantTarea($FechaDesde, $FechaHasta);
     }
@@ -108,4 +110,13 @@ class ControladorTarea {
     public static function obtenerCotizacionesUsuario($usuario){
         return Tarea::obtenerCotizacionesUsuario($usuario);
     }
+
+    public static function obtenerCotizacionesUsuarioPDF($usuario, $buscar){
+        return Tarea::obtenerCotizacionesUsuarioPDF($usuario, $buscar);
+    }
+
+    public static function obtenerCotizacionXId($idCotizacion){
+        return Tarea::obtenerCotizacionXId($idCotizacion);
+    }
+
 }

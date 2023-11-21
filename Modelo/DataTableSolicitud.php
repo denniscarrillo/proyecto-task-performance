@@ -53,20 +53,19 @@ class DataTableSolicitud
     } 
 
 
-    public static function actualizarEstadoSolicitud($nuevaSolicitud){
+    public static function actualizarEstadoSolicitud($cancelarSolicitud){
         try {
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $idSolicitud=$nuevaSolicitud->idSolicitud;
-            $EstadoSolicitud=$nuevaSolicitud->EstadoSolicitud;
-            $MotivoCancelacion=$nuevaSolicitud->MotivoCancelacion;
-            $modificadoPor=$nuevaSolicitud->modificadoPor;
-            // date_default_timezone_set('America/Tegucigalpa'); 
-            // $fechaModificado = date("Y-m-d h:i:s");
-            $query ="UPDATE tbl_Solicitud SET EstadoSolicitud='$EstadoSolicitud', motivo_cancelacion = '$MotivoCancelacion', 
+            $idSolicitud=$cancelarSolicitud->idSolicitud;
+            $EstadoAvance = $cancelarSolicitud->EstadoAvance;
+            $EstadoSolicitud=$cancelarSolicitud->EstadoSolicitud;
+            $MotivoCancelacion=$cancelarSolicitud->MotivoCancelacion;
+            $modificadoPor=$cancelarSolicitud->modificadoPor;
+            $query ="UPDATE tbl_Solicitud SET EstadoAvance='$EstadoAvance', EstadoSolicitud='$EstadoSolicitud', motivo_cancelacion = '$MotivoCancelacion', 
             Modificado_Por='$modificadoPor', Fecha_Modificacion = GETDATE()
             WHERE id_Solicitud='$idSolicitud';";
-            $nuevaSolicitud = sqlsrv_query($abrirConexion, $query);
+            $cancelarSolicitud = sqlsrv_query($abrirConexion, $query);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
@@ -210,24 +209,66 @@ class DataTableSolicitud
         return $verArticulos;
     }
 
-    public static function validarRtnExiste($rtn) {
-        $validarRtnExiste= false;
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB();
-        $query = "SELECT rtn_Cliente FROM tbl_CarteraCliente WHERE rtn_Cliente = '$rtn'";
-        $rtnCliente = sqlsrv_query($conexion, $query);
-        $query2 = "SELECT rtn_Cliente FROM tbl_CarteraCliente WHERE (rtn_Cliente= '$rtn' AND rtn_Cliente IS NOT NULL AND rtn_Cliente != '')
-        OR (rtn_Cliente IS NOT NULL AND rtn_Cliente!= '' AND '$rtn' IS NULL)";
-        $rtnCliente2 = sqlsrv_query($conexion, $query2);
-        $existe = sqlsrv_has_rows($rtnCliente);
-        $existe2 = sqlsrv_has_rows($rtnCliente2);
-        if($existe || $existe2){
-            $validarRtnExiste= true;
-        }
-        sqlsrv_close($conexion); #Cerramos la conexión.
-        return $validarRtnExiste;
-    }
+    // public static function validarRtnExiste($rtn) {
+    //     $validarRtnExiste= false;
+    //     $conn = new Conexion();
+    //     $conexion = $conn->abrirConexionDB();
+    //     $query = "SELECT rtn_Cliente FROM tbl_CarteraCliente WHERE rtn_Cliente = '$rtn'";
+    //     $rtnCliente = sqlsrv_query($conexion, $query);
+    //     $query2 = "SELECT rtn_Cliente FROM tbl_CarteraCliente WHERE (rtn_Cliente= '$rtn' AND rtn_Cliente IS NOT NULL AND rtn_Cliente != '')
+    //     OR (rtn_Cliente IS NOT NULL AND rtn_Cliente!= '' AND '$rtn' IS NULL)";
+    //     $rtnCliente2 = sqlsrv_query($conexion, $query2);
+    //     $existe = sqlsrv_has_rows($rtnCliente);
+    //     $existe2 = sqlsrv_has_rows($rtnCliente2);
+    //     if($existe || $existe2){
+    //         $validarRtnExiste= true;
+    //     }
+    //     sqlsrv_close($conexion); #Cerramos la conexión.
+    //     return $validarRtnExiste;
+    // }
 
+    ///Validaciones de RTN NUEVO
+    public static function validarRtnExiste($rtn) {
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();   
+        $query = "SELECT COUNT(CIF) AS Cantidad_de_CIF FROM View_Clientes WHERE CIF = ?";
+        $params = array($rtn);
+        $stmt = sqlsrv_query($conexion, $query, $params);
+        if ($stmt === false) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+        $existe = false;
+        $mensaje = '';
+        if (sqlsrv_fetch($stmt) === true) {
+            $cantidadCIF = sqlsrv_get_field($stmt, 0);
+            if ($cantidadCIF > 0) {
+                $existe = true;
+                $mensaje = 'RTN ya existe en View Clientes';
+            }
+        }
+        sqlsrv_free_stmt($stmt); 
+        $query2 = "SELECT COUNT(rtn_Cliente) AS Cantidad_de_RTN FROM tbl_CarteraCliente WHERE rtn_Cliente = ?";
+        $stmt2 = sqlsrv_query($conexion, $query2, $params);
+        if ($stmt2 === false) {
+            // Manejar errores de consulta
+            die(print_r(sqlsrv_errors(), true));
+        }
+        if (sqlsrv_fetch($stmt2) === true) {
+            $cantidadRTN = sqlsrv_get_field($stmt2, 0);
+            if ($cantidadRTN > 0) {
+                $existe = true;
+                $mensaje = 'RTN ya existe en Cartera Cliente';
+            }
+        }
+        sqlsrv_free_stmt($stmt2);
+        sqlsrv_close($conexion);
+
+        return array(
+            'existe' => $existe,
+            'mensaje' => $mensaje
+        );
+    }
+    
     // Obtener todas las solicitudes .
     public static function obtenerSolicitudPDF($buscar)
     {

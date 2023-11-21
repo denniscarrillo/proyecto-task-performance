@@ -13,9 +13,12 @@ require_once("../../../Modelo/TipoServicio.php");
 require_once("../../../Controlador/ControladorTipoServicio.php");
 require_once('../../../TCPDF/tcpdf.php');
 
-function enviarCorreoSolicitud($destinario, $nuevaSolicitud, $productosSolicitud, $idSolicitud, $nombrePDF){
+function enviarCorreoSolicitud($nuevaSolicitud, $productosSolicitud, $idSolicitud, $nombrePDF){
     $confirmacion = '';
     $getDataServerEmail = ControladorParametro::getDataServerEmail();
+    
+    $data = ControladorParametro::obtenerCorreoDestino();
+    $destinario = $data[0]['CorreoServicio'];
    // Crear instancia de TCPDF
 
    $datosParametro = ControladorParametro::obtenerDatosReporte();

@@ -3,7 +3,7 @@ export let estadoValidado = false;
 //Objeto con expresiones regulares para los inptus
 
 const validaciones = {
-    soloLetras: /^(?=.*[^a-zA-Z\/ .Ñós])/, //Solo letras
+    soloLetras: /^(?=.*[^a-zA-Z\/ .Ñóás])/, //Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
     soloNumeros: /^[0-9,-]*$/
 }
@@ -137,12 +137,12 @@ $form.addEventListener('submit', e => {
                       
 
                 }else{
-                    if(estadoExisteRtn == false){
-                        e.preventDefault();
-                        estadoExisteRtn = obtenerRtnExiste($('#rtnCliente').val());
-                    } else {
+                    // if( estadoExisteRtn  == false){
+                    //     e.preventDefault();
+                    //     estadoExisteRtn = obtenerValidarRtnExiste($('#rtnCliente').val());
+                    // } else {
                 estadoValidado = true;
-                    }
+                    
                 }
                    
             }
@@ -208,12 +208,6 @@ $descripcion.addEventListener('focusout', ()=>{
     estadoSelect.estadoSelectDescripcion= funciones.validarCampoVacio($descripcion);
  });
 
-//  $rtn.addEventListener('focusout', ()=>{
-//     let $rtn = $('#rtnCliente').val();
-//     estadoExisteRtn = obtenerValidarRtnExiste($rtn);
-// });
-
-
  $telefono.addEventListener('keyup', ()=>{
      estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
     funciones.limitarCantidadCaracteres("telefono", 14);
@@ -221,45 +215,80 @@ $descripcion.addEventListener('focusout', ()=>{
 
 
 
+  $('input[id="clientenuevo"]').on('change', function() {
+    if ($(this).is(':checked')) {
+        $('#rtnCliente').on('focusout', () => {
+            let $rtn = $('#rtnCliente').val();
+            obtenerValidarRtnExiste($rtn);
+        });
+    } else {
+        $('#rtnCliente').off('focusout'); // Remover el evento focusout si el radio no está seleccionado
+    }
+});
 
+$('input[id="clienteExistente"]').on('change', function() {
+    if ($(this).is(':checked')) {
+        $('#rtnCliente').off('focusout');
+        $('#mensajeError').text('');
+    } 
+});
+
+  
 let obtenerValidarRtnExiste = (rtn) => {
-  // Puedes dejar que la función maneje el caso de rtn null sin necesidad de verificarlo aquí.
-  $.ajax({
-      url: "../../../Vista/crud/DataTableSolicitud/ExisteRTN.php",
-      type: "POST",
-      datatype: "JSON",
-      data: {
-          rtnCliente:rtn
-      },
-      success: function (rtn) {
-          let $objRtn = JSON.parse(rtn);
-
-          if ($objRtn.estado == 'true') {
-              document.getElementById('rtnCliente').classList.add('mensaje_error');
-              document.getElementById('rtnCliente').parentElement.querySelector('p').innerText = '*Este rtn ya existe, en Cartera Clientes';
-              estadoExisteRtn = false; // Rtn es existente, es false
-          } else {
-              document.getElementById('rtnCliente').classList.remove('mensaje_error');
-              document.getElementById('rtnCliente').parentElement.querySelector('p').innerText = '';
-              estadoExisteRtn = true; // Rtn no existe, es true
-          }
-      }
-  });
+    $.ajax({
+        url: "../../../Vista/crud/DataTableSolicitud/ExisteRTN.php",
+        type: "POST",
+        datatype: "JSON",
+        data: {
+            rtnCliente: rtn
+        },
+        success: function (data) {
+            let $data = JSON.parse(data);
+            if ($data.estado === 'true') {
+                document.getElementById('rtnCliente').classList.add('mensaje_error');
+                document.getElementById('rtnCliente').parentElement.querySelector('p').innerText = $data.mensaje;
+            } else {
+                document.getElementById('rtnCliente').classList.remove('mensaje_error');
+                document.getElementById('rtnCliente').parentElement.querySelector('p').innerText = '';
+            }
+        }
+    });
 };
 
-/* ---------------- VALIDACIONES FORMULARIO GESTION NUEVO USUARIO ----------------------*/
-/* 
-    Antes de enviar datos del formulario, se comprobara que todas  
-    las validaciones se hayan cumplido.
-*/
+
+
+// let obtenerValidarRtnExiste = (rtn) => {
+//   // Puedes dejar que la función maneje el caso de rtn null sin necesidad de verificarlo aquí.
+//   $.ajax({
+//       url: "../../../Vista/crud/DataTableSolicitud/ExisteRTN.php",
+//       type: "POST",
+//       datatype: "JSON",
+//       data: {
+//           rtnCliente:rtn
+//       },
+//       success: function (rtn) {
+//           let $objRtn = JSON.parse(rtn);
+
+//           if ($objRtn.estado == 'true') {
+//               document.getElementById('rtnCliente').classList.add('mensaje_error');
+//               document.getElementById('rtnCliente').parentElement.querySelector('p').innerText = '*Este rtn ya existe, en Cartera Clientes';
+//               estadoExisteRtn = false; // Rtn es existente, es false
+//           } else {
+//               document.getElementById('rtnCliente').classList.remove('mensaje_error');
+//               document.getElementById('rtnCliente').parentElement.querySelector('p').innerText = '';
+//               estadoExisteRtn = true; // Rtn no existe, es true
+//           }
+//       }
+//   });
+// };
 
 
 
-$rtn.addEventListener('focusout', () => {
-  let rtnValue = $('#rtnCliente').val();
-  obtenerValidarRtnExiste(rtnValue);
-  console.log(rtnValue);
-});
+// $rtn.addEventListener('focusout', () => {
+//   let rtnValue = $('#rtnCliente').val();
+//   estadoExisteRtn = obtenerValidarRtnExiste(rtnValue);
+//   console.log(rtnValue);
+// });
 
 
 

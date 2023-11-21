@@ -138,6 +138,11 @@
 									<input type="text" name="rtnCliente" id="rnt-cliente" class="form-control">
 									<!-- Aqui va el boton del filtro de clientes -->
 								</div>
+								<div class="mb-3" id="container-num-factura" hidden>
+									<label for="num-factura" class="form-label" >N° FACTURA: </label>
+									<p id="mensaje"></p>
+									<input type="text" name="num-factura" id="num-factura" class="form-control">
+								</div>
 								<div class="mb-3">
 									<label for="nombre" class="form-label">Nombre Cliente:</label>
 									<input type="text" name="nombre" id="nombre-cliente" class="form-control" >

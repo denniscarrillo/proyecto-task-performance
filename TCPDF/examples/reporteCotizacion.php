@@ -4,8 +4,6 @@ require_once('../tcpdf.php');
 require_once("../../db/Conexion.php");
 require_once('../../Modelo/Tarea.php');
 require_once('../../Controlador/ControladorTarea.php');
-require_once("../../Modelo/Pregunta.php");
-require_once("../../Controlador/ControladorPregunta.php");
 require_once("../../Modelo/Parametro.php");
 require_once("../../Controlador/ControladorParametro.php");
 ob_start();
@@ -22,7 +20,6 @@ foreach($datosParametro  as $datos){
 }
 // hora y fecha
 date_default_timezone_set('America/Tegucigalpa'); // Establecer la zona horaria de Tegucigalpa
-
 $fechaActual = date('Y-m-d'); // Obtener la fecha actual en formato ISO 8601
 $horaActual = date('h:i:s A'); // Obtener la hora actual en formato de 12 horas con AM/PM
 $fechaFormateada = ucfirst(strftime('%A, %d de %B del %Y ', strtotime($fechaActual)));
@@ -32,7 +29,6 @@ $nombreMesEnIngles = ['January', 'February', 'March', 'April', 'May', 'June', 'J
 $nombreMesEnEspañol = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 $fechaFormateada = str_replace($nombreDiaEnIngles, $nombreDiaEnEspañol, $fechaFormateada);
 $fechaFormateada = str_replace($nombreMesEnIngles, $nombreMesEnEspañol, $fechaFormateada);
-// Agregar la hora a la fecha formateada
 $fechaFormateada .= ' ' . $horaActual;
 
 // create new PDF document  PDF_PAGE_ORIENTATION
