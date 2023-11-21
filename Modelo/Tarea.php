@@ -771,7 +771,7 @@ class Tarea
         $conexion = $conn->abrirConexionDB();
         $query = "SELECT DATEDIFF(day, Fecha_Creacion, GETDATE()) AS dias_Transcurridos, 
                     (SELECT valor FROM tbl_MS_Parametro WHERE parametro = 'DIAS VIGENCIA COTIZACION') AS vigencia
-                        FROM tbl_CotizacionTarea WHERE id_Cotizacion = 1;";
+                        FROM tbl_CotizacionTarea WHERE id_Cotizacion = '$idCotizacion';";
         $fila = sqlsrv_fetch_array(sqlsrv_query($conexion, $query));
         if(intval($fila['dias_Transcurridos']) > intval($fila['vigencia'])){
             $estado = true;
@@ -870,5 +870,123 @@ class Tarea
         }
         sqlsrv_close($conexion);
         return $cotizaciones;
+    }
+
+    public static function obtenerCotizacionesUsuarioPDF($usuario, $buscar){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $select = '';
+        $cotizaciones = array();
+        if($usuario == 'SUPERADMIN'){
+            $select = "SELECT ct.id_Cotizacion, us.nombre_Usuario, cc.NOMBRECLIENTE AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
+            FROM tbl_CotizacionTarea ct
+            INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
+            INNER JOIN View_Clientes cc ON ta.RTN_Cliente = cc.CIF COLLATE Latin1_General_CI_AI
+            INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario
+            WHERE CONCAT(ct.id_Cotizacion, us.nombre_Usuario, cc.NOMBRECLIENTE, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion) COLLATE Latin1_General_CI_AI
+            LIKE '%' + '$buscar' + '%' COLLATE Latin1_General_CI_AI 
+            UNION
+            SELECT ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente COLLATE Latin1_General_CI_AI AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
+            FROM tbl_CotizacionTarea ct
+            INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
+            INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente
+            INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario
+            WHERE CONCAT(ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion) COLLATE Latin1_General_CI_AI
+            LIKE '%' + '$buscar' + '%' COLLATE Latin1_General_CI_AI 
+            ORDER BY id_Cotizacion ASC;";
+                $ejecutar = sqlsrv_query($conexion, $select);
+                if(sqlsrv_has_rows($ejecutar)){
+                    while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
+                        $cotizaciones[] = [
+                            'id' => $fila['id_Cotizacion'],
+                            'creadoPor' => $fila['nombre_Usuario'],
+                            'cliente' =>$fila['nombre_Cliente'],
+                            'subDescuento' => $fila['subDescuento'],
+                            'impuesto' => $fila['isv'],
+                            'total' => $fila['total_Cotizacion'],
+                            'estado' => $fila['estado_Cotizacion']
+                        ];
+                    }
+                }            
+        }else{
+            $select = "SELECT ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente AS nombre_Cliente, ct.subDescuento, 
+            ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
+            FROM tbl_CotizacionTarea ct
+            INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
+            INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente
+            INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario
+            WHERE ct.Creado_Por = 'ROGER' 
+            AND CONCAT(ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente, ct.subDescuento, ct.isv, 
+            ct.total_Cotizacion, ct.estado_Cotizacion) COLLATE Latin1_General_CI_AI
+            LIKE '%' + '' + '%' COLLATE Latin1_General_CI_AI 
+            UNION
+            SELECT ct.id_Cotizacion, us.nombre_Usuario, cc.NOMBRECLIENTE COLLATE Latin1_General_CS_AI AS nombre_Cliente, 
+            ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
+            FROM tbl_CotizacionTarea ct
+            INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
+            INNER JOIN View_Clientes cc ON ta.RTN_Cliente = cc.CIF COLLATE Latin1_General_CS_AI
+            INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario
+            WHERE ct.Creado_Por = 'ROGER' 
+            AND CONCAT(ct.id_Cotizacion, us.nombre_Usuario, cc.NOMBRECLIENTE, ct.subDescuento, ct.isv, 
+            ct.total_Cotizacion, ct.estado_Cotizacion) COLLATE Latin1_General_CI_AI
+            LIKE '%' + '' + '%' COLLATE Latin1_General_CI_AI 
+            ORDER BY id_Cotizacion;";
+                $ejecutar = sqlsrv_query($conexion, $select);
+                if(sqlsrv_has_rows($ejecutar)){
+                    while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
+                        $cotizaciones[] = [
+                            'id' => $fila['id_Cotizacion'],
+                            'creadoPor' => $fila['nombre_Usuario'],
+                            'cliente' =>$fila['nombre_Cliente'],
+                            'subDescuento' => $fila['subDescuento'],
+                            'impuesto' => $fila['isv'],
+                            'total' => $fila['total_Cotizacion'],
+                            'estado' => $fila['estado_Cotizacion']
+                        ];
+                    }
+                }          
+        }
+        sqlsrv_close($conexion);
+        return $cotizaciones;
+    }
+
+    public static function obtenerCotizacionXId($idCotizacion){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $datosCotizacion = array();
+        $selectCot = "SELECT id_Cotizacion,estado_Cotizacion,id_Tarea,validez,subTotal,descuento,subDescuento,isv
+        ,total_Cotizacion,Creado_Por,Fecha_Creacion,Modificado_Por,Fecha_Modificacion
+        FROM tbl_CotizacionTarea where id_Cotizacion = $idCotizacion";
+        $resultCot = sqlsrv_query($conexion, $selectCot);
+        if(sqlsrv_has_rows($resultCot)){
+            $fila = sqlsrv_fetch_array($resultCot, SQLSRV_FETCH_ASSOC);
+            $datosCotizacion = [
+                'detalleC' => $fila
+            ];
+            $selectCotProductos = "SELECT pc.id_Producto ,pc.item, pct.descripcion, pct.marca, pc.cantidad, pp.id_Precio, pp.precio, pc.total 
+            FROM tbl_ProductosCotizacion pc 
+            INNER JOIN tbl_ProductosCotizados pct ON pc.id_Producto = pct.id_Producto
+            INNER JOIN tbl_PreciosProductos pp ON pct.id_Producto = pp.id_Producto
+            WHERE  pc.id_Cotizacion = '$idCotizacion';";
+            $resultCot = sqlsrv_query($conexion, $selectCotProductos);
+            $productos = array();
+            while($fila = sqlsrv_fetch_array($resultCot, SQLSRV_FETCH_ASSOC)){
+                $productos[] = [
+                    'id' => $fila['id_Producto'],
+                    'item' => $fila['item'],
+                    'descripcion' => $fila['descripcion'],
+                    'marca' => $fila['marca'],
+                    'cantidad' => $fila['cantidad'],
+                    'precio' => $fila['precio'],
+                    'idPrecio' => $fila['id_Precio'],
+                    'total' => $fila['total']
+                ];
+            }
+            $datosCotizacion += [
+                'productos' => $productos
+            ];
+        }
+        sqlsrv_close($conexion);
+        return $datosCotizacion;
     }
 }

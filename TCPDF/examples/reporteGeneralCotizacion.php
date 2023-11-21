@@ -2,10 +2,10 @@
 // Include the main TCPDF library (search for installation path).
 require_once('../tcpdf.php');
 require_once("../../db/Conexion.php");
-require_once("../../Modelo/Comision.php");
-require_once("../../Controlador/ControladorComision.php");
 require_once("../../Modelo/Parametro.php");
 require_once("../../Controlador/ControladorParametro.php");
+require_once("../../Modelo/Tarea.php");
+require_once("../../Controlador/ControladorTarea.php");
 ob_start();
 
 //cargar el encabezado
@@ -27,10 +27,11 @@ $pdf = new TCPDF('L', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 // set document information
 $pdf->setCreator(PDF_CREATOR);
 $pdf->setAuthor('Nicola Asuni');
-$pdf->setTitle('ReporteComision');
+$pdf->setTitle('ReporteGeneralCotizacion');
 $pdf->setSubject('TCPDF Tutorial');
 $pdf->setKeywords('TCPDF, PDF, example, test, guide');
-
+//vertical 64
+//horizontal 152
 $width = 154; // Define el ancho que desea para su cadena de encabezado
 
 $PDF_HEADER_TITLE =  $nombreP;
@@ -53,7 +54,8 @@ $pdf->setHeaderMargin(PDF_MARGIN_HEADER);
 $pdf->setFooterMargin(PDF_MARGIN_FOOTER);
 
 // set auto page breaks
-$pdf->setAutoPageBreak(TRUE, 10);
+//$pdf->setAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+$pdf->setAutoPageBreak(TRUE, 13);
 
 // set image scale factor
 $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
@@ -72,48 +74,39 @@ $pdf->setFont('Helvetica', '', 11);
 $pdf->AddPage();
 // create some HTML content
 $html = '
-<P style="text-align: center; font-size: 18px;"><b>Reporte de Comisiones</b></P>
+<P style="text-align: center; font-size: 18px;"><b>Reporte de Cotización</b></P>
 <table border="1" cellpadding="4">
 <tr>
 <td style="background-color: #e54037;color: white; text-align: center; width: 60px;">N°</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">FACTURA</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">TOTAL VENTA</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">PORCENTAJE</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 115px;">COMISION TOTAL</td>
+<td style="background-color: #e54037;color: white; text-align: center;width: 190px;">CREADO POR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 295px;">CLIENTE</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">SUB TOTAL</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">ISV %</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">TOTAL COTIZACIÓN</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 100px;">ESTADO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 115px;">LIQUIDACION</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">FECHA</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 125px;">FECHA LIQUIDAR </td>
 </tr>
 ';
-$Comisiones = ControladorComision::getComisionesPdf($_GET['buscar']);
-foreach($Comisiones as $Comision){
-    // $idComision = $Comision['idComision'];
-    $idFactura = $Comision['factura'];
-    $totalVenta = $Comision['totalVenta'];
-    $porcentaje = $Comision['porcentaje'] * 100;
-    $comisionTotal = $Comision['comisionTotal'];
-    $estado = $Comision['estadoComisionar'];
-    $liquidacion = $Comision['estadoLiquidacion'];
-    $fecha = $Comision['fechaComision'];
-    $timestamp = $fecha->getTimestamp();
-    $fechaComision = date('Y-m-d', $timestamp);
-    $fechaL = $Comision['fechaLiquidacion'];
-    $timestamp = $fechaL->getTimestamp();
-    $fechaLiquidacion = date('Y-m-d', $timestamp);
-    $Cont++;
-
+session_start();
+if(isset($_SESSION['usuario'])){
+    $Cotizaciones = ControladorTarea::obtenerCotizacionesUsuarioPDF($_SESSION['usuario'], $_GET['buscar']);
+}
+foreach($Cotizaciones as $datos){
+    $id = $datos['id'];
+    $creadoPor = $datos['creadoPor'];
+    $cliente = $datos['cliente'];
+    $subDescuento = $datos['subDescuento'];
+    $impuesto = $datos['impuesto'];
+    $total = $datos['total'];
+    $estado = $datos['estado'];
     $html .= '
     <tr>
-    <td style="text-align: center">'.$Cont.'</td>
-    <td style="text-align: center">'.$idFactura.'</td>
-    <td style="text-align: center">'.$totalVenta.'</td>
-    <td style="text-align: center">'.$porcentaje.'%</td>
-    <td style="text-align: center">'.$comisionTotal.'</td>
+    <td style="text-align: center">'.$id.'</td>
+    <td >'.$creadoPor.'</td>
+    <td >'.$cliente.'</td>
+    <td style="text-align: center">'.$subDescuento.'</td>
+	<td style="text-align: center">'.$impuesto.'</td>
+    <td style="text-align: center">'.$total.'</td>
     <td style="text-align: center">'.$estado.'</td>
-    <td style="text-align: center">'.$liquidacion.'</td>
-    <td style="text-align: center">'.$fechaComision.'</td>
-    <td style="text-align: center">'.$fechaLiquidacion.'</td>
     </tr>
     ';
 }
@@ -126,4 +119,4 @@ $html.='
 $pdf->writeHTML($html, true, false, true, false);
 //Close and output PDF document
 ob_end_clean();
-$pdf->Output('Reporte Comisiones.pdf', 'I');
+$pdf->Output('ReporteGeneraldeCotizacion.pdf', 'I');

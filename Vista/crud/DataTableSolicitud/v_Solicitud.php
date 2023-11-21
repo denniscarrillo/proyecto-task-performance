@@ -73,6 +73,7 @@ if (isset($_SESSION['usuario'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/3153/3153506.png">
     <!-- DataTables -->
     <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" rel="stylesheet"> -->
@@ -100,10 +101,10 @@ if (isset($_SESSION['usuario'])) {
                 $urlIndex = '../../index.php';
                 // Rendimiento
                 $urlMisTareas = '../../rendimiento/v_tarea.php';
-                $urlConsultarTareas = './'; //PENDIENTE
-                $urlBitacoraTarea = ''; //PENDIENTE
+                $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
+                $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
                 $urlMetricas = '../Metricas/gestionMetricas.php';
-                $urlEstadisticas = '../../grafica/estadistica.php'; //PENDIENTE
+                $urlEstadisticas = '../../grafica/estadistica.php';
                 //Solicitud
                 $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
                 //Comisión
@@ -120,7 +121,7 @@ if (isset($_SESSION['usuario'])) {
                 $urlPreguntas = '../pregunta/gestionPregunta.php';
                 $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
                 $urlParametros = '../parametro/gestionParametro.php';
-                $urlPermisos = '../permiso/gestionPermiso.php';
+                $urlPermisos = '../permiso/gestionPermisos.php';
                 $urlRoles = '../rol/gestionRol.php';
                 $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
                 $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
@@ -137,6 +138,7 @@ if (isset($_SESSION['usuario'])) {
             <h2 class="title-dashboard-task">Generar nueva solicitud</h2>
         </div>
     </div>
+    
     <div class="form-conteiner">
         <div class="form-element">
             <label class="titulo-radios">Tipo de Cliente: </label>
@@ -245,6 +247,7 @@ if (isset($_SESSION['usuario'])) {
   require_once('modalClienteFrecuente.html');
   require_once('modalArticulosSolicitud.html');
   require_once('modalFacturaSolicitud.html');
+  require_once('modalMenuClientes.html');
   
 ?>
  <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>

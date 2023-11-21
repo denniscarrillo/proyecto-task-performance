@@ -3,8 +3,8 @@
 class ControladorDataTableTarea {
 
   
-    public static function DataTableTarea($User){
-        return DataTableTarea::obtenerTareas($User);
+    public static function obtenerTareasUsuario($usuario){
+        return DataTableTarea::obtenerTodasTareasUsuario($usuario);
     }
 
     public static function obtenerTareasPDF($User, $buscar){

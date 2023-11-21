@@ -21,6 +21,10 @@ $(document).ready(function () {
       "render": function(data) {
         return data.slice(0, 10); },
       },
+      { "data": 'fechaLiquidacion.date',
+      "render": function(data) {
+        return data.slice(0, 10); },
+      },
     ]
   });
 });
@@ -33,7 +37,7 @@ $(document).ready(function () {
     hour12: true,
     dateStyle: "short",
   });
-  document.getElementById("fecha-comision").value = now;
+  // document.getElementById("fecha-comision").value = now;
 });
 
 $btnFiltrar.addEventListener("click", function () {
@@ -47,9 +51,9 @@ $("#btn_PdfComisiones").on("click", function () {
  });
 
 let iniciarDataTable = function (fechaDesde, fechaHasta) {
-  if (document.querySelector(".dataTables_info") !== null) {
-    // $tablaComisionesV.destroy();
-  }
+  // if (document.querySelector(".dataTables_info") !== null) {
+  //   // $tablaComisionesV.destroy();
+  // }
   //DataTable
   $tablaComisionesV = $("#table-comisionesVendedor").DataTable({
     ajax: {
@@ -73,19 +77,42 @@ let iniciarDataTable = function (fechaDesde, fechaHasta) {
       // { data: "estadoComision" },
       { data: "totalComision" },
     ],
-    response : true,
-    initComplete: function () {
-      // Obtener las fechas de la primera fila
-      var fechaDesde = $tablaComisionesV.row(0).data().fechaDesde;
-      var fechaHasta = $tablaComisionesV.row(0).data().fechaHasta;
-
-      // Asumiendo que tengas un elemento con el id "fechasLabel" para mostrar las fechas
-      $("#fechasLabel").text('Desde el: ' + fechaDesde +' Hasta el: ' + fechaHasta);
-  },
 });
+$("#btn_liquidar").on("click", function () {
+  // Obtén el rango de fechas desde los datos de la tabla (ajusta esto según tu estructura de datos)
+  let fechaDesde = tablaComisionVendedor.rows().data()[0].fechaComision;
+  let fechaHasta = tablaComisionVendedor.rows().data().slice(-1)[0].fechaComision;
+
+  // Realiza la solicitud AJAX para llamar al método PHP
+  $.ajax({
+      type: "POST",
+      url: "../../../Vista/crud/ComisionesVendedores/liquidandoComisiones.php",
+      data: { fechaDesde: fechaDesde, fechaHasta: fechaHasta },
+      dataType: "json",
+      success: function (response) {
+          // Maneja la respuesta del servidor (muestra la alerta)
+          Swal.fire({
+              icon: response.success ? 'success' : 'error',
+              title: 'Comisiones liquidadas correctamente',
+              showConfirmButton: false,
+              timer: 1500  // La alerta se cerrará automáticamente después de 1.5 segundos
+          });
+      },
+      error: function (error) {
+          // Maneja cualquier error que pueda ocurrir durante la solicitud AJAX
+          console.error(error);
+      }
+  });
+});
+
 $("#modalComisionesV").modal("show");
 };
 
+// ...
+
+
+
+// ...
 
 
 // // Función para generar el PDF
@@ -144,3 +171,5 @@ $(document).on("click", "#btn_Pdf", function() {
   let buscar = $('#table-ComisionVendedor_filter > label > input[type=search]').val();
   window.open('../../../TCPDF/examples/reporteriaComisionVendedores.php?buscar='+buscar, '_blank');
 });
+
+// title: 'Comisiones liquidadas correctamente',

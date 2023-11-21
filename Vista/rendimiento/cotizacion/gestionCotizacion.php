@@ -83,7 +83,7 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
-  <title> Comisiones </title>
+  <title> Ver Cotizaciones </title>
 </head>
 
 <body style="overflow: hidden;">
@@ -95,33 +95,34 @@ if (isset($_SESSION['usuario'])) {
       <?php
           $urlIndex = '../../index.php';
           // Rendimiento
-          $urlMisTareas = '../../rendimiento/v_tarea.php';
-          $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
-          $urlMetricas = '../Metricas/gestionMetricas.php';
+          $urlMisTareas = '../v_tarea.php';
+          $urlCotizacion = './gestionCotizacion.php';
+          $urlConsultarTareas = '../../crud/DataTableTarea/gestionDataTableTarea.php';
+          $urlMetricas = '../../crud/Metricas/gestionMetricas.php';
           $urlEstadisticas = '../../grafica/estadistica.php'; 
           //Solicitud
-          $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
+          $urlSolicitud = '../../crud/DataTableSolicitud/gestionDataTableSolicitud.php';
           //Comisión
           $urlComision = '../../comisiones/v_comision.php';
-          $comisionVendedor = '../ComisionesVendedores/ComisionesVendedores.php';
-          $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
+          $comisionVendedor = '../../crud/ComisionesVendedores/ComisionesVendedores.php';
+          $urlPorcentajes = '../../crud/Porcentajes/gestionPorcentajes.php';
           //Consulta
-          $urlClientes = '../cliente/gestionCliente.php';
-          $urlVentas = '../Venta/gestionVenta.php';
-          $urlArticulos = '../articulo/gestionArticulo.php';
-          $urlObjetos = '../DataTableObjeto/gestionDataTableObjeto.php';
-          $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
+          $urlClientes = '../../crud/cliente/gestionCliente.php';
+          $urlVentas = '../../crud/Venta/gestionVenta.php';
+          $urlArticulos = '../../crud/articulo/gestionArticulo.php';
+          $urlObjetos = '../../crud/DataTableObjeto/gestionDataTableObjeto.php';
+          $urlBitacoraSistema = '../../crud/bitacora/gestionBitacora.php';
           //Mantenimiento
-          $urlUsuarios = '../usuario/gestionUsuario.php';
-          $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
-          $urlPreguntas = './gestionPregunta.php';
-          $urlParametros = '../parametro/gestionParametro.php';
-          $urlPermisos = '../permiso/gestionPermisos.php';
-          $urlRoles = '../rol/gestionRol.php';
-          $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+          $urlUsuarios = '../../crud/usuario/gestionUsuario.php';
+          $urlCarteraCliente = '../../crud/carteraCliente/gestionCarteraClientes.php';
+          $urlPreguntas = '../../crud/pregunta/gestionPregunta.php';
+          $urlParametros = '../../crud/parametro/gestionParametro.php';
+          $urlPermisos = '../../crud/permiso/gestionPermisos.php';
+          $urlRoles = '../../crud/rol/gestionRol.php';
+          $urlServiciosTecnicos = '../../crud/TipoServicio/gestionTipoServicio.php';
           $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
-          $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
-          $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
+          $urlPerfilUsuario='../../crud/PerfilUsuario/gestionPerfilUsuario.php';
+          $urlPerfilContraseniaUsuarios='../../crud/PerfilUsuario/gestionPerfilContrasenia.php';
           require_once '../../layout/sidebar.php';
         ?>
       </div>
@@ -140,7 +141,8 @@ if (isset($_SESSION['usuario'])) {
 
         <div class="table-conteiner">
         <div>
-            <a href="../../../TCPDF/examples/reporteCotizacion.php" target="_blank" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> 
+            <!-- <a href="../../../TCPDF/examples/reporteCotizacion.php" target="_blank" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>  -->
+            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
           </div>
           <table class="table" id="table-Cotizacion">
             <thead>
@@ -148,9 +150,9 @@ if (isset($_SESSION['usuario'])) {
                 <th scope="col"> N° </th>
                 <th scope="col"> CREADO POR </th>
                 <th scope="col"> CLIENTE </th>
-                <th scope="col"> SUB DESCUENTO </th>
+                <th scope="col"> SUB TOTAL </th>
                 <th scope="col"> ISV % </th>
-                <th scope="col"> TOTAL COTIZACION </th>
+                <th scope="col"> TOTAL </th>
                 <th scope="col"> ESTADO </th>
                 <th scope="col"> ACCION </th>
               </tr>

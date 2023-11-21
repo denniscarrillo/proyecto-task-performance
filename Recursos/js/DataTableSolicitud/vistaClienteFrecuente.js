@@ -83,7 +83,7 @@ rtnCliente.addEventListener('change', function () {
     let $btnBuscar = document.createElement('div')
     $btnBuscar.classList.add('btnbuscarcliente');
     $btnBuscar.innerHTML = `
-    <button type="button" class="btn btn-primary" id="btnclientes" data-bs-toggle="modal" data-bs-target="#modalClienteFrecuente">
+    <button type="button" class="btn btn-primary" id="btnclientes" data-bs-toggle="modal" data-bs-target="#modalMenuClientes">
       Buscar <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
     </button>
     `;

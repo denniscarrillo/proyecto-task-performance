@@ -7,8 +7,8 @@ class ControladorDataTableSolicitud {
         return DataTableSolicitud::obtenerSolicitud();
     }
 
-    public static function actualizarEstadoSolicitud($nuevaSolicitud){
-        return DataTableSolicitud::actualizarEstadoSolicitud($nuevaSolicitud);
+    public static function actualizarEstadoSolicitud($cancelarSolicitud){
+        return DataTableSolicitud::actualizarEstadoSolicitud($cancelarSolicitud);
     }
 
     public static function LlenarModalSolicitudEditar($idSolicitud){

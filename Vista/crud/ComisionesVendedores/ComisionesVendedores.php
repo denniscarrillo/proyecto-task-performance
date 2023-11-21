@@ -96,10 +96,10 @@ if (isset($_SESSION['usuario'])) {
         $urlIndex = '../../index.php';
         // Rendimiento
         $urlMisTareas = '../../rendimiento/v_tarea.php';
-        $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php'; //PENDIENTE
-        $urlBitacoraTarea = ''; //PENDIENTE
+        $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
+        $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
         $urlMetricas = '../Metricas/gestionMetricas.php';
-        $urlEstadisticas = '../../grafica/estadistica.php'; //PENDIENTE
+        $urlEstadisticas = '../../grafica/estadistica.php'; 
         //Solicitud
         $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
         //Comisión
@@ -164,6 +164,7 @@ if (isset($_SESSION['usuario'])) {
                 <th scope="col">ESTADO</th>
                 <th scope="col">LIQUIDACION</th>
                 <th scope="col">FECHA</th>
+                <th scope="col">FECHA LIQUIDAR</th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
