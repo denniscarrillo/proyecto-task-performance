@@ -277,6 +277,7 @@ $(document).on("click", "#btn_eliminar", async function(){
   let fila = $(this).closest("tr");
   // Capturar el ID de la solicitud
   let idSolicitud = fila.find('td:eq(0)').text();
+  let motivo= fila.find('td:eq(null)').text();
   let SolicitudesC = await obtenerSolicitudesPorId(idSolicitud);
   if (SolicitudesC.EstadoSolicitud === 'CANCELADO') {
     // Aquí puedes mostrar un mensaje o tomar alguna acción específica
@@ -294,7 +295,7 @@ $(document).on("click", "#btn_eliminar", async function(){
   // Establecer valores en los campos del modal
   $("#C_IdSolicitud").val(idSolicitud);
   $("#C_EstadoSolicitud").val(EstadoSolicitud);
-  //$("#C_MotivoCancelacion").val(motivo);
+  $("#C_MotivoCancelacion").val(motivo);
   // Estilizar el modal
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");
@@ -307,7 +308,7 @@ $('#form-Solicitud').submit(function (e) {
    //Obtener datos del nuevo Cliente
    let idSolicitud = $('#C_IdSolicitud').val(),
     EstadoSolicitud =  $('#C_EstadoSolicitud').val(),
-    MotivoCancelacion =  $('#C_MotivoCancelacion').val()
+   MotivoCancelacion =  $('#C_MotivoCancelacion').val();
    Swal.fire({
     title: 'Estas seguro de cancelar la Solicitud?',
     icon: 'warning',

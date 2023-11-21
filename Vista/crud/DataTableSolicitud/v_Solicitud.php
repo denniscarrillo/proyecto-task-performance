@@ -73,6 +73,7 @@ if (isset($_SESSION['usuario'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/3153/3153506.png">
     <!-- DataTables -->
     <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" rel="stylesheet"> -->
@@ -137,6 +138,7 @@ if (isset($_SESSION['usuario'])) {
             <h2 class="title-dashboard-task">Generar nueva solicitud</h2>
         </div>
     </div>
+    
     <div class="form-conteiner">
         <div class="form-element">
             <label class="titulo-radios">Tipo de Cliente: </label>

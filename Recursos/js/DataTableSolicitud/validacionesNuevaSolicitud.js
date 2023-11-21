@@ -3,7 +3,7 @@ export let estadoValidado = false;
 //Objeto con expresiones regulares para los inptus
 
 const validaciones = {
-    soloLetras: /^(?=.*[^a-zA-Z\/ .Ñós])/, //Solo letras
+    soloLetras: /^(?=.*[^a-zA-Z\/ .Ñóás])/, //Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
     soloNumeros: /^[0-9,-]*$/
 }
@@ -137,12 +137,12 @@ $form.addEventListener('submit', e => {
                       
 
                 }else{
-                    if(estadoExisteRtn == false){
-                        e.preventDefault();
-                        estadoExisteRtn = obtenerRtnExiste($('#rtnCliente').val());
-                    } else {
+                    // if( estadoExisteRtn  == false){
+                    //     e.preventDefault();
+                    //     estadoExisteRtn = obtenerValidarRtnExiste($('#rtnCliente').val());
+                    // } else {
                 estadoValidado = true;
-                    }
+                    
                 }
                    
             }
@@ -208,12 +208,6 @@ $descripcion.addEventListener('focusout', ()=>{
     estadoSelect.estadoSelectDescripcion= funciones.validarCampoVacio($descripcion);
  });
 
-//  $rtn.addEventListener('focusout', ()=>{
-//     let $rtn = $('#rtnCliente').val();
-//     estadoExisteRtn = obtenerValidarRtnExiste($rtn);
-// });
-
-
  $telefono.addEventListener('keyup', ()=>{
      estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
     funciones.limitarCantidadCaracteres("telefono", 14);
@@ -247,19 +241,13 @@ let obtenerValidarRtnExiste = (rtn) => {
   });
 };
 
-/* ---------------- VALIDACIONES FORMULARIO GESTION NUEVO USUARIO ----------------------*/
-/* 
-    Antes de enviar datos del formulario, se comprobara que todas  
-    las validaciones se hayan cumplido.
-*/
 
 
-
-$rtn.addEventListener('focusout', () => {
-  let rtnValue = $('#rtnCliente').val();
-  obtenerValidarRtnExiste(rtnValue);
-  console.log(rtnValue);
-});
+// $rtn.addEventListener('focusout', () => {
+//   let rtnValue = $('#rtnCliente').val();
+//   estadoExisteRtn = obtenerValidarRtnExiste(rtnValue);
+//   console.log(rtnValue);
+// });
 
 
 
