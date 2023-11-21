@@ -248,6 +248,7 @@ if (isset($_SESSION['usuario'])) {
   require_once('modalArticulosSolicitud.html');
   require_once('modalFacturaSolicitud.html');
   require_once('modalMenuClientes.html');
+  require_once('modalCarteraCliente.html');
   
 ?>
  <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>

@@ -3,6 +3,7 @@ import {estadoValidado as valido } from './validacionesNuevaSolicitud.js';
 
 $(document).on('click', '#clienteExistente', function () {
   obtenerClientes();
+  obtenerCarteraCliente();
  // $("#modalClienteFrecuente").modal("show");
 
  let correoCliente = document.getElementById('containerCorreocliente');
@@ -322,25 +323,54 @@ $(document).on("click", "#btn_selectfactura", function () {
   let carritoArticulos = ($productos) => {
     let productos = '';
     let $tableArticulos = document.getElementById('listarticulos');
+
     $productos.forEach((producto) => {
-      productos += `
-      <tr>
-      <td><input type="text" value="${producto.id}" class="idproducto" name="idproducto"></td>
-        <td>${producto.nombre}</td>
-        <td>${producto.marca}</td>
-        <td><input type="text" id="${producto.id}" class="cantproducto" name "cantProducto" >
-        <p class="mensaje"></p></td>
-        <td><button class="btn_eliminar btns btn" id="btn_eliminar"><i class="fas fa-times"></i></button></td>
-      </tr>
-    `
-  });
-    $tableArticulos.innerHTML = productos;
-    let idsProducto = document.querySelectorAll('.idproducto');
-    idsProducto.forEach(function(idProducto){
-      idProducto.setAttribute('disabled', 'true');
+        productos += `
+        <tr>
+            <td><input type="text" value="${producto.id}" class="idproducto" name="idproducto" disabled></td>
+            <td>${producto.nombre}</td>
+            <td>${producto.marca}</td>
+            <td>
+                <input type="number" id="${producto.id}" class="cantproducto" name="cantProducto" min="1" max="50">
+                <p class="mensaje"></p>
+            </td>
+            <td><button class="btn_eliminar btns btn" id="btn_eliminar"><i class="fas fa-times"></i></button></td>
+        </tr>
+        `;
     });
-  }
-  
+
+    $tableArticulos.innerHTML = productos;
+
+    let idsProducto = document.querySelectorAll('.idproducto');
+    idsProducto.forEach(function (idProducto) {
+        idProducto.setAttribute('disabled', 'true');
+    });
+
+    // Validación al inicializar
+    validarCantidades();
+
+    // Agregar validación al evento change de los campos cantProducto
+    let cantProductos = document.querySelectorAll('.cantproducto');
+    cantProductos.forEach(function (cantProducto) {
+        cantProducto.addEventListener('change', validarCantidades);
+    });
+};
+
+function validarCantidades() {
+    let cantProductos = document.querySelectorAll('.cantproducto');
+    cantProductos.forEach(function (cantProducto) {
+        if (cantProducto.value.trim() === '' || isNaN(cantProducto.value) || parseInt(cantProducto.value) < 0) {
+            // Mostrar mensaje de error y agregar clase de estilo
+            cantProducto.nextElementSibling.textContent = 'Ingrese una cantidad válida';
+            cantProducto.nextElementSibling.classList.add('error-message');
+        } else {
+            // Limpiar mensaje de error si la cantidad es válida
+            cantProducto.nextElementSibling.textContent = '';
+            cantProducto.nextElementSibling.classList.remove('error-message');
+        }
+    });
+}
+
 
   $(document).on("click", "#btn_eliminar", function() {
     let nombreProd = $(this).closest('tr').find('td:eq(1)').text();
@@ -480,4 +510,52 @@ $('#form-solicitud').submit(function (e) {
 });
 
 
+let obtenerCarteraCliente = function () {
+  if (document.getElementById('table-CarteraCliente_wrapper') == null) {
+    $('#table-CarteraCliente').DataTable({
+      "ajax": {
+        "url": "../../../Vista/crud/DataTableSolicitud/obtenerCarteraCliente.php",
+        "dataSrc": ""
+      },
+      "language": {
+        "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+      },
+      "columns": [
+        { "data": "idcarteraCliente"},
+      { "data": "nombre"},
+      { "data": "rtn"},
+      { "data": "telefono"},
+      { "data": "correo"},
+      { "data": "direccion"},
+      { "data": "estadoContacto"},
+      {
+        "defaultContent":
+          '<div><button class="btns btn" id="btn_selectcarteraCliente"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>'
+      }
+      ]
+    });
+  }
+}
+$(document).on("click", "#btn_selectcarteraCliente", function () {
+  let fila = $(this).closest("tr");        
+  let nombreCarteraCliente = fila.find('td:eq(1)').text();
+  let rtnCartera = fila.find('td:eq(2)').text();
+  let telefonoCartera = fila.find('td:eq(3)').text();
+  let direccionCartera = fila.find('td:eq(5)').text();
+  let nombre = document.getElementById("nombre");
+  let rtn = document.getElementById("rtnCliente");
+  let telefono = document.getElementById("telefono");
+  let direccion = document.getElementById("direccion");
 
+ 
+  // console.log(estadoContacto);
+
+  nombre.value =  nombreCarteraCliente ;
+  rtn.value = rtnCartera;
+  telefono.value =telefonoCartera;
+  direccion.value =  direccionCartera;
+  // $("#E_estadoContacto").val(estadoContacto);
+  $(".modal-header").css("background-color", "#007bff");
+  $(".modal-header").css("color", "white");	
+  $('#modalCarteraCliente').modal('hide');
+});

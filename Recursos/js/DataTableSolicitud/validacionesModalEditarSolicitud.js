@@ -2,7 +2,7 @@ import * as funciones from '../funcionesValidaciones.js';
 export let estadoValidado = false;
 //Objeto con expresiones regulares para los inptus
 const validaciones = {
-    soloLetras: /^(?=.*[^a-zA-Z\sÑó])/, //Solo letras
+    soloLetras: /^(?=.*[^a-zA-Z\/ .ÑñáéíóúÁÉÍÓÚs])/, //Solo letras
     soloNumeros: /^[0-9,-]*$/
  
 }
@@ -33,6 +33,7 @@ let estadoSoloLetras = {
     estadoLetrasdescripcion: true,
     estadoLetrasubicacion: true,
     estadoLetrasAvance: true,
+    
   
 
 }
