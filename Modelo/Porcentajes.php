@@ -41,10 +41,10 @@ class Porcentajes {
         $descripcionPorcentaje = $nuevoPorcentaje->descripcionPorcentaje;
         $estadoPorcentaje = $nuevoPorcentaje->estadoPorcentaje;
         $CreadoPor = $nuevoPorcentaje->CreadoPor;
-        date_default_timezone_set('America/Tegucigalpa');
-        $FechaCreacion = date("Y-m-d");
+        // date_default_timezone_set('America/Tegucigalpa');
+        // $FechaCreacion = date("Y-m-d");
         $query = "INSERT INTO tbl_Porcentaje(valor_Porcentaje,descripcion,estado_Porcentaje, Creado_Por, Fecha_Creacion)
-                       VALUES ('$valorPorcentaje', '$descripcionPorcentaje', '$estadoPorcentaje', '$CreadoPor', '$FechaCreacion');";        
+                       VALUES ('$valorPorcentaje', '$descripcionPorcentaje', '$estadoPorcentaje', '$CreadoPor', GETDATE());";        
         $nuevoPorcentaje = sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $nuevoPorcentaje;
@@ -63,10 +63,10 @@ class Porcentajes {
         // $descripcionPorcentaje =$nuevoPorcentaje->descripcionPorcentaje;
         $estadoPorcentaje = $nuevoPorcentaje->estadoPorcentaje;
         $ModificadoPor = $nuevoPorcentaje->ModificadoPor;
-        date_default_timezone_set('America/Tegucigalpa'); 
-        $FechaModificacion = date("Y-m-d");
+        // date_default_timezone_set('America/Tegucigalpa'); 
+        // $FechaModificacion = date("Y-m-d");
         $query = "UPDATE tbl_Porcentaje SET estado_Porcentaje ='$estadoPorcentaje', Modificado_Por = '$ModificadoPor', 
-        Fecha_Modificacion = '$FechaModificacion' WHERE id_Porcentaje='$idPorcentaje';";
+        Fecha_Modificacion = GETDATE() WHERE id_Porcentaje='$idPorcentaje';";
         $nuevoPorcentaje = sqlsrv_query($conexion, $query);
         sqlsrv_close($conexion); #Cerramos la conexión.
     }

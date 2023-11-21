@@ -17,8 +17,8 @@ if (isset($_SESSION['usuario'])) {
         // $nuevaComision->estadoComision = $_POST['estadoComision'];
         $nuevaComision->estadoLiquidacion = $_POST['estadoLiquidacion'];
         $nuevaComision->ModificadoPor = $user;
-        date_default_timezone_set('America/Tegucigalpa');
-        $nuevaComision->fechaModificacion = date("Y-m-d");
+        // date_default_timezone_set('America/Tegucigalpa');
+        // $nuevaComision->fechaModificacion = date("Y-m-d");
         ControladorComision::actualizarComision($nuevaComision);
 
         // ControladorComision::editarEstadoComisionVendedor($nuevaComision);

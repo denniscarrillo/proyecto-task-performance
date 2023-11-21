@@ -21,7 +21,8 @@ let procesarPermisoActualizar = data => {
     "columns": [
       { "data": "idComision" },
       { "data": "factura" },
-      { "data": "totalVenta" },
+      { "data": "totalVenta",
+       "render": $.fn.dataTable.render.number(',', '.', 2, ' Lps. ') },
       {
         "data": "porcentaje",
         "render": function (data, type, row) {
@@ -31,7 +32,8 @@ let procesarPermisoActualizar = data => {
           return data; // En otras ocasiones, devuelve el valor sin formato
         }
       },
-      { "data": "comisionTotal" },
+      { "data": "comisionTotal", 
+      "render": $.fn.dataTable.render.number(',', '.', 2, ' Lps. ') },
       { "data": "estadoComisionar" },
       { "data": "estadoLiquidacion" },
       { "data": 'fechaComision.date',
@@ -40,7 +42,7 @@ let procesarPermisoActualizar = data => {
       },
       { "data": 'fechaLiquidacion.date',
       "render": function(data) {
-        return data.slice(0, 10); },
+        return data ? data.slice(0, 10) : ''; },
       },
       {
         "defaultContent":
@@ -73,9 +75,9 @@ $(document).on("click", "#btn_editar", function(){
     porcentaje = fila.find("td:eq(3)").text(),
     comisionTotal = fila.find("td:eq(4)").text(),
     estadoComisionar = fila.find("td:eq(5)").text(),
-    estadoLiquidacion = fila.find("td:eq(6)").text(),
-    fechaComision = fila.find("td:eq(7)").text(),
-    fechaLiquidacion = fila.find("td:eq(8)").text(); // Agregar punto y coma aquí
+    // estadoLiquidacion = fila.find("td:eq(6)").text(),
+    fechaComision = fila.find("td:eq(6)").text();
+    // fechaLiquidacion = fila.find("td:eq(8)").text(); // Agregar punto y coma aquí
   $("#idComision_E").val(idComision);
   $("#idVenta_E").val(idVenta);
   $("#monto_E").val(monto);
@@ -84,7 +86,7 @@ $(document).on("click", "#btn_editar", function(){
   $("#estadoComision_E").val(estadoComisionar);
   $("#estadoLiquidacion_E").val(estadoLiquidacion);
   $("#fecha_E").val(fechaComision);
-  $("#fecha_EV").val(fechaLiquidacion);
+  // $("#fecha_EV").val(fechaLiquidacion);
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-title").css("color", "white");
   $("#modalEditarComision").modal("show");
@@ -135,7 +137,7 @@ $(document).on("click", "#btn_ver", async function (){
   const idVentaLabel = document.getElementById('V_idFactura');
   idVentaLabel.innerText = idComisionVer.idFactura;
   const montoLabel = document.getElementById('V_Monto');
-  montoLabel.innerText = idComisionVer.ventaTotal;
+  montoLabel.innerText = 'Lps ' + parseFloat(idComisionVer.ventaTotal).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'); // Formatear el monto
   const porcentajeLabel = document.getElementById('V_Porcentaje');
   const porcentajeDecimal = idComisionVer.valorPorcentaje; // Supongamos que porcentaje es un decimal
 
@@ -147,17 +149,21 @@ if (!isNaN(porcentajeDecimal)) {
   porcentajeLabel.innerText = porcentajeEntero + '%';
 }
   const comisionTotalLabel = document.getElementById('V_comisionTotal');
-  comisionTotalLabel.innerText = idComisionVer.comisionT;
+  comisionTotalLabel.innerText = 'Lps ' + parseFloat(idComisionVer.comisionT).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'); // Formatear el monto
   const estadoComisionLabel = document.getElementById('V_Estado');
   estadoComisionLabel.innerText = idComisionVer.estadoComision;
   const estadoLiquidacionLabel = document.getElementById('V_EstadoLiquidar');
   estadoLiquidacionLabel.innerText = idComisionVer.estadoLiquidacion;
   const fechaLiquidacionLabel = document.getElementById('V_fechaLiquidacion');
-  fechaLiquidacionLabel.innerText = idComisionVer.FechaLiquidacion.date;
+  if(idComisionVer.FechaLiquidacion !== null){
+    fechaLiquidacionLabel.innerText = idComisionVer.FechaLiquidacion.date.slice(0, 19).replace("T", " ");
+  } else {
+    fechaLiquidacionLabel.innerText = '';
+  }
   const CreadoPorLabel = document.getElementById('V_CreadoPor');
   CreadoPorLabel.innerText = idComisionVer.CreadoPor;
   const fechaComisionLabel = document.getElementById('V_fechaCreacion');
-  fechaComisionLabel.innerText = idComisionVer.FechaComision.date;
+  fechaComisionLabel.innerText = idComisionVer.FechaComision.date.slice(0, 19).replace("T", " ");
   const ModificadoPorLabel = document.getElementById('V_ModificadoPor');
   ModificadoPorLabel.innerText = idComisionVer.modificadoPor;
   if(idComisionVer.modificadoPor !== null){
@@ -167,7 +173,7 @@ if (!isNaN(porcentajeDecimal)) {
   }
   const fechaModificacionLabel = document.getElementById('V_FechaModificado');
   if(idComisionVer.FechaModificacion !== null){
-    fechaModificacionLabel.innerText = idComisionVer.fechaModificacion.date;
+    fechaModificacionLabel.innerText = idComisionVer.fechaModificacion.date.slice(0, 19).replace("T", " ");
   } else {
     fechaModificacionLabel.innerText = '';
   }
@@ -177,7 +183,7 @@ if (!isNaN(porcentajeDecimal)) {
       `<tr>
         <td>${vendedor.idVendedor}</td>
         <td>${vendedor.nombreVendedor}</td>
-        <td>${vendedor.comisionVendedor}</td>
+        <td>${'Lps ' + parseFloat(vendedor.comisionVendedor).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</td>
       </tr>`;
   });
   document.getElementById('tbody-vendedores').innerHTML = $vendedores;

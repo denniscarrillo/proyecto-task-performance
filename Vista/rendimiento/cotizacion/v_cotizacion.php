@@ -101,7 +101,15 @@
                             <label for="validez" class="form-label" id="validez-cotizacion"><?php echo $datosCotizacion['vigencia']. ' dias'?></label>
                             <p class="mensaje"></p>
                         </div>
-                        <label class="form-label bold label-estado-cot exist hidden">Estado: </label><label class="estado-cot exist hidden" id="estado-cot"></label>
+                        <label class="mb-3 form-label bold label-estado-cot exist hidden">Estado: </label><label class="estado-cot exist hidden" id="estado-cot"></label>
+                        <div class="container-desc bold new hidden">
+                            <label class="form-label ">Descuento:</label>
+                            <select title="Estado descuento" class="form-control " id="estado-desc" disabled>
+                                <option selected>No aplica</option>
+                                <option >Aplica</option>
+                            </select>
+                            <div class="container-input-cant-desc"></div>
+                        </div>
                     </div>
                     <div class="container-btns-cotizacion">
                         <a href="#" class="btn_nuevoRegistro btn btn-primary exist hidden" id="btn-nueva-cot"><i class="fa-solid fa-circle-plus"></i> Nueva Cotización</a>
@@ -150,11 +158,11 @@
                                         <label for="sub-total" class=" bold" id="label-correo">SubTotal</label>
                                         <label name="sub-total" class="align-end" id="sub-total" >Lps. 0.00</label>
                                     </div>
-                                    <div class="align-in-column" id="input-descuento">
+                                    <div class="align-in-column hidden" id="input-descuento">
                                         <label for="descuento" class="bold" id="label-correo">Descuento</label>
                                         <label name="descuento" class="align-end" id="descuento" >Lps. 0.00</label>
                                     </div>
-                                    <div class="align-in-column" id="input-sub-descuento">
+                                    <div class="align-in-column hidden" id="input-sub-descuento">
                                         <label for="sub-descuento" class="bold" id="label-correo">Sub Descuento</label>
                                         <label name="sub-descuento" class="align-end" id="sub-descuento" >Lps. 0.00</label>
                                     </div>
@@ -188,6 +196,6 @@
     <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
     <script src="../../../Recursos/js/librerias/dataTables.bootstrap5.min.js"></script>
     <script src="../../../Recursos/js/librerias/SweetAlert2.all.min.js"></script>
-	<script src="../../../Recursos/js/rendimiento/cotizacion/v_cotizacion.js"></script>
+	<script src="../../../Recursos/js/rendimiento/cotizacion/v_cotizacion.js" type="module"></script>
 </body>
 </html>

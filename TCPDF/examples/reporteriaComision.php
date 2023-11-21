@@ -88,19 +88,34 @@ $html = '
 ';
 $Comisiones = ControladorComision::getComisionesPdf($_GET['buscar']);
 foreach($Comisiones as $Comision){
-    // $idComision = $Comision['idComision'];
     $idFactura = $Comision['factura'];
-    $totalVenta = $Comision['totalVenta'];
+    // Formatear $totalVenta como "Lps 2,500.99"
+    $totalVenta = 'Lps. ' . number_format($Comision['totalVenta'], 2, '.', ',');
     $porcentaje = $Comision['porcentaje'] * 100;
-    $comisionTotal = $Comision['comisionTotal'];
+    $comisionTotal = 'Lps. ' . number_format($Comision['comisionTotal'], 2, '.', ',');
     $estado = $Comision['estadoComisionar'];
     $liquidacion = $Comision['estadoLiquidacion'];
-    $fecha = $Comision['fechaComision'];
-    $timestamp = $fecha->getTimestamp();
-    $fechaComision = date('Y-m-d', $timestamp);
-    $fechaL = $Comision['fechaLiquidacion'];
-    $timestamp = $fechaL->getTimestamp();
-    $fechaLiquidacion = date('Y-m-d', $timestamp);
+    
+    // Verificar si $fecha está definido y no es null
+    if (isset($Comision['fechaComision']) && $Comision['fechaComision'] !== null) {
+        $fecha = $Comision['fechaComision'];
+        $timestamp = $fecha->getTimestamp();
+        // Verificar si la fecha es no nula antes de formatearla
+        $fechaComision = date('Y-m-d H:i:s', $timestamp);
+    } else {
+        $fechaComision = ''; // Otra acción si $fechaComision es nulo
+    }
+
+    // Verificar si $fechaL está definido y no es null
+    if (isset($Comision['fechaLiquidacion']) && $Comision['fechaLiquidacion'] !== null) {
+        $fechaL = $Comision['fechaLiquidacion'];
+        $timestamp = $fechaL->getTimestamp();
+        // Verificar si la fecha es no nula antes de formatearla
+        $fechaLiquidacion = date('Y-m-d H:i:s', $timestamp);
+    } else {
+        $fechaLiquidacion = ''; // Otra acción si $fechaLiquidacion es nulo
+    }
+
     $Cont++;
 
     $html .= '
@@ -117,6 +132,7 @@ foreach($Comisiones as $Comision){
     </tr>
     ';
 }
+
 
 $html.='
 </table>

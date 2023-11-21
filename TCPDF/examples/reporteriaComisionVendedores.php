@@ -31,7 +31,7 @@ $pdf->setTitle('ReporteComisionesVendedores');
 $pdf->setSubject('TCPDF Tutorial');
 $pdf->setKeywords('TCPDF, PDF, example, test, guide');
 
-$width = 64; // Define el ancho que desea para su cadena de encabezado
+$width = 154; // Define el ancho que desea para su cadena de encabezado
 
 $PDF_HEADER_TITLE =  $nombreP;
 $PDF_HEADER_STRING = $direccionP . "\n"  .'Correo: ' . $correoP ."\nTeléfono: +" . $telefonoP.  ", +" . $telefono2P;
@@ -75,12 +75,13 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de comision por vendedores</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 60px">N°</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 120px;">ID COMISION</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 125px;">ID VENDEDOR</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 120px;">VENDEDOR</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 120px;">ESTADO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 140px;">COMISION TOTAL</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 40px">N°</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">ID COMISION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 105px;">ID VENDEDOR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">VENDEDOR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">ESTADO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 130px;">COMISION TOTAL</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 120px;">LIQUIDACION</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 120px;">FECHA</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 140px;">FECHA LIQUIDAR</td>
 </tr>
@@ -92,13 +93,26 @@ foreach($ComisionVendedor as $ComisionV){
     $IdVendedor = $ComisionV['idVendedor'];
     $usuario = $ComisionV['usuario'];
     $Estado = $ComisionV['estadoComision'];
-    $comisionTotal = $ComisionV['comisionTotal'];
-    $fecha = $ComisionV['fechaComision'];
-    $timestamp = $fecha->getTimestamp();
-    $fechaComision = date('Y-m-d', $timestamp);
-    $fechaLiqui = $ComisionV['fechaLiquidacion'];
-    $timestampLiqui = $fechaLiqui->getTimestamp();
-    $fechaLiquidacion = date('Y-m-d', $timestampLiqui);
+    $comisionTotal = 'Lps. ' . number_format($ComisionV['comisionTotal'], 2, '.', ',');
+    $liquidacion = $ComisionV['estadoLiquidacion'];
+    // Verificar si $fecha está definido y no es null
+    if (isset($ComisionV['fechaComision']) && $ComisionV['fechaComision'] !== null) {
+        $fecha = $ComisionV['fechaComision'];
+        $timestamp = $fecha->getTimestamp();
+        // Verificar si la fecha es no nula antes de formatearla
+        $fechaComision = date('Y-m-d H:i:s', $timestamp);
+    } else {
+        $fechaComision = ''; // Otra acción si $fechaComision es nulo
+    }
+     // Verificar si $fechaL está definido y no es null
+     if (isset($ComisionV['fechaLiquidacion']) && $ComisionV['fechaLiquidacion'] !== null) {
+        $fechaL = $ComisionV['fechaLiquidacion'];
+        $timestamp = $fechaL->getTimestamp();
+        // Verificar si la fecha es no nula antes de formatearla
+        $fechaLiquidacion = date('Y-m-d H:i:s', $timestamp);
+    } else {
+        $fechaLiquidacion = ''; // Otra acción si $fechaLiquidacion es nulo
+    }
     $Cont++;
     
 
@@ -110,6 +124,7 @@ foreach($ComisionVendedor as $ComisionV){
     <td style="text-align: center">'.$usuario.'</td>
 	<td style="text-align: center">'.$Estado.'</td>
     <td style="text-align: center">'.$comisionTotal.'</td>
+    <td style="text-align: center">'.$liquidacion.'</td>
     <td style="text-align: center">'.$fechaComision.'</td>
     <td style="text-align: center">'.$fechaLiquidacion.'</td>
     </tr>

@@ -1,7 +1,6 @@
 .encabezado {
     position: sticky;
     top: 0;
-    /* min-height: fit-content; */
     color: #f1d2c7;
     background-color: #615f5e;
     margin: 1rem;
@@ -23,12 +22,33 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    /* height: calc(100vh - 2.5rem); */
     padding: 1rem;
     overflow: hidden;
 }
+#estado-desc {
+    appearance: auto !important;
+}
 .datos-cotizacion {
     padding: 0.5rem;
+}
+.container-input-cant-desc {
+    display: inline-block;
+    margin-left: 0.4rem;
+}
+.container-input-cant-desc input {
+    border: none;
+    border-radius: 0.2rem;
+    height: 2rem;
+    width: 4rem;
+    outline-color: #ee894f;
+    text-align: center;
+    /* border: 2px solid red; */
+}
+input[type=number]::-webkit-inner-spin-button {
+    opacity: 1
+}
+.hidden {
+    display: none !important;
 }
 /* ESTILOS PARA SECCION DATOS DEL CLIENTE */
 #input-fecha{
@@ -299,4 +319,24 @@
 }
 .btn-salir-cotizacion label {
     cursor: pointer;
+}
+#estado-desc {
+    display: inline;
+    margin-left: 0.4rem;
+    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+    max-width: 7.5rem;
+}
+.mensaje_error {
+    box-shadow: 0 0 0 .15rem #e15e3eac;
+    border-color: red;
+}
+.mensaje_error:focus {
+    box-shadow: 0 0 0 .25rem rgba(226, 73, 35, 0.455);
+    border-color: red;
+}
+.mensaje {
+    position: absolute;
+    margin-top: 3px;
+    color: red;
+    font-size: 10px;
 }

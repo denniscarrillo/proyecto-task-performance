@@ -52,8 +52,4 @@ $form.addEventListener('submit', e => {
 
 $rtn.addEventListener('keyup', () => {
     estadoEspacioInput.estadoEspacioRtn = funciones.validarEspacios($rtn);
-    //Validación con jQuery inputlimiter
-    // $("#usuario").inputlimiter({
-    //     limit: 15
-    // });
 });

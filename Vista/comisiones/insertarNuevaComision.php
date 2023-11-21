@@ -19,23 +19,14 @@ if(isset($_POST['idVenta']) || isset($_POST['idComision']) || isset($_POST['$Com
     $nuevaComision->estadoComision = 'Activa';
     $nuevaComision->estadoLiquidacion = 'Pendiente';
     $nuevaComision->creadoPor = $user;
-    date_default_timezone_set('America/Tegucigalpa');
-    $nuevaComision->fechaComision = date("Y-m-d", strtotime($_POST['fechaComision']));
-    $liquidacion = ControladorParametro::obtenerVigenciaLiquidar(); // Obtén el valor de AdminLiquidacion
-    $liquidar = $liquidacion['liquidacion'];
-
-// Guardar la línea de código en una variable
-    $fechaLiquidacionCalculada = date("Y-m-d", strtotime($nuevaComision->fechaComision . " + $liquidar days"));
-
-// Asignar la variable a $nuevaComision->fechaLiquidacion
-    $nuevaComision->fechaLiquidacion = $fechaLiquidacionCalculada;
-    
+    // date_default_timezone_set('America/Tegucigalpa');
+    // $nuevaComision->fechaComision = date("Y-m-d", strtotime($_POST['fechaComision']));
     $idTarea = ControladorComision::traerIdTarea(intval($_POST['idVenta']));
     $vendedores = ControladorComision::traerVendedores($idTarea);
     $idComision = ControladorComision::registroComision($nuevaComision);
     var_dump($idComision);
     echo''.$idTarea.''.$idComision.
-    ControladorComision::guardarComisionVendedor(floatval($_POST['comisionTotal']), $idComision, $vendedores, $user, $_POST['fechaComision'], $fechaLiquidacionCalculada );
+    ControladorComision::guardarComisionVendedor(floatval($_POST['comisionTotal']), $idComision, $vendedores, $user);
     // header('Location: v_comision.php');
     
 }

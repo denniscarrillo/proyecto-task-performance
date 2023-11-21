@@ -7,9 +7,8 @@ const $btnCotizacion = document.getElementById('btn-container-cotizacion');
 let radioOption = document.getElementsByName('radioOption');
 let estadoRTN = '';
 $(document).ready(async function(){
-  if($idEstadoTarea == '3'){
-    $btnCotizacion.removeAttribute('hidden');
-  }
+  ($idEstadoTarea == '3') ? $btnCotizacion.removeAttribute('hidden') : '';
+  ($idEstadoTarea == '4') ? document.getElementById('container-num-factura').removeAttribute('hidden') : '';
     setEstadoTarea();
     obtenerComentarios($idTarea);
     obtenerDatosTarea($idTarea, $idEstadoTarea);
@@ -88,9 +87,32 @@ document.getElementById('form-Edit-Tarea').addEventListener('submit', function(e
   let tipoCliente = (radioOption[1].checked) ? radioOption[1].value : radioOption[0].value;
   let $datosTarea = validarCamposEnviar(tipoCliente);
   actualizarDatosTarea($datosTarea);
-  obtenerDatosTarea($idTarea, $idEstadoTarea);
+  let numFactura = document.getElementById('num-factura');
+  console.log(numFactura.getAttribute('hidden'));
+  if(numFactura.getAttribute('hidden') == null){
+    almacenarFactura(numFactura);
+  }
   enviarProductosInteres($idTask); //Enviamos los productos de interes a almacenar
+  obtenerDatosTarea($idTarea, $idEstadoTarea);
 });
+
+let almacenarFactura = ($numFactura) => {
+  console.log($numFactura.value);
+  $.ajax({
+    url: "../../../../Vista/rendimiento/validacionesEditarTarea.php",
+    type: "POST",
+    datatype: "JSON",
+    data: {
+      evidencia: $numFactura.value
+    }
+  }); //Fin AJAX   
+}
+// let numFactura = document.getElementById('num-factura');
+// numFactura.addEventListener('focusout', () => {
+//   if(!numFactura.getAttribute('hidden')){
+//     almacenarFactura(numFactura);
+//   }
+// });
 // CARGAR LOS ARTICULOS A AGREGAR A LA TAREA
 $('#btn-articulos').click(() => {
     if (document.getElementById('table-Articulos_wrapper') == null) {
@@ -189,23 +211,6 @@ $('#btn-articulos').click(() => {
     idsProducto.forEach(function(idProducto){
       idProducto.setAttribute('disabled', 'true');
     });
-    // if(document.getElementById('table-articulos_wrapper')){
-    //   tableArticulos.destroy();
-    //   //Convertimos la tabla de productos de interes a DataTable
-    //   tableArticulos = $('#table-articulos').DataTable({
-    //     "language": {
-    //       "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
-    //     },
-    //   });
-    // } else {
-    //   //Convertimos la tabla de productos de interes a DataTable
-    //   tableArticulos = $('#table-articulos').DataTable({
-    //     language: {
-    //       "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
-    //     },
-    //     scrollY: "29vh"
-    //   });
-    // }
   }
   let setEstadoTarea = function(){
     let $select = document.getElementById('estados-tarea');
