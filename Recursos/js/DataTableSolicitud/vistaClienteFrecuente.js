@@ -59,7 +59,9 @@ $(document).on("click", "#btn_selectcliente", function () {
   let telefonoCliente = fila.find("td:eq(3)").text();
   let direccionCliente = fila.find("td:eq(4)").text();
   let nombre = document.getElementById("nombre");
-  let rtn = document.getElementById("rtnCliente");
+  //let rtn = document.getElementById("rtnCliente");
+  let rtn = document.querySelector('[name="rtnCliente"]');
+  rtn.id = "rtnClienteV";
   let telefono = document.getElementById("telefono");
   let direccion = document.getElementById("direccion");
   //Setear datos del cliente
@@ -407,16 +409,18 @@ $('#form-solicitud').submit(function (e) {
   let tiposervicio = document.getElementById('tiposervicio').value;
   let ubicacion = $('#direccion').val();
   let descripcion = $('#descripcion').val();
-  let rtncliente, rtnclienteC;
-  var radio = document.getElementById("clienteExistente");
-if (radio.checked) {
-  rtncliente = $('#rtnCliente').val();
-  rtnclienteC = 'NULL'; 
-} else {
-  rtnclienteC = $('#rtnCliente').val();
-  rtncliente = 'NULL'; 
-  idFactura = null;
-}
+  let rtncliente = $('#rtnClienteV').val();
+  let rtnclienteC = $('#rtnCliente').val();
+
+
+
+// var radio = document.getElementById("clienteExistente");
+// if (radio.checked) {
+//   rtnclienteC = $('#rtnCliente').val();
+//   rtncliente = 'NULL'; 
+//   idFactura = null;
+//} 
+
 let $idProductos = document.querySelectorAll('.idproducto');
 let $cantProducto = document.querySelectorAll('.cantproducto');
 let productos = [];
@@ -543,13 +547,11 @@ $(document).on("click", "#btn_selectcarteraCliente", function () {
   let telefonoCartera = fila.find('td:eq(3)').text();
   let direccionCartera = fila.find('td:eq(5)').text();
   let nombre = document.getElementById("nombre");
-  let rtn = document.getElementById("rtnCliente");
+  //let rtn = document.getElementById("rtnCliente");
+  let rtn = document.querySelector('[name="rtnCliente"]');
+  //rtn.id = "rtnClienteC";
   let telefono = document.getElementById("telefono");
   let direccion = document.getElementById("direccion");
-
- 
-  // console.log(estadoContacto);
-
   nombre.value =  nombreCarteraCliente ;
   rtn.value = rtnCartera;
   telefono.value =telefonoCartera;
