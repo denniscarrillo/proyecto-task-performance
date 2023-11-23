@@ -110,11 +110,7 @@ $SolicitudesId = ControladorDataTableSolicitud::VerSolicitudesPorId($_GET['idSol
         
         $ArticulosS = ControladorDataTableSolicitud::obtenerProductosS($_GET['idSolicitud']);
         
-        foreach ($ArticulosS as $producto) {
-            $Articulo = $producto['Articulo'];
-            $Cant = $producto['Cant'];
-            $ListaArticulos .= '<li>'.$Cant.' - '. $Articulo .'</li>';
-        }   
+           
        
         $html .= '
         <tr>
@@ -190,7 +186,38 @@ $SolicitudesId = ControladorDataTableSolicitud::VerSolicitudesPorId($_GET['idSol
         ';     
 $html .= '
     </table>
-    ';      
+
+    <table border="1" cellpadding="4">
+
+    <tr> 
+        <td style="background-color: #e54037; text-align: center;"><b>LISTA DE ARTICULOS</b></td>
+        </tr>
+        <tr >
+            <td style="background-color: #c9c9c9; text-align: center;width: 80px;">Cant</td>
+            <td style="background-color: #c9c9c9; text-align: center;width: 100px;">Codigo</td>
+            <td style="background-color: #c9c9c9; text-align: center;width: 458px;">Descripción</td>
+        </tr>
+        ';
+            //$ListaArticulos = ''; 
+            foreach ($ArticulosS as $producto) {
+                $Articulo = $producto['Articulo'];
+                $Cant = $producto['Cant'];
+                $CodArticulo = $producto['CodArticulo'];
+                //$ListaArticulos .= '<li>'.$Cant.' - '. $Articulo .'</li>';
+            
+                $html .= '
+            <tr>
+                <td style="text-align: center;">'.$Cant.'</td>
+                <td style="text-align: center;">'.$CodArticulo.'</td>
+                <td>'.$Articulo.'</td>
+            </tr>
+        ';
+        }
+        $html.='
+    </table>
+    '; 
+    
+    
 
 //output the HTML content
 $pdf->writeHTML($html, true, false, true, false);

@@ -10,4 +10,8 @@ class ControladorDataTableTarea {
     public static function obtenerTareasPDF($User, $buscar){
         return DataTableTarea::obtenerTareasPDF($User, $buscar);
     }
+
+    public static function obtenerTareasId($idTarea){
+        return DataTableTarea::obtenerTareasId($idTarea);
+    }
 }
