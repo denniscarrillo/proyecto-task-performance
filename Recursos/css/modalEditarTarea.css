@@ -34,14 +34,9 @@ body{
     min-width: inherit;
     width: 45%;
 }
-
-/* Estilos para tabla de articulos */
-.table-conteiner {
-    margin: 2rem;
-    background-color: #ebe5e0;
-    padding: 0.6rem;
-    min-height: 6rem;
-    /* overflow-y: scroll; */
+#table-container {
+    height: 15rem;
+    overflow-y: auto;
 }
 .conteiner-id-articulo{
     margin: 0;
@@ -136,15 +131,18 @@ body{
 }
 .btn-buscar-cliente{
     position: absolute;
-    right: 1px;
+    right: 0rem;
     bottom: 0;
-    height: fit-content;
+    /* height: 36px; */
     height: fit-content;
 }
 #btn-clientes{
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 5px;
+    height: 36px;
+    width: 7rem;
 }
 #btn-clientes i {
     padding: 0;

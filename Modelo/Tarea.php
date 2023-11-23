@@ -484,14 +484,14 @@ class Tarea
             if($tipoCliente['estado_Cliente_Tarea'] == 'Nuevo'){
                 switch($tipoTarea){
                     case 0:{
-                        $consultaDatos = "SELECT tr.titulo,tr.estado_Cliente_Tarea, tr.id_EstadoAvance, tr.RTN_Cliente, cc.nombre_Cliente as NOMBRECLIENTE, 
+                        $consultaDatos = "SELECT tr.titulo,tr.estado_Cliente_Tarea, tr.id_EstadoAvance, (SELECT evidencia FROM tbl_AdjuntoEvidencia WHERE id_Tarea = '$idTarea') as evidencia, tr.RTN_Cliente, cc.nombre_Cliente as NOMBRECLIENTE, 
                         cc.telefono as TELEFONO, cc.correo, cc.direccion as DIRECCION, tr.rubro_Comercial, tr.razon_Social FROM tbl_Tarea tr
                         INNER JOIN tbl_CarteraCliente cc ON tr.RTN_Cliente = cc.rtn_Cliente
                         WHERE tr.id_Tarea = '$idTarea';";
                         break;
                     }
                     case 2:{
-                        $consultaDatos = "SELECT tr.titulo,tr.estado_Cliente_Tarea, tr.id_EstadoAvance, tr.id_ClasificacionLead , tr.id_OrigenLead,
+                        $consultaDatos = "SELECT tr.titulo,tr.estado_Cliente_Tarea, tr.id_EstadoAvance, (SELECT evidencia FROM tbl_AdjuntoEvidencia WHERE id_Tarea = '$idTarea') as evidencia, tr.id_ClasificacionLead , tr.id_OrigenLead,
                         tr.RTN_Cliente, cc.nombre_Cliente as NOMBRECLIENTE, cc.telefono as TELEFONO, cc.correo, cc.direccion as DIRECCION, tr.rubro_Comercial, tr.razon_Social FROM tbl_Tarea tr
                         INNER JOIN tbl_CarteraCliente cc ON tr.RTN_Cliente = cc.rtn_Cliente
                         WHERE tr.id_Tarea = '$idTarea';";
@@ -501,14 +501,14 @@ class Tarea
             } else {
                 switch($tipoTarea){
                     case 0:{
-                        $consultaDatos = "SELECT tr.titulo, tr.estado_Cliente_Tarea, tr.id_EstadoAvance, tr.RTN_Cliente, vc.NOMBRECLIENTE, vc.TELEFONO1 as TELEFONO,
+                        $consultaDatos = "SELECT tr.titulo, tr.estado_Cliente_Tarea, tr.id_EstadoAvance, (SELECT evidencia FROM tbl_AdjuntoEvidencia WHERE id_Tarea = '$idTarea') as evidencia, tr.RTN_Cliente, vc.NOMBRECLIENTE, vc.TELEFONO1 as TELEFONO,
                         vc.DIRECCION1 as DIRECCION, tr.rubro_Comercial, tr.razon_Social FROM COCINAS_Y_EQUIPOS.dbo.View_Clientes vc 
                         INNER JOIN tbl_Tarea tr ON vc.CIF COLLATE Latin1_General_CS_AI = tr.RTN_Cliente
                         WHERE tr.id_Tarea = '$idTarea';";
                         break;
                     }
                     case 2:{
-                        $consultaDatos = "SELECT tr.titulo, tr.estado_Cliente_Tarea, tr.id_EstadoAvance, tr.id_ClasificacionLead , tr.id_OrigenLead,
+                        $consultaDatos = "SELECT tr.titulo, tr.estado_Cliente_Tarea, tr.id_EstadoAvance, (SELECT evidencia FROM tbl_AdjuntoEvidencia WHERE id_Tarea = '$idTarea') as evidencia, tr.id_ClasificacionLead , tr.id_OrigenLead,
                         tr.RTN_Cliente, vc.NOMBRECLIENTE, vc.TELEFONO1 as TELEFONO, vc.DIRECCION1 as DIRECCION, tr.rubro_Comercial, tr.razon_Social FROM COCINAS_Y_EQUIPOS.dbo.View_Clientes vc 
                         INNER JOIN tbl_Tarea tr ON vc.CIF COLLATE Latin1_General_CS_AI = tr.RTN_Cliente
                         WHERE tr.id_Tarea = '$idTarea';";
@@ -988,5 +988,24 @@ class Tarea
         }
         sqlsrv_close($conexion);
         return $datosCotizacion;
+    }
+
+    public static function obtenerProductosInteres($idTarea){
+        $productos = array();
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT pi.id_Articulo, va.ARTICULO AS descripcion, va.MARCA, pi.cantidad FROM COCINAS_Y_EQUIPOS.dbo.View_ARTICULOS va 
+                    INNER JOIN tbl_ProductoInteres pi ON pi.id_Articulo = va.CODARTICULO WHERE pi.id_Tarea = '$idTarea'";
+        $result = sqlsrv_query($conexion, $query);
+        while($fila = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)){
+            $productos [] = [
+                'id' => $fila['id_Articulo'],
+                'descripcion' => $fila['descripcion'],
+                'marca' => $fila['MARCA'],
+                'cantidad' => $fila['cantidad']
+            ];
+        }
+        sqlsrv_close($conexion);
+        return $productos;
     }
 }
