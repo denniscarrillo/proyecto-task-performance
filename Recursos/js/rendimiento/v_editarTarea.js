@@ -88,31 +88,10 @@ document.getElementById('form-Edit-Tarea').addEventListener('submit', function(e
   let $datosTarea = validarCamposEnviar(tipoCliente);
   actualizarDatosTarea($datosTarea);
   let numFactura = document.getElementById('num-factura');
-  console.log(numFactura.getAttribute('hidden'));
-  if(numFactura.getAttribute('hidden') == null){
-    almacenarFactura(numFactura);
-  }
+  console.log(numFactura.value);
   enviarProductosInteres($idTask); //Enviamos los productos de interes a almacenar
   obtenerDatosTarea($idTarea, $idEstadoTarea);
 });
-
-let almacenarFactura = ($numFactura) => {
-  console.log($numFactura.value);
-  $.ajax({
-    url: "../../../../Vista/rendimiento/validacionesEditarTarea.php",
-    type: "POST",
-    datatype: "JSON",
-    data: {
-      evidencia: $numFactura.value
-    }
-  }); //Fin AJAX   
-}
-// let numFactura = document.getElementById('num-factura');
-// numFactura.addEventListener('focusout', () => {
-//   if(!numFactura.getAttribute('hidden')){
-//     almacenarFactura(numFactura);
-//   }
-// });
 // CARGAR LOS ARTICULOS A AGREGAR A LA TAREA
 $('#btn-articulos').click(() => {
     if (document.getElementById('table-Articulos_wrapper') == null) {
@@ -474,15 +453,19 @@ let obtenerDatosTarea = ($idTarea, $idEstadoTarea) => {
   });
 }
 let setearDatosTarea = ($datosTarea) => {
+    setArticulosInteres($datosTarea.productos)
+    console.log($datosTarea.productos);
     let nuevo = document.getElementById('cliente-nuevo');
     let existe =  document.getElementById('cliente-existente');
     let nombre = document.getElementById('nombre-cliente');
     let rtn = document.getElementById('rnt-cliente'); 
     let correo = document.getElementById('correo-cliente');
+    let nFactura = document.getElementById('num-factura');
     document.getElementById('input-titulo-tarea').value = $datosTarea.titulo;
     rtn.value = $datosTarea.RTN_Cliente;
     rtn.disabled =true;
     nombre.value = $datosTarea.NOMBRECLIENTE;
+    nFactura.value = $datosTarea.evidencia;
     nombre.disabled = true;
     document.getElementById('telefono-cliente').value = $datosTarea.TELEFONO,
     ($datosTarea.estado_Cliente_Tarea == 'Nuevo') ? correo.value = $datosTarea.correo: '';
@@ -504,6 +487,22 @@ let setearDatosTarea = ($datosTarea) => {
       nuevo.disabled = true;
     }
 }
+let setArticulosInteres = (productos) => {
+  //Recorremos todos los productos y los insertamos en la tabla
+  productos.forEach(producto => {
+    let $tBody = document.getElementById('list-articulos');
+    let $fila = document.createElement('tr');
+    let id = $fila.appendChild(document.createElement('td'));
+    let articulo = $fila.appendChild(document.createElement('td'));
+    let marca = $fila.appendChild(document.createElement('td'));
+    let cantidad = $fila.appendChild(document.createElement('td'));
+    id.innerText = producto.id;
+    articulo.innerText = producto.descripcion;
+    marca.innerText = producto.marca;
+    cantidad.innerText = producto.cantidad;
+    $tBody.appendChild($fila);
+  });
+}
 
 let validarCamposEnviar = (tipoCliente) => {
   let $datosTarea;
@@ -522,7 +521,8 @@ let validarCamposEnviar = (tipoCliente) => {
         "clasificacionLead": document.getElementById('clasificacion-lead').value,
         "origenLead": document.getElementById('origen-lead').value,
         "rubrocomercial": document.getElementById('rubrocomercial').value,
-        "razonsocial": document.getElementById('razonsocial').value
+        "razonsocial": document.getElementById('razonsocial').value,
+        "nFactura": document.getElementById('num-factura').value
       };
     } else {
       $datosTarea = {
@@ -536,7 +536,8 @@ let validarCamposEnviar = (tipoCliente) => {
         "correo": document.getElementById('correo-cliente').value,
         "direccion": document.getElementById('direccion-cliente').value,
         "rubrocomercial": document.getElementById('rubrocomercial').value,
-        "razonsocial": document.getElementById('razonsocial').value
+        "razonsocial": document.getElementById('razonsocial').value,
+        "nFactura": document.getElementById('num-factura').value
       };
     }
   } else {
@@ -553,7 +554,8 @@ let validarCamposEnviar = (tipoCliente) => {
         "clasificacionLead": document.getElementById('clasificacion-lead').value,
         "origenLead": document.getElementById('origen-lead').value,
         "rubrocomercial": document.getElementById('rubrocomercial').value,
-        "razonsocial": document.getElementById('razonsocial').value
+        "razonsocial": document.getElementById('razonsocial').value,
+        "nFactura": document.getElementById('num-factura').value
       };
     } else {
       $datosTarea = {
@@ -566,7 +568,8 @@ let validarCamposEnviar = (tipoCliente) => {
         "correo": document.getElementById('correo-cliente').value,
         "direccion": document.getElementById('direccion-cliente').value,
         "rubrocomercial": document.getElementById('rubrocomercial').value,
-        "razonsocial": document.getElementById('razonsocial').value
+        "razonsocial": document.getElementById('razonsocial').value,
+        "nFactura": document.getElementById('num-factura').value
       };
     }
   }

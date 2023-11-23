@@ -15,6 +15,75 @@
     color: #3b3b3a;
     padding: 0.8rem;
 }
+#table-container::-webkit-scrollbar {
+    width: 0.6rem;
+    border-radius: 6px;
+    background: #f4f2f1;
+  }
+  #table-container::-webkit-scrollbar-thumb {
+    background: #3b3b3a;
+    border: 2px solid #ebe5e0;
+    border-radius: 6px;
+  }
+/* Estilos para tabla de articulos */
+.table-conteiner {
+    background-color: #ebe5e0;
+    padding: 0.6rem;
+    min-height: 6rem;
+    max-width: 95%;
+    border-radius: 0.5rem;
+    margin: 0.5rem auto 1rem auto;
+}
+.btn-guardar {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+.btn-primary {
+    background-color: #534f4a;
+    border-color: #534f4a;
+    box-shadow: 1px 2px 2px 0px #9e9e9e;
+    width: 10rem;
+    height: 2.5rem;
+}
+.btn-primary:hover {
+    background-color: #ee9866;
+    border-color: #ee9866;
+}
+.btn-primary:active {
+    background-color: #ee9827 !important;
+    border-color: #ee9827 !important;
+}
+.btn-secondary {
+    border: none;
+    width: 10rem;
+    height: 2.5rem;
+    border-radius: 0.4rem;
+    font-size: 1.1rem;
+    color: aliceblue;
+    background-color: #ee9866;
+    border-color: #ee9866;
+    box-shadow: 1px 2px 2px 0px #9e9e9e;
+}
+.btn-secondary:hover {
+    background-color: #ee8c53 !important;
+}
+.btn-secondary:active {
+    background-color: #ea884f !important;
+}
+.table {
+    border: 3px solid #efa173;
+    margin-bottom: 0;
+}
+.table>:not(caption)>*>* {
+    border-bottom-width: 1px;
+}
+.th-col-row {
+    border: 2px solid #ee9866;
+    text-align: center;
+    text-transform: uppercase;
+}
 .comments-container{
     width: 100%;
     height: 100vh;
