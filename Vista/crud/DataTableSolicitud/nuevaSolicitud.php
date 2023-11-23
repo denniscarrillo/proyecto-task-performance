@@ -11,6 +11,14 @@
     session_start(); //Reanudamos session
     if(isset($_SESSION['usuario'])){
         $user = $_SESSION['usuario'];
+        if (empty($_POST['RTNcliente'])) {
+            // Si está vacío, asignar 'NULL' o algún otro valor por defecto
+            $_POST['RTNcliente'] = 'NULL';
+        }
+        if (empty($_POST['RTNclienteC'])) {
+            // Si está vacío, asignar 'NULL' o algún otro valor por defecto
+            $_POST['RTNclienteC'] = 'NULL';
+        }
         $nuevaSolicitud = new DataTableSolicitud();
         $nuevaSolicitud->idFactura = $_POST['idFactura'];
         $nuevaSolicitud->rtnCliente = $_POST['RTNcliente'];
