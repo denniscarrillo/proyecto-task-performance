@@ -418,10 +418,10 @@ let obtenerHistorialTarea = ($idTarea) => {
         `<div class="card-history">
           <section class="info-history">
             <section class="creadoPor-history">${historial.usuarioTarea}</section>
-            <section class="action-history">${historial.accion}</section>
             <section class="data-history">${historial.fecha.date.split('.')[0]}</section>
           </section>
           <section class="text-history">${historial.descripcion}</section>
+          <section class="text-history comentario">${historial.comentario}</section>
         </div>`;
         conteinerHistory.innerHTML = historialTarea;
       });

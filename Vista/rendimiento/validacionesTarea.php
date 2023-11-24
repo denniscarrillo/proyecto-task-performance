@@ -19,7 +19,7 @@ if (isset($_SESSION['usuario'])) {
       $permisoConsulta = true;
     ;
   if(!$permisoConsulta){
-    /* ====================== Evento intento de ingreso sin permiso a mantenimiento de usuario. =====================*/
+    /* ====================== Evento intento de ingreso sin permiso a tablero tareas. =====================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
     $newBitacora->fecha = date("Y-m-d h:i:s");
