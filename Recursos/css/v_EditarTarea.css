@@ -211,3 +211,8 @@
 .link-nueva-cotizacion:hover {
     color: #5799e5;
 }
+.comentario{
+    padding: 0.4rem 0.2rem 0.2rem 0.4rem;
+    background-color: #9b9fa436;
+    border-radius: 0.4rem;
+}

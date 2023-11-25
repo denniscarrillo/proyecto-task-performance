@@ -5,7 +5,7 @@ class ControladorTarea {
         return Tarea::obtenerTareas($idUser);
     }
     public static function insertarNuevaTarea($tarea){
-        Tarea::nuevaTarea($tarea); 
+        return Tarea::nuevaTarea($tarea); 
     }
     public static function obtenerestadoClienteTarea($rtnCliente){
         return Tarea::clienteExistente($rtnCliente); 

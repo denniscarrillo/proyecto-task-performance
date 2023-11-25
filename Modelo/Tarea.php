@@ -81,6 +81,7 @@ class Tarea
             echo 'Error SQL:' . $e;
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
+        return $idTarea;
     }
     public static function obtenerEstadoClienteTarea($rtnCliente)
     {
@@ -520,7 +521,6 @@ class Tarea
         sqlsrv_close($abrirConexion); //Cerrar conexion
         return $datosTarea;
     }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static function editarNuevoClienteTarea($editarClienteTarea){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();

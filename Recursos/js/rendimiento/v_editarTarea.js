@@ -421,7 +421,7 @@ let obtenerHistorialTarea = ($idTarea) => {
             <section class="data-history">${historial.fecha.date.split('.')[0]}</section>
           </section>
           <section class="text-history">${historial.descripcion}</section>
-          <section class="text-history comentario">${historial.comentario}</section>
+          ${(historial.comentario != null)? `<section class="text-history comentario">${historial.comentario}</section>`: ''}
         </div>`;
         conteinerHistory.innerHTML = historialTarea;
       });

@@ -486,7 +486,10 @@ let anularCotizacion = async ($idCotizacion) => {
             url: '../../../../Vista/rendimiento/cotizacion/anularCotizacion.php',
             datatype: 'JSON',
             type: 'POST',
-            data: {idCotizacion: $idCotizacion}
+            data: {
+                idCotizacion: $idCotizacion,
+                idTarea: document.querySelector('.encabezado').id
+            }
         });
     } catch (error) {
         console.error(error);
