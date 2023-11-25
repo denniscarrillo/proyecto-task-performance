@@ -119,4 +119,7 @@ class ControladorTarea {
     public static function obtenerProductosInteres($idTarea){
         return Tarea::obtenerProductosInteres($idTarea);
     }
+    public static function obtenerHistorialEstadosTarea($idTarea){
+        return Tarea::obtenerHistorialEstadosTarea($idTarea);
+    }
 }

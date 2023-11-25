@@ -224,6 +224,7 @@ let validacionInputs = (inputs) => {
 }
 //nueva Cotizacion
 let enviarNuevaCotizacion = ($datosCotizacion, $productosCotizacion) => {
+    // console.log($datosCotizacion);
     $.ajax({
         url: "../../../../Vista/rendimiento/cotizacion/nuevaCotizacion.php",
         type: "POST",

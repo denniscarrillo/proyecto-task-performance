@@ -1012,4 +1012,18 @@ class Tarea
         sqlsrv_close($conexion);
         return $productos;
     }
+    public static function obtenerHistorialEstadosTarea($idTarea){
+        $estados = array();
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT he.id_estado FROM tbl_historial_estado_tarea he
+                    INNER JOIN tbl_EstadoAvance et ON he.id_estado = et.id_EstadoAvance
+                        WHERE he.id_Tarea = '$idTarea' ORDER BY he.id_estado DESC";
+        $result = sqlsrv_query($conexion, $query);
+        while($fila = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)){
+            array_push($estados, $fila['id_estado']);
+        }
+        sqlsrv_close($conexion);
+        return $estados;
+    }
 }

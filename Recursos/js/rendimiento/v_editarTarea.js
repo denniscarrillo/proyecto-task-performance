@@ -269,13 +269,33 @@ let obtenerClientes = function () {
     });
   }
 }
-document.getElementById('estados-tarea').addEventListener('change', () => {
+document.getElementById('estados-tarea').addEventListener('change', async () => {
+  // let estadoNuevo = false;
   let $newEstado = document.getElementById('estados-tarea').value;
-console.log($newEstado);
-if($newEstado != $idEstadoTarea){
-  
-}
-  cambiarEstado($newEstado);
+  // console.log($newEstado);
+  if($newEstado < parseInt($idEstadoTarea)){
+        document.getElementById('estados-tarea').value = $idEstadoTarea;
+    }
+  // const estados = JSON.parse(await obtenerHistorialEstado($idTarea));
+  //Iteramos el historial para validar el nuevo estado
+  // for (const idEstado of estados) {
+  //   console.log(idEstado+''+$idEstadoTarea);
+  //   // if($newEstado == idEstado){
+  //   //   estadoNuevo = true;
+  //   //   break;
+  //   // }
+  //   if(idEstado < parseInt($idEstadoTarea) ||  idEstado != 4){
+  //     document.getElementById('estados-tarea').value = $idEstadoTarea;
+  //     console.log('gagag')
+  //     break;
+  //   }
+  // }
+  // if(estadoNuevo){
+  //   document.getElementById('estados-tarea').value = $idEstadoTarea;
+  // }
+
+
+// cambiarEstado($newEstado);
 });
 let $rtn = document.getElementById('rnt-cliente');
 $rtn.addEventListener('focusout', function () {
@@ -591,10 +611,9 @@ let validarCamposEnviar = (tipoCliente) => {
   }
   return $datosTarea;
 }
-
 let cambiarEstado = ($newEstado) => {
   $.ajax({
-    url: '../../../Vista/rendimiento/',
+    url: '../../../Vista/rendimiento/cambiarEstadoTarea.php',
     type: 'POST',
     datatype: 'JSON',
     data: {
@@ -604,4 +623,18 @@ let cambiarEstado = ($newEstado) => {
       console.log(res);
     }
   });
+}
+let obtenerHistorialEstado = async ($idTarea) => {
+  let estadosTarea = null;
+  try {
+      estadosTarea = await $.ajax({
+      url: '../../../Vista/rendimiento/obtenerHistorialEstado.php',
+      type: 'POST',
+      datatype: 'JSON',
+      data: {idTarea: $idTarea}
+    });
+  } catch (error) {
+    console.error('Ha ocurrido un error: '+error);
+  }
+  return estadosTarea;
 }
