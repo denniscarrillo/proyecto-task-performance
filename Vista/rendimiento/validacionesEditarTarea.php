@@ -54,6 +54,11 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
                 editarTareaBitacora($id_Tarea, $estadoTarea, $_SESSION['usuario']);
                 if(isset($_POST['nFactura'])){
                     ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia, intval($_POST['accion']));
+                    if(intval($_POST['accion']) == 0){
+                        guardarFacturaTareaBitacora($id_Tarea, $evidencia, $estadoTarea, $_SESSION['usuario']);
+                    }else{
+                        editoFacturaTareaBitacora($id_Tarea, $evidencia, $estadoTarea, $_SESSION['usuario']);
+                    }
                 }
                 if(!isset($datosTareaDB['RTN_Cliente']) && (isset($_POST['nombre']) && isset($_POST['rtnCliente']))){
                     $nombre = $_POST['nombre'];
@@ -94,6 +99,11 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
                 editarTareaBitacora($id_Tarea, $estadoTarea, $_SESSION['usuario']);
                 if(isset($_POST['nFactura'])){
                     ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia, intval($_POST['accion']));
+                    if(intval($_POST['accion']) == 0){
+                        guardarFacturaTareaBitacora($id_Tarea, $evidencia, $estadoTarea, $_SESSION['usuario']);
+                    }else{
+                        editoFacturaTareaBitacora($id_Tarea, $evidencia, $estadoTarea, $_SESSION['usuario']);
+                    }
                 }
             }
         }
@@ -120,7 +130,25 @@ function editarTareaBitacora($idTarea, $estado, $usuario){
     $idUsuario = intval(ControladorUsuario::obtenerIdUsuario($usuario));
     $newBitacora = new BitacoraTarea();
     $newBitacora->idTarea = intval($idTarea);
-    $newBitacora->descripcionEvento = 'Ha modificado la tarea # '.$idTarea.' en el estado '.$estado;
+    $newBitacora->descripcionEvento = 'Ha editado la tarea # '.$idTarea.' en el estado '.$estado;
+    $idBitacora = ControladorBitacoraTarea::SAVE_EVENT_TASKS_BITACORA($newBitacora, $idUsuario);
+    /* =======================================================================================*/
+}
+function guardarFacturaTareaBitacora($idTarea, $factura, $estado, $usuario){
+    /* ====================== Evento, el usuario ha modificado una nueva tarea. =====================*/
+    $idUsuario = intval(ControladorUsuario::obtenerIdUsuario($usuario));
+    $newBitacora = new BitacoraTarea();
+    $newBitacora->idTarea = intval($idTarea);
+    $newBitacora->descripcionEvento = 'Ha agregado la evidencia factura #'.$factura.' en la tarea # '.$idTarea.' en el estado '.$estado;
+    $idBitacora = ControladorBitacoraTarea::SAVE_EVENT_TASKS_BITACORA($newBitacora, $idUsuario);
+    /* =======================================================================================*/
+}
+function editoFacturaTareaBitacora($idTarea, $factura, $estado, $usuario){
+    /* ====================== Evento, el usuario ha modificado una nueva tarea. =====================*/
+    $idUsuario = intval(ControladorUsuario::obtenerIdUsuario($usuario));
+    $newBitacora = new BitacoraTarea();
+    $newBitacora->idTarea = intval($idTarea);
+    $newBitacora->descripcionEvento = 'Ha editado la evidencia factura #'.$factura.' en la tarea # '.$idTarea.' en el estado '.$estado;
     $idBitacora = ControladorBitacoraTarea::SAVE_EVENT_TASKS_BITACORA($newBitacora, $idUsuario);
     /* =======================================================================================*/
 }
