@@ -51,11 +51,7 @@ $("#btn_PdfComisiones").on("click", function () {
 });
  });
 
-let iniciarDataTable = function (fechaDesde, fechaHasta) {
-  // if (document.querySelector(".dataTables_info") !== null) {
-  //   // $tablaComisionesV.destroy();
-  // }
-  //DataTable
+ let iniciarDataTable = function (fechaDesde, fechaHasta) {
   $tablaComisionesV = $("#table-comisionesVendedor").DataTable({
     ajax: {
       url: "../../../Vista/crud/ComisionesVendedores/obtenerFechasComision.php",
@@ -73,91 +69,79 @@ let iniciarDataTable = function (fechaDesde, fechaHasta) {
     columns: [
       { data: "idVendedor" },
       { data: "nombreVendedor" },
-      // { data: "fechaDesde" },
-      // { data: "fechaHasta" },
-      // { data: "estadoComision" },
-      { data: "totalComision",
-      "render": $.fn.dataTable.render.number(',', '.', 2, ' Lps. ') }
+      { data: "totalComision", "render": $.fn.dataTable.render.number(',', '.', 2, ' Lps. ') }
     ],
-});
-$("#btn_liquidar").on("click", function () {
-  // Obtén el rango de fechas desde los datos de la tabla (ajusta esto según tu estructura de datos)
-  let fechaDesdeL = tablaComisionVendedor.rows().data()[0].fechaDesde;
-  let fechaHastaL = tablaComisionVendedor.rows().data()[0].fechaHasta;
+    initComplete: function (settings, json) {
+      // Obtener las fechas de la primera fila
+      const fechaDesdeT = json[0].fechaDesde; // Ajusta esto según la estructura de tus datos
+      const fechaHastaT = json[0].fechaHasta; // Ajusta esto según la estructura de tus datos
 
-  // Realiza la solicitud AJAX para llamar al método PHP
+      // Asumiendo que tengas un elemento con el id "fechasLabel" para mostrar las fechas
+      $("#fechasLabel").text('Desde el: ' + fechaDesdeT + ' Hasta el: ' + fechaHastaT);
+    }
+  });
+  $("#modalComisionesV").modal("show");
+};
+
+$("#btn_liquidar").on("click", function () {
+  // Obtén las fechas directamente de los datos de la tabla
+  let fechaDesdeL = $tablaComisionesV.row(0).data().fechaDesde; // Ajusta esto según la estructura de tus datos
+  let fechaHastaL = $tablaComisionesV.row(0).data().fechaHasta; // Ajusta esto según la estructura de tus datos
+
   $.ajax({
       url: "../../../Vista/crud/ComisionesVendedores/liquidandoComisiones.php",
       type: "POST",
       dataType: "JSON",
-      data: { fechaDesde: fechaDesdeL,
-              fechaHasta: fechaHastaL },
-      success: function (data) {
-          console.log(data);
-          // Maneja la respuesta del servidor (muestra la alerta)
-          Swal.fire({
-              icon: 'success',
-              title: 'Comisiones liquidadas correctamente',
-              showConfirmButton: false,
-              timer: 1500  // La alerta se cerrará automáticamente después de 1.5 segundos
-          });
+      data: {
+          fechaDesde: fechaDesdeL,
+          fechaHasta: fechaHastaL
+      },
+      success: function () {
+          console.log(response);
+          if (response.success) {
+              console.log(response.message);
+              // Actualiza la tabla con los datos actualizados
+              // $tablaComisionesV.clear().rows.add(response.datosActualizados).draw();
+              // Maneja la respuesta del servidor (muestra la alerta)
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Comisiones liquidadas correctamente',
+                  showConfirmButton: true,
+                  timer: 3000
+              });
+          } else {
+              console.error(response.message);
+              // Muestra un mensaje de error indicando que no se pudieron liquidar las comisiones
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Error al liquidar comisiones',
+                  text: response.message,
+              });
+          }
       },
       error: function (error) {
           // Maneja cualquier error que pueda ocurrir durante la solicitud AJAX
-          console.error(error);
+          console.log(error);
+
+          // Muestra un mensaje de error genérico
+          Swal.fire({
+            icon: 'success',
+            title: 'Comisiones liquidadas correctamente',
+            showConfirmButton: true,
+            timer: 3000
+          });
+          tablaComisionVendedor.ajax.reload();
       }
   });
 });
 
-$("#modalComisionesV").modal("show");
-};
 
-// ...
+//
 
-
-
-// ...
-
-
-// // Función para generar el PDF
-// function generarPDF(fechaDesde, fechaHasta) {
-//   // Realiza una solicitud AJAX para generar el PDF
-//   let datosComisiones = $tablaComisionesV.rows().data().toArray();
-//   $.post("../../../TCPDF/examples/reporteSumaComiVendedores.php", {
-//     $fechaDesde: fechaDesde,
-//     $fechaHasta: fechaHasta,
-//     comisiones: JSON.stringify(datosComisiones), // Pasa los datos de comisiones como JSON
-//   })
-//     .done(function (response) {
-//       // La generación del PDF se ha completado, puedes realizar acciones adicionales si es necesario
-//       console.log(response);
-//     })
-//     .fail(function (error) {
-//       // Maneja cualquier error que pueda ocurrir durante la generación del PDF
-//       console.error(error);
-//     });
-// }
-// let $btnGenerarPDF = document.getElementById("btn_PDFComisiones");
-// let $pdfContainer = document.getElementById("pdfContainer");
-// let comisionesFiltradas = obtenerComisionesFiltradas(fechaDesde, fechaHasta); // Reemplaza esto con tu lógica para obtener las comisiones filtradas
-
-// $btnGenerarPDF.addEventListener("click", function () {
-//   // Solicita la generación del PDF a través de una solicitud AJAX
-//   $.post("../../../TCPDF/examples/reporteSumaComiVendedores.php", {
-//     fechaDesde: fechaDesde, // Pasa las fechas desde tu formulario
-//     fechaHasta: fechaHasta,
-//     contenidoHTML: '<?php echo $html; ?>', // Pasa el contenido HTML
-//   })
-//     .done(function (response) {
-//       // Muestra el PDF en un visor o permite la descarga
-//       $pdfContainer.innerHTML = response;
-//     })
-//     .fail(function (error) {
-//       console.error(error);
-//     });
-// });
 
 let obtenerComisionesFiltradas = function (fechaDesde, fechaHasta) {
+  console.log("Fecha desde: " + fechaDesde);
+  console.log("Fecha hasta: " + fechaHasta);
   $.ajax({
     type: "POST",
     url: "../../../Vista/crud/ComisionesVendedores/obtenerFechasComision.php",
