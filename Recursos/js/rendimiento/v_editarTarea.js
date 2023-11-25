@@ -1,6 +1,7 @@
 import { sidePanel_Interaction } from '../../components/js/sidePanel.js'; //importamos la funcion del sidePanel
 
-let tableArticulos = '';
+// let tableArticulos = '';
+let existEvidencia = 0;
 let $idTarea = document.getElementById('id-Tarea').value;
 let $idEstadoTarea = document.querySelector('.id-estado-tarea').id;
 const $btnCotizacion = document.getElementById('btn-container-cotizacion');
@@ -268,6 +269,14 @@ let obtenerClientes = function () {
     });
   }
 }
+document.getElementById('estados-tarea').addEventListener('change', () => {
+  let $newEstado = document.getElementById('estados-tarea').value;
+console.log($newEstado);
+if($newEstado != $idEstadoTarea){
+  
+}
+  cambiarEstado($newEstado);
+});
 let $rtn = document.getElementById('rnt-cliente');
 $rtn.addEventListener('focusout', function () {
   let $mensaje = document.getElementById('mensaje');
@@ -449,6 +458,7 @@ let obtenerDatosTarea = ($idTarea, $idEstadoTarea) => {
     success: function($datosTarea){
       let datos = JSON.parse($datosTarea);
       (Object.keys(datos).length > 1) ? setearDatosTarea(datos) : document.getElementsByName('estadoEdicion')[0].id = datos.data;
+
     }
   });
 }
@@ -465,7 +475,9 @@ let setearDatosTarea = ($datosTarea) => {
     rtn.value = $datosTarea.RTN_Cliente;
     rtn.disabled =true;
     nombre.value = $datosTarea.NOMBRECLIENTE;
-    nFactura.value = $datosTarea.evidencia;
+    nFactura.value =  ($datosTarea.evidencia != null && $datosTarea.evidencia != '') ? $datosTarea.evidencia: '';
+    ($datosTarea.evidencia != null && $datosTarea.evidencia != '') ? existEvidencia = 1 : '';
+    console.log('Estado evidencia: '+existEvidencia);
     nombre.disabled = true;
     document.getElementById('telefono-cliente').value = $datosTarea.TELEFONO,
     ($datosTarea.estado_Cliente_Tarea == 'Nuevo') ? correo.value = $datosTarea.correo: '';
@@ -522,7 +534,8 @@ let validarCamposEnviar = (tipoCliente) => {
         "origenLead": document.getElementById('origen-lead').value,
         "rubrocomercial": document.getElementById('rubrocomercial').value,
         "razonsocial": document.getElementById('razonsocial').value,
-        "nFactura": document.getElementById('num-factura').value
+        "nFactura": document.getElementById('num-factura').value,
+        "accion": existEvidencia
       };
     } else {
       $datosTarea = {
@@ -537,7 +550,8 @@ let validarCamposEnviar = (tipoCliente) => {
         "direccion": document.getElementById('direccion-cliente').value,
         "rubrocomercial": document.getElementById('rubrocomercial').value,
         "razonsocial": document.getElementById('razonsocial').value,
-        "nFactura": document.getElementById('num-factura').value
+        "nFactura": document.getElementById('num-factura').value,
+        "accion": existEvidencia
       };
     }
   } else {
@@ -555,7 +569,8 @@ let validarCamposEnviar = (tipoCliente) => {
         "origenLead": document.getElementById('origen-lead').value,
         "rubrocomercial": document.getElementById('rubrocomercial').value,
         "razonsocial": document.getElementById('razonsocial').value,
-        "nFactura": document.getElementById('num-factura').value
+        "nFactura": document.getElementById('num-factura').value,
+        "accion": existEvidencia
       };
     } else {
       $datosTarea = {
@@ -569,9 +584,24 @@ let validarCamposEnviar = (tipoCliente) => {
         "direccion": document.getElementById('direccion-cliente').value,
         "rubrocomercial": document.getElementById('rubrocomercial').value,
         "razonsocial": document.getElementById('razonsocial').value,
-        "nFactura": document.getElementById('num-factura').value
+        "nFactura": document.getElementById('num-factura').value,
+        "accion": existEvidencia
       };
     }
   }
   return $datosTarea;
+}
+
+let cambiarEstado = ($newEstado) => {
+  $.ajax({
+    url: '../../../Vista/rendimiento/',
+    type: 'POST',
+    datatype: 'JSON',
+    data: {
+      estado: $newEstado
+    }, 
+    success: (res) => {
+      console.log(res);
+    }
+  });
 }

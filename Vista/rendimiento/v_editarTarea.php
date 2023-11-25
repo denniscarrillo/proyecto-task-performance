@@ -111,7 +111,7 @@
 							</div>
 							<div class="mb-3">
 								<label for="input-titulo-tarea" class="form-label label-title-task">Titulo de la tarea</label>
-								<input type="text" name="input-titulo-tarea" id="input-titulo-tarea" class="form-control" value="<?php echo $_GET['titulo']; ?>">
+								<input type="text" name="input-titulo-tarea" id="input-titulo-tarea" class="form-control">
 							</div>
 							<div class="mb-3">
 								<label id="<?php echo $_GET['estadoTarea']; ?>" class="id-estado-tarea" hidden="true" name="estadoTarea"></label>

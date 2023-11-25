@@ -47,7 +47,7 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
             if(count($tarea) > 0){
                 ControladorTarea::actualizarTarea($id_Tarea, $tipo_Tarea, $tarea);
                 if(isset($_POST['nFactura'])){
-                    ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia);
+                    ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia, intval($_POST['accion']));
                 }
                 if(!isset($datosTareaDB['RTN_Cliente']) && (isset($_POST['nombre']) && isset($_POST['rtnCliente']))){
                     $nombre = $_POST['nombre'];
@@ -83,9 +83,10 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
                 ];
             } 
             if(count($tarea) > 0){
+                var_dump($tarea);
                 ControladorTarea::actualizarTarea($id_Tarea, $tipo_Tarea, $tarea);
                 if(isset($_POST['nFactura'])){
-                    ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia);
+                    ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia, intval($_POST['accion']));
                 }
             }
         }
