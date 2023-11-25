@@ -42,7 +42,6 @@
     width: 4rem;
     outline-color: #ee894f;
     text-align: center;
-    /* border: 2px solid red; */
 }
 input[type=number]::-webkit-inner-spin-button {
     opacity: 1
@@ -105,7 +104,10 @@ input[type=number]::-webkit-inner-spin-button {
     gap: 0.8rem;
 }
 .table {
-    border: 3px solid #efa173
+    border: 2px solid #efa173
+}
+.table>:not(caption)>*>* {
+    border-bottom-width: 1px;
 }
 .fila-producto {
     outline: none;
@@ -126,6 +128,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 .th-col-row {
     border: 2px solid #ee9866;
+    text-align: center;
 }
 .btn-agregar-producto {
     padding: 0.2rem;

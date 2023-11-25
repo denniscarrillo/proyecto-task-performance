@@ -71,6 +71,9 @@ h1{
 #btn_eliminar {
     background-color: rgba(255, 0, 0, 0.855);
 }
+#btn_PDFid{
+    background-color: #dc871a;
+}
 .filtro-fecha{
     content: inherit;
     display: flex;

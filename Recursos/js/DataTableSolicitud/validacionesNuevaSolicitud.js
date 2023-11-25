@@ -3,7 +3,7 @@ export let estadoValidado = false;
 //Objeto con expresiones regulares para los inptus
 
 const validaciones = {
-    soloLetras: /^(?=.*[^a-zA-Z\/ .Ñóás])/, //Solo letras
+    soloLetras: /^(?=.*[^a-zA-Z\/ .ÑñáéíóúÁÉÍÓÚs])+$/, //Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
     soloNumeros: /^[0-9,-]*$/
 }
@@ -220,6 +220,7 @@ $descripcion.addEventListener('focusout', ()=>{
         $('#rtnCliente').on('focusout', () => {
             let $rtn = $('#rtnCliente').val();
             obtenerValidarRtnExiste($rtn);
+            
         });
     } else {
         $('#rtnCliente').off('focusout'); // Remover el evento focusout si el radio no está seleccionado

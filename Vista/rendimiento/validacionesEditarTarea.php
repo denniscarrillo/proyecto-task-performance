@@ -19,7 +19,7 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
         $id_Tarea = $_POST['idTarea'];
         $Creado_Por = $_SESSION['usuario'];
         $Modificador_Por = $_SESSION['usuario'];
-        $evidencia = $_POST['evidencia'];
+        $evidencia = $_POST['nFactura'];
         $rtn = '';
         $nombre = '';
         if($_POST['tipoCliente'] == 'Nuevo'){
@@ -46,8 +46,8 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
             }
             if(count($tarea) > 0){
                 ControladorTarea::actualizarTarea($id_Tarea, $tipo_Tarea, $tarea);
-                if(isset($_POST['evidencia'])){
-                    ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia);
+                if(isset($_POST['nFactura'])){
+                    ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia, intval($_POST['accion']));
                 }
                 if(!isset($datosTareaDB['RTN_Cliente']) && (isset($_POST['nombre']) && isset($_POST['rtnCliente']))){
                     $nombre = $_POST['nombre'];
@@ -83,9 +83,10 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
                 ];
             } 
             if(count($tarea) > 0){
+                var_dump($tarea);
                 ControladorTarea::actualizarTarea($id_Tarea, $tipo_Tarea, $tarea);
-                if(isset($_POST['evidencia'])){
-                    ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia);
+                if(isset($_POST['nFactura'])){
+                    ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia, intval($_POST['accion']));
                 }
             }
         }
@@ -95,6 +96,9 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
         if(ControladorTarea::validarEstadoClienteTarea(intval($_POST['idTarea']))){
             $estadoTarea = (intval($_POST['idEstado']) == 2) ? 2: 0;
             $datosTarea = ControladorTarea::obtenerDatosTarea($estadoTarea, intval($_POST['idTarea']));
+            $datosTarea += [
+                'productos' => ControladorTarea::obtenerProductosInteres($_POST['idTarea'])
+            ];
             print json_encode($datosTarea, JSON_UNESCAPED_UNICODE);
         } else {
             $datosTarea = [

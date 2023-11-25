@@ -25,7 +25,7 @@ let procesarPermisoActualizar = data => {
       {"data":  'diasTranscurridos' },
       {
         "defaultContent":
-        `<button class="btn-editar btns btn ${(permisos.Reporte == 'N')?'hidden':''}" id="btn_editar"><i class="fas fa-file-pdf"> </i></button>`
+        `<button class="btn-editar btns btn ${(permisos.Reporte == 'N')?'hidden':''}" id="btn_PDFid"><i class="fas fa-file-pdf"> </i></button>`
       }
     ]
   });
@@ -46,4 +46,11 @@ let obtenerPermisos = function ($idObjeto, callback) {
 $(document).on("click", "#btn_Pdf", function() {
   let buscar = $('#table-Tareas_filter > label > input[type=search]').val();
   window.open('../../../TCPDF/examples/reporteConsulTarea.php?buscar='+buscar, '_blank');
+});
+
+$(document).on("click", "#btn_PDFid", function() {
+  let idTarea = $(this).closest('tr').find('td:eq(0)').text();
+  console.log(idTarea);
+
+  window.open('../../../TCPDF/examples/reporteTareaID.php?idTarea='+idTarea, '_blank');
 });

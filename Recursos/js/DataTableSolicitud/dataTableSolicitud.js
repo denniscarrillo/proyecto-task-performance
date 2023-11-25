@@ -104,7 +104,7 @@ $(document).on("click", "#btn_ver", async function (){
  
   let ProductosS = await obtenerProductosS(idSolicitud);
   const productos = document.getElementById('ListaArticulos');
-  // Función para limpiar la lista
+  //Función para limpiar la lista
   function limpiarLista(lista) {
     while (lista.firstChild) {
       lista.removeChild(lista.firstChild);
@@ -123,6 +123,15 @@ $(document).on("click", "#btn_ver", async function (){
     }
   }
 
+//   
+//   ProductosS.forEach(producto => {
+//     $articulos +=
+//     `<tr>
+//       <td>${producto.Cant}</td>
+//       <td>${producto.CodArticulo}</td>
+//       <td>${producto.Articulo}</td>
+//     </tr>`;
+//});
 
    // Estilizar el modal
    $(".modal-header").css("background-color", "#007bff");

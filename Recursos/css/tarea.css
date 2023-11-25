@@ -128,7 +128,7 @@ p {
   border-radius: 4px;
 }
 .container_tarea::-webkit-scrollbar-thumb {
-  background: #ef904d;;
+  background: #ef904d;
   border-radius: 4px;
   padding: 0 0.4rem;
 }
@@ -286,8 +286,8 @@ p {
   background-color: transparent;
 }
 .fa-comment-dots {
-  font-size: 3rem;
-  color: #de7931;
+  font-size: 3.5rem;
+  color: #534f4a;
   transition-duration: 0.3s;
 }
 .fa-comment-dots:hover{
