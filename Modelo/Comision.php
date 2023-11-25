@@ -190,14 +190,15 @@ class Comision
     $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
     
     $query = "SELECT vt.id_usuario_vendedor, u.usuario, 
-        MIN(vt.Fecha_Creacion) AS Fecha_Inicial, MAX(vt.Fecha_Creacion) AS Fecha_Final, 
-        SUM(vt.total_Comision) AS totalComision
-        FROM tbl_comision_por_vendedor vt
-        INNER JOIN tbl_ms_usuario AS u ON vt.id_usuario_vendedor = u.id_Usuario
-        WHERE vt.estadoComisionVendedor = 'Activa' AND vt.estado_Liquidacion = 'Pendiente'
-          AND vt.Fecha_Creacion BETWEEN '$fechaDesde 00:00:00:00' AND '$fechaHasta 23:59:59:59'
-        GROUP BY vt.id_usuario_vendedor, u.Usuario
-        ORDER BY Fecha_Inicial, totalComision;";
+    MIN(vt.Fecha_Creacion) AS Fecha_Inicial, MAX(vt.Fecha_Creacion) AS Fecha_Final, 
+    SUM(vt.total_Comision) AS totalComision
+    FROM tbl_comision_por_vendedor vt
+    INNER JOIN tbl_ms_usuario AS u ON vt.id_usuario_vendedor = u.id_Usuario
+    WHERE vt.estadoComisionVendedor = 'Activa' AND vt.estado_Liquidacion = 'Pendiente'
+      AND vt.Fecha_Creacion BETWEEN '$fechaDesde 00:00:00:00' AND '$fechaHasta 23:59:59:59'
+    GROUP BY vt.id_usuario_vendedor, u.Usuario
+    ORDER BY Fecha_Inicial, Fecha_Final, totalComision;";
+
 
     $sumaComisiones = sqlsrv_query($consulta, $query);
 
@@ -408,78 +409,67 @@ class Comision
         $conn = new Conexion();
         $abrirConexion = $conn->abrirConexionDB();
         $estadoLiquidacion = 'Liquidada';
+        $mensaje = '';
     
         try {
             // Configura el manejo de fechas de SQL Server
-            $querySetDateFormat = "SET DATEFORMAT ymd;";
-            sqlsrv_query($abrirConexion, $querySetDateFormat);
+            // $querySetDateFormat = "SET DATEFORMAT ymd;";
+            // sqlsrv_query($abrirConexion, $querySetDateFormat);
     
             // Inicia una transacción
             sqlsrv_begin_transaction($abrirConexion);
     
-            // Actualiza el estado de liquidación en la tabla tbl_comision
-            $query1 = "UPDATE tbl_comision 
-                       SET estado_Liquidacion = '$estadoLiquidacion', fecha_Liquidacion = GETDATE() 
-                       WHERE fecha_Creacion >= '$fechaDesde' AND fecha_Creacion <= '$fechaHasta';";
-    
-            $params1 = array($estadoLiquidacion, $fechaDesde, $fechaHasta);
-    
-            $result1 = sqlsrv_query($abrirConexion, $query1, $params1);
-    
             // Actualiza el estado de liquidación en la tabla tbl_comision_por_vendedor
-            $query2 = "UPDATE tbl_comision_por_vendedor 
+            $query2 = "UPDATE tbl_Comision_Por_Vendedor 
                        SET estado_Liquidacion = '$estadoLiquidacion', fecha_Liquidacion = GETDATE() 
-                       WHERE fecha_Creacion >= '$fechaDesde' AND fecha_Creacion <= '$fechaHasta';";
+                       WHERE id_Comision IN (
+                           SELECT id_Comision
+                           FROM tbl_Comision
+                           WHERE estadoComision = 'Activa' AND estado_Liquidacion = 'Pendiente'
+                             AND fecha_Creacion BETWEEN '$fechaDesde 00:00:00:000' AND '$fechaHasta 23:59:59:999'
+                       );";
+            // var_dump($query2);
     
-            $params2 = array($estadoLiquidacion, $fechaDesde, $fechaHasta);
+            $result2 = sqlsrv_query($abrirConexion, $query2);
     
-            $result2 = sqlsrv_query($abrirConexion, $query2, $params2);
+            if ($result2 === false) {
+                throw new Exception("Error en la consulta 1: " . print_r(sqlsrv_errors(), true));
+            }
+    
+            // Actualiza el estado de liquidación en la tabla tbl_comision
+            $query3 = "UPDATE tbl_Comision 
+                       SET estado_Liquidacion = '$estadoLiquidacion', fecha_Liquidacion = GETDATE() 
+                       WHERE estadoComision = 'Activa' AND estado_Liquidacion = 'Pendiente'
+                         AND fecha_Creacion BETWEEN '$fechaDesde 00:00:00:000' AND '$fechaHasta 23:59:59:999';";
+    
+            $result3 = sqlsrv_query($abrirConexion, $query3);
+    
+            if ($result3 === false) {
+                throw new Exception("Error en la consulta 2: " . print_r(sqlsrv_errors(), true));
+            }
     
             // Si ambos updates fueron exitosos, confirma la transacción
-            if ($result1 && $result2) {
-                sqlsrv_commit($abrirConexion);
-                echo "Comisiones liquidadas correctamente";
-            } else {
-                // Si hubo algún problema, revierte la transacción
-                sqlsrv_rollback($abrirConexion);
-                echo "Error al liquidar comisiones";
-            }
+            sqlsrv_commit($abrirConexion);
+            $mensaje = "Comisiones liquidadas correctamente update";
+    
         } catch (Exception $e) {
             // Maneja excepciones
-            echo "Error: " . $e->getMessage();
+            $mensaje = "Error: " . $e->getMessage();
             sqlsrv_rollback($abrirConexion);
+    
         } finally {
             // Cierra la conexión después de la transacción
             sqlsrv_close($abrirConexion);
+        
+            // Devuelve el mensaje al final
+            echo json_encode(array('success' => true, 'message' => $mensaje));
         }
+        
     }
     
     
     
+    
 }
-    //convertir la fecha de comision totalm por vendedor en texto
-
-    
-    /* public static function obtenerVendedoresComision(){
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $listaVendedores = $conexion->query("SELECT rtnCliente, nombre_Usuario FROM tbl_usuario WHERE id_Rol = 2");
-        $vendedores = array();
-        while ($fila = $listaVendedores->fetch_assoc()) {
-            $vendedores[] = [
-            'idVendedor' => $fila['id_Usuario'],
-            'nombreVendedor' => $fila['nombre_Usuario']
-            ];
-        }
-    
-        mysqli_close($conexion); #Cerramos la conexión.
-        return $vendedores;
-    } */
-
-
-
-
-
-
 
 #Fin de la clase
