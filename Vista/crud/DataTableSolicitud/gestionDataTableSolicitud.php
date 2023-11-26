@@ -85,6 +85,8 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href="../../../Recursos/css/modalVerSolicitud.css" rel="stylesheet">
+
+  
   <title> Consulta solicitudes</title>
 </head>
 

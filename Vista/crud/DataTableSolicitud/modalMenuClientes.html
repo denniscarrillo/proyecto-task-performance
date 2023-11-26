@@ -9,10 +9,21 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"  id="btn-close-modal-Articulos"></button>
         </div>
         <div class="modal-body">
-            <p>Buscar Clientes Existentes en: </p>
+          <p class="modal-p-Etiqueta">Buscar Clientes Existentes en: </p>
+          <br>
+              <div class="label-menu">             
+                <label>Clientes que han facturado:</label><br>
+              </div>
+              <div class="button-menu">
+                <button type="button" class="btn btn-primary menu"   id="btn_ModalViewCliente" data-bs-toggle="modal" data-bs-target="#modalClienteFrecuente">Cliente Frecuentes</button>
+              </div>
             <br>
-            <button type="button" class="btn btn-primary"   id="btn_ModalViewCliente" data-bs-toggle="modal" data-bs-target="#modalClienteFrecuente">View_Cliente</button>
-            <button type="button" class="btn btn-primary"   id="btn_ModalCarteraCliente" data-bs-toggle="modal" data-bs-target="#modalCarteraCliente">Cartera Cliente</button>
+            <div class="label-menu">
+              <label>Clientes nuevos sin factura:</label><br>
+            </div>
+            <div class="button-menu">
+              <button type="button" class="btn btn-primary menu"   id="btn_ModalCarteraCliente" data-bs-toggle="modal" data-bs-target="#modalCarteraCliente">Cartera Cliente</button>
+            </div>  
         </div>
       </div>
     </div>

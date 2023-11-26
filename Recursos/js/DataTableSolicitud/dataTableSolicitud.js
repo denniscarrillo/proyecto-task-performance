@@ -312,47 +312,50 @@ $(document).on("click", "#btn_eliminar", async function(){
   $('#modalCancelacionSolicitud').modal('show');
 });
 
+
 $('#form-Solicitud').submit(function (e) {
-  e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
-   //Obtener datos del nuevo Cliente
-   let idSolicitud = $('#C_IdSolicitud').val(),
-    EstadoSolicitud =  $('#C_EstadoSolicitud').val(),
-   MotivoCancelacion =  $('#C_MotivoCancelacion').val();
-   Swal.fire({
-    title: 'Estas seguro de cancelar la Solicitud?',
+  e.preventDefault(); // Evita el comportamiento normal del submit
+
+  let idSolicitud = $('#C_IdSolicitud').val(),
+    EstadoSolicitud = $('#C_EstadoSolicitud').val(),
+    MotivoCancelacion = $('#C_MotivoCancelacion').val();
+
+  Swal.fire({
+    title: 'Estás seguro de cancelar la Solicitud?',
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Si, Cancelalo!',
-   });
-      if(validado){    
+    confirmButtonText: 'Sí, Cancelarlo!',
+  }).then((result) => {
+    // El código dentro de esta función se ejecutará después de que el usuario responda al diálogo de confirmación
+    if (result.isConfirmed) {
+      // Si el usuario confirma la cancelación, realiza la llamada AJAX
       $.ajax({
         url: "../../../Vista/crud/DataTableSolicitud/editarEstadoSolicitud.php",
         type: "POST",
-        datatype:"JSON",    
-        data:{ 
+        dataType: "JSON",
+        data: {
           idSolicitud: idSolicitud,
           EstadoAvance: 'CANCELADO',
           EstadoSolicitud: EstadoSolicitud,
           MotivoCancelacion: MotivoCancelacion
-        },    
-        success: function() {          
-         // console.log(data);  
-            Swal.fire(
-              'Cancelada!',
-              'La Solicitud ha sido Cancelada.',
-              'success'
-            ) 
-           tablaDataTableSolicitud.ajax.reload(null, false);                    
+        },
+        success: function () {
+          Swal.fire(
+            '¡Cancelada!',
+            'La Solicitud ha sido Cancelada.',
+            'success'
+          );
+         
         }
-        }); //Fin del AJAX
-        $('#modalCancelacionSolicitud').modal('hide');
-      }
-    
-  });  
+      }); // Fin del AJAX
+      tablaDataTableSolicitud.ajax.reload(null, false);
+      $('#modalCancelacionSolicitud').modal('hide');
+    }
+  });
+});
 
-  
 //Generar reporte PDF
 $(document).on("click", "#btn_Pdf", function() {
   let buscar = $('#table-Solicitud_filter > label > input[type=search]').val();

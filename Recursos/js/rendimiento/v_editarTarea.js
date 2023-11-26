@@ -7,6 +7,17 @@ let $idEstadoTarea = document.querySelector('.id-estado-tarea').id;
 const $btnCotizacion = document.getElementById('btn-container-cotizacion');
 let radioOption = document.getElementsByName('radioOption');
 let estadoRTN = '';
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top',
+  showConfirmButton: false,
+  timer: 5000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+});
 $(document).ready(async function(){
   ($idEstadoTarea == '3') ? $btnCotizacion.removeAttribute('hidden') : '';
   ($idEstadoTarea == '4') ? document.getElementById('container-num-factura').removeAttribute('hidden') : '';
@@ -33,17 +44,6 @@ document.getElementById('btn-comment').addEventListener('click', () => {
 document.getElementById('link-nueva-cotizacion').addEventListener('click', (e) => {
   if(JSON.parse(estadoRTN) == false) {
     e.preventDefault();
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top',
-      showConfirmButton: false,
-      timer: 5000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
-    });
     Toast.fire({
         icon: 'warning',
         title: 'Debe tener los datos del cliente'
@@ -270,33 +270,18 @@ let obtenerClientes = function () {
   }
 }
 document.getElementById('estados-tarea').addEventListener('change', async () => {
-  // let estadoNuevo = false;
   let $newEstado = document.getElementById('estados-tarea').value;
-  // console.log($newEstado);
   if($newEstado < parseInt($idEstadoTarea)){
         document.getElementById('estados-tarea').value = $idEstadoTarea;
-    }
-  // const estados = JSON.parse(await obtenerHistorialEstado($idTarea));
-  //Iteramos el historial para validar el nuevo estado
-  // for (const idEstado of estados) {
-  //   console.log(idEstado+''+$idEstadoTarea);
-  //   // if($newEstado == idEstado){
-  //   //   estadoNuevo = true;
-  //   //   break;
-  //   // }
-  //   if(idEstado < parseInt($idEstadoTarea) ||  idEstado != 4){
-  //     document.getElementById('estados-tarea').value = $idEstadoTarea;
-  //     console.log('gagag')
-  //     break;
-  //   }
-  // }
-  // if(estadoNuevo){
-  //   document.getElementById('estados-tarea').value = $idEstadoTarea;
-  // }
-
-
-// cambiarEstado($newEstado);
+        Toast.fire({
+          icon: 'error',
+          title: 'No puedes volver a un estado anterior'
+    });
+  } else {
+    cambiarEstado($newEstado, $idTarea);
+  }
 });
+
 let $rtn = document.getElementById('rnt-cliente');
 $rtn.addEventListener('focusout', function () {
   let $mensaje = document.getElementById('mensaje');
@@ -611,30 +596,40 @@ let validarCamposEnviar = (tipoCliente) => {
   }
   return $datosTarea;
 }
-let cambiarEstado = ($newEstado) => {
+
+let cambiarEstado = ($newEstado, $idTarea) => {
   $.ajax({
     url: '../../../Vista/rendimiento/cambiarEstadoTarea.php',
     type: 'POST',
     datatype: 'JSON',
     data: {
-      estado: $newEstado
-    }, 
-    success: (res) => {
-      console.log(res);
+      nuevoEstado: $newEstado,
+      idTarea: $idTarea
     }
   });
 }
-let obtenerHistorialEstado = async ($idTarea) => {
-  let estadosTarea = null;
-  try {
-      estadosTarea = await $.ajax({
-      url: '../../../Vista/rendimiento/obtenerHistorialEstado.php',
-      type: 'POST',
-      datatype: 'JSON',
-      data: {idTarea: $idTarea}
-    });
-  } catch (error) {
-    console.error('Ha ocurrido un error: '+error);
-  }
-  return estadosTarea;
-}
+// let obtenerEstadoTarea = ($newEstado, $idTarea) => {
+//   $.ajax({
+//     url: '../../../Vista/rendimiento/cambiarEstadoTarea.php',
+//     type: 'POST',
+//     datatype: 'JSON',
+//     data: {
+//       nuevoEstado: $newEstado,
+//       idTarea: $idTarea
+//     }
+//   });
+// }
+// let obtenerHistorialEstado = async ($idTarea) => {
+//   let estadosTarea = null;
+//   try {
+//       estadosTarea = await $.ajax({
+//       url: '../../../Vista/rendimiento/obtenerHistorialEstado.php',
+//       type: 'POST',
+//       datatype: 'JSON',
+//       data: {idTarea: $idTarea}
+//     });
+//   } catch (error) {
+//     console.error('Ha ocurrido un error: '+error);
+//   }
+//   return estadosTarea;
+// }
