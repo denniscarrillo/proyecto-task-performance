@@ -255,8 +255,8 @@ $(document).on("click", "#btn_selectfactura", function () {
         type: 'GET',
         dataType: 'JSON',
         success: function (data) {
-          let correo = data[0]['Correo'];
-          console.log('Correo obtenido:', correo);
+          let correo = data[0]['CorreoServicio'];
+          // console.log('Correo obtenido:', correo);
           $(idElemento).val(correo);   
           //console.log(correo);
         }        
@@ -458,9 +458,7 @@ $idProductos.forEach(id => {
               icon: 'success',
               // El tiempo se especifica en milisegundos (en este caso, 3000 ms o 3 segundos)
               showConfirmButton: false // Esto oculta el botón "Aceptar" para que la notificación se cierre automáticamente
-            });   
-            $mensajeConfirmacion = enviarCorreoSolicitud($nuevaSolicitud, $productosSolicitud, $idSolicitud, $nombrePDF);
-            
+            });               
             redirigirADataTable();           
           }                      
       });

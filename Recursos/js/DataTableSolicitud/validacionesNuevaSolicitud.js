@@ -229,13 +229,14 @@ $descripcion.addEventListener('focusout', ()=>{
         });
     } else {
         $('#rtnCliente').off('focusout'); // Remover el evento focusout si el radio no está seleccionado
+        $('#mensaje').text('');
     }
 });
 
 $('input[id="clienteExistente"]').on('change', function() {
     if ($(this).is(':checked')) {
-        $('#rtnCliente').off('focusout');
-        $('#mensajeError').text('');
+        document.getElementById('rtnCliente').classList.remove('mensaje_error');
+        document.getElementById('rtnCliente').parentElement.querySelector('p').innerText = '';
     } 
 });
 
