@@ -106,9 +106,8 @@ $('#form-usuario').submit(async function (e) {
 //Eliminar usuario
 $(document).on("click", "#btn_eliminar", function() {
   let fila = $(this);        
-    let usuario = $(this).closest('tr').find('td:eq(1)').text();
-    let ROL = $(this).closest('tr').find('td:eq(5)').text();
-    if (ROL == 'Super Administrador'){
+  let usuario = $(this).closest('tr').find('td:eq(1)').text();
+    if (usuario == 'SUPERADMIN'){
       Swal.fire(
         'Sin acceso!',
         'Super Administrador no puede ser eliminado',
@@ -153,8 +152,7 @@ $(document).on("click", "#btn_eliminar", function() {
           }); //Fin del AJAX
         }
       });
-    }		    
-                    
+    }		                   
 });
 
 $(document).on("click", "#btn_editar", async function(){		                
@@ -351,20 +349,7 @@ $(document).on("click", "#btn_Pdf", function() {
   let buscar = $('#table-Usuarios_filter > label > input[type=search]').val();
   window.open('../../../TCPDF/examples/reporteriaListaUsuario.php?buscar='+buscar, '_blank');
 });     
-document.getElementById('btn-finalizar-tarea').addEventListener('click', ()=>{
-  
-})
-let finalizarTarea = ($idTarea) => {
-  $.ajax({
-    url: '../../../Vista/rendimiento/cambiarEstadoTarea.php',
-    type: 'POST',
-    datatype: 'JSON',
-    data: {
-      nuevoEstado: $newEstado,
-      idTarea: $idTarea
-    }
-  });
-}
+
 
 
 

@@ -119,4 +119,13 @@ class ControladorTarea {
     public static function obtenerIdCotizacionTarea($idTarea){
         return Tarea::obtenerIdCotizacionTarea($idTarea);
     }
+    public static function finalizarTarea($idTarea){
+        return Tarea::finalizarTarea($idTarea);
+    }
+    public static function obtenerTareaFinalizada($idTarea){
+        return Tarea::obtenerTareaFinalizada($idTarea);
+    }
+    public static function reabrirTarea($idTarea){
+        return Tarea::reabrirTarea($idTarea);
+    }
 }

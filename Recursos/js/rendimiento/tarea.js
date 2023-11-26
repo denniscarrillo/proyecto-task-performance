@@ -362,3 +362,55 @@ let actualizarContadores = () => {
   divPadre = document.getElementById('conteiner-venta');
   contVentas.textContent = divPadre.querySelectorAll('.card_task').length;
 }
+// $(document).on("click", "#btn_eliminar", function() {
+//   let fila = $(this);        
+//     let usuario = $(this).closest('tr').find('td:eq(1)').text();
+//     let ROL = $(this).closest('tr').find('td:eq(5)').text();
+//     if (ROL == 'Super Administrador'){
+//       Swal.fire(
+//         'Sin acceso!',
+//         'Super Administrador no puede ser eliminado',
+//         'error'
+//       )
+//     }else{
+//       Swal.fire({
+//         title: 'Estas seguro de eliminar a '+usuario+'?',
+//         text: "No podras revertir esto!",
+//         icon: 'warning',
+//         showCancelButton: true,
+//         confirmButtonColor: '#3085d6',
+//         cancelButtonColor: '#d33',
+//         confirmButtonText: 'Si, borralo!'
+//       }).then((result) => {
+//         if (result.isConfirmed) {      
+//           $.ajax({
+//             url: "../../../Vista/crud/usuario/eliminarUsuario.php",
+//             type: "POST",
+//             datatype:"json",    
+//             data:  { usuario: usuario},    
+//             success: function(data) {
+//               let estadoEliminado = data[0].estadoEliminado;
+//                console.log(data);
+//               if(estadoEliminado == 'eliminado'){
+//                 tablaUsuarios.row(fila.parents('tr')).remove().draw();
+//                 Swal.fire(
+//                   'Eliminado!',
+//                   'El usuario ha sido eliminado.',
+//                   'success'
+//                 ) 
+//                 tablaUsuarios.ajax.reload(null, false); 
+//               } else {
+//                 Swal.fire(
+//                   'Lo sentimos!',
+//                   'El usuario no puede ser eliminado, se ha inactivado.',
+//                   'error'
+//                 );
+//                 tablaUsuarios.ajax.reload(null, false);
+//               }           
+//             }
+//           }); //Fin del AJAX
+//         }
+//       });
+//     }		                   
+// });
+

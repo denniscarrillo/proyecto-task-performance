@@ -40,7 +40,7 @@ class Tarea
             $query = "SELECT t.id_Tarea, t.id_EstadoAvance, t.titulo, e.descripcion, DATEDIFF(DAY, t.Fecha_Creacion, getdate()) as Dias_Antiguedad FROM tbl_vendedores_tarea AS vt
             INNER JOIN tbl_tarea AS t ON t.id_Tarea = vt.id_Tarea
             INNER JOIN tbl_estadoavance AS e ON t.id_EstadoAvance = e.id_EstadoAvance
-            WHERE vt.id_usuario_vendedor = '$idUser';";
+            WHERE vt.id_usuario_vendedor = '$idUser' AND t.estado_Finalizacion IN('Pendiente', 'Reabierta')";
             $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
             while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
@@ -983,5 +983,40 @@ class Tarea
         }
         sqlsrv_close($conexion);
         return $idCotizacion;
+    }
+    public static function finalizarTarea($idTarea){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $estadoUpdate = false;
+        $query = "UPDATE tbl_Tarea SET estado_Finalizacion = 'Finalizada', fecha_Finalizacion = GETDATE() WHERE id_Tarea = '$idTarea';";
+        if(sqlsrv_rows_affected(sqlsrv_query($conexion, $query)) > 0){
+            $estadoUpdate = true;
+        }
+        sqlsrv_close($conexion);
+        return $estadoUpdate;
+    }
+    public static function obtenerTareaFinalizada($idTarea){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $existeTarea = 0;
+        $query = "SELECT estado_Finalizacion FROM tbl_Tarea WHERE id_Tarea = '$idTarea';";
+        $ejecutar = sqlsrv_query($conexion, $query);
+        if(sqlsrv_has_rows($ejecutar) > 0){
+            $tarea = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC);
+            $existeTarea = $tarea['estado_Finalizacion'];
+        }
+        sqlsrv_close($conexion);
+        return $existeTarea;
+    }
+    public static function reabrirTarea($idTarea){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $estadoReabierto = false;
+        $query ="UPDATE tbl_Tarea SET estado_Finalizacion = 'Reabierta', fecha_Finalizacion = GETDATE() WHERE id_Tarea = '$idTarea';";
+        if(sqlsrv_rows_affected(sqlsrv_query($conexion, $query)) > 0){
+            $estadoReabierto = true;
+        }
+        sqlsrv_close($conexion);
+        return $estadoReabierto;
     }
 }
