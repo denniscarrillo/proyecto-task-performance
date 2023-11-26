@@ -237,7 +237,7 @@ if (isset($_SESSION['usuario'])) {
 					<!-- Botones -->
 					<div class="btn-guardar">
 						<a href="./gestionDataTableSolicitud.php"><button type="button" id="btncerrar2" class="btn btn-secondary">Cancelar</button></a>
-						<button   type="submit" name="actualizarTarea"  class="btn btn-primary" ><i class="fa-solid fa-floppy-disk" ></i>Guardar y Enviar</button>
+						<button   type="submit" name="actualizarTarea"  class="btn btn-primary" ><i class="fa-solid fa-floppy-disk"></i> Guardar y Enviar</button>
 					</div>
 				</form>
 			</div>
