@@ -35,5 +35,10 @@ class ControladorParametro {
     public static function obtenerCorreoDestino(){
         return Parametro::obtenerCorreoDestino();
     }
+
+    public static function obtenerCarpetaDestino(){
+        return Parametro::obtenerCarpetaDestino();
+    }
     
+  
 }
