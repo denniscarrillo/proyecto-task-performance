@@ -947,18 +947,23 @@ class Tarea
         sqlsrv_close($conexion);
         return $productos;
     }
-    public static function obtenerHistorialEstadosTarea($idTarea){
+    public static function cambiarEstadoTarea($idTarea, $newEstado, $usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $update = sqlsrv_query($conexion, "UPDATE tbl_Tarea SET id_EstadoAvance = '$newEstado', Modificado_Por = '$usuario', Fecha_Modificacion = GETDATE() WHERE id_Tarea = '$idTarea'");
+        if(sqlsrv_rows_affected($update) > 0) {
+            sqlsrv_query($conexion, "INSERT INTO tbl_historial_estado_tarea VALUES('$idTarea', '$newEstado', '$usuario', GETDATE())");
+        }
+        sqlsrv_close($conexion);
+    }
+    
+    public static function obtenerEstadoTarea($idTarea){
         $estados = array();
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query = "SELECT he.id_estado FROM tbl_historial_estado_tarea he
-                    INNER JOIN tbl_EstadoAvance et ON he.id_estado = et.id_EstadoAvance
-                        WHERE he.id_Tarea = '$idTarea' ORDER BY he.id_estado DESC";
-        $result = sqlsrv_query($conexion, $query);
-        while($fila = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)){
-            array_push($estados, $fila['id_estado']);
-        }
+        $query = "SELECT id_estadoAvance, titulo FROM tbl_Tarea WHERE id_Tarea = '$idTarea'";
+        $fila = sqlsrv_fetch_array(sqlsrv_query($conexion, $query), SQLSRV_FETCH_ASSOC);
         sqlsrv_close($conexion);
-        return $estados;
+        return $fila;
     }
 }
