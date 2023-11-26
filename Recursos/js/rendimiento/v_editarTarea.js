@@ -34,7 +34,65 @@ $(document).ready(async function(){
     });
     let tipoCliente = (radioOption[1].checked) ? radioOption[1].value : radioOption[0].value;
     document.getElementById('link-nueva-cotizacion').setAttribute('href', `./cotizacion/v_cotizacion.php?idTarea=${$idTarea}&estadoCliente=${tipoCliente}`);
-});
+    let estadoFinalizar = document.getElementById('estado-finalizacion').textContent;
+    if(estadoFinalizar == 'Pendiente' || estadoFinalizar == 'Reabierta'){
+      document.getElementById('btn-finalizar-tarea').removeAttribute('disabled');
+      document.getElementById('btn-finalizar-tarea').addEventListener('click', ()=>{
+        if ($idTarea != null){
+          Swal.fire({
+            title: 'Estas seguro de finalizar la tarea # '+$idTarea+'?',
+            text: "No podras revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, finalizalo!'
+          }).then((result) => {
+            if (result.isConfirmed) {      
+              $.ajax({
+                url: "../../../Vista/rendimiento/finalizarTarea.php",
+                type: "POST",
+                datatype:"JSON",    
+                data:  { 
+                  idTarea: $idTarea
+                },    
+                success: function(data) {
+                  console.log(JSON.parse(data));
+                  if(JSON.parse(data) == true){
+                    Swal.fire(
+                      'Tarea Finalizada!',
+                      'La tarea ha sido finalizada.',
+                      'success'
+                    )  
+                    document.getElementById('btn-finalizar-tarea').addEventListener('click', ()=>{
+                      Toast.fire({
+                        icon: 'error',
+                        title: 'La tarea ya fue finalizada',
+                      });
+                    })
+                  } else{
+                    Swal.fire(
+                      'Lo sentimos!',
+                      'La tarea no ha sido finalizada.',
+                      'error'
+                    ) 
+                  }         
+                }
+              }); //Fin del AJAX
+            }
+          });
+        }	
+      })
+    }else{
+      document.getElementById('btn-finalizar-tarea').removeAttribute('disabled');
+      document.getElementById('btn-finalizar-tarea').addEventListener('click', ()=>{
+        Toast.fire({
+          icon: 'error',
+          title: 'La tarea ya fue finalizada',
+        });
+      })
+    }
+  });
 
 document.getElementById('btn-comment').addEventListener('click', () => {
   obtenerComentarios($idTarea);
@@ -276,7 +334,7 @@ document.getElementById('estados-tarea').addEventListener('change', async () => 
         Toast.fire({
           icon: 'error',
           title: 'No puedes volver a un estado anterior'
-    });
+        });
   } else {
     cambiarEstado($newEstado, $idTarea);
   }
@@ -608,6 +666,47 @@ let cambiarEstado = ($newEstado, $idTarea) => {
     }
   });
 }
+document.getElementById('btn-finalizar-tarea').addEventListener('click', ()=>{
+  if ($idTarea != null){
+    Swal.fire({
+      title: 'Estas seguro de finalizar la tarea # '+$idTarea+'?',
+      text: "No podras revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, finalizalo!'
+    }).then((result) => {
+      if (result.isConfirmed) {      
+        $.ajax({
+          url: "../../../Vista/rendimiento/finalizarTarea.php",
+          type: "POST",
+          datatype:"JSON",    
+          data:  { 
+            idTarea: $idTarea
+          },    
+          success: function(data) {
+             console.log(JSON.parse(data));
+            if(JSON.parse(data) == true){
+              Swal.fire(
+                'Tarea Finalizada!',
+                'La tarea ha sido finalizada.',
+                'success'
+              )  
+              document.getElementById('btn-finalizar-tarea').setAttribute('disabled', 'true');
+            } else{
+              Swal.fire(
+                'Lo sentimos!',
+                'La tarea no ha sido finalizada.',
+                'error'
+              ) 
+            }         
+          }
+        }); //Fin del AJAX
+      }
+    });
+  }	
+})
 // let obtenerEstadoTarea = ($newEstado, $idTarea) => {
 //   $.ajax({
 //     url: '../../../Vista/rendimiento/cambiarEstadoTarea.php',

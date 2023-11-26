@@ -82,8 +82,8 @@ if (isset($_SESSION['usuario'])) {
 
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <title> Ver Tareas </title>
 </head>
 
@@ -150,6 +150,8 @@ if (isset($_SESSION['usuario'])) {
                 <th scope="col"> CLIENTE </th>
                 <th scope="col"> TITULO </th>
                 <th scope="col"> CREADO POR </th>
+                <th scope="col"> ESTADO FINALIZACION </th>
+                <th scope="col"> FECHA FINALIZACION </th>
                 <th scope="col"> ANTIGÜEDAD(DIAS)</th>
                 <th scope="col"> ACCION </th>
               </tr>
