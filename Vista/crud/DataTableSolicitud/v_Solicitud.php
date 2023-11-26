@@ -135,7 +135,7 @@ if (isset($_SESSION['usuario'])) {
             <?php include_once '../../layout/navbar.php' ?>
         </div>
         <div class="titulo">
-            <h2 class="title-dashboard-task">Generar nueva solicitud</h2>
+            <h2 class="title-dashboard-task">Generar nueva solicitud de Servicio</h2>
         </div>
     </div>
     
@@ -176,14 +176,14 @@ if (isset($_SESSION['usuario'])) {
                     <input type="text" id="telefono" name="telefono" class="form-control" disabled>
                     <p class="mensaje"></p>
                 </div>
-                <div class="form-element input-conteiner">
-                    <label for="correoL"class="form-label">Correo electrónico destinado:</label>
-                    <input type="text" id="correo" name="correoElectronico" class="form-control" disabled>
-                    <p class="mensaje"></p>
-                </div>
                 <div class="form-element input-conteiner" id="containerCorreocliente" >
                     <label for="correoL" class="form-label">Correo electrónico Cliente</label>
                     <input type="text" id="correoCliente" name="correoElectronico" class="form-control">
+                    <p class="mensaje"></p>
+                </div>
+                <div class="form-element input-conteiner">
+                    <label for="correoL"class="form-label">Correo electrónico destinado:</label>
+                    <input type="text" id="correo" name="correoElectronico" class="form-control" disabled>
                     <p class="mensaje"></p>
                 </div>
             </div>
@@ -205,8 +205,8 @@ if (isset($_SESSION['usuario'])) {
                         <p class="mensaje"></p>
                     </div>
                     <div class="form-element input-conteiner">
-                        <label for="descripcion" class="form-label">Descripción:</label>
-                        <input type="text" id="descripcion" name="descripcion" class="form-control" disabled>
+                        <label for="descripcion" class="form-label">Descripción De Servicios:</label>
+                        <textarea type="text" id="descripcion" name="descripcion" class="form-control" disabled></textarea>
                         <p class="mensaje"></p>
                     </div>
                 </div>
@@ -236,7 +236,7 @@ if (isset($_SESSION['usuario'])) {
 					<!-- Botones -->
 					<div class="btn-guardar">
 						<a href="./gestionDataTableSolicitud.php"><button type="button" id="btncerrar2" class="btn btn-secondary">Cancelar</button></a>
-						<button   type="submit" name="actualizarTarea"  class="btn btn-primary" ><i class="fa-solid fa-floppy-disk" ></i>Guardar</button>
+						<button   type="submit" name="actualizarTarea"  class="btn btn-primary" ><i class="fa-solid fa-floppy-disk"> </i> Guardar y Enviar</button>
 					</div>
 				</form>
 			</div>

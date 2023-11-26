@@ -133,12 +133,12 @@ if (isset($_SESSION['usuario'])) {
                 <?php include_once '../../layout/navbar.php'?>                             
             </div>        
             <div class ="titulo">
-                  <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionSolicitud.php');?>"> Solicitudes</H2>
+                  <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionSolicitud.php');?>"> Solicitudes De Servicios</H2>
             </div>  
       </div>    
         <div class="table-conteiner">
           <div>
-            <a href="./v_Solicitud.php" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro"><i class="fa-solid fa-circle-plus"></i> Generar solicitud</a>
+            <a href="./v_Solicitud.php" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro"><i class="fa-solid fa-circle-plus"></i> Generar solicitud de Servicios</a>
             <!-- <a href="../../../TCPDF/examples/reporteriaSolicitud.php" target="_blank" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>  -->
           <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
           </div>
@@ -177,6 +177,7 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/DataTableSolicitud/validacionesModalEliminarSolicitud.js" type="module"></script>
   <script src="../../../Recursos/js/DataTableSolicitud/validacionesModalEditarSolicitud.js" type="module"></script>
+  <script src="../../../Recursos/js/DataTableSolicitud/guardarEvidencia.js" type="module"></script>
   <script src="../../../Recursos/js/index.js"></script>
   
 </body>
