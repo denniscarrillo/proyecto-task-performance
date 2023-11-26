@@ -231,10 +231,14 @@ function enviarCorreoSolicitud($nuevaSolicitud, $productosSolicitud, $idSolicitu
         // $mail->AltBody = 'Si funcionó!';
         $mail->CharSet = 'UTF-8'; // Setear UTF-8 para caracteres especiales
         $mail->send();
+
+        
         $confirmacion = 'La solicitud se ha enviado al correo electrónico';
     } catch (Exception $e) {
         $confirmacion =  'No se ha podido enviar la solicitud. Mailer Error: {$mail->ErrorInfo}';
+    
     }
     return $confirmacion;
+
 }
 
