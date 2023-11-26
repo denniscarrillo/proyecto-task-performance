@@ -92,6 +92,9 @@ class ControladorTarea {
     public static function calcularVencimientoCotizacion($idCotizacion){
         return Tarea::calcularVencimientoCotizacion($idCotizacion);
     }
+    public static function vencimientoEstadoCotizacion($idCotizaciones){
+        Tarea::vencimientoEstadoCotizacion($idCotizaciones);
+    }
     public static function obtenerCotizacionesUsuario($usuario){
         return Tarea::obtenerCotizacionesUsuario($usuario);
     }

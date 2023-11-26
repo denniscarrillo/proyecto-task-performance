@@ -718,8 +718,13 @@ class Tarea
         sqlsrv_close($conexion);
         return $estado;
     }
-    // public static function actualizarEstadoCotizacion(){
-    // }
+    public static function vencimientoEstadoCotizacion($idCotizacion){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "UPDATE tbl_CotizacionTarea SET estado_Cotizacion = 'Vencida' WHERE id_Cotizacion = '$idCotizacion'";
+        sqlsrv_query($conexion,$query);
+        sqlsrv_close($conexion);
+    }
 
     public static function obtenerCotizacionesUsuario($usuario){
         $conn = new Conexion();

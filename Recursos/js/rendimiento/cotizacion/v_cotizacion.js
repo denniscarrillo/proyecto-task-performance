@@ -15,12 +15,13 @@ const Toast = Swal.mixin({
     }
   });
 $(document).ready( async () => {
-   let idCotizacion = await validarDatosCotizacion();
+    let idCotizacion = await validarDatosCotizacion();
     alternarHiddenBotones();
     if(estadoCot == 'Existente'){
         let nCotizacion = `<label>Cotización N°</label><label id="id-cotizacion">${idCotizacion}</label>`;
         document.querySelector('.title-dashboard-task').innerHTML =  nCotizacion;
     }
+    vencimientoCotizacion(document.getElementById('id-cotizacion').textContent);
 });
 let contItem = 0;
 let itemProdDB = [];
@@ -497,6 +498,17 @@ let anularCotizacion = async ($idCotizacion) => {
     }
     return estado;
 }
+let vencimientoCotizacion = ($idCotizacion) => {
+    $.ajax({
+        url: '../../../../Vista/rendimiento/cotizacion/vencimientoCotizacion.php',
+        datatype: 'JSON',
+        type: 'POST',
+        data: {
+            idCotizacion: $idCotizacion
+        }
+    });
+}
+
 let mostrarElementosNuevaCotizacion = (estado) => {
     estadoCot = 'Nueva';
     if(estado){

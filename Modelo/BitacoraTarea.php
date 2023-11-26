@@ -106,6 +106,21 @@ class BitacoraTarea
         sqlsrv_close($conexion);
         return $usuario;
     }
+    public static function obtenerTareaCotizacion($idCotizacion){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT id_Tarea,estado_Cotizacion FROM tbl_CotizacionTarea WHERE id_Cotizacion = '$idCotizacion';";
+        $ejecutar = sqlsrv_query($conexion, $query);
+        $tarea = array();
+        while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
+            $tarea [] = [
+                'id' => $fila['id_Tarea'],
+                'estado' => $fila['estado_Cotizacion']
+            ];
+        }
+        sqlsrv_close($conexion);
+        return $tarea;
+    }
 }
 
 
