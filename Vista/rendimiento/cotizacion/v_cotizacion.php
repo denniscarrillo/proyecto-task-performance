@@ -2,8 +2,8 @@
     session_start(); //Reanudamos sesion
     require_once('../../../db/Conexion.php');
     require_once('../../../Modelo/Bitacora.php');
-    require_once('../../../Controlador/ControladorBitacora.php');
     require_once('../../../Modelo/Tarea.php');
+    require_once('../../../Controlador/ControladorBitacora.php');
     require_once('../../../Controlador/ControladorTarea.php');
     $datosCotizacion = ControladorTarea::obtenerDatos(intval($_GET['idTarea']), $_GET['estadoCliente']);
 ?>
@@ -70,6 +70,7 @@
                 <div class="container-cotizacion">
                 <div class="encabezado" id="<?php echo $_GET['idTarea'] ?>">
                     <h2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('v_tarea.php');?>" name='v_tarea.php'>Nueva Cotización</h2>
+                    <label id="id-cot-tarea" hidden><?php echo ControladorTarea::obtenerIdCotizacionTarea($_GET['idTarea']);?></label>
                 </div>
                     <div class="datos-cotizacion" id="<?php echo $_GET['estadoCliente'] ?>">
                         <div class="colum-horizontal">

@@ -51,9 +51,9 @@ table.dataTable.no-footer {
 .table tbody td {
     background-color: #dbd2c0;
 } 
-.table thead tr th {   
+.table thead tr th {
     background-color: #534f4a;
-    color: #c8bfbd;;    
+    color: #c8bfbd;
 }  
 .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_paginate{
     margin-top: 8px;
@@ -68,7 +68,7 @@ table.dataTable.no-footer {
     height: 3rem;
 }
 .btn-guardar .btn-primary {
-    background-color: #f5971d;
+    /* background-color: #f5971d; */
     border: none;
     bottom: 0.2rem;
     left: 40%;

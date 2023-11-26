@@ -2,8 +2,10 @@
 	session_start(); //Reanudamos sesion
 	require_once('../../db/Conexion.php');
 	require_once('../../Modelo/Tarea.php');
+	// require_once('../../Modelo/BitacoraTarea.php');
 	require_once('../../Modelo/Bitacora.php');
 	require_once('../../Controlador/ControladorTarea.php');
+	// require_once('../../Controlador/ControladorBitacoraTarea.php');
 	require_once('../../Controlador/ControladorBitacora.php');
 	$clasificacionLeads = ControladorTarea::obtenerClasificacionLead();
 	$estadosTarea = ControladorTarea::traerEstadosTarea();
@@ -111,10 +113,12 @@
 							</div>
 							<div class="mb-3">
 								<label for="input-titulo-tarea" class="form-label label-title-task">Titulo de la tarea</label>
-								<input type="text" name="input-titulo-tarea" id="input-titulo-tarea" class="form-control" value="<?php echo $_GET['titulo']; ?>">
+								<input type="text" name="input-titulo-tarea" id="input-titulo-tarea" class="form-control" value="<?php echo ControladorTarea::obtenerEstadoTarea(intval($_GET['idTarea']))['titulo'] ?>">
+								<button type="button" id="btn-finalizar-tarea"><i class="fa-solid fa-text-slash"></i> Finalizar tarea</button>
 							</div>
 							<div class="mb-3">
-								<label id="<?php echo $_GET['estadoTarea']; ?>" class="id-estado-tarea" hidden="true" name="estadoTarea"></label>
+								<!-- <label id="" class="id-estado-tarea" hidden="true" name="estadoTarea"></label> -->
+								<label id="<?php echo ControladorTarea::obtenerEstadoTarea(intval($_GET['idTarea']))['id_estadoAvance'] ?>" class="id-estado-tarea" hidden="true" name="estadoTarea"></label>
 								<input type="text" value="<?php echo $_GET['idTarea']; ?>" id="id-Tarea" class="id-tarea" name="idTarea" hidden="true">
 								<label for="estados-tarea" class="form-label"> Estado: </label>
 								<label id="estado-tarea"></label>
@@ -212,32 +216,33 @@
 						</div>
 						<div class="table-conteiner">
 							<div class="mb-3 conteiner-id-articulo">
-								<p class="titulo-articulo">Artículos Interés</p>
+								<p class="titulo-articulo">Artículos de interés</p>
 								<button type="button" class="btn btn-primary" data-bs-toggle="modal"
 									data-bs-target="#modalArticulos" id="btn-articulos">
 									Seleccionar... <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
 								</button>
 							</div>
-							<table id="table-articulos" class="table table-striped">
-								<thead>
-									<tr>
-										<th scope="col">Id</th>
-										<th scope="col">Artículo</th>
-										<th scope="col">Marca</th>
-										<th scope="col">Cantidad</th>
-									</tr>
-								</thead>
-								<tbody id="list-articulos" class="table-group-divider">
-									<!-- Articulos de interes -->
-								</tbody>
-							</table>
+							<div id="table-container">
+								<table id="table-articulos" class="table table-hover">
+									<thead>
+										<tr>
+											<th scope="col" class="th-col-row">Id</th>
+											<th scope="col" class="th-col-row">Artículo</th>
+											<th scope="col" class="th-col-row">Marca</th>
+											<th scope="col" class="th-col-row">Cantidad</th>
+										</tr>
+									</thead>
+										<tbody id="list-articulos" class="table-group-divider">
+											<!-- Articulos de interes -->
+										</tbody>								
+								</table>
+							</div>
 						</div>
 						<!-- Botones -->
 						<div class="btn-guardar">
-							<a href="./v_tarea.php"><button type="button" id="btn-cerrar2"
-									class="btn btn-secondary">Cancelar</button></a>
-							<button type="submit" id="btn-guardar" class="btn btn-primary" name="actualizarTarea">
-								<i class="fa-solid fa-floppy-disk"></i>
+							<a href="./v_tarea.php"><button type="button" id="btn-cerrar2" class="btn btn-primary"><i class="fa-solid fa-angle-left"></i> Cancelar</button></a>
+							<button type="submit" id="btn-guardar" class="btn btn-secondary" name="actualizarTarea">
+							<i class="fa-regular fa-floppy-disk"></i>
 								Guardar
 							</button>
 						</div>
@@ -257,7 +262,7 @@
 	<script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
 	<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
 	<script src="../../Recursos/js/rendimiento/v_editarTarea.js" type="module"></script>
-	<!-- <script src="../../Recursos/js/rendimiento/validacionesEditarTarea.js" ></script> -->
+	<!-- <script src="../../Recursos/js/rendimiento/validacionesEditarTarea.js" type="module"></script> -->
 </body>
 
 </html>

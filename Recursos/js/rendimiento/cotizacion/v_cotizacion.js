@@ -15,7 +15,11 @@ const Toast = Swal.mixin({
     }
   });
 $(document).ready( async () => {
-   let idCotizacion = await validarDatosCotizacion();
+    let cotTarea = document.getElementById('id-cot-tarea').textContent;
+    if(parseInt(cotTarea)>0){
+        vencimientoCotizacion(cotTarea);
+    }
+    let idCotizacion = await validarDatosCotizacion();
     alternarHiddenBotones();
     if(estadoCot == 'Existente'){
         let nCotizacion = `<label>Cotización N°</label><label id="id-cotizacion">${idCotizacion}</label>`;
@@ -224,6 +228,7 @@ let validacionInputs = (inputs) => {
 }
 //nueva Cotizacion
 let enviarNuevaCotizacion = ($datosCotizacion, $productosCotizacion) => {
+    // console.log($datosCotizacion);
     $.ajax({
         url: "../../../../Vista/rendimiento/cotizacion/nuevaCotizacion.php",
         type: "POST",
@@ -486,13 +491,27 @@ let anularCotizacion = async ($idCotizacion) => {
             url: '../../../../Vista/rendimiento/cotizacion/anularCotizacion.php',
             datatype: 'JSON',
             type: 'POST',
-            data: {idCotizacion: $idCotizacion}
+            data: {
+                idCotizacion: $idCotizacion,
+                idTarea: document.querySelector('.encabezado').id
+            }
         });
     } catch (error) {
         console.error(error);
     }
     return estado;
 }
+let vencimientoCotizacion = ($idCotizacion) => {
+    $.ajax({
+        url: '../../../../Vista/rendimiento/cotizacion/vencimientoCotizacion.php',
+        datatype: 'JSON',
+        type: 'POST',
+        data: {
+            idCotizacion: $idCotizacion
+        }
+    });
+}
+
 let mostrarElementosNuevaCotizacion = (estado) => {
     estadoCot = 'Nueva';
     if(estado){

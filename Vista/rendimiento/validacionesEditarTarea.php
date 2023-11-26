@@ -3,8 +3,12 @@ session_start(); //Reanudamos sesion
 require_once('../../db/Conexion.php');
 require_once('../../Modelo/Tarea.php');
 require_once('../../Modelo/Bitacora.php');
+require_once('../../Modelo/BitacoraTarea.php');
+require_once('../../Modelo/Usuario.php');
 require_once('../../Controlador/ControladorTarea.php');
 require_once('../../Controlador/ControladorBitacora.php');
+require_once('../../Controlador/ControladorBitacoraTarea.php');
+require_once('../../Controlador/ControladorUsuario.php');
 
 $estadosTarea = array();
 $clasificacionLeads = array();
@@ -19,9 +23,10 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
         $id_Tarea = $_POST['idTarea'];
         $Creado_Por = $_SESSION['usuario'];
         $Modificador_Por = $_SESSION['usuario'];
-        $evidencia = $_POST['evidencia'];
+        $evidencia = $_POST['nFactura'];
         $rtn = '';
         $nombre = '';
+        $estadoTarea = ControladorBitacoraTarea::obtenerEstadoTarea($tipo_Tarea);
         if($_POST['tipoCliente'] == 'Nuevo'){
             $telefono = $_POST['telefono'];
             $correo = $_POST['correo'];
@@ -46,8 +51,14 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
             }
             if(count($tarea) > 0){
                 ControladorTarea::actualizarTarea($id_Tarea, $tipo_Tarea, $tarea);
-                if(isset($_POST['evidencia'])){
-                    ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia);
+                editarTareaBitacora($id_Tarea, $estadoTarea, $_SESSION['usuario']);
+                if(isset($_POST['nFactura'])){
+                    ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia, intval($_POST['accion']));
+                    if(intval($_POST['accion']) == 0){
+                        guardarFacturaTareaBitacora($id_Tarea, $evidencia, $estadoTarea, $_SESSION['usuario']);
+                    }else{
+                        editoFacturaTareaBitacora($id_Tarea, $evidencia, $estadoTarea, $_SESSION['usuario']);
+                    }
                 }
                 if(!isset($datosTareaDB['RTN_Cliente']) && (isset($_POST['nombre']) && isset($_POST['rtnCliente']))){
                     $nombre = $_POST['nombre'];
@@ -83,9 +94,16 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
                 ];
             } 
             if(count($tarea) > 0){
+                var_dump($tarea);
                 ControladorTarea::actualizarTarea($id_Tarea, $tipo_Tarea, $tarea);
-                if(isset($_POST['evidencia'])){
-                    ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia);
+                editarTareaBitacora($id_Tarea, $estadoTarea, $_SESSION['usuario']);
+                if(isset($_POST['nFactura'])){
+                    ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia, intval($_POST['accion']));
+                    if(intval($_POST['accion']) == 0){
+                        guardarFacturaTareaBitacora($id_Tarea, $evidencia, $estadoTarea, $_SESSION['usuario']);
+                    }else{
+                        editoFacturaTareaBitacora($id_Tarea, $evidencia, $estadoTarea, $_SESSION['usuario']);
+                    }
                 }
             }
         }
@@ -95,6 +113,9 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
         if(ControladorTarea::validarEstadoClienteTarea(intval($_POST['idTarea']))){
             $estadoTarea = (intval($_POST['idEstado']) == 2) ? 2: 0;
             $datosTarea = ControladorTarea::obtenerDatosTarea($estadoTarea, intval($_POST['idTarea']));
+            $datosTarea += [
+                'productos' => ControladorTarea::obtenerProductosInteres($_POST['idTarea'])
+            ];
             print json_encode($datosTarea, JSON_UNESCAPED_UNICODE);
         } else {
             $datosTarea = [
@@ -103,4 +124,31 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
             print json_encode($datosTarea, JSON_UNESCAPED_UNICODE);
         }
     }
+}
+function editarTareaBitacora($idTarea, $estado, $usuario){
+    /* ====================== Evento, el usuario ha modificado una nueva tarea. =====================*/
+    $idUsuario = intval(ControladorUsuario::obtenerIdUsuario($usuario));
+    $newBitacora = new BitacoraTarea();
+    $newBitacora->idTarea = intval($idTarea);
+    $newBitacora->descripcionEvento = 'Ha editado la tarea # '.$idTarea.' en el estado '.$estado;
+    $idBitacora = ControladorBitacoraTarea::SAVE_EVENT_TASKS_BITACORA($newBitacora, $idUsuario);
+    /* =======================================================================================*/
+}
+function guardarFacturaTareaBitacora($idTarea, $factura, $estado, $usuario){
+    /* ====================== Evento, el usuario ha modificado una nueva tarea. =====================*/
+    $idUsuario = intval(ControladorUsuario::obtenerIdUsuario($usuario));
+    $newBitacora = new BitacoraTarea();
+    $newBitacora->idTarea = intval($idTarea);
+    $newBitacora->descripcionEvento = 'Ha agregado la evidencia factura #'.$factura.' en la tarea # '.$idTarea.' en el estado '.$estado;
+    $idBitacora = ControladorBitacoraTarea::SAVE_EVENT_TASKS_BITACORA($newBitacora, $idUsuario);
+    /* =======================================================================================*/
+}
+function editoFacturaTareaBitacora($idTarea, $factura, $estado, $usuario){
+    /* ====================== Evento, el usuario ha modificado una nueva tarea. =====================*/
+    $idUsuario = intval(ControladorUsuario::obtenerIdUsuario($usuario));
+    $newBitacora = new BitacoraTarea();
+    $newBitacora->idTarea = intval($idTarea);
+    $newBitacora->descripcionEvento = 'Ha editado la evidencia factura #'.$factura.' en la tarea # '.$idTarea.' en el estado '.$estado;
+    $idBitacora = ControladorBitacoraTarea::SAVE_EVENT_TASKS_BITACORA($newBitacora, $idUsuario);
+    /* =======================================================================================*/
 }

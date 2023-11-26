@@ -5,7 +5,7 @@ class ControladorTarea {
         return Tarea::obtenerTareas($idUser);
     }
     public static function insertarNuevaTarea($tarea){
-        Tarea::nuevaTarea($tarea); 
+        return Tarea::nuevaTarea($tarea); 
     }
     public static function obtenerestadoClienteTarea($rtnCliente){
         return Tarea::clienteExistente($rtnCliente); 
@@ -43,8 +43,8 @@ class ControladorTarea {
     public static function almacenarProductosInteres($idTarea, $productos){
         Tarea::guardarProductosInteres($idTarea, $productos);
     }
-    public static function guardarFacturaTarea($idTarea, $evidencia){
-        Tarea::guardarFacturaTarea($idTarea, $evidencia);
+    public static function guardarFacturaTarea($idTarea, $evidencia, $accion){
+        Tarea::guardarFacturaTarea($idTarea, $evidencia, $accion);
     }
     public static function obtenerCantTareas($FechaDesde, $FechaHasta){
         return Tarea::obtenerCantTarea($FechaDesde, $FechaHasta);
@@ -58,21 +58,6 @@ class ControladorTarea {
     }
     public static function obtenerDatosTarea ($tipoTarea, $idTarea) {
         return Tarea::obtenerDatosClienteTarea($tipoTarea, $idTarea);
-    }
-    public static function agregarComentarioTarea($idTarea, $comentario, $CreadoPor){
-        Tarea::agregarComentarioTarea($idTarea, $comentario, $CreadoPor);
-    }
-    public static function mostrarComentariosTarea($idTarea){
-        return Tarea::mostrarComentariosTarea($idTarea);
-    }
-    public static function acciones_Evento_Tareas(){
-        return Tarea::acciones_Evento_Tareas();
-    }
-    public static function SAVE_EVENT_TASKS_BITACORA($eventoTarea, $idUser){
-        Tarea::SAVE_EVENT_TASKS_BITACORA($eventoTarea, $idUser);
-    }
-    public static function consultarBitacoraTarea($idTarea){
-        return Tarea::consultarBitacoraTarea($idTarea);
     }
     public static function editarNuevoClienteTarea($editarClienteTarea){
         Tarea::editarNuevoClienteTarea($editarClienteTarea);
@@ -107,16 +92,31 @@ class ControladorTarea {
     public static function calcularVencimientoCotizacion($idCotizacion){
         return Tarea::calcularVencimientoCotizacion($idCotizacion);
     }
+    public static function vencimientoEstadoCotizacion($idCotizaciones){
+        Tarea::vencimientoEstadoCotizacion($idCotizaciones);
+    }
     public static function obtenerCotizacionesUsuario($usuario){
         return Tarea::obtenerCotizacionesUsuario($usuario);
     }
-
     public static function obtenerCotizacionesUsuarioPDF($usuario, $buscar){
         return Tarea::obtenerCotizacionesUsuarioPDF($usuario, $buscar);
     }
-
     public static function obtenerCotizacionXId($idCotizacion){
         return Tarea::obtenerCotizacionXId($idCotizacion);
     }
-
+    public static function obtenerProductosInteres($idTarea){
+        return Tarea::obtenerProductosInteres($idTarea);
+    }
+    // public static function obtenerHistorialEstadosTarea($idTarea){
+    //     return Tarea::obtenerHistorialEstadosTarea($idTarea);
+    // }
+    public static function actualizarEstadoTarea($idTarea, $newEstado, $usuario){
+        Tarea::cambiarEstadoTarea($idTarea, $newEstado, $usuario);
+    }
+    public static function obtenerEstadoTarea($idTarea){
+        return Tarea::obtenerEstadoTarea($idTarea);
+    }
+    public static function obtenerIdCotizacionTarea($idTarea){
+        return Tarea::obtenerIdCotizacionTarea($idTarea);
+    }
 }

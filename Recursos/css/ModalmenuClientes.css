@@ -1,0 +1,42 @@
+.modal-body{
+    padding: 50px;
+    background-color: #c8bfbd;
+}
+
+.modal-p-Etiqueta{
+    color: rgb(75, 75, 75);
+    font-weight: bold;
+    font-size: 20px;
+
+    padding: 10px;
+    border: 3px solid #ef904d;
+    border-radius: 10px;
+}
+.label-menu{
+    display: flex;
+    justify-content: center;
+    color: #6e6b6a;
+    font-weight: bold;
+}
+.button-menu{
+    display: flex;
+    justify-content: center;
+}
+#btn_ModalViewCliente{
+    margin-top: 5px;
+    width: 210px;
+    height: 60px;
+    background-color: #4CAF50;
+    
+}
+#btn_ModalViewCliente:hover {
+    background-color: #3e8e41;
+}
+
+ #btn_ModalCarteraCliente{
+    margin-top: 5px;
+    width: 210px;
+    height: 60px;
+    background-color: #008CBA;
+
+}

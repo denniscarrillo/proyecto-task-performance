@@ -29,10 +29,6 @@ class Tarea
     public $correo;
     public $direccion;
 
-
-
-
-
     // Obtener todas las tareas que le pertenecen a un usuario.
     public static function obtenerTareas($idUser)
     {
@@ -85,6 +81,7 @@ class Tarea
             echo 'Error SQL:' . $e;
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
+        return $idTarea;
     }
     public static function obtenerEstadoClienteTarea($rtnCliente)
     {
@@ -267,34 +264,33 @@ class Tarea
             $ModificadoPor = $datosTarea['ModificadoPor'];
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            if(intval($tipoTarea) === 2){
-                $estadoCliente = $datosTarea['tipoCliente']; $idClasificacionLead = $datosTarea['clasificacionLead'];
-                $idOrigen = $datosTarea['origenLead']; $razon = $datosTarea['razon']; $rubro = $datosTarea['rubro'];
+            //Valores a Setear
+            $estadoCliente = $datosTarea['tipoCliente']; $titulo = $datosTarea['titulo']; $razon = $datosTarea['razon']; $rubro = $datosTarea['rubro'];
+            if(intval($tipoTarea) === 2){ //Tareas de tipo LEAD
+                $idClasificacionLead = $datosTarea['clasificacionLead'];  $rtn = $datosTarea['rtn']; $idOrigen = $datosTarea['origenLead'];
                 //Actualizamos los datos de la tarea de tipo Lead
-                if(isset($datosTarea['rtn'])){
-                    $rtn = $datosTarea['rtn'];
-                    $update = "UPDATE tbl_tarea SET RTN_Cliente = '$rtn', estado_Cliente_Tarea = '$estadoCliente', 
+                if(isset($datosTarea['rtn']) && !empty($datosTarea['rtn'])){
+                    $update = "UPDATE tbl_tarea SET RTN_Cliente = '$rtn', titulo = '$titulo', estado_Cliente_Tarea = '$estadoCliente', 
                     id_ClasificacionLead = '$idClasificacionLead', id_OrigenLead = '$idOrigen', rubro_Comercial = '$rubro', razon_Social ='$razon',
                     Modificado_Por = '$ModificadoPor', Fecha_Modificacion = GETDATE() WHERE id_Tarea = '$idTarea';";
-                } else {
+                } 
+                else {
                     $update = "UPDATE tbl_tarea SET estado_Cliente_Tarea = '$estadoCliente', 
-                    id_ClasificacionLead = '$idClasificacionLead', id_OrigenLead = '$idOrigen', rubro_Comercial = '$rubro', razon_Social ='$razon',
+                    id_ClasificacionLead = '$idClasificacionLead', id_OrigenLead = '$idOrigen', titulo = '$titulo', rubro_Comercial = '$rubro', razon_Social ='$razon',
                     Modificado_Por = '$ModificadoPor', Fecha_Modificacion = GETDATE() WHERE id_Tarea = '$idTarea';";
                 }
-                sqlsrv_query($abrirConexion, $update);
-            } else {
-                $estadoCliente = $datosTarea['tipoCliente']; $razon = $datosTarea['razon']; $rubro = $datosTarea['rubro']; 
+            } else { //Otros tipos de tarea
+                $idClasificacionLead = $datosTarea['clasificacionLead'];  $rtn = $datosTarea['rtn']; $idOrigen = $datosTarea['origenLead'];
                 //Actualizamos los datos de la tarea
-                if(isset($datosTarea['rtn'])){
-                    $rtn = $datosTarea['rtn'];
-                    $update = "UPDATE tbl_tarea SET RTN_Cliente = '$rtn', estado_Cliente_Tarea = '$estadoCliente', rubro_Comercial = '$rubro',
+                if(isset($datosTarea['rtn']) && !empty($datosTarea['rtn'])){
+                    $update = "UPDATE tbl_tarea SET RTN_Cliente = '$rtn', titulo = '$titulo', estado_Cliente_Tarea = '$estadoCliente', rubro_Comercial = '$rubro',
                     razon_Social ='$razon', Modificado_Por = '$ModificadoPor', Fecha_Modificacion = GETDATE() WHERE id_Tarea = '$idTarea';"; 
-                }else{
-                    $update = "UPDATE tbl_tarea SET estado_Cliente_Tarea = '$estadoCliente', rubro_Comercial = '$rubro',
+                } else {
+                    $update = "UPDATE tbl_tarea SET estado_Cliente_Tarea = '$estadoCliente', titulo = '$titulo', rubro_Comercial = '$rubro',
                     razon_Social ='$razon', Modificado_Por = '$ModificadoPor', Fecha_Modificacion = GETDATE() WHERE id_Tarea = '$idTarea';";
                 }
-                sqlsrv_query($abrirConexion, $update);
             }
+            sqlsrv_query($abrirConexion, $update);
         }catch(Exception $e){
             echo 'Error SQL:' . $e;
         }
@@ -316,10 +312,15 @@ class Tarea
         }
        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
-    public static function guardarFacturaTarea($idTarea, $evidencia){
+    public static function guardarFacturaTarea($idTarea, $evidencia, $accion){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query = "INSERT INTO tbl_AdjuntoEvidencia VALUES('$idTarea', '$evidencia');";
+        $query = '';
+        if($accion == 0){
+            $query = "INSERT INTO tbl_AdjuntoEvidencia VALUES('$idTarea', '$evidencia');";
+        } else {
+            $query = "UPDATE tbl_AdjuntoEvidencia SET evidencia = '$evidencia' WHERE id_Tarea = '$idTarea';";
+        }
         sqlsrv_query($conexion, $query);
         sqlsrv_close($conexion);
     }
@@ -484,14 +485,14 @@ class Tarea
             if($tipoCliente['estado_Cliente_Tarea'] == 'Nuevo'){
                 switch($tipoTarea){
                     case 0:{
-                        $consultaDatos = "SELECT tr.titulo,tr.estado_Cliente_Tarea, tr.id_EstadoAvance, tr.RTN_Cliente, cc.nombre_Cliente as NOMBRECLIENTE, 
+                        $consultaDatos = "SELECT tr.titulo,tr.estado_Cliente_Tarea, tr.id_EstadoAvance, (SELECT evidencia FROM tbl_AdjuntoEvidencia WHERE id_Tarea = '$idTarea') as evidencia, tr.RTN_Cliente, cc.nombre_Cliente as NOMBRECLIENTE, 
                         cc.telefono as TELEFONO, cc.correo, cc.direccion as DIRECCION, tr.rubro_Comercial, tr.razon_Social FROM tbl_Tarea tr
                         INNER JOIN tbl_CarteraCliente cc ON tr.RTN_Cliente = cc.rtn_Cliente
                         WHERE tr.id_Tarea = '$idTarea';";
                         break;
                     }
                     case 2:{
-                        $consultaDatos = "SELECT tr.titulo,tr.estado_Cliente_Tarea, tr.id_EstadoAvance, tr.id_ClasificacionLead , tr.id_OrigenLead,
+                        $consultaDatos = "SELECT tr.titulo,tr.estado_Cliente_Tarea, tr.id_EstadoAvance, (SELECT evidencia FROM tbl_AdjuntoEvidencia WHERE id_Tarea = '$idTarea') as evidencia, tr.id_ClasificacionLead , tr.id_OrigenLead,
                         tr.RTN_Cliente, cc.nombre_Cliente as NOMBRECLIENTE, cc.telefono as TELEFONO, cc.correo, cc.direccion as DIRECCION, tr.rubro_Comercial, tr.razon_Social FROM tbl_Tarea tr
                         INNER JOIN tbl_CarteraCliente cc ON tr.RTN_Cliente = cc.rtn_Cliente
                         WHERE tr.id_Tarea = '$idTarea';";
@@ -501,14 +502,14 @@ class Tarea
             } else {
                 switch($tipoTarea){
                     case 0:{
-                        $consultaDatos = "SELECT tr.titulo, tr.estado_Cliente_Tarea, tr.id_EstadoAvance, tr.RTN_Cliente, vc.NOMBRECLIENTE, vc.TELEFONO1 as TELEFONO,
+                        $consultaDatos = "SELECT tr.titulo, tr.estado_Cliente_Tarea, tr.id_EstadoAvance, (SELECT evidencia FROM tbl_AdjuntoEvidencia WHERE id_Tarea = '$idTarea') as evidencia, tr.RTN_Cliente, vc.NOMBRECLIENTE, vc.TELEFONO1 as TELEFONO,
                         vc.DIRECCION1 as DIRECCION, tr.rubro_Comercial, tr.razon_Social FROM COCINAS_Y_EQUIPOS.dbo.View_Clientes vc 
                         INNER JOIN tbl_Tarea tr ON vc.CIF COLLATE Latin1_General_CS_AI = tr.RTN_Cliente
                         WHERE tr.id_Tarea = '$idTarea';";
                         break;
                     }
                     case 2:{
-                        $consultaDatos = "SELECT tr.titulo, tr.estado_Cliente_Tarea, tr.id_EstadoAvance, tr.id_ClasificacionLead , tr.id_OrigenLead,
+                        $consultaDatos = "SELECT tr.titulo, tr.estado_Cliente_Tarea, tr.id_EstadoAvance, (SELECT evidencia FROM tbl_AdjuntoEvidencia WHERE id_Tarea = '$idTarea') as evidencia, tr.id_ClasificacionLead , tr.id_OrigenLead,
                         tr.RTN_Cliente, vc.NOMBRECLIENTE, vc.TELEFONO1 as TELEFONO, vc.DIRECCION1 as DIRECCION, tr.rubro_Comercial, tr.razon_Social FROM COCINAS_Y_EQUIPOS.dbo.View_Clientes vc 
                         INNER JOIN tbl_Tarea tr ON vc.CIF COLLATE Latin1_General_CS_AI = tr.RTN_Cliente
                         WHERE tr.id_Tarea = '$idTarea';";
@@ -523,68 +524,6 @@ class Tarea
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
         return $datosTarea;
-    }
-    public static function agregarComentarioTarea($idTarea, $comentario, $CreadoPor){
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB();
-        $query = "INSERT INTO tbl_Comentarios_Tarea (id_Tarea, Comentario, Creado_Por, Fecha_Creacion) VALUES ('$idTarea', '$comentario', '$CreadoPor', GETDATE());";
-        sqlsrv_query($conexion, $query);
-        sqlsrv_close($conexion);
-    }
-    public static function mostrarComentariosTarea($idTarea){
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB();
-        $query = "SELECT Comentario, Creado_Por, Fecha_Creacion FROM tbl_Comentarios_Tarea WHERE id_Tarea = '$idTarea' ORDER BY Fecha_Creacion DESC;";
-        $resultado = sqlsrv_query($conexion, $query);
-        $comentariosTarea = array();
-        while($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)){
-            $comentariosTarea [] = [
-                'comentarioTarea' => $fila['Comentario'],
-                'creadoPor' => $fila['Creado_Por'],
-                'FechaCreacion' => $fila['Fecha_Creacion']
-            ];
-        }
-        sqlsrv_close($conexion);
-        return $comentariosTarea;
-    }
-    public static function acciones_Evento_Tareas(){
-        $accionesTarea = [
-            'nuevoComentario' => 'Agrego un comentario',
-            'Update' => 'Actualizacion'
-        ];
-        return $accionesTarea;
-    }
-    /*
-    *** Método de captura los eventos sobre el modulo de RENDIMIENTO y los almacena en la base de datos
-    *** en la tabla TBL_BITACORA_TAREA
-    */
-    public static function SAVE_EVENT_TASKS_BITACORA($eventoTarea, $idUser){
-        //Recibir objeto y obtener parametros
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB();
-        $ejecutarSQL = "INSERT INTO tbl_Bitacora_Tarea (id_Tarea, id_Usuario, accion, descripcion, fecha)
-        VALUES('$eventoTarea->idTarea', '$idUser', '$eventoTarea->accionEvento', '$eventoTarea->descripcionEvento', GETDATE());";
-        $ejecutarSQL = sqlsrv_query($conexion, $ejecutarSQL);
-        sqlsrv_close($conexion); #Cerramos la conexión.
-    }
-    public static function consultarBitacoraTarea($idTarea){
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB();
-        $query = "SELECT mu.usuario, bt.accion, bt.descripcion, bt.fecha FROM tbl_Bitacora_Tarea bt
-        INNER JOIN tbl_MS_Usuario mu ON bt.id_Usuario = mu.id_Usuario
-        WHERE bt.id_Tarea = '$idTarea' ORDER BY bt.fecha DESC;";
-        $ejecutar = sqlsrv_query($conexion, $query);
-        $historialTarea = array();
-        while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
-            $historialTarea[] = [
-                'usuarioTarea' => $fila['usuario'],
-                'accion' => $fila['accion'],
-                'descripcion' => $fila['descripcion'],
-                'fecha' => $fila['fecha']
-            ];
-        }
-        sqlsrv_close($conexion);
-        return $historialTarea;
     }
     public static function editarNuevoClienteTarea($editarClienteTarea){
         $conn = new Conexion();
@@ -779,8 +718,13 @@ class Tarea
         sqlsrv_close($conexion);
         return $estado;
     }
-    // public static function actualizarEstadoCotizacion(){
-    // }
+    public static function vencimientoEstadoCotizacion($idCotizacion){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "UPDATE tbl_CotizacionTarea SET estado_Cotizacion = 'Vencida' WHERE id_Cotizacion = '$idCotizacion'";
+        sqlsrv_query($conexion,$query);
+        sqlsrv_close($conexion);
+    }
 
     public static function obtenerCotizacionesUsuario($usuario){
         $conn = new Conexion();
@@ -988,5 +932,56 @@ class Tarea
         }
         sqlsrv_close($conexion);
         return $datosCotizacion;
+    }
+
+    public static function obtenerProductosInteres($idTarea){
+        $productos = array();
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT pi.id_Articulo, va.ARTICULO AS descripcion, va.MARCA, pi.cantidad FROM COCINAS_Y_EQUIPOS.dbo.View_ARTICULOS va 
+                    INNER JOIN tbl_ProductoInteres pi ON pi.id_Articulo = va.CODARTICULO WHERE pi.id_Tarea = '$idTarea'";
+        $result = sqlsrv_query($conexion, $query);
+        while($fila = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)){
+            $productos [] = [
+                'id' => $fila['id_Articulo'],
+                'descripcion' => $fila['descripcion'],
+                'marca' => $fila['MARCA'],
+                'cantidad' => $fila['cantidad']
+            ];
+        }
+        sqlsrv_close($conexion);
+        return $productos;
+    }
+    public static function cambiarEstadoTarea($idTarea, $newEstado, $usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $update = sqlsrv_query($conexion, "UPDATE tbl_Tarea SET id_EstadoAvance = '$newEstado', Modificado_Por = '$usuario', Fecha_Modificacion = GETDATE() WHERE id_Tarea = '$idTarea'");
+        if(sqlsrv_rows_affected($update) > 0) {
+            sqlsrv_query($conexion, "INSERT INTO tbl_historial_estado_tarea VALUES('$idTarea', '$newEstado', '$usuario', GETDATE())");
+        }
+        sqlsrv_close($conexion);
+    }
+    
+    public static function obtenerEstadoTarea($idTarea){
+        $estados = array();
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT id_estadoAvance, titulo FROM tbl_Tarea WHERE id_Tarea = '$idTarea'";
+        $fila = sqlsrv_fetch_array(sqlsrv_query($conexion, $query), SQLSRV_FETCH_ASSOC);
+        sqlsrv_close($conexion);
+        return $fila;
+    }
+    public static function obtenerIdCotizacionTarea($idTarea){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $idCotizacion = 0;
+        $query = "SELECT TOP 1 id_Cotizacion FROM tbl_CotizacionTarea WHERE id_Tarea = '$idTarea' ORDER BY id_Cotizacion DESC;";
+        $ejecutar = sqlsrv_query($conexion, $query);
+        if(sqlsrv_has_rows($ejecutar) > 0){
+            $cotizacion = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC);
+            $idCotizacion = $cotizacion['id_Cotizacion'];
+        }
+        sqlsrv_close($conexion);
+        return $idCotizacion;
     }
 }

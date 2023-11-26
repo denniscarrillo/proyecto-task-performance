@@ -1,9 +1,11 @@
 <?php
 require_once('../../db/Conexion.php');
 require_once('../../Modelo/Usuario.php');
-require_once('../../Controlador/ControladorUsuario.php');
 require_once('../../Modelo/Tarea.php');
+require_once('../../Modelo/BitacoraTarea.php');
+require_once('../../Controlador/ControladorUsuario.php');
 require_once('../../Controlador/ControladorTarea.php');
+require_once('../../Controlador/ControladorBitacoraTarea.php');
 
 if(isset($_POST['tipoTarea'])){
     session_start();
@@ -25,6 +27,13 @@ if(isset($_POST['tipoTarea'])){
     $tarea->fechaInicio = date("Y-m-d");
     $tarea->Creado_Por = $user;
     $tarea->Fecha_Creacion = date("Y-m-d");
-    ControladorTarea::insertarNuevaTarea($tarea);
+    $idTarea = ControladorTarea::insertarNuevaTarea($tarea);
+    /* ====================== Evento, el usuario ha creado una nueva tarea. =====================*/
+    $idUsuario = intval(ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']));
+    $newBitacora = new BitacoraTarea();
+    $newBitacora->idTarea = intval($idTarea);
+    $newBitacora->descripcionEvento = 'Ha creado la tarea # '.$idTarea.' en el estado '.$_POST['tipoTarea'];
+    $idBitacora = ControladorBitacoraTarea::SAVE_EVENT_TASKS_BITACORA($newBitacora, $idUsuario);
+    /* =======================================================================================*/
     unset($_POST['tipoTarea']); //Vaciar variable
 }

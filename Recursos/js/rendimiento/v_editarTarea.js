@@ -1,11 +1,23 @@
 import { sidePanel_Interaction } from '../../components/js/sidePanel.js'; //importamos la funcion del sidePanel
 
-let tableArticulos = '';
+// let tableArticulos = '';
+let existEvidencia = 0;
 let $idTarea = document.getElementById('id-Tarea').value;
 let $idEstadoTarea = document.querySelector('.id-estado-tarea').id;
 const $btnCotizacion = document.getElementById('btn-container-cotizacion');
 let radioOption = document.getElementsByName('radioOption');
 let estadoRTN = '';
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top',
+  showConfirmButton: false,
+  timer: 5000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+});
 $(document).ready(async function(){
   ($idEstadoTarea == '3') ? $btnCotizacion.removeAttribute('hidden') : '';
   ($idEstadoTarea == '4') ? document.getElementById('container-num-factura').removeAttribute('hidden') : '';
@@ -32,17 +44,6 @@ document.getElementById('btn-comment').addEventListener('click', () => {
 document.getElementById('link-nueva-cotizacion').addEventListener('click', (e) => {
   if(JSON.parse(estadoRTN) == false) {
     e.preventDefault();
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top',
-      showConfirmButton: false,
-      timer: 5000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
-    });
     Toast.fire({
         icon: 'warning',
         title: 'Debe tener los datos del cliente'
@@ -88,31 +89,10 @@ document.getElementById('form-Edit-Tarea').addEventListener('submit', function(e
   let $datosTarea = validarCamposEnviar(tipoCliente);
   actualizarDatosTarea($datosTarea);
   let numFactura = document.getElementById('num-factura');
-  console.log(numFactura.getAttribute('hidden'));
-  if(numFactura.getAttribute('hidden') == null){
-    almacenarFactura(numFactura);
-  }
+  console.log(numFactura.value);
   enviarProductosInteres($idTask); //Enviamos los productos de interes a almacenar
   obtenerDatosTarea($idTarea, $idEstadoTarea);
 });
-
-let almacenarFactura = ($numFactura) => {
-  console.log($numFactura.value);
-  $.ajax({
-    url: "../../../../Vista/rendimiento/validacionesEditarTarea.php",
-    type: "POST",
-    datatype: "JSON",
-    data: {
-      evidencia: $numFactura.value
-    }
-  }); //Fin AJAX   
-}
-// let numFactura = document.getElementById('num-factura');
-// numFactura.addEventListener('focusout', () => {
-//   if(!numFactura.getAttribute('hidden')){
-//     almacenarFactura(numFactura);
-//   }
-// });
 // CARGAR LOS ARTICULOS A AGREGAR A LA TAREA
 $('#btn-articulos').click(() => {
     if (document.getElementById('table-Articulos_wrapper') == null) {
@@ -289,6 +269,19 @@ let obtenerClientes = function () {
     });
   }
 }
+document.getElementById('estados-tarea').addEventListener('change', async () => {
+  let $newEstado = document.getElementById('estados-tarea').value;
+  if($newEstado < parseInt($idEstadoTarea)){
+        document.getElementById('estados-tarea').value = $idEstadoTarea;
+        Toast.fire({
+          icon: 'error',
+          title: 'No puedes volver a un estado anterior'
+    });
+  } else {
+    cambiarEstado($newEstado, $idTarea);
+  }
+});
+
 let $rtn = document.getElementById('rnt-cliente');
 $rtn.addEventListener('focusout', function () {
   let $mensaje = document.getElementById('mensaje');
@@ -439,10 +432,10 @@ let obtenerHistorialTarea = ($idTarea) => {
         `<div class="card-history">
           <section class="info-history">
             <section class="creadoPor-history">${historial.usuarioTarea}</section>
-            <section class="action-history">${historial.accion}</section>
             <section class="data-history">${historial.fecha.date.split('.')[0]}</section>
           </section>
           <section class="text-history">${historial.descripcion}</section>
+          ${(historial.comentario != null)? `<section class="text-history comentario">${historial.comentario}</section>`: ''}
         </div>`;
         conteinerHistory.innerHTML = historialTarea;
       });
@@ -470,19 +463,26 @@ let obtenerDatosTarea = ($idTarea, $idEstadoTarea) => {
     success: function($datosTarea){
       let datos = JSON.parse($datosTarea);
       (Object.keys(datos).length > 1) ? setearDatosTarea(datos) : document.getElementsByName('estadoEdicion')[0].id = datos.data;
+
     }
   });
 }
 let setearDatosTarea = ($datosTarea) => {
+    setArticulosInteres($datosTarea.productos)
+    console.log($datosTarea.productos);
     let nuevo = document.getElementById('cliente-nuevo');
     let existe =  document.getElementById('cliente-existente');
     let nombre = document.getElementById('nombre-cliente');
     let rtn = document.getElementById('rnt-cliente'); 
     let correo = document.getElementById('correo-cliente');
+    let nFactura = document.getElementById('num-factura');
     document.getElementById('input-titulo-tarea').value = $datosTarea.titulo;
     rtn.value = $datosTarea.RTN_Cliente;
     rtn.disabled =true;
     nombre.value = $datosTarea.NOMBRECLIENTE;
+    nFactura.value =  ($datosTarea.evidencia != null && $datosTarea.evidencia != '') ? $datosTarea.evidencia: '';
+    ($datosTarea.evidencia != null && $datosTarea.evidencia != '') ? existEvidencia = 1 : '';
+    console.log('Estado evidencia: '+existEvidencia);
     nombre.disabled = true;
     document.getElementById('telefono-cliente').value = $datosTarea.TELEFONO,
     ($datosTarea.estado_Cliente_Tarea == 'Nuevo') ? correo.value = $datosTarea.correo: '';
@@ -504,6 +504,22 @@ let setearDatosTarea = ($datosTarea) => {
       nuevo.disabled = true;
     }
 }
+let setArticulosInteres = (productos) => {
+  //Recorremos todos los productos y los insertamos en la tabla
+  productos.forEach(producto => {
+    let $tBody = document.getElementById('list-articulos');
+    let $fila = document.createElement('tr');
+    let id = $fila.appendChild(document.createElement('td'));
+    let articulo = $fila.appendChild(document.createElement('td'));
+    let marca = $fila.appendChild(document.createElement('td'));
+    let cantidad = $fila.appendChild(document.createElement('td'));
+    id.innerText = producto.id;
+    articulo.innerText = producto.descripcion;
+    marca.innerText = producto.marca;
+    cantidad.innerText = producto.cantidad;
+    $tBody.appendChild($fila);
+  });
+}
 
 let validarCamposEnviar = (tipoCliente) => {
   let $datosTarea;
@@ -522,7 +538,9 @@ let validarCamposEnviar = (tipoCliente) => {
         "clasificacionLead": document.getElementById('clasificacion-lead').value,
         "origenLead": document.getElementById('origen-lead').value,
         "rubrocomercial": document.getElementById('rubrocomercial').value,
-        "razonsocial": document.getElementById('razonsocial').value
+        "razonsocial": document.getElementById('razonsocial').value,
+        "nFactura": document.getElementById('num-factura').value,
+        "accion": existEvidencia
       };
     } else {
       $datosTarea = {
@@ -536,7 +554,9 @@ let validarCamposEnviar = (tipoCliente) => {
         "correo": document.getElementById('correo-cliente').value,
         "direccion": document.getElementById('direccion-cliente').value,
         "rubrocomercial": document.getElementById('rubrocomercial').value,
-        "razonsocial": document.getElementById('razonsocial').value
+        "razonsocial": document.getElementById('razonsocial').value,
+        "nFactura": document.getElementById('num-factura').value,
+        "accion": existEvidencia
       };
     }
   } else {
@@ -553,7 +573,9 @@ let validarCamposEnviar = (tipoCliente) => {
         "clasificacionLead": document.getElementById('clasificacion-lead').value,
         "origenLead": document.getElementById('origen-lead').value,
         "rubrocomercial": document.getElementById('rubrocomercial').value,
-        "razonsocial": document.getElementById('razonsocial').value
+        "razonsocial": document.getElementById('razonsocial').value,
+        "nFactura": document.getElementById('num-factura').value,
+        "accion": existEvidencia
       };
     } else {
       $datosTarea = {
@@ -566,9 +588,48 @@ let validarCamposEnviar = (tipoCliente) => {
         "correo": document.getElementById('correo-cliente').value,
         "direccion": document.getElementById('direccion-cliente').value,
         "rubrocomercial": document.getElementById('rubrocomercial').value,
-        "razonsocial": document.getElementById('razonsocial').value
+        "razonsocial": document.getElementById('razonsocial').value,
+        "nFactura": document.getElementById('num-factura').value,
+        "accion": existEvidencia
       };
     }
   }
   return $datosTarea;
 }
+
+let cambiarEstado = ($newEstado, $idTarea) => {
+  $.ajax({
+    url: '../../../Vista/rendimiento/cambiarEstadoTarea.php',
+    type: 'POST',
+    datatype: 'JSON',
+    data: {
+      nuevoEstado: $newEstado,
+      idTarea: $idTarea
+    }
+  });
+}
+// let obtenerEstadoTarea = ($newEstado, $idTarea) => {
+//   $.ajax({
+//     url: '../../../Vista/rendimiento/cambiarEstadoTarea.php',
+//     type: 'POST',
+//     datatype: 'JSON',
+//     data: {
+//       nuevoEstado: $newEstado,
+//       idTarea: $idTarea
+//     }
+//   });
+// }
+// let obtenerHistorialEstado = async ($idTarea) => {
+//   let estadosTarea = null;
+//   try {
+//       estadosTarea = await $.ajax({
+//       url: '../../../Vista/rendimiento/obtenerHistorialEstado.php',
+//       type: 'POST',
+//       datatype: 'JSON',
+//       data: {idTarea: $idTarea}
+//     });
+//   } catch (error) {
+//     console.error('Ha ocurrido un error: '+error);
+//   }
+//   return estadosTarea;
+// }
