@@ -351,8 +351,20 @@ $(document).on("click", "#btn_Pdf", function() {
   let buscar = $('#table-Usuarios_filter > label > input[type=search]').val();
   window.open('../../../TCPDF/examples/reporteriaListaUsuario.php?buscar='+buscar, '_blank');
 });     
-
-
+document.getElementById('btn-finalizar-tarea').addEventListener('click', ()=>{
+  
+})
+let finalizarTarea = ($idTarea) => {
+  $.ajax({
+    url: '../../../Vista/rendimiento/cambiarEstadoTarea.php',
+    type: 'POST',
+    datatype: 'JSON',
+    data: {
+      nuevoEstado: $newEstado,
+      idTarea: $idTarea
+    }
+  });
+}
 
 
 
