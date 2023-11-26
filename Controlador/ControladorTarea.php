@@ -116,4 +116,7 @@ class ControladorTarea {
     public static function obtenerEstadoTarea($idTarea){
         return Tarea::obtenerEstadoTarea($idTarea);
     }
+    public static function obtenerIdCotizacionTarea($idTarea){
+        return Tarea::obtenerIdCotizacionTarea($idTarea);
+    }
 }

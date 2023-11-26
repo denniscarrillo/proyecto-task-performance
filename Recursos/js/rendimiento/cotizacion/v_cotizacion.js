@@ -15,13 +15,16 @@ const Toast = Swal.mixin({
     }
   });
 $(document).ready( async () => {
+    let cotTarea = document.getElementById('id-cot-tarea').textContent;
+    if(parseInt(cotTarea)>0){
+        vencimientoCotizacion(cotTarea);
+    }
     let idCotizacion = await validarDatosCotizacion();
     alternarHiddenBotones();
     if(estadoCot == 'Existente'){
         let nCotizacion = `<label>Cotización N°</label><label id="id-cotizacion">${idCotizacion}</label>`;
         document.querySelector('.title-dashboard-task').innerHTML =  nCotizacion;
     }
-    vencimientoCotizacion(document.getElementById('id-cotizacion').textContent);
 });
 let contItem = 0;
 let itemProdDB = [];

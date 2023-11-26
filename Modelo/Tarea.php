@@ -971,4 +971,17 @@ class Tarea
         sqlsrv_close($conexion);
         return $fila;
     }
+    public static function obtenerIdCotizacionTarea($idTarea){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $idCotizacion = 0;
+        $query = "SELECT TOP 1 id_Cotizacion FROM tbl_CotizacionTarea WHERE id_Tarea = '$idTarea' ORDER BY id_Cotizacion DESC;";
+        $ejecutar = sqlsrv_query($conexion, $query);
+        if(sqlsrv_has_rows($ejecutar) > 0){
+            $cotizacion = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC);
+            $idCotizacion = $cotizacion['id_Cotizacion'];
+        }
+        sqlsrv_close($conexion);
+        return $idCotizacion;
+    }
 }

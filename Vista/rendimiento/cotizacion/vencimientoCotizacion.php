@@ -14,7 +14,7 @@
         $Tarea = ControladorBitacoraTarea::obtenerTareaCotizacion($idCotizacion);
         if($estado && $Tarea['estado'] != 'Vencida'){
             ControladorTarea::vencimientoEstadoCotizacion($idCotizacion);
-            /* ====================== Evento, el usuario ha anulado una cotizacion. =====================*/
+            /* ====================== Evento, la cotizacion ha sido vencida. =====================*/
                 $idUsuario = intval(ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']));
                 $newBitacora = new BitacoraTarea();
                 $newBitacora->idTarea = intval($Tarea['id']);
