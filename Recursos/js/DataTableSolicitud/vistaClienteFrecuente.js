@@ -374,7 +374,29 @@ function validarCantidades() {
 }
 
 
-  
+  $(document).on("click", "#btn_eliminar", function() {
+    let nombreProd = $(this).closest('tr').find('td:eq(1)').text();
+    let filaproducto = this.parentElement.parentElement; 
+      Swal.fire({
+        title: 'Estas seguro de quitar el producto '+nombreProd+'?',
+        text: "No podras revertir esto!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, borralo!'
+      }).then((result) => {
+        if (result.isConfirmed) {      
+          filaproducto.remove();
+                Swal.fire(
+                  'Eliminado!',
+                  'El producto ha sido eliminado.',
+                  'success'
+                ) 
+            }; //Fin del AJAX
+        
+      });                
+  });
 
 ///////////GUARDAR NUEVA SOLICITUD
 $('#form-solicitud').submit(function (e) {
@@ -389,8 +411,6 @@ $('#form-solicitud').submit(function (e) {
   let descripcion = $('#descripcion').val();
   let rtncliente = $('#rtnClienteV').val();
   let rtnclienteC = $('#rtnCliente').val();
-
-
 
 // var radio = document.getElementById("clienteExistente");
 // if (radio.checked) {
@@ -438,7 +458,9 @@ $idProductos.forEach(id => {
               icon: 'success',
               // El tiempo se especifica en milisegundos (en este caso, 3000 ms o 3 segundos)
               showConfirmButton: false // Esto oculta el botón "Aceptar" para que la notificación se cierre automáticamente
-            });        
+            });   
+            $mensajeConfirmacion = enviarCorreoSolicitud($nuevaSolicitud, $productosSolicitud, $idSolicitud, $nombrePDF);
+            
             redirigirADataTable();           
           }                      
       });

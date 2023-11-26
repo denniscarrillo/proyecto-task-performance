@@ -177,13 +177,6 @@ $SolicitudesId = ControladorDataTableSolicitud::VerSolicitudesPorId($_GET['idSol
             <td style="background-color: #c9c9c9;"><b>FECHA MODIFICACIÓN:</b></td>
             <td>'.$fechaFormateadaM.'</td>     
         </tr>
-        
-        <tr>
-            <td style="background-color: #c9c9c9;"><b>LISTA DE ARTICULOS:</b></td>
-            <td>                
-                <ul>'.$ListaArticulos.'</ul>
-          </td>
-        </tr>
 
         ';     
 $html .= '

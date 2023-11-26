@@ -86,6 +86,8 @@ $(document).on("click", "#btn_ver", async function (){
   EstadoSolicitudLabel.innerText = SolicitudXid.EstadoSolicitud;
   if (SolicitudXid.EstadoSolicitud === 'CANCELADO') {
     EstadoSolicitudLabel.style.color = 'red';
+  }else {
+    EstadoSolicitudLabel.style.color = 'black';
   }
   const MotivoLabel = document.getElementById('V_Motivo');
   MotivoLabel.innerText = SolicitudXid.motivoCancelacion;
@@ -181,10 +183,37 @@ let obtenerProductosS = async (idSolicitud) => {
 
 $(document).on("click", "#btn_pdf_id",  function (){
   let idSolicitudR = document.querySelector('#V_IdSolicitud').innerText;
-
-  //console.log("hola")
   window.open('../../../TCPDF/examples/reporteSolicitudXId.php?idSolicitud='+idSolicitudR, '_blank');
-  //await reporteSolicitudesPorId(idSolicitudR);  
+ });
+
+ $(document).on("click", "#btn_enviar",  function (){
+  let idSolicitudR = document.querySelector('#V_IdSolicitud').innerText;
+    $.ajax({
+      url: "../../../Vista/crud/DataTableSolicitud/reenvioCorreo.php",
+      type: "GET",
+      datatype: "JSON",
+      data: {
+        idSolicitud: idSolicitudR,
+      },
+      success: function () {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Correo enviado!"
+        });
+      }
+    })  
+  //window.open('../../../Vista/crud/DataTableSolicitud/reenvioCorreo.php?idSolicitud='+idSolicitudR, '_blank');
  });
 
 $(document).on("click", "#btn_editar", async function(){	
