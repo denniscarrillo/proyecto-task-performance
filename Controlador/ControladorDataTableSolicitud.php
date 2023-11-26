@@ -35,7 +35,11 @@ class ControladorDataTableSolicitud {
         return DataTableSolicitud::validarRtnExiste($rtn);
        }
 
-       public static function obtenerSolicitudPDF($buscar){
-        return DataTableSolicitud::obtenerSolicitudPDF($buscar);
-       } 
+    public static function obtenerSolicitudPDF($buscar){
+       return DataTableSolicitud::obtenerSolicitudPDF($buscar);
+    }
+    
+    public static function insertarEvidenciaPDF($solicitud, $directorio_destino){
+        DataTableSolicitud::insertarEvidenciaPDF($solicitud, $directorio_destino);
+    } 
 }

@@ -454,7 +454,7 @@ $idProductos.forEach(id => {
            
             Swal.fire({
               title: 'Guardado!',
-              text: 'Se le ha registrado la solicitud!',
+              text: '¡Tu solicitud ha sido registrada con éxito! Pronto recibirás un correo electrónico de confirmación.',
               icon: 'success',
               // El tiempo se especifica en milisegundos (en este caso, 3000 ms o 3 segundos)
               showConfirmButton: false // Esto oculta el botón "Aceptar" para que la notificación se cierre automáticamente

@@ -237,7 +237,8 @@ $(document).on("click", "#btn_editar", async function(){
   //LLenar Campos de modal Editar Solicitud
   $("#E_IdSolicitud").val(idSolicitud);
   const idSolicitudLabel = document.getElementById('E_IdSolicitud');
-  idSolicitudLabel.innerText = Solicitudes.idSolicitud;
+  idSolicitudLabel.value = Solicitudes.idSolicitud;
+  document.getElementById('id_solicitud').value = Solicitudes.idSolicitud;
   const nombreLabel = document.getElementById('E_NombreC');
   nombreLabel.innerText = Solicitudes.NombreCliente;
   $("#E_descripcion").val(Solicitudes['Descripcion']);

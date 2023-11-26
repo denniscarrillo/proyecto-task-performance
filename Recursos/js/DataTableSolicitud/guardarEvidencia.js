@@ -1,20 +1,21 @@
-// let $inputEvidencia = document.getElementById('evidencia');
-// let $formEvidencia = document.getElementById('form-evidencia');
+const $inputGarantia = document.getElementById('evidencia_garantia');
+const $formEditSolicitud = document.getElementById('form-Edit-Solicitud');
+// const $idSolicitud = document.getElementById('E_IdSolicitud');
 
-// $formEvidencia.addEventListener('submit', (event) => {
-//     event.preventDefault();
-//     subirEvidencia($formEvidencia);
-//     $inputEvidencia.value = null;
-//     Swal.fire(
-//         'Exito!',
-//         'Su evidencia ha sido guardada',
-//         'success',
-//       )
-//  });
+$formEditSolicitud.addEventListener('submit', e => {
+    e.preventDefault();
+    subirGarantia($formEditSolicitud);
+});
 
-// let subirEvidencia = function($form){
-//     let ajax = new XMLHttpRequest();
-//     let urlPHP = '../../../Vista/crud/DataTableSolicitud/guardarEvidencia.php';
-//     ajax.open('post', urlPHP)
-//     ajax.send(new FormData($form));
-// }
+let subirGarantia = function($form){
+    console.log($form);
+    let ajax = new XMLHttpRequest();
+    let urlPHP = '../../../Vista/crud/DataTableSolicitud/guardarEvidencia.php';
+    ajax.open('post', urlPHP);
+    ajax.send(new FormData($form));
+}
+
+// $(document).on("click", "#btn_Pdf",  function (){
+//     let idTarea = document.querySelector('.encabezado').id;
+//     let estadoCliente = document.querySelector('.datos-cotizacion').id;
+// });
