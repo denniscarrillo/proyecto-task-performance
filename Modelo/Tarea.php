@@ -181,8 +181,8 @@ class Tarea
             $selectCliente = "SELECT CODCLIENTE FROM view_clientes WHERE CIF = '$rtn'";
             $consulta = sqlsrv_query($abrirConexion, $selectCliente);
             if(sqlsrv_has_rows($consulta)){
-                $arrCodCiente = sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC);
-                $codCliente = $arrCodCiente['CODCLIENTE'];
+                $arrCodCliente= sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC);
+                $codCliente = $arrCodCliente['CODCLIENTE'];
                 $selectFacturas = "SELECT COUNT(NUMFACTURA) AS CANT FROM View_FACTURASVENTA WHERE CODCLIENTE = '$codCliente';";
                 $consulta= sqlsrv_query($abrirConexion, $selectFacturas);
                 $cantFacturas = sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC);
@@ -200,6 +200,32 @@ class Tarea
             echo 'Error SQL:' . $e;
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
+    }
+    public static function validarClienteExistenteCarteraCliente($rtn){
+        try{
+            $estadoCliente = null;
+            $datosCliente = array();
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $selectCliente = "SELECT nombre_Cliente, telefono, correo, direccion FROM tbl_CarteraCliente WHERE rtn_Cliente = '$rtn'";
+            $consulta = sqlsrv_query($abrirConexion, $selectCliente);
+            if(sqlsrv_has_rows($consulta)){
+                while($fila = sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC)){
+                    $datosCliente[] = [
+                        'nombre' => $fila['nombre_Cliente'],
+                        'telefono' => $fila['telefono'],
+                        'correo' => $fila['correo'],
+                        'direccion' => $fila['direccion']
+                    ];
+                }
+                sqlsrv_close($abrirConexion); //Cerrar conexion
+                return $datosCliente;
+            } else {
+               return $estadoCliente = false;
+            }
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
     }
     public static function obtenerClientes(){
         try{
@@ -312,14 +338,16 @@ class Tarea
         }
        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
-    public static function guardarFacturaTarea($idTarea, $evidencia, $accion){
+    public static function guardarFacturaTarea($idTarea, $evidencia, $accion, $creadoPor){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
         $query = '';
         if($accion == 0){
-            $query = "INSERT INTO tbl_AdjuntoEvidencia VALUES('$idTarea', '$evidencia');";
+            $query = "INSERT INTO tbl_AdjuntoEvidencia (id_Tarea, evidencia, Creado_Por, fecha_Creacion)
+                VALUES('$idTarea', '$evidencia', '$creadoPor', GETDATE())";
         } else {
-            $query = "UPDATE tbl_AdjuntoEvidencia SET evidencia = '$evidencia' WHERE id_Tarea = '$idTarea';";
+            $query = "UPDATE tbl_AdjuntoEvidencia SET evidencia = '$evidencia', 
+                Modificado_Por = '$creadoPor', fecha_Modificacion = GETDATE() WHERE id_Tarea = '$idTarea'";
         }
         sqlsrv_query($conexion, $query);
         sqlsrv_close($conexion);
@@ -369,11 +397,16 @@ class Tarea
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             $estadoContacto = 'En Proceso';
-            date_default_timezone_set('America/Tegucigalpa');
-            $Fecha_Creacion = date("Y-m-d");
-            $insertNuevoCliente = "INSERT INTO tbl_CarteraCliente (nombre_Cliente, rtn_Cliente, telefono, correo, direccion, estadoContacto, Creado_Por, Fecha_Creacion) 
-            VALUES('$nombre', '$rtn', '$telefono', '$correo', '$direccion', '$estadoContacto', '$Creado_Por', '$Fecha_Creacion');";
-            sqlsrv_query($abrirConexion, $insertNuevoCliente);
+            $existeCliente = "SELECT rtn_Cliente FROM tbl_CarteraCliente WHERE rtn_Cliente = '$rtn'";
+            $query = '';
+            if(sqlsrv_has_rows(sqlsrv_query($abrirConexion, $existeCliente)) > 0){
+                $query = "UPDATE tbl_CarteraCliente SET nombre_Cliente = '$nombre', telefono = '$telefono', correo = '$correo', direccion = '$direccion', 
+                        Modificado_Por = '$Creado_Por', Fecha_Modificacion = GETDATE() WHERE rtn_Cliente = '$rtn'";
+            } else {
+                $query = "INSERT INTO tbl_CarteraCliente (nombre_Cliente, rtn_Cliente, telefono, correo, direccion, estadoContacto, Creado_Por, Fecha_Creacion) 
+                VALUES('$nombre', '$rtn', '$telefono', '$correo', '$direccion', '$estadoContacto', '$Creado_Por', GETDATE());";
+            }
+            sqlsrv_query($abrirConexion, $query); 
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
@@ -965,5 +998,35 @@ class Tarea
         $fila = sqlsrv_fetch_array(sqlsrv_query($conexion, $query), SQLSRV_FETCH_ASSOC);
         sqlsrv_close($conexion);
         return $fila;
+    }
+    public static function validarSiExisteEvidencia($evidencia){
+        try{
+            $estado = array();
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $query = "SELECT Creado_Por, id_Tarea FROM tbl_AdjuntoEvidencia WHERE evidencia = '$evidencia'";
+            $result = sqlsrv_query($abrirConexion, $query);
+            $userV = sqlsrv_fetch_array($result,SQLSRV_FETCH_ASSOC);
+            //Verificamos si esta factura corresponde al cliente de la tarea
+            $query1 = "";
+            $result1 = sqlsrv_query($abrirConexion, $query);
+            $cliente = sqlsrv_fetch_array($result,SQLSRV_FETCH_ASSOC);
+
+            if(sqlsrv_has_rows($result) > 0){
+                $estado = [
+                    'estado' =>  true,
+                    'nTarea' => $userV['id_Tarea'],
+                    'vendedor' => $userV['Creado_Por']
+                ];
+            } else {
+                $estado = [
+                    'estado' =>  false
+                ];
+            }
+            sqlsrv_close($abrirConexion); //Cerrar conexion
+            return $estado;
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
     }
 }

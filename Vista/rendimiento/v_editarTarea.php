@@ -144,7 +144,7 @@
 								</div>
 								<div class="mb-3" id="container-num-factura" hidden>
 									<label for="num-factura" class="form-label" >N° FACTURA: </label>
-									<p id="mensaje"></p>
+									<p class="mensaje"></p>
 									<input type="text" name="num-factura" id="num-factura" class="form-control">
 								</div>
 								<div class="mb-3">

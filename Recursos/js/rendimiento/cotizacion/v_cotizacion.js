@@ -534,4 +534,4 @@ $(document).on("click", "#btn_Pdf",  function (){
     let idTarea = document.querySelector('.encabezado').id;
     let estadoCliente = document.querySelector('.datos-cotizacion').id;
     window.open('../../../TCPDF/examples/reporteCotizacion.php?idTarea='+idTarea+'&estadoCliente='+estadoCliente,'_blank');
-   });
+});
