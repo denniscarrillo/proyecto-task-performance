@@ -120,7 +120,7 @@ table.dataTable.no-footer {
 .dataTables_wrapper{
     overflow-y: hidden;
     overflow-x: auto;
-    padding: 2rem;
+    padding: 1rem;
 }
 /* .table-conteiner{
     overflow-x: auto;
