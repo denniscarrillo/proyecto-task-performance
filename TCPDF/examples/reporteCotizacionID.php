@@ -147,20 +147,23 @@ $html .= '
     <td style="width: 401px; font-size: 11px;"></td>
     <td border="1" style="font-size: 12px; width: 120px;">SUB-TOTAL</td>
     <td border="1" style="text-align: center; width: 120px;">Lps.  '. $CotizacionXid['detalleC']['subTotal'].'</td>
-    </tr>
-    
-    <tr>
-    <td style="width: 401px; font-size: 11px;"></td>
-    <td border="1" style="font-size: 12px;">DESCUENTO</td>
-    <td border="1" style="text-align: center; width: 120px;">Lps.  '. $CotizacionXid['detalleC']['descuento'].'</td>
-    </tr>
-    
-    <tr>
-    <td style="width: 401px; font-size: 11px;"></td>
-    <td border="1" style="font-size: 12px;">SUB DESC</td>
-    <td border="1" style="text-align: center; width: 120px;">Lps.  '. $CotizacionXid['detalleC']['subDescuento'].'</td>
-    </tr>
-    
+    </tr>';
+    if ($CotizacionXid['detalleC']['descuento'] > 0) :
+        $html .='
+        <tr>
+        <td style="width: 401px; font-size: 11px;"></td>
+        <td border="1" style="font-size: 12px;">DESCUENTO</td>
+        <td border="1" style="text-align: center; width: 120px;">Lps.  '. $CotizacionXid['detalleC']['descuento'].'</td>
+        </tr>
+        
+        <tr>
+        <td style="width: 401px; font-size: 11px;"></td>
+        <td border="1" style="font-size: 12px;">SUB DESC</td>
+        <td border="1" style="text-align: center; width: 120px;">Lps.  '. $CotizacionXid['detalleC']['subDescuento'].'</td>
+        </tr>
+    ';    
+    endif;
+    $html .='
     <tr>
     <td ></td>
     <td border="1" style="font-size: 12px;">15% I.S.V.</td>
