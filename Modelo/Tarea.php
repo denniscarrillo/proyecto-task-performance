@@ -293,10 +293,10 @@ class Tarea
             //Valores a Setear
             $estadoCliente = $datosTarea['tipoCliente']; $titulo = $datosTarea['titulo']; $razon = $datosTarea['razon']; $rubro = $datosTarea['rubro'];
             if(intval($tipoTarea) === 2){ //Tareas de tipo LEAD
-                $idClasificacionLead = $datosTarea['clasificacionLead'];  $rtn = $datosTarea['rtn']; $idOrigen = $datosTarea['origenLead'];
+                $idClasificacionLead = $datosTarea['clasificacionLead'];  $codCliente = $datosTarea['codCliente']; $rtn = $datosTarea['rtn']; $idOrigen = $datosTarea['origenLead'];
                 //Actualizamos los datos de la tarea de tipo Lead
                 if(isset($datosTarea['rtn']) && !empty($datosTarea['rtn'])){
-                    $update = "UPDATE tbl_tarea SET RTN_Cliente = '$rtn', titulo = '$titulo', estado_Cliente_Tarea = '$estadoCliente', 
+                    $update = "UPDATE tbl_tarea SET RTN_Cliente = '$rtn', cod_Cliente = '$codCliente', titulo = '$titulo', estado_Cliente_Tarea = '$estadoCliente', 
                     id_ClasificacionLead = '$idClasificacionLead', id_OrigenLead = '$idOrigen', rubro_Comercial = '$rubro', razon_Social ='$razon',
                     Modificado_Por = '$ModificadoPor', Fecha_Modificacion = GETDATE() WHERE id_Tarea = '$idTarea';";
                 } 
@@ -306,10 +306,10 @@ class Tarea
                     Modificado_Por = '$ModificadoPor', Fecha_Modificacion = GETDATE() WHERE id_Tarea = '$idTarea';";
                 }
             } else { //Otros tipos de tarea
-                $idClasificacionLead = $datosTarea['clasificacionLead'];  $rtn = $datosTarea['rtn']; $idOrigen = $datosTarea['origenLead'];
+                $idClasificacionLead = $datosTarea['clasificacionLead'];  $codCliente = $datosTarea['codCliente']; $rtn = $datosTarea['rtn']; $idOrigen = $datosTarea['origenLead'];
                 //Actualizamos los datos de la tarea
                 if(isset($datosTarea['rtn']) && !empty($datosTarea['rtn'])){
-                    $update = "UPDATE tbl_tarea SET RTN_Cliente = '$rtn', titulo = '$titulo', estado_Cliente_Tarea = '$estadoCliente', rubro_Comercial = '$rubro',
+                    $update = "UPDATE tbl_tarea SET RTN_Cliente = '$rtn', cod_Cliente = '$codCliente', titulo = '$titulo', estado_Cliente_Tarea = '$estadoCliente', rubro_Comercial = '$rubro',
                     razon_Social ='$razon', Modificado_Por = '$ModificadoPor', Fecha_Modificacion = GETDATE() WHERE id_Tarea = '$idTarea';"; 
                 } else {
                     $update = "UPDATE tbl_tarea SET estado_Cliente_Tarea = '$estadoCliente', titulo = '$titulo', rubro_Comercial = '$rubro',
@@ -538,14 +538,14 @@ class Tarea
                         $consultaDatos = "SELECT tr.titulo, tr.estado_Cliente_Tarea, tr.id_EstadoAvance, (SELECT evidencia FROM tbl_AdjuntoEvidencia WHERE id_Tarea = '$idTarea') as evidencia, tr.RTN_Cliente, vc.NOMBRECLIENTE, vc.TELEFONO1 as TELEFONO,
                         vc.DIRECCION1 as DIRECCION, tr.rubro_Comercial, tr.razon_Social FROM COCINAS_Y_EQUIPOS.dbo.View_Clientes vc 
                         INNER JOIN tbl_Tarea tr ON vc.CIF COLLATE Latin1_General_CS_AI = tr.RTN_Cliente
-                        WHERE tr.id_Tarea = '$idTarea';";
+                        WHERE tr.id_Tarea = '$idTarea'  and vc.CODCLIENTE = (SELECT cod_Cliente FROM tbl_Tarea WHERE id_Tarea = '$idTarea')";
                         break;
                     }
                     case 2:{
                         $consultaDatos = "SELECT tr.titulo, tr.estado_Cliente_Tarea, tr.id_EstadoAvance, (SELECT evidencia FROM tbl_AdjuntoEvidencia WHERE id_Tarea = '$idTarea') as evidencia, tr.id_ClasificacionLead , tr.id_OrigenLead,
                         tr.RTN_Cliente, vc.NOMBRECLIENTE, vc.TELEFONO1 as TELEFONO, vc.DIRECCION1 as DIRECCION, tr.rubro_Comercial, tr.razon_Social FROM COCINAS_Y_EQUIPOS.dbo.View_Clientes vc 
                         INNER JOIN tbl_Tarea tr ON vc.CIF COLLATE Latin1_General_CS_AI = tr.RTN_Cliente
-                        WHERE tr.id_Tarea = '$idTarea';";
+                        WHERE tr.id_Tarea = '$idTarea'  and vc.CODCLIENTE = (SELECT cod_Cliente FROM tbl_Tarea WHERE id_Tarea = '$idTarea');";
                         break;
                     }
                 }

@@ -76,12 +76,14 @@ $html = '
 <table border="1" cellpadding="4">
 <tr>
 <!-- <td style="background-color: #e54037;color: white; text-align: center; width: 40px;">N°</td>-->
-<td style="background-color: #e54037;color: white; text-align: center; width: 60px;">ID</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">TIPO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 265px;">CLIENTE</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 230px;">TITULO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 180px;">CREADO POR</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">ANTIGUEDAD</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 50;">ID</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 80px;">TIPO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 200;">CLIENTE</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 140;">TITULO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 160px;">CREADO POR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">ESTADO FINALICACIÓN</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 105;">FECHA FINALICACIÓN</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 100;">ANTIGUEDAD</td>
 </tr>
 ';
 session_start();
@@ -97,6 +99,12 @@ foreach($Tareas as $tarea){
     $cliente = $tarea['nombreCliente'];
     $titulo = $tarea['titulo'];
     $creadoPor = $tarea['creadoPor'];
+    $estadoFinal = $tarea['estadoFinalizacion'];
+    if (empty($tarea['fechaFinalizacion'])) {
+        $fechaFinal = 'Pendiente';
+    } else {
+        $fechaFinal = $tarea['fechaFinalizacion']->format('Y-m-d');
+    }
     $dias = $tarea['diasTranscurridos'];
     $html .= '
     <tr>
@@ -106,6 +114,8 @@ foreach($Tareas as $tarea){
         <td>'.$cliente.'</td>
         <td>'.$titulo.'</td>
         <td>'.$creadoPor.'</td>
+        <td>'.$estadoFinal.'</td>
+        <td>'.$fechaFinal.'</td>
         <td style="text-align: center">'.$dias.'</td>
     </tr>
     ';

@@ -148,20 +148,24 @@ $html.='
 <td style="width: 401px; font-size: 11px;"></td>
 <td border="1" style="font-size: 12px; width: 120px;">SUB-TOTAL</td>
 <td border="1" style="text-align: center; width: 120px;">Lps.  '. $data['detalle']['subTotal'].'</td>
-</tr>
+</tr>';
+    if ($data['detalle']['descuento'] > 0) :
+        $html .='
 
-<tr>
-<td style="width: 401px; font-size: 11px;"></td>
-<td border="1" style="font-size: 12px;">DESCUENTO</td>
-<td border="1" style="text-align: center; width: 120px;">Lps.  '. $data['detalle']['descuento'].'</td>
-</tr>
+    <tr>
+    <td style="width: 401px; font-size: 11px;"></td>
+    <td border="1" style="font-size: 12px;">DESCUENTO</td>
+    <td border="1" style="text-align: center; width: 120px;">Lps.  '. $data['detalle']['descuento'].'</td>
+    </tr>
 
-<tr>
-<td style="width: 401px; font-size: 11px;"></td>
-<td border="1" style="font-size: 12px;">SUB DESC</td>
-<td border="1" style="text-align: center; width: 120px;">Lps.  '. $data['detalle']['subDescuento'].'</td>
-</tr>
-
+    <tr>
+    <td style="width: 401px; font-size: 11px;"></td>
+    <td border="1" style="font-size: 12px;">SUB DESC</td>
+    <td border="1" style="text-align: center; width: 120px;">Lps.  '. $data['detalle']['subDescuento'].'</td>
+    </tr>
+';    
+endif;
+$html .='
 <tr>
 <td ></td>
 <td border="1" style="font-size: 12px;">15% I.S.V.</td>

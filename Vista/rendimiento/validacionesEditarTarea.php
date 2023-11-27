@@ -63,7 +63,9 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
                         editoFacturaTareaBitacora($id_Tarea, $evidencia, $estadoTarea, $_SESSION['usuario']);
                     }
                 }
-                if(!isset($datosTareaDB['RTN_Cliente']) && (isset($_POST['nombre']) && isset($_POST['rtnCliente']))){
+                // !isset($datosTareaDB['RTN_Cliente']) && (isset($_POST['nombre']) && isset($_POST['rtnCliente']))
+                if(isset($_POST['nombre']) && isset($_POST['rtnCliente'])){
+                    var_dump($_POST['rtnCliente']);
                     $nombre = $_POST['nombre'];
                     $rtn = $_POST['rtnCliente'];
                     ControladorTarea::insertarNuevoCliente($nombre, $rtn, $telefono, $correo, $direccion, $Creado_Por);
@@ -85,9 +87,11 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
                 'razon' => $_POST['razonsocial'],
                 'ModificadoPor' => $Modificador_Por
             ];
+            //Se valida el estado del cliente de la tarea cliente es existente
             if(!ControladorTarea::validarEstadoClienteTarea(intval($_POST['idTarea']))){
                 $tarea += [
-                    'rtn' => $_POST['rtnCliente']
+                    'rtn' => $_POST['rtnCliente'],
+                    'codCliente' => $_POST['codCliente']
                 ];
             }
             if($_POST['idEstado'] == '2'){
