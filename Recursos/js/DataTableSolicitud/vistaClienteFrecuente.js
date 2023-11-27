@@ -22,11 +22,11 @@ $(document).on('click', '#clientenuevo', function () {
   let correoCliente = document.getElementById('containerCorreocliente');
   correoCliente.removeAttribute('hidden');
   containerCorreocliente.style.display = 'block';
-
+ 
   let Factura = document.getElementById('containerFacturacliente');
   Factura.setAttribute('hidden', 'false');
 
-
+ 
 });
 let obtenerClientes = function () {
   if (document.getElementById('table-ClienteFrecuente_wrapper') == null) {
@@ -85,12 +85,15 @@ rtnCliente.addEventListener('change', function () {
   if (document.getElementById('btnclientes') == null) {
     let $btnBuscar = document.createElement('div')
     $btnBuscar.classList.add('btnbuscarcliente');
+    
     $btnBuscar.innerHTML = `
     <button type="button" class="btn btn-primary" id="btnclientes" data-bs-toggle="modal" data-bs-target="#modalMenuClientes">
       Buscar <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
     </button>
     `;
+    
     $containerRTN.appendChild($btnBuscar);
+
   }
   
 });
@@ -205,6 +208,7 @@ $(document).on("click", "#btn_selectfactura", function () {
   let Factura = document.getElementById("idfactura");  
   Factura.value = FacturaCliente;
  $("#modalFacturaSolicitud").modal("hide");
+ limpiarForm();
 });
 
 //Activar los campos al tocar los radio existente o nuevo
@@ -454,7 +458,7 @@ $idProductos.forEach(id => {
            
             Swal.fire({
               title: 'Guardado!',
-              text: '¡Tu solicitud ha sido registrada con éxito! Pronto recibirás un correo electrónico de confirmación.',
+              text: '¡Tu solicitud ha sido registrada con éxito! Pronto se enviará un correo a Servicio Técnico.',
               icon: 'success',
               // El tiempo se especifica en milisegundos (en este caso, 3000 ms o 3 segundos)
               showConfirmButton: false // Esto oculta el botón "Aceptar" para que la notificación se cierre automáticamente

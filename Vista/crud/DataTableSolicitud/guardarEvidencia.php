@@ -4,6 +4,8 @@
  require_once ("../../../Modelo/DataTableSolicitud.php");
  require_once("../../../Controlador/ControladorUsuario.php");
  require_once("../../../Controlador/ControladorDataTableSolicitud.php");
+ require_once ("../../../Modelo/Parametro.php");
+ require_once("../../../Controlador/ControladorParametro.php");
 
 
 // Validar si se ha enviado un archivo
@@ -11,8 +13,11 @@ if (isset($_FILES['evidencia_garantia']) && $_FILES['evidencia_garantia']['error
     $nombre_temporal = $_FILES['evidencia_garantia']['tmp_name'];
     $nombre = $_FILES['evidencia_garantia']['name'];
     $TipoExtensiones = strtolower(pathinfo($nombre, PATHINFO_EXTENSION));
-    $directorio_destino = 'C:/evidencias_solicitud/';
 
+   // Carpeta se llama por parametro
+    $data = ControladorParametro::obtenerCarpetaDestino();
+    $directorio_destino = $data[0]['CarpetaGarantia'];
+  
     $Extensiones = ['pdf', 'doc', 'jpg', 'jpeg', 'png', 'gif']; 
     if (!in_array($TipoExtensiones, $Extensiones)){
         die("Error: Tipo de archivo no permitido.");
