@@ -103,7 +103,8 @@ class Parametro {
 		(SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='ADMIN DIRECCION') as direccion,
 		(SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='ADMIN SITIO WEB') as sitioWed,
         (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='ADMIN TELEFONO') as Telefono,
-        (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='ADMIN TELEFONO2') as Telefono2;";
+        (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='ADMIN TELEFONO2') as Telefono2,
+		(SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='CORREO SERVICIO TEC') as CorreoServicio;";
         $resultado = sqlsrv_query($conexion, $query);
         while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
             $datos [] = [
@@ -112,7 +113,8 @@ class Parametro {
                 'direccion' => $fila['direccion'],
                 'sitioWed' => $fila['sitioWed'],
                 'Telefono' => $fila['Telefono'],
-                'Telefono2' => $fila['Telefono2']
+                'Telefono2' => $fila['Telefono2'],
+                'CorreoServicio' => $fila['CorreoServicio']
             ];
         }        
         sqlsrv_close($conexion); #Cerramos la conexión.
@@ -183,6 +185,22 @@ class Parametro {
         while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
             $datos [] = [
                 'CorreoServicio' => $fila['CorreoServicio']
+            ];
+        }        
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $datos;
+    }
+
+
+    public static function obtenerCarpetaDestino(){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query=" SELECT (SELECT VALOR  FROM tbl_MS_Parametro 
+        WHERE parametro ='ADMIN GARANTIA') as CarpetaGarantia;;";
+        $resultado = sqlsrv_query($conexion, $query);
+        while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+            $datos [] = [
+                'CarpetaGarantia' => $fila['CarpetaGarantia']
             ];
         }        
         sqlsrv_close($conexion); #Cerramos la conexión.

@@ -25,4 +25,7 @@ class ControladorBitacoraTarea {
     public static function obtenerUsuario($idUsuario){
         return BitacoraTarea::obtenerUsuario($idUsuario);
     }
+    public static function obtenerTareaCotizacion($idCotizacion){
+        return BitacoraTarea::obtenerTareaCotizacion($idCotizacion);
+    }
 }

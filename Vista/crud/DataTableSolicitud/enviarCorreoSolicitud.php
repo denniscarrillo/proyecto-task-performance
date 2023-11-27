@@ -161,10 +161,13 @@ function enviarCorreoSolicitud($nuevaSolicitud, $productosSolicitud, $idSolicitu
         </tr>
         <tr>
             <td style="background-color: #c9c9c9;"><b>FECHA CREACIÓN:</b></td>
-            <td>'.$fechaFormateadaC.'</td>       
-        </tr>       
+            <td>'.$fechaFormateadaC.'</td> 
+
+             
+                 
+        </tr> 
         
-      
+        
 
             ';     
     $html .= '
@@ -194,7 +197,11 @@ function enviarCorreoSolicitud($nuevaSolicitud, $productosSolicitud, $idSolicitu
         ';
         }
         $html.='
-        </table>       
+        </table>  
+        <div>
+        <p>Puede ver más detalles en la siguiente URL: <a href="https://shre.ink/TGH6">https://shre.ink/TGH6</a></p>
+        </div> 
+           
 
         ';
     $pdf->writeHTML($html, true, false, true, false);
@@ -224,17 +231,22 @@ function enviarCorreoSolicitud($nuevaSolicitud, $productosSolicitud, $idSolicitu
         // Configurar el contenido del correo
         $mail->isHTML(true);                                        //Set email format to HTML
         $mail->Subject = 'Nueva Solicitud N° '.$idSolicitud;
-        $mail->Body    = 
-        '<div>
-            <h2>Se le muestra información acerca de la nueva solicitud número '. $idSolicitud .'</h2>
+        $mail->Body = '
+        <div>
+        <h2>Se le muestra información acerca de la nueva solicitud número '. $idSolicitud .'</h2>    
+        <p>Puede ver más detalles en la siguiente URL: <a href="http://localhost:3000/Vista/crud/DataTableSolicitud/gestionDataTableSolicitud.php">http://localhost:3000/Vista/crud/DataTableSolicitud/gestionDataTableSolicitud.php</a></p>
         </div>';
         // $mail->AltBody = 'Si funcionó!';
         $mail->CharSet = 'UTF-8'; // Setear UTF-8 para caracteres especiales
         $mail->send();
+
+        
         $confirmacion = 'La solicitud se ha enviado al correo electrónico';
     } catch (Exception $e) {
         $confirmacion =  'No se ha podido enviar la solicitud. Mailer Error: {$mail->ErrorInfo}';
+    
     }
     return $confirmacion;
+
 }
 
