@@ -87,10 +87,17 @@ $html = '
         </tr>
 
         <tr>
-            <th>'.$Tareas['titulo'].'</th>
-            <th>'.$Tareas['estadoAvance'].'</th>
-            <th>'.$Tareas['fecha_Inicio']->format('Y-m-d').'</th>
-            <th>'.$Tareas['fecha_Finalizacion'].'</th>
+            <th>' . $Tareas['titulo'] . '</th>
+            <th>' . $Tareas['estadoAvance'] . '</th>
+            <th>' . $Tareas['fecha_Inicio']->format('Y-m-d') . '</th>';
+
+            if (!empty($Tareas['fecha_Finalizacion'])) {
+                $fechaFinal = $Tareas['fecha_Finalizacion']->format('Y-m-d');
+            } else {
+                $fechaFinal = 'Pendiente';
+            }
+
+        $html .= '<th>' . $fechaFinal . '</th>
         </tr>
     
         <tr>
