@@ -7,6 +7,7 @@ let $idEstadoTarea = document.querySelector('.id-estado-tarea').id;
 const $btnCotizacion = document.getElementById('btn-container-cotizacion');
 let radioOption = document.getElementsByName('radioOption');
 let estadoRTN = '';
+let $codCliente = '';
 const Toast = Swal.mixin({
   toast: true,
   position: 'top',
@@ -143,6 +144,7 @@ document.getElementById('form-Edit-Tarea').addEventListener('submit', function(e
   let $idTask = $('#id-Tarea').val();
   let radioOption = document.getElementsByName('radioOption');
   let tipoCliente = (radioOption[1].checked) ? radioOption[1].value : radioOption[0].value;
+  console.log(tipoCliente)
   let $datosTarea = validarCamposEnviar(tipoCliente);
   actualizarDatosTarea($datosTarea);
   enviarProductosInteres($idTask); //Enviamos los productos de interes a almacenar
@@ -177,6 +179,8 @@ $('#btn-articulos').click(() => {
   });
   $(document).on("click", "#btn_select-cliente", function () {
     let fila = $(this).closest("tr");
+    let codCliente = fila.find("td:eq(0)").text();
+    $codCliente = codCliente;
     let nombreCliente = fila.find("td:eq(1)").text();
     let rtnCliente = fila.find("td:eq(2)").text();
     let telefonoCliente = fila.find("td:eq(3)").text();
@@ -585,6 +589,7 @@ let setArticulosInteres = (productos) => {
 
 let validarCamposEnviar = (tipoCliente) => {
   let $datosTarea;
+  console.log($codCliente);
   if(document.getElementsByName('estadoEdicion')[0].id == 'false'){
     if($idEstadoTarea == '2'){
       $datosTarea = {
@@ -593,6 +598,7 @@ let validarCamposEnviar = (tipoCliente) => {
         "tipoCliente": tipoCliente,
         "titulo": document.getElementById('input-titulo-tarea').value,
         "rtnCliente": document.getElementById('rnt-cliente').value,
+        "codCliente": $codCliente,
         "nombre": document.getElementById('nombre-cliente').value, 
         "telefono": document.getElementById('telefono-cliente').value,
         "correo": document.getElementById('correo-cliente').value,
@@ -611,6 +617,7 @@ let validarCamposEnviar = (tipoCliente) => {
         "tipoCliente": tipoCliente,
         "titulo": document.getElementById('input-titulo-tarea').value,
         "rtnCliente": document.getElementById('rnt-cliente').value,
+        "codCliente": $codCliente,
         "nombre": document.getElementById('nombre-cliente').value, 
         "telefono": document.getElementById('telefono-cliente').value,
         "correo": document.getElementById('correo-cliente').value,
@@ -628,7 +635,8 @@ let validarCamposEnviar = (tipoCliente) => {
         "idEstado": $idEstadoTarea,
         "tipoCliente": tipoCliente,
         "titulo": document.getElementById('input-titulo-tarea').value,
-        "rtn": document.getElementById('rnt-cliente').value,
+        "rtnCliente": document.getElementById('rnt-cliente').value,
+        "nombre": document.getElementById('nombre-cliente').value, 
         "telefono": document.getElementById('telefono-cliente').value,
         "correo": document.getElementById('correo-cliente').value,
         "direccion": document.getElementById('direccion-cliente').value,
@@ -645,7 +653,8 @@ let validarCamposEnviar = (tipoCliente) => {
         "idEstado": $idEstadoTarea,
         "tipoCliente": tipoCliente,
         "titulo": document.getElementById('input-titulo-tarea').value,
-        "rtn": document.getElementById('rnt-cliente').value,
+        "rtnCliente": document.getElementById('rnt-cliente').value,
+        "nombre": document.getElementById('nombre-cliente').value, 
         "telefono": document.getElementById('telefono-cliente').value,
         "correo": document.getElementById('correo-cliente').value,
         "direccion": document.getElementById('direccion-cliente').value,
