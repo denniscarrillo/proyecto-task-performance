@@ -161,10 +161,13 @@ if (isset($_SESSION['usuario'])) {
                 <th scope="col">ID VENDEDOR</th>
                 <th scope="col">VENDEDOR</th>
                 <th scope="col">COMISION TOTAL</th>
-                <th scope="col">ESTADO</th>
+                <th scope="col">ESTADO </th>
                 <th scope="col">LIQUIDACION</th>
-                <th scope="col">FECHA</th>
-                <th scope="col">FECHA LIQUIDAR</th>
+                <th scope="col">ESTADO COBRO VENTA</th>
+                <th scope="col">METODO PAGO</th>
+                <th scope="col">FECHA CREACION</th>
+                <th scope="col">FECHA LIQUIDACION</th>
+                <th scope="col">FECHA COBRO</th>
               </tr>
             </thead>
             <tbody class="table-group-divider">

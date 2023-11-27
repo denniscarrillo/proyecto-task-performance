@@ -141,20 +141,29 @@ $selectPorcentaje.addEventListener("change", function () {
   obtenerComisionTotal($porcentaje, $totalVenta);
 });
 
-$('#form-Comision').submit(function (e) { //evita el comportambiento normal del submit, es decir, recarga total de la página
+$('#form-Comision').submit(function (e) {
   e.preventDefault();
-  if(document.getElementById("mensaje").classList.contains("mensaje-estado")){
+  if (document.getElementById("mensaje").classList.contains("mensaje-estado")) {
+    Swal.fire(
+      'Error!',
+      '¡Factura ya comisionada!',
+      'error',
+    )
+  } else {
+    // Verificar si el cliente es elegible para la comisión
+    if (document.getElementById("mensaje-tipo-cliente").innerText.includes("No Aplica Comision")) {
       Swal.fire(
         'Error!',
-        'Factura ya comisionada!',
+        '¡El cliente no aplica para comisión!',
         'error',
       )
-  }else{
-    guardarNuevaComision();
-    window.location.href = "../../../Vista/comisiones/v_Comision.php";
+    } else {
+      guardarNuevaComision();
+      // window.location.href = "../../../Vista/comisiones/v_Comision.php";
+    }
   }
-  
 });
+
 
 let guardarNuevaComision = function () {
   // let fechaComision = document.getElementById('fecha-comision').value;
@@ -194,11 +203,15 @@ let guardarNuevaComision = function () {
         'Registrado!',
         'Se ha registrado la comision!',
         'success',
-      )
+      ).then((result) => {
+        // Redirigir solo si se hizo clic en "Aceptar" en el mensaje de Swal
+        if (result.isConfirmed || result.isDismissed) {
+          window.location.href = "../../../Vista/comisiones/v_Comision.php";
+        }
+      });
     }
   });
 }
-
 // }
 
 let obtenerEstadoComision = ($idVenta) => {
@@ -212,18 +225,29 @@ let obtenerEstadoComision = ($idVenta) => {
     success: function (idVenta) {
       let $mensajeEstado = document.getElementById("mensaje");
       let $objEstadoVenta = JSON.parse(idVenta);
-      //condicion donde valida si la comision ya esta registrada 
 
+      // Condición para verificar si la comisión ya está registrada
       if ($objEstadoVenta.estado == 'true') {
-        $mensajeEstado.innerText = 'Facura ya comisionada'
+        $mensajeEstado.innerText = 'Factura ya comisionada';
         $mensajeEstado.classList.add('mensaje-estado');
-      } else{
-        $mensajeEstado.innerText = ''
+
+        // Deshabilitar campos cuando la comisión ya está registrada
+        document.getElementById("monto-total").disabled = true;
+        document.getElementById("porcentaje-comision").disabled = true;
+        document.getElementById("comision-total").disabled = true;
+      } else {
+        $mensajeEstado.innerText = '';
         $mensajeEstado.classList.remove('mensaje-estado');
+
+        // Habilitar campos si la comisión no está registrada
+        document.getElementById("monto-total").disabled = false;
+        document.getElementById("porcentaje-comision").disabled = false;
+        document.getElementById("comision-total").disabled = false;
       }
     }
   });
- } 
+}
+
  let obtenerLiquidacion = async () =>{
   try {
     let dato = await $.ajax({
@@ -236,37 +260,3 @@ let obtenerEstadoComision = ($idVenta) => {
     console.error(err)
 }
 }//Fin AJAX
-/* let $btnGuardarComision = document.getElementById('btn-guardar-comision');
-  $btnGuardarComision.addEventListener('click', function(){
-  let $idVenta = document.getElementById('monto-total').value;
-   let $idVendedor = document.getElementById('conteiner-vendedores').value; 
-  let $porcentaje = document.getElementById('porcentaje-comision').value;
-  let $comision = document.getElementById('comision-total').value;
-  let $fechaComision = document.getElementById('fecha-comision').value;
-  guardarComision($idVenta, $porcentaje, $comision, $fechaComision);
-}
-); */
-
-//crear comision
-/*let guardarComision = ($idVenta, $idVendedor, $porcentaje, $comision, $fechaComision) => {
-  $.ajax({
-
-url: "../../../Vista/comisiones/guardarComision.php",
-    type: "POST",
-    datatype: "JSON",
-    data: {
-      idVenta: $idVenta,
-      idVendedor: $idVendedor,
-      porcentaje: $porcentaje,
-      comision: $comision,
-      fechaComision: $fechaComision
-    },
-    success: function () {
-      Swal.fire(
-        'Registrado!',
-        'Se ha registrado la comision!',
-        'success',
-      )
-    },
-  }); //Fin AJAX
- */

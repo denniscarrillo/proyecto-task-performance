@@ -42,7 +42,7 @@ class Venta {
         $select = "SELECT v.NUMFACTURA, v.CODCLIENTE, c.NOMBRECLIENTE, c.CIF, v.FECHA, v.TOTALBRUTO, v.TOTALIMPUESTOS, v.TOTALNETO
                     FROM view_clientes AS c
                     INNER JOIN View_facturasventa AS v ON c.CODCLIENTE = v.CODCLIENTE
-                    WHERE v.FECHA BETWEEN '$fechaDesde' AND '$fechaHasta';";
+                    WHERE v.FECHA BETWEEN '$fechaDesde' AND '$fechaHasta' AND v.TOTALNETO > 0;";
         $query = $select;
         $listaVentas = sqlsrv_query($conexion, $query);
         $ventas = array();
