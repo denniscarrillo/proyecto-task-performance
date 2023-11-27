@@ -65,6 +65,9 @@
             return Comision::liquidarComisiones($fechaDesde, $fechaHasta);
         }
         public static function ComisionesGenerales_a_Liquidar($fechaDesde, $fechaHasta){
-            return Comision::comisiones_A_Liquidar($fechaDesde, $fechaHasta);
+            return Comision::Obtenercomisiones_A_Liquidar($fechaDesde, $fechaHasta);
+        }
+        public static function LiquidandoComisionesGenerales($idComision){
+            return Comision::LiquidandoComisionesGenerales($idComision);
         }
     }
