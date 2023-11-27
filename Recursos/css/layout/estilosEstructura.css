@@ -110,4 +110,19 @@ table.dataTable.no-footer {
     margin-top: 14px;
     margin-left: 15px;
 }
+/* #table-Tareas{
+    width: fit-content !important;
+}
+.table-group-divider tr td{
+    width: 200rem !important;
+
+} */
+.dataTables_wrapper{
+    overflow-y: hidden;
+    overflow-x: auto;
+    padding: 2rem;
+}
+/* .table-conteiner{
+    overflow-x: auto;
+} */
 

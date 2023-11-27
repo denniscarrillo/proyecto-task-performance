@@ -18,7 +18,6 @@ $(document).ready(function () {
 //Recibe la respuesta de la peticion AJAX y la procesa
 let procesarPermisoActualizar = data => {
   let permisos = JSON.parse(data);
-  let btn = '<button class="btn-abrir" id="btn-abrir-tarea"><i class="fa-solid fa-envelope-open"></i> Reabrir</button><button class="btn-finalizar" id="btn-finalizar-tarea"><i class="fa-solid fa-envelope"></i> Finalizar</button>';
   let user = document.getElementById('username').textContent;
   tablaDataTableTarea = $('#table-Tareas').DataTable({
     "ajax": {
@@ -43,8 +42,8 @@ let procesarPermisoActualizar = data => {
       {
         "defaultContent":
         `<button class="btn-editar btns btn ${(permisos.Reporte == 'N')?'hidden':''}" id="btn_PDFid"><i class="fas fa-file-pdf"> </i></button>
-        ${(user == 'SUPERADMIN')? btn : ''}
-        `
+        <button class="btn-abrir ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn-abrir-tarea"><i class="fa-solid fa-envelope-open"></i> Reabrir</button>
+        <button class="btn-finalizar ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn-finalizar-tarea"><i class="fa-solid fa-envelope"></i> Finalizar</button>`
       }
     ]
   });
