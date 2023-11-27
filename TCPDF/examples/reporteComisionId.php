@@ -75,10 +75,6 @@ $pdf->setFont('Helvetica', '', 11);
 // add a page
 $pdf->AddPage();
 // create some HTML content
-$html = '
-<P style="text-align: center; font-size: 18px;"><b>Reporte de la Comision id</b></P>
-';
-
 $ComisionId = ControladorComision::traerIdComision($_GET['idComision']);
 $idComision = $ComisionId['idComision'];
 $idFactura = $ComisionId['idFactura'];
@@ -87,6 +83,8 @@ $valorPorcentaje = $ComisionId['valorPorcentaje'] * 100;
 $ComisionT =  'Lps. ' . number_format($ComisionId['comisionT'], 2, '.', ',');
 $Estado = $ComisionId['estadoComision'];
 $EstadoL = $ComisionId['estadoLiquidacion'];
+$EstadoC = $ComisionId['estadoCobro'];
+$metodoPago = $ComisionId['metodoPago'];
 $creadoPor = $ComisionId['CreadoPor'];
 // Verificar si $fecha está definido y no es null
 if (isset($ComisionId['FechaComision']) && $ComisionId['FechaComision'] !== null) {
@@ -106,6 +104,14 @@ if (isset($ComisionId['FechaLiquidacion']) && $ComisionId['FechaLiquidacion'] !=
 } else {
     $fechaLiquidacion = 'Sin Liquidar'; // Otra acción si $fechaLiquidacion es nulo
 }
+if(isset($ComisionId['FechaCobro']) && $ComisionId['FechaCobro'] !== null){
+    $fechaC = $ComisionId['FechaCobro'];
+    $timestamp = $fechaC->getTimestamp();
+    // Verificar si la fecha es no nula antes de formatearla
+    $fechaCobro = date('Y-m-d H:i:s', $timestamp);
+}else{
+    $fechaCobro = 'Sin Cobrar';
+}
 $modificadoPor = $ComisionId['ModificadoPor'];
 if ($modificadoPor == null) {
     $modificadoPor = "Sin modificaciones";
@@ -118,6 +124,9 @@ if (isset($ComisionId['FechaModificacion']) && $ComisionId['FechaModificacion'] 
 } else {
     $fechaModificacion = 'Sin modificaciones'; // Otra acción si $fechaLiquidacion es nulo
 }
+$html = '
+<P style="text-align: center; font-size: 18px;"><b>Reporte de la Comision N° '.$idComision.'</b></P>
+';
 
 $html .= '
 
@@ -129,9 +138,12 @@ $html .= '
 <div style="flex: 1; text-align: left;"> <b> COMISION TOTAL:  </b>' . $ComisionT . '</div>
 <div style="flex: 1; text-align: left;"> <b> ESTADO:  </b>' . $Estado . '</div>
 <div style="flex: 1; text-align: left;"> <b> ESTADO LIQUIDACION:  </b>' . $EstadoL . '</div>
+<div style="flex: 1; text-align: left;"> <b> ESTADO COBRO:  </b>' . $EstadoC . '</div>
+<div style="flex: 1; text-align: left;"> <b> METODO PAGO:  </b>' . $metodoPago . '</div>
 <div style="flex: 1; text-align: left;"> <b> CREADO POR:  </b>' . $creadoPor . '</div>
 <div style="flex: 1; text-align: left;"> <b> FECHA DE CREACION:  </b>' . $fechaComision . '</div>
 <div style="flex: 1; text-align: left;"> <b> FECHA DE LIQUIDACION:  </b>' . $fechaLiquidacion . '</div>
+<div style="flex: 1; text-align: left;"> <b> FECHA DE COBRO:  </b>' . $fechaCobro . '</div>
 <div style="flex: 1; text-align: left;"> <b> MODIFICADO POR:  </b>' . $modificadoPor . '</div>
 <div style="flex: 1; text-align: left;"> <b> FECHA MODIFICACION:  </b>' . $fechaModificacion . '</div>
 </dl>
