@@ -18,11 +18,17 @@ $(document).ready(function () {
       "render": $.fn.dataTable.render.number( ',', '.', 2, ' Lps. ' )},
       { "data": 'estadoComision'},
       { "data": 'estadoLiquidacion'},
+      { "data": 'estadoCobro'},
+      { "data": 'metodoPago'},
       { "data": 'fechaComision.date',
       "render": function(data) {
         return data.slice(0, 19); },
       },
       { "data": 'fechaLiquidacion.date',
+      "render": function(data) {
+        return data ? data.slice(0, 19) : '' },
+      },
+      { "data": 'fechaCobro.date',
       "render": function(data) {
         return data ? data.slice(0, 19) : '' },
       },

@@ -66,7 +66,7 @@ if (@file_exists(dirname(__FILE__).'/lang/spa.php')) {
 
 
 // set font
-$pdf->setFont('Helvetica', '', 11);
+$pdf->setFont('Helvetica', '', 9);
 
 // add a page
 $pdf->AddPage();
@@ -76,14 +76,17 @@ $html = '
 <table border="1" cellpadding="4">
 <tr>
 <td style="background-color: #e54037;color: white; text-align: center; width: 40px">N°</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">ID COMISION</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 105px;">ID VENDEDOR</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">VENDEDOR</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">ESTADO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 130px;">COMISION TOTAL</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 120px;">LIQUIDACION</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 120px;">FECHA</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 140px;">FECHA LIQUIDAR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 70px;">ID COMISION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 80px;">ID VENDEDOR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">VENDEDOR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 70px;">ESTADO COMISION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">COMISION TOTAL</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">ESTADO LIQUIDACION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 80px;">ESTADO COBRO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 70px;">METODO PAGO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">FECHA COMISION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">FECHA LIQUIDAR </td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">FECHA COBRO</td>
 </tr>
 ';
 $ComisionVendedor = ControladorComision::getComisionesVendedorPdf($_GET['buscar']);
@@ -95,6 +98,8 @@ foreach($ComisionVendedor as $ComisionV){
     $Estado = $ComisionV['estadoComision'];
     $comisionTotal = 'Lps. ' . number_format($ComisionV['comisionTotal'], 2, '.', ',');
     $liquidacion = $ComisionV['estadoLiquidacion'];
+    $estadoCobro = $ComisionV['estadoCobro'];
+    $metodoPago = $ComisionV['metodoPago'];
     // Verificar si $fecha está definido y no es null
     if (isset($ComisionV['fechaComision']) && $ComisionV['fechaComision'] !== null) {
         $fecha = $ComisionV['fechaComision'];
@@ -113,6 +118,14 @@ foreach($ComisionVendedor as $ComisionV){
     } else {
         $fechaLiquidacion = ''; // Otra acción si $fechaLiquidacion es nulo
     }
+    if(isset($ComisionV['fechaCobro']) && $ComisionV['fechaCobro'] !== null){
+        $fechaC = $ComisionV['fechaCobro'];
+        $timestamp = $fechaC->getTimestamp();
+        // Verificar si la fecha es no nula antes de formatearla
+        $fechaCobro = date('Y-m-d H:i:s', $timestamp);
+    } else {
+        $fechaCobro = ''; // Otra acción si $fechaCobro es nulo
+    }
     $Cont++;
     
 
@@ -125,8 +138,11 @@ foreach($ComisionVendedor as $ComisionV){
 	<td style="text-align: center">'.$Estado.'</td>
     <td style="text-align: center">'.$comisionTotal.'</td>
     <td style="text-align: center">'.$liquidacion.'</td>
+    <td style="text-align: center">'.$estadoCobro.'</td>
+    <td style="text-align: center">'.$metodoPago.'</td>
     <td style="text-align: center">'.$fechaComision.'</td>
     <td style="text-align: center">'.$fechaLiquidacion.'</td>
+    <td style="text-align: center">'.$fechaCobro.'</td>
     </tr>
     ';
     

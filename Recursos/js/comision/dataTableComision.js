@@ -1,14 +1,19 @@
 /* import {estadoValidado as valido } from './validacionesEditarComision.js'; */
 let $vendedores = '';
 let tablaComision = "";
+let permisos; // Variable para almacenar los permisos
+
 $(document).ready(function () {
   let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
   console.log($idObjetoSistema);
   obtenerPermisos($idObjetoSistema, procesarPermisoActualizar);
 });
-//Recibe la respuesta de la peticion AJAX y la procesa
+
+// Inicialización de modales
+
+// Recibe la respuesta de la petición AJAX y la procesa
 let procesarPermisoActualizar = data => {
-  let permisos = JSON.parse(data);
+  permisos = JSON.parse(data);
   // console.log(permisos);
   tablaComision = $('#table-Comision').DataTable({
     "ajax": {
@@ -21,8 +26,7 @@ let procesarPermisoActualizar = data => {
     "columns": [
       { "data": "idComision" },
       { "data": "factura" },
-      { "data": "totalVenta",
-       "render": $.fn.dataTable.render.number(',', '.', 2, ' Lps. ') },
+      { "data": "totalVenta", "render": $.fn.dataTable.render.number(',', '.', 2, ' Lps. ') },
       {
         "data": "porcentaje",
         "render": function (data, type, row) {
@@ -32,29 +36,58 @@ let procesarPermisoActualizar = data => {
           return data; // En otras ocasiones, devuelve el valor sin formato
         }
       },
-      { "data": "comisionTotal", 
-      "render": $.fn.dataTable.render.number(',', '.', 2, ' Lps. ') },
+      { "data": "comisionTotal", "render": $.fn.dataTable.render.number(',', '.', 2, ' Lps. ') },
       { "data": "estadoComisionar" },
       { "data": "estadoLiquidacion" },
-      { "data": 'fechaComision.date',
-      "render": function(data) {
-        return data.slice(0, 10); },
+      { "data": "estadoCobro" },
+      { "data": "metodoPago" },
+      {
+        "data": 'fechaComision.date',
+        "render": function (data) {
+          return data.slice(0, 19);
+        },
       },
-      { "data": 'fechaLiquidacion.date',
-      "render": function(data) {
-        return data ? data.slice(0, 10) : ''; },
+      {
+        "data": 'fechaLiquidacion.date',
+        "render": function (data) {
+          return data ? data.slice(0, 19) : '';
+        },
+      },
+      {
+        "data": 'fechaCobro.date',
+        "render": function (data) {
+          return data ? data.slice(0, 19) : '';
+        },
       },
       {
         "defaultContent":
           `<div>
           <button class="btns btn" id="btn_ver"><i class="fa-solid fa-eye"></i></button>
-          <button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>
-          <button class="btn_eliminar btns btn ${(permisos.Eliminar == 'N')? 'hidden': ''}" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button>
+          <button class="btn-editar btns btn ${(permisos.Actualizar == 'N') ? 'hidden' : ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button class="btn_eliminar btns btn ${(permisos.Eliminar == 'N') ? 'hidden' : ''}" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button>
           </div>`
-        }
-    ]
+      }
+    ],
+    // Evento para manejar clics en filas
+    "rowCallback": function (row, data, index) {
+      $(row).on("click", "#btn_editar", function () {
+        // Obtener datos de la fila clicada y abrir modalEditarComision
+        // ...
+        $("#modalEditarComision").modal("show");
+      });
+
+      $(row).on("click", "#btn_ver", function () {
+        // Obtener datos de la fila clicada y abrir modalVerComision
+        // ...
+        $("#modalVerComision").modal("show");
+      });
+      // Otros eventos o acciones que puedas necesitar
+    }
   });
 }
+
+// Resto del código...
+
 //Peticion  AJAX que trae los permisos
 let obtenerPermisos = function ($idObjeto, callback) { 
   $.ajax({
@@ -75,9 +108,13 @@ $(document).on("click", "#btn_editar", function(){
     porcentaje = fila.find("td:eq(3)").text(),
     comisionTotal = fila.find("td:eq(4)").text(),
     estadoComisionar = fila.find("td:eq(5)").text(),
-    // estadoLiquidacion = fila.find("td:eq(6)").text(),
-    fechaComision = fila.find("td:eq(6)").text();
-    // fechaLiquidacion = fila.find("td:eq(8)").text(); // Agregar punto y coma aquí
+    estadoLiquidacion = fila.find("td:eq(6)").text(),
+    estadoCobro = fila.find("td:eq(7)").text(),
+    metodoPago = fila.find("td:eq(8)").text(),
+    fechaComision = fila.find("td:eq(9)").text(),
+    fechaLiquidacion = fila.find("td:eq(10)").text(), 
+    fechaCobro = fila.find("td:eq(11)").text(); // Agregar punto y coma aquí
+
   $("#idComision_E").val(idComision);
   $("#idVenta_E").val(idVenta);
   $("#monto_E").val(monto);
@@ -85,12 +122,16 @@ $(document).on("click", "#btn_editar", function(){
   $("#totalComsion_E").val(comisionTotal);
   $("#estadoComision_E").val(estadoComisionar);
   $("#estadoLiquidacion_E").val(estadoLiquidacion);
+  $("#estadoCobro_E").val(estadoCobro);
+  $("#metodoPago_E").val(metodoPago);
   $("#fecha_E").val(fechaComision);
-  // $("#fecha_EV").val(fechaLiquidacion);
+  $("#fecha_EV").val(fechaLiquidacion);
+  $("#fecha_EC").val(fechaCobro);
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-title").css("color", "white");
   $("#modalEditarComision").modal("show");
 });
+
 
 
 //Envio de datos para editar
@@ -98,7 +139,9 @@ $("#form-Edit-Comision").submit(function (e) {
   e.preventDefault();
   let idComision = $("#idComision_E").val();
   // let estadoComision = document.getElementById("estadoComision_E").value;
+  let estadoCobro = document.getElementById("estadoCobro_E").value;
   let estadoLiquidacion = document.getElementById("estadoLiquidacion_E").value;
+  let metodoPago = document.getElementById("metodoPago_E").value;
   $.ajax({
     url: "../../../Vista/comisiones/EditarComision.php",
     type: "POST",
@@ -106,7 +149,9 @@ $("#form-Edit-Comision").submit(function (e) {
     data: {
       idComision: idComision,
       // estadoComision: estadoComision,
+      estadoCobro: estadoCobro,
       estadoLiquidacion: estadoLiquidacion,
+      metodoPago: metodoPago,
     },
     success: function (data) {
       console.log(data);
@@ -154,11 +199,21 @@ if (!isNaN(porcentajeDecimal)) {
   estadoComisionLabel.innerText = idComisionVer.estadoComision;
   const estadoLiquidacionLabel = document.getElementById('V_EstadoLiquidar');
   estadoLiquidacionLabel.innerText = idComisionVer.estadoLiquidacion;
+  const estadoCobroLabel = document.getElementById('V_EstadoCobro');
+  estadoCobroLabel.innerText = idComisionVer.estadoCobro;
+  const metodoPagoLabel = document.getElementById('V_metodoPago');
+  metodoPagoLabel.innerText = idComisionVer.metodoPago;
   const fechaLiquidacionLabel = document.getElementById('V_fechaLiquidacion');
   if(idComisionVer.FechaLiquidacion !== null){
     fechaLiquidacionLabel.innerText = idComisionVer.FechaLiquidacion.date.slice(0, 19).replace("T", " ");
   } else {
     fechaLiquidacionLabel.innerText = '';
+  }
+  const fechaCobroLabel = document.getElementById('V_fechaCobro');
+  if(idComisionVer.FechaCobro !== null){
+    fechaCobroLabel.innerText = idComisionVer.FechaCobro.date.slice(0, 19).replace("T", " ");
+  } else {
+    fechaCobroLabel.innerText = '';
   }
   const CreadoPorLabel = document.getElementById('V_CreadoPor');
   CreadoPorLabel.innerText = idComisionVer.CreadoPor;
@@ -173,7 +228,7 @@ if (!isNaN(porcentajeDecimal)) {
   }
   const fechaModificacionLabel = document.getElementById('V_FechaModificado');
   if(idComisionVer.FechaModificacion !== null){
-    fechaModificacionLabel.innerText = idComisionVer.fechaModificacion.date.slice(0, 19).replace("T", " ");
+    fechaModificacionLabel.innerText = idComisionVer.FechaModificacion.date.slice(0, 19).replace("T", " ");
   } else {
     fechaModificacionLabel.innerText = '';
   }
@@ -272,6 +327,67 @@ $(document).on("click", "#btn_pdf_id",  function (){
       window.open('../../../TCPDF/examples/reporteriaComision.php?buscar='+buscar, '_blank');
     });
     
+    let $btnFiltrar = document.getElementById("btn_filtroALiquidar");
+    let $tablaComisionesLiquidadas = "";
+    let $fechaDesde = document.getElementById('fechaDesdef');
+    let $fechaHasta = document.getElementById('fechaHastaf');
+    
+    $btnFiltrar.addEventListener("click", function(){
+      iniciarDataTable($fechaDesde.value, $fechaHasta.value);
+    });
+    
+    let iniciarDataTable = function (fechaDesde, fechaHasta) {
+      $tablaComisionesLiquidadas = $("#table-comisiones_ALiquidar").DataTable({
+        ajax: {
+          url: "../../../Vista/comisiones/comisiones_A_Liquidar.php",
+          type: "POST",
+          datatype: "JSON",
+          data: {
+            fecha_Desde: fechaDesde,
+            fecha_Hasta: fechaHasta
+          },
+          dataSrc: "",
+        },
+        language: {
+          url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
+        },
+        columns: [
+          { data: "idComision" },
+          { data: "idVenta" },
+          { data: "comisionTotal", "render": $.fn.dataTable.render.number(',', '.', 2, ' Lps. ') },
+          { data: "estadoComision" },
+          { data: "estadoCobro" },
+          { defaultContent: `<div>
+          <button class="btns btn" id="btn_liquidar"><i class="fa-solid fa-clipboard-check"></i></button>
+          </div>` }
+        ],
+        initComplete: function (settings, json) {
+          // Obtener las fechas de la primera fila
+          const fechaDesdeT = json[0].fechaDesde; // Ajusta esto según la estructura de tus datos
+          const fechaHastaT = json[0].fechaHasta; // Ajusta esto según la estructura de tus datos
+    
+          // Asumiendo que tengas un elemento con el id "fechasLabel" para mostrar las fechas
+          $("#fechasLabel").text('Desde el: ' + fechaDesdeT + ' Hasta el: ' + fechaHastaT);
+        }
+      });
+      $("#modalComisiones_Liquidar").modal("show");
+    };
+    
+    let obtenerComisionesFiltradas = function (fechaDesde, fechaHasta) {
+      console.log("Fecha desde: " + fechaDesde);
+      console.log("Fecha hasta: " + fechaHasta);
+      $.ajax({
+        type: "POST",
+        url: "../../../Vista/comisiones/comisiones_A_Liquidar.php",
+        data: {
+          fecha_Desde: fechaDesde,
+          fecha_Hasta: fechaHasta,
+        },
+        success: function (data) {
+          console.log(data);
+        },
+      });
+    }
 /* let obtenerEstadoComision = function (idElemento) {
   //Petición para obtener los estados de las comisiones
   $.ajax({

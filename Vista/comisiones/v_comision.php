@@ -84,7 +84,7 @@ require_once("validacionesComision.php");
               <input type="date" id="fechaDesdef" name="fechaDesdef" class="form-control">
               <label for="fechaHasta">Fecha hasta:</label>
               <input type="date" id="fechaHastaf" name="fechaHastaf" class="form-control">
-              <button type="button" class="btn btn-primary" id="btnFiltrar">Filtrar</button>
+              <button type="button" class="btn btn-primary" id="btn_filtroALiquidar">Comisiones a liquidar</button>
             </div> -->
             <div>
               <a href="v_nuevaComision.php" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro"><i
@@ -99,14 +99,17 @@ require_once("validacionesComision.php");
               <thead>
                 <tr>
                   <th scope="col"> ID COMISION </th>
-                  <th scope="col"> FACTURA </th>
+                  <th scope="col"> N° FACTURA </th>
                   <th scope="col"> TOTAL VENTA </th>
                   <th scope="col"> PORCENTAJE </th>
                   <th scope="col"> COMISION TOTAL </th>
-                  <th scope="col"> ESTADO </th>
-                  <th scope="col"> LIQUIDACION </th>
-                  <th scope="col"> FECHA </th>
-                  <th scope="col"> FECHA LIQUIDAR</th>
+                  <th scope="col"> ESTADO COMISION </th>
+                  <th scope="col"> ESTADO LIQUIDACION </th>
+                  <th scope="col"> ESTADO COBRO </th>
+                  <th scope="col"> METODO PAGO </th>
+                  <th scope="col"> FECHA CREACION </th>
+                  <th scope="col"> FECHA LIQUIDACION</th>
+                  <th scope="col"> FECHA COBRO VENTA </th>
                   <th scope="col"> ACCIONES </th>
                 </tr>
               </thead>
@@ -118,9 +121,13 @@ require_once("validacionesComision.php");
       </div>
     </div>
     <?php
-    require_once('modalFiltroVenta.html');
-    require('modalVerComisiones.html');
-    require('modalEditarComision.html');
+    // require_once('modalFiltroVenta.html');
+    
+    require_once('modalVerComisiones.html');
+    require_once('modalEditarComision.html');
+    require_once('modalLiquidarComisiones.html');
+    
+    
     ?>
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
@@ -133,6 +140,7 @@ require_once("validacionesComision.php");
     <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
     <script src="../../Recursos/bootstrap5/bootstrap.min.js"></script>
     <script src="../../Recursos/js/index.js"></script>
+
 </body>
 
 </html>
