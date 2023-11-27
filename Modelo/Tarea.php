@@ -309,7 +309,7 @@ class Tarea
                 $idClasificacionLead = $datosTarea['clasificacionLead'];  $codCliente = $datosTarea['codCliente']; $rtn = $datosTarea['rtn']; $idOrigen = $datosTarea['origenLead'];
                 //Actualizamos los datos de la tarea
                 if(isset($datosTarea['rtn']) && !empty($datosTarea['rtn'])){
-                    $update = "UPDATE tbl_tarea SET RTN_Cliente = '$rtn', titulo = '$titulo', estado_Cliente_Tarea = '$estadoCliente', rubro_Comercial = '$rubro',
+                    $update = "UPDATE tbl_tarea SET RTN_Cliente = '$rtn', cod_Cliente = '$codCliente', titulo = '$titulo', estado_Cliente_Tarea = '$estadoCliente', rubro_Comercial = '$rubro',
                     razon_Social ='$razon', Modificado_Por = '$ModificadoPor', Fecha_Modificacion = GETDATE() WHERE id_Tarea = '$idTarea';"; 
                 } else {
                     $update = "UPDATE tbl_tarea SET estado_Cliente_Tarea = '$estadoCliente', titulo = '$titulo', rubro_Comercial = '$rubro',
