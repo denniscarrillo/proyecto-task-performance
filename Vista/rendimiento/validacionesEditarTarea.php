@@ -52,8 +52,11 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
             if(count($tarea) > 0){
                 ControladorTarea::actualizarTarea($id_Tarea, $tipo_Tarea, $tarea);
                 editarTareaBitacora($id_Tarea, $estadoTarea, $_SESSION['usuario']);
-                if(isset($_POST['nFactura'])){
-                    ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia, intval($_POST['accion']));
+                //Valiar que no exista esa misma evidencia en la tabla evidencia
+                $estadoE = ControladorTarea::validarSiExisteEvidencia($evidencia);
+                if(isset($_POST['nFactura']) && intval($_POST['idEstado'] ) == 4 && $estadoE['estado'] == false){
+                    // $idTarea, $evidencia, $accion, $creadoPor
+                    ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia, intval($_POST['accion']), $Creado_Por);
                     if(intval($_POST['accion']) == 0){
                         guardarFacturaTareaBitacora($id_Tarea, $evidencia, $estadoTarea, $_SESSION['usuario']);
                     }else{
@@ -94,11 +97,10 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
                 ];
             } 
             if(count($tarea) > 0){
-                var_dump($tarea);
                 ControladorTarea::actualizarTarea($id_Tarea, $tipo_Tarea, $tarea);
                 editarTareaBitacora($id_Tarea, $estadoTarea, $_SESSION['usuario']);
-                if(isset($_POST['nFactura'])){
-                    ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia, intval($_POST['accion']));
+                if(isset($_POST['nFactura'])  && intval($_POST['idEstado'] ) == 4  && $estadoE['estado'] == false){
+                    ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia, intval($_POST['accion']), $Creado_Por);
                     if(intval($_POST['accion']) == 0){
                         guardarFacturaTareaBitacora($id_Tarea, $evidencia, $estadoTarea, $_SESSION['usuario']);
                     }else{
