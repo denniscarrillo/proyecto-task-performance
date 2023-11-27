@@ -135,7 +135,7 @@ if (isset($_SESSION['usuario'])) {
                 <?php include_once '../../layout/navbar.php'?>                             
             </div>        
             <div class ="titulo">
-              <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionCotizacion.php');?>">Gestión de Cotización</H2>
+              <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionCotizacion.php');?>">Ver Cotizaciones</H2>
             </div>  
           </div>
 

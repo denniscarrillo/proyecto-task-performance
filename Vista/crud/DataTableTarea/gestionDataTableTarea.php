@@ -82,8 +82,8 @@ if (isset($_SESSION['usuario'])) {
 
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <title> Ver Tareas </title>
 </head>
 
@@ -133,10 +133,9 @@ if (isset($_SESSION['usuario'])) {
                   <?php include_once '../../layout/navbar.php'?>                             
               </div>        
               <div class ="titulo">
-              <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionConsultaTarea.php');?>">Gestión Tareas</H2>
+              <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionConsultaTarea.php');?>">Ver Tareas</H2>
             </div> 
             </div>
-
         <div class="table-conteiner">
           <div>
             <a href="../../../TCPDF/examples/reporteConsulTarea.php" target="_blank" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> 
@@ -150,6 +149,8 @@ if (isset($_SESSION['usuario'])) {
                 <th scope="col"> CLIENTE </th>
                 <th scope="col"> TITULO </th>
                 <th scope="col"> CREADO POR </th>
+                <th scope="col"> ESTADO FINALIZACION </th>
+                <th scope="col"> FECHA FINALIZACION </th>
                 <th scope="col"> ANTIGÜEDAD(DIAS)</th>
                 <th scope="col"> ACCION </th>
               </tr>

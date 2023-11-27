@@ -114,7 +114,8 @@
 							<div class="mb-3">
 								<label for="input-titulo-tarea" class="form-label label-title-task">Titulo de la tarea</label>
 								<input type="text" name="input-titulo-tarea" id="input-titulo-tarea" class="form-control" value="<?php echo ControladorTarea::obtenerEstadoTarea(intval($_GET['idTarea']))['titulo'] ?>">
-								<button type="button" id="btn-finalizar-tarea"><i class="fa-solid fa-text-slash"></i> Finalizar tarea</button>
+								<button type="button" id="btn-finalizar-tarea" disabled><i class="fa-solid fa-text-slash"></i> Finalizar tarea</button>
+								<label id="estado-finalizacion" hidden><?php echo ControladorTarea::obtenerTareaFinalizada($_GET['idTarea']) ?></label>
 							</div>
 							<div class="mb-3">
 								<!-- <label id="" class="id-estado-tarea" hidden="true" name="estadoTarea"></label> -->
@@ -144,7 +145,7 @@
 								</div>
 								<div class="mb-3" id="container-num-factura" hidden>
 									<label for="num-factura" class="form-label" >N° FACTURA: </label>
-									<p id="mensaje"></p>
+									<p class="mensaje"></p>
 									<input type="text" name="num-factura" id="num-factura" class="form-control">
 								</div>
 								<div class="mb-3">

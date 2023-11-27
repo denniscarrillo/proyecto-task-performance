@@ -34,7 +34,65 @@ $(document).ready(async function(){
     });
     let tipoCliente = (radioOption[1].checked) ? radioOption[1].value : radioOption[0].value;
     document.getElementById('link-nueva-cotizacion').setAttribute('href', `./cotizacion/v_cotizacion.php?idTarea=${$idTarea}&estadoCliente=${tipoCliente}`);
-});
+    let estadoFinalizar = document.getElementById('estado-finalizacion').textContent;
+    if(estadoFinalizar == 'Pendiente' || estadoFinalizar == 'Reabierta'){
+      document.getElementById('btn-finalizar-tarea').removeAttribute('disabled');
+      document.getElementById('btn-finalizar-tarea').addEventListener('click', ()=>{
+        if ($idTarea != null){
+          Swal.fire({
+            title: 'Estas seguro de finalizar la tarea # '+$idTarea+'?',
+            text: "No podras revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, finalizalo!'
+          }).then((result) => {
+            if (result.isConfirmed) {      
+              $.ajax({
+                url: "../../../Vista/rendimiento/finalizarTarea.php",
+                type: "POST",
+                datatype:"JSON",    
+                data:  { 
+                  idTarea: $idTarea
+                },    
+                success: function(data) {
+                  console.log(JSON.parse(data));
+                  if(JSON.parse(data) == true){
+                    Swal.fire(
+                      'Tarea Finalizada!',
+                      'La tarea ha sido finalizada.',
+                      'success'
+                    )  
+                    document.getElementById('btn-finalizar-tarea').addEventListener('click', ()=>{
+                      Toast.fire({
+                        icon: 'error',
+                        title: 'La tarea ya fue finalizada',
+                      });
+                    })
+                  } else{
+                    Swal.fire(
+                      'Lo sentimos!',
+                      'La tarea no ha sido finalizada.',
+                      'error'
+                    ) 
+                  }         
+                }
+              }); //Fin del AJAX
+            }
+          });
+        }	
+      })
+    }else{
+      document.getElementById('btn-finalizar-tarea').removeAttribute('disabled');
+      document.getElementById('btn-finalizar-tarea').addEventListener('click', ()=>{
+        Toast.fire({
+          icon: 'error',
+          title: 'La tarea ya fue finalizada',
+        });
+      })
+    }
+  });
 
 document.getElementById('btn-comment').addEventListener('click', () => {
   obtenerComentarios($idTarea);
@@ -72,7 +130,6 @@ $tabComments.addEventListener('click', () => {
 });
 
 /* ------------------------------------------------------------------------------------ */
-
 //En el evento submit llamamos a la función que enviara el comentario a la base de datos
 document.getElementById('form-comentario').addEventListener('submit', (e) => {
   e.preventDefault();
@@ -88,8 +145,6 @@ document.getElementById('form-Edit-Tarea').addEventListener('submit', function(e
   let tipoCliente = (radioOption[1].checked) ? radioOption[1].value : radioOption[0].value;
   let $datosTarea = validarCamposEnviar(tipoCliente);
   actualizarDatosTarea($datosTarea);
-  let numFactura = document.getElementById('num-factura');
-  console.log(numFactura.value);
   enviarProductosInteres($idTask); //Enviamos los productos de interes a almacenar
   obtenerDatosTarea($idTarea, $idEstadoTarea);
 });
@@ -276,7 +331,7 @@ document.getElementById('estados-tarea').addEventListener('change', async () => 
         Toast.fire({
           icon: 'error',
           title: 'No puedes volver a un estado anterior'
-    });
+        });
   } else {
     cambiarEstado($newEstado, $idTarea);
   }
@@ -295,20 +350,30 @@ $rtn.addEventListener('focusout', function () {
       data: {
         rtnCliente: $rtn.value
       },
-      success: function (cliente) {
+      success: function (cliente){
         let $objCliente = JSON.parse(cliente);
-        // console.log(cliente)
-        if ($objCliente.estado == 'true') {
+        if ($objCliente.estado == 'true'){
           $mensaje.innerText = 'Cliente existente'
           $mensaje.classList.add('mensaje-existe-cliente');
         } else {
           $mensaje.innerText = '';
           $mensaje.classList.remove('mensaje-existe-cliente');
+          if($objCliente != 'true' && $objCliente != false){
+            setearDatosClienteCartera($objCliente);
+          }
         }
       }
     }); //Fin AJAX   
   }
 });
+let setearDatosClienteCartera = (cliente) => {
+  document.getElementById('nombre-cliente').value = cliente[0].nombre;
+  document.getElementById('telefono-cliente').value = cliente[0].telefono;
+  document.getElementById('correo-cliente').value = cliente[0].correo;
+  document.getElementById('direccion-cliente').value = cliente[0].direccion;
+}
+
+
 let limpiarForm = () => {
   let $mensaje = document.getElementById('mensaje');
   $mensaje.innerText = '';
@@ -469,7 +534,6 @@ let obtenerDatosTarea = ($idTarea, $idEstadoTarea) => {
 }
 let setearDatosTarea = ($datosTarea) => {
     setArticulosInteres($datosTarea.productos)
-    console.log($datosTarea.productos);
     let nuevo = document.getElementById('cliente-nuevo');
     let existe =  document.getElementById('cliente-existente');
     let nombre = document.getElementById('nombre-cliente');
@@ -482,11 +546,9 @@ let setearDatosTarea = ($datosTarea) => {
     nombre.value = $datosTarea.NOMBRECLIENTE;
     nFactura.value =  ($datosTarea.evidencia != null && $datosTarea.evidencia != '') ? $datosTarea.evidencia: '';
     ($datosTarea.evidencia != null && $datosTarea.evidencia != '') ? existEvidencia = 1 : '';
-    console.log('Estado evidencia: '+existEvidencia);
     nombre.disabled = true;
     document.getElementById('telefono-cliente').value = $datosTarea.TELEFONO,
     ($datosTarea.estado_Cliente_Tarea == 'Nuevo') ? correo.value = $datosTarea.correo: '';
-    // ($datosTarea.estado_Cliente_Tarea == 'Nuevo') ? document.getElementById('container-correo').removeAttribute('hidden'): '';
     document.getElementById('direccion-cliente').value = $datosTarea.DIRECCION,
     document.getElementById('clasificacion-lead').value = $datosTarea.id_ClasificacionLead,
     document.getElementById('origen-lead').value = $datosTarea.id_OrigenLead,
@@ -608,6 +670,74 @@ let cambiarEstado = ($newEstado, $idTarea) => {
     }
   });
 }
+document.getElementById('num-factura').addEventListener('focusout', () => {
+  let $inputNumFactura = document.getElementById('num-factura');
+  if($inputNumFactura.parentElement.querySelector('p').classList.contains('mensaje-existe-cliente')){
+    $inputNumFactura.parentElement.querySelector('p').innerText = '';
+    $inputNumFactura.parentElement.querySelector('p').classList.remove('mensaje-existe-cliente');
+  }
+  if($inputNumFactura.value.trim() != ''){
+    validarEvidencia($inputNumFactura.value, $inputNumFactura);
+  }
+});
+
+let validarEvidencia = ($evidencia, $elemento) => {
+  $.ajax({
+    url: '../../../Vista/rendimiento/validarEstadoEvidencia.php',
+    type: 'POST',
+    datatype: 'JSON',
+    data: {evidencia: $evidencia},
+    success: (res) => {
+      let $estado = JSON.parse(res);
+      let $mensaje = $elemento.parentElement.querySelector('.mensaje');
+      if($estado.estado == true){
+          $mensaje.innerText = `Evidencia existente en venta N° ${$estado.nTarea} | Vendedor: ${$estado.vendedor}`
+          $mensaje.classList.add('mensaje-existe-cliente');
+      }
+    }
+  }); 
+}
+document.getElementById('btn-finalizar-tarea').addEventListener('click', ()=>{
+  if ($idTarea != null){
+    Swal.fire({
+      title: 'Estas seguro de finalizar la tarea # '+$idTarea+'?',
+      text: "No podras revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, finalizalo!'
+    }).then((result) => {
+      if (result.isConfirmed) {      
+        $.ajax({
+          url: "../../../Vista/rendimiento/finalizarTarea.php",
+          type: "POST",
+          datatype:"JSON",    
+          data:  { 
+            idTarea: $idTarea
+          },    
+          success: function(data) {
+             console.log(JSON.parse(data));
+            if(JSON.parse(data) == true){
+              Swal.fire(
+                'Tarea Finalizada!',
+                'La tarea ha sido finalizada.',
+                'success'
+              )  
+              document.getElementById('btn-finalizar-tarea').setAttribute('disabled', 'true');
+            } else{
+              Swal.fire(
+                'Lo sentimos!',
+                'La tarea no ha sido finalizada.',
+                'error'
+              ) 
+            }         
+          }
+        }); //Fin del AJAX
+      }
+    });
+  }	
+})
 // let obtenerEstadoTarea = ($newEstado, $idTarea) => {
 //   $.ajax({
 //     url: '../../../Vista/rendimiento/cambiarEstadoTarea.php',

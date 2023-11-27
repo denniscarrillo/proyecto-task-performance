@@ -100,6 +100,7 @@ $SolicitudesId = ControladorDataTableSolicitud::VerSolicitudesPorId($_GET['idSol
         $creadoPor = $SolicitudesId['CreadoPor'];
         $FechaCreacion = $SolicitudesId['FechaCreacion'];
         $modifacadoPor = $SolicitudesId['ModificadoPor'];
+        
         $fechaFormateadaC = $FechaCreacion->format('Y/m/d');
         $FechaModificacion = $SolicitudesId['FechaModificacion'];       
         if ($FechaModificacion !== null) {
@@ -112,6 +113,7 @@ $SolicitudesId = ControladorDataTableSolicitud::VerSolicitudesPorId($_GET['idSol
         
            
        
+        
         $html .= '
         <tr>
             <td style="background-color: #c9c9c9; width: 200px;"><b>ID:</b></td>
@@ -174,13 +176,6 @@ $SolicitudesId = ControladorDataTableSolicitud::VerSolicitudesPorId($_GET['idSol
         <tr>
             <td style="background-color: #c9c9c9;"><b>FECHA MODIFICACIÓN:</b></td>
             <td>'.$fechaFormateadaM.'</td>     
-        </tr>
-        
-        <tr>
-            <td style="background-color: #c9c9c9;"><b>LISTA DE ARTICULOS:</b></td>
-            <td>                
-                <ul>'.$ListaArticulos.'</ul>
-          </td>
         </tr>
 
         ';     

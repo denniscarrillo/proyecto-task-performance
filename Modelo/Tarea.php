@@ -40,7 +40,7 @@ class Tarea
             $query = "SELECT t.id_Tarea, t.id_EstadoAvance, t.titulo, e.descripcion, DATEDIFF(DAY, t.Fecha_Creacion, getdate()) as Dias_Antiguedad FROM tbl_vendedores_tarea AS vt
             INNER JOIN tbl_tarea AS t ON t.id_Tarea = vt.id_Tarea
             INNER JOIN tbl_estadoavance AS e ON t.id_EstadoAvance = e.id_EstadoAvance
-            WHERE vt.id_usuario_vendedor = '$idUser';";
+            WHERE vt.id_usuario_vendedor = '$idUser' AND t.estado_Finalizacion IN('Pendiente', 'Reabierta')";
             $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
             while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
@@ -181,8 +181,8 @@ class Tarea
             $selectCliente = "SELECT CODCLIENTE FROM view_clientes WHERE CIF = '$rtn'";
             $consulta = sqlsrv_query($abrirConexion, $selectCliente);
             if(sqlsrv_has_rows($consulta)){
-                $arrCodCiente = sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC);
-                $codCliente = $arrCodCiente['CODCLIENTE'];
+                $arrCodCliente= sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC);
+                $codCliente = $arrCodCliente['CODCLIENTE'];
                 $selectFacturas = "SELECT COUNT(NUMFACTURA) AS CANT FROM View_FACTURASVENTA WHERE CODCLIENTE = '$codCliente';";
                 $consulta= sqlsrv_query($abrirConexion, $selectFacturas);
                 $cantFacturas = sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC);
@@ -200,6 +200,32 @@ class Tarea
             echo 'Error SQL:' . $e;
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
+    }
+    public static function validarClienteExistenteCarteraCliente($rtn){
+        try{
+            $estadoCliente = null;
+            $datosCliente = array();
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $selectCliente = "SELECT nombre_Cliente, telefono, correo, direccion FROM tbl_CarteraCliente WHERE rtn_Cliente = '$rtn'";
+            $consulta = sqlsrv_query($abrirConexion, $selectCliente);
+            if(sqlsrv_has_rows($consulta)){
+                while($fila = sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC)){
+                    $datosCliente[] = [
+                        'nombre' => $fila['nombre_Cliente'],
+                        'telefono' => $fila['telefono'],
+                        'correo' => $fila['correo'],
+                        'direccion' => $fila['direccion']
+                    ];
+                }
+                sqlsrv_close($abrirConexion); //Cerrar conexion
+                return $datosCliente;
+            } else {
+               return $estadoCliente = false;
+            }
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
     }
     public static function obtenerClientes(){
         try{
@@ -312,14 +338,16 @@ class Tarea
         }
        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
-    public static function guardarFacturaTarea($idTarea, $evidencia, $accion){
+    public static function guardarFacturaTarea($idTarea, $evidencia, $accion, $creadoPor){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
         $query = '';
         if($accion == 0){
-            $query = "INSERT INTO tbl_AdjuntoEvidencia VALUES('$idTarea', '$evidencia');";
+            $query = "INSERT INTO tbl_AdjuntoEvidencia (id_Tarea, evidencia, Creado_Por, fecha_Creacion)
+                VALUES('$idTarea', '$evidencia', '$creadoPor', GETDATE())";
         } else {
-            $query = "UPDATE tbl_AdjuntoEvidencia SET evidencia = '$evidencia' WHERE id_Tarea = '$idTarea';";
+            $query = "UPDATE tbl_AdjuntoEvidencia SET evidencia = '$evidencia', 
+                Modificado_Por = '$creadoPor', fecha_Modificacion = GETDATE() WHERE id_Tarea = '$idTarea'";
         }
         sqlsrv_query($conexion, $query);
         sqlsrv_close($conexion);
@@ -369,11 +397,16 @@ class Tarea
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             $estadoContacto = 'En Proceso';
-            date_default_timezone_set('America/Tegucigalpa');
-            $Fecha_Creacion = date("Y-m-d");
-            $insertNuevoCliente = "INSERT INTO tbl_CarteraCliente (nombre_Cliente, rtn_Cliente, telefono, correo, direccion, estadoContacto, Creado_Por, Fecha_Creacion) 
-            VALUES('$nombre', '$rtn', '$telefono', '$correo', '$direccion', '$estadoContacto', '$Creado_Por', '$Fecha_Creacion');";
-            sqlsrv_query($abrirConexion, $insertNuevoCliente);
+            $existeCliente = "SELECT rtn_Cliente FROM tbl_CarteraCliente WHERE rtn_Cliente = '$rtn'";
+            $query = '';
+            if(sqlsrv_has_rows(sqlsrv_query($abrirConexion, $existeCliente)) > 0){
+                $query = "UPDATE tbl_CarteraCliente SET nombre_Cliente = '$nombre', telefono = '$telefono', correo = '$correo', direccion = '$direccion', 
+                        Modificado_Por = '$Creado_Por', Fecha_Modificacion = GETDATE() WHERE rtn_Cliente = '$rtn'";
+            } else {
+                $query = "INSERT INTO tbl_CarteraCliente (nombre_Cliente, rtn_Cliente, telefono, correo, direccion, estadoContacto, Creado_Por, Fecha_Creacion) 
+                VALUES('$nombre', '$rtn', '$telefono', '$correo', '$direccion', '$estadoContacto', '$Creado_Por', GETDATE());";
+            }
+            sqlsrv_query($abrirConexion, $query); 
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
@@ -718,8 +751,13 @@ class Tarea
         sqlsrv_close($conexion);
         return $estado;
     }
-    // public static function actualizarEstadoCotizacion(){
-    // }
+    public static function vencimientoEstadoCotizacion($idCotizacion){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "UPDATE tbl_CotizacionTarea SET estado_Cotizacion = 'Vencida' WHERE id_Cotizacion = '$idCotizacion'";
+        sqlsrv_query($conexion,$query);
+        sqlsrv_close($conexion);
+    }
 
     public static function obtenerCotizacionesUsuario($usuario){
         $conn = new Conexion();
@@ -965,5 +1003,83 @@ class Tarea
         $fila = sqlsrv_fetch_array(sqlsrv_query($conexion, $query), SQLSRV_FETCH_ASSOC);
         sqlsrv_close($conexion);
         return $fila;
+    }
+    public static function obtenerIdCotizacionTarea($idTarea){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $idCotizacion = 0;
+        $query = "SELECT TOP 1 id_Cotizacion FROM tbl_CotizacionTarea WHERE id_Tarea = '$idTarea' ORDER BY id_Cotizacion DESC;";
+        $ejecutar = sqlsrv_query($conexion, $query);
+        if(sqlsrv_has_rows($ejecutar) > 0){
+            $cotizacion = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC);
+            $idCotizacion = $cotizacion['id_Cotizacion'];
+        }
+        sqlsrv_close($conexion);
+        return $idCotizacion;
+    }
+    public static function finalizarTarea($idTarea){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $estadoUpdate = false;
+        $query = "UPDATE tbl_Tarea SET estado_Finalizacion = 'Finalizada', fecha_Finalizacion = GETDATE() WHERE id_Tarea = '$idTarea';";
+        if(sqlsrv_rows_affected(sqlsrv_query($conexion, $query)) > 0){
+            $estadoUpdate = true;
+        }
+        sqlsrv_close($conexion);
+        return $estadoUpdate;
+    }
+    public static function obtenerTareaFinalizada($idTarea){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $existeTarea = 0;
+        $query = "SELECT estado_Finalizacion FROM tbl_Tarea WHERE id_Tarea = '$idTarea';";
+        $ejecutar = sqlsrv_query($conexion, $query);
+        if(sqlsrv_has_rows($ejecutar) > 0){
+            $tarea = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC);
+            $existeTarea = $tarea['estado_Finalizacion'];
+        }
+        sqlsrv_close($conexion);
+        return $existeTarea;
+    }
+    public static function reabrirTarea($idTarea){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $estadoReabierto = false;
+        $query ="UPDATE tbl_Tarea SET estado_Finalizacion = 'Reabierta', fecha_Finalizacion = GETDATE() WHERE id_Tarea = '$idTarea';";
+        if(sqlsrv_rows_affected(sqlsrv_query($conexion, $query)) > 0){
+            $estadoReabierto = true;
+        }
+        sqlsrv_close($conexion);
+        return $estadoReabierto;
+    }
+    public static function validarSiExisteEvidencia($evidencia){
+        try{
+            $estado = array();
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $query = "SELECT Creado_Por, id_Tarea FROM tbl_AdjuntoEvidencia WHERE evidencia = '$evidencia'";
+            $result = sqlsrv_query($abrirConexion, $query);
+            $userV = sqlsrv_fetch_array($result,SQLSRV_FETCH_ASSOC);
+            //Verificamos si esta factura corresponde al cliente de la tarea
+            $query1 = "";
+            $result1 = sqlsrv_query($abrirConexion, $query);
+            $cliente = sqlsrv_fetch_array($result,SQLSRV_FETCH_ASSOC);
+
+            if(sqlsrv_has_rows($result) > 0){
+                $estado = [
+                    'estado' =>  true,
+                    'nTarea' => $userV['id_Tarea'],
+                    'vendedor' => $userV['Creado_Por']
+                ];
+            } else {
+                $estado = [
+                    'estado' =>  false
+                ];
+            }
+            sqlsrv_close($abrirConexion); //Cerrar conexion
+            return $estado;
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
     }
 }

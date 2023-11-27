@@ -312,6 +312,13 @@ class DataTableSolicitud
         sqlsrv_close($abrirConexion); //Cerrar conexion
         return $SolicitudesUsuario;
     } 
-    
+
+    public static function insertarEvidenciaPDF($solicitud, $directorio_destino) {
+        // Insertar evidencia en la base de datos
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB();
+        $query = "INSERT INTO tbl_EvidenciaGarantia (id_Solicitud, _url, fecha_Creacion) VALUES ('$solicitud', '$directorio_destino', GETDATE())";
+        sqlsrv_query($consulta, $query);
+    }
 }
 

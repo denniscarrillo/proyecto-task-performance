@@ -15,7 +15,11 @@ const Toast = Swal.mixin({
     }
   });
 $(document).ready( async () => {
-   let idCotizacion = await validarDatosCotizacion();
+    let cotTarea = document.getElementById('id-cot-tarea').textContent;
+    if(parseInt(cotTarea)>0){
+        vencimientoCotizacion(cotTarea);
+    }
+    let idCotizacion = await validarDatosCotizacion();
     alternarHiddenBotones();
     if(estadoCot == 'Existente'){
         let nCotizacion = `<label>Cotización N°</label><label id="id-cotizacion">${idCotizacion}</label>`;
@@ -497,6 +501,17 @@ let anularCotizacion = async ($idCotizacion) => {
     }
     return estado;
 }
+let vencimientoCotizacion = ($idCotizacion) => {
+    $.ajax({
+        url: '../../../../Vista/rendimiento/cotizacion/vencimientoCotizacion.php',
+        datatype: 'JSON',
+        type: 'POST',
+        data: {
+            idCotizacion: $idCotizacion
+        }
+    });
+}
+
 let mostrarElementosNuevaCotizacion = (estado) => {
     estadoCot = 'Nueva';
     if(estado){
@@ -534,4 +549,4 @@ $(document).on("click", "#btn_Pdf",  function (){
     let idTarea = document.querySelector('.encabezado').id;
     let estadoCliente = document.querySelector('.datos-cotizacion').id;
     window.open('../../../TCPDF/examples/reporteCotizacion.php?idTarea='+idTarea+'&estadoCliente='+estadoCliente,'_blank');
-   });
+});

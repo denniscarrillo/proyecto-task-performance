@@ -17,5 +17,5 @@
         $newBitacora->idTarea = intval($_POST['idTarea']);
         $newBitacora->descripcionEvento = 'Ha anulado la Cotización # '.$_POST['idCotizacion'];
         $idBitacora = ControladorBitacoraTarea::SAVE_EVENT_TASKS_BITACORA($newBitacora, $idUsuario);
-        /* =======================================================================================*/
+        /* ===========================================================================================*/
     }
