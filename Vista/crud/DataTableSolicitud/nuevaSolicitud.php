@@ -19,6 +19,10 @@
             // Si está vacío, asignar 'NULL' o algún otro valor por defecto
             $_POST['RTNclienteC'] = 'NULL';
         }
+        if (empty($_POST['codigo'])) {
+            // Si está vacío, asignar 'NULL' o algún otro valor por defecto
+            $_POST['codigo'] = NULL;
+        }
         $nuevaSolicitud = new DataTableSolicitud();
         $nuevaSolicitud->idFactura = $_POST['idFactura'];
         $nuevaSolicitud->rtnCliente = $_POST['RTNcliente'];
@@ -31,6 +35,7 @@
         $nuevaSolicitud->estadoAvance = 'PENDIENTE';
         $nuevaSolicitud->estadoSolicitud = 'ACTIVO';
         $nuevaSolicitud->creadoPor =  $user;
+        $nuevaSolicitud->codigoCliente = $_POST['codigo'];
         $productos = json_decode($_POST['productos'], true);
         $nombrePDF =  $_POST['nombre'];
     
