@@ -102,7 +102,7 @@ h1{
     margin: 0.5rem;
     padding: 0.5rem;
     font-size: 1.2rem;
-    width: 5rem;
+    width: 10rem;
     border-color: rgb(24, 26, 26);
     background-color: #d1821b;
 }
@@ -122,7 +122,7 @@ h1{
 .form-control {
     padding-left: 20px;
 }
-.btn-sumar{
+.btn_filtroALiquidar{
     margin: 1.5rem;
     padding: 2.5rem;
     font-size: 1.2rem;

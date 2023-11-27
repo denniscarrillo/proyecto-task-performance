@@ -66,7 +66,7 @@ if (@file_exists(dirname(__FILE__).'/lang/spa.php')) {
 
 
 // set font
-$pdf->setFont('Helvetica', '', 11);
+$pdf->setFont('Helvetica', '', 9);
 
 // add a page
 $pdf->AddPage();
@@ -75,15 +75,18 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de Comisiones</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 60px;">N°</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">FACTURA</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">TOTAL VENTA</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">PORCENTAJE</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 115px;">COMISION TOTAL</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">ESTADO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 115px;">LIQUIDACION</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">FECHA</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 125px;">FECHA LIQUIDAR </td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 40px;">N°</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 70px;">FACTURA</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 80px;">TOTAL VENTA</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">PORCENTAJE</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">COMISION TOTAL</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 70px;">ESTADO COMISION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">ESTADO LIQUIDACION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 80px;">ESTADO COBRO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 70px;">METODO PAGO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">FECHA COMISION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">FECHA LIQUIDAR </td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">FECHA COBRO</td>
 </tr>
 ';
 $Comisiones = ControladorComision::getComisionesPdf($_GET['buscar']);
@@ -95,6 +98,8 @@ foreach($Comisiones as $Comision){
     $comisionTotal = 'Lps. ' . number_format($Comision['comisionTotal'], 2, '.', ',');
     $estado = $Comision['estadoComisionar'];
     $liquidacion = $Comision['estadoLiquidacion'];
+    $estadoCobro = $Comision['estadoCobro'];
+    $metodoPago = $Comision['metodoPago'];
     
     // Verificar si $fecha está definido y no es null
     if (isset($Comision['fechaComision']) && $Comision['fechaComision'] !== null) {
@@ -115,6 +120,14 @@ foreach($Comisiones as $Comision){
     } else {
         $fechaLiquidacion = ''; // Otra acción si $fechaLiquidacion es nulo
     }
+    if (isset($Comision['fechaCobro']) && $Comision['fechaCobro'] !== null) {
+        $fechaC = $Comision['fechaCobro'];
+        $timestamp = $fechaC->getTimestamp();
+        // Verificar si la fecha es no nula antes de formatearla
+        $fechaCobro = date('Y-m-d H:i:s', $timestamp);
+    } else {
+        $fechaCobro = ''; // Otra acción si $fechaCobro es nulo
+    }
 
     $Cont++;
 
@@ -127,8 +140,11 @@ foreach($Comisiones as $Comision){
     <td style="text-align: center">'.$comisionTotal.'</td>
     <td style="text-align: center">'.$estado.'</td>
     <td style="text-align: center">'.$liquidacion.'</td>
+    <td style="text-align: center">'.$estadoCobro.'</td>
+    <td style="text-align: center">'.$metodoPago.'</td>
     <td style="text-align: center">'.$fechaComision.'</td>
     <td style="text-align: center">'.$fechaLiquidacion.'</td>
+    <td style="text-align: center">'.$fechaCobro.'</td>
     </tr>
     ';
 }
