@@ -1,5 +1,5 @@
 import { sidePanel_Interaction } from '../../components/js/sidePanel.js'; //importamos la funcion del sidePanel
-import { estadoValidado as estado } from './validacionesEditarTarea.js';
+// import { estadoValidado as estado } from './validacionesEditarTarea.js';
 
 
 let existEvidencia = 0;
@@ -157,12 +157,12 @@ document.getElementById('form-Edit-Tarea').addEventListener('submit', function(e
   let $idTask = $('#id-Tarea').val();
   let radioOption = document.getElementsByName('radioOption');
   let tipoCliente = (radioOption[1].checked) ? radioOption[1].value : radioOption[0].value;
-  if(estado){
+  // if(estado){
     let $datosTarea = validarCamposEnviar(tipoCliente);
     actualizarDatosTarea($datosTarea);
     enviarProductosInteres($idTask); //Enviamos los productos de interes a almacenar
     obtenerDatosTarea($idTarea, $idEstadoTarea);
-  }
+  // }
 });
 // CARGAR LOS ARTICULOS A AGREGAR A LA TAREA
 $('#btn-articulos').click(() => {
