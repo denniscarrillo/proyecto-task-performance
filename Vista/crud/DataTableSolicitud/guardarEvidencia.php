@@ -28,7 +28,7 @@ if (isset($_FILES['evidencia_garantia']) && $_FILES['evidencia_garantia']['error
     $ruta_archivo = $directorio_destino . $nombre_unico;
     // Mover el archivo al directorio de destino
     move_uploaded_file($nombre_temporal, $ruta_archivo);    
-   var_dump($_POST['id_solicitud']);
+   var_dump($ruta_archivo);
    ControladorDataTableSolicitud::insertarEvidenciaPDF(intval($_POST['id_solicitud']), $ruta_archivo);
    
 } else {
