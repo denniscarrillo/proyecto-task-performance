@@ -170,10 +170,6 @@ export const cantidadParametrosContrasenia = async (elemento) => {
             elemento.classList.remove('mensaje_error');
             estado = true;
         }
-        // //Limitar cantidad de caracters maximo segun el parametro
-        // $('#'+elemento.id).inputlimiter({
-        //     limit: maxLength
-        // });
     } catch (error) {
         console.log(error);
     }

@@ -195,8 +195,8 @@ class Parametro {
     public static function obtenerCarpetaDestino(){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query=" SELECT (SELECT VALOR  FROM tbl_MS_Parametro 
-        WHERE parametro ='ADMIN GARANTIA') as CarpetaGarantia;;";
+        $query="SELECT (SELECT VALOR  FROM tbl_MS_Parametro 
+        WHERE parametro ='ADMIN GARANTIA') as CarpetaGarantia;";
         $resultado = sqlsrv_query($conexion, $query);
         while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
             $datos [] = [

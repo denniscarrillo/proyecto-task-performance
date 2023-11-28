@@ -27,6 +27,7 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
         $rtn = '';
         $nombre = '';
         $estadoTarea = ControladorBitacoraTarea::obtenerEstadoTarea($tipo_Tarea);
+        $estadoE = ControladorTarea::validarSiExisteEvidencia($evidencia);
         if($_POST['tipoCliente'] == 'Nuevo'){
             $telefono = $_POST['telefono'];
             $correo = $_POST['correo'];
@@ -53,7 +54,6 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
                 ControladorTarea::actualizarTarea($id_Tarea, $tipo_Tarea, $tarea);
                 editarTareaBitacora($id_Tarea, $estadoTarea, $_SESSION['usuario']);
                 //Valiar que no exista esa misma evidencia en la tabla evidencia
-                $estadoE = ControladorTarea::validarSiExisteEvidencia($evidencia);
                 if(isset($_POST['nFactura']) && intval($_POST['idEstado'] ) == 4 && $estadoE['estado'] == false){
                     // $idTarea, $evidencia, $accion, $creadoPor
                     ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia, intval($_POST['accion']), $Creado_Por);
