@@ -337,6 +337,17 @@ $(document).on("click", "#btn_pdf_id",  function (){
   const fechaDesdeT = $fechaDesde.value;
   const fechaHastaT = $fechaHasta.value;
 
+  if(new Date($fechaDesde.value) > new Date($fechaHasta.value))
+  {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error al filtrar comisiones',
+      text: 'La fecha desde no puede ser mayor a la fecha hasta.',
+    });
+    return;
+  }
+
+
   // Asumiendo que tengas un elemento con el id "fechasLabel" para mostrar las fechas
   $("#fechasLabel").text('Desde el: ' + fechaDesdeT + ' Hasta el: ' + fechaHastaT);
       iniciarDataTable($fechaDesde.value, $fechaHasta.value);

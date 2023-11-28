@@ -133,7 +133,7 @@ require_once('obtenerEstadoComision.php');
           </div>
           <div class="form-element-btns">
             <button type="submit" class="btn btn-primary" id="btn-guardar-comision">Guardar</button>
-            <button type="button" class="btn btn-secondary">Cancelar</button>
+            <button type="button" class="btn btn-secondary" id="btn-cancelar">Cancelar</button>
           </div>
         </form>
       </div>

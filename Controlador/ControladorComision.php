@@ -70,4 +70,7 @@
         public static function LiquidandoComisionesGenerales($idComision){
             return Comision::LiquidandoComisionesGenerales($idComision);
         }
+        public static function LiquidandoComisionesVendedores($idVendedor, $fechaDesde, $fechaHasta){
+            return Comision::liquidandoComisionesPorVendedor($idVendedor, $fechaDesde, $fechaHasta);
+        }
     }

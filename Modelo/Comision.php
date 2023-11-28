@@ -588,8 +588,26 @@ public static function liquidandoComisionesGenerales($idComision){
     }
     sqlsrv_close($abrirConexion);
 }
+public static function liquidandoComisionesPorVendedor($idVendedor, $fechaDesde, $fechaHasta){
+    $conn = new Conexion();
+    $abrirConexion = $conn->abrirConexionDB();
+    $estadoLiquidacion = 'Liquidada';
+    
+    // Agrega la condición del rango de fechas en la consulta
+    $query = "UPDATE tbl_Comision_Por_Vendedor 
+              SET estado_Liquidacion = '$estadoLiquidacion', 
+                  fecha_Liquidacion = GETDATE() 
+              WHERE id_usuario_vendedor = '$idVendedor' 
+                AND fecha_comision BETWEEN '$fechaDesde 00:00:00:00' AND '$fechaHasta 23:59:59:59';";
 
+    $result = sqlsrv_query($abrirConexion, $query);
 
+    if ($result === false) {
+        die(print_r(sqlsrv_errors(), true)); // Manejo de errores
+    }
+
+    sqlsrv_close($abrirConexion);
 }
 
+}
 #Fin de la clase

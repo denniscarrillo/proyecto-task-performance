@@ -18,14 +18,31 @@ $(document).ready(function () {
   document.getElementById("monto-total").setAttribute("disabled", "true");
   document.getElementById("comision-total").setAttribute("disabled", "true");
 });
-$btnFiltrar.addEventListener("click", function () {
-  let $fechaDesde = document.getElementById("fecha-desde");
-  let $fechaHasta = document.getElementById("fecha-hasta");
-  iniciarDataTable($fechaDesde.value, $fechaHasta.value);
-  $btnCerrarModalVentas.addEventListener("click", function () {
-    $tablaVentas.rows().remove().draw();
+
+  $btnFiltrar.addEventListener("click", function () {
+    let $fechaDesde = document.getElementById("fecha-desde");
+    let $fechaHasta = document.getElementById("fecha-hasta");
+  
+    // Verificar si la fecha de inicio es mayor que la fecha final
+    if (new Date($fechaDesde.value) > new Date($fechaHasta.value)) {
+      // Muestra un mensaje de error o realiza la acción que consideres adecuada
+      Swal.fire(
+        'Error!',
+        '¡La fecha de inicio no puede ser mayor que la fecha final!',
+        'error',
+      );
+      return;
+    }
+  
+    // Si las fechas son válidas, llama a la función para iniciar el DataTable
+    iniciarDataTable($fechaDesde.value, $fechaHasta.value);
+  
+    $btnCerrarModalVentas.addEventListener("click", function () {
+      $tablaVentas.rows().remove().draw();
+    });
   });
-});
+
+
 //Iniciar dataTable y carga las ventas filtradas segun el rango de fechas
 let iniciarDataTable = function (fechaDesde, fechaHasta) {
   if (document.querySelector(".dataTables_info") !== null) {
@@ -143,6 +160,18 @@ $selectPorcentaje.addEventListener("change", function () {
 
 $('#form-Comision').submit(function (e) {
   e.preventDefault();
+
+  // Validar campos antes de proceder con el guardado
+  if (!validarCampos()) {
+    // Mostrar un mensaje de error o realizar la acción que consideres adecuada
+    Swal.fire(
+      'Error!',
+      '¡Por favor, completa todos los campos!',
+      'error',
+    );
+    return;
+  }
+
   if (document.getElementById("mensaje").classList.contains("mensaje-estado")) {
     Swal.fire(
       'Error!',
@@ -246,6 +275,28 @@ let obtenerEstadoComision = ($idVenta) => {
       }
     }
   });
+}
+let $btnCancelar = document.getElementById("btn-cancelar");
+
+$btnCancelar.addEventListener("click", function () {
+  // Redirige a la pantalla principal de comisiones
+  window.location.href = "../../../Vista/comisiones/v_Comision.php";
+});
+function validarCampos() {
+  // Agrega aquí la lógica de validación para cada campo
+  let idVenta = document.getElementById('id-venta').value;
+  let montoTotal = document.getElementById('monto-total').value;
+  let porcentaje = document.getElementById('porcentaje-comision').value;
+  let comisionTotal = document.getElementById('comision-total').value;
+
+  // Verifica si algún campo está vacío
+  if (idVenta === '' || montoTotal === '' || porcentaje === '' || comisionTotal === '') {
+    return false;
+  }
+
+  // Agrega más condiciones de validación si es necesario
+
+  return true;
 }
 
  let obtenerLiquidacion = async () =>{
