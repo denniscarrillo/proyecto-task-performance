@@ -1057,14 +1057,9 @@ class Tarea
             $estado = array();
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $query = "SELECT Creado_Por, id_Tarea FROM tbl_AdjuntoEvidencia WHERE evidencia = '$evidencia'";
+            $query = "SELECT id_Tarea, Creado_Por FROM tbl_AdjuntoEvidencia WHERE evidencia = '$evidencia'";
             $result = sqlsrv_query($abrirConexion, $query);
             $userV = sqlsrv_fetch_array($result,SQLSRV_FETCH_ASSOC);
-            //Verificamos si esta factura corresponde al cliente de la tarea
-            $query1 = "";
-            $result1 = sqlsrv_query($abrirConexion, $query);
-            $cliente = sqlsrv_fetch_array($result,SQLSRV_FETCH_ASSOC);
-
             if(sqlsrv_has_rows($result) > 0){
                 $estado = [
                     'estado' =>  true,
@@ -1081,5 +1076,29 @@ class Tarea
         }catch(Exception $e){
             echo 'Error SQL:' . $e;
         }
+    }
+    public static function obtenerLlaveUnicaClienteTarea($idTarea){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $llave = array();
+        $query = "SELECT RTN_Cliente, cod_Cliente FROM tbl_Tarea WHERE id_Tarea = '$idTarea'";
+        $result = sqlsrv_query($conexion, $query);
+        if(sqlsrv_has_rows($result) > 0){
+            $llave = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC);
+        }
+        sqlsrv_close($conexion);
+        return $llave;
+    }
+    public static function validarFacturaEvidencia($cif, $codCliente, $numFactura){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $existe = false;
+        $query = "SELECT NUMFACTURA FROM View_FACTURASVENTA WHERE CODCLIENTE
+        = (SELECT CODCLIENTE FROM view_clientes WHERE CIF = '$cif' and CODCLIENTE = '$codCliente')  and NUMFACTURA = '$numFactura'";
+        if(sqlsrv_has_rows(sqlsrv_query($conexion, $query)) > 0){
+            $existe = true;
+        }
+        sqlsrv_close($conexion);
+        return $existe;
     }
 }

@@ -1,7 +1,9 @@
 import { sidePanel_Interaction } from '../../components/js/sidePanel.js'; //importamos la funcion del sidePanel
+import { estadoValidado as estado } from './validacionesEditarTarea.js';
 
-// let tableArticulos = '';
+
 let existEvidencia = 0;
+let numEvidencia = '';
 let $idTarea = document.getElementById('id-Tarea').value;
 let $idEstadoTarea = document.querySelector('.id-estado-tarea').id;
 const $btnCotizacion = document.getElementById('btn-container-cotizacion');
@@ -19,6 +21,17 @@ const Toast = Swal.mixin({
       toast.addEventListener('mouseleave', Swal.resumeTimer)
   }
 });
+let inputsEditarTarea = {
+  rtn: document.getElementById('rnt-cliente'),
+  nombre: document.getElementById('nombre-cliente'),
+  telefono: document.getElementById('telefono-cliente'),
+  correo: document.getElementById('correo-cliente'),
+  direccion: document.getElementById('direccion-cliente'),
+  rubroComercial: document.getElementById('rubrocomercial'),
+  razonSocial: document.getElementById('razonsocial'), 
+  clasificacionLead: document.getElementById('clasificacion-lead'),
+  origenLead: document.getElementById('origen-lead')
+}
 $(document).ready(async function(){
   ($idEstadoTarea == '3') ? $btnCotizacion.removeAttribute('hidden') : '';
   ($idEstadoTarea == '4') ? document.getElementById('container-num-factura').removeAttribute('hidden') : '';
@@ -144,11 +157,12 @@ document.getElementById('form-Edit-Tarea').addEventListener('submit', function(e
   let $idTask = $('#id-Tarea').val();
   let radioOption = document.getElementsByName('radioOption');
   let tipoCliente = (radioOption[1].checked) ? radioOption[1].value : radioOption[0].value;
-  console.log(tipoCliente)
-  let $datosTarea = validarCamposEnviar(tipoCliente);
-  actualizarDatosTarea($datosTarea);
-  enviarProductosInteres($idTask); //Enviamos los productos de interes a almacenar
-  obtenerDatosTarea($idTarea, $idEstadoTarea);
+  if(estado){
+    let $datosTarea = validarCamposEnviar(tipoCliente);
+    actualizarDatosTarea($datosTarea);
+    enviarProductosInteres($idTask); //Enviamos los productos de interes a almacenar
+    obtenerDatosTarea($idTarea, $idEstadoTarea);
+  }
 });
 // CARGAR LOS ARTICULOS A AGREGAR A LA TAREA
 $('#btn-articulos').click(() => {
@@ -274,7 +288,8 @@ $('#btn-articulos').click(() => {
 /* ============= EVENTOS DE TIPO DE CLIENTE Y BOTON PARA BUSCAR EL CLIENTE, EN CASO SEA EXISTENTE ================== */
 // Si el tipo de cliente es existen se crea y muestra un boton para buscar el cliente
 let rtnCliente = document.getElementById('cliente-existente');
-rtnCliente.addEventListener('change', function () {
+  rtnCliente.addEventListener('change', function () {
+  inputsEditarTarea.rtn.disabled = true;
   limpiarForm();
   let $containerRTN = document.getElementById('container-rtn-cliente');
   if (document.getElementById('btn-clientes') == null) {
@@ -294,6 +309,13 @@ rtnCliente.addEventListener('change', function () {
 document.getElementById('cliente-nuevo').addEventListener('change', function () {
   let $containerRTN = document.getElementById('container-rtn-cliente');
   let $btnBuscarCliente = document.querySelector('.btn-buscar-cliente');
+  //Volvemos a habilitar los inputs
+  if(inputsEditarTarea.rtn.disabled == true){
+    inputsEditarTarea.rtn.disabled = false;
+    inputsEditarTarea.nombre.disabled = false 
+    inputsEditarTarea.telefono.disabled = false;
+    inputsEditarTarea.direccion.disabled = false;
+  }
   if ($btnBuscarCliente) {
     $containerRTN.removeChild($btnBuscarCliente);
     limpiarForm();
@@ -548,7 +570,8 @@ let setearDatosTarea = ($datosTarea) => {
     rtn.value = $datosTarea.RTN_Cliente;
     rtn.disabled =true;
     nombre.value = $datosTarea.NOMBRECLIENTE;
-    nFactura.value =  ($datosTarea.evidencia != null && $datosTarea.evidencia != '') ? $datosTarea.evidencia: '';
+    nFactura.value =  ($datosTarea.evidencia != null && $datosTarea.evidencia != '') ? $datosTarea.evidencia : '';
+    numEvidencia = ($datosTarea.evidencia != null && $datosTarea.evidencia != '') ? $datosTarea.evidencia : '';
     ($datosTarea.evidencia != null && $datosTarea.evidencia != '') ? existEvidencia = 1 : '';
     nombre.disabled = true;
     document.getElementById('telefono-cliente').value = $datosTarea.TELEFONO,
@@ -687,7 +710,7 @@ document.getElementById('num-factura').addEventListener('focusout', () => {
     $inputNumFactura.parentElement.querySelector('p').innerText = '';
     $inputNumFactura.parentElement.querySelector('p').classList.remove('mensaje-existe-cliente');
   }
-  if($inputNumFactura.value.trim() != ''){
+  if(($inputNumFactura.value.trim() != '' && ($inputNumFactura.value != numEvidencia))){
     validarEvidencia($inputNumFactura.value, $inputNumFactura);
   }
 });
@@ -697,13 +720,21 @@ let validarEvidencia = ($evidencia, $elemento) => {
     url: '../../../Vista/rendimiento/validarEstadoEvidencia.php',
     type: 'POST',
     datatype: 'JSON',
-    data: {evidencia: $evidencia},
+    data: {
+      idTarea: $idTarea,
+      evidencia: $evidencia
+    },
     success: (res) => {
       let $estado = JSON.parse(res);
       let $mensaje = $elemento.parentElement.querySelector('.mensaje');
       if($estado.estado == true){
-          $mensaje.innerText = `Evidencia existente en venta N° ${$estado.nTarea} | Vendedor: ${$estado.vendedor}`
+          $mensaje.innerText = `Existente en venta N° ${$estado.nTarea} => Vendedor ${$estado.vendedor}`
           $mensaje.classList.add('mensaje-existe-cliente');
+      } else {
+        if($estado.existeFacturaCliente == false){
+          $mensaje.innerText = `La factura no existe para este cliente`
+          $mensaje.classList.add('mensaje-existe-cliente');
+        }
       }
     }
   }); 

@@ -134,4 +134,10 @@ class ControladorTarea {
     public static function validarSiExisteEvidencia($evidencia){
         return Tarea::validarSiExisteEvidencia($evidencia);
     }
+    public static function existeFacturaEvidencia($cif, $codCliente, $numFactura){
+        return Tarea::validarFacturaEvidencia($cif, $codCliente, $numFactura);
+    }
+    public static function obtenerLlaveUnicaClienteTarea($idTarea){
+        return Tarea::obtenerLlaveUnicaClienteTarea($idTarea);
+    }
 }
