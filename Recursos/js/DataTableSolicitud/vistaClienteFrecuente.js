@@ -54,19 +54,22 @@ let obtenerClientes = function () {
 }
 $(document).on("click", "#btn_selectcliente", function () {
   let fila = $(this).closest("tr");
+  let codCliente = fila.find("td:eq(0)").text();
   let nombreCliente = fila.find("td:eq(1)").text();
   let rtnCliente = fila.find("td:eq(2)").text();
   let telefonoCliente = fila.find("td:eq(3)").text();
   let direccionCliente = fila.find("td:eq(4)").text();
+
   let nombre = document.getElementById("nombre");
-  //let rtn = document.getElementById("rtnCliente");
   let rtn = document.querySelector('[name="rtnCliente"]');
   rtn.id = "rtnClienteV";
   let telefono = document.getElementById("telefono");
+  let codigoC = document.querySelector('[name="codC"]');
   let direccion = document.getElementById("direccion");
   //Setear datos del cliente
   nombre.value = nombreCliente;
   rtn.value = rtnCliente;
+  codigoC.id = codCliente;
   telefono.value = telefonoCliente;
   direccion.value = direccionCliente;
   //Deshabilitar elementos
@@ -75,6 +78,8 @@ $(document).on("click", "#btn_selectcliente", function () {
   //direccion.setAttribute('disabled', 'true');
   $("#modalClienteFrecuente").modal("hide");
 });
+
+
 
 let rtnCliente = document.getElementById('clienteExistente');
 //let rtnCliente = document.getElementById('rtnCliente');
@@ -233,6 +238,8 @@ $(document).on("click", "#btn_selectfactura", function () {
     rtnCliente.disabled = false;
     nombre.disabled=false;
     let fechaC = new Date().toISOString().slice(0, 10);
+    let codigoC = document.querySelector('[name="codC"]');
+    codigoC.id= "";
     $("#fechasolicitud").val(fechaC);
     obtenerAdminCorreo('#correo');
   });
@@ -415,7 +422,8 @@ $('#form-solicitud').submit(function (e) {
   let descripcion = $('#descripcion').val();
   let rtncliente = $('#rtnClienteV').val();
   let rtnclienteC = $('#rtnCliente').val();
-
+  let codigoClieteF = document.querySelector('[name="codC"]');
+  let codigo = codigoClieteF.getAttribute('id');
 // var radio = document.getElementById("clienteExistente");
 // if (radio.checked) {
 //   rtnclienteC = $('#rtnCliente').val();
@@ -452,7 +460,8 @@ $idProductos.forEach(id => {
               ubicacion: ubicacion,
               descripcion: descripcion,
               nombre: nombre.value,
-              "productos": JSON.stringify(productos)
+              "productos": JSON.stringify(productos),
+              codigo: codigo
           },
           success: function () {
            
@@ -551,9 +560,10 @@ $(document).on("click", "#btn_selectcarteraCliente", function () {
   let nombre = document.getElementById("nombre");
   //let rtn = document.getElementById("rtnCliente");
   let rtn = document.querySelector('[name="rtnCliente"]');
-  //rtn.id = "rtnClienteC";
+  let codigoC = document.querySelector('[name="codC"]');
   let telefono = document.getElementById("telefono");
   let direccion = document.getElementById("direccion");
+  codigoC.id= "";
   nombre.value =  nombreCarteraCliente ;
   rtn.value = rtnCartera;
   telefono.value =telefonoCartera;

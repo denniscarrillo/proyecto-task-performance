@@ -163,7 +163,7 @@ if (isset($_SESSION['usuario'])) {
                     <p class="mensaje"></p>
                 </div>
                 <div class="form-element input-conteiner" id="containerrtncliente" >
-                    <label for="rtn-cliente" class="form-label">RTN:</label>
+                    <label for="rtn-cliente" class="form-label" id="" name = "codC" >RTN:</label>
                     <input type="text" id="rtnCliente" name="rtnCliente" class="form-control">
                     <p class="mensaje"></p>
                 </div>

@@ -78,14 +78,14 @@ require_once("validacionesComision.php");
           </div>
         </div>
         <div class="table-conteiner">
-          <!-- <div class="filtros">
+          <div class="filtros">
             <div class="filtro-fecha">
               <label for="fechaDesde">Fecha desde:</label>
               <input type="date" id="fechaDesdef" name="fechaDesdef" class="form-control">
               <label for="fechaHasta">Fecha hasta:</label>
               <input type="date" id="fechaHastaf" name="fechaHastaf" class="form-control">
               <button type="button" class="btn btn-primary" id="btn_filtroALiquidar">Comisiones a liquidar</button>
-            </div> -->
+            </div>
             <div>
               <a href="v_nuevaComision.php" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro"><i
                   class="fa-solid fa-circle-plus"></i> Generar comisión</a>
