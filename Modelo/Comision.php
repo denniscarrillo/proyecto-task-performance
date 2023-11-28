@@ -552,7 +552,7 @@ class Comision
         }
 
     }
-    public static function Comisiones_a_Liquidar($fechaDesde, $fechaHasta)
+    public static function ObtenerComisiones_a_Liquidar($fechaDesde, $fechaHasta)
     {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
@@ -577,7 +577,17 @@ class Comision
 
         return $comisiones_a_Liquidar;
     }
-
+public static function liquidandoComisionesGenerales($idComision){
+    $conn = new Conexion();
+    $abrirConexion = $conn->abrirConexionDB();
+    $estadoLiquidacion = 'Liquidada';
+    $query = "UPDATE tbl_Comision SET estado_Liquidacion = '$estadoLiquidacion', fecha_Liquidacion = GETDATE() WHERE id_Comision = '$idComision';";
+    $result = sqlsrv_query($abrirConexion, $query);
+    if ($result === false) {
+        die(print_r(sqlsrv_errors(), true)); // Manejo de errores
+    }
+    sqlsrv_close($abrirConexion);
+}
 
 
 }

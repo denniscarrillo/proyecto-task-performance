@@ -333,13 +333,19 @@ $(document).on("click", "#btn_pdf_id",  function (){
     let $fechaHasta = document.getElementById('fechaHastaf');
     
     $btnFiltrar.addEventListener("click", function(){
+      // Obtener las fechas desde el modal
+  const fechaDesdeT = $fechaDesde.value;
+  const fechaHastaT = $fechaHasta.value;
+
+  // Asumiendo que tengas un elemento con el id "fechasLabel" para mostrar las fechas
+  $("#fechasLabel").text('Desde el: ' + fechaDesdeT + ' Hasta el: ' + fechaHastaT);
       iniciarDataTable($fechaDesde.value, $fechaHasta.value);
     });
     
     let iniciarDataTable = function (fechaDesde, fechaHasta) {
       $tablaComisionesLiquidadas = $("#table-comisiones_ALiquidar").DataTable({
         ajax: {
-          url: "../../../Vista/comisiones/comisiones_A_Liquidar.php",
+          url: "../../../Vista/comisiones/Obteniendocomisiones_A_Liquidar.php",
           type: "POST",
           datatype: "JSON",
           data: {
@@ -360,25 +366,46 @@ $(document).on("click", "#btn_pdf_id",  function (){
           { defaultContent: `<div>
           <button class="btns btn" id="btn_liquidar"><i class="fa-solid fa-clipboard-check"></i></button>
           </div>` }
-        ],
-        initComplete: function (settings, json) {
-          // Obtener las fechas de la primera fila
-          const fechaDesdeT = json[0].fechaDesde; // Ajusta esto según la estructura de tus datos
-          const fechaHastaT = json[0].fechaHasta; // Ajusta esto según la estructura de tus datos
-    
-          // Asumiendo que tengas un elemento con el id "fechasLabel" para mostrar las fechas
-          $("#fechasLabel").text('Desde el: ' + fechaDesdeT + ' Hasta el: ' + fechaHastaT);
-        }
+        ]
       });
       $("#modalComisiones_Liquidar").modal("show");
     };
+
+    // Agrega un evento click para los botones con el id "btn_liquidar"
+$('#table-comisiones_ALiquidar').on('click', '#btn_liquidar', function () {
+  // Obtén la fila de la tabla
+  var data = $tablaComisionesLiquidadas.row($(this).parents('tr')).data();
+
+  // Acciones que deseas realizar al liquidar la comisión
+  var idComision = data.idComision;
+
+  // Realiza la llamada AJAX para liquidar la comisión
+  $.ajax({
+    type: "POST",
+    url: "../../../Vista/comisiones/LiquidandoComisiones.php",  // Reemplaza con la ruta correcta
+    data: { idComision: idComision },
+    success: function(response) {
+      console.log("Comisión liquidada con éxito");
+      Swal.fire(
+        'Liquidada!',
+        'La comisión ha sido liquidada!',
+        'success',
+      )
+      tablaComision.ajax.reload(null, false);
+      // Puedes realizar acciones adicionales aquí, como actualizar la tabla
+    },
+    error: function(error) {
+      console.error("Error al liquidar la comisión", error);
+    }
+  });
+});
     
     let obtenerComisionesFiltradas = function (fechaDesde, fechaHasta) {
       console.log("Fecha desde: " + fechaDesde);
       console.log("Fecha hasta: " + fechaHasta);
       $.ajax({
         type: "POST",
-        url: "../../../Vista/comisiones/comisiones_A_Liquidar.php",
+        url: "../../../Vista/comisiones/ObteniendoComisiones_A_Liquidar.php",
         data: {
           fecha_Desde: fechaDesde,
           fecha_Hasta: fechaHasta,
@@ -388,80 +415,3 @@ $(document).on("click", "#btn_pdf_id",  function (){
         },
       });
     }
-/* let obtenerEstadoComision = function (idElemento) {
-  //Petición para obtener los estados de las comisiones
-  $.ajax({
-    url: "../../../Vista/comisiones/traerEstadoComision.php",
-    type: "GET",
-    dataType: "JSON",
-    success: function (data) {
-      let valores = '<option value="">Seleccionar...</option>';
-      //Recorremos el arreglo de roles que nos devuelve la peticion
-      for (let i = 0; i < data.length; i++) {
-        valores += '<option value="' + data[i].idComision + '">' + data[i].estadoComisionar + '</option>';
-        $(idElemento).html(valores);
-      }
-    },
-  });
-}; */
-
-/* let obtenerComisionTotal = ($porcentaje, $totalVenta) => {
-  $.ajax({
-    url: "../../../Vista/comisiones/obtenerComisionTotal.php",
-    type: "POST",
-    datatype: "JSON",
-    data: {
-      porcentaje: $porcentaje,
-      totalVenta: $totalVenta,
-    },
-    success: function (comisionTotal) {
-      let objComisionTotal = JSON.parse(comisionTotal);
-      document.getElementById("totalComsion_E").value =
-        objComisionTotal[0].comision;
-    },
-  }); //Fin AJAX
-}; */
-
-/* let $selectPorcentaje = document.getElementById("porcentaje-comision_E");
-$selectPorcentaje.addEventListener("change", function () {
-  let $porcentaje = $selectPorcentaje.value;
-  let $totalVenta = document.getElementById("monto_E").value;
-  obtenerComisionTotal($porcentaje, $totalVenta);
-}); */
-
-/* let obtenerPorcentajes = function (idElemento) {
-  //Petición para obtener porcentajes
-  $.ajax({
-    url: "../../../Vista/comisiones/obtenerPorcentaje.php",
-    type: "GET",
-    dataType: "JSON",
-    success: function (data) {
-      let valores = '<option value="">Seleccionar...</option>';
-      //Recorremos el arreglo de roles que nos devuelve la peticion
-      for (let i = 0; i < data.length; i++) {
-        valores += '<option value="' + data[i].idPorcentaje + '">' + data[i].porcentaje + '</option>';
-        $(idElemento).html(valores);
-      }
-    },
-  });
-}; */
-/*   $('#btnFiltrar') .click(function(){
-    tablaComision.destroy();
-    var fechaDesdef = $('#fechaDesdef').val();
-    var fechaHastaf = $('#fechaHastaf').val();
-    tablaComision = $('#table-Comision').DataTable({
-      "ajax": {
-        "url": "../../../Vista/crud/comision/obtenerFiltroComisiones.php",
-        "dataSrc": "",
-        "data":{
-          "fechaDesdef":fechaDesdef,
-          "fechaHastaf":fechaHastaf
-        },
-      success: function(data){
-        console.log(data);
-      },
-    },
-  });
-}); */
-
-// 
