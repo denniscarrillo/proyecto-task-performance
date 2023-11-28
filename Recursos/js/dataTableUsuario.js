@@ -46,6 +46,7 @@ let obtenerPermisos = function ($idObjeto, callback) {
 }
 // Cuando presionamos el boton aparece el modal con los siguientes campos
 $('#btn_nuevoRegistro').click(async function () {
+  limpiarForm();
   // //Petición para obtener roles 
   obtenerRoles('#rol');
   //Petición para obtener estado de usuario
@@ -100,6 +101,7 @@ $('#form-usuario').submit(async function (e) {
         }
       });
      $('#modalNuevoUsuario').modal('hide');
+     limpiarForm();
     } 
 });
 

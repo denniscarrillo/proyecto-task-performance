@@ -106,9 +106,9 @@ if (isset($_POST["submit"])) {
                         $incremento = ControladorUsuario::incrementarIntentos($_POST["userName"], $intentosFallidos);
                         $nuevoEstado = Usuario::bloquearUsuario($intentosMax, $incremento, $_POST["userName"]);
                         if (($intentosFallidos + 1) == $intentosMax) {
-                            $mensaje = 'Ha alcanzado el limite de intentos fallidos, no debe equivocarse de nuevo';
+                            $mensaje = 'Ha alcanzado el límite de intentos fallidos, no debe equivocarse de nuevo';
                         } else if ($nuevoEstado == true || $estadoUsuario == 4) {
-                            $mensaje = 'Su ussuario ha sido bloqueado por exceder el número de intentos fallidos';
+                            $mensaje = 'Su usuario ha sido bloqueado por exceder el número de intentos fallidos';
                         } else {
                             $mensaje = 'Usuario y/o Contraseña incorrectos';
                         }
