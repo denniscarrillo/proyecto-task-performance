@@ -31,6 +31,7 @@
 	<link rel='stylesheet' href="../../Recursos/css/layout/sidebar.css">
 	<link rel='stylesheet' href="../../Recursos/components/css/sidePanel.css">
 	<link rel='stylesheet' href="../../Recursos/css/v_EditarTarea.css">
+	<link rel='stylesheet' href="../../Recursos/css/estilosMensajesError.css">
 	<title>Editar tarea</title>
 </head>
 
@@ -111,13 +112,14 @@
 								<input type="radio" name="radioOption" id="cliente-nuevo" class="radio" value="Nuevo"
 									checked><label for="cliente-nuevo" class="radio-label form-label">Nuevo</label>
 							</div>
-							<div class="mb-3">
+							<div class="mb-3 data-container">
 								<label for="input-titulo-tarea" class="form-label label-title-task">Titulo de la tarea</label>
 								<input type="text" name="input-titulo-tarea" id="input-titulo-tarea" class="form-control" value="<?php echo ControladorTarea::obtenerEstadoTarea(intval($_GET['idTarea']))['titulo'] ?>">
+								<p class="mensaje" hidden></p>
 								<button type="button" id="btn-finalizar-tarea" disabled><i class="fa-solid fa-text-slash"></i> Finalizar tarea</button>
 								<label id="estado-finalizacion" hidden><?php echo ControladorTarea::obtenerTareaFinalizada($_GET['idTarea']) ?></label>
 							</div>
-							<div class="mb-3">
+							<div class="mb-3 data-container">
 								<!-- <label id="" class="id-estado-tarea" hidden="true" name="estadoTarea"></label> -->
 								<label id="<?php echo ControladorTarea::obtenerEstadoTarea(intval($_GET['idTarea']))['id_estadoAvance'] ?>" class="id-estado-tarea" hidden="true" name="estadoTarea"></label>
 								<input type="text" value="<?php echo $_GET['idTarea']; ?>" id="id-Tarea" class="id-tarea" name="idTarea" hidden="true">
@@ -137,28 +139,28 @@
 						<div id="group-inputs">
 							<!-- Columna 1 -->
 							<div class="grupo-form">
-								<div class="mb-3" id="container-rtn-cliente">
+								<div class="mb-3 data-container" id="container-rtn-cliente">
 									<label for="rnt-cliente" class="form-label" name="estadoEdicion" id="true">RTN:</label>
-									<p id="mensaje"></p>
 									<input type="text" name="rtnCliente" id="rnt-cliente" class="form-control">
+									<p class="mensaje"></p>
 									<!-- Aqui va el boton del filtro de clientes -->
 								</div>
-								<div class="mb-3" id="container-num-factura" hidden>
+								<div class="mb-3 data-container" id="container-num-factura" hidden>
 									<label for="num-factura" class="form-label" >N° FACTURA: </label>
 									<p class="mensaje"></p>
 									<input type="text" name="num-factura" id="num-factura" class="form-control ">
 								</div>
-								<div class="mb-3">
+								<div class="mb-3 data-container">
 									<label for="nombre" class="form-label">Nombre Cliente:</label>
 									<input type="text" name="nombre" id="nombre-cliente" class="form-control" >
 									<p class="mensaje"></p>
 								</div>
-								<div class="mb-3">
+								<div class="mb-3 data-container">
 									<label for="telefono" class="form-label">Teléfono: </label>
 									<input type="text" name="telefono" id="telefono-cliente" class="form-control">
 									<p class="mensaje"></p>
 								</div>
-								<div class="mb-3" id="container-correo">
+								<div class="mb-3 data-container" id="container-correo">
 									<label for="correo" class="form-label" id="label-correo">Correo Electrónico: </label>
 									<input type="email" name="correo" id="correo-cliente" class="form-control" >
 									<p class="mensaje"></p>
@@ -166,12 +168,12 @@
 							</div>
 							<!-- Columna 2 -->
 							<div class="grupo-form">
-								<div class="mb-3">
+								<div class="mb-3 data-container">
 									<label for="direccion" class="form-label">Dirección: </label>
 									<input type="text" name="direccion" id="direccion-cliente" class="form-control">
 									<p class="mensaje"></p>
 								</div>
-								<div class="mb-3" id="container-clasificacion-lead" hidden="true">
+								<div class="mb-3 data-container" id="container-clasificacion-lead" hidden="true">
 									<label for="clasificacionlead" class="form-label">Clasificación Lead: </label>
 									<select id="clasificacion-lead" class="form-control " name="clasificacionLead">
 										<!-- Opciones clasificacion lead -->
@@ -184,7 +186,7 @@
 									</select>
 									<p class="mensaje"></p>
 								</div>
-								<div class="mb-3" hidden="true" id="container-origen-lead">
+								<div class="mb-3 data-container" hidden="true" id="container-origen-lead">
 									<label for="origenlead" class="form-label">Origen Lead: </label>
 									<select id="origen-lead" class="form-control " name="origenLead">
 										<!-- Opciones clasificacion lead -->
@@ -197,12 +199,12 @@
 									</select>
 									<p class="mensaje"></p>
 								</div>
-								<div class="mb-3">
+								<div class="mb-3 data-container">
 									<label for="rubrocomercial" class="form-label">Rubro Comercial: </label>
 									<input type="text" name="rubrocomercial" id="rubrocomercial" class="form-control">
 									<p class="mensaje"></p>
 								</div>
-								<div class="mb-3">
+								<div class="mb-3 data-container">
 									<label for="razonsocial" class="form-label">Razón Social: </label>
 									<input type="text" name="razonsocial" id="razonsocial" class="form-control">
 									<p class="mensaje"></p>
@@ -256,12 +258,14 @@
 	require_once('modalClientes.html');
 	require_once('modalArticulos.html');
 	?>
-	<script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-	<script src="../../Recursos/bootstrap5/bootstrap.min.js "></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+	<!-- <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script> -->
+	<script src="../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js"></script>
 	<script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
+	<script src="../../Recursos/bootstrap5/bootstrap.min.js "></script>
+	<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script> -->
+	<script src="../../Recursos/js/librerias/SweetAlert2.all.min.js"></script>
 	<script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
-	<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+	<!-- <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script> -->
 	<script src="../../Recursos/js/rendimiento/v_editarTarea.js" type="module"></script>
 	<script src="../../Recursos/js/rendimiento/validacionesEditarTarea.js" type="module"></script>
 </body>

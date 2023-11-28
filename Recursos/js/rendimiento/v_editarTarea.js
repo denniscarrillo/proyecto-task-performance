@@ -1,7 +1,7 @@
 import { sidePanel_Interaction } from '../../components/js/sidePanel.js'; //importamos la funcion del sidePanel
-import { estadoValidado as estado } from './validacionesEditarTarea.js';
+// import { estadoValidado as estado } from './validacionesEditarTarea.js';
 
-
+let estado = false;
 let existEvidencia = 0;
 let numEvidencia = '';
 let $idTarea = document.getElementById('id-Tarea').value;
@@ -157,7 +157,13 @@ document.getElementById('form-Edit-Tarea').addEventListener('submit', function(e
   let $idTask = $('#id-Tarea').val();
   let radioOption = document.getElementsByName('radioOption');
   let tipoCliente = (radioOption[1].checked) ? radioOption[1].value : radioOption[0].value;
+  console.log(estado)
+  if (document.querySelectorAll('.mensaje_error').length == 0) {
+    console.log('ENTRO')
+    estado = true;
+}
   if(estado){
+    console.log('entro 2');
     let $datosTarea = validarCamposEnviar(tipoCliente);
     actualizarDatosTarea($datosTarea);
     enviarProductosInteres($idTask); //Enviamos los productos de interes a almacenar
@@ -365,7 +371,7 @@ document.getElementById('estados-tarea').addEventListener('change', async () => 
 
 let $rtn = document.getElementById('rnt-cliente');
 $rtn.addEventListener('focusout', function () {
-  let $mensaje = document.getElementById('mensaje');
+  let $mensaje = document.querySelector('.mensaje');
   $mensaje.innerText = '';
   $mensaje.classList.remove('mensaje-existe-cliente');
   if($rtn.value.trim() != ''){
@@ -401,7 +407,7 @@ let setearDatosClienteCartera = (cliente) => {
 
 
 let limpiarForm = () => {
-  let $mensaje = document.getElementById('mensaje');
+  let $mensaje = document.querySelector('.mensaje');
   $mensaje.innerText = '';
   $mensaje.classList.remove('mensaje-existe-cliente');
   let rtn = document.getElementById('rnt-cliente'),
