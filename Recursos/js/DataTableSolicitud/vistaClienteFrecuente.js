@@ -275,11 +275,12 @@ $(document).on("click", "#btn_selectfactura", function () {
   }
 
 
+  //const table = new DataTable('#table-ArticuloSolicitud');
 
 ////////////////MODAL DE ARTICULO  
   $('#btnarticulos').click(() => {
     if (document.getElementById('table-ArticuloSolicitud_wrapper') == null) {
-      $('#table-ArticuloSolicitud').DataTable({
+      let t = $('#table-ArticuloSolicitud').DataTable({
         "ajax": {
           "url": "../../../Vista/crud/DataTableSolicitud/obtenerArticulosSolicitud.php",
           "dataSrc": ""
@@ -301,38 +302,37 @@ $(document).on("click", "#btn_selectfactura", function () {
     }
   });
   
-  $(document).on("click", '#btn_selectarticle', function () {
-    selectArticulo(this);
+  $(document).on("click", 'tbody tr', function (e) {
+    $(this).find("button")[0].classList.toggle('select_articulo')
+    e.currentTarget.classList.toggle('ArtSelec');
+    // $("tr.dummy button").currentTarget.classList.toggle("select_articulo")    
+    // selectArticulo(this);
   });
 
-  let selectArticulo = function ($selector) {
-    $selector.classList.toggle('select_articulo');
-  };
+  // let selectArticulo = function ($selector) {
+  //   $selector.classList.toggle('select_articulo');
+  // };
 
   $('#btn_agregar').click(function () {
     agregarArticulos();
     $('#modalArticulosSolicitud').modal('hide');  
   });
-  
   let agregarArticulos = function () {
     let $Articulos = [];
-    let productosSeleccionados = document.querySelectorAll('.select_articulo');
-    productosSeleccionados.forEach(function (producto) {
-      if (producto.classList.contains('select_articulo')) {
-        let $idArticulo = $(producto).closest('tr').find('td:eq(0)').text();
-        let $nombreArticulo = $(producto).closest('tr').find('td:eq(1)').text();
-        let $marca = $(producto).closest('tr').find('td:eq(3)').text();
-        let $articulo = {
-          id: $idArticulo,
-          nombre: $nombreArticulo,
-          marca: $marca
-        }
-        $Articulos.push($articulo);
-      }
-    });
+    let productosSeleccionados = $('#table-ArticuloSolicitud').DataTable().rows(".ArtSelec").data()
+    for (let i=0; i<productosSeleccionados.length; i++) {
+      console.log(productosSeleccionados[i])
+      $Articulos.push({
+        id: productosSeleccionados[i].codArticulo,
+        nombre: productosSeleccionados[i].articulo,
+        marca: productosSeleccionados[i].marcaArticulo
+      })
+    }
+
     carritoArticulos($Articulos);
   };
 
+  
   let carritoArticulos = ($productos) => {
     let productos = '';
     let $tableArticulos = document.getElementById('listarticulos');
