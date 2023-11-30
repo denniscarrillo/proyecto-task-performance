@@ -25,12 +25,20 @@ $(document).ready(function(){
     $tipoCliente = ($radioButton[1].checked) ? $radioButton[1].value : $radioButton[0].value;
     console.log($tipoCliente);
     //Evento SUBMIT
-    $form.addEventListener('submit', () => { 
+    // $form.addEventListener('submit', () => { 
+    //     validarInputs(funciones, $tipoCliente);
+    //     if (document.querySelectorAll('.mensaje_error').length == 0) {
+    //         // console.log(document.querySelectorAll('.mensaje_error').length)
+    //         estadoValidado = true;
+    //     }
+    // });
+    document.getElementById('btn-guardar').addEventListener('click', () =>{
         validarInputs(funciones, $tipoCliente);
-        // if (document.querySelectorAll('.mensaje_error').length == 0) {
-        //     console.log('ENTRO')
-        //     estadoValidado = true;
-        // }
+        if (document.querySelectorAll('.mensaje_error').length == 0) {
+            estadoValidado = true;
+        } else {
+            estadoValidado = false;
+        }
     });
     //Volver a validar cuando se han introducido datos de un cliente existente
     $(document).on("click", "#btn_select-cliente", function () {
@@ -46,15 +54,15 @@ inputsEditarTarea.origenLead.addEventListener('change', () => {
 inputsEditarTarea.rubroComercial.addEventListener('focusout', () => {
     validarInputs(funciones, $tipoCliente);
 });
-inputsEditarTarea.rubroComercial.addEventListener('mouseout', () => {
-    validarInputs(funciones, $tipoCliente);
-});
+// inputsEditarTarea.rubroComercial.addEventListener('mouseout', () => {
+//     validarInputs(funciones, $tipoCliente);
+// });
 inputsEditarTarea.razonSocial.addEventListener('focusout', () => {
     validarInputs(funciones, $tipoCliente);
 });
-inputsEditarTarea.razonSocial.addEventListener('mouseout', () => {
-    validarInputs(funciones, $tipoCliente);
-});
+// inputsEditarTarea.razonSocial.addEventListener('mouseout', () => {
+//     validarInputs(funciones, $tipoCliente);
+// });
 
 
 
@@ -87,7 +95,7 @@ let validarInputs = (funciones, tipoCliente) => {
             funciones.validarCampoVacio(inputsEditarTarea.nombre);
             if(tipoCliente != 'Existente'){
                 funciones.validarCampoVacio(inputsEditarTarea.telefono);
-                funciones.validarCampoVacio(inputsEditarTarea.correo);
+                // funciones.validarCampoVacio(inputsEditarTarea.correo);
                 funciones.validarCampoVacio(inputsEditarTarea.direccion);   
             }
             funciones.validarCampoVacio(inputsEditarTarea.rubroComercial);
@@ -101,7 +109,7 @@ let validarInputs = (funciones, tipoCliente) => {
             funciones.validarCampoVacio(inputsEditarTarea.nombre);
             if(tipoCliente != 'Existente'){
                 funciones.validarCampoVacio(inputsEditarTarea.telefono);
-                funciones.validarCampoVacio(inputsEditarTarea.correo);
+                // funciones.validarCampoVacio(inputsEditarTarea.correo);
                 funciones.validarCampoVacio(inputsEditarTarea.direccion);     
             }
             funciones.validarCampoVacio(inputsEditarTarea.rubroComercial);
