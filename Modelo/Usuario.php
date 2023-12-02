@@ -27,7 +27,6 @@ class Usuario {
     //Método para obtener todos los usuarios que existen.
     public static function obtenerTodosLosUsuarios(){
         $conn = new Conexion();
-
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $query = "SELECT u.id_Usuario, u.usuario, u.nombre_Usuario, u.correo_Electronico, e.descripcion, r.rol
                 FROM tbl_ms_usuario AS u
