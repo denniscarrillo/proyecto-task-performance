@@ -94,6 +94,7 @@ if (isset($_SESSION['usuario'])) {
       $urlEditarCamposPerfil = './crud/PerfilUsuario/EditarCamposPerfilUsuario.php';
       $urlImg = '../Recursos/imagenes/Logo-E&C.png';
       $urlRazonSocial = './crud/RazonSocial/gestionRazonSocial.php';
+      $urlRubroComercial = './crud/RubroComercial/gestionRubroComercial.php';
       require_once 'layout/sidebar.php';
       ?>
     </div>

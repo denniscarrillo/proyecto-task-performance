@@ -59,6 +59,7 @@ require_once('obtenerEstadoComision.php');
           $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
         $urlImg = '../../Recursos/imagenes/Logo-E&C.png';
         $urlRazonSocial = '../crud/RazonSocial/gestionRazonSocial.php';
+        $urlRubroComercial = '../crud/rubroComercial/gestionRubroComercial.php';
         require_once '../layout/sidebar.php';
         ?>
       </div>

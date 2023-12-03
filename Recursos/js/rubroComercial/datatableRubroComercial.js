@@ -1,6 +1,6 @@
-import {estadoValidado as validado } from './validacionesModalNuevaRazonSocial.js';
-import {estadoValidado as valido } from './validacionesModalEditarRazonSocial.js';
-let tablaRazonSocial = '';
+import {estadoValidado as validado } from './validacionesModalNuevoRubroComercial.js';
+import {estadoValidado as valido } from './validacionesModalEditarRubroComercial.js';
+let tablaRubroComercial = '';
 $(document).ready(function () {
   let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
   // console.log($idObjetoSistema);
@@ -10,17 +10,17 @@ $(document).ready(function () {
 let procesarPermisoActualizar = data => {
   let permisos = JSON.parse(data);
   // console.log(permisos);
-  tablaRazonSocial = $('#table-RazonSocial').DataTable({
+  tablaRubroComercial = $('#table-RubroComercial').DataTable({
     "ajax": {
-      "url": "../../../Vista/crud/razonSocial/obtenerRazonSocial.php",
+      "url": "../../../Vista/crud/rubroComercial/obtenerRubroComercial.php",
       "dataSrc": ""
     },
     "language": {
       "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
     },
     "columns": [
-      { "data": "id_razonSocial" },
-      { "data": 'razon_Social' },
+      { "data": "id_rubroComercial" },
+      { "data": 'rubro_Comercial' },
       { "data": 'descripcion' },
       {
         "defaultContent":
@@ -40,87 +40,87 @@ let obtenerPermisos = function ($idObjeto, callback) {
       success: callback
   });
 }
-// Crear nueva Razon Social
-$('#form-razonSocial').submit(function (e) {
+// Crear nueva Rubro Comercial
+$('#form-rubroComercial').submit(function (e) {
     e.preventDefault();
-    let razonSocial = $('#razonSocial').val();
+    let rubroComercial = $('#rubroComercial').val();
     let descripcion = $('#descripcion').val();
     if(validado){
       $.ajax({
-        url: "../../../Vista/crud/razonSocial/nuevaRazonSocial.php",
+        url: "../../../Vista/crud/rubroComercial/nuevoRubroComercial.php",
         type: "POST",
         datatype: "JSON",
         data: { 
-            razonSocial: razonSocial,
+            rubroComercial: rubroComercial,
             descripcion: descripcion
         },
         success: function () {
         //Mostrar mensaje de exito
           Swal.fire(
             'Registrado!',
-            'La razon Social ha sido registrada.',
+            'El Rubro Comercial ha sido registrado.',
             'success',
           )
-          tablaRazonSocial.ajax.reload(null, false);
+          tablaRubroComercial.ajax.reload(null, false);
          }
        });
-        $('#modalNuevaRazonSocial').modal('hide');
+        $('#modalNuevoRubroComercial').modal('hide');
       }
   });
   
-  // Editar Razon Social
+  // Editar Rubro Comercial
   $(document).on('click', '#btn_editar', function () {
     let fila = $(this).closest("tr"),
-    idRazonSocial = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		   
-    razonSocial = fila.find('td:eq(1)').text(),
+    idRubroComercial = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		   
+    rubroComercial = fila.find('td:eq(1)').text(),
     descripcion = fila.find('td:eq(2)').text();
-    $('#E_idRazonSocial').val(idRazonSocial);
-    $('#E_razonSocial').val(razonSocial);
+    $('#E_idRubroComercial').val(idRubroComercial);
+    $('#E_rubroComercial').val(rubroComercial);
     $('#E_descripcion').val(descripcion);
     $(".modal-header").css("background-color", "#007bff");
     $(".modal-header").css("color", "white");	
-    $('#modalEditarRazonSocial').modal('show');
+    $('#modalEditarRubroComercial').modal('show');
   });
   
-  // Evento Submit que edita la Razon Social
-  $('#form-Edit_razonSocial').submit(function (e) {
+  // Evento Submit que edita el Rubro Comercial
+  $('#form-Edit_rubroComercial').submit(function (e) {
     e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
      //Obtener datos del nuevo Cliente
-     let idRazonSocial = $('#E_idRazonSocial').val(),
-      razonSocial = $('#E_razonSocial').val(),
+     let idRubroComercial = $('#E_idRubroComercial').val(),
+      rubroComercial = $('#E_rubroComercial').val(),
       descripcion = $('#E_descripcion').val();
      if(valido){
       $.ajax({
-        url: "../../../Vista/crud/razonSocial/editarRazonSocial.php",
+        url: "../../../Vista/crud/rubroComercial/editarRubroComercial.php",
         type: "POST",
         datatype: "JSON",
         data: {
-          id_RazonSocial: idRazonSocial,
-          razonSocial: razonSocial,
+          id_RubroComercial: idRubroComercial,
+          rubroComercial: rubroComercial,
           descripcion: descripcion
         },
         success: function () {
           //Mostrar mensaje de exito
           Swal.fire(
             'Actualizado!',
-            'La razon social ha sido modificado!',
+            'El Rubro Comercial ha sido modificado!',
             'success',
           )
-           tablaRazonSocial.ajax.reload(null, false);
+           tablaRubroComercial.ajax.reload(null, false);
         }
       });
-      $('#modalEditarRazonSocial').modal('hide');
+      $('#modalEditarRubroComercial').modal('hide');
      }
   });
   //Eliminar pregunta
   $(document).on("click", "#btn_eliminar", function() {
     let fila = $(this).closest("tr"),
-       idRazonSocial = $(this).closest('tr').find('td:eq(0)').text(), 
-       razonSocial = fila.find('td:eq(1)').text(),
+       idRubroComercial = $(this).closest('tr').find('td:eq(0)').text(), 
+       rubroComercial = fila.find('td:eq(1)').text(),
        descripcion = fila.find('td:eq(2)').text();
        
       Swal.fire({
-        title: 'Estas seguro de eliminar la razonSocial '+razonSocial+'?',
+        title: 'Estas seguro de eliminar el rubro comercial '+rubroComercial+'?',
         text: "No podras revertir esto!",
         icon: 'warning',
         showCancelButton: true,
@@ -131,31 +131,31 @@ $('#form-razonSocial').submit(function (e) {
       }).then((result) => {
         if (result.isConfirmed) {      
           $.ajax({
-            url: "../../../Vista/crud/razonSocial/eliminarRazonSocial.php",
+            url: "../../../Vista/crud/rubroComercial/eliminarRubroComercial.php",
             type: "POST",
             datatype: "JSON",
             data: { 
-              id_RazonSocial: idRazonSocial,
-              razonSocial: razonSocial,
+              id_RubroComercial: idRubroComercial,
+              rubroComercial: rubroComercial,
               descripcion: descripcion
             },
             success: function (data) {
               if(JSON.parse(data) == 'true'){
-                tablaRazonSocial.row(fila.parents('tr')).remove().draw();
+                tablaRubroComercial.row(fila.parents('tr')).remove().draw();
               Swal.fire(
-                'Lo sentimos!',
-                'La razon Social no puede ser eliminada.',
-                'error'
+                'Rubro Eliminado!',
+                'El Rubro Comercial ha sido Eliminado!.',
+                'success'
               );
-              tablaRazonSocial.ajax.reload(null, false);
-               } else{
-                Swal.fire(
-                  'Eliminada!',
-                  'La razon Social ha sido Eliminada!.',
+              tablaRubroComercial.ajax.reload(null, false);
+              } else{
+              Swal.fire(
+                'Eliminado!',
+                  'El rubro comercial ha sido Eliminado!.',
                   'success'
-                );
-                tablaRazonSocial.ajax.reload(null, false);
-               }
+              );
+              tablaRubroComercial.ajax.reload(null, false);
+              }
             }
           });
         
@@ -180,9 +180,9 @@ $('#form-razonSocial').submit(function (e) {
     $mensajes.forEach($mensaje =>{
       $mensaje.innerText = '';
     });
-    let razonSocial = document.getElementById('razonSocial');
+    let rubroComercial = document.getElementById('rubroComercial');
     //Vaciar campos cliente
-      razonSocial.value = '';
+      rubroComercial.value = '';
   }
   
   //Limpiar modal de editar
@@ -205,6 +205,6 @@ $('#form-razonSocial').submit(function (e) {
   
   //Generar reporte PDF
   $(document).on("click", "#btn_Pdf", function() {
-    let buscar = $('#table-RazonSocial_filter > label > input[type=search]').val();
-    window.open('../../../TCPDF/examples/reporteRazonSocial.php?buscar='+buscar, '_blank');
+    let buscar = $('#table-RubroComercial_filter > label > input[type=search]').val();
+    window.open('../../../TCPDF/examples/reporteRubroComercial.php?buscar='+buscar, '_blank');
   });     
