@@ -11,7 +11,6 @@
     if(isset($_SESSION['usuario'])){
         $nuevoRol = new Rol();
         $nuevoRol->id_Rol = $_POST['idRol'];//aquí va la variable de inicio de 
-        $nuevoRol->rol = $_POST['rol'];
         $nuevoRol->descripcion = $_POST['descripcion'];
         $nuevoRol->ModificadoPor = $_SESSION['usuario'];
         ControladorRol::editarRolUsuario($nuevoRol);

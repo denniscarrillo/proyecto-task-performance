@@ -1101,4 +1101,44 @@ class Tarea
         sqlsrv_close($conexion);
         return $existe;
     }
+    public static function obtenerRazonSocial(){
+        try{
+            $razon = array();
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $query = "SELECT id_razon_Social, razon_Social FROM tbl_razon_Social;";
+            $resultado = sqlsrv_query($abrirConexion, $query);
+            //Recorremos el resultado y almacenamos en el arreglo.
+            while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+                $razon[] = [
+                    'id' => $fila['id_razon_Social'],
+                    'razonSocial' => $fila['razon_Social']
+                ];
+            }
+            return $razon;
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
+        sqlsrv_close($abrirConexion); //Cerrar conexion
+    }
+    public static function obtenerRubroComercial(){
+        try{
+            $rubro = array();
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $query = "SELECT id_rubro_Comercial, rubro_Comercial FROM tbl_rubro_Comercial;";
+            $resultado = sqlsrv_query($abrirConexion, $query);
+            //Recorremos el resultado y almacenamos en el arreglo.
+            while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+                $rubro[] = [
+                    'id' => $fila['id_rubro_Comercial'],
+                    'rubroComercial' => $fila['rubro_Comercial']
+                ];
+            }
+            return $rubro;
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
+        sqlsrv_close($abrirConexion); //Cerrar conexion
+    }
 }

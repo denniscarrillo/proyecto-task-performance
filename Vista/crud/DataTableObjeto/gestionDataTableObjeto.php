@@ -133,7 +133,7 @@ if (isset($_SESSION['usuario'])) {
                 <?php include_once '../../layout/navbar.php'?>                             
             </div>        
             <div class ="titulo">
-                  <H2 class="title-dashboard-task"> Objetos</H2>
+                  <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionObjeto.php');?>"> Objetos</H2>
             </div>  
           </div> 
         <div class="table-conteiner">

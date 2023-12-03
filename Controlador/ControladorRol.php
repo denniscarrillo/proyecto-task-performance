@@ -20,7 +20,7 @@ class ControladorRol {
     //     return Rol::eliminarRol($id_Rol);
     // }
     public static function editarRolUsuario($nuevoRol){
-       return Rol::editarRol($nuevoRol);
+       Rol::editarRol($nuevoRol);
     }
 
     public static function rolExiste($rol){

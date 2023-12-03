@@ -17,6 +17,7 @@ export const validarEspacios = elemento => {
     }
     return estado;
 };
+
 // VALIDAR QUE SE CUMPLAN LAS REGLAS MÍNIMAS PARA LA CONTRASEÑA
 export const validarPassword = (elemento, objetoRegex) => {
     let mensaje = elemento.parentElement.querySelector('p');
@@ -79,6 +80,21 @@ export const validarCampoVacio = elemento => {
     } else {
         elemento.classList.remove('mensaje_error');
         mensaje.innerText = '';
+        estado = true;
+    }
+    return estado;
+}
+//Funcion para validar campos vacios cantidad cotizacion
+export const validarCampoVacioCant = elemento => {
+    let estado;
+    // let mensaje = elemento.parentElement.querySelector('p');
+    if (elemento.value.trim() === ''){
+        // mensaje.innerText = '*';
+        elemento.classList.add('mensaje_error');
+        estado = false;
+    } else {
+        elemento.classList.remove('mensaje_error');
+        // mensaje.innerText = '';
         estado = true;
     }
     return estado;

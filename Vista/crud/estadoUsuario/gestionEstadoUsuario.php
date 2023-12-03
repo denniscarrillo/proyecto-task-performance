@@ -1,18 +1,33 @@
-
 <?php
-session_start(); //Reanudamos la sesion
 require_once("../../../db/Conexion.php");
 require_once("../../../Modelo/Usuario.php");
 require_once("../../../Modelo/Bitacora.php");
 require_once("../../../Controlador/ControladorUsuario.php");
 require_once("../../../Controlador/ControladorBitacora.php");
-require_once("actualizarPerfilContrasenia.php");
 
+session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
- 
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
-  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
+  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionEstadoUsuario.php');
+  (!($_SESSION['usuario'] == 'SUPERADMIN'))
+  ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
+  : 
+    $permisoConsulta = true;
+  ;
+  if(!$permisoConsulta){
+    /* ==================== Evento intento de ingreso sin permiso a mantenimiento estado usuario. ==========================*/
+    $accion = ControladorBitacora::accion_Evento();
+    date_default_timezone_set('America/Tegucigalpa');
+    $newBitacora->fecha = date("Y-m-d h:i:s");
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionEstadoUsuario.php');
+    $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+    $newBitacora->accion = $accion['fallido'];
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a mantenimiento estado usuario';
+    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+    /* ===============================================================================================================*/
+    header('location: ../../v_errorSinPermiso.php');
+    die();
   }else{
     if(isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])){
       /* ====================== Evento salir. ================================================*/
@@ -26,19 +41,23 @@ if (isset($_SESSION['usuario'])) {
       ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     /* =======================================================================================*/
     }
-    /* ====================== Evento ingreso a mantenimiento usuario. ========================*/
+    /* ====================== Evento ingreso a mantenimiento estado usuario. ========================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
     $newBitacora->fecha = date("Y-m-d h:i:s");
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionEstadoUsuario.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['income'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a mantenimiento usuario';
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a mantenimiento estado usuario';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-    $_SESSION['objetoAnterior'] = 'gestionUsuario.php';
-    $_SESSION['descripcionObjeto'] = 'mantenimiento usuario';
+    $_SESSION['objetoAnterior'] = 'gestionEstadoUsuario.php';
+    $_SESSION['descripcionObjeto'] = 'mantenimiento estado usuario';
     /* =======================================================================================*/
   }
+} else {
+  header('location: ../../login/login.php');
+  die();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -46,7 +65,7 @@ if (isset($_SESSION['usuario'])) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/6266/6266866.png">
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
   <!-- Boostrap5 -->
   <link href='../../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
   <!-- Boxicons CSS -->
@@ -56,15 +75,16 @@ if (isset($_SESSION['usuario'])) {
   <!-- <link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" rel="stylesheet"> -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
   <!-- Estilos personalizados -->
-  <link href="../../../Recursos/css/gestionPerfilContrasenia.css" rel="stylesheet" />
-  <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+  <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
+  <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
-  <title> Actualizar Perfil</title>
+  <title> Gestión Estados de Usuarios </title>
 </head>
 
-<body  style="overflow: hidden;">
+<body>
   <div class="conteiner">
     <div class="conteiner-global">
       <div class="sidebar-conteiner">
@@ -80,6 +100,8 @@ if (isset($_SESSION['usuario'])) {
           $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
           //Comisión
           $urlComision = '../../comisiones/v_comision.php';
+          $comisionVendedor = '../ComisionesVendedores/ComisionesVendedores.php';
+          $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
           //Consulta
           $urlClientes = '../cliente/gestionCliente.php';
           $urlVentas = '../Venta/gestionVenta.php';
@@ -93,71 +115,65 @@ if (isset($_SESSION['usuario'])) {
           $urlParametros = '../parametro/gestionParametro.php';
           $urlPermisos = '../permiso/gestionPermisos.php';
           $urlRoles = '../rol/gestionRol.php';
-          $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
           $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
           $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
           $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
-          $urlEditarCamposPerfil='../PerfilUsuario/EditarCamposPerfilUsuario.php';
           $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
           require_once '../../layout/sidebar.php';
         ?>
       </div>
-          <div class="conteiner-main">
-          <div class="navbar-conteiner">
-            <!-- Aqui va la barra -->
-            <?php include_once '../../layout/navbar.php'?>
+
+      <!-- CONTENIDO DE LA PAGINA - 2RA PARTE -->
+        <div class="conteiner-main">
+            <!-- Encabezado -->
+          <div class= "encabezado">
+            <div class="navbar-conteiner">
+                <!-- Aqui va la barra -->
+                <?php include_once '../../layout/navbar.php'?>                             
+            </div>        
+            <div class ="titulo">
+              <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionEstadoUsuario.php');?>">Gestión Estado de Usuarios</H2>
+            </div>  
           </div>
-      <!-- Cuerpo de la pagina -->
-      <div class="container">
-             <div class="title-form">
-                <div class="img-content">
-                  <img class="img" src="https://cdn-icons-png.flaticon.com/128/6266/6266866.png" height="50px">
-                </div>
-                <h2 class="text-title-form">Configura tu nueva contraseña</h2>
-            </div>
-         <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post" id="formContrasenia">
-            <div class="grupo-form">
-              <div class="mb-3">
-                <input type="password" class="form-control" name="password" id="password" maxlength = "15" placeholder="Contraseña Actual">
-                <p class="mensaje"></p>
-              </div>
-              <div class="mb-3">
-                <input type="password" class="form-control" id="newPassword" maxlength="15" name="newPassword" placeholder="Nueva Contraseña" >
-                <p class="mensaje"></p>
-              </div>
-              <div class="mb-3">
-                <input type="password" class="form-control" id="confirmPassword" maxlength="15" name="confirmPassword" placeholder="Confirmar Contraseña" >
-                <p class="mensaje"></p>
-              </div>
-              <div class ="mb-3">
-                <input type="checkbox" id="checkbox"> Mostrar Contraseñas
-              </div>
-              <div class="btn-guardar">
-              <a href="../../index.php"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                          <button type="submit" name="submit" href="../PerfilUsuario/gestionPerfilUsuario.php"  class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
-              </div>
-            <?php 
-              if(!empty($mensaje)){
-                echo '<h2 class="mensaje-error" style="margin-top: 8px;">'. $mensaje. '</h2>';
-              }
-            ?>
-         </form>
-         </div>
+  
+        <div class="table-conteiner">
+          <div>
+            <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoEstadoUsuario"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
+            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
+          </div>
+          <table class="table" id="table-EstadoUsuarios">
+            <thead>
+              <tr>
+                <th scope="col"> ID </th>
+                <th scope="col"> ESTADO </th>
+                <th scope="col"> CREADO POR </th>
+                <th scope="col"> FECHA CREACION </th>
+                <th scope="col"> ACCIONES </th>
+              </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            </tbody>
+          </table>
         </div>
-    </div>
+      </div> <!-- Fin de la columna -->
     </div>
   </div>
-
+  <?php
+  require('modalNuevoEstado.html');
+//   require('modalEditarUsuario.html');
+  ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
-  <!-- Scripts propios -->
- 
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
+  <!-- Scripts propios -->
+  <script src="../../../Recursos/js/estadoUsuario/dataTableEstadoUsuario.js" type="module"></script>
+  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
+  <script src="../../../Recursos/js/validacionesSidebar.js"></script>
+  <!-- <script src="../../../Recursos/js/validacionesModalNuevoUsuario.js" type="module"></script> -->
+  <!-- <script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script> -->
   <script src="../../../Recursos/js/index.js"></script>
-  <script src="../../../Recursos/js/PerfilUsuario/validacionesPerfilContrasenia.js" type="module"></script>
 </body>
-
 </html>
