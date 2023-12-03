@@ -213,6 +213,12 @@
                 <i class=""></i>
                 <span>Razón Social</span>
               </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlRubroComercial; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Rubro Comercial</span>
+              </a>
           </ul>
         </div>
       </li>

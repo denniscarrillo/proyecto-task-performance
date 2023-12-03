@@ -62,17 +62,20 @@ public static function nuevaRazonSocial($nuevaRazonSocial){
     return $nuevaRazonSocial;
 }
 
-public static function eliminarRazonSocial($RazonSocial){
+public static function eliminarRazonSocial($idRazonSocial){
     try{
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $id_RazonSocial = $RazonSocial->id_RazonSocial;
-        $query = "DELETE FROM tbl_razon_Social WHERE id_razon_Social = '$id_RazonSocial';";
-        $ejecutar = sqlsrv_query($conexion, $query);
+        $estadoEliminado = false; 
+        $query = "DELETE FROM tbl_razon_Social WHERE id_razon_Social = '$idRazonSocial';";
+        if(sqlsrv_rows_affected(sqlsrv_query($conexion, $query)) > 0){
+            $estadoEliminado = true;
+        }
     } catch (Exception $e) {
         echo 'Error SQL:' . $e;
     }
     sqlsrv_close($conexion); //Cerrar conexion
+    return $estadoEliminado;
 }
 public static function RazonSocialExistente($razonSocial){
     $existeRazonSocial = false;
