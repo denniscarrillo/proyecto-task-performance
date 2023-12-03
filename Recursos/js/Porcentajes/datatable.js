@@ -87,7 +87,10 @@ $('#form-Porcentajes').submit(function (e) {
      $('#modalNuevoPorcentaje').modal('hide');
     } 
 });
-
+$('#modalNuevoPorcentaje').on('hidden.bs.modal', function (e) {
+  // Limpia los valores de los campos del formulario
+  $('#form-Porcentajes')[0].reset();
+});
 // let obtenerContactoCliente = function (idElemento) {
 //   //Petición para obtener estados contacto clientes
 //   $.ajax({

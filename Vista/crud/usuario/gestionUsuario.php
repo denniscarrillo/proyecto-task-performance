@@ -181,5 +181,4 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script>
   <script src="../../../Recursos/js/index.js"></script>
 </body>
-
 </html>

@@ -5,22 +5,10 @@ const validaciones = {
     soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/
 }
-//VARIABLES GLOBALES
-let estadoEspacioInput = {
-    estadoEspacioRtn: true,
-    estadoEspacioTelefono: true, 
-} 
-let estadoSoloLetras = {
-    estadoLetrasNombre: true,
-    estadoLetrasRubro: true,
-    estadoLetrasRazonSocial: true,
-}
-let estadoSelect = {
-    estadoSelectClasificacion: true,
-    estadoSelectOrigen: true
-}  
 const $form = document.getElementById('form-Edit-Tarea'); 
 const $estadoTarea = document.getElementById('estados-tarea');
+const $radioButton = document.getElementsByName('radioOption');
+let $tipoCliente = '';
 let inputsEditarTarea = {
     titulo: document.getElementById('input-titulo-tarea'),
     rtn: document.getElementById('rnt-cliente'),
@@ -33,44 +21,99 @@ let inputsEditarTarea = {
     clasificacionLead: document.getElementById('clasificacion-lead'),
     origenLead: document.getElementById('origen-lead')
   }
+$(document).ready(function(){
+    $tipoCliente = ($radioButton[1].checked) ? $radioButton[1].value : $radioButton[0].value;
+    console.log($tipoCliente);
+    //Evento SUBMIT
+    // $form.addEventListener('submit', () => { 
+    //     validarInputs(funciones, $tipoCliente);
+    //     if (document.querySelectorAll('.mensaje_error').length == 0) {
+    //         // console.log(document.querySelectorAll('.mensaje_error').length)
+    //         estadoValidado = true;
+    //     }
+    // });
+    document.getElementById('btn-guardar').addEventListener('click', () =>{
+        validarInputs(funciones, $tipoCliente);
+        if (document.querySelectorAll('.mensaje_error').length == 0) {
+            estadoValidado = true;
+        } else {
+            estadoValidado = false;
+        }
+    });
+    //Volver a validar cuando se han introducido datos de un cliente existente
+    $(document).on("click", "#btn_select-cliente", function () {
+        validarInputs(funciones, $tipoCliente);    
+    });
+});
+inputsEditarTarea.clasificacionLead.addEventListener('change', () => {
+    validarInputs(funciones, $tipoCliente);
+});
+inputsEditarTarea.origenLead.addEventListener('change', () => {
+    validarInputs(funciones, $tipoCliente);
+});
+inputsEditarTarea.rubroComercial.addEventListener('focusout', () => {
+    validarInputs(funciones, $tipoCliente);
+});
+// inputsEditarTarea.rubroComercial.addEventListener('mouseout', () => {
+//     validarInputs(funciones, $tipoCliente);
+// });
+inputsEditarTarea.razonSocial.addEventListener('focusout', () => {
+    validarInputs(funciones, $tipoCliente);
+});
+// inputsEditarTarea.razonSocial.addEventListener('mouseout', () => {
+//     validarInputs(funciones, $tipoCliente);
+// });
 
-$form.addEventListener('submit', e => {   
-    //Validamos que algún campo no esté vacío.
-    // let estadoInputRtn = funciones.validarCampoVacio($rtn);
-    // let estadoInputNombre =  funciones.validarCampoVacio($nombre);
-    // let estadoInputTelefono = funciones.validarCampoVacio($telefono);
-    // let estadoInputCorreo = funciones.validarCampoVacio($correo);
-    // let estadoInputDireccion = funciones.validarCampoVacio($direccion);
-    // let estadoInputClasificacion = funciones.validarCampoVacio($clasificacion);
-    // let estadoInputOrigen = funciones.validarCampoVacio($origen);
-    // let estadoInputRubro = funciones.validarCampoVacio($rubro);
-    // let estadoInputRazon = funciones.validarCampoVacio($razon);
+
+
+
+
+let optionExistente = document.getElementById('cliente-existente');
+optionExistente.addEventListener('change', function () {
+    $tipoCliente =  $tipoCliente = ($radioButton[1].checked) ? $radioButton[1].value : $radioButton[0].value;
+    //Limpiamos los errores al cambiar a existes ya que estos campos no se validan aqui
+    document.querySelectorAll('.mensaje_error').forEach(input => {
+        input.classList.remove('mensaje_error');
+        input.parentElement.querySelector('p').innerHTML = '';
+    });
+});
+let optionNuevo = document.getElementById('cliente-nuevo');
+optionNuevo.addEventListener('change', function () {
+    $tipoCliente =  $tipoCliente = ($radioButton[1].checked) ? $radioButton[1].value : $radioButton[0].value;
+    //Limpiamos los errores al cambiar a existes ya que estos campos no se validan aqui
+    document.querySelectorAll('.mensaje_error').forEach(input => {
+        input.classList.remove('mensaje_error');
+        input.parentElement.querySelector('p').innerHTML = '';
+    });
+});
+//Funcion principal que aplica validaciones a los inptus de forma dinamica segun tipo cliente y tipo tarea
+let validarInputs = (funciones, tipoCliente) => {
     switch ($estadoTarea.value){
         case "2":{
-            funciones.validarCampoVacio(inputsEditarTarea.va);
-            funciones.validarCampoVacio(inputsEditarTarea);
-            break;
+            funciones.validarCampoVacio(inputsEditarTarea.titulo);
+            funciones.validarCampoVacio(inputsEditarTarea.rtn);
+            funciones.validarCampoVacio(inputsEditarTarea.nombre);
+            if(tipoCliente != 'Existente'){
+                funciones.validarCampoVacio(inputsEditarTarea.telefono);
+                // funciones.validarCampoVacio(inputsEditarTarea.correo);
+                funciones.validarCampoVacio(inputsEditarTarea.direccion);   
+            }
+            funciones.validarCampoVacio(inputsEditarTarea.rubroComercial);
+            funciones.validarCampoVacio(inputsEditarTarea.razonSocial);
+            funciones.validarCampoVacio(inputsEditarTarea.clasificacionLead);
+            funciones.validarCampoVacio(inputsEditarTarea.origenLead);
         }  
         default:{
-    
-            break;
+            funciones.validarCampoVacio(inputsEditarTarea.titulo);
+            funciones.validarCampoVacio(inputsEditarTarea.rtn);
+            funciones.validarCampoVacio(inputsEditarTarea.nombre);
+            if(tipoCliente != 'Existente'){
+                funciones.validarCampoVacio(inputsEditarTarea.telefono);
+                // funciones.validarCampoVacio(inputsEditarTarea.correo);
+                funciones.validarCampoVacio(inputsEditarTarea.direccion);     
+            }
+            funciones.validarCampoVacio(inputsEditarTarea.rubroComercial);
+            funciones.validarCampoVacio(inputsEditarTarea.razonSocial);
         }   
     }
-
-    // Comprobamos que todas las validaciones se hayan cumplido 
-    if (estadoInputRtn == false || estadoInputNombre  == false || estadoInputTelefono == false || 
-        estadoInputCorreo == false || estadoInputDireccion == false || estadoInputClasificacion == false
-        || estadoInputOrigen == false || estadoInputRubro == false || estadoInputRazon == false) {
-        e.preventDefault();
-    }
-});
-
-
-
-
-
-
-
-// $rtn.addEventListener('keyup', () => {
-//     estadoEspacioInput.estadoEspacioRtn = funciones.validarEspacios($rtn);
-// });
+}

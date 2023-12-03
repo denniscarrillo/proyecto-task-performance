@@ -1,7 +1,8 @@
 import { sidePanel_Interaction } from '../../components/js/sidePanel.js'; //importamos la funcion del sidePanel
-import { estadoValidado as estado } from './validacionesEditarTarea.js';
+import { estadoValidado } from './validacionesEditarTarea.js';
 
-
+// let estado = false;
+let tipoCliente = '';
 let existEvidencia = 0;
 let numEvidencia = '';
 let $idTarea = document.getElementById('id-Tarea').value;
@@ -46,7 +47,7 @@ $(document).ready(async function(){
         "idTarea": $idTarea
       }
     });
-    let tipoCliente = (radioOption[1].checked) ? radioOption[1].value : radioOption[0].value;
+    tipoCliente = (radioOption[1].checked) ? radioOption[1].value : radioOption[0].value;
     document.getElementById('link-nueva-cotizacion').setAttribute('href', `./cotizacion/v_cotizacion.php?idTarea=${$idTarea}&estadoCliente=${tipoCliente}`);
     let estadoFinalizar = document.getElementById('estado-finalizacion').textContent;
     if(estadoFinalizar == 'Pendiente' || estadoFinalizar == 'Reabierta'){
@@ -157,11 +158,16 @@ document.getElementById('form-Edit-Tarea').addEventListener('submit', function(e
   let $idTask = $('#id-Tarea').val();
   let radioOption = document.getElementsByName('radioOption');
   let tipoCliente = (radioOption[1].checked) ? radioOption[1].value : radioOption[0].value;
-  if(estado){
+  console.log(document.querySelectorAll('.mensaje_error').length);
+  console.log(estadoValidado);
+  if(estadoValidado){ //Si se cumplen todas las validacinones se guardara la data
     let $datosTarea = validarCamposEnviar(tipoCliente);
     actualizarDatosTarea($datosTarea);
     enviarProductosInteres($idTask); //Enviamos los productos de interes a almacenar
-    obtenerDatosTarea($idTarea, $idEstadoTarea);
+    // obtenerDatosTarea($idTarea, $idEstadoTarea);
+    setTimeout(() => {
+      location.href ='../../../Vista/rendimiento/v_tarea.php';
+    }, 2000);
   }
 });
 // CARGAR LOS ARTICULOS A AGREGAR A LA TAREA
@@ -360,12 +366,15 @@ document.getElementById('estados-tarea').addEventListener('change', async () => 
         });
   } else {
     cambiarEstado($newEstado, $idTarea);
+    setTimeout(() => {
+      location.href ='./v_editarTarea.php?idTarea='+$idTarea;
+    }, 100);
   }
 });
 
 let $rtn = document.getElementById('rnt-cliente');
 $rtn.addEventListener('focusout', function () {
-  let $mensaje = document.getElementById('mensaje');
+  let $mensaje = document.querySelector('.mensaje');
   $mensaje.innerText = '';
   $mensaje.classList.remove('mensaje-existe-cliente');
   if($rtn.value.trim() != ''){
@@ -401,7 +410,7 @@ let setearDatosClienteCartera = (cliente) => {
 
 
 let limpiarForm = () => {
-  let $mensaje = document.getElementById('mensaje');
+  let $mensaje = document.querySelector('.mensaje');
   $mensaje.innerText = '';
   $mensaje.classList.remove('mensaje-existe-cliente');
   let rtn = document.getElementById('rnt-cliente'),
@@ -455,11 +464,15 @@ let enviarProductosInteres = ($idTarea) => {
       "productos": JSON.stringify(productos)
     },
     success: function (resp) {
-      Swal.fire(
-        'Cambios guardados',
-        'La tarea '+$idTarea+' ha sido editada!',
-        'success',
-      )
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: 'La tarea '+$idTarea+' ha sido actualizada',
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        timer: 2000
+      });
     }
   });//Fin AJAX
 }
@@ -554,7 +567,7 @@ let obtenerDatosTarea = ($idTarea, $idEstadoTarea) => {
     success: function($datosTarea){
       let datos = JSON.parse($datosTarea);
       (Object.keys(datos).length > 1) ? setearDatosTarea(datos) : document.getElementsByName('estadoEdicion')[0].id = datos.data;
-
+      // document.getElementsByName('radioOption').setAttribute('checked', 'true');
     }
   });
 }

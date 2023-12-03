@@ -1,32 +1,29 @@
 <?php
 require_once("../../../db/Conexion.php");
-require_once("../../../Modelo/DataTableObjeto.php");
+require_once("../../../Modelo/Usuario.php");
 require_once("../../../Modelo/Bitacora.php");
-require_once("../../../Controlador/ControladorDataTableObjeto.php");
+require_once("../../../Controlador/ControladorUsuario.php");
 require_once("../../../Controlador/ControladorBitacora.php");
-require_once('../../../Modelo/Usuario.php');
-require_once('../../../Controlador/ControladorUsuario.php');
 
 session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
-  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionObjeto.php');
-  //Se valida el usuario, si es SUPERADMIN por defecto tiene permiso caso contrario se valida el permiso vrs base de datos
-  (!($_SESSION['usuario'] == 'SUPERADMIN')) 
+  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionEstadoUsuario.php');
+  (!($_SESSION['usuario'] == 'SUPERADMIN'))
   ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
   : 
     $permisoConsulta = true;
   ;
   if(!$permisoConsulta){
-    /* ====================== Evento intento de ingreso sin permiso a la vista objetos. ================================*/
+    /* ==================== Evento intento de ingreso sin permiso a mantenimiento estado usuario. ==========================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
     $newBitacora->fecha = date("Y-m-d h:i:s");
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionObjeto.php');
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionEstadoUsuario.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['fallido'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a la vista de objetos';
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a mantenimiento estado usuario';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     /* ===============================================================================================================*/
     header('location: ../../v_errorSinPermiso.php');
@@ -44,17 +41,17 @@ if (isset($_SESSION['usuario'])) {
       ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     /* =======================================================================================*/
     }
-    /* ====================== Evento ingreso a vista objeto. =====================*/
+    /* ====================== Evento ingreso a mantenimiento estado usuario. ========================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
     $newBitacora->fecha = date("Y-m-d h:i:s");
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionObjeto.php');
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionEstadoUsuario.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['income'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a vista de objetos';
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a mantenimiento estado usuario';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-    $_SESSION['objetoAnterior'] = 'gestionObjeto.php';
-    $_SESSION['descripcionObjeto'] = 'vista de objetos';
+    $_SESSION['objetoAnterior'] = 'gestionEstadoUsuario.php';
+    $_SESSION['descripcionObjeto'] = 'mantenimiento estado usuario';
     /* =======================================================================================*/
   }
 } else {
@@ -78,20 +75,20 @@ if (isset($_SESSION['usuario'])) {
   <!-- <link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" rel="stylesheet"> -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
   <!-- Estilos personalizados -->
-  <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
-
-  <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+  <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
+  <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
-  <title> Estado De Objetos</title>
+  <title> Gestión Estados de Usuarios </title>
 </head>
 
-<body style="overflow: hidden;">
+<body>
   <div class="conteiner">
     <div class="conteiner-global">
       <div class="sidebar-conteiner">
-      <?php
+        <?php
           $urlIndex = '../../index.php';
           // Rendimiento
           $urlMisTareas = '../../rendimiento/v_tarea.php';
@@ -112,44 +109,46 @@ if (isset($_SESSION['usuario'])) {
           $urlObjetos = '../DataTableObjeto/gestionDataTableObjeto.php';
           $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
           //Mantenimiento
-          $urlUsuarios = '../usuario/gestionUsuario.php';
+          $urlUsuarios = './gestionUsuario.php';
           $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
           $urlPreguntas = '../pregunta/gestionPregunta.php';
           $urlParametros = '../parametro/gestionParametro.php';
           $urlPermisos = '../permiso/gestionPermisos.php';
           $urlRoles = '../rol/gestionRol.php';
-          $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
           $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
           $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
           $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
           $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
-          $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
           require_once '../../layout/sidebar.php';
         ?>
       </div>
-      <div class="conteiner-main">
-      <div class= "encabezado">
+
+      <!-- CONTENIDO DE LA PAGINA - 2RA PARTE -->
+        <div class="conteiner-main">
+            <!-- Encabezado -->
+          <div class= "encabezado">
             <div class="navbar-conteiner">
                 <!-- Aqui va la barra -->
                 <?php include_once '../../layout/navbar.php'?>                             
             </div>        
             <div class ="titulo">
-                  <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionObjeto.php');?>"> Objetos</H2>
+              <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionEstadoUsuario.php');?>">Gestión Estado de Usuarios</H2>
             </div>  
-          </div> 
+          </div>
+  
         <div class="table-conteiner">
           <div>
-            <!-- <a href="../../../TCPDF/examples/reporteriaObjetos.php" target="_blank" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>  -->
+            <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoEstadoUsuario"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
             <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
           </div>
-          <table class="table" id="table-Objeto">
+          <table class="table" id="table-EstadoUsuarios">
             <thead>
               <tr>
                 <th scope="col"> ID </th>
-                <th scope="col"> OBJETO</th>
-                <th scope="col"> DESCRIPCION</th>
-                <th scope="col"> TIPO OBJETO </th>
-            
+                <th scope="col"> ESTADO </th>
+                <th scope="col"> CREADO POR </th>
+                <th scope="col"> FECHA CREACION </th>
+                <th scope="col"> ACCIONES </th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -159,17 +158,22 @@ if (isset($_SESSION['usuario'])) {
       </div> <!-- Fin de la columna -->
     </div>
   </div>
- 
+  <?php
+  require('modalNuevoEstado.html');
+//   require('modalEditarUsuario.html');
+  ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
-  <!-- Scripts propios -->
-  <script src="../../../Recursos/js/DataTableObjeto/dataTableObjeto.js" type="module"></script>
-  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
+  <!-- Scripts propios -->
+  <script src="../../../Recursos/js/estadoUsuario/dataTableEstadoUsuario.js" type="module"></script>
+  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
+  <script src="../../../Recursos/js/validacionesSidebar.js"></script>
+  <!-- <script src="../../../Recursos/js/validacionesModalNuevoUsuario.js" type="module"></script> -->
+  <!-- <script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script> -->
   <script src="../../../Recursos/js/index.js"></script>
 </body>
-
 </html>

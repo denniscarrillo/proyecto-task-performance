@@ -13,24 +13,6 @@ if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
-  (!($_SESSION['usuario'] == 'SUPERADMIN'))
-  ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
-  : 
-    $permisoConsulta = true;
-  ;
-  if(!$permisoConsulta){
-    /* ==================== Evento intento de ingreso sin permiso a mantenimiento usuario. ==========================*/
-    $accion = ControladorBitacora::accion_Evento();
-    date_default_timezone_set('America/Tegucigalpa');
-    $newBitacora->fecha = date("Y-m-d h:i:s");
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
-    $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-    $newBitacora->accion = $accion['fallido'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a mantenimiento usuario';
-    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-    /* ===============================================================================================================*/
-    header('location: ../../v_errorSinPermiso.php');
-    die();
   }else{
     if(isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])){
       /* ====================== Evento salir. ================================================*/
@@ -57,10 +39,6 @@ if (isset($_SESSION['usuario'])) {
     $_SESSION['descripcionObjeto'] = 'mantenimiento usuario';
     /* =======================================================================================*/
   }
-} else {
-  header('location: ../../login/login.php');
-  die();
-}
 ?>
 <!DOCTYPE html>
 <html lang="es">

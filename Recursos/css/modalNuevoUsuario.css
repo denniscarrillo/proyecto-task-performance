@@ -15,9 +15,6 @@
     position: relative;
     margin-bottom: 2rem !important;
 }
-
-   
-    .modal-content{
-        min-height: 25rem;
-        
-     }
+.modal-content{
+    min-height: 25rem;
+}
