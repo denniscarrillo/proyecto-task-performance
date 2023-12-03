@@ -124,9 +124,18 @@
                                 <button type="button" class="btn btn-primary new hidden" data-bs-toggle="modal" data-bs-target="#modalProductosCotizados" id="btn-productos">
 									<i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
 								</button>
-                                <input type="text" name="descripcion" id="descripcion" class="fila-producto new hidden" placeholder="Descripción">
-                                <input type="text" name="marca" id="marca" class="fila-producto new hidden" placeholder="Marca">
-                                <input type="text" name="precio" id="precio" class="fila-producto new hidden" placeholder="Precio">
+                                <div class="data-container">
+                                    <input type="text" name="descripcion" id="descripcion" class="fila-producto new hidden" placeholder="Descripción">
+                                    <p class="mensaje"></p>
+                                </div>
+                                <div class="data-container">
+                                    <input type="text" name="marca" id="marca" class="fila-producto new hidden" placeholder="Marca">
+                                    <p class="mensaje"></p>
+                                </div>
+                                <div class="data-container">
+                                    <input type="number" name="precio" id="precio" class="fila-producto new hidden" placeholder="Precio">
+                                    <p class="mensaje"></p>
+                                </div>
                                 <button type="button" class="btn-agregar-producto new hidden" id="btn-agregar-producto"><i class="fa-solid fa-plus"></i> Producto</button>
                                 <!-- <input type="number" name="cantidad" id="cantidad" class="fila-producto" placeholder="Cantidad"> -->
                                 <div id="button-container"></div>
@@ -197,6 +206,7 @@
     <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
     <script src="../../../Recursos/js/librerias/dataTables.bootstrap5.min.js"></script>
     <script src="../../../Recursos/js/librerias/SweetAlert2.all.min.js"></script>
+    <script src="../../../Recursos/js/rendimiento/cotizacion/validacionesCotizacion.js" type="module"></script>
 	<script src="../../../Recursos/js/rendimiento/cotizacion/v_cotizacion.js" type="module"></script>
 </body>
 </html>

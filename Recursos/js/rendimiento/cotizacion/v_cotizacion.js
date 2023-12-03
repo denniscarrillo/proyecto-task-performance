@@ -1,5 +1,7 @@
-import  {validarCampoVacio} from "../../funcionesValidaciones.js";
+import {estadoValidado as validoProd } from './validacionesCotizacion.js';
+import {estado} from './validacionesCotizacion.js';
 
+let $idTarea = document.querySelector('.encabezado').id;
 const $tbody = document.getElementById('t-body');
 const $btnAgregar = document.getElementById('btn-agregar-producto');
 let $optionDescuento = document.getElementById('estado-desc');
@@ -51,23 +53,26 @@ $btnAgregar.addEventListener('click', () => {
         marca: $addNewProduct.marca.value,
         precio: $addNewProduct.precio.value
     }
-    $.ajax({
-        url: '../../../../Vista/rendimiento/cotizacion/agregarNuevoProducto.php',
-        type: 'POST',
-        datatype: 'JSON',
-        data: {
-            nuevoProducto: $newProduct
-        },
-        success: () => {
-            $addNewProduct.descripcion.value = '';
-            $addNewProduct.marca.value = '';
-            $addNewProduct.precio.value = '';
-              Toast.fire({
-                  icon: 'success',
-                  title: '¡Producto guardado!'
-            });
-        }
-    });
+    console.log(validoProd);
+    if(validoProd){
+        $.ajax({
+            url: '../../../../Vista/rendimiento/cotizacion/agregarNuevoProducto.php',
+            type: 'POST',
+            datatype: 'JSON',
+            data: {
+                nuevoProducto: $newProduct
+            },
+            success: () => {
+                $addNewProduct.descripcion.value = '';
+                $addNewProduct.marca.value = '';
+                $addNewProduct.precio.value = '';
+                  Toast.fire({
+                      icon: 'success',
+                      title: '¡Producto guardado!'
+                });
+            }
+        });
+    }
 });
 $(document).on('click', '.btn_article', function () {
     selectArticulos(this.children[0]);
@@ -172,23 +177,29 @@ document.getElementById('form-cotizacion').addEventListener('submit', async (eve
             $arrayProductosCot.push($newProduct);
         });
         //Llamamos a la funcion que envia la cotizacion al servidor y recibe estos parametros
-        enviarNuevaCotizacion($datosCotizacion, $arrayProductosCot);
-        $optionDescuento[0].selected = true;
-        document.getElementById('estado-desc').setAttribute('disabled', 'true');
-        document.querySelector('.container-input-cant-desc').innerHTML = '';
-        estadoCot = 'Existente';
-        alternarHiddenBotones();
-        document.querySelectorAll('.new').forEach((elemento) => {
-            elemento.classList.add('hidden');
-        });
-        $tbody.innerHTML = '';
-        let idCotizacion = await validarDatosCotizacion();
-        if(estadoCot == 'Existente'){
-            let nCotizacion = `<label>Cotización N°</label><label id="id-cotizacion">${idCotizacion}</label>`;
-            document.querySelector('.title-dashboard-task').innerHTML =  nCotizacion;
+        if(estado){
+            console.log('ENTRO')
+            enviarNuevaCotizacion($datosCotizacion, $arrayProductosCot);
+            $optionDescuento[0].selected = true;
+            document.getElementById('estado-desc').setAttribute('disabled', 'true');
+            document.querySelector('.container-input-cant-desc').innerHTML = '';
+            estadoCot = 'Existente';
+            alternarHiddenBotones();
+            document.querySelectorAll('.new').forEach((elemento) => {
+                elemento.classList.add('hidden');
+            });
+            $tbody.innerHTML = '';
+            let idCotizacion = await validarDatosCotizacion();
+            if(estadoCot == 'Existente'){
+                let nCotizacion = `<label>Cotización N°</label><label id="id-cotizacion">${idCotizacion}</label>`;
+                document.querySelector('.title-dashboard-task').innerHTML =  nCotizacion;
+            }
+            let btnCancel = document.getElementById('btn-salir-cotizacion');
+            btnCancel.children[1].textContent = 'Refrescar...';
+            setTimeout(() => {
+                location.href ='../../../../Vista/rendimiento/v_editarTarea.php?idTarea='+$idTarea;
+            }, 3000);
         }
-        let btnCancel = document.getElementById('btn-salir-cotizacion');
-        btnCancel.children[1].textContent = 'Refrescar...';
     }
 });
 let alternarHiddenBotones = () => {
@@ -391,7 +402,7 @@ let insertarNewProduct = (contItem, $addProduct, $tbody, referencia) => {
         //Ahora agregamos los datos 
         divIcons.innerHTML = `<i class="fa-regular fa-circle-xmark fa-circle-xmark-new icon"></i>`
         label.append(document.createTextNode(contItem));
-        cantidad.innerHTML = `<input type="text" class="input-cant" placeholder="Ingresar...">`;
+        cantidad.innerHTML = `<input type="number" class="input-cant" placeholder="Ingresar...">`;
         descripcion.textContent = $addProduct.descripcion;
         marca.textContent = $addProduct.marca;
         precio.appendChild(document.createTextNode(`Lps. ${parseFloat($addProduct.precio).toFixed(2)}`));
