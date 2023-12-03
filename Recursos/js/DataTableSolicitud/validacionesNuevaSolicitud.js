@@ -122,31 +122,42 @@ $form.addEventListener('submit', e => {
             console.log(estadoMasdeUnEspacio.estadoMasEspacioDireccion);
             console.log(estadoMasdeUnEspacio.estadoMasEspacioName);
         }else{
-            if(estadoSoloLetras.estadoLetrasName == false ){
-                e.preventDefault();
-                estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras); 
-            }
-            
-             if(estadoSoloNumeros.estadoNumerotelefono == false ){
-                e.preventDefault();
-                estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
-            } else {
-                if(estadoMayorCero.estadoMayorCeroTelefono == false){
-                    e.preventDefault();
-                    estadoMayorCero.estadoMayorCeroTelefono = funciones.MayorACero($telefono);
-                
-                        
+          if(estadoLetrasRepetidas.estadoLetrasRepetidasname == false ||estadoLetrasRepetidas.estadoLetrasRepetidasDescripcion == false ||
+                        estadoLetrasRepetidas.estadoLetrasRepetidasDireccion == false){
+                        e.preventDefault();
+                        estadoLetrasRepetidas.estadoLetrasRepetidasname= funciones.limiteMismoCaracter($name, validaciones.MismoCaracter);
+                        estadoLetrasRepetidas.estadoLetrasRepetidasDescripcion = funciones.limiteMismoCaracter($descripcion, validaciones.MismoCaracter);
+                        estadoLetrasRepetidas.estadoLetrasRepetidasDireccion = funciones.limiteMismoCaracter($direccion, validaciones.MismoCaracter);
             }else{
-                if(estadoCorreo == false || estadoSelect == false ){
-                    e.preventDefault();   
-                    estadoSelect = funciones.validarCampoVacio($name);
-                    estadoSelect = funciones.validarCampoVacio($direccion);
-                    estadoSelect = funciones.validarCampoVacio($tipoServicio);
-                    estadoSelect = funciones.validarCampoVacio($telefono);
-                    estadoSelect = funciones.validarCampoVacio($descripcion);
-                   estadoSelect = funciones.validarCampoVacio($rtn);
-                  //  estadoSelect = funciones.validarCampoVacio($correoCliente);
-                    estadoCorreo = funciones.validarCorreo($correoCliente, validaciones.correo);
+                if(estadoSoloLetras.estadoLetrasName == false){
+                    e.preventDefault();
+                    estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
+                    console.log(estadoSoloLetras.estadoLetrasName); 
+     
+                }
+        if(estadoSoloNumeros.estadoNumerotelefono == false|| estadoSoloNumeros.estadoNumeroRTN== false ){
+            e.preventDefault();
+            estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
+            estadoSoloNumeros.estadoNumeroRTN = funciones.validarSoloNumeros($rtn, validaciones.soloNumeros);
+        } else {
+            if(estadoMayorCero.estadoMayorCeroTelefono == false){
+                e.preventDefault();
+                estadoMayorCero.estadoMayorCeroTelefono = funciones.MayorACero($telefono);
+            
+                    
+        }else{
+            if(estadoCorreo == false || estadoSelect == false ){
+                e.preventDefault();   
+                estadoSelect = funciones.validarCampoVacio($name);
+                estadoSelect = funciones.validarCampoVacio($direccion);
+                estadoSelect = funciones.validarCampoVacio($tipoServicio);
+                estadoSelect = funciones.validarCampoVacio($telefono);
+                estadoSelect = funciones.validarCampoVacio($descripcion);
+                estadoSelect = funciones.validarCampoVacio($rtn);
+              //  estadoSelect = funciones.validarCampoVacio($correoCliente);
+                estadoCorreo = funciones.validarCorreo($correoCliente, validaciones.correo);
+        
+                                      
                 }else{
                     // if( estadoExisteRtn  == false){
                     //     e.preventDefault();
@@ -155,8 +166,9 @@ $form.addEventListener('submit', e => {
                 estadoValidado = true;
                     
                 }
-                   
-            }
+              }
+             }    
+          }
         } 
     }
 });
@@ -215,6 +227,8 @@ $name.addEventListener('keyup', ()=>{
     if(estadoMasdeUnEspacio.estadoMasEspacioName){
          funciones.validarMasdeUnEspacio($name);
     }  
+    let nameMayus = $name.value.toUpperCase();
+    $name.value = nameMayus;
  });
 
  $correoCliente.addEventListener('focusout', ()=>{
