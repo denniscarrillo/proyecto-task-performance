@@ -111,11 +111,11 @@ $form.addEventListener('submit', e => {
 });
 $descripcion.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasdescripcion = funciones.validarSoloLetras($descripcion, validaciones.soloLetras);
-   funciones.limitarCantidadCaracteres("E_descripcion", 30);
+   funciones.limitarCantidadCaracteres("E_descripcion", 500);
 });
 $ubicacion.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasubicacion= funciones.validarSoloLetras($ubicacion, validaciones.soloLetras);
-   funciones.limitarCantidadCaracteres("E_ubicacion", 30);
+   funciones.limitarCantidadCaracteres("E_ubicacion", 100);
 });
 $Avance.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasAvance= funciones.validarSoloLetras($Avance, validaciones.soloLetras);
@@ -124,7 +124,10 @@ $Avance.addEventListener('keyup', ()=>{
 $descripcion.addEventListener('focusout', ()=>{
     if(estadoMasdeUnEspacio.estadoMasEspaciodescripcion){
         funciones.validarMasdeUnEspacio($descripcion);
-    }  
+    }
+    let descripcionMayus = $descripcion.value.toUpperCase();
+     $descripcion.value = descripcionMayus;  
+  
 });
 $telefono.addEventListener('focusout', ()=>{
     if(estadoMasdeUnEspacio.estadoMasEspaciotelefono){
@@ -134,7 +137,9 @@ $telefono.addEventListener('focusout', ()=>{
 $ubicacion.addEventListener('focusout', ()=>{
     if(estadoMasdeUnEspacio.estadoMasEspacioubicacion){
         funciones.validarMasdeUnEspacio($ubicacion);
-    }  
+    }
+    let direccionMayus = $ubicacion.value.toUpperCase();
+    $ubicacion.value = direccionMayus;  
 });
 $Avance.addEventListener('focusout', ()=>{
     if(estadoMasdeUnEspacio.estadoMasEspacioAvance){

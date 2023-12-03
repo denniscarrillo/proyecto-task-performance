@@ -51,11 +51,19 @@ $Rol.addEventListener('keyup', () => {
 });
 $Descripcion.addEventListener('keyup', () => {
     estadoSoloLetras.estadoLetrasRol = funciones.validarSoloLetras($Descripcion, validaciones.soloLetras);
-    funciones.limitarCantidadCaracteres("E_descripcion", 45);
+    funciones.limitarCantidadCaracteres("E_descripcion", 300);
 });
 $Rol.addEventListener('focusout', () => {
-    estadoMasdeUnEspacio.estadoMasEspacioRol = funciones.validarMasdeUnEspacio($Rol);
+    if(estadoMasdeUnEspacio.estadoMasEspacioRol){
+        funciones.validarMasdeUnEspacio($Rol);
+     }
+     let rolMayus = $Rol.value.toUpperCase();
+     $Rol.value = rolMayus;  
 });
-$Descripcion.addEventListener('focusout', () => {
-    estadoMasdeUnEspacio.estadoMasEspacioDescripcion = funciones.validarMasdeUnEspacio($Descripcion);
-});
+$Descripcion.addEventListener('focusout', ()=>{
+    if(estadoMasdeUnEspacio.estadoMasEspacioDescripcion){
+        funciones.validarMasdeUnEspacio($Descripcion);
+     }
+     let descripcionMayus = $Descripcion.value.toUpperCase();
+     $Descripcion.value = descripcionMayus;  
+ });

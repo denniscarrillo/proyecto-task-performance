@@ -62,10 +62,17 @@ $Rol.addEventListener('focusout', () => {
           let rol = $('#rol').val();
           estadoExisteRol = obtenerRolExiste(rol);
     }
+    let rolMayus = $Rol.value.toUpperCase();
+     $Rol.value = rolMayus;  
 });
-$Descripcion.addEventListener('focusout', () => {
-    estadoMasdeUnEspacio.estadoMasEspacioDescripcion = funciones.validarMasdeUnEspacio($Descripcion);
-});
+
+$Descripcion.addEventListener('focusout', ()=>{
+    if(estadoMasdeUnEspacio.estadoMasEspacioDescripcion){
+        funciones.validarMasdeUnEspacio($Descripcion);
+     }
+     let descripcionMayus = $Descripcion.value.toUpperCase();
+     $Descripcion.value = descripcionMayus;  
+ });
 
 let obtenerRolExiste = ($rol) => {
     $.ajax({

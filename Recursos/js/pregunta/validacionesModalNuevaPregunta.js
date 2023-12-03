@@ -39,7 +39,10 @@ $pregunta.addEventListener('focusout', ()=>{
          let pregunta = $('#pregunta').val();
          estadoExistePregunta = obtenerPreguntaExiste(pregunta);
    }
+   let preguntaMayus = $pregunta.value.toUpperCase();
+   $pregunta.value = preguntaMayus;  
 });
+
 /* $pregunta.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasPregunta = funciones.validarSoloLetras($pregunta, validaciones.soloLetras);
 }); */
