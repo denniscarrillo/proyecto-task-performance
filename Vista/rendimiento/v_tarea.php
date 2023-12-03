@@ -57,6 +57,7 @@ require_once('validacionesTarea.php');
         $urlPerfilUsuarios='../crud/PerfilUsuario/gestionPerfilUsuario.php';
         $urlPerfilContraseniaUsuarios='../crud/PerfilUsuario/gestionPerfilContrasenia.php';
         $urlImg = '../../Recursos/imagenes/Logo-E&C.png';
+        $urlRazonSocial = '../crud/razonSocial/gestionRazonSocial.php';
         require_once '../layout/sidebar.php';
       ?>
     </div>

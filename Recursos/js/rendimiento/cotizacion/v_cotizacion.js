@@ -178,7 +178,6 @@ document.getElementById('form-cotizacion').addEventListener('submit', async (eve
         });
         //Llamamos a la funcion que envia la cotizacion al servidor y recibe estos parametros
         if(estado){
-            console.log('ENTRO')
             enviarNuevaCotizacion($datosCotizacion, $arrayProductosCot);
             $optionDescuento[0].selected = true;
             document.getElementById('estado-desc').setAttribute('disabled', 'true');

@@ -143,4 +143,10 @@ class ControladorTarea {
     public static function obtenerTipoCliente($idTarea){
         return Tarea::obtenerTipoCliente($idTarea);
     }
+    public static function obtenerRazonSocial(){
+        return Tarea::obtenerRazonSocial();
+    }
+    public static function obtenerRubroComercial(){
+        return Tarea::obtenerRubroComercial();
+    }
 }

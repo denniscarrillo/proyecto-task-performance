@@ -13,6 +13,9 @@ let estadoSoloNumeros = {
 let estadoMasdeUnEspacio = {
     estadoMasEspacioMeta: true
 }
+let estadoMayorCero = {
+    estadoMayorCeroMeta: true
+}
 const $form = document.getElementById('form-Edit-Metrica');
 const $meta = document.getElementById('E_meta');
 
@@ -21,25 +24,33 @@ const $meta = document.getElementById('E_meta');
     Antes de enviar datos del formulario, se comprobara que todas  
     las validaciones se hayan cumplido.
 */
-$form.addEventListener('submit', e => {   
+$form.addEventListener('submit', e => {  
+    estadoValidado = false; 
     //Validamos que algún campo no esté vacío.
     let estadoInputMeta = funciones.validarCampoVacio($meta);
     // Comprobamos que todas las validaciones se hayan cumplido 
     if (estadoInputMeta == false) {
         e.preventDefault();
-    } else {
+    } else {    
         if(estadoSoloNumeros.estadoNumerosMeta == false){
             e.preventDefault();
             estadoSoloNumeros.estadoNumerosMeta = funciones.validarSoloNumeros($meta, validaciones.soloNumeros);
+            
         }else {
             if(estadoMasdeUnEspacio.estadoMasEspacioMeta == false){
             e.preventDefault();
             estadoMasdeUnEspacio.estadoMasEspacioMeta = funciones.validarMasdeUnEspacio($meta);
-            } else{
-            estadoValidado = true;
-            }
-        }     
+        } else {
+            if(estadoMayorCero.estadoMayorCeroMeta == false){
+                e.preventDefault();
+                estadoMayorCero.estadoMayorCeroMeta = funciones.MayorACero($meta);
+            } else {
+                estadoValidado = true; 
+                }                  
+            }    
+        }
     }
+
 });
 $meta.addEventListener('keyup', ()=>{
      estadoSoloNumeros.estadoNumerosMeta = funciones.validarSoloNumeros($meta, validaciones.soloNumeros);
@@ -47,4 +58,12 @@ $meta.addEventListener('keyup', ()=>{
 });
 $meta.addEventListener('focusout', ()=>{
     estadoMasdeUnEspacio.estadoMasEspacioMeta = funciones.validarMasdeUnEspacio($meta);
+});
+
+$meta.addEventListener('focusout', () => {
+    estadoMayorCero.estadoMayorCeroMeta = funciones.MayorACero($meta);
+});
+
+$meta.addEventListener('keyup', ()=>{
+    estadoMayorCero.estadoMayorCeroMeta = funciones.MayorACero($meta);
 });

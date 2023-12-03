@@ -29,4 +29,6 @@ $pregunta.addEventListener('keyup', ()=>{
 });
 $pregunta.addEventListener('focusout', ()=>{
     estadoMasdeUnEspacioPregunta = funciones.validarMasdeUnEspacio($pregunta);
+    let preguntaMayus = $pregunta.value.toUpperCase();
+    $pregunta.value = preguntaMayus;  
 });

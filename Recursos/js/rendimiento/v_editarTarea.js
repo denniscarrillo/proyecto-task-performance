@@ -369,6 +369,9 @@ document.getElementById('estados-tarea').addEventListener('change', async () => 
         });
   } else {
     cambiarEstado($newEstado, $idTarea);
+    setTimeout(() => {
+      location.href ='./v_editarTarea.php?idTarea='+$idTarea;
+    }, 100);
   }
 });
 
@@ -469,6 +472,8 @@ let enviarProductosInteres = ($idTarea) => {
         icon: "success",
         title: 'La tarea '+$idTarea+' ha sido actualizada',
         showConfirmButton: false,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
         timer: 2000
       });
     }
@@ -592,8 +597,8 @@ let setearDatosTarea = ($datosTarea) => {
     document.getElementById('direccion-cliente').value = $datosTarea.DIRECCION,
     document.getElementById('clasificacion-lead').value = $datosTarea.id_ClasificacionLead,
     document.getElementById('origen-lead').value = $datosTarea.id_OrigenLead,
-    document.getElementById('rubrocomercial').value = $datosTarea.rubro_Comercial,
-    document.getElementById('razonsocial').value = $datosTarea.razon_Social
+    document.getElementById('rubrocomercial').value = $datosTarea.id_rubro_Comercial,
+    document.getElementById('razonsocial').value = $datosTarea.id_razon_Social
     console.log($datosTarea.estado_Cliente_Tarea);
     if(($datosTarea.estado_Cliente_Tarea == 'Existente')){
       nuevo.removeAttribute('checked');

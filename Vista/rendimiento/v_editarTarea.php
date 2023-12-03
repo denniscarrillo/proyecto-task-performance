@@ -10,6 +10,8 @@
 	$clasificacionLeads = ControladorTarea::obtenerClasificacionLead();
 	$estadosTarea = ControladorTarea::traerEstadosTarea();
 	$origenLeads = ControladorTarea::obtenerOrigenLead();
+	$razonSociales = ControladorTarea::obtenerRazonSocial();
+	$rubroSociales = ControladorTarea::obtenerRubroComercial();
 ?>
 
 <!DOCTYPE html>
@@ -69,6 +71,7 @@
 			$urlPerfilUsuarios = '../crud/PerfilUsuario/gestionPerfilUsuario.php';
 			$urlPerfilContraseniaUsuarios = '../crud/PerfilUsuario/gestionPerfilContrasenia.php';
 			$urlImg = '../../Recursos/imagenes/Logo-E&C.png';
+			$urlRazonSocial = '../crud/razonSocial/gestionRazonSocial.php';
 			require_once '../layout/sidebar.php';
 			?>
 		</div>
@@ -176,7 +179,7 @@
 								</div>
 								<div class="mb-3 data-container" id="container-clasificacion-lead" hidden="true">
 									<label for="clasificacionlead" class="form-label">Clasificación Lead: </label>
-									<select id="clasificacion-lead" class="form-control " name="clasificacionLead">
+									<select id="clasificacion-lead" class="form-select" name="clasificacionLead">
 										<!-- Opciones clasificacion lead -->
 										<option value="">Seleccionar...</option>
 										<?php
@@ -189,7 +192,7 @@
 								</div>
 								<div class="mb-3 data-container" hidden="true" id="container-origen-lead">
 									<label for="origenlead" class="form-label">Origen Lead: </label>
-									<select id="origen-lead" class="form-control " name="origenLead">
+									<select id="origen-lead" class="form-select" name="origenLead">
 										<!-- Opciones clasificacion lead -->
 										<option value="">Seleccionar...</option>
 										<?php
@@ -202,12 +205,31 @@
 								</div>
 								<div class="mb-3 data-container">
 									<label for="rubrocomercial" class="form-label">Rubro Comercial: </label>
-									<input type="text" name="rubrocomercial" id="rubrocomercial" class="form-control">
+									<select id="rubrocomercial" class="form-select" name="rubrocomercial">
+										<!-- Opciones clasificacion lead -->
+										<option value="">SELECCIONAR...</option>
+										<?php
+										foreach ($rubroSociales as $rubroSocial) {
+											echo '<option value="' . $rubroSocial['id'] . '">' . $rubroSocial['rubroComercial'] . '</option>';
+										}
+										?>
+									</select>
 									<p class="mensaje"></p>
+
+									<!-- <input type="text" name="rubrocomercial" id="rubrocomercial" class="form-control">
+									<p class="mensaje"></p> -->
 								</div>
 								<div class="mb-3 data-container">
 									<label for="razonsocial" class="form-label">Razón Social: </label>
-									<input type="text" name="razonsocial" id="razonsocial" class="form-control">
+									<select id="razonsocial" class="form-select" name="razonsocial">
+										<!-- Opciones clasificacion lead -->
+										<option value="">SELECCIONAR...</option>
+										<?php
+										foreach ($razonSociales as $razonSocial) {
+											echo '<option value="' . $razonSocial['id'] . '">' . $razonSocial['razonSocial'] . '</option>';
+										}
+										?>
+									</select>
 									<p class="mensaje"></p>
 								</div>
 								<div hidden="true" id="btn-container-cotizacion">

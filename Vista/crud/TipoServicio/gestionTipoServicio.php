@@ -83,7 +83,7 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
-  <title> Gestion de Tipo Servicio </title>
+  <title> Gestion de Tipos Servicio Técnico </title>
 </head>
 
 <body style="overflow: hidden;">
@@ -121,6 +121,7 @@ if (isset($_SESSION['usuario'])) {
           $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
           $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
           $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
+          $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
           require_once '../../layout/sidebar.php';
         ?>
       </div>

@@ -33,4 +33,10 @@ $form.addEventListener('submit', e => {
 $servicio_Tecnico.addEventListener('keyup', () => {
     estadoValidaciones.estadoLetrasServicio_Tecnico = funciones.validarSoloLetras($servicio_Tecnico, validaciones.soloLetras);
     funciones.limitarCantidadCaracteres("E_servicio_Tecnico", 50);
+
 });
+$servicio_Tecnico.addEventListener('focusout', ()=>{
+    
+     let servicio_TecnicoMayus = $servicio_Tecnico.value.toUpperCase();
+     $servicio_Tecnico.value = servicio_TecnicoMayus;  
+ });
