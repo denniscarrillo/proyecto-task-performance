@@ -309,8 +309,8 @@ p {
   position: absolute;
   background-color:  #e68b4a;
   right: 10px;
-  box-shadow: 2px 2px 5px #46403a;
-  padding: 0.4rem;
+  box-shadow: 5px 4px 10px #67635f;
+  /* padding: 0.4rem; */
   z-index: 110;
 }
 .item-menu{
@@ -318,9 +318,11 @@ p {
   font-size: 16px;
   color:whitesmoke;
   padding: 0.2rem;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
 }
 .item-menu:hover{
-  background-color: #3d3d3cce;
+  background-color:  #e4792c;
 }
 .menu-estados{
   border: none;

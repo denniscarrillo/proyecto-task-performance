@@ -10,6 +10,8 @@
 	$clasificacionLeads = ControladorTarea::obtenerClasificacionLead();
 	$estadosTarea = ControladorTarea::traerEstadosTarea();
 	$origenLeads = ControladorTarea::obtenerOrigenLead();
+	$razonSociales = ControladorTarea::obtenerRazonSocial();
+	$rubroSociales = ControladorTarea::obtenerRubroComercial();
 ?>
 
 <!DOCTYPE html>
@@ -201,12 +203,31 @@
 								</div>
 								<div class="mb-3 data-container">
 									<label for="rubrocomercial" class="form-label">Rubro Comercial: </label>
-									<input type="text" name="rubrocomercial" id="rubrocomercial" class="form-control">
+									<select id="rubrocomercial" class="form-control " name="rubrocomercial">
+										<!-- Opciones clasificacion lead -->
+										<option value="">SELECCIONAR...</option>
+										<?php
+										foreach ($rubroSociales as $rubroSocial) {
+											echo '<option value="' . $rubroSocial['id'] . '">' . $rubroSocial['rubroComercial'] . '</option>';
+										}
+										?>
+									</select>
 									<p class="mensaje"></p>
+
+									<!-- <input type="text" name="rubrocomercial" id="rubrocomercial" class="form-control">
+									<p class="mensaje"></p> -->
 								</div>
 								<div class="mb-3 data-container">
 									<label for="razonsocial" class="form-label">Razón Social: </label>
-									<input type="text" name="razonsocial" id="razonsocial" class="form-control">
+									<select id="razonsocial" class="form-control " name="razonsocial">
+										<!-- Opciones clasificacion lead -->
+										<option value="">SELECCIONAR...</option>
+										<?php
+										foreach ($razonSociales as $razonSocial) {
+											echo '<option value="' . $razonSocial['id'] . '">' . $razonSocial['razonSocial'] . '</option>';
+										}
+										?>
+									</select>
 									<p class="mensaje"></p>
 								</div>
 								<div hidden="true" id="btn-container-cotizacion">

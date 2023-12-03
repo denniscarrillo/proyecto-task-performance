@@ -186,7 +186,7 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
                 ${(tarea.idEstadoAvance != 4)? `<button class="menu-estados"><i class="fa-solid fa-arrow-right-long"></i></button>` : ''}
               </div>
                 ${(tarea.idEstadoAvance != 4)?  
-                  `<div class="menu-estado" hidden>
+                  `<div class="menu-estado ${tarea.idEstadoAvance}" hidden>
                   <p class="item-menu ${tarea.id} 1" id="newEstado-llamada">Llamada</p>
                   <p class="item-menu ${tarea.id} 2" id="newEstado-lead">Lead</p>
                   <p class="item-menu ${tarea.id} 3" id="newEstado-cotizacion">Cotización</p>
@@ -406,63 +406,83 @@ $(document).on("click", ".menu-estados", function() {
   })
 });
 
-// if(parseInt(this.getAttribute('class').split(' ')[2]) == 1){
-//   Toast.fire({
-//     icon: 'error',
-//     // title: 'No puedes volver a un estado anterior'
-//   });
-// }
 $(document).on("click", "#newEstado-llamada", function() {
   let $idTarea = this.getAttribute('class').split(' ')[1];
-  console.log(this.getAttribute('class').split(' ')[2]);
-  if(parseInt(this.getAttribute('class').split(' ')[2]) < 1){
-    Toast.fire({
-      icon: 'error',
-      title: 'No puedes volver a un estado anterior'
-    });
+  let $estadoActual = parseInt(this.parentElement.getAttribute('class').split(' ')[1]);
+  let $nuevoEstado = parseInt(this.getAttribute('class').split(' ')[2]);
+  console.log($estadoActual);
+  console.log($nuevoEstado);
+  if($nuevoEstado < $estadoActual || $nuevoEstado == $estadoActual){
+    if($nuevoEstado < $estadoActual){
+      Toast.fire({
+        icon: 'error',
+        title: 'No puedes volver a un estado anterior'
+      });
+    }
   }else{
-    cambiarEstado($idTarea, 1)
+    console.log('no entro')
+    cambiarEstado($idTarea, $nuevoEstado);
     location.href ='./v_tarea.php';
   }
+  this.parentElement.setAttribute('hidden', 'true');
 })
 $(document).on("click", "#newEstado-lead", function() {
   let $idTarea = this.getAttribute('class').split(' ')[1];
-  console.log(this.getAttribute('class').split(' ')[2]);
-  if(parseInt(this.getAttribute('class').split(' ')[2]) < 2){
-    Toast.fire({
-      icon: 'error',
-      title: 'No puedes volver a un estado anterior'
-    });
+  let $estadoActual = parseInt(this.parentElement.getAttribute('class').split(' ')[1]);
+  let $nuevoEstado = parseInt(this.getAttribute('class').split(' ')[2]);
+  console.log($estadoActual);
+  console.log($nuevoEstado);
+  if($nuevoEstado < $estadoActual || $nuevoEstado == $estadoActual){
+    if($nuevoEstado < $estadoActual){
+      Toast.fire({
+        icon: 'error',
+        title: 'No puedes volver a un estado anterior'
+      });
+    }
   }else{
-    cambiarEstado($idTarea, 2)
+    cambiarEstado($idTarea, $nuevoEstado);
     location.href ='./v_tarea.php';
   }
+  this.parentElement.setAttribute('hidden', 'true');
 })
 $(document).on("click", "#newEstado-cotizacion", function() {
   let $idTarea = this.getAttribute('class').split(' ')[1];
-  console.log(this.getAttribute('class').split(' ')[2]);
-  if(parseInt(this.getAttribute('class').split(' ')[2]) < 3){
-    Toast.fire({
-      icon: 'error',
-      title: 'No puedes volver a un estado anterior'
-    });
+  let $estadoActual = parseInt(this.parentElement.getAttribute('class').split(' ')[1]);
+  let $nuevoEstado = parseInt(this.getAttribute('class').split(' ')[2]);
+  console.log($estadoActual);
+  console.log($nuevoEstado);
+  if($nuevoEstado < $estadoActual || $nuevoEstado == $estadoActual){
+    if($nuevoEstado < $estadoActual){
+      Toast.fire({
+        icon: 'error',
+        title: 'No puedes volver a un estado anterior'
+      });
+    }
   }else{
-    cambiarEstado($idTarea, 3)
+    cambiarEstado($idTarea, $nuevoEstado);
     location.href ='./v_tarea.php';
   }
+  this.parentElement.setAttribute('hidden', 'true');
 })
 $(document).on("click", "#newEstado-venta", function() {
   let $idTarea = this.getAttribute('class').split(' ')[1];
-  console.log(this.getAttribute('class').split(' ')[2]);
-  if(parseInt(this.getAttribute('class').split(' ')[2]) < 4){
-    Toast.fire({
-      icon: 'error',
-      title: 'No puedes volver a un estado anterior'
-    });
+  let $estadoActual = parseInt(this.parentElement.getAttribute('class').split(' ')[1]);
+  let $nuevoEstado = parseInt(this.getAttribute('class').split(' ')[2]);
+  console.log($estadoActual);
+  console.log($nuevoEstado);
+  if($nuevoEstado < $estadoActual || $nuevoEstado == $estadoActual){
+    if($nuevoEstado < $estadoActual){
+      Toast.fire({
+        icon: 'error',
+        title: 'No puedes volver a un estado anterior'
+      });
+    }
   }else{
-    cambiarEstado($idTarea, 4)
+    console.log('venta')
+    cambiarEstado($idTarea, $nuevoEstado);
     location.href ='./v_tarea.php';
   }
+  this.parentElement.setAttribute('hidden', 'true');
 })
 let cambiarEstado = ($idTarea, $nuevoEstado) => {
   $.ajax({
