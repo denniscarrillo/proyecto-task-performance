@@ -157,6 +157,7 @@ p {
   margin-bottom: 10px;
   border-radius: 0.2rem;
   text-align: left;
+  z-index: 100;
 }
 .form-nuevaTarea {
   width: 17rem;
@@ -292,4 +293,43 @@ p {
 }
 .fa-comment-dots:hover{
   color: #de563b;
+}
+.tarea-id{
+  background-color: #e68b4a;
+  margin: 10px;
+  padding: 5px;
+  color: #f9f4f4;
+  border-radius: 3px;
+  height: fit-content;
+}
+.card_task{
+  position: relative;
+}
+.menu-estado{
+  position: absolute;
+  background-color:  #e68b4a;
+  right: 10px;
+  box-shadow: 5px 4px 10px #67635f;
+  /* padding: 0.4rem; */
+  z-index: 110;
+}
+.item-menu{
+  text-align: left;
+  font-size: 16px;
+  color:whitesmoke;
+  padding: 0.2rem;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+}
+.item-menu:hover{
+  background-color:  #e4792c;
+}
+.menu-estados{
+  border: none;
+  width: fit-content;
+  margin-left: 10.2rem;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
+  background: none;
+  color:whitesmoke;
 }

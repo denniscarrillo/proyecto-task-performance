@@ -131,7 +131,7 @@ if (isset($_SESSION['usuario'])) {
                 <?php include_once '../../layout/navbar.php'?>                             
             </div>        
             <div class ="titulo">
-                  <H2 class="title-dashboard-task">Ventas</H2>
+                  <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionVenta.php');?>">Ventas</H2>
             </div>  
           </div>
         <div class="table-conteiner">
@@ -149,7 +149,6 @@ if (isset($_SESSION['usuario'])) {
               </tr>
             </thead>
             <div class ="text-left mb-2">
-            <!-- <a href="../../../TCPDF/examples/reporteriaVentas.php" target="_blank" class="btn btn-success hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> -->
             <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
           </div>
             <tbody class="table-group-divider">

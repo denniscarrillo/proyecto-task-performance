@@ -82,7 +82,7 @@ $('#form-Edit-Parametro').submit(function (e) {
         //Mostrar mensaje de exito
         Swal.fire(
           'Actualizado!',
-          'El usuario ha sido modificado!',
+          'El parámetro ha sido modificado!',
           'success',
         )
         tablaParametro.ajax.reload(null, false);      

@@ -9,6 +9,8 @@ require_once("../../Controlador/ControladorUsuario.php");
 require_once("../../Controlador/ControladorBitacoraTarea.php");
 
 if(isset($_SESSION['usuario']) && $_POST['idTarea']){ //Validamos si existe una session y el usuario
+  var_dump($_POST['nuevoEstado']);
+  var_dump($_POST['idTarea']);
   ControladorTarea::actualizarEstadoTarea(intval($_POST['idTarea']), intval($_POST['nuevoEstado']), $_SESSION['usuario']);
   /* ====================== Evento, el usuario ha cambiado la tarea de estado  =====================*/
   $estado = ControladorBitacoraTarea::obtenerEstadoAvanceTarea($_POST['idTarea']);

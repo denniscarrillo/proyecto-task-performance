@@ -55,6 +55,9 @@ let estadoMasdeUnEspacio = {
         estadoMasEspaciotipoServicio:true,
 
 }
+let estadoMayorCero = {
+    estadoMayorCeroTelefono: true
+}
 
 let estadoSoloLetras = {
    
@@ -106,9 +109,7 @@ $form.addEventListener('submit', e => {
             estadoEspacioInput.estadoEspaciotelefono= funciones.validarEspacios($telefono);  
             estadoEspacioInput.estadoEspacioDireccion = funciones.validarEspacios($direccion);  
             estadoEspacioInput.estadoEspacioCorreoCliente = funciones.validarEspacios($correoCliente); 
-            estadoEspacioInput.estadoEspaciodescripcion = funciones.validarEspacios($descripcion); 
-         
-              
+            estadoEspacioInput.estadoEspaciodescripcion = funciones.validarEspacios($descripcion);                
         }
         estadoMasdeUnEspacio.estadoMasEspacioName= funciones.validarMasdeUnEspacio($name);
         estadoMasdeUnEspacio.estadoMasEspacioDescripcion= funciones.validarMasdeUnEspacio($descripcion);
@@ -121,52 +122,69 @@ $form.addEventListener('submit', e => {
             console.log(estadoMasdeUnEspacio.estadoMasEspacioDireccion);
             console.log(estadoMasdeUnEspacio.estadoMasEspacioName);
         }else{
-          if(estadoLetrasRepetidas.estadoLetrasRepetidasname == false ||estadoLetrasRepetidas.estadoLetrasRepetidasDescripcion == false ||
-                        estadoLetrasRepetidas.estadoLetrasRepetidasDireccion == false){
-                        e.preventDefault();
-                        estadoLetrasRepetidas.estadoLetrasRepetidasname= funciones.limiteMismoCaracter($name, validaciones.MismoCaracter);
-                        estadoLetrasRepetidas.estadoLetrasRepetidasDescripcion = funciones.limiteMismoCaracter($descripcion, validaciones.MismoCaracter);
-                        estadoLetrasRepetidas.estadoLetrasRepetidasDireccion = funciones.limiteMismoCaracter($direccion, validaciones.MismoCaracter);
-            }else{
-                if(estadoSoloLetras.estadoLetrasName == false){
-                    e.preventDefault();
-                    estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
-                    console.log(estadoSoloLetras.estadoLetrasName); 
-     
-                }
-    
-        if(estadoSoloNumeros.estadoNumerotelefono == false|| estadoSoloNumeros.estadoNumeroRTN== false ){
-            e.preventDefault();
-            estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
-            estadoSoloNumeros.estadoNumeroRTN = funciones.validarSoloNumeros($rtn, validaciones.soloNumeros);
-        }else{
-            if(estadoCorreo == false || estadoSelect == false ){
-                e.preventDefault();   
-                estadoSelect = funciones.validarCampoVacio($name);
-                estadoSelect = funciones.validarCampoVacio($direccion);
-                estadoSelect = funciones.validarCampoVacio($tipoServicio);
-                estadoSelect = funciones.validarCampoVacio($telefono);
-                estadoSelect = funciones.validarCampoVacio($descripcion);
-                estadoSelect = funciones.validarCampoVacio($rtn);
-              //  estadoSelect = funciones.validarCampoVacio($correoCliente);
-                estadoCorreo = funciones.validarCorreo($correoCliente, validaciones.correo);
-        
-                                      
-                }else{
-                        estadoValidado = true;
-                           
-               
-                    
-                      
-                }    
-           
-         } }
-                  
+            if(estadoSoloLetras.estadoLetrasName == false ){
+                e.preventDefault();
+                estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras); 
+            }
             
-        }
+             if(estadoSoloNumeros.estadoNumerotelefono == false ){
+                e.preventDefault();
+                estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
+            } else {
+                if(estadoMayorCero.estadoMayorCeroTelefono == false){
+                    e.preventDefault();
+                    estadoMayorCero.estadoMayorCeroTelefono = funciones.MayorACero($telefono);
+                
+                        
+            }else{
+                if(estadoCorreo == false || estadoSelect == false ){
+                    e.preventDefault();   
+                    estadoSelect = funciones.validarCampoVacio($name);
+                    estadoSelect = funciones.validarCampoVacio($direccion);
+                    estadoSelect = funciones.validarCampoVacio($tipoServicio);
+                    estadoSelect = funciones.validarCampoVacio($telefono);
+                    estadoSelect = funciones.validarCampoVacio($descripcion);
+                   estadoSelect = funciones.validarCampoVacio($rtn);
+                  //  estadoSelect = funciones.validarCampoVacio($correoCliente);
+                    estadoCorreo = funciones.validarCorreo($correoCliente, validaciones.correo);
+                }else{
+                    // if( estadoExisteRtn  == false){
+                    //     e.preventDefault();
+                    //     estadoExisteRtn = obtenerValidarRtnExiste($('#rtnCliente').val());
+                    // } else {
+                estadoValidado = true;
+                    
+                }
+                   
+            }
+        } 
     }
 });
 
+////TELEFONO
+
+$telefono.addEventListener('focusout', () => {
+    estadoMayorCero.estadoMayorCeroTelefono = funciones.MayorACero($telefono);
+});
+
+$telefono.addEventListener('keyup', ()=>{
+    estadoMayorCero.estadoMayorCeroTelefono = funciones.MayorACero($telefono);
+});
+
+$telefono.addEventListener('keyup', ()=>{
+    estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
+   funciones.limitarCantidadCaracteres("telefono", 14);
+ });
+
+ $telefono.addEventListener('change', ()=>{
+    estadoSelect.estadoSelecttelefono = funciones.validarCampoVacio($telefono);
+});
+
+$telefono.addEventListener('focusout', ()=>{
+    if(estadoMasdeUnEspacio.estadoMasEspaciotelefono){
+        funciones.validarMasdeUnEspacio($telefono);
+    }  
+});
 
 $name.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
@@ -196,16 +214,9 @@ $name.addEventListener('keyup', ()=>{
     
     if(estadoMasdeUnEspacio.estadoMasEspacioName){
          funciones.validarMasdeUnEspacio($name);
-    }
-    let nameMayus = $name.value.toUpperCase();
-    $name.value = nameMayus;
+    }  
+ });
 
- });
- $telefono.addEventListener('focusout', ()=>{
-     if(estadoMasdeUnEspacio.estadoMasEspaciotelefono){
-         funciones.validarMasdeUnEspacio($telefono);
-     }  
- });
  $correoCliente.addEventListener('focusout', ()=>{
      if(estadoMasdeUnEspacio.estadoMasEspacioCorreoCliente){
          funciones.validarMasdeUnEspacio($correoCliente);
@@ -228,9 +239,7 @@ $descripcion.addEventListener('focusout', ()=>{
  $name.addEventListener('change', ()=>{
      estadoSelect.estadoSelectName = funciones.validarCampoVacio($name);
  });
- $telefono.addEventListener('change', ()=>{
-     estadoSelect.estadoSelecttelefono = funciones.validarCampoVacio($telefono);
- });
+
  $direccion.addEventListener('change', ()=>{
      estadoSelect.estadoSelectDireccion = funciones.validarCampoVacio($direccion);
  });
@@ -243,10 +252,7 @@ $descripcion.addEventListener('focusout', ()=>{
     estadoSelect.estadoSelectRtn= funciones.validarCampoVacio($rtn);
  });
 
- $telefono.addEventListener('keyup', ()=>{
-     estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
-    funciones.limitarCantidadCaracteres("telefono", 14);
-  });
+
 
 
 
@@ -292,40 +298,6 @@ let obtenerValidarRtnExiste = (rtn) => {
     });
 };
 
-
-
-// let obtenerValidarRtnExiste = (rtn) => {
-//   // Puedes dejar que la función maneje el caso de rtn null sin necesidad de verificarlo aquí.
-//   $.ajax({
-//       url: "../../../Vista/crud/DataTableSolicitud/ExisteRTN.php",
-//       type: "POST",
-//       datatype: "JSON",
-//       data: {
-//           rtnCliente:rtn
-//       },
-//       success: function (rtn) {
-//           let $objRtn = JSON.parse(rtn);
-
-//           if ($objRtn.estado == 'true') {
-//               document.getElementById('rtnCliente').classList.add('mensaje_error');
-//               document.getElementById('rtnCliente').parentElement.querySelector('p').innerText = '*Este rtn ya existe, en Cartera Clientes';
-//               estadoExisteRtn = false; // Rtn es existente, es false
-//           } else {
-//               document.getElementById('rtnCliente').classList.remove('mensaje_error');
-//               document.getElementById('rtnCliente').parentElement.querySelector('p').innerText = '';
-//               estadoExisteRtn = true; // Rtn no existe, es true
-//           }
-//       }
-//   });
-// };
-
-
-
-// $rtn.addEventListener('focusout', () => {
-//   let rtnValue = $('#rtnCliente').val();
-//   estadoExisteRtn = obtenerValidarRtnExiste(rtnValue);
-//   console.log(rtnValue);
-// });
 
 
 

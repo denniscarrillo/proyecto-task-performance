@@ -164,7 +164,10 @@ document.getElementById('form-Edit-Tarea').addEventListener('submit', function(e
     let $datosTarea = validarCamposEnviar(tipoCliente);
     actualizarDatosTarea($datosTarea);
     enviarProductosInteres($idTask); //Enviamos los productos de interes a almacenar
-    obtenerDatosTarea($idTarea, $idEstadoTarea);
+    // obtenerDatosTarea($idTarea, $idEstadoTarea);
+    setTimeout(() => {
+      location.href ='../../../Vista/rendimiento/v_tarea.php';
+    }, 2000);
   }
 });
 // CARGAR LOS ARTICULOS A AGREGAR A LA TAREA
@@ -363,6 +366,9 @@ document.getElementById('estados-tarea').addEventListener('change', async () => 
         });
   } else {
     cambiarEstado($newEstado, $idTarea);
+    setTimeout(() => {
+      location.href ='./v_editarTarea.php?idTarea='+$idTarea;
+    }, 100);
   }
 });
 
@@ -458,11 +464,15 @@ let enviarProductosInteres = ($idTarea) => {
       "productos": JSON.stringify(productos)
     },
     success: function (resp) {
-      Swal.fire(
-        'Cambios guardados',
-        'La tarea '+$idTarea+' ha sido editada!',
-        'success',
-      )
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: 'La tarea '+$idTarea+' ha sido actualizada',
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        timer: 2000
+      });
     }
   });//Fin AJAX
 }

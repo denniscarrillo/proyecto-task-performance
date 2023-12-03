@@ -15,7 +15,6 @@ let estadoEspacioInput = {
 }
   
 
-
 let estadoSelect = {
     estadoSelectdescripcion: true,
     estadoSelecttelefono: true,
@@ -33,13 +32,13 @@ let estadoSoloLetras = {
     estadoLetrasdescripcion: true,
     estadoLetrasubicacion: true,
     estadoLetrasAvance: true,
-    
-  
-
 }
 let estadoSoloNumeros = {
-   
     estadoNumerotelefono :true,
+}
+
+let estadoMayorCero = {
+    estadoMayorCeroTelefono: true
 }
 //VARIABLES GLOBALES
 
@@ -58,6 +57,7 @@ const $Avance = document.getElementById('E_AvanceSolicitud');
     las validaciones se hayan cumplido.
 */
 $form.addEventListener('submit', e => {
+    estadoValidado = false;
     //Validamos que algún campo no esté vacío.
     let estadoInputdescripcion = funciones.validarCampoVacio($descripcion);
     let estadoInputtelefono = funciones.validarCampoVacio($telefono);
@@ -102,10 +102,14 @@ $form.addEventListener('submit', e => {
                     estadoSelect = funciones.validarCampoVacio($ubicacion);
                     estadoSelect = funciones.validarCampoVacio($Avance);
                 } else {
+                    if(estadoMayorCero.estadoMayorCeroTelefono == false){
+                        e.preventDefault();
+                        estadoMayorCero.estadoMayorCeroTelefono = funciones.MayorACero($telefono);
+                } else {
                     estadoValidado = true; // 
                 }  
             }
-        
+        }
         } 
     }
 });
@@ -129,11 +133,7 @@ $descripcion.addEventListener('focusout', ()=>{
      $descripcion.value = descripcionMayus;  
   
 });
-$telefono.addEventListener('focusout', ()=>{
-    if(estadoMasdeUnEspacio.estadoMasEspaciotelefono){
-        funciones.validarMasdeUnEspacio($telefono);
-    }  
-});
+
 $ubicacion.addEventListener('focusout', ()=>{
     if(estadoMasdeUnEspacio.estadoMasEspacioubicacion){
         funciones.validarMasdeUnEspacio($ubicacion);
@@ -150,18 +150,31 @@ $Avance.addEventListener('focusout', ()=>{
 $descripcion.addEventListener('change', ()=>{
     estadoSelect.estadoSelectdescripcion = funciones.validarCampoVacio($descripcion);
 });
+/////////TEEFONO
+$telefono.addEventListener('focusout', ()=>{
+    if(estadoMasdeUnEspacio.estadoMasEspaciotelefono){
+        funciones.validarMasdeUnEspacio($telefono);
+    }  
+});
 $telefono.addEventListener('change', ()=>{
     estadoSelect.estadoSelecttelefono = funciones.validarCampoVacio($telefono);
 });
+
+$telefono.addEventListener('keyup', ()=>{
+    estadoMayorCero.estadoMayorCeroTelefono = funciones.MayorACero($telefono);
+});
+$telefono.addEventListener('keyup', ()=>{
+    estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
+   funciones.limitarCantidadCaracteres("E_telefono_cliente", 14);
+});
+
+
 $ubicacion.addEventListener('change', ()=>{
     estadoSelect.estadoSelectubicacion = funciones.validarCampoVacio($ubicacion);
 });
 $Avance.addEventListener('change', ()=>{
     estadoSelect.estadoSelectAvance = funciones.validarCampoVacio($Avance);
 });
-$telefono.addEventListener('keyup', ()=>{
-    estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
-   funciones.limitarCantidadCaracteres("E_telefono_cliente", 14);
-});
+
 
 // || estadoMasdeUnEspacio.estadoMasEspacioNombre == true
