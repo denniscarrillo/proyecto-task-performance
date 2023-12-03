@@ -23,7 +23,10 @@ let estadoSoloNumeros = {
     estadoNumerortn :true,
     estadoNumerotelefono :true,
 }
-
+let estadoMayorCero = {
+    estadoMayorCeroRTN: true,
+    estadoMayorCeroTelefono: true
+}
 
 
 const $form = document.getElementById('form-carteraCliente');
@@ -39,6 +42,7 @@ const $direccion = document.getElementById('direccion');
     las validaciones se hayan cumplido.
 */
 $form.addEventListener('submit', e => {   
+    estadoValidado = false; 
     //Validamos que algún campo no esté vacío.
     let estadoInputNombre = funciones.validarCampoVacio($name);
     let estadoInputRtn = funciones.validarCampoVacio($rtn);
@@ -72,14 +76,22 @@ $form.addEventListener('submit', e => {
                             e.preventDefault();
                             estadoExisteRtn = obtenerRtnExiste($('#rtn').val());
                         } else {
+                            if(estadoMayorCero.estadoMayorCeroRTN == false || estadoMayorCero.estadoMayorCeroTelefono == false){
+                                e.preventDefault();
+                                estadoMayorCero.estadoMayorCeroRTN = funciones.MayorACero($rtn);
+                                estadoMayorCero.estadoMayorCeroTelefono = funciones.MayorACero($telefono);
+                            } else {
                     estadoValidado = true;
                    }
                  }
               }
             }       
-            
-        }
+        } 
+    }
 });
+
+
+
 $name.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
     funciones.limitarCantidadCaracteres("nombre", 50);
@@ -98,18 +110,32 @@ $correo.addEventListener('keyup', ()=>{
 $rtn.addEventListener('keyup', ()=>{
     funciones.limitarCantidadCaracteres("rtn", 14);
 });
+
+$rtn.addEventListener('keyup', ()=>{
+    estadoMayorCero.estadoMayorCeroRTN = funciones.MayorACero($rtn);
+});
+$rtn.addEventListener('focusout', ()=>{
+    estadoMayorCero.estadoMayorCeroRTN = funciones.MayorACero($rtn);
+});
+
 $telefono.addEventListener('keyup', ()=>{
+    estadoMayorCero.estadoMayorCeroTelefono  = funciones.MayorACero($telefono);
     funciones.limitarCantidadCaracteres("telefono", 18);
 });
+
+$telefono.addEventListener('focusout', ()=>{
+    estadoMayorCero.estadoMayorCeroTelefono  = funciones.MayorACero($telefono);
+});
+
 $direccion.addEventListener('keyup', ()=>{
-    funciones.limitarCantidadCaracteres("direccion", 100);
+    funciones.limitarCantidadCaracteres("direccion", 300);
 });
 $direccion.addEventListener('focusout', ()=>{
     if(estasdoMasdeUnEspacio.estadoMasEspacioDireccion){
         estasdoMasdeUnEspacio.estadoMasEspacioDireccion = funciones.validarMasdeUnEspacio($direccion);
     }
-    /* let direccionMayus = $direccion.value.toUpperCase();
-    $direccion.value = direccionMayus; */
+    let direccionMayus = $direccion.value.toUpperCase();
+    $direccion.value = direccionMayus; 
 });
 $rtn.addEventListener('focusout', ()=>{
     let rtn = $('#rtn').val();
@@ -118,12 +144,12 @@ $rtn.addEventListener('focusout', ()=>{
 
 $telefono.addEventListener('keyup', ()=>{
     estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
-   funciones.limitarCantidadCaracteres("telefono", 14);
+   funciones.limitarCantidadCaracteres("telefono", 20);
 });
 
 $rtn.addEventListener('keyup', ()=>{
     estadoSoloNumeros.estadoNumerortn = funciones.validarSoloNumeros($rtn, validaciones.soloNumeros);
-   funciones.limitarCantidadCaracteres("rtn", 14);
+   funciones.limitarCantidadCaracteres("rtn", 20);
 });
 
 let obtenerRtnExiste = ($rtn) => {

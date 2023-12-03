@@ -49,6 +49,26 @@ export const validarSoloLetras = (elemento, objetoRegex) => {
     }
     return estado;
 }
+
+//Funcion para validar mayor a cero
+export const MayorACero = (elemento) => {
+    let mensaje = elemento.parentElement.querySelector('p');
+    let estado;
+    let input = parseFloat(elemento.value.trim()); // Convertir a número y eliminar espacios en blanco
+
+    if (isNaN(input) || input <= 0) {
+        mensaje.innerText = '*Debe ser un número mayor a cero';
+        elemento.classList.add('mensaje_error');
+        estado = false;
+    } else {
+        mensaje.innerText = '';
+        elemento.classList.remove('mensaje_error');
+        estado = true;
+    }
+    return estado;
+}
+
+
 //Funcion para validar campos vacios
 export const validarCampoVacio = elemento => {
     let estado;
@@ -191,6 +211,9 @@ export const cantidadParametrosContrasenia = async (elemento) => {
     }
     return estado;
 };
+
+
+
 
     
 

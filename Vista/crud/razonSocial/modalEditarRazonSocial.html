@@ -1,0 +1,36 @@
+<div class="modal fade" id="modalEditarRazonSocial" tabindex="-1" aria-labelledby="nuevoModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="editarModalLabel">Editar Razon Social</h1>
+                <button type="button" class="btn-close" id ="btn-x" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" id="form-Edit_razonSocial">
+                    <div class="grupo-form">
+                        <div class="grupo-form">
+                            <div class="mb-3">
+                                <label for="idRazonSocial" class="form-label">Id Razon Social:</label>
+                                <input type="text" name="E_idRazonSocial" id="E_idRazonSocial" class="form-control" disabled>
+                                <p class="mensaje"></p>
+                            </div>
+                        <div class="mb-3">
+                            <label for="razonSocial" class="form-label">Razon Social:</label>
+                            <input type="text" name="razonSocial" id="E_razonSocial" class="form-control" disabled>
+                            <p class="mensaje"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripcion de la razon social:</label>
+                            <input type="text" name="descripcion" id="E_descripcion" class="form-control" >
+                            <p class="mensaje"></p>
+                        </div>
+                    </div>
+                    <div class="btn-guardar">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn-cerrar">Cerrar</button>
+                        <button type="submit" class="btn btn-primary" id="btn-submit"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

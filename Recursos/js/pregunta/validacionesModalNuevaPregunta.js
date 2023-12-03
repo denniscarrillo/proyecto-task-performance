@@ -33,13 +33,21 @@ $pregunta.addEventListener('keyup', ()=>{
     funciones.validarCampoVacio($pregunta);
     funciones.limitarCantidadCaracteres('pregunta', 100);
 });
+
+$pregunta.addEventListener('focusout', ()=>{
+    funciones.validarCampoVacio($pregunta);
+    funciones.limitarCantidadCaracteres('pregunta', 100);
+});
 $pregunta.addEventListener('focusout', ()=>{
    let preguntas = estadoMasdeUnEspacioPregunta = funciones.validarMasdeUnEspacio($pregunta);
    if(preguntas){
          let pregunta = $('#pregunta').val();
          estadoExistePregunta = obtenerPreguntaExiste(pregunta);
    }
+   let preguntaMayus = $pregunta.value.toUpperCase();
+   $pregunta.value = preguntaMayus;  
 });
+
 /* $pregunta.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasPregunta = funciones.validarSoloLetras($pregunta, validaciones.soloLetras);
 }); */

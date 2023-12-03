@@ -43,7 +43,10 @@ $servicio_Tecnico.addEventListener('keyup', () => {
 $servicio_Tecnico.addEventListener('focusout', () => {
     let servicioTecnico = $('#servicio_Tecnico').val();
     estadoExisteservicioTecnico = obtenerServicioTecnico(servicioTecnico);
+    let servicio_TecnicoMayus = $servicio_Tecnico.value.toUpperCase();
+    $servicio_Tecnico.value = servicio_TecnicoMayus;  
 });
+
 
 let obtenerServicioTecnico = ($servicioTecnico) => {
     $.ajax({
