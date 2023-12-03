@@ -60,6 +60,7 @@ require_once("validacionesComision.php");
         $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
         $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
         $urlImg = '../../Recursos/imagenes/Logo-E&C.png';
+        $urlRazonSocial = '../crud/RazonSocial/gestionRazonSocial.php';
         require_once '../layout/sidebar.php';
         ?>
       </div>
