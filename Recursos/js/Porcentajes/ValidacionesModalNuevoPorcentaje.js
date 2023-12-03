@@ -15,7 +15,9 @@ let estadoSoloNumeros = {
 let estadoSoloLetras = {
     estadoLetrasDescripcionPorcentaje: true,
 }
- 
+let estadoMayorCero = {
+    estadoMayorCeroMeta: true
+} 
 let estadoSelect = true;
 
 const $form = document.getElementById('form-Porcentajes');
@@ -54,14 +56,19 @@ $form.addEventListener('submit', e => {
                         estadoExistePorcentaje = 
                         estadoExistePorcentaje = obtenerPorcentajeExiste(valorPorcentaje);
                     } else {
-                        estadoValidado = true;
-                        console.log(estadoValidado); // 
-                    }
+                        if(estadoMayorCero.estadoMayorCeroMeta == false){
+                            e.preventDefault();
+                            estadoMayorCero.estadoMayorCeroMeta = funciones.MayorACero($valor);    
+                        } else {
+                            estadoValidado = true;
+                            console.log(estadoValidado); // 
+                        }
                 
                 }
             }       
             
         }
+    } 
 });
 $('#valorPorcentaje').on('focusout', function () {
     // Obtiene el valor ingresado por el usuario como número entero
@@ -103,20 +110,34 @@ let obtenerPorcentajeExiste = ($valorPorcentaje) => {
     });
 }
 
-// $valor.addEventListener('keyup', ()=>{
-//     estadoSoloNumeros.estadoNumerosValorPorcentaje = funciones.validarSoloNumeros($valor, validaciones.soloNumeros);
-//     $("#valorPorcentaje").inputlimiter({
-//         limit: 14
-//     });
-// });
+$valor.addEventListener('keyup', ()=>{
+    estadoSoloNumeros.estadoNumerosValorPorcentaje = funciones.validarSoloNumeros($valor, validaciones.soloNumeros);
+    $("#valorPorcentaje").inputlimiter({
+        limit: 14
+    });
+});
 
-// $descripcion.addEventListener('keyup', ()=>{
-//     estadoSoloLetras.estadoLetrasDescripcionPorcentaje = funciones.validarSoloLetras($descripcion, validaciones.soloLetras);
-//     $("#descripcionPorcentaje").inputlimiter({
-//         limit: 50
-//     });
-// });
+$valor.addEventListener('keyup', ()=>{
+    estadoMayorCero.estadoMayorCeroMeta = funciones.MayorACero($valor);
+    $("#valorPorcentaje").inputlimiter({
+        limit: 14
+    });
+});
 
-// $estado.addEventListener('change', ()=>{
-//     estadoSelect = funciones.validarCampoVacio($estado);
-// });
+$valor.addEventListener('focusout', ()=>{
+    estadoMayorCero.estadoMayorCeroMeta = funciones.MayorACero($valor);
+    $("#valorPorcentaje").inputlimiter({
+        limit: 14
+    });
+});
+
+$descripcion.addEventListener('keyup', ()=>{
+    estadoSoloLetras.estadoLetrasDescripcionPorcentaje = funciones.validarSoloLetras($descripcion, validaciones.soloLetras);
+    $("#descripcionPorcentaje").inputlimiter({
+        limit: 50
+    });
+});
+
+$estado.addEventListener('change', ()=>{
+    estadoSelect = funciones.validarCampoVacio($estado);
+});

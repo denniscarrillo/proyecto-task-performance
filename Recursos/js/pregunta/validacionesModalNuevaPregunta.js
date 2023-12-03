@@ -33,6 +33,11 @@ $pregunta.addEventListener('keyup', ()=>{
     funciones.validarCampoVacio($pregunta);
     funciones.limitarCantidadCaracteres('pregunta', 100);
 });
+
+$pregunta.addEventListener('focusout', ()=>{
+    funciones.validarCampoVacio($pregunta);
+    funciones.limitarCantidadCaracteres('pregunta', 100);
+});
 $pregunta.addEventListener('focusout', ()=>{
    let preguntas = estadoMasdeUnEspacioPregunta = funciones.validarMasdeUnEspacio($pregunta);
    if(preguntas){
