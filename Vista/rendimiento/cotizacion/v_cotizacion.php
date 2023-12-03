@@ -105,7 +105,7 @@
                         <label class="mb-3 form-label bold label-estado-cot exist hidden">Estado: </label><label class="estado-cot exist hidden" id="estado-cot"></label>
                         <div class="container-desc bold new hidden">
                             <label class="form-label ">Descuento:</label>
-                            <select title="Estado descuento" class="form-control " id="estado-desc" disabled>
+                            <select title="Estado descuento" class="form-select" id="estado-desc" disabled>
                                 <option selected>No aplica</option>
                                 <option >Aplica</option>
                             </select>

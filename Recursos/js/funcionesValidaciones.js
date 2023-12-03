@@ -99,7 +99,23 @@ export const limiteMismoCaracter = (elemento, objetoRegex) => {
     let mensaje = elemento.parentElement.querySelector('p');
     let input = elemento.value;
     if (objetoRegex.test(input)){
-        mensaje.innerText = '*No debe colocar el mismo caracter +3 veces seguidas.';
+        mensaje.innerText = '*No debe colocar el mismo caracter +3 veces seguidas';
+        elemento.classList.add('mensaje_error');
+        estado = false;
+    } else {
+        mensaje.innerText = '';
+        elemento.classList.remove('mensaje_error');
+        estado = true;
+    }
+    return estado;
+}
+
+export const validarMismoNumeroConsecutivo = (elemento, objetoRegex) => {
+    let estado;
+    let mensaje = elemento.parentElement.querySelector('p');
+    let input = elemento.value;
+    if (objetoRegex.test(input)){
+        mensaje.innerText = '*No debe colocar el mismo número +5 veces seguidas';
         elemento.classList.add('mensaje_error');
         estado = false;
     } else {
@@ -114,8 +130,8 @@ export const validarCorreo = (elemento, objetoRegex) => {
     let estado;
     let mensaje = elemento.parentElement.querySelector('p');
     let correo = elemento.value;
-    if (!objetoRegex.test(correo)){
-        mensaje.innerText = '*Correo no válido, verifiquélo';
+    if (!objetoRegex.test(correo)){ 
+        mensaje.innerText = '*Ingrese un correo válido';
         elemento.classList.add('mensaje_error');
         estado = false;
     } else {
@@ -131,7 +147,7 @@ export const validarSoloNumeros = (elemento, objetoRegex) => {
     let estado;
     let input = elemento.value;
     if (!objetoRegex.test(input)){
-        mensaje.innerText = '*Solo se permiten Numeros.';
+        mensaje.innerText = '*Solo se permiten números';
         elemento.classList.add('mensaje_error');
         estado = false;
     } else {
@@ -148,6 +164,20 @@ export const limitarCantidadCaracteres = (elemento, cantMax) => {
         limitText: '',
 		limitTextShow: true
     });
+}
+export const caracteresMinimo = (elemento, min) => {
+  let mensaje = elemento.parentElement.querySelector('p');
+  let estado;
+  if(elemento.value.length < min){
+    mensaje.innerText = '*Debe ingresar mínimo '+min+' caracteres';
+        elemento.classList.add('mensaje_error');
+        estado = false;
+  } else {
+    elemento.classList.remove('mensaje_error');
+        mensaje.innerText = '';
+        estado = true;
+  }
+  return estado;
 }
 
 export const validarMasdeUnEspacio = elemento => {
