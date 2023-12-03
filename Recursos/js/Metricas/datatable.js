@@ -43,6 +43,14 @@ let obtenerPermisos = function ($idObjeto, callback) {
     });
 }
 
+
+$(document).on("click", "#btn_nuevoRegistro", function(){		        
+  Swal.fire({
+    icon: "error",
+    title: "No se puede crear un nuevo registro!",     
+  });   
+});
+
 $(document).on("click", "#btn_editar", function(){		        
   let fila = $(this).closest("tr"),	        
   idMetrica = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		
