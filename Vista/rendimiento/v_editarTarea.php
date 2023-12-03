@@ -177,7 +177,7 @@
 								</div>
 								<div class="mb-3 data-container" id="container-clasificacion-lead" hidden="true">
 									<label for="clasificacionlead" class="form-label">Clasificación Lead: </label>
-									<select id="clasificacion-lead" class="form-control " name="clasificacionLead">
+									<select id="clasificacion-lead" class="form-select" name="clasificacionLead">
 										<!-- Opciones clasificacion lead -->
 										<option value="">Seleccionar...</option>
 										<?php
@@ -190,7 +190,7 @@
 								</div>
 								<div class="mb-3 data-container" hidden="true" id="container-origen-lead">
 									<label for="origenlead" class="form-label">Origen Lead: </label>
-									<select id="origen-lead" class="form-control " name="origenLead">
+									<select id="origen-lead" class="form-select" name="origenLead">
 										<!-- Opciones clasificacion lead -->
 										<option value="">Seleccionar...</option>
 										<?php
@@ -203,7 +203,7 @@
 								</div>
 								<div class="mb-3 data-container">
 									<label for="rubrocomercial" class="form-label">Rubro Comercial: </label>
-									<select id="rubrocomercial" class="form-control " name="rubrocomercial">
+									<select id="rubrocomercial" class="form-select" name="rubrocomercial">
 										<!-- Opciones clasificacion lead -->
 										<option value="">SELECCIONAR...</option>
 										<?php
@@ -219,7 +219,7 @@
 								</div>
 								<div class="mb-3 data-container">
 									<label for="razonsocial" class="form-label">Razón Social: </label>
-									<select id="razonsocial" class="form-control " name="razonsocial">
+									<select id="razonsocial" class="form-select" name="razonsocial">
 										<!-- Opciones clasificacion lead -->
 										<option value="">SELECCIONAR...</option>
 										<?php

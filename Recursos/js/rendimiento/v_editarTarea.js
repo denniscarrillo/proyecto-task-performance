@@ -592,8 +592,8 @@ let setearDatosTarea = ($datosTarea) => {
     document.getElementById('direccion-cliente').value = $datosTarea.DIRECCION,
     document.getElementById('clasificacion-lead').value = $datosTarea.id_ClasificacionLead,
     document.getElementById('origen-lead').value = $datosTarea.id_OrigenLead,
-    document.getElementById('rubrocomercial').value = $datosTarea.rubro_Comercial,
-    document.getElementById('razonsocial').value = $datosTarea.razon_Social
+    document.getElementById('rubrocomercial').value = $datosTarea.id_rubro_Comercial,
+    document.getElementById('razonsocial').value = $datosTarea.id_razon_Social
     if(($datosTarea.estado_Cliente_Tarea == 'Existente')) {
       nuevo.removeAttribute('checked');
       nuevo.disabled = true;
