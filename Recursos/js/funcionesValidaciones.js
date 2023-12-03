@@ -49,6 +49,21 @@ export const validarSoloLetras = (elemento, objetoRegex) => {
     }
     return estado;
 }
+export const validarSoloLetrasNumeros = (elemento, objetoRegex) => {
+  let mensaje = elemento.parentElement.querySelector('p');
+  let estado;
+  let input = elemento.value;
+  if (!objetoRegex.test(input)){
+    mensaje.innerText = '*Solo #- letras y números';
+    elemento.classList.add('mensaje_error');
+    estado = false;
+  } else {
+    mensaje.innerText = '';
+    elemento.classList.remove('mensaje_error');
+    estado = true;
+  }
+  return estado;
+}
 
 //Funcion para validar mayor a cero
 export const MayorACero = (elemento) => {

@@ -116,10 +116,12 @@
 								<input type="radio" name="radioOption" id="cliente-nuevo" class="radio" value="Nuevo"
 									checked><label for="cliente-nuevo" class="radio-label form-label">Nuevo</label>
 							</div>
-							<div class="mb-3 data-container">
-								<label for="input-titulo-tarea" class="form-label label-title-task">Titulo de la tarea</label>
-								<input type="text" name="input-titulo-tarea" id="input-titulo-tarea" class="form-control" value="<?php echo ControladorTarea::obtenerEstadoTarea(intval($_GET['idTarea']))['titulo'] ?>">
-								<p class="mensaje" hidden></p>
+							<div class="mb-3 data-container title_container">
+								<div class="data-container title_container">
+									<label for="input-titulo-tarea" class="form-label label-title-task">Titulo de la tarea</label>
+									<input type="text" name="input-titulo-tarea" id="input-titulo-tarea" class="form-control" value="<?php echo ControladorTarea::obtenerEstadoTarea(intval($_GET['idTarea']))['titulo'] ?>">
+									<p class="mensaje"></p>
+								</div>
 								<button type="button" id="btn-finalizar-tarea" disabled><i class="fa-solid fa-text-slash"></i> Finalizar tarea</button>
 								<label id="estado-finalizacion" hidden><?php echo ControladorTarea::obtenerTareaFinalizada($_GET['idTarea']) ?></label>
 							</div>
