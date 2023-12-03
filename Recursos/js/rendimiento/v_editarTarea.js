@@ -366,6 +366,9 @@ document.getElementById('estados-tarea').addEventListener('change', async () => 
         });
   } else {
     cambiarEstado($newEstado, $idTarea);
+    setTimeout(() => {
+      location.href ='./v_editarTarea.php?idTarea='+$idTarea;
+    }, 100);
   }
 });
 
@@ -466,6 +469,8 @@ let enviarProductosInteres = ($idTarea) => {
         icon: "success",
         title: 'La tarea '+$idTarea+' ha sido actualizada',
         showConfirmButton: false,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
         timer: 2000
       });
     }

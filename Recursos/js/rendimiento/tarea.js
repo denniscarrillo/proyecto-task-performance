@@ -14,7 +14,17 @@ let $columnaVentas = document.getElementById('conteiner-venta');
 let $ArticulosInteres = [];
 let $idTarea = '';
 let item = 0;
-
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top',
+  showConfirmButton: false,
+  timer: 5000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+});
 // new Sortable(document.getElementById('conteiner-llamada'), {
 //   group: 'shared', // set both lists to same group
 //   animation: 200,
@@ -172,6 +182,17 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
           $tareas +=
           // `<div class="card_task dragged-element" draggable="true" id="${tarea.id}" >
             `<div class="card_task dragged-element" draggable="true" data-id="${item+=1}" style="order: ${item+=1}">
+              <div class="tarea-id">N° ${tarea.id}
+                ${(tarea.idEstadoAvance != 4)? `<button class="menu-estados"><i class="fa-solid fa-arrow-right-long"></i></button>` : ''}
+              </div>
+                ${(tarea.idEstadoAvance != 4)?  
+                  `<div class="menu-estado" hidden>
+                  <p class="item-menu ${tarea.id} 1" id="newEstado-llamada">Llamada</p>
+                  <p class="item-menu ${tarea.id} 2" id="newEstado-lead">Lead</p>
+                  <p class="item-menu ${tarea.id} 3" id="newEstado-cotizacion">Cotización</p>
+                  <p class="item-menu ${tarea.id} 4" id="newEstado-venta">Venta</p>
+                  </div>`
+                : ''}
               <div class="conteiner-text-task">
                 <p style="min-height: 2.5rem;">${tarea.tituloTarea}</p>
               </div>
@@ -361,6 +382,101 @@ let actualizarContadores = () => {
   let contVentas = document.getElementById('circle-count-ventas'); //Contado de llamadas
   divPadre = document.getElementById('conteiner-venta');
   contVentas.textContent = divPadre.querySelectorAll('.card_task').length;
+}
+
+$(document).on("click", ".menu-estados", function() {
+  if(this.parentElement.parentElement.children[1].getAttribute('hidden') != null){
+    this.parentElement.parentElement.children[1].removeAttribute('hidden');
+  }else{
+    this.parentElement.parentElement.children[1].setAttribute('hidden', 'true');
+  }
+  // document.querySelectorAll('.card_task').forEach(card => {
+  //   card.addEventListener('mouseenter', () => {
+  //     console.log(this.parentElement.parentElement.children[1]);
+  //     if(this.parentElement.parentElement.children[1].getAttribute('hidden') != null){
+  //       this.parentElement.parentElement.children[1].removeAttribute('hidden');
+  //     }
+  //   })
+  // });
+  this.parentElement.parentElement.children[1].addEventListener('mouseleave', function() {
+    console.log(this.parentElement.parentElement.children[1]);
+    document.querySelectorAll('.menu-estado').forEach(menu => {
+      menu.setAttribute('hidden', 'true');
+    })
+  })
+});
+
+// if(parseInt(this.getAttribute('class').split(' ')[2]) == 1){
+//   Toast.fire({
+//     icon: 'error',
+//     // title: 'No puedes volver a un estado anterior'
+//   });
+// }
+$(document).on("click", "#newEstado-llamada", function() {
+  let $idTarea = this.getAttribute('class').split(' ')[1];
+  console.log(this.getAttribute('class').split(' ')[2]);
+  if(parseInt(this.getAttribute('class').split(' ')[2]) < 1){
+    Toast.fire({
+      icon: 'error',
+      title: 'No puedes volver a un estado anterior'
+    });
+  }else{
+    cambiarEstado($idTarea, 1)
+    location.href ='./v_tarea.php';
+  }
+})
+$(document).on("click", "#newEstado-lead", function() {
+  let $idTarea = this.getAttribute('class').split(' ')[1];
+  console.log(this.getAttribute('class').split(' ')[2]);
+  if(parseInt(this.getAttribute('class').split(' ')[2]) < 2){
+    Toast.fire({
+      icon: 'error',
+      title: 'No puedes volver a un estado anterior'
+    });
+  }else{
+    cambiarEstado($idTarea, 2)
+    location.href ='./v_tarea.php';
+  }
+})
+$(document).on("click", "#newEstado-cotizacion", function() {
+  let $idTarea = this.getAttribute('class').split(' ')[1];
+  console.log(this.getAttribute('class').split(' ')[2]);
+  if(parseInt(this.getAttribute('class').split(' ')[2]) < 3){
+    Toast.fire({
+      icon: 'error',
+      title: 'No puedes volver a un estado anterior'
+    });
+  }else{
+    cambiarEstado($idTarea, 3)
+    location.href ='./v_tarea.php';
+  }
+})
+$(document).on("click", "#newEstado-venta", function() {
+  let $idTarea = this.getAttribute('class').split(' ')[1];
+  console.log(this.getAttribute('class').split(' ')[2]);
+  if(parseInt(this.getAttribute('class').split(' ')[2]) < 4){
+    Toast.fire({
+      icon: 'error',
+      title: 'No puedes volver a un estado anterior'
+    });
+  }else{
+    cambiarEstado($idTarea, 4)
+    location.href ='./v_tarea.php';
+  }
+})
+let cambiarEstado = ($idTarea, $nuevoEstado) => {
+  $.ajax({
+    url: "../../../Vista/rendimiento/cambiarEstadoTarea.php",
+    type: "POST",
+    datatype:"json",    
+    data:  { 
+      idTarea: $idTarea,
+      nuevoEstado: $nuevoEstado
+    },    
+    success: function(data) {
+                 
+    }
+  }); //Fin del AJAX
 }
 // $(document).on("click", "#btn_eliminar", function() {
 //   let fila = $(this);        
