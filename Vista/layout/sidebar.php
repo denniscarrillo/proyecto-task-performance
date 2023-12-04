@@ -173,6 +173,12 @@
               </a>
             </li>
             <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlEstadoUsuario; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Estado Usuario</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
               <a href="<?php echo $urlCarteraCliente; ?>" class="dropdown-menu__content__secundario__link">
                 <i class=""></i>
                 <span>Cartera Cliente</span>

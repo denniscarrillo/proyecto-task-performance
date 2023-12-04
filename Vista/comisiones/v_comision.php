@@ -51,6 +51,7 @@ require_once("validacionesComision.php");
         $urlBitacoraSistema = '../crud/bitacora/gestionBitacora.php';
         //Mantenimiento
         $urlUsuarios = '../crud/usuario/gestionUsuario.php';
+        $urlEstadoUsuario = '../crud/estadoUsuario/gestionEstadoUsuario.php';
         $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
         $urlPreguntas = '../crud/pregunta/gestionPregunta.php';
         $urlParametros = '../crud/parametro/gestionParametro.php';

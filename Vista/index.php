@@ -82,6 +82,7 @@ if (isset($_SESSION['usuario'])) {
       $urlObjetos = './crud/DataTableObjeto/gestionDataTableObjeto.php';
       //Mantenimiento
       $urlUsuarios = './crud/usuario/gestionUsuario.php';
+      $urlEstadoUsuario = './crud/estadoUsuario/gestionEstadoUsuario.php';
       $urlCarteraCliente = './crud/carteraCliente/gestionCarteraClientes.php';
       $urlPreguntas = './crud/pregunta/gestionPregunta.php';
       $urlBitacoraSistema = './crud/bitacora/gestionBitacora.php';

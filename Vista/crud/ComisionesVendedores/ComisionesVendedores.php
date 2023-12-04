@@ -113,6 +113,7 @@ if (isset($_SESSION['usuario'])) {
         $urlObjetos = '../DataTableObjeto/gestionDataTableObjeto.php';
         //Mantenimiento
         $urlUsuarios = '../usuario/gestionUsuario.php';
+        $urlEstadoUsuario = '../estadoUsuario/gestionEstadoUsuario.php';
         $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
         $urlPreguntas = '../pregunta/gestionPregunta.php';
         $urlBitacoraSistema = '../bitacora/gestionBitacora.php';

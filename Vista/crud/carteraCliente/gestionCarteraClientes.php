@@ -112,6 +112,7 @@
             $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
             //Mantenimiento
             $urlUsuarios = '../usuario/gestionUsuario.php';
+            $urlEstadoUsuario = '../estadoUsuario/gestionEstadoUsuario.php';
             $urlCarteraCliente = './gestionCarteraClientes.php';
             $urlPreguntas = '../pregunta/gestionPregunta.php';
             $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
