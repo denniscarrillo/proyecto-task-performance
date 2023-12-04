@@ -908,7 +908,7 @@ class Tarea
             WHERE ct.Creado_Por = 'ROGER' 
             AND CONCAT(ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente, ct.subDescuento, ct.isv, 
             ct.total_Cotizacion, ct.estado_Cotizacion) COLLATE Latin1_General_CI_AI
-            LIKE '%' + '' + '%' COLLATE Latin1_General_CI_AI 
+            LIKE '%' + '$buscar' + '%' COLLATE Latin1_General_CI_AI 
             UNION
             SELECT ct.id_Cotizacion, us.nombre_Usuario, cc.NOMBRECLIENTE COLLATE Latin1_General_CS_AI AS nombre_Cliente, 
             ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
@@ -919,7 +919,7 @@ class Tarea
             WHERE ct.Creado_Por = 'ROGER' 
             AND CONCAT(ct.id_Cotizacion, us.nombre_Usuario, cc.NOMBRECLIENTE, ct.subDescuento, ct.isv, 
             ct.total_Cotizacion, ct.estado_Cotizacion) COLLATE Latin1_General_CI_AI
-            LIKE '%' + '' + '%' COLLATE Latin1_General_CI_AI 
+            LIKE '%' + '$buscar' + '%' COLLATE Latin1_General_CI_AI 
             ORDER BY id_Cotizacion;";
                 $ejecutar = sqlsrv_query($conexion, $select);
                 if(sqlsrv_has_rows($ejecutar)){
