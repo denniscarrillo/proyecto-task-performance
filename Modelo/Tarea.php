@@ -187,7 +187,7 @@ class Tarea
                 $consulta= sqlsrv_query($abrirConexion, $selectFacturas);
                 $cantFacturas = sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC);
                 $facturas = intval($cantFacturas['CANT']);
-                if($facturas > 1){
+                if($facturas > 0){
                     $estadoCliente = true;
                 }else{
                     $estadoCliente = false;

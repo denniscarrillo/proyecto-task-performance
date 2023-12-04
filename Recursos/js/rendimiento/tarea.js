@@ -37,7 +37,6 @@ const Toast = Swal.mixin({
   }
 });
 let validarInputTitulo = ($titleTarea) => {
-  funciones.limitarCantidadCaracteres('title-task', 45);
   let estadoValidaciones = {
       estadoCV: false,
       estadoME: false,
@@ -228,6 +227,11 @@ let cerrarFormTarea = ($elementoPadre, $elementoCerrar) => {
   $elementoPadre.removeChild($elementoCerrar);
 }
 let guardarTarea = ($btnGuardar, $tarea, $actualizarTarea, $elementoPadre, $elementoCerrar) => {
+  document.getElementById('title-task').addEventListener('keyup', () =>{
+    let titulo =  document.getElementById('title-task').value.toUpperCase();
+    document.getElementById('title-task').value =  titulo;
+  })
+  funciones.limitarCantidadCaracteres('title-task', 45);
   //Agregamos el evento click al boton de guardar tarea
   $btnGuardar.addEventListener('click', function (e) {
     e.preventDefault();

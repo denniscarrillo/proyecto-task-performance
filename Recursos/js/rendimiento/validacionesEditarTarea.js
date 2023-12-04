@@ -23,7 +23,8 @@ let inputsEditarTarea = {
     rubroComercial: document.getElementById('rubrocomercial'),
     razonSocial: document.getElementById('razonsocial'), 
     clasificacionLead: document.getElementById('clasificacion-lead'),
-    origenLead: document.getElementById('origen-lead')
+    origenLead: document.getElementById('origen-lead'),
+    nFactura: document.getElementById('num-factura')
 }
 $(document).ready(function(){
     if(document.getElementById('tipoCliente').textContent != "" && document.getElementById('tipoCliente').textContent != null){
@@ -34,7 +35,7 @@ $(document).ready(function(){
     //Evento clic para hacer todas las validaciones
     document.getElementById('btn-guardar').addEventListener('click', () =>{
         validarInputs(funciones, $tipoCliente);
-        if (document.querySelectorAll('.mensaje_error').length == 0) {
+        if (document.querySelectorAll('.mensaje_error').length == 0 && document.querySelectorAll('.mensaje-existe-cliente').length == 0) {
             estadoValidado = true;
         } else {
             estadoValidado = false;
@@ -69,11 +70,11 @@ inputsEditarTarea.titulo.addEventListener('keyup', () => {
     funciones.limitarCantidadCaracteres('input-titulo-tarea', 45);
 });
 inputsEditarTarea.rtn.addEventListener('keyup', () => {
-    validarInputRTN();
+    validarInputRTN($tipoCliente);
     funciones.limitarCantidadCaracteres('rnt-cliente', 20);
 });
 inputsEditarTarea.nombre.addEventListener('keyup', () => {
-    validarInputNombreCliente();
+    validarInputNombreCliente($tipoCliente);
     funciones.limitarCantidadCaracteres('nombre-cliente', 50);
 });
 inputsEditarTarea.telefono.addEventListener('keyup', () => {
@@ -105,10 +106,10 @@ inputsEditarTarea.razonSocial.addEventListener('change', () => {
 let validarInputs = (funciones, tipoCliente) => {
     switch ($estadoTarea.value){
         case "2":{ //Leads
+            validarInputRTN(tipoCliente);
+            validarInputNombreCliente(tipoCliente);
             validarInputTitulo ();
             if(tipoCliente != 'Existente'){
-                validarInputRTN();
-                validarInputNombreCliente();
                 validarInputTelefono();
                 validarInputCorreo();
                 validarInputDireccion();
@@ -117,22 +118,39 @@ let validarInputs = (funciones, tipoCliente) => {
             funciones.validarCampoVacio(inputsEditarTarea.razonSocial);
             funciones.validarCampoVacio(inputsEditarTarea.clasificacionLead);
             funciones.validarCampoVacio(inputsEditarTarea.origenLead);
-        }  
-        default:{ //Otros estados
+            break;
+        } 
+        case "4": {
+            validarInputEvidenciaFactura();
+            validarInputRTN(tipoCliente);
+            validarInputNombreCliente(tipoCliente);
             validarInputTitulo();
-            if(tipoCliente != 'Existente'){
-                validarInputRTN();
-                validarInputNombreCliente();
+            if(tipoCliente != 'Existente'){ 
                 validarInputTelefono();
                 validarInputCorreo();
                 validarInputDireccion();
             }
             funciones.validarCampoVacio(inputsEditarTarea.rubroComercial);
             funciones.validarCampoVacio(inputsEditarTarea.razonSocial);
+            break;
+        }
+        default:{ //Otros estados
+            validarInputRTN(tipoCliente);
+            validarInputNombreCliente(tipoCliente);
+            validarInputTitulo();
+            if(tipoCliente != 'Existente'){ 
+                validarInputTelefono();
+                validarInputCorreo();
+                validarInputDireccion();
+            }
+            funciones.validarCampoVacio(inputsEditarTarea.rubroComercial);
+            funciones.validarCampoVacio(inputsEditarTarea.razonSocial);
+            break;
         }   
     }
+    
 }
-let validarInputRTN = () => {
+let validarInputRTN = ($tipoCliente) => {
     let estadoValidaciones = {
         estadoSN: false,
         estadoCV: false,
@@ -143,10 +161,10 @@ let validarInputRTN = () => {
     (estadoValidaciones.estadoCV) ? estadoValidaciones.estadoSN = funciones.validarSoloNumeros(inputsEditarTarea.rtn, validaciones.soloNumeros) : '';
     (estadoValidaciones.estadoSN) ? estadoValidaciones.estadoME =funciones.validarEspacios(inputsEditarTarea.rtn) : '';
     (estadoValidaciones.estadoME) ? estadoValidaciones.estadoMC = funciones.validarMismoNumeroConsecutivo(inputsEditarTarea.rtn, validaciones.caracterMas5veces) : '';
-    (estadoValidaciones.estadoMC) ? funciones.caracteresMinimo(inputsEditarTarea.rtn, 13) : '';
+    (estadoValidaciones.estadoMC && $tipoCliente != 'Existente') ? funciones.caracteresMinimo(inputsEditarTarea.rtn, 13) : '';
 }
 //Validaciones campo nombre cliente
-let validarInputNombreCliente = () => {
+let validarInputNombreCliente = ($tipoCliente) => {
     let usuarioMayus = inputsEditarTarea.nombre.value.toUpperCase();
     inputsEditarTarea.nombre.value = usuarioMayus;
     let estadoValidaciones = {
@@ -156,10 +174,10 @@ let validarInputNombreCliente = () => {
         estadoMC: false
     }
     estadoValidaciones.estadoCV = funciones.validarCampoVacio(inputsEditarTarea.nombre);
-    (estadoValidaciones.estadoCV) ? estadoValidaciones.estadoSL = funciones.validarSoloLetras(inputsEditarTarea.nombre, validaciones.soloLetras) : '';
-    (estadoValidaciones.estadoSL) ? estadoValidaciones.estadoME = funciones.validarMasdeUnEspacio(inputsEditarTarea.nombre) : '';
-    (estadoValidaciones.estadoME) ? estadoValidaciones.estadoMC = funciones.limiteMismoCaracter(inputsEditarTarea.nombre, validaciones.caracterMas3veces) : '';
-    (estadoValidaciones.estadoMC) ? funciones.caracteresMinimo(inputsEditarTarea.nombre, 13) : '';
+    (estadoValidaciones.estadoCV  && $tipoCliente != 'Existente') ? estadoValidaciones.estadoSL = funciones.validarSoloLetras(inputsEditarTarea.nombre, validaciones.soloLetras) : '';
+    (estadoValidaciones.estadoSL  && $tipoCliente != 'Existente') ? estadoValidaciones.estadoME = funciones.validarMasdeUnEspacio(inputsEditarTarea.nombre) : '';
+    (estadoValidaciones.estadoME  && $tipoCliente != 'Existente') ? estadoValidaciones.estadoMC = funciones.limiteMismoCaracter(inputsEditarTarea.nombre, validaciones.caracterMas3veces) : '';
+    (estadoValidaciones.estadoMC && $tipoCliente != 'Existente') ? funciones.caracteresMinimo(inputsEditarTarea.nombre, 13) : '';
  }
 //Validaciones del campo telefono
 let validarInputTelefono = () => {
@@ -202,3 +220,12 @@ let validarInputDireccion = () => {
     (estadoValidaciones.estadoME) ? estadoValidaciones.estadoMC = funciones.limiteMismoCaracter(inputsEditarTarea.direccion, validaciones.caracterMas3veces) : '';
     (estadoValidaciones.estadoMC) ? funciones.caracteresMinimo(inputsEditarTarea.direccion, 20) : '';
 }
+let validarInputEvidenciaFactura = () => {
+    let estadoValidaciones = {
+        estadoCV: false,
+    }
+    if(inputsEditarTarea.nFactura.disabled == false) {
+        estadoValidaciones.estadoCV = funciones.validarCampoVacio(inputsEditarTarea.nFactura);
+    }
+}
+

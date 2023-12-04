@@ -295,8 +295,9 @@ p {
   color: #de563b;
 }
 .tarea-id{
-  background-color: #e68b4a;
-  color: whitesmoke;
+  background-color: #ece9e9;
+  color: #242222;
+  font-weight: 400;
   border-radius: 3px;
   border: none;
   height: fit-content;
@@ -331,7 +332,7 @@ p {
   padding-left: 0.4rem;
   padding-right: 0.4rem;
   background: none;
-  color:whitesmoke;
+  color:#242222;
 }
 #btn_agregarVendedores {
   display: block;
