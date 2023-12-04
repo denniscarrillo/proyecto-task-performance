@@ -16,7 +16,8 @@ class Venta {
         
         $query = "SELECT v.NUMFACTURA, v.CODCLIENTE, c.NOMBRECLIENTE, c.CIF, v.FECHA, v.TOTALBRUTO, v.TOTALIMPUESTOS, v.TOTALNETO
         FROM View_Clientes AS c
-        INNER JOIN View_FACTURASVENTA AS v ON c.CODCLIENTE = v.CODCLIENTE;
+        INNER JOIN View_FACTURASVENTA AS v ON c.CODCLIENTE = v.CODCLIENTE
+        WHERE v.TOTALNETO > 0;
             ";
         $listaVentas = sqlsrv_query($consulta, $query);
         $ventas = array();
