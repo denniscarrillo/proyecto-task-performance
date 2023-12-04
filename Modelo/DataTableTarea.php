@@ -250,18 +250,20 @@ class DataTableTarea
         $query1 = "SELECT ta.id_Tarea, ea.descripcion AS estado, cc.rtn_Cliente COLLATE Latin1_General_CI_AI AS rtn_Cliente, cc.nombre_Cliente COLLATE Latin1_General_CI_AI AS nombre_Cliente, 
         ta.titulo, us.nombre_Usuario AS Creado_Por, DATEDIFF(day, ta.Fecha_Creacion, GETDATE()) AS dias_Transcurridos,ta.estado_Cliente_Tarea AS TipoCliente,
         ta.fecha_Inicio,ta.fecha_Finalizacion,ta.id_ClasificacionLead,cl.nombre AS ClasificacionLead,ta.id_OrigenLead,ol.descripcion AS OrigenLead,
-        ta.rubro_Comercial,ta.razon_Social,ta.estado_Finalizacion,ta.Fecha_Creacion,ta.Modificado_Por,ta.Fecha_Modificacion
+        rc.rubro_Comercial,rs.razon_Social,ta.estado_Finalizacion,ta.Fecha_Creacion,ta.Modificado_Por,ta.Fecha_Modificacion
         FROM tbl_Tarea ta
         INNER JOIN tbl_EstadoAvance ea ON ta.id_EstadoAvance = ea.id_EstadoAvance
         INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente
         INNER JOIN tbl_MS_Usuario us ON ta.Creado_Por = us.usuario
         FULL JOIN tbl_ClasificacionLead cl ON ta.id_ClasificacionLead = cl.id_ClasificacionLead
         FULL JOIN tbl_OrigenLead ol ON ta.id_OrigenLead = ol.id_OrigenLead
+		INNER JOIN tbl_rubro_Comercial rc ON ta.id_rubro_Comercial = rc.id_rubro_Comercial
+		INNER JOIN tbl_razon_Social rs ON ta.id_razon_Social = rs.id_razon_Social
         WHERE ta.id_Tarea = $idTarea
         UNION
         SELECT ta.id_Tarea, ea.descripcion AS estado,cc.CIF AS rtn_Cliente, cc.NOMBRECLIENTE AS nombre_Cliente, ta.titulo, us.nombre_Usuario AS Creado_Por, 
         DATEDIFF(day, ta.Fecha_Creacion, GETDATE()) AS dias_Transcurridos,ta.estado_Cliente_Tarea AS TipoCliente,ta.fecha_Inicio,ta.fecha_Finalizacion,
-        ta.id_ClasificacionLead,cl.nombre AS ClasificacionLead,ta.id_OrigenLead,ol.descripcion AS OrigenLead,ta.rubro_Comercial,ta.razon_Social,
+        ta.id_ClasificacionLead,cl.nombre AS ClasificacionLead,ta.id_OrigenLead,ol.descripcion AS OrigenLead,rc.rubro_Comercial,rs.razon_Social,
         ta.estado_Finalizacion,ta.Fecha_Creacion,ta.Modificado_Por,ta.Fecha_Modificacion
         FROM tbl_Tarea ta
         INNER JOIN tbl_EstadoAvance ea ON ta.id_EstadoAvance = ea.id_EstadoAvance
@@ -269,7 +271,9 @@ class DataTableTarea
         INNER JOIN tbl_MS_Usuario us ON ta.Creado_Por = us.usuario
         FULL JOIN tbl_ClasificacionLead cl ON ta.id_ClasificacionLead = cl.id_ClasificacionLead
         FULL JOIN tbl_OrigenLead ol ON ta.id_OrigenLead = ol.id_OrigenLead
-        WHERE ta.id_Tarea = $idTarea";
+		INNER JOIN tbl_rubro_Comercial rc ON ta.id_rubro_Comercial = rc.id_rubro_Comercial
+		INNER JOIN tbl_razon_Social rs ON ta.id_razon_Social = rs.id_razon_Social
+        WHERE ta.id_Tarea = $idTarea;";
         $listaTarea = sqlsrv_query($conexion, $query1);
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
         $fila = sqlsrv_fetch_array($listaTarea, SQLSRV_FETCH_ASSOC);
