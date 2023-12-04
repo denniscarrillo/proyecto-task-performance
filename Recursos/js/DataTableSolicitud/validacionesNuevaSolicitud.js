@@ -2,16 +2,6 @@ import * as funciones from '../funcionesValidaciones.js';
 export let estadoValidado = false;
 //Objeto con expresiones regulares para los inptus
 
-const validaciones = {
-   // Mismo Caracter: Valida la repetición de cualquier par de caracteres
-   MismoCaracter: /^(?=.*(..)\1)/,
-    // Correo electrónico: Valida un formato básico de dirección de correo electrónico
-    correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
-    // Solo números: Permite solo dígitos numéricos, comas y guiones
-    soloNumeros: /^[0-9,-]*$/,
-     // Solo letras: Permite solo letras (mayúsculas y minúsculas) y algunos caracteres especiales
-     soloLetras: /^[a-zA-Z\/ .ÑñáéíóúÁÉÍÓÚs]+$/,
-};
 
 //VARIABLES GLOBALES
 
@@ -69,7 +59,7 @@ let estadoSoloNumeros = {
     estadoNumeroRTN :true,
 }
 
-let estadoExisteRtn = false;
+
 let estadoCorreo = true;
 
 const $form = document.getElementById('form-solicitud');
@@ -83,9 +73,19 @@ const $descripcion = document.getElementById('descripcion');
 const $fechaSolicitud = document.getElementById('fechaSolicitud');
 const $tipoServicio = document.getElementById('tiposervicio');
 
-
-
-
+const validaciones = {
+    // Mismo Caracter: Valida la repetición de cualquier par de caracteres
+     MismoCaracter: /^(?=.*(..)\1)/,
+       // Solo letras: Permite solo letras (mayúsculas y minúsculas) y algunos caracteres especiales
+     soloLetras: /^[a-zA-Z\/ .ÑñáéíóúÁÉÍÓÚs]+$/,
+     // Correo electrónico: Valida un formato básico de dirección de correo electrónico
+     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
+     // Solo números: Permite solo dígitos numéricos, comas y guiones
+     soloNumeros: /^[0-9,-]*$/,
+    
+  
+ };
+ 
 /* ---------------- VALIDACIONES FORMULARIO GESTION NUEVO name ----------------------*/
 /* 
     Antes de enviar datos del formulario, se comprobara que todas  
@@ -122,19 +122,19 @@ $form.addEventListener('submit', e => {
             console.log(estadoMasdeUnEspacio.estadoMasEspacioDireccion);
             console.log(estadoMasdeUnEspacio.estadoMasEspacioName);
         }else{
+            if(estadoSoloLetras.estadoLetrasName == false){
+                e.preventDefault();
+                estadoSoloLetras.estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
+                console.log(estadoSoloLetras.estadoLetrasName); 
+            }
           if(estadoLetrasRepetidas.estadoLetrasRepetidasname == false ||estadoLetrasRepetidas.estadoLetrasRepetidasDescripcion == false ||
                         estadoLetrasRepetidas.estadoLetrasRepetidasDireccion == false){
                         e.preventDefault();
                         estadoLetrasRepetidas.estadoLetrasRepetidasname= funciones.limiteMismoCaracter($name, validaciones.MismoCaracter);
                         estadoLetrasRepetidas.estadoLetrasRepetidasDescripcion = funciones.limiteMismoCaracter($descripcion, validaciones.MismoCaracter);
                         estadoLetrasRepetidas.estadoLetrasRepetidasDireccion = funciones.limiteMismoCaracter($direccion, validaciones.MismoCaracter);
-            }else{
-                if(estadoSoloLetras.estadoLetrasName == false){
-                    e.preventDefault();
-                    estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
-                    console.log(estadoSoloLetras.estadoLetrasName); 
-     
-                }
+            }
+          
         if(estadoSoloNumeros.estadoNumerotelefono == false|| estadoSoloNumeros.estadoNumeroRTN== false ){
             e.preventDefault();
             estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
@@ -166,55 +166,41 @@ $form.addEventListener('submit', e => {
                 estadoValidado = true;
                     
                 }
-              }
+              
              }    
           }
         } 
     }
 });
 
-////TELEFONO
 
-$telefono.addEventListener('focusout', () => {
-    estadoMayorCero.estadoMayorCeroTelefono = funciones.MayorACero($telefono);
-});
 
-$telefono.addEventListener('keyup', ()=>{
-    estadoMayorCero.estadoMayorCeroTelefono = funciones.MayorACero($telefono);
-});
-
-$telefono.addEventListener('keyup', ()=>{
-    estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
-   funciones.limitarCantidadCaracteres("telefono", 14);
+$name.addEventListener('focusout', ()=>{
+    
+    if(estadoMasdeUnEspacio.estadoMasEspacioName){
+         funciones.validarMasdeUnEspacio($name);
+    } 
+    let nameMayus = $name.value.toUpperCase();
+    $name.value = nameMayus; 
+   
  });
-
- $telefono.addEventListener('change', ()=>{
-    estadoSelect.estadoSelecttelefono = funciones.validarCampoVacio($telefono);
-});
-
-$telefono.addEventListener('focusout', ()=>{
-    if(estadoMasdeUnEspacio.estadoMasEspaciotelefono){
-        funciones.validarMasdeUnEspacio($telefono);
-    }  
-});
-
-$name.addEventListener('keyup', ()=>{
-    estadoSoloLetras.estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
-    if(estadoSoloLetras.estadoLetrasName){
-    estadoLetrasRepetidas.estadoLetrasRepetidasname = funciones.limiteMismoCaracter($name, validaciones.MismoCaracter);
-    }
+$name.addEventListener('keyup', () => {
+    
+    estadoLetrasRepetidas.estadoLetrasRepetidasname= funciones.limiteMismoCaracter($name, validaciones.MismoCaracter);
+    
     funciones.limitarCantidadCaracteres("nombre", 50 );
 });
 
 
  $direccion.addEventListener('keyup', ()=>{
     estadoLetrasRepetidas.estadoLetrasRepetidasDireccion = funciones.limiteMismoCaracter($direccion, validaciones.MismoCaracter);
-    estadoSoloLetras.estadoLetrasdireccion = funciones.validarSoloLetras($direccion, validaciones.soloLetras);
+    
    funciones.limitarCantidadCaracteres("direccion", 100);
 
  });
  $descripcion.addEventListener('keyup', ()=>{
-    estadoSoloLetras.estadoLetrasdescripcion = funciones.validarSoloLetras($descripcion, validaciones.soloLetras);
+    estadoLetrasRepetidas.estadoLetrasRepetidasDescripcion = funciones.limiteMismoCaracter($descripcion, validaciones.MismoCaracter);
+
     funciones.limitarCantidadCaracteres("descripcion", 500);
  });
 
@@ -222,14 +208,7 @@ $name.addEventListener('keyup', ()=>{
     estadoCorreo = funciones.validarCorreo($correoCliente, validaciones.correo);
 });
 
- $name.addEventListener('focusout', ()=>{
-    
-    if(estadoMasdeUnEspacio.estadoMasEspacioName){
-         funciones.validarMasdeUnEspacio($name);
-    }  
-    let nameMayus = $name.value.toUpperCase();
-    $name.value = nameMayus;
- });
+ 
 
  $correoCliente.addEventListener('focusout', ()=>{
      if(estadoMasdeUnEspacio.estadoMasEspacioCorreoCliente){
@@ -265,9 +244,30 @@ $descripcion.addEventListener('focusout', ()=>{
  $rtn.addEventListener('change', ()=>{
     estadoSelect.estadoSelectRtn= funciones.validarCampoVacio($rtn);
  });
+ ////TELEFONO
 
+$telefono.addEventListener('focusout', () => {
+    estadoMayorCero.estadoMayorCeroTelefono = funciones.MayorACero($telefono);
+});
 
+$telefono.addEventListener('keyup', ()=>{
+    estadoMayorCero.estadoMayorCeroTelefono = funciones.MayorACero($telefono);
+});
 
+$telefono.addEventListener('keyup', ()=>{
+    estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
+   funciones.limitarCantidadCaracteres("telefono", 20);
+ });
+
+ $telefono.addEventListener('change', ()=>{
+    estadoSelect.estadoSelecttelefono = funciones.validarCampoVacio($telefono);
+});
+
+$telefono.addEventListener('focusout', ()=>{
+    if(estadoMasdeUnEspacio.estadoMasEspaciotelefono){
+        funciones.validarMasdeUnEspacio($telefono);
+    }  
+});
 
 
   $('input[id="clientenuevo"]').on('change', function() {
