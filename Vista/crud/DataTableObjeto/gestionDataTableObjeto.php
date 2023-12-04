@@ -113,6 +113,7 @@ if (isset($_SESSION['usuario'])) {
           $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
           //Mantenimiento
           $urlUsuarios = '../usuario/gestionUsuario.php';
+          $urlEstadoUsuario = '../estadoUsuario/gestionEstadoUsuario.php';
           $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
           $urlPreguntas = '../pregunta/gestionPregunta.php';
           $urlParametros = '../parametro/gestionParametro.php';
