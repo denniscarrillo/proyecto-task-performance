@@ -82,4 +82,17 @@ class DataTableObjeto
         sqlsrv_close($abrirConexion); //Cerrar conexion
         return $ObjetoUsuario;
     } 
+
+    public static function CrearObjeto($nuevoObjeto){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB();
+        $objeto = $nuevoObjeto->objeto;
+        $descripcion = $nuevoObjeto->descripcion;
+        $CreadoPor = $nuevoObjeto->CreadoPor;
+        $query = "INSERT INTO tbl_MS_Objetos (objeto, descripcion, tipo_Objeto, Creado_Por, Fecha_Creacion) 
+        VALUES ('$objeto', '$descripcion', 'Pantalla', '$CreadoPor', GETDATE())";
+        $insertarObjeto= sqlsrv_query($consulta, $query);
+        sqlsrv_close($consulta); #Cerramos la conexión.
+        return $insertarObjeto;
+    }
 }

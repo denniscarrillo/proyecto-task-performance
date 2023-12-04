@@ -2,16 +2,19 @@
 	session_start(); //Reanudamos sesion
 	require_once('../../db/Conexion.php');
 	require_once('../../Modelo/Tarea.php');
-	// require_once('../../Modelo/BitacoraTarea.php');
 	require_once('../../Modelo/Bitacora.php');
 	require_once('../../Controlador/ControladorTarea.php');
-	// require_once('../../Controlador/ControladorBitacoraTarea.php');
 	require_once('../../Controlador/ControladorBitacora.php');
 	$clasificacionLeads = ControladorTarea::obtenerClasificacionLead();
 	$estadosTarea = ControladorTarea::traerEstadosTarea();
 	$origenLeads = ControladorTarea::obtenerOrigenLead();
 	$razonSociales = ControladorTarea::obtenerRazonSocial();
 	$rubroSociales = ControladorTarea::obtenerRubroComercial();
+	//Valida si tiene sesion
+	if (!isset($_SESSION['usuario'])) {
+		header('location: ../login/login.php');
+   die();
+	}
 ?>
 
 <!DOCTYPE html>
@@ -284,8 +287,9 @@
 	<script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
 	<script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
 	<script src="../../Recursos/bootstrap5/bootstrap.min.js "></script>
-	<script src="../../Recursos/js/librerias/SweetAlert2.all.min.js"></script>
 	<script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
+	<script src="../../Recursos/js/librerias/dataTables.bootstrap5.min.js"></script>
+	<script src="../../Recursos/js/librerias/SweetAlert2.all.min.js"></script>
 	<script src="../../Recursos/js/rendimiento/validacionesEditarTarea.js" type="module"></script>
 	<script src="../../Recursos/js/rendimiento/v_editarTarea.js" type="module"></script>
 </body>

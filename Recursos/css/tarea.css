@@ -296,11 +296,11 @@ p {
 }
 .tarea-id{
   background-color: #e68b4a;
-  margin: 10px;
-  padding: 5px;
-  color: #f9f4f4;
+  color: whitesmoke;
   border-radius: 3px;
+  border: none;
   height: fit-content;
+  padding-left: 0.3rem;
 }
 .card_task{
   position: relative;
@@ -310,7 +310,6 @@ p {
   background-color:  #e68b4a;
   right: 10px;
   box-shadow: 5px 4px 10px #67635f;
-  /* padding: 0.4rem; */
   z-index: 110;
 }
 .item-menu{
@@ -328,7 +327,7 @@ p {
 .menu-estados{
   border: none;
   width: fit-content;
-  margin-left: 10.2rem;
+  margin-left: 11.5rem;
   padding-left: 0.4rem;
   padding-right: 0.4rem;
   background: none;
