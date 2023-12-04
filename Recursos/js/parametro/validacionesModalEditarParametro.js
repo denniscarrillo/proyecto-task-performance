@@ -29,10 +29,19 @@ $form.addEventListener('submit', e => {
     } else {
         if (estasdoMasdeUnEspacio.estadoMasEspacioValor == false) {
             e.preventDefault();
-            estasdoMasdeUnEspacio.estadoMasEspacioValor = funciones.validarMasdeUnEspacio($valor);
+           // estasdoMasdeUnEspacio.estadoMasEspacioValor = funciones.validarMasdeUnEspacio($valor);
         } else {
         estadoValidado = true;    
        }
     }
     
 });
+
+
+$valor.addEventListener('focusout', ()=>{
+    if(estasdoMasdeUnEspacio.estadoMasEspacioValor){
+        funciones.validarMasdeUnEspacio($valor);
+    }  
+     let valorMayus = $valor.value.toUpperCase();
+     $valor.value = valorMayus;  
+ });

@@ -2,16 +2,19 @@
 	session_start(); //Reanudamos sesion
 	require_once('../../db/Conexion.php');
 	require_once('../../Modelo/Tarea.php');
-	// require_once('../../Modelo/BitacoraTarea.php');
 	require_once('../../Modelo/Bitacora.php');
 	require_once('../../Controlador/ControladorTarea.php');
-	// require_once('../../Controlador/ControladorBitacoraTarea.php');
 	require_once('../../Controlador/ControladorBitacora.php');
 	$clasificacionLeads = ControladorTarea::obtenerClasificacionLead();
 	$estadosTarea = ControladorTarea::traerEstadosTarea();
 	$origenLeads = ControladorTarea::obtenerOrigenLead();
 	$razonSociales = ControladorTarea::obtenerRazonSocial();
 	$rubroSociales = ControladorTarea::obtenerRubroComercial();
+	//Valida si tiene sesion
+	if (!isset($_SESSION['usuario'])) {
+		header('location: ../login/login.php');
+   die();
+	}
 ?>
 
 <!DOCTYPE html>
@@ -72,6 +75,7 @@
 			$urlPerfilContraseniaUsuarios = '../crud/PerfilUsuario/gestionPerfilContrasenia.php';
 			$urlImg = '../../Recursos/imagenes/Logo-E&C.png';
 			$urlRazonSocial = '../crud/razonSocial/gestionRazonSocial.php';
+			$urlRubroComercial = '../crud/rubroComercial/gestionRubroComercial.php';
 			require_once '../layout/sidebar.php';
 			?>
 		</div>
@@ -109,26 +113,28 @@
 						<div class="encabezado-tarea">
 							<div class="mb-3">
 								<label class="text-cliente">Tipo cliente:</label>
+								<label id="tipoCliente" hidden><?php echo ControladorTarea::obtenerTipoCliente(intval($_GET['idTarea'])) ?></label>
 								<input type="radio" name="radioOption" id="cliente-existente" class="radio"
 									value="Existente"><label for="cliente-existente"
 									class="radio-label form-label">Existente</label>
 								<input type="radio" name="radioOption" id="cliente-nuevo" class="radio" value="Nuevo"
 									checked><label for="cliente-nuevo" class="radio-label form-label">Nuevo</label>
 							</div>
-							<div class="mb-3 data-container">
-								<label for="input-titulo-tarea" class="form-label label-title-task">Titulo de la tarea</label>
-								<input type="text" name="input-titulo-tarea" id="input-titulo-tarea" class="form-control" value="<?php echo ControladorTarea::obtenerEstadoTarea(intval($_GET['idTarea']))['titulo'] ?>">
-								<p class="mensaje" hidden></p>
+							<div class="mb-3 data-container title_container">
+								<div class="data-container title_container">
+									<label for="input-titulo-tarea" class="form-label label-title-task">Título de la tarea</label>
+									<input type="text" name="input-titulo-tarea" id="input-titulo-tarea" class="form-control" value="<?php echo ControladorTarea::obtenerEstadoTarea(intval($_GET['idTarea']))['titulo'] ?>">
+									<p class="mensaje"></p>
+								</div>
 								<button type="button" id="btn-finalizar-tarea" disabled><i class="fa-solid fa-text-slash"></i> Finalizar tarea</button>
 								<label id="estado-finalizacion" hidden><?php echo ControladorTarea::obtenerTareaFinalizada($_GET['idTarea']) ?></label>
 							</div>
 							<div class="mb-3 data-container">
-								<!-- <label id="" class="id-estado-tarea" hidden="true" name="estadoTarea"></label> -->
 								<label id="<?php echo ControladorTarea::obtenerEstadoTarea(intval($_GET['idTarea']))['id_estadoAvance'] ?>" class="id-estado-tarea" hidden="true" name="estadoTarea"></label>
 								<input type="text" value="<?php echo $_GET['idTarea']; ?>" id="id-Tarea" class="id-tarea" name="idTarea" hidden="true">
 								<label for="estados-tarea" class="form-label"> Estado: </label>
 								<label id="estado-tarea"></label>
-								<select name="estadoTarea" id="estados-tarea" class="form-control">
+								<select name="estadoTarea" id="estados-tarea" class="form-select">
 									<!-- Opciones estados de tarea -->
 									<?php
 									foreach ($estadosTarea as $estado) {
@@ -163,9 +169,9 @@
 									<input type="text" name="telefono" id="telefono-cliente" class="form-control">
 									<p class="mensaje"></p>
 								</div>
-								<div class="mb-3 data-container" id="container-correo">
+								<div class="mb-3 data-container" id="container-correo" hidden>
 									<label for="correo" class="form-label" id="label-correo">Correo Electrónico: </label>
-									<input type="email" name="correo" id="correo-cliente" class="form-control" >
+									<input type="text" name="correo" id="correo-cliente" class="form-control" >
 									<p class="mensaje"></p>
 								</div>
 							</div>
@@ -178,9 +184,9 @@
 								</div>
 								<div class="mb-3 data-container" id="container-clasificacion-lead" hidden="true">
 									<label for="clasificacionlead" class="form-label">Clasificación Lead: </label>
-									<select id="clasificacion-lead" class="form-control " name="clasificacionLead">
+									<select id="clasificacion-lead" class="form-select" name="clasificacionLead">
 										<!-- Opciones clasificacion lead -->
-										<option value="">Seleccionar...</option>
+										<option value="">SELECCIONAR...</option>
 										<?php
 										foreach ($clasificacionLeads as $clasificacionLead) {
 											echo '<option value="' . $clasificacionLead['id'] . '">' . $clasificacionLead['clasificacion'] . '</option>';
@@ -191,9 +197,9 @@
 								</div>
 								<div class="mb-3 data-container" hidden="true" id="container-origen-lead">
 									<label for="origenlead" class="form-label">Origen Lead: </label>
-									<select id="origen-lead" class="form-control " name="origenLead">
+									<select id="origen-lead" class="form-select" name="origenLead">
 										<!-- Opciones clasificacion lead -->
-										<option value="">Seleccionar...</option>
+										<option value="">SELECCIONAR...</option>
 										<?php
 										foreach ($origenLeads as $origenLead) {
 											echo '<option value="' . $origenLead['id'] . '">' . $origenLead['origen'] . '</option>';
@@ -204,7 +210,7 @@
 								</div>
 								<div class="mb-3 data-container">
 									<label for="rubrocomercial" class="form-label">Rubro Comercial: </label>
-									<select id="rubrocomercial" class="form-control " name="rubrocomercial">
+									<select id="rubrocomercial" class="form-select" name="rubrocomercial">
 										<!-- Opciones clasificacion lead -->
 										<option value="">SELECCIONAR...</option>
 										<?php
@@ -214,13 +220,10 @@
 										?>
 									</select>
 									<p class="mensaje"></p>
-
-									<!-- <input type="text" name="rubrocomercial" id="rubrocomercial" class="form-control">
-									<p class="mensaje"></p> -->
 								</div>
 								<div class="mb-3 data-container">
 									<label for="razonsocial" class="form-label">Razón Social: </label>
-									<select id="razonsocial" class="form-control " name="razonsocial">
+									<select id="razonsocial" class="form-select" name="razonsocial">
 										<!-- Opciones clasificacion lead -->
 										<option value="">SELECCIONAR...</option>
 										<?php
@@ -280,14 +283,13 @@
 	require_once('modalClientes.html');
 	require_once('modalArticulos.html');
 	?>
-	<!-- <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script> -->
 	<script src="../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js"></script>
 	<script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
+	<script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
 	<script src="../../Recursos/bootstrap5/bootstrap.min.js "></script>
-	<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script> -->
-	<script src="../../Recursos/js/librerias/SweetAlert2.all.min.js"></script>
 	<script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
-	<!-- <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script> -->
+	<script src="../../Recursos/js/librerias/dataTables.bootstrap5.min.js"></script>
+	<script src="../../Recursos/js/librerias/SweetAlert2.all.min.js"></script>
 	<script src="../../Recursos/js/rendimiento/validacionesEditarTarea.js" type="module"></script>
 	<script src="../../Recursos/js/rendimiento/v_editarTarea.js" type="module"></script>
 </body>

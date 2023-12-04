@@ -14,6 +14,7 @@ let $columnaVentas = document.getElementById('conteiner-venta');
 let $ArticulosInteres = [];
 let $idTarea = '';
 let item = 0;
+let tableVendedor = '';
 const Toast = Swal.mixin({
   toast: true,
   position: 'top',
@@ -55,7 +56,7 @@ $(document).ready(function () {
   obtenerTareas($contenedorLeads, $contadorLeads, 'Lead');
   obtenerTareas($contenedorCotizaciones, $contadorCotizaciones, 'Cotizacion');
   obtenerTareas($contenedorVentas, $contadorVentas, 'Venta');
-  obtenerVendedores();
+  // obtenerVendedores();
 
   new Sortable(document.getElementById('conteiner-llamada'), {
     group: 'shared', // set both lists to same group
@@ -298,12 +299,22 @@ let guardarTarea = ($btnGuardar, $tarea, $actualizarTarea, $elementoPadre, $elem
     }
   });
 }
+$(document).on('click', '.btn-vendedor', function () {
+  $idTarea = this.getAttribute('id'); //Obtenemos el id de la tara que se le van a agregar los vendedores
+  obtenerVendedores($idTarea);
+  console.log($idTarea);
+});
 let obtenerVendedores = function () {
+  console.log($idTarea);
   if (document.getElementById('table-Vendedores_wrapper') == null) {
-    $('#table-Vendedores').DataTable({
+    tableVendedor = $('#table-Vendedores').DataTable({
       "ajax": {
         "url": "../../../Vista/rendimiento/obtenerVendedores.php",
-        "dataSrc": ""
+        "type": "POST",
+        "data": {
+          "idTarea": $idTarea 
+        },
+        "dataSrc": "",
       },
       "language": {
         "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
@@ -323,9 +334,6 @@ let obtenerVendedores = function () {
 $(document).on('click', '.btn_select-Vendedores', function () {
   selectVendedores(this);
 });
-$(document).on('click', '.btn-vendedor', function () {
-  $idTarea = this.getAttribute('id'); //Obtenemos el id de la tara que se le van a agregar los vendedores
-});
 $(document).on('click', '#btn_agregarVendedores', function () {
   //Tiendiendo los vendedores y el idTarea enviamos los datos al servidor
   agregarVendedores($idTarea);
@@ -337,33 +345,50 @@ let selectVendedores = function ($elementoHtml) {
 let agregarVendedores = function ($id_Tarea) {
   let $Vendedores = [];
   let vendedoresSeleccionados = document.querySelectorAll('.select-vendedor');
-  vendedoresSeleccionados.forEach(function (vendedor) {
-    if (vendedor.classList.contains('select-vendedor')) {
-      let $idVendedor = $(vendedor).closest('tr').find('td:eq(0)').text();
-      let $vendedor = {
-        idVendedor: $idVendedor
+  console.log(vendedoresSeleccionados);
+  console.log(vendedoresSeleccionados.length);
+  if(vendedoresSeleccionados.length > 0){
+    vendedoresSeleccionados.forEach(function (vendedor) {
+      if (vendedor.classList.contains('select-vendedor')) {
+        let $idVendedor = $(vendedor).closest('tr').find('td:eq(0)').text();
+        let $vendedor = {
+          idVendedor: $idVendedor
+        }
+        $Vendedores.push($vendedor);
       }
-      $Vendedores.push($vendedor);
+    });
+    //AJAX para almacenar vendedores en la base de datos
+    $.ajax({
+      url: "../../../Vista/rendimiento/agregarVendedoresTarea.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {
+        "idTarea": $id_Tarea,
+        "vendedores": JSON.stringify($Vendedores)
+      },
+      success: function (res) {
+          $('#modalVendedores').modal('hide');
+          Toast.fire({
+            icon: 'success',
+            title: 'Los vendedores han sido agregados'
+          });
+          tableVendedor.destroy();
+      }
+    }); //Fin AJAX
+  }else{
+    if(tableVendedor.rows().count() < 1){
+      Toast.fire({
+        icon: 'error',
+        title: 'No hay vendedores disponibles'
+      });
+    }else{
+      Toast.fire({
+        icon: 'error',
+        title: 'No ha seleccionado vendedores'
+      });
     }
-  });
-  //AJAX para almacenar vendedores en la base de datos
-  $.ajax({
-    url: "../../../Vista/rendimiento/agregarVendedoresTarea.php",
-    type: "POST",
-    datatype: "JSON",
-    data: {
-      "idTarea": $id_Tarea,
-      "vendedores": JSON.stringify($Vendedores)
-    },
-    success: function (res) {
-      $('#modalVendedores').modal('hide');
-      Swal.fire(
-        'Exito!',
-        'Los vendedores han sido agregados',
-        'success',
-      )
-    }
-  }); //Fin AJAX
+  }
+  
 }
 let actualizarContadores = () => {
   //Actualizar contador llamadas
@@ -498,6 +523,12 @@ let cambiarEstado = ($idTarea, $nuevoEstado) => {
     }
   }); //Fin del AJAX
 }
+$(document).on("click", "#btn-close-modal-Vendedores", function(){
+  tableVendedor.destroy();
+})
+// $(document).on("click", "#btn_agregarVendedores", function(){
+//   tableVendedor.destroy();
+// })
 // $(document).on("click", "#btn_eliminar", function() {
 //   let fila = $(this);        
 //     let usuario = $(this).closest('tr').find('td:eq(1)').text();

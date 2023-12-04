@@ -12,8 +12,8 @@ Class ControladorRazonSocial{
         razonSocial::editarRazonSocial($editarRazonSocial);
     }
 
-    public static function eliminarRazonSocial($razonSocial){
-        return razonSocial::eliminarRazonSocial($razonSocial);
+    public static function eliminarRazonSocial($idRazonSocial){
+        return razonSocial::eliminarRazonSocial($idRazonSocial);
     }
     public static function RazonSocialExiste($razonSocial){
         return razonSocial::RazonSocialExistente($razonSocial);

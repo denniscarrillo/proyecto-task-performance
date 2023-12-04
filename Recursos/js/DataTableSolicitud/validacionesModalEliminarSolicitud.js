@@ -69,13 +69,15 @@ $form.addEventListener('submit', e => {
 
 $MotivoCancelacion.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasMotivo = funciones.validarSoloLetras($MotivoCancelacion, validaciones.soloLetras);
-   funciones.limitarCantidadCaracteres("E_MotivoCancelacion", 50);
+   funciones.limitarCantidadCaracteres("E_MotivoCancelacion", 300);
 });
 
 $MotivoCancelacion.addEventListener('focusout', ()=>{
     if(estadoMasdeUnEspacio.estadoMasEspacioMotivo){
         funciones.validarMasdeUnEspacio($MotivoCancelacion);
     }
+    let descripcionMayus = $MotivoCancelacion.value.toUpperCase();
+     $MotivoCancelacion.value = descripcionMayus; 
    
 });
 

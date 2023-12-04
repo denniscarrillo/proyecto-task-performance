@@ -139,13 +139,23 @@ $('#form-razonSocial').submit(function (e) {
               razonSocial: razonSocial,
               descripcion: descripcion
             },
-            success: function () {
+            success: function (data) {
+              if(JSON.parse(data) == 'true'){
+                tablaRazonSocial.row(fila.parents('tr')).remove().draw();
               Swal.fire(
                 'Lo sentimos!',
                 'La razon Social no puede ser eliminada.',
                 'error'
               );
               tablaRazonSocial.ajax.reload(null, false);
+               } else{
+                Swal.fire(
+                  'Eliminada!',
+                  'La razon Social ha sido Eliminada!.',
+                  'success'
+                );
+                tablaRazonSocial.ajax.reload(null, false);
+               }
             }
           });
         

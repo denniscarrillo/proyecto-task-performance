@@ -128,14 +128,14 @@ $telefono.addEventListener('focusout', ()=>{
 });
 
 $direccion.addEventListener('keyup', ()=>{
-    funciones.limitarCantidadCaracteres("direccion", 100);
+    funciones.limitarCantidadCaracteres("direccion", 300);
 });
 $direccion.addEventListener('focusout', ()=>{
     if(estasdoMasdeUnEspacio.estadoMasEspacioDireccion){
         estasdoMasdeUnEspacio.estadoMasEspacioDireccion = funciones.validarMasdeUnEspacio($direccion);
     }
-    /* let direccionMayus = $direccion.value.toUpperCase();
-    $direccion.value = direccionMayus; */
+    let direccionMayus = $direccion.value.toUpperCase();
+    $direccion.value = direccionMayus; 
 });
 $rtn.addEventListener('focusout', ()=>{
     let rtn = $('#rtn').val();
@@ -144,12 +144,12 @@ $rtn.addEventListener('focusout', ()=>{
 
 $telefono.addEventListener('keyup', ()=>{
     estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
-   funciones.limitarCantidadCaracteres("telefono", 14);
+   funciones.limitarCantidadCaracteres("telefono", 20);
 });
 
 $rtn.addEventListener('keyup', ()=>{
     estadoSoloNumeros.estadoNumerortn = funciones.validarSoloNumeros($rtn, validaciones.soloNumeros);
-   funciones.limitarCantidadCaracteres("rtn", 14);
+   funciones.limitarCantidadCaracteres("rtn", 20);
 });
 
 let obtenerRtnExiste = ($rtn) => {

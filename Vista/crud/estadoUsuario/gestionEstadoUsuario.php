@@ -119,6 +119,8 @@ if (isset($_SESSION['usuario'])) {
           $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
           $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
           $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
+          $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
+          $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
           require_once '../../layout/sidebar.php';
         ?>
       </div>

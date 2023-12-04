@@ -25,8 +25,8 @@ class ControladorTarea {
     public static function agregarVendores($idTarea, $idVendores){
         Tarea::agregarVendedoresTarea($idTarea, $idVendores);
     }
-    public static function obtenerVendedoresTarea(){
-        return Tarea::obtenerVendedores();
+    public static function obtenerVendedoresTarea($idTarea){
+        return Tarea::obtenerVendedores($idTarea);
     }
     public static function obtenerClasificacionLead(){
         return Tarea::obtenerClasificacionLead();
@@ -139,6 +139,9 @@ class ControladorTarea {
     }
     public static function obtenerLlaveUnicaClienteTarea($idTarea){
         return Tarea::obtenerLlaveUnicaClienteTarea($idTarea);
+    }
+    public static function obtenerTipoCliente($idTarea){
+        return Tarea::obtenerTipoCliente($idTarea);
     }
     public static function obtenerRazonSocial(){
         return Tarea::obtenerRazonSocial();

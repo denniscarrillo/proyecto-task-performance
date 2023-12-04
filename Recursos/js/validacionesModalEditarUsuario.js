@@ -71,6 +71,11 @@ $name.addEventListener('focusout', ()=>{
     let usuarioMayus = $name.value.toUpperCase();
     $name.value = usuarioMayus;
 });
+$estado.addEventListener('focusout', ()=>{
+    
+    let usuarioMayus = $estado.value.toUpperCase();
+    $estado.value = usuarioMayus;
+});
 $correo.addEventListener('keyup', ()=>{
     estadoCorreo = funciones.validarCorreo($correo, validaciones.correo);
 });

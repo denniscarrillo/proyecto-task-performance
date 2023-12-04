@@ -4,9 +4,10 @@ export let estadoValidado = false;
 let estadoExisteRtn = false;
 
 const validaciones = {
-    soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
+    soloLetras: /^(?=.*[^a-zA-Z\/ .ÑñáéíóúÁÉÍÓÚs])+$/, //Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
-    soloNumeros: /^[0-9]*$/
+    soloNumeros: /^[0-9,-]*$/,
+    MismoCaracter: /^(?=.*(..)\1)/, 
 }
 //VARIABLES GLOBALES
 
@@ -123,17 +124,19 @@ $form.addEventListener('submit', e => {
 });
 $name.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
-   funciones.limitarCantidadCaracteres("E_Nombre", 30);
+   funciones.limitarCantidadCaracteres("E_Nombre", 50);
 });
 $direccion.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasDireccion= funciones.validarSoloLetras($direccion, validaciones.soloLetras);
-   funciones.limitarCantidadCaracteres("E_Direccion", 30);
+   funciones.limitarCantidadCaracteres("E_Direccion", 300);
 });
 
 $name.addEventListener('focusout', ()=>{
     if(estadoMasdeUnEspacio.estadoMasEspacioName){
         funciones.validarMasdeUnEspacio($name);
-    }  
+    } 
+    let nameMayus = $name.value.toUpperCase();
+    $name.value = nameMayus; 
 });
 $telefono.addEventListener('focusout', ()=>{
     if(estadoMasdeUnEspacio.estadoMasEspaciotelefono){
@@ -148,7 +151,10 @@ $correo.addEventListener('focusout', ()=>{
 $direccion.addEventListener('focusout', ()=>{
     if(estadoMasdeUnEspacio.estadoMasEspacioDireccion){
         funciones.validarMasdeUnEspacio($direccion);
-    }  
+    } 
+    let direccionMayus = $direccion.value.toUpperCase();
+    $direccion.value = direccionMayus;  
+
 });
 $rtn.addEventListener('focusout', ()=>{
     if(estadoMasdeUnEspacio.estadoMasEspacioRtn){
@@ -174,10 +180,10 @@ $rtn.addEventListener('change', ()=>{
 });
 $telefono.addEventListener('keyup', ()=>{
     estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
-   funciones.limitarCantidadCaracteres("E_Telefono", 14);
+   funciones.limitarCantidadCaracteres("E_Telefono", 20);
 });
 
 $rtn.addEventListener('keyup', ()=>{
     estadoSoloNumeros.estadoNumerortn = funciones.validarSoloNumeros($rtn, validaciones.soloNumeros);
-   funciones.limitarCantidadCaracteres("E_Rtn", 14);
+   funciones.limitarCantidadCaracteres("E_Rtn", 20);
 });
