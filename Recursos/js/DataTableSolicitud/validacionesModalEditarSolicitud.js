@@ -165,7 +165,7 @@ $telefono.addEventListener('keyup', ()=>{
 });
 $telefono.addEventListener('keyup', ()=>{
     estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
-   funciones.limitarCantidadCaracteres("E_telefono_cliente", 14);
+   funciones.limitarCantidadCaracteres("E_telefono_cliente", 20);
 });
 
 
