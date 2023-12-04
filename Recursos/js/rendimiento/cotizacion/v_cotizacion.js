@@ -401,7 +401,7 @@ let insertarNewProduct = (contItem, $addProduct, $tbody, referencia) => {
         //Ahora agregamos los datos 
         divIcons.innerHTML = `<i class="fa-regular fa-circle-xmark fa-circle-xmark-new icon"></i>`
         label.append(document.createTextNode(contItem));
-        cantidad.innerHTML = `<input type="number" class="input-cant" placeholder="Ingresar...">`;
+        cantidad.innerHTML = `<input type="text" class="input-cant" placeholder="Ingresar...">`;
         descripcion.textContent = $addProduct.descripcion;
         marca.textContent = $addProduct.marca;
         precio.appendChild(document.createTextNode(`Lps. ${parseFloat($addProduct.precio).toFixed(2)}`));
