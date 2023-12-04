@@ -370,7 +370,7 @@ let agregarVendedores = function ($id_Tarea) {
           $('#modalVendedores').modal('hide');
           Toast.fire({
             icon: 'success',
-            title: 'Los vendedores han sido agregados'
+            title: 'Los vendedores han sido agregados en la tarea #'+$id_Tarea,
           });
           tableVendedor.destroy();
       }
