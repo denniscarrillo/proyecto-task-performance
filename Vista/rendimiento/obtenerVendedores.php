@@ -5,6 +5,7 @@ require_once('../../Controlador/ControladorTarea.php');
 
 session_start(); //Reanudamos sesion
 if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
-    $vendedoresTarea = ControladorTarea::obtenerVendedoresTarea();
+    $idTarea = $_POST['idTarea'];
+    $vendedoresTarea = ControladorTarea::obtenerVendedoresTarea($idTarea);
     print json_encode($vendedoresTarea, JSON_UNESCAPED_UNICODE);
 }
