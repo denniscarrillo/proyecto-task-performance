@@ -333,3 +333,44 @@ p {
   background: none;
   color:whitesmoke;
 }
+#btn_agregarVendedores {
+  display: block;
+  margin: 0 auto;
+}
+#btn_agregarVendedores:hover {
+  background-color: #67635f;
+}
+#title-task {
+  margin: 0.8rem auto;
+  margin-bottom: 0.2rem;
+}
+.mensaje {
+
+  color: red;
+  font-size: 12px;
+  margin-bottom: 0.2rem;
+  margin-left: 1rem;
+  text-align: left;
+}
+.mensaje_error {
+  box-shadow: 0 0 0 .15rem #e15e3eac;
+  border-color: red;
+}
+.mensaje_error:focus {
+  box-shadow: 0 0 0 .25rem rgba(226, 73, 35, 0.455);
+  border-color: red;
+}
+.form-control-sm {
+  border: 1px solid #edb99f;
+}
+#table-Vendedores_filter label input{
+  display: inline;
+  width: 17rem;
+  margin-left: 0.4rem;
+}
+#table-Vendedores_length label select{
+  display: inline;
+  border: 1px solid #edb99f;
+  width: 4.5rem;
+}
+

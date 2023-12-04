@@ -133,13 +133,14 @@ require_once('validacionesTarea.php');
   <script src="../../Recursos/js/librerias/SweetAlert2.all.min.js"></script>
   <script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
+  <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../Recursos/js/librerias/dataTables.bootstrap5.min.js"></script>
   <script src="../../Recursos/js/librerias/Sortable.min.js"></script>
   <script src="../../Recursos/bootstrap5/bootstrap.min.js "></script>
   <!-- Scripts personalizados -->
   <script src="../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../Recursos/js/index.js"></script>
-  <script src="../../Recursos/js/rendimiento/tarea.js"></script>
+  <script src="../../Recursos/js/rendimiento/tarea.js" type="module"></script>
 </body>
 
 </html>

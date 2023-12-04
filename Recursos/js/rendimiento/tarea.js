@@ -1,3 +1,13 @@
+import * as funciones from '../funcionesValidaciones.js';
+const validaciones = {
+  soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
+  correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
+  soloNumeros: /^[0-9 ]*$/,
+  caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
+  caracterMas5veces: /^(?=.*(...)\1)/,
+  letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
+  direccion: /^[a-zA-Z0-9 #.,-]+$/
+}
 //Elementos HTML seleccionados a traves de su atributo ID
 let $contenedorLlamada = document.getElementById('conteiner-llamada');
 let $contadorLlamadas = document.getElementById('circle-count-llamadas');
@@ -26,94 +36,69 @@ const Toast = Swal.mixin({
       toast.addEventListener('mouseleave', Swal.resumeTimer)
   }
 });
-// new Sortable(document.getElementById('conteiner-llamada'), {
-//   group: 'shared', // set both lists to same group
-//   animation: 200,
-//   easing: "cubic-bezier(1, 0, 0, 1)",
-//   chosenClass: 'seleccionado',
-//   dragClass: 'drag',
-//   onEnd: () => {
-//     actualizarContadores();
-//     $('#modal-evidencia').modal('show');
-//   },
-//   group: "list-llamadas",
-//   store: {
-//     set: (sortable) => {
-//       const orden = sortable.toArray();
-//       console.log(orden);
-//       localStorage.setItem(sortable.options.group.name, orden.join('|'));
-//     },
-//     get: (sortable) => {
-//       const orden = localStorage.getItem(sortable.options.group.name);
-//       return orden ? orden.split('|') : [];
-//     }
-//   }
-// });
-
+let validarInputTitulo = ($titleTarea) => {
+  funciones.limitarCantidadCaracteres('title-task', 45);
+  let estadoValidaciones = {
+      estadoCV: false,
+      estadoME: false,
+      estadoSLN: false
+  }
+  estadoValidaciones.estadoCV = funciones.validarCampoVacio($titleTarea);
+  (estadoValidaciones.estadoCV) ? estadoValidaciones.estadoSLN = funciones.validarSoloLetrasNumeros($titleTarea, validaciones.letrasNumeros) : '';
+  (estadoValidaciones.estadoSLN) ? estadoValidaciones.estadoME = funciones.validarMasdeUnEspacio($titleTarea) : '';
+  (estadoValidaciones.estadoME) ? funciones.limiteMismoCaracter($titleTarea, validaciones.caracterMas3veces) : '';
+}
 //Una vez este cargado el documento o pagina web se va a ejecutar lo que esta dentro
 $(document).ready(function () {
   obtenerTareas($contenedorLlamada, $contadorLlamadas, 'Llamada');
   obtenerTareas($contenedorLeads, $contadorLeads, 'Lead');
   obtenerTareas($contenedorCotizaciones, $contadorCotizaciones, 'Cotizacion');
   obtenerTareas($contenedorVentas, $contadorVentas, 'Venta');
-  // obtenerVendedores();
 
-  new Sortable(document.getElementById('conteiner-llamada'), {
-    group: 'shared', // set both lists to same group
-    animation: 200,
-    easing: "cubic-bezier(1, 0, 0, 1)",
-    chosenClass: 'seleccionado',
-    dragClass: 'drag',
-    onEnd: () => {
-      actualizarContadores();
-      $('#modal-evidencia').modal('show');
-    }
-    // group: "list-llamadas",
-    // store: {
-    //   set: (sortable) => {
-    //     const orden = sortable.toArray();
-    //     console.log(orden);
-    //     localStorage.setItem('list-llamadas', orden.join('|'));
-    //   }
-      // get: (sortable) => {
-      //   const orden = localStorage.getItem('list-llamadas');
-      //   return orden ? orden.split('|') : [];
-      // }
-    // }
-  });
-  new Sortable(document.getElementById('conteiner-lead'), {
-    group: 'shared',
-    animation: 200,
-    easing: "cubic-bezier(1, 0, 0, 1)",
-    chosenClass: 'seleccionado',
-    dragClass: 'drag',
-    onEnd: () => {
-      actualizarContadores();
-      $('#modal-evidencia').modal('show');
-    },
-  });
-  new Sortable(document.getElementById('conteiner-cotizacion'), {
-    group: 'shared',
-    animation: 200,
-    easing: "cubic-bezier(1, 0, 0, 1)",
-    chosenClass: 'seleccionado',
-    dragClass: 'drag',
-    onEnd: () => {
-      actualizarContadores();
-      $('#modal-evidencia').modal('show');
-    },
-  });
-  new Sortable(document.getElementById('conteiner-venta'), {
-    group: 'shared',
-    animation: 200,
-    easing: "cubic-bezier(1, 0, 0, 1)",
-    chosenClass: 'seleccionado',
-    dragClass: 'drag',
-    onEnd: () => {
-      actualizarContadores();
-      $('#modal-evidencia').modal('show');
-    },
-  });
+  // new Sortable(document.getElementById('conteiner-llamada'), {
+  //   group: 'shared', // set both lists to same group
+  //   animation: 200,
+  //   easing: "cubic-bezier(1, 0, 0, 1)",
+  //   chosenClass: 'seleccionado',
+  //   dragClass: 'drag',
+  //   onEnd: () => {
+  //     actualizarContadores();
+  //     $('#modal-evidencia').modal('show');
+  //   }
+  // });
+  // new Sortable(document.getElementById('conteiner-lead'), {
+  //   group: 'shared',
+  //   animation: 200,
+  //   easing: "cubic-bezier(1, 0, 0, 1)",
+  //   chosenClass: 'seleccionado',
+  //   dragClass: 'drag',
+  //   onEnd: () => {
+  //     actualizarContadores();
+  //     $('#modal-evidencia').modal('show');
+  //   },
+  // });
+  // new Sortable(document.getElementById('conteiner-cotizacion'), {
+  //   group: 'shared',
+  //   animation: 200,
+  //   easing: "cubic-bezier(1, 0, 0, 1)",
+  //   chosenClass: 'seleccionado',
+  //   dragClass: 'drag',
+  //   onEnd: () => {
+  //     actualizarContadores();
+  //     $('#modal-evidencia').modal('show');
+  //   },
+  // });
+  // new Sortable(document.getElementById('conteiner-venta'), {
+  //   group: 'shared',
+  //   animation: 200,
+  //   easing: "cubic-bezier(1, 0, 0, 1)",
+  //   chosenClass: 'seleccionado',
+  //   dragClass: 'drag',
+  //   onEnd: () => {
+  //     actualizarContadores();
+  //     $('#modal-evidencia').modal('show');
+  //   },
+  // });
 });
 //Evento
 $('#btn-NuevaLLamada').click(function () {
@@ -173,16 +158,9 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
       //Recorremo arreglo de objetos con un forEach para mostrar tareas
       objData.forEach(tarea => {
         if (tarea.tipoTarea == tipoTarea) {
-          // const orden = localStorage.getItem('list-llamadas').split('|');
-          // console.log(orden);
-          // orden.forEach(position => {
-          //   position
-          // });
-          // let fechaIni = tarea.fechaInicio.date.split(" ");
-          // data-id="${item+=1}"
           $tareas +=
           // `<div class="card_task dragged-element" draggable="true" id="${tarea.id}" >
-            `<div class="card_task dragged-element" draggable="true" data-id="${item+=1}" style="order: ${item+=1}">
+            `<div class="card_task dragged-element" data-id="${item+=1}" style="order: ${item+=1}">
               <div class="tarea-id">N° ${tarea.id}
                 ${(tarea.idEstadoAvance != 4)? `<button class="menu-estados"><i class="fa-solid fa-arrow-right-long"></i></button>` : ''}
               </div>
@@ -210,7 +188,7 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
             </div>`;
           $elemento.innerHTML = $tareas;
           count++;
-          id = "btn_nuevoRegistro"
+          // id = "btn_nuevoRegistro"
         }
       });
       //Si no hay tareas del tipo buscado el contador se mantiene en cero y se indica en el HTML
@@ -226,7 +204,10 @@ let crearNuevaTarea = ($contenedor, $idConteinerForm, $idForm, $placeholder, $ta
     newFormulario.setAttribute('id', $idConteinerForm); //Añadimos clase al div
     newFormulario.innerHTML = `
       <form action="" method="" id="${$idForm}" class="new-form">
+        <div class="data-container">
         <textarea id="title-task" class="input-title" placeholder="${$placeholder}"></textarea>
+        <p class="mensaje"></p>
+        </div>
         <div class="btns">
           <button type="submit" class="btn btn-primary" id="btn-submit-${$tarea}">Guardar</button>
           <button type="button" class="btn btn-secondary" id="btn-cancelar-${$tarea}">Cancelar</button>
@@ -250,52 +231,56 @@ let guardarTarea = ($btnGuardar, $tarea, $actualizarTarea, $elementoPadre, $elem
   //Agregamos el evento click al boton de guardar tarea
   $btnGuardar.addEventListener('click', function (e) {
     e.preventDefault();
-    let titulo = document.getElementById('title-task').value;
-    let tarea = null;
-    console.log(titulo);
-    if (document.getElementById('title-task').value.trim() == '' || document.getElementById('title-task').value.trim() == null) {
-      document.getElementById('title-task').setAttribute('placeholder', 'Debe poner un titulo!');
-    } else {
-      if ($btnGuardar.getAttribute('id') == $tarea) {
-        const str = $btnGuardar.getAttribute('id').split('-');
-        tarea = str[2];
+    //Validaciones textArea
+    validarInputTitulo(document.getElementById('title-task'));
+    //Si cumple las validaciones dejara crear la tarea
+    if(document.querySelectorAll('.mensaje_error').length == 0){
+      let titulo = document.getElementById('title-task').value;
+      let tarea = null;
+      if (document.getElementById('title-task').value.trim() == '' || document.getElementById('title-task').value.trim() == null) {
+        document.getElementById('title-task').setAttribute('placeholder', 'Debe poner un titulo!');
+      } else {
+        if ($btnGuardar.getAttribute('id') == $tarea) {
+          const str = $btnGuardar.getAttribute('id').split('-');
+          tarea = str[2];
+        }
+        let objTarea = {
+          tipoTarea: tarea,
+          titulo: titulo,
+        }
+        $.ajax({
+          url: "../../../Vista/rendimiento/nuevaTarea.php",
+          type: "POST",
+          datatype: "JSON",
+          data: objTarea
+        });
+        /*
+          LLamamos a la funcion correspondiente para obtener la actualizacion del contenedor de tarea,
+          además de cerrar el formulario en el que se creo la tarea.
+        */
+        switch ($actualizarTarea) {
+          case 1: {
+            cerrarFormTarea($elementoPadre, $elementoCerrar)
+            obtenerTareas($contenedorLlamada, $contadorLlamadas, 'Llamada');
+            break;
+          }
+          case 2: {
+            cerrarFormTarea($elementoPadre, $elementoCerrar)
+            obtenerTareas($contenedorLeads, $contadorLeads, 'Lead');
+            break;
+          }
+          case 3: {
+            cerrarFormTarea($elementoPadre, $elementoCerrar)
+            obtenerTareas($contenedorCotizaciones, $contadorCotizaciones, 'Cotizacion');
+            break;
+          }
+          case 4: {
+            cerrarFormTarea($elementoPadre, $elementoCerrar)
+            obtenerTareas($contenedorVentas, $contadorVentas, 'Venta');
+            break;
+          }
+        } //Fin de los casos
       }
-      let objTarea = {
-        tipoTarea: tarea,
-        titulo: titulo,
-      }
-      $.ajax({
-        url: "../../../Vista/rendimiento/nuevaTarea.php",
-        type: "POST",
-        datatype: "JSON",
-        data: objTarea
-      });
-      /*
-        LLamamos a la funcion correspondiente para obtener la actualizacion del contenedor de tarea,
-        además de cerrar el formulario en el que se creo la tarea.
-      */
-      switch ($actualizarTarea) {
-        case 1: {
-          cerrarFormTarea($elementoPadre, $elementoCerrar)
-          obtenerTareas($contenedorLlamada, $contadorLlamadas, 'Llamada');
-          break;
-        }
-        case 2: {
-          cerrarFormTarea($elementoPadre, $elementoCerrar)
-          obtenerTareas($contenedorLeads, $contadorLeads, 'Lead');
-          break;
-        }
-        case 3: {
-          cerrarFormTarea($elementoPadre, $elementoCerrar)
-          obtenerTareas($contenedorCotizaciones, $contadorCotizaciones, 'Cotizacion');
-          break;
-        }
-        case 4: {
-          cerrarFormTarea($elementoPadre, $elementoCerrar)
-          obtenerTareas($contenedorVentas, $contadorVentas, 'Venta');
-          break;
-        }
-      } //Fin de los casos
     }
   });
 }
