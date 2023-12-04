@@ -258,7 +258,6 @@ class Tarea
                 $insertUsuarioTarea = "INSERT INTO tbl_vendedores_tarea (id_Tarea, id_usuario_vendedor, vend_Identificador) 
                                     VALUES ('$idTarea', '$id', 'Agregado');";
                 sqlsrv_query($abrirConexion, $insertUsuarioTarea);
-                
             }
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;

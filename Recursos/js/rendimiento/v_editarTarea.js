@@ -175,28 +175,32 @@ document.getElementById('form-Edit-Tarea').addEventListener('submit', function(e
 });
 // CARGAR LOS ARTICULOS A AGREGAR A LA TAREA
 $('#btn-articulos').click(() => {
-    if (document.getElementById('table-Articulos_wrapper') == null) {
-      $('#table-Articulos').DataTable({
-        "ajax": {
-          "url": "../../../Vista/rendimiento/obtenerArticulos.php",
-          "dataSrc": ""
-        },
-        "language": {
-          "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
-        },
-        "columns": [
-          { "data": "codArticulo" },
-          { "data": 'articulo' },
-          { "data": 'detalleArticulo' },
-          { "data": 'marcaArticulo' },
-          {
-            "defaultContent":
-              '<div><button class="btns btn" id="btn_select-article"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>'
-          }
-        ]
-      });
-    }
-  });
+  if (document.getElementById('table-Articulos_wrapper') == null) {
+    let articulosTarea = $('#table-Articulos').DataTable({
+      "ajax": {
+        "url": "../../../Vista/rendimiento/obtenerArticulos.php",
+        "dataSrc": ""
+      },
+      "language": {
+        "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+      },
+      "columns": [
+        { "data": "codArticulo" },
+        { "data": 'articulo' },
+        { "data": 'detalleArticulo' },
+        { "data": 'marcaArticulo' },
+        {
+          "defaultContent":
+            '<div><button class="btns btn" id="btn_select-article"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>'
+        }
+      ]
+    });
+  }
+});
+$(document).on("click", 'tbody tr', function (e) {
+  $(this).find("button")[0].classList.toggle('select_articulo')
+  e.currentTarget.classList.toggle('ArtSelec');
+});
   $(document).on('click', '#btn_select-article', function () {
     selectArticulos(this);
   });
@@ -238,22 +242,18 @@ $('#btn-articulos').click(() => {
   }
   let agregarArticulos = function () {
     let $Articulos = [];
-    let productosSeleccionados = document.querySelectorAll('.select-articulo');
-    productosSeleccionados.forEach(function (producto) {
-      if (producto.classList.contains('select-articulo')) {
-        let $idArticulo = $(producto).closest('tr').find('td:eq(0)').text();
-        let $nombreArticulo = $(producto).closest('tr').find('td:eq(1)').text();
-        let $marca = $(producto).closest('tr').find('td:eq(3)').text();
-        let $articulo = {
-          id: $idArticulo,
-          nombre: $nombreArticulo,
-          marca: $marca
-        } 
-        $Articulos.push($articulo);
-      }
-    });
+    let productosSeleccionados = $('#table-Articulos').DataTable().rows(".ArtSelec").data()
+    for (let i=0; i<productosSeleccionados.length; i++) {
+      console.log(productosSeleccionados[i])
+      $Articulos.push({
+        id: productosSeleccionados[i].codArticulo,
+        nombre: productosSeleccionados[i].articulo,
+        marca: productosSeleccionados[i].marcaArticulo
+      })
+    }
+
     carritoArticulos($Articulos);
-  }
+  };
   let carritoArticulos = ($productos) => {
     console.log($productos);
     let productos = '';
@@ -788,7 +788,7 @@ document.getElementById('btn-finalizar-tarea').addEventListener('click', ()=>{
                 'Tarea Finalizada!',
                 'La tarea ha sido finalizada.',
                 'success'
-              )  
+              ) 
               document.getElementById('btn-finalizar-tarea').setAttribute('disabled', 'true');
             } else{
               Swal.fire(
