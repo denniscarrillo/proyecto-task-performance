@@ -23,6 +23,9 @@
     margin-bottom: 1rem;
     border-radius: 1rem;
 }
+.table{
+    min-width: 100%;
+}
 .title-dashboard-task {
     text-align: left;
     font-weight: 600;

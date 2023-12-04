@@ -123,6 +123,8 @@ if (isset($_SESSION['usuario'])) {
           $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
           $urlPerfilUsuario='../../crud/PerfilUsuario/gestionPerfilUsuario.php';
           $urlPerfilContraseniaUsuarios='../../crud/PerfilUsuario/gestionPerfilContrasenia.php';
+          $urlRazonSocial = '../../crud/RazonSocial/gestionRazonSocial.php';
+          $urlRubroComercial = '../../crud/RubroComercial/gestionRubroComercial.php';
           require_once '../../layout/sidebar.php';
         ?>
       </div>

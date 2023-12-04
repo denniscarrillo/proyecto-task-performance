@@ -140,6 +140,9 @@ class ControladorTarea {
     public static function obtenerLlaveUnicaClienteTarea($idTarea){
         return Tarea::obtenerLlaveUnicaClienteTarea($idTarea);
     }
+    public static function obtenerTipoCliente($idTarea){
+        return Tarea::obtenerTipoCliente($idTarea);
+    }
     public static function obtenerRazonSocial(){
         return Tarea::obtenerRazonSocial();
     }

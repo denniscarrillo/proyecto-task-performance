@@ -34,11 +34,14 @@ let inputsEditarTarea = {
   origenLead: document.getElementById('origen-lead')
 }
 $(document).ready(async function(){
+  
   ($idEstadoTarea == '3') ? $btnCotizacion.removeAttribute('hidden') : '';
   ($idEstadoTarea == '4') ? document.getElementById('container-num-factura').removeAttribute('hidden') : '';
     setEstadoTarea();
     obtenerComentarios($idTarea);
     obtenerDatosTarea($idTarea, $idEstadoTarea);
+
+
     estadoRTN = await $.ajax({
       url: "../../../Vista/rendimiento/cotizacion/obtenerRTN_Tarea.php",
       type: "POST",
@@ -567,7 +570,7 @@ let obtenerDatosTarea = ($idTarea, $idEstadoTarea) => {
     success: function($datosTarea){
       let datos = JSON.parse($datosTarea);
       (Object.keys(datos).length > 1) ? setearDatosTarea(datos) : document.getElementsByName('estadoEdicion')[0].id = datos.data;
-      // document.getElementsByName('radioOption').setAttribute('checked', 'true');
+      (!(Object.keys(datos).length > 1)) ? document.getElementById('container-correo').removeAttribute('hidden') : '';
     }
   });
 }
@@ -579,6 +582,8 @@ let setearDatosTarea = ($datosTarea) => {
     let rtn = document.getElementById('rnt-cliente'); 
     let correo = document.getElementById('correo-cliente');
     let nFactura = document.getElementById('num-factura');
+    let telefono = document.getElementById('telefono-cliente');
+    let direccion = document.getElementById('direccion-cliente');
     document.getElementById('input-titulo-tarea').value = $datosTarea.titulo;
     rtn.value = $datosTarea.RTN_Cliente;
     rtn.disabled =true;
@@ -594,12 +599,17 @@ let setearDatosTarea = ($datosTarea) => {
     document.getElementById('origen-lead').value = $datosTarea.id_OrigenLead,
     document.getElementById('rubrocomercial').value = $datosTarea.id_rubro_Comercial,
     document.getElementById('razonsocial').value = $datosTarea.id_razon_Social
-    if(($datosTarea.estado_Cliente_Tarea == 'Existente')) {
+    console.log($datosTarea.estado_Cliente_Tarea);
+    if(($datosTarea.estado_Cliente_Tarea == 'Existente')){
       nuevo.removeAttribute('checked');
       nuevo.disabled = true;
       existe.setAttribute('checked', 'true');
       existe.disabled = true;
+      telefono.disabled = true;
+      direccion.disabled = true;
+      tipoCliente = $datosTarea.estado_Cliente_Tarea;
     }else{
+      document.getElementById('container-correo').removeAttribute('hidden');
       existe.removeAttribute('checked');
       existe.disabled = true;
       nuevo.setAttribute('checked','true');

@@ -1114,6 +1114,23 @@ class Tarea
         sqlsrv_close($conexion);
         return $existe;
     }
+    public static function obtenerTipoCliente($idTarea){
+        $tipoCliente = null;
+        try{
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $selectCliente = "SELECT estado_cliente_tarea AS tipo_cliente FROM tbl_Tarea WHERE id_Tarea = '$idTarea'";
+            $consulta = sqlsrv_query($abrirConexion, $selectCliente);
+            if(sqlsrv_has_rows($consulta)){
+                $tipoCliente = sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC);
+                $tipoCliente = $tipoCliente['tipo_cliente'];
+            }
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
+        sqlsrv_close($abrirConexion); //Cerrar conexion
+        return $tipoCliente;
+    }
     public static function obtenerRazonSocial(){
         try{
             $razon = array();

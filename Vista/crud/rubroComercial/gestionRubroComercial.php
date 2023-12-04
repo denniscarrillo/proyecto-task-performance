@@ -1,31 +1,30 @@
 <?php
 require_once("../../../db/Conexion.php");
-require_once("../../../Modelo/Rol.php");
-require_once("../../../Modelo/Usuario.php");
+require_once("../../../Modelo/RazonSocial.php");
+require_once("../../../Controlador/ControladorRazonSocial.php");
 require_once("../../../Modelo/Bitacora.php");
-require_once("../../../Controlador/ControladorRol.php");
-require_once("../../../Controlador/ControladorUsuario.php");
 require_once("../../../Controlador/ControladorBitacora.php");
-
+require_once("../../../Modelo/Usuario.php");
+require_once("../../../Controlador/ControladorUsuario.php");
 session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
-  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionRol.php');
+  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionRubroComercial.php');
   (!($_SESSION['usuario'] == 'SUPERADMIN'))
   ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
   : 
     $permisoConsulta = true;
   ;
   if(!$permisoConsulta){
-    /* ==================== Evento intento de ingreso sin permiso a mantenimiento rol. ==========================*/
+    /* ==================== Evento intento de ingreso sin permiso a mantenimiento razon social. ==========================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
     $newBitacora->fecha = date("Y-m-d h:i:s");
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionRol.php');
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionRubroComercial.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['fallido'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a mantenimiento rol';
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a mantenimiento Rubro Comercial';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     /* ===============================================================================================================*/
     header('location: ../../v_errorSinPermiso.php');
@@ -40,20 +39,19 @@ if (isset($_SESSION['usuario'])) {
       $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
       $newBitacora->accion = $accion['Exit'];
       $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de '.$_SESSION['descripcionObjeto'];
-      ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-    /* =======================================================================================*/
+        ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+        /* =======================================================================================*/
     }
-    /* ====================== Evento ingreso a mantenimiento rol. ========================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
     $newBitacora->fecha = date("Y-m-d h:i:s");
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionRol.php');
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionRubroComercial.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['income'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a mantenimiento rol';
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a mantenimiento Rubro Comercial';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-    $_SESSION['objetoAnterior'] = 'gestionRol.php';
-    $_SESSION['descripcionObjeto'] = 'mantenimiento rol';
+    $_SESSION['objetoAnterior'] = 'gestionRubroComercial.php';
+    $_SESSION['descripcionObjeto'] = 'mantenimiento Rubro Comercial';
     /* =======================================================================================*/
   }
 } else {
@@ -83,7 +81,7 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
-  <title> Rol </title>
+  <title> Gestion Rubro Comercial </title>
 </head>
 
 <body style="overflow: hidden;">
@@ -116,16 +114,18 @@ if (isset($_SESSION['usuario'])) {
           $urlPreguntas = '../pregunta/gestionPregunta.php';
           $urlParametros = '../parametro/gestionParametro.php';
           $urlPermisos = '../permiso/gestionPermisos.php';
-          $urlRoles = './gestionRol.php';
-          $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+          $urlRoles = '../rol/gestionRol.php';
+          $urlServiciosTecnicos = './gestionTipoServicio.php';
+          $urlRazonSocial = './gestionRazonSocial.php';
           $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
           $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
           $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
-          $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
-          $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
+          $urlRubroComercial='../rubroComercial/gestionRubroComercial.php';
           require_once '../../layout/sidebar.php';
         ?>
       </div>
+
+
       <div class="conteiner-main">
             <!-- Encabezado -->
           <div class= "encabezado">
@@ -134,20 +134,20 @@ if (isset($_SESSION['usuario'])) {
                 <?php include_once '../../layout/navbar.php'?>                             
             </div>        
             <div class ="titulo">
-              <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionRol.php');?>">Gestión de Roles</H2>
+                  <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionRubroComercial.php');?>">Gestión Rubro Comercial</H2>
             </div>  
           </div>
+
         <div class="table-conteiner">
           <div>
-            <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoRol"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
-            <!-- <a href="../../../TCPDF/examples/reporteRoles.php" target="_blank" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>  -->
-            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"><i class="fas fa-file-pdf"></i> Generar PDF</button>
+            <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoRubroComercial"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
+            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
           </div>
-          <table class="table" id="table-Rol">
+          <table class="table" id="table-RubroComercial">
             <thead>
               <tr>
                 <th scope="col"> ID </th>
-                <th scope="col"> ROL </th>
+                <th scope="col"> RUBRO COMERCIAL </th>
                 <th scope="col"> DESCRIPCION </th>
                 <th scope="col"> ACCIONES </th>
               </tr>
@@ -160,21 +160,20 @@ if (isset($_SESSION['usuario'])) {
     </div>
   </div>
   <?php
-  require('modalNuevoRol.html');
-  require('modalEditarRol.html');
+  require('modalNuevoRubroComercial.html');
+  require('modalEditarRubroComercial.html');
   ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
   <!-- Scripts propios -->
-  <script src="../../../Recursos/js/rol/dataTableRol.js" type="module"></script>
+  <script src="../../../Recursos/js/rubroComercial/validacionesModalNuevoRubroComercial.js" type="module"></script>
+  <script src="../../../Recursos/js/rubroComercial/validacionesModalEditarRubroComercial.js" type="module"></script>
+  <script src="../../../Recursos/js/rubroComercial/datatableRubroComercial.js" type="module"></script>
   <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-  <script src="../../../Recursos/js/rol/validacionesModalNuevoRol.js" type="module"></script>
-  <script src="../../../Recursos/js/rol/validacionesModalEditarRol.js" type="module"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
 </body>
-
 </html>
