@@ -34,14 +34,11 @@ let inputsEditarTarea = {
   origenLead: document.getElementById('origen-lead')
 }
 $(document).ready(async function(){
-  
   ($idEstadoTarea == '3') ? $btnCotizacion.removeAttribute('hidden') : '';
   ($idEstadoTarea == '4') ? document.getElementById('container-num-factura').removeAttribute('hidden') : '';
     setEstadoTarea();
     obtenerComentarios($idTarea);
     obtenerDatosTarea($idTarea, $idEstadoTarea);
-
-
     estadoRTN = await $.ajax({
       url: "../../../Vista/rendimiento/cotizacion/obtenerRTN_Tarea.php",
       type: "POST",
@@ -298,6 +295,11 @@ $(document).on("click", 'tbody tr', function (e) {
 // Si el tipo de cliente es existen se crea y muestra un boton para buscar el cliente
 let rtnCliente = document.getElementById('cliente-existente');
   rtnCliente.addEventListener('change', function () {
+  if(document.querySelectorAll('.mensaje-existe-cliente').length > 0) {
+    document.querySelector('.mensaje-existe-cliente').textContent = '';
+    document.querySelector('.mensaje-existe-cliente').classList.remove('mensaje-existe-cliente');
+  }
+  
   inputsEditarTarea.rtn.disabled = true;
   limpiarForm();
   let $containerRTN = document.getElementById('container-rtn-cliente');
@@ -316,6 +318,10 @@ let rtnCliente = document.getElementById('cliente-existente');
 });
 //Cuando el cliente es nuevo se oculta el buscador de existir.
 document.getElementById('cliente-nuevo').addEventListener('change', function () {
+  if(document.querySelectorAll('.mensaje-existe-cliente').length > 0) {
+    document.querySelector('.mensaje-existe-cliente').textContent = '';
+    document.querySelector('.mensaje-existe-cliente').classList.remove('mensaje-existe-cliente');
+  }
   let $containerRTN = document.getElementById('container-rtn-cliente');
   let $btnBuscarCliente = document.querySelector('.btn-buscar-cliente');
   //Volvemos a habilitar los inputs
@@ -377,7 +383,7 @@ document.getElementById('estados-tarea').addEventListener('change', async () => 
 
 let $rtn = document.getElementById('rnt-cliente');
 $rtn.addEventListener('focusout', function () {
-  let $mensaje = document.querySelector('.mensaje');
+  let $mensaje = document.querySelector('.mensaje-rtn');
   $mensaje.innerText = '';
   $mensaje.classList.remove('mensaje-existe-cliente');
   if($rtn.value.trim() != ''){
@@ -571,11 +577,14 @@ let obtenerDatosTarea = ($idTarea, $idEstadoTarea) => {
       let datos = JSON.parse($datosTarea);
       (Object.keys(datos).length > 1) ? setearDatosTarea(datos) : document.getElementsByName('estadoEdicion')[0].id = datos.data;
       (!(Object.keys(datos).length > 1)) ? document.getElementById('container-correo').removeAttribute('hidden') : '';
+      (document.getElementsByClassName('estadoEdicion').textContent == 'false') ? document.getElementById('num-factura').removeAttribute('disabled') : '';
+      // (!(Object.keys(datos).length > 0)) ? document.getElementById('num-factura').removeAttribute('disabled') : '';
     }
   });
 }
 let setearDatosTarea = ($datosTarea) => {
-    setArticulosInteres($datosTarea.productos)
+    setArticulosInteres($datosTarea.productos);
+    document.getElementById('num-factura').removeAttribute('disabled');
     let nuevo = document.getElementById('cliente-nuevo');
     let existe =  document.getElementById('cliente-existente');
     let nombre = document.getElementById('nombre-cliente');
@@ -594,9 +603,11 @@ let setearDatosTarea = ($datosTarea) => {
     nombre.disabled = true;
     document.getElementById('telefono-cliente').value = $datosTarea.TELEFONO,
     ($datosTarea.estado_Cliente_Tarea == 'Nuevo') ? correo.value = $datosTarea.correo: '';
-    document.getElementById('direccion-cliente').value = $datosTarea.DIRECCION,
-    document.getElementById('clasificacion-lead').value = $datosTarea.id_ClasificacionLead,
-    document.getElementById('origen-lead').value = $datosTarea.id_OrigenLead,
+    document.getElementById('direccion-cliente').value = $datosTarea.DIRECCION;
+    if($datosTarea.id_ClasificacionLead != null) {
+      document.getElementById('clasificacion-lead').value = $datosTarea.id_ClasificacionLead;
+      document.getElementById('origen-lead').value = $datosTarea.id_OrigenLead;
+    }
     document.getElementById('rubrocomercial').value = $datosTarea.id_rubro_Comercial,
     document.getElementById('razonsocial').value = $datosTarea.id_razon_Social
     console.log($datosTarea.estado_Cliente_Tarea);

@@ -150,14 +150,15 @@
 							<div class="grupo-form">
 								<div class="mb-3 data-container" id="container-rtn-cliente">
 									<label for="rnt-cliente" class="form-label" name="estadoEdicion" id="true">RTN:</label>
+									<label class="mensaje-rtn"></label>
 									<input type="text" name="rtnCliente" id="rnt-cliente" class="form-control">
-									<p class="mensaje"></p>
+									<p class="mensaje"></p>									
 									<!-- Aqui va el boton del filtro de clientes -->
 								</div>
-								<div class="mb-3 data-container" id="container-num-factura" hidden>
+								<div class="mb-3 data-container" id="container-num-factura"hidden>
 									<label for="num-factura" class="form-label" >N° FACTURA: </label>
 									<p class="mensaje"></p>
-									<input type="text" name="num-factura" id="num-factura" class="form-control ">
+									<input type="text" name="num-factura" id="num-factura" class="form-control" disabled>
 								</div>
 								<div class="mb-3 data-container">
 									<label for="nombre" class="form-label">Nombre Cliente:</label>
@@ -186,7 +187,7 @@
 									<label for="clasificacionlead" class="form-label">Clasificación Lead: </label>
 									<select id="clasificacion-lead" class="form-select" name="clasificacionLead">
 										<!-- Opciones clasificacion lead -->
-										<option value="">SELECCIONAR...</option>
+										<option value="" selected>SELECCIONAR...</option>
 										<?php
 										foreach ($clasificacionLeads as $clasificacionLead) {
 											echo '<option value="' . $clasificacionLead['id'] . '">' . $clasificacionLead['clasificacion'] . '</option>';
@@ -199,7 +200,7 @@
 									<label for="origenlead" class="form-label">Origen Lead: </label>
 									<select id="origen-lead" class="form-select" name="origenLead">
 										<!-- Opciones clasificacion lead -->
-										<option value="">SELECCIONAR...</option>
+										<option value="" selected>SELECCIONAR...</option>
 										<?php
 										foreach ($origenLeads as $origenLead) {
 											echo '<option value="' . $origenLead['id'] . '">' . $origenLead['origen'] . '</option>';
