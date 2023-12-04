@@ -797,10 +797,11 @@ class Tarea
                     }
                 }
             $select = "SELECT ct.id_Cotizacion, us.nombre_Usuario, cc.NOMBRECLIENTE AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
-                FROM tbl_CotizacionTarea ct
-                INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
-                INNER JOIN View_Clientes cc ON ta.RTN_Cliente = cc.CIF COLLATE Latin1_General_CS_AI
-                INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario;";
+            FROM tbl_CotizacionTarea ct
+            INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
+            INNER JOIN View_Clientes cc ON ta.RTN_Cliente = cc.CIF COLLATE Latin1_General_CS_AI
+            INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario
+            WHERE cc.CODCLIENTE IN(SELECT cod_Cliente FROM tbl_Tarea);";
                 $ejecutar = sqlsrv_query($conexion, $select);
                 if(sqlsrv_has_rows($ejecutar)){
                     while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
@@ -841,7 +842,7 @@ class Tarea
                 INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
                 INNER JOIN View_Clientes cc ON ta.RTN_Cliente = cc.CIF COLLATE Latin1_General_CS_AI
                 INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario
-				WHERE ct.Creado_Por = '$usuario';";
+				WHERE ct.Creado_Por = '$usuario' AND cc.CODCLIENTE IN(SELECT cod_Cliente FROM tbl_Tarea);";
                 $ejecutar = sqlsrv_query($conexion, $select);
                 if(sqlsrv_has_rows($ejecutar)){
                     while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
