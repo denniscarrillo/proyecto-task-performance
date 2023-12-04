@@ -106,9 +106,9 @@ let validarInputs = (funciones, tipoCliente) => {
     switch ($estadoTarea.value){
         case "2":{ //Leads
             validarInputTitulo ();
-            validarInputRTN();
-            validarInputNombreCliente();
             if(tipoCliente != 'Existente'){
+                validarInputRTN();
+                validarInputNombreCliente();
                 validarInputTelefono();
                 validarInputCorreo();
                 validarInputDireccion();
@@ -120,9 +120,9 @@ let validarInputs = (funciones, tipoCliente) => {
         }  
         default:{ //Otros estados
             validarInputTitulo();
-            validarInputRTN();
-            validarInputNombreCliente();
             if(tipoCliente != 'Existente'){
+                validarInputRTN();
+                validarInputNombreCliente();
                 validarInputTelefono();
                 validarInputCorreo();
                 validarInputDireccion();

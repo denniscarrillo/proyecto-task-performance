@@ -8,12 +8,12 @@ class DataTableTarea
     public $descripcion;
 
     // Obtener todas las tareas que le pertenecen a un usuario.
-    public static function obtenerTodasTareasUsuario($usuario){
+    public static function obtenerTodasTareasUsuario($usuario, $rolUsuario){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
         $select = '';
         $tareas = array();
-        if($usuario == 'SUPERADMIN'){
+        if($usuario == 'SUPERADMIN' || $rolUsuario == 'Administrador'){
             $select = "SELECT ta.id_Tarea, ea.descripcion AS estado, cc.rtn_Cliente, cc.nombre_Cliente, ta.titulo, us.nombre_Usuario AS Creado_Por, ta.estado_Finalizacion, ta.fecha_Finalizacion, DATEDIFF(day, ta.Fecha_Creacion, GETDATE()) AS dias_Transcurridos 
             FROM tbl_Tarea ta
             INNER JOIN tbl_EstadoAvance ea ON ta.id_EstadoAvance = ea.id_EstadoAvance
@@ -35,12 +35,11 @@ class DataTableTarea
                     ];
                 }
             }
-
             $select = "SELECT ta.id_Tarea, ea.descripcion AS estado, cc.CIF AS rtn_Cliente, cc.NOMBRECLIENTE AS nombre_Cliente, ta.titulo, us.nombre_Usuario AS Creado_Por, ta.estado_Finalizacion, ta.fecha_Finalizacion, DATEDIFF(day, ta.Fecha_Creacion, GETDATE()) AS dias_Transcurridos 
             FROM tbl_Tarea ta
             INNER JOIN tbl_EstadoAvance ea ON ta.id_EstadoAvance = ea.id_EstadoAvance
             INNER JOIN View_Clientes cc ON ta.RTN_Cliente = cc.CIF COLLATE Latin1_General_CS_AI
-            INNER JOIN tbl_MS_Usuario us ON ta.Creado_Por = us.usuario;";
+            INNER JOIN tbl_MS_Usuario us ON ta.Creado_Por = us.usuario and cc.CODCLIENTE IN(SELECT cod_Cliente FROM tbl_Tarea);";
             $ejecutar = sqlsrv_query($conexion, $select);
             if(sqlsrv_has_rows($ejecutar)){
                 while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
@@ -58,50 +57,98 @@ class DataTableTarea
                 }
             }
         }else{
-            $select = "SELECT ta.id_Tarea, ea.descripcion AS estado, cc.rtn_Cliente, cc.nombre_Cliente, ta.titulo, us.nombre_Usuario AS Creado_Por, ta.estado_Finalizacion, ta.fecha_Finalizacion, DATEDIFF(day, ta.Fecha_Creacion, GETDATE()) AS dias_Transcurridos 
-            FROM tbl_Tarea ta
-            INNER JOIN tbl_EstadoAvance ea ON ta.id_EstadoAvance = ea.id_EstadoAvance
-            INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente
-            INNER JOIN tbl_MS_Usuario us ON ta.Creado_Por = us.usuario
-            WHERE ta.Creado_Por = '$usuario';";
-            $ejecutar = sqlsrv_query($conexion, $select);
-            if(sqlsrv_has_rows($ejecutar)){
-                while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
-                    $tareas[] = [
-                        'id' => $fila['id_Tarea'],
-                        'estadoAvance' => $fila['estado'],
-                        'rtnCliente' =>$fila['rtn_Cliente'],
-                        'nombreCliente' =>$fila['nombre_Cliente'],
-                        'titulo' => $fila['titulo'],
-                        'creadoPor' => $fila['Creado_Por'],
-                        'estadoFinalizacion' => $fila['estado_Finalizacion'],
-                        'fechaFinalizacion' => $fila['fecha_Finalizacion'],
-                        'diasTranscurridos' => $fila['dias_Transcurridos']
-                    ];
+            if($rolUsuario == 'Contador'){
+                $select = "SELECT ta.id_Tarea, ea.descripcion AS estado, cc.rtn_Cliente, cc.nombre_Cliente, ta.titulo, us.nombre_Usuario AS Creado_Por, ta.estado_Finalizacion, ta.fecha_Finalizacion, DATEDIFF(day, ta.Fecha_Creacion, GETDATE()) AS dias_Transcurridos 
+                FROM tbl_Tarea ta
+                INNER JOIN tbl_EstadoAvance ea ON ta.id_EstadoAvance = ea.id_EstadoAvance
+                INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente
+                INNER JOIN tbl_MS_Usuario us ON ta.Creado_Por = us.usuario
+                WHERE ea.descripcion = 'Venta' AND ta.estado_Finalizacion = 'Finalizada';";
+                $ejecutar = sqlsrv_query($conexion, $select);
+                if(sqlsrv_has_rows($ejecutar)){
+                    while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
+                        $tareas[] = [
+                            'id' => $fila['id_Tarea'],
+                            'estadoAvance' => $fila['estado'],
+                            'rtnCliente' =>$fila['rtn_Cliente'],
+                            'nombreCliente' =>$fila['nombre_Cliente'],
+                            'titulo' => $fila['titulo'],
+                            'creadoPor' => $fila['Creado_Por'],
+                            'estadoFinalizacion' => $fila['estado_Finalizacion'],
+                            'fechaFinalizacion' => $fila['fecha_Finalizacion'],
+                            'diasTranscurridos' => $fila['dias_Transcurridos']
+                        ];
+                    }
+                }
+                $select = "SELECT ta.id_Tarea, ea.descripcion AS estado, cc.CIF AS rtn_Cliente, cc.NOMBRECLIENTE AS nombre_Cliente, ta.titulo, us.nombre_Usuario AS Creado_Por, ta.estado_Finalizacion, ta.fecha_Finalizacion, DATEDIFF(day, ta.Fecha_Creacion, GETDATE()) AS dias_Transcurridos 
+                FROM tbl_Tarea ta
+                INNER JOIN tbl_EstadoAvance ea ON ta.id_EstadoAvance = ea.id_EstadoAvance
+                INNER JOIN View_Clientes cc ON ta.RTN_Cliente = cc.CIF COLLATE Latin1_General_CS_AI
+                INNER JOIN tbl_MS_Usuario us ON ta.Creado_Por = us.usuario and cc.CODCLIENTE IN(SELECT cod_Cliente FROM tbl_Tarea)
+                WHERE ea.descripcion = 'Venta' AND ta.estado_Finalizacion = 'Finalizada';";
+                $ejecutar = sqlsrv_query($conexion, $select);
+                if(sqlsrv_has_rows($ejecutar)){
+                    while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
+                        $tareas[] = [
+                            'id' => $fila['id_Tarea'],
+                            'estadoAvance' => $fila['estado'],
+                            'rtnCliente' =>$fila['rtn_Cliente'],
+                            'nombreCliente' =>$fila['nombre_Cliente'],
+                            'titulo' => $fila['titulo'],
+                            'creadoPor' => $fila['Creado_Por'],
+                            'estadoFinalizacion' => $fila['estado_Finalizacion'],
+                            'fechaFinalizacion' => $fila['fecha_Finalizacion'],
+                            'diasTranscurridos' => $fila['dias_Transcurridos']
+                        ];
+                    }
+                }
+            }else{
+                $select = "SELECT ta.id_Tarea, ea.descripcion AS estado, cc.rtn_Cliente, cc.nombre_Cliente, ta.titulo, us.nombre_Usuario AS Creado_Por, ta.estado_Finalizacion, ta.fecha_Finalizacion, DATEDIFF(day, ta.Fecha_Creacion, GETDATE()) AS dias_Transcurridos 
+                FROM tbl_Tarea ta
+                INNER JOIN tbl_EstadoAvance ea ON ta.id_EstadoAvance = ea.id_EstadoAvance
+                INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente
+                INNER JOIN tbl_MS_Usuario us ON ta.Creado_Por = us.usuario
+                WHERE ta.Creado_Por = '$usuario';";
+                $ejecutar = sqlsrv_query($conexion, $select);
+                if(sqlsrv_has_rows($ejecutar)){
+                    while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
+                        $tareas[] = [
+                            'id' => $fila['id_Tarea'],
+                            'estadoAvance' => $fila['estado'],
+                            'rtnCliente' =>$fila['rtn_Cliente'],
+                            'nombreCliente' =>$fila['nombre_Cliente'],
+                            'titulo' => $fila['titulo'],
+                            'creadoPor' => $fila['Creado_Por'],
+                            'estadoFinalizacion' => $fila['estado_Finalizacion'],
+                            'fechaFinalizacion' => $fila['fecha_Finalizacion'],
+                            'diasTranscurridos' => $fila['dias_Transcurridos']
+                        ];
+                    }
+                }
+                $select = "SELECT ta.id_Tarea, ea.descripcion AS estado, cc.CIF AS rtn_Cliente, cc.NOMBRECLIENTE AS nombre_Cliente, ta.titulo, us.nombre_Usuario AS Creado_Por, ta.estado_Finalizacion, ta.fecha_Finalizacion, DATEDIFF(day, ta.Fecha_Creacion, GETDATE()) AS dias_Transcurridos 
+                FROM tbl_Tarea ta
+                INNER JOIN tbl_EstadoAvance ea ON ta.id_EstadoAvance = ea.id_EstadoAvance
+                INNER JOIN View_Clientes cc ON ta.RTN_Cliente = cc.CIF COLLATE Latin1_General_CS_AI
+                INNER JOIN tbl_MS_Usuario us ON ta.Creado_Por = us.usuario
+                WHERE ta.Creado_Por = '$usuario' and cc.CODCLIENTE IN(SELECT cod_Cliente FROM tbl_Tarea);";
+                $ejecutar = sqlsrv_query($conexion, $select);
+                if(sqlsrv_has_rows($ejecutar)){
+                    while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
+                        $tareas[] = [
+                            'id' => $fila['id_Tarea'],
+                            'estadoAvance' => $fila['estado'],
+                            'rtnCliente' =>$fila['rtn_Cliente'],
+                            'nombreCliente' =>$fila['nombre_Cliente'],
+                            'titulo' => $fila['titulo'],
+                            'creadoPor' => $fila['Creado_Por'],
+                            'estadoFinalizacion' => $fila['estado_Finalizacion'],
+                            'fechaFinalizacion' => $fila['fecha_Finalizacion'],
+                            'diasTranscurridos' => $fila['dias_Transcurridos']
+                        ];
+                    }
                 }
             }
-            $select = "SELECT ta.id_Tarea, ea.descripcion AS estado, cc.CIF AS rtn_Cliente, cc.NOMBRECLIENTE AS nombre_Cliente, ta.titulo, us.nombre_Usuario AS Creado_Por, ta.estado_Finalizacion, ta.fecha_Finalizacion, DATEDIFF(day, ta.Fecha_Creacion, GETDATE()) AS dias_Transcurridos 
-            FROM tbl_Tarea ta
-            INNER JOIN tbl_EstadoAvance ea ON ta.id_EstadoAvance = ea.id_EstadoAvance
-            INNER JOIN View_Clientes cc ON ta.RTN_Cliente = cc.CIF COLLATE Latin1_General_CS_AI
-            INNER JOIN tbl_MS_Usuario us ON ta.Creado_Por = us.usuario
-            WHERE ta.Creado_Por = '$usuario';";
-            $ejecutar = sqlsrv_query($conexion, $select);
-            if(sqlsrv_has_rows($ejecutar)){
-                while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
-                    $tareas[] = [
-                        'id' => $fila['id_Tarea'],
-                        'estadoAvance' => $fila['estado'],
-                        'rtnCliente' =>$fila['rtn_Cliente'],
-                        'nombreCliente' =>$fila['nombre_Cliente'],
-                        'titulo' => $fila['titulo'],
-                        'creadoPor' => $fila['Creado_Por'],
-                        'estadoFinalizacion' => $fila['estado_Finalizacion'],
-                        'fechaFinalizacion' => $fila['fecha_Finalizacion'],
-                        'diasTranscurridos' => $fila['dias_Transcurridos']
-                    ];
-                }
-            }
+            
         }
         sqlsrv_close($conexion);
         return $tareas;

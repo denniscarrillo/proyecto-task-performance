@@ -935,6 +935,17 @@ class Usuario {
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $usuarios;
     }
+    public static function obtenerRolUser($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query="SELECT ro.rol FROM tbl_ms_usuario us INNER JOIN tbl_MS_Roles ro ON us.id_Rol = ro.id_Rol
+        WHERE us.usuario = '$usuario';";
+        $resultado = sqlsrv_query($conexion, $query);
+        $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+        $rolUsuario = $fila['rol'];
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $rolUsuario;
+    }
 }#Fin de la clase
 
     
