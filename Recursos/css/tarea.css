@@ -323,6 +323,7 @@ p {
 }
 .item-menu:hover{
   background-color:  #e4792c;
+  cursor: pointer;
 }
 .menu-estados{
   border: none;

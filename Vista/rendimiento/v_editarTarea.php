@@ -116,14 +116,13 @@
 									checked><label for="cliente-nuevo" class="radio-label form-label">Nuevo</label>
 							</div>
 							<div class="mb-3 data-container">
-								<label for="input-titulo-tarea" class="form-label label-title-task">Titulo de la tarea</label>
+								<label for="input-titulo-tarea" class="form-label label-title-task">Título de la tarea</label>
 								<input type="text" name="input-titulo-tarea" id="input-titulo-tarea" class="form-control" value="<?php echo ControladorTarea::obtenerEstadoTarea(intval($_GET['idTarea']))['titulo'] ?>">
 								<p class="mensaje" hidden></p>
 								<button type="button" id="btn-finalizar-tarea" disabled><i class="fa-solid fa-text-slash"></i> Finalizar tarea</button>
 								<label id="estado-finalizacion" hidden><?php echo ControladorTarea::obtenerTareaFinalizada($_GET['idTarea']) ?></label>
 							</div>
 							<div class="mb-3 data-container">
-								<!-- <label id="" class="id-estado-tarea" hidden="true" name="estadoTarea"></label> -->
 								<label id="<?php echo ControladorTarea::obtenerEstadoTarea(intval($_GET['idTarea']))['id_estadoAvance'] ?>" class="id-estado-tarea" hidden="true" name="estadoTarea"></label>
 								<input type="text" value="<?php echo $_GET['idTarea']; ?>" id="id-Tarea" class="id-tarea" name="idTarea" hidden="true">
 								<label for="estados-tarea" class="form-label"> Estado: </label>
@@ -180,7 +179,7 @@
 									<label for="clasificacionlead" class="form-label">Clasificación Lead: </label>
 									<select id="clasificacion-lead" class="form-select" name="clasificacionLead">
 										<!-- Opciones clasificacion lead -->
-										<option value="">Seleccionar...</option>
+										<option value="">SELECCIONAR...</option>
 										<?php
 										foreach ($clasificacionLeads as $clasificacionLead) {
 											echo '<option value="' . $clasificacionLead['id'] . '">' . $clasificacionLead['clasificacion'] . '</option>';
@@ -193,7 +192,7 @@
 									<label for="origenlead" class="form-label">Origen Lead: </label>
 									<select id="origen-lead" class="form-select" name="origenLead">
 										<!-- Opciones clasificacion lead -->
-										<option value="">Seleccionar...</option>
+										<option value="">SELECCIONAR...</option>
 										<?php
 										foreach ($origenLeads as $origenLead) {
 											echo '<option value="' . $origenLead['id'] . '">' . $origenLead['origen'] . '</option>';
@@ -214,9 +213,6 @@
 										?>
 									</select>
 									<p class="mensaje"></p>
-
-									<!-- <input type="text" name="rubrocomercial" id="rubrocomercial" class="form-control">
-									<p class="mensaje"></p> -->
 								</div>
 								<div class="mb-3 data-container">
 									<label for="razonsocial" class="form-label">Razón Social: </label>

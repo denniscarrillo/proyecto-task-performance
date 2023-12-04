@@ -258,18 +258,23 @@ class Tarea
                 $insertUsuarioTarea = "INSERT INTO tbl_vendedores_tarea (id_Tarea, id_usuario_vendedor, vend_Identificador) 
                                     VALUES ('$idTarea', '$id', 'Agregado');";
                 sqlsrv_query($abrirConexion, $insertUsuarioTarea);
+                
             }
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
     }
-    public static function obtenerVendedores(){
+    public static function obtenerVendedores($idTarea){
         try{
             $vendedores = array();
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $select = "SELECT id_Usuario, usuario, nombre_Usuario FROM tbl_ms_usuario WHERE id_Rol = 3;";
+            $select = "SELECT us.id_Usuario, us.usuario, us.nombre_Usuario FROM tbl_ms_usuario us
+            INNER JOIN tbl_MS_Roles ro ON us.id_Rol = ro.id_Rol
+            WHERE ro.rol = 'VENDEDOR' AND us.id_Usuario NOT IN(SELECT us.id_Usuario FROM tbl_vendedores_tarea ta
+            INNER JOIN tbl_MS_Usuario us ON ta.id_usuario_vendedor = us.id_Usuario
+            WHERE id_Tarea = '$idTarea');";
             $listaVendedores = sqlsrv_query($abrirConexion, $select);
             while($fila = sqlsrv_fetch_array($listaVendedores , SQLSRV_FETCH_ASSOC)){
                 $vendedores[] = [
