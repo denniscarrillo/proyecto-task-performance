@@ -1,3 +1,4 @@
+import * as funciones from '../../funcionesValidaciones.js';
 import {estadoValidado as validoProd } from './validacionesCotizacion.js';
 import {estado} from './validacionesCotizacion.js';
 
@@ -144,12 +145,9 @@ let validarCantidad = function($inputs){
 }
 document.getElementById('form-cotizacion').addEventListener('submit', async (event) => {
     event.preventDefault();
-    let estadoValidaciones = true;
+    let estadoValidaciones = false;
     if(document.getElementById('valor-descuento') != null) {
-        let inputs = {
-            valorDescuento: document.getElementById('valor-descuento')
-        }
-        estadoValidaciones = validacionInputs(inputs);
+        estadoValidaciones = validacionInputs(document.getElementById('valor-descuento'));
     }
     if(!estadoValidaciones){
         event.preventDefault();
@@ -233,8 +231,9 @@ let calcularResumenCotizacion = (elementosSumar, acumTotalSuma) => {
     $resumenCotizacion.impuesto.textContent = `Lps. ${(parseFloat($resumenCotizacion.subdescuento.textContent.split(' ')[1]) * 0.15).toFixed(2)}`;
     $resumenCotizacion.total.textContent = `Lps. ${(parseFloat($resumenCotizacion.subdescuento.textContent.split(' ')[1]) + parseFloat($resumenCotizacion.impuesto.textContent.split(' ')[1])).toFixed(2)}`;
 }
-let validacionInputs = (inputs) => {
-   return validarCampoVacio(inputs.valorDescuento);
+
+let validacionInputs = (input) => {
+   return funciones.validarCampoVacio(input);
 }
 //nueva Cotizacion
 let enviarNuevaCotizacion = ($datosCotizacion, $productosCotizacion) => {

@@ -9,7 +9,7 @@ const $descProducto = document.getElementById('descripcion');
 const $marProducto = document.getElementById('marca');
 const $preProducto = document.getElementById('precio');
 // let $cantsProducto = document.querySelectorAll('.input-cant');
-// const $descuento = document.getElementById('valor-descuento');
+const $descuento = document.getElementById('valor-descuento');
 
 $(document).ready(() => {
     $btnProduct.addEventListener('click', e =>{
