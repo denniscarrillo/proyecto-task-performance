@@ -65,10 +65,10 @@ if (isset($_SESSION['usuario'])) {
       $urlIndex = './index.php';
       // Rendimiento
       $urlMisTareas = './rendimiento/v_tarea.php';
-      $urlConsultarTareas = './crud/DataTableTarea/gestionDataTableTarea.php'; //PENDIENTE
-      $urlBitacoraTarea = ''; //PENDIENTE
+      $urlCotizacion = './rendimiento/cotizacion/gestionCotizacion.php';
+      $urlConsultarTareas = './crud/DataTableTarea/gestionDataTableTarea.php'; 
       $urlMetricas = './crud/Metricas/gestionMetricas.php';
-      $urlEstadisticas = './grafica/estadistica.php'; //PENDIENTE
+      $urlEstadisticas = './grafica/estadistica.php'; 
       //Solicitud
       $urlSolicitud = './crud/DataTableSolicitud/gestionDataTableSolicitud.php';
       //Comisión
@@ -82,6 +82,7 @@ if (isset($_SESSION['usuario'])) {
       $urlObjetos = './crud/DataTableObjeto/gestionDataTableObjeto.php';
       //Mantenimiento
       $urlUsuarios = './crud/usuario/gestionUsuario.php';
+      $urlEstadoUsuario = './crud/estadoUsuario/gestionEstadoUsuario.php';
       $urlCarteraCliente = './crud/carteraCliente/gestionCarteraClientes.php';
       $urlPreguntas = './crud/pregunta/gestionPregunta.php';
       $urlBitacoraSistema = './crud/bitacora/gestionBitacora.php';
@@ -93,6 +94,8 @@ if (isset($_SESSION['usuario'])) {
       $urlPerfilContraseniaUsuarios = './crud/PerfilUsuario/gestionPerfilContrasenia.php';
       $urlEditarCamposPerfil = './crud/PerfilUsuario/EditarCamposPerfilUsuario.php';
       $urlImg = '../Recursos/imagenes/Logo-E&C.png';
+      $urlRazonSocial = './crud/RazonSocial/gestionRazonSocial.php';
+      $urlRubroComercial = './crud/RubroComercial/gestionRubroComercial.php';
       require_once 'layout/sidebar.php';
       ?>
     </div>
@@ -112,7 +115,7 @@ if (isset($_SESSION['usuario'])) {
               class="fa-solid fa-file-invoice-dollar icon-size"></i>
             <p>Comisiones</p>
           </a>
-          <a class="card-link" href="crud/solicitud/gestionSolicitud.php"><i
+          <a class="card-link" href="crud/DataTableSolicitud/gestionDataTableSolicitud.php"><i
               class="fa-solid fa-envelopes-bulk icon-size"></i>
             <p>Solicitud</p>
           </a>

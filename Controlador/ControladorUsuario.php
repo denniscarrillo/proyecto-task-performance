@@ -118,11 +118,11 @@
         public static function obtenerIdUsuario($usuario){
             return Usuario::obtenerIdUsuario($usuario);
         }
-        public static function permisosRol($idRol){
-            return Usuario::permisosRol($idRol);
+        public static function permisoConsultaRol($idRol, $id_Objeto){
+            return Usuario::permisoConsultaRol($idRol, $id_Objeto);
         }
-        public static function permisoSobreObjeto($userName, $IdObjetoActual, $permisosRol) {
-            return Usuario::validarPermisoSobreObjeto($userName, $IdObjetoActual, $permisosRol);
+        public static function permisoSobreObjeto($IdObjetoActual, $permisosRol) {
+            return Usuario::validarPermisoSobreObjeto($IdObjetoActual, $permisosRol);
         }
         public static function validarUsuarioExistente($usuario){
             return Usuario::usuarioExiste($usuario);
@@ -178,4 +178,10 @@
        public static function reiniciarIntentosFallidos($usuario){
             Usuario::reiniciarIntentosFallidos($usuario);
        }
+       public static function obtenerLosUsuariosPDF($buscar){
+        return Usuario::obtenerLosUsuariosPDF($buscar);
+        }
+        public static function obtenerRolUser($usuario){
+            return Usuario::obtenerRolUser($usuario);
+        }
     }

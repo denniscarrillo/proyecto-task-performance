@@ -27,7 +27,6 @@ class Usuario {
     //Método para obtener todos los usuarios que existen.
     public static function obtenerTodosLosUsuarios(){
         $conn = new Conexion();
-
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $query = "SELECT u.id_Usuario, u.usuario, u.nombre_Usuario, u.correo_Electronico, e.descripcion, r.rol
                 FROM tbl_ms_usuario AS u
@@ -645,33 +644,26 @@ class Usuario {
         return $id;
     }
 
-    public static function permisosRol($idRolUser){
+    public static function permisoConsultaRol($idRolUser, $id_Objeto){
+        $permitido = false;
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query = "SELECT id_Objeto, permiso_Consultar, permiso_Insercion, permiso_Actualizacion, permiso_Eliminacion  
-        FROM tbl_MS_Permisos WHERE id_Rol = '$idRolUser';";
+        $query = "SELECT id_Objeto, permiso_Consultar FROM tbl_MS_Permisos WHERE id_Rol = '$idRolUser' and id_Objeto = '$id_Objeto';";
         $resultado = sqlsrv_query($conexion, $query);
-        while($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)){
-            $permisoRol [] = [
-                'idObjeto' => $fila['id_Objeto'],
-                'consulta' => $fila['permiso_Consultar'],
-                'insertar' => $fila['permiso_Insercion'],
-                'actualizar' => $fila['permiso_Actualizacion'],
-                'eliminar' => $fila['permiso_Eliminacion']
-            ];
+       $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+       if(isset($fila['permiso_Consultar']) && $fila['permiso_Consultar'] == 'Y'){
+            $permitido = true;
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
-        return $permisoRol;
+        return $permitido ;
     }
     //Metodo que valida los objetos y los permisos del usuario sobre ellos
-    public static function validarPermisoSobreObjeto($userName, $IdObjetoActual, $permisosRol) {
+    public static function validarPermisoSobreObjeto($IdObjetoActual, $permisoConsulta) {
         $permitido = false;
-        foreach ($permisosRol as $objeto) {
-            if($objeto['idObjeto'] == $IdObjetoActual && $objeto['consulta'] == 'Y'){
+            if(($permisoConsulta['idObjeto'] == $IdObjetoActual) && ($permisoConsulta['consulta'] == 'Y')){
                 $permitido = true;
-                break;
             }
-        }
+
         return $permitido;
     }
 
@@ -916,6 +908,44 @@ class Usuario {
         $ejecutar = sqlsrv_query($conexion, $query);
         sqlsrv_close($conexion); #Cerramos la conexión.
      }
+
+
+    //Método para generar el reporte de usuarios.
+    public static function obtenerLosUsuariosPDF($buscar){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $query = "SELECT u.id_Usuario, u.usuario, u.nombre_Usuario, u.correo_Electronico, e.descripcion, r.rol
+        FROM tbl_ms_usuario AS u
+        INNER JOIN tbl_estado_usuario AS e ON u.id_Estado_Usuario = e.id_Estado_Usuario 
+        INNER JOIN tbl_ms_roles AS r ON u.id_Rol = r.id_Rol
+        WHERE CONCAT(u.id_Usuario, u.usuario, u.nombre_Usuario, u.correo_Electronico, e.descripcion, r.rol) LIKE '%' + '$buscar' + '%';";
+        $listaUsuarios = sqlsrv_query($consulta, $query);
+        $usuarios = array();
+        //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
+        while ($fila = sqlsrv_fetch_array($listaUsuarios, SQLSRV_FETCH_ASSOC)) {
+            $usuarios[] = [
+                'IdUsuario' => $fila["id_Usuario"],
+                'usuario' => $fila["usuario"],
+                'nombreUsuario' => $fila["nombre_Usuario"],
+                'correo' => $fila["correo_Electronico"],
+                'Estado' => $fila["descripcion"],
+                'Rol' => $fila["rol"]
+            ];
+        }
+        sqlsrv_close($consulta); #Cerramos la conexión.
+        return $usuarios;
+    }
+    public static function obtenerRolUser($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query="SELECT ro.rol FROM tbl_ms_usuario us INNER JOIN tbl_MS_Roles ro ON us.id_Rol = ro.id_Rol
+        WHERE us.usuario = '$usuario';";
+        $resultado = sqlsrv_query($conexion, $query);
+        $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+        $rolUsuario = $fila['rol'];
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $rolUsuario;
+    }
 }#Fin de la clase
 
     

@@ -29,7 +29,8 @@ let procesarPermisoActualizar = data => {
       { "data": "estadoContacto"},
       {
         "defaultContent":
-        `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`
+        `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`+
+        `<button class="btn_eliminar btns btn ${(permisos.Eliminar == 'N')? 'hidden': ''}" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button>`
       }
     ]
   });
@@ -96,6 +97,7 @@ $(document).on('click', '#btn_editar', function(){
   correo = fila.find('td:eq(4)').text(),
   direccion = fila.find('td:eq(5)').text(),
   estadoContacto = fila.find('td:eq(6)').text();
+  
   // console.log(estadoContacto);
   $("#E_Cliente").val(idcarteraCliente);
   $("#E_Nombre").val(nombre);
@@ -114,8 +116,7 @@ $('#form-editar-carteraCliente').submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
    //Obtener datos del nuevo Cliente
    let idcarteraCliente = $('#E_Cliente').val(),
-   nombre = $('#E_Nombre').val(),
-   rtn =  $('#E_Rtn').val(),
+  
    telefono = $('#E_Telefono').val(),
    correo = $('#E_Correo').val(),
    direccion = $('#E_Direccion').val(),
@@ -127,8 +128,6 @@ $('#form-editar-carteraCliente').submit(function (e) {
       datatype: "JSON",
       data: {
        id: idcarteraCliente,
-       nombre: nombre,
-       rtn: rtn,
        telefono: telefono,
        correo: correo,
        direccion: direccion,
@@ -195,3 +194,61 @@ let limpiarFormEdit = () => {
     $mensaje.innerText = '';
   });
 }
+
+
+//Eliminar Cartera Cliente
+$(document).on("click", "#btn_eliminar", function() {
+  let fila = $(this).closest("tr"),
+     id= $(this).closest('tr').find('td:eq(0)').text(), 
+     carteraCliente= fila.find('td:eq(1)').text(),
+     rtn = fila.find('td:eq(2)').text(),
+     telefono = fila.find('td:eq(3)').text(),
+     correo = fila.find('td:eq(4)').text(),
+     direccion = fila.find('td:eq(5)').text(),
+     estado = 'Finalización';
+     
+    Swal.fire({
+      title: 'Estas seguro de eliminar la carteraCliente '+carteraCliente+'?',
+      text: "No podras revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borralo!'
+      
+    }).then((result) => {
+      if (result.isConfirmed) {      
+        $.ajax({
+          url: "../../../Vista/crud/carteraCliente/eliminarCarteraCliente.php",
+          type: "POST",
+          datatype: "JSON",
+          data: { 
+            id: id,
+            carteraCliente:carteraCliente,
+            rtn:rtn,
+            telefono: telefono,
+            correo: correo,
+            direccion: direccion,
+            estado: estado
+          },
+          success: function (data) {
+            console.log(data)
+            Swal.fire(
+              'Lo sentimos!',
+              'La carteraCliente no puede ser eliminada, se ha Finalizado.',
+              'error'
+            );
+            tablaCarteraClientes.ajax.reload(null, false);
+          }
+        });
+      
+      }//Fin del AJAX
+      
+    });                
+});
+
+//Generar reporte PDF
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-CarteraClientes_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reporteriaCarteraCliente.php?buscar='+buscar, '_blank');
+}); 

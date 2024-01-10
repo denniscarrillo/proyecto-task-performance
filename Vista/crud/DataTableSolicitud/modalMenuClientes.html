@@ -1,0 +1,30 @@
+ <!-- Modal Clientes-->
+ <div class="modal fade" id="modalMenuClientes" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div style="display: flex; align-items: center;">
+            <h1 class="modal-title fs-5" id="editarModalLabel">Seleccionar tabla al que pertenece el cliente</h1>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"  id="btn-close-modal-Articulos"></button>
+        </div>
+        <div class="modal-body">
+          <p class="modal-p-Etiqueta">Buscar Clientes Existentes en: </p>
+          <br>
+              <div class="label-menu">             
+                <label>Clientes que han facturado:</label><br>
+              </div>
+              <div class="button-menu">
+                <button type="button" class="btn btn-primary menu"   id="btn_ModalViewCliente" data-bs-toggle="modal" data-bs-target="#modalClienteFrecuente">Cliente Frecuentes</button>
+              </div>
+            <br>
+            <div class="label-menu">
+              <label>Clientes nuevos sin factura:</label><br>
+            </div>
+            <div class="button-menu">
+              <button type="button" class="btn btn-primary menu"   id="btn_ModalCarteraCliente" data-bs-toggle="modal" data-bs-target="#modalCarteraCliente">Cartera Cliente</button>
+            </div>  
+        </div>
+      </div>
+    </div>
+  </div>

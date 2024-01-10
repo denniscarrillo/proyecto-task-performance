@@ -94,4 +94,118 @@ class Parametro {
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $vigencia;
     }
+
+    public static function obtenerDatosReporte(){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query="SELECT (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='SYS NOMBRE')as NombreEmpresa,
+        (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='ADMIN CORREO') as Correo,
+		(SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='ADMIN DIRECCION') as direccion,
+		(SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='ADMIN SITIO WEB') as sitioWed,
+        (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='ADMIN TELEFONO') as Telefono,
+        (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='ADMIN TELEFONO2') as Telefono2,
+		(SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='CORREO SERVICIO TEC') as CorreoServicio;";
+        $resultado = sqlsrv_query($conexion, $query);
+        while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+            $datos [] = [
+                'NombreEmpresa' => $fila['NombreEmpresa'],
+                'Correo' => $fila['Correo'],
+                'direccion' => $fila['direccion'],
+                'sitioWed' => $fila['sitioWed'],
+                'Telefono' => $fila['Telefono'],
+                'Telefono2' => $fila['Telefono2'],
+                'CorreoServicio' => $fila['CorreoServicio']
+            ];
+        }        
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $datos;
+    }
+
+    public static function eliminarParametro($parametro){
+        try{
+            $conn = new Conexion();
+            $conexion = $conn->abrirConexionDB();
+            $query = "DELETE FROM tbl_MS_Parametro WHERE id_Parametro = '$parametro';";
+            $estadoEliminado = sqlsrv_query($conexion, $query);
+        }catch (Exception $e) {
+            $estadoEliminado = 'Error SQL:' . $e;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estadoEliminado;
+    }
+
+    //Método para generar reporte.
+    public static function obtenerLosParametrosPDF($buscar){
+        $parametros = null;
+        try {
+            $parametros = array();
+            $con = new Conexion();
+            $abrirConexion = $con->abrirConexionDB();
+            $query = "SELECT p.id_Parametro, p.parametro, p.valor, p.descripcion, u.usuario 
+            FROM tbl_ms_parametro p
+            INNER JOIN tbl_ms_usuario u ON p.id_Usuario = u.id_Usuario
+            WHERE CONCAT(p.id_Parametro, p.parametro, p.valor, p.descripcion, u.usuario) LIKE '%' + '$buscar' + '%';";
+            $resultado = sqlsrv_query($abrirConexion, $query);
+            //Recorremos el resultado de tareas y almacenamos en el arreglo.
+            while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+                $parametros[] = [
+                    'id' => $fila['id_Parametro'],
+                    'parametro' => $fila['parametro'],
+                    'valorParametro' => $fila['valor'],
+                    'descripcionParametro' => $fila['descripcion'],
+                    'usuario' => $fila['usuario'],
+                ];
+            }
+        } catch (Exception $e) {
+            $parametros = 'Error SQL:' . $e;
+        }
+       sqlsrv_close($abrirConexion); //Cerrar conexion
+        return $parametros;
+    }
+
+    public static function obtenerVigenciaLiquidacion(){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query="SELECT valor FROM  tbl_MS_Parametro where parametro = 'ADMINLIQUIDACION'";
+        $resultado = sqlsrv_query($conexion, $query);
+        $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+        $liquidacion = [
+            'liquidacion' => $fila['valor']   
+        ];
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $liquidacion;
+    }
+
+    public static function obtenerCorreoDestino(){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query="SELECT (SELECT VALOR  FROM tbl_MS_Parametro 
+        WHERE parametro ='CORREO SERVICIO TEC') as CorreoServicio;;";
+        $resultado = sqlsrv_query($conexion, $query);
+        while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+            $datos [] = [
+                'CorreoServicio' => $fila['CorreoServicio']
+            ];
+        }        
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $datos;
+    }
+
+
+    public static function obtenerCarpetaDestino(){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query="SELECT (SELECT VALOR  FROM tbl_MS_Parametro 
+        WHERE parametro ='ADMIN GARANTIA') as CarpetaGarantia;";
+        $resultado = sqlsrv_query($conexion, $query);
+        while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+            $datos [] = [
+                'CarpetaGarantia' => $fila['CarpetaGarantia']
+            ];
+        }        
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $datos;
+    }
+
+
 }

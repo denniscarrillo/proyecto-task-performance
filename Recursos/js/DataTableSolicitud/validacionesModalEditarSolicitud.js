@@ -2,8 +2,8 @@ import * as funciones from '../funcionesValidaciones.js';
 export let estadoValidado = false;
 //Objeto con expresiones regulares para los inptus
 const validaciones = {
-    soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
-    soloNumeros: /^[0-9]*$/
+    soloLetras: /^(?=.*[^a-zA-Z\/ .ÑñáéíóúÁÉÍÓÚs])/, //Solo letras
+    soloNumeros: /^[0-9,-]*$/
  
 }
 
@@ -14,7 +14,6 @@ let estadoEspacioInput = {
     estadoEspacioAvance: true
 }
   
-
 
 let estadoSelect = {
     estadoSelectdescripcion: true,
@@ -33,12 +32,13 @@ let estadoSoloLetras = {
     estadoLetrasdescripcion: true,
     estadoLetrasubicacion: true,
     estadoLetrasAvance: true,
-  
-
 }
 let estadoSoloNumeros = {
-   
     estadoNumerotelefono :true,
+}
+
+let estadoMayorCero = {
+    estadoMayorCeroTelefono: true
 }
 //VARIABLES GLOBALES
 
@@ -57,6 +57,7 @@ const $Avance = document.getElementById('E_AvanceSolicitud');
     las validaciones se hayan cumplido.
 */
 $form.addEventListener('submit', e => {
+    estadoValidado = false;
     //Validamos que algún campo no esté vacío.
     let estadoInputdescripcion = funciones.validarCampoVacio($descripcion);
     let estadoInputtelefono = funciones.validarCampoVacio($telefono);
@@ -101,20 +102,24 @@ $form.addEventListener('submit', e => {
                     estadoSelect = funciones.validarCampoVacio($ubicacion);
                     estadoSelect = funciones.validarCampoVacio($Avance);
                 } else {
+                    if(estadoMayorCero.estadoMayorCeroTelefono == false){
+                        e.preventDefault();
+                        estadoMayorCero.estadoMayorCeroTelefono = funciones.MayorACero($telefono);
+                } else {
                     estadoValidado = true; // 
                 }  
             }
-        
+        }
         } 
     }
 });
 $descripcion.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasdescripcion = funciones.validarSoloLetras($descripcion, validaciones.soloLetras);
-   funciones.limitarCantidadCaracteres("E_descripcion", 30);
+   funciones.limitarCantidadCaracteres("E_descripcion", 500);
 });
 $ubicacion.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasubicacion= funciones.validarSoloLetras($ubicacion, validaciones.soloLetras);
-   funciones.limitarCantidadCaracteres("E_ubicacion", 30);
+   funciones.limitarCantidadCaracteres("E_ubicacion", 100);
 });
 $Avance.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasAvance= funciones.validarSoloLetras($Avance, validaciones.soloLetras);
@@ -123,17 +128,18 @@ $Avance.addEventListener('keyup', ()=>{
 $descripcion.addEventListener('focusout', ()=>{
     if(estadoMasdeUnEspacio.estadoMasEspaciodescripcion){
         funciones.validarMasdeUnEspacio($descripcion);
-    }  
+    }
+    let descripcionMayus = $descripcion.value.toUpperCase();
+     $descripcion.value = descripcionMayus;  
+  
 });
-$telefono.addEventListener('focusout', ()=>{
-    if(estadoMasdeUnEspacio.estadoMasEspaciotelefono){
-        funciones.validarMasdeUnEspacio($telefono);
-    }  
-});
+
 $ubicacion.addEventListener('focusout', ()=>{
     if(estadoMasdeUnEspacio.estadoMasEspacioubicacion){
         funciones.validarMasdeUnEspacio($ubicacion);
-    }  
+    }
+    let direccionMayus = $ubicacion.value.toUpperCase();
+    $ubicacion.value = direccionMayus;  
 });
 $Avance.addEventListener('focusout', ()=>{
     if(estadoMasdeUnEspacio.estadoMasEspacioAvance){
@@ -144,18 +150,31 @@ $Avance.addEventListener('focusout', ()=>{
 $descripcion.addEventListener('change', ()=>{
     estadoSelect.estadoSelectdescripcion = funciones.validarCampoVacio($descripcion);
 });
+/////////TEEFONO
+$telefono.addEventListener('focusout', ()=>{
+    if(estadoMasdeUnEspacio.estadoMasEspaciotelefono){
+        funciones.validarMasdeUnEspacio($telefono);
+    }  
+});
 $telefono.addEventListener('change', ()=>{
     estadoSelect.estadoSelecttelefono = funciones.validarCampoVacio($telefono);
 });
+
+$telefono.addEventListener('keyup', ()=>{
+    estadoMayorCero.estadoMayorCeroTelefono = funciones.MayorACero($telefono);
+});
+$telefono.addEventListener('keyup', ()=>{
+    estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
+   funciones.limitarCantidadCaracteres("E_telefono_cliente", 20);
+});
+
+
 $ubicacion.addEventListener('change', ()=>{
     estadoSelect.estadoSelectubicacion = funciones.validarCampoVacio($ubicacion);
 });
 $Avance.addEventListener('change', ()=>{
     estadoSelect.estadoSelectAvance = funciones.validarCampoVacio($Avance);
 });
-$telefono.addEventListener('keyup', ()=>{
-    estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
-   funciones.limitarCantidadCaracteres("E_telefono_cliente", 14);
-});
+
 
 // || estadoMasdeUnEspacio.estadoMasEspacioNombre == true

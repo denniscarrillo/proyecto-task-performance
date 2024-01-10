@@ -33,18 +33,18 @@ class Porcentajes {
         return $Porcent;
     }
 
-    //Método para crear nuevo registro
-    public static function registroNuevoPorcentaje($nuevoPorcentaje){
+    //Método para crear eliminar registro
+    public static function registroPorcentaje($nuevoPorcentaje){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB
         $valorPorcentaje = $nuevoPorcentaje->valorPorcentaje;
         $descripcionPorcentaje = $nuevoPorcentaje->descripcionPorcentaje;
         $estadoPorcentaje = $nuevoPorcentaje->estadoPorcentaje;
         $CreadoPor = $nuevoPorcentaje->CreadoPor;
-        date_default_timezone_set('America/Tegucigalpa');
-        $FechaCreacion = date("Y-m-d");
+        // date_default_timezone_set('America/Tegucigalpa');
+        // $FechaCreacion = date("Y-m-d");
         $query = "INSERT INTO tbl_Porcentaje(valor_Porcentaje,descripcion,estado_Porcentaje, Creado_Por, Fecha_Creacion)
-                       VALUES ('$valorPorcentaje', '$descripcionPorcentaje', '$estadoPorcentaje', '$CreadoPor', '$FechaCreacion');";        
+                       VALUES ('$valorPorcentaje', '$descripcionPorcentaje', '$estadoPorcentaje', '$CreadoPor', GETDATE());";        
         $nuevoPorcentaje = sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $nuevoPorcentaje;
@@ -59,15 +59,14 @@ class Porcentajes {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
         $idPorcentaje = $nuevoPorcentaje->idPorcentaje;
-        $valorPorcentaje = $nuevoPorcentaje->valorPorcentaje;
-        $descripcionPorcentaje =$nuevoPorcentaje->descripcionPorcentaje;
+        // $valorPorcentaje = $nuevoPorcentaje->valorPorcentaje;
+        // $descripcionPorcentaje =$nuevoPorcentaje->descripcionPorcentaje;
         $estadoPorcentaje = $nuevoPorcentaje->estadoPorcentaje;
         $ModificadoPor = $nuevoPorcentaje->ModificadoPor;
-        date_default_timezone_set('America/Tegucigalpa'); 
-        $FechaModificacion = date("Y-m-d");
-        $query = "UPDATE tbl_Porcentaje SET valor_Porcentaje='$valorPorcentaje', descripcion='$descripcionPorcentaje',
-        estado_Porcentaje ='$estadoPorcentaje', Modificado_Por = '$ModificadoPor', 
-        Fecha_Modificacion = '$FechaModificacion' WHERE id_Porcentaje='$idPorcentaje';";
+        // date_default_timezone_set('America/Tegucigalpa'); 
+        // $FechaModificacion = date("Y-m-d");
+        $query = "UPDATE tbl_Porcentaje SET estado_Porcentaje ='$estadoPorcentaje', Modificado_Por = '$ModificadoPor', 
+        Fecha_Modificacion = GETDATE() WHERE id_Porcentaje='$idPorcentaje';";
         $nuevoPorcentaje = sqlsrv_query($conexion, $query);
         sqlsrv_close($conexion); #Cerramos la conexión.
     }
@@ -84,5 +83,39 @@ class Porcentajes {
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $existePorcentaje;
+    }
+    public static function eliminarPorcentaje($eliminarPorcentaje){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $idPorcentaje = $eliminarPorcentaje->idPorcentaje;
+        $estadoPorcentaje = $eliminarPorcentaje->estadoPorcentaje;
+        $ModificadoPor = $eliminarPorcentaje->ModificadoPor;
+        date_default_timezone_set('America/Tegucigalpa'); 
+        $FechaModificacion = date("Y-m-d");
+        $query = "UPDATE tbl_Porcentaje SET estado_Porcentaje ='$estadoPorcentaje', Modificado_Por = '$ModificadoPor', 
+        Fecha_Modificacion = '$FechaModificacion' WHERE id_Porcentaje='$idPorcentaje';";
+        $eliminarPorcentaje = sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion); #Cerramos la conexión.
+    }
+    public static function obtenerPorcentajesPdf($buscar){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $query = "SELECT id_Porcentaje,valor_Porcentaje, descripcion, estado_Porcentaje
+        FROM tbl_Porcentaje 
+        WHERE CONCAT(id_Porcentaje,valor_Porcentaje, descripcion, estado_Porcentaje)
+        LIKE '%' + '$buscar' + '%'";
+        $listaPorcentajes = sqlsrv_query($consulta, $query);
+        $Porcent = array();
+        //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
+        while($fila = sqlsrv_fetch_array($listaPorcentajes, SQLSRV_FETCH_ASSOC)){
+            $Porcent [] = [
+                'idPorcentaje' => $fila["id_Porcentaje"],
+                'valorPorcentaje' => $fila["valor_Porcentaje"],
+                'descripcionPorcentaje'=> $fila["descripcion"],
+                'estadoPorcentaje' => $fila["estado_Porcentaje"]
+            ];
+        }
+        sqlsrv_close($consulta); #Cerramos la conexión.
+        return $Porcent;
     }
 }

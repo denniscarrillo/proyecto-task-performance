@@ -67,4 +67,61 @@ class TipoServicio {
         sqlsrv_close($abrirConexion); //Cerrar conexion
     }
 
+    public static function eliminarTipoServicio($TipoServicio){
+        try{
+            $conn = new Conexion();
+            $conexion = $conn->abrirConexionDB();
+            $query = "DELETE FROM tbl_TipoServicio WHERE id_TipoServicio = '$TipoServicio';";
+            $estadoEliminado = sqlsrv_query($conexion, $query);
+        }catch (Exception $e) {
+            $estadoEliminado = 'Error SQL:' . $e;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estadoEliminado;
+    }
+
+    //Generado por PDF
+    public static function obtenerTipoServicioID($id){
+        $tipoServicio = array();
+        try{
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB();
+            $query = "SELECT servicio_Tecnico FROM tbl_TipoServicio
+            WHERE id_TipoServicio = '$id';";
+            $obtenerTipoServicio = sqlsrv_query($abrirConexion, $query);
+            //Recorremos el resultado de tareas y almacenamos en el arreglo.
+            while ($fila = sqlsrv_fetch_array( $obtenerTipoServicio, SQLSRV_FETCH_ASSOC)) {
+                $tipoServicio[] = [
+                    'servicioTec' => $fila["servicio_Tecnico"]
+                ];
+            }
+        } catch (Exception $e) {
+            $tipoServicio = 'Error SQL:' .$e;
+        }
+        sqlsrv_close($abrirConexion); //Cerrar conexion
+        return $tipoServicio;
+    }
+
+    //Generado por PDF
+    public static function obtenerTipoServicioPDF($buscar){
+        $tipoServicio = array();
+        try{
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB();
+            $query = "SELECT id_TipoServicio, servicio_Tecnico FROM tbl_TipoServicio
+            WHERE CONCAT(id_TipoServicio, servicio_Tecnico) LIKE '%' + '$buscar' + '%';";
+            $obtenerTipoServicio = sqlsrv_query($abrirConexion, $query);
+            //Recorremos el resultado de tareas y almacenamos en el arreglo.
+            while ($fila = sqlsrv_fetch_array( $obtenerTipoServicio, SQLSRV_FETCH_ASSOC)) {
+                $tipoServicio[] = [
+                    'id_TipoServicio' => $fila["id_TipoServicio"],
+                    'servicio_Tecnico' => $fila["servicio_Tecnico"]
+                ];
+            }
+        } catch (Exception $e) {
+            $tipoServicio = 'Error SQL:' .$e;
+        }
+        sqlsrv_close($abrirConexion); //Cerrar conexion
+        return $tipoServicio;
+    }
 }//Fin de la clase

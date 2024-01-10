@@ -31,10 +31,10 @@ require_once('obtenerEstadoComision.php');
         $urlIndex = '../index.php';
         // Rendimiento
         $urlMisTareas = '../rendimiento/v_tarea.php';
+        $urlCotizacion = '../rendimiento/cotizacion/gestionCotizacion.php';
         $urlConsultarTareas = '../crud/DataTableTarea/gestionDataTableTarea.php';
-        $urlBitacoraTarea = ''; //PENDIENTE
         $urlMetricas = '../crud/Metricas/gestionMetricas.php';
-        $urlEstadisticas = '../grafica/estadistica.php'; //PENDIENTE
+        $urlEstadisticas = '../grafica/estadistica.php';
         //Solicitud
         $urlSolicitud = '../crud/DataTableSolicitud/gestionDataTableSolicitud.php';
         //Comisión
@@ -49,6 +49,7 @@ require_once('obtenerEstadoComision.php');
         $urlBitacoraSistema = '../crud/bitacora/gestionBitacora.php';
         //Mantenimiento
         $urlUsuarios = '../crud/usuario/gestionUsuario.php';
+        $urlEstadoUsuario = '../crud/estadoUsuario/gestionEstadoUsuario.php';
         $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
         $urlPreguntas = '../crud/pregunta/gestionPregunta.php';
         $urlParametros = '../crud/parametro/gestionParametro.php';
@@ -58,6 +59,8 @@ require_once('obtenerEstadoComision.php');
         $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
           $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
         $urlImg = '../../Recursos/imagenes/Logo-E&C.png';
+        $urlRazonSocial = '../crud/RazonSocial/gestionRazonSocial.php';
+        $urlRubroComercial = '../crud/rubroComercial/gestionRubroComercial.php';
         require_once '../layout/sidebar.php';
         ?>
       </div>
@@ -99,6 +102,7 @@ require_once('obtenerEstadoComision.php');
             <label id="mensaje-estado"></label>
             <p class="mensaje" id= "mensaje"></p>
           </div>
+
           <div class="form-element">
             <label>Monto</label>
             <input type="text" class="form-control" id="monto-total">
@@ -122,6 +126,9 @@ require_once('obtenerEstadoComision.php');
             <label>Comisión venta</label>
             <input type="text" class="form-control" id="comision-total">
           </div>
+          <!-- <div class="form-element">
+            <label>Fecha de liquidación</label>
+            <input type="text" class="form-control" id="fecha_V" value=""> -->
           <div class="form-element">
             <label>Vendedores:</label>
             <div class="conteiner-vendedores" id="conteiner-vendedores">
@@ -129,7 +136,7 @@ require_once('obtenerEstadoComision.php');
           </div>
           <div class="form-element-btns">
             <button type="submit" class="btn btn-primary" id="btn-guardar-comision">Guardar</button>
-            <button type="button" class="btn btn-secondary">Cancelar</button>
+            <button type="button" class="btn btn-secondary" id="btn-cancelar">Cancelar</button>
           </div>
         </form>
       </div>

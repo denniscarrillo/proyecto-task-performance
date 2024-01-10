@@ -40,7 +40,7 @@
                    }else{ 
                     ControladorUsuario::actualizarContrasenia($user, $encriptPassword);
 
-                    $respaldada = ControladorUsuario::respaldarContrasenia($user, "", $encriptPassword, 3); 
+                    ControladorUsuario::respaldarContrasenia($user, "", $encriptPassword, 3); 
                     ControladorUsuario::eliminarUltimaContrasena($_SESSION['usuario']);
                     $mensaje = 'Contraseña Actualizada'; 
                    }                 

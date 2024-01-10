@@ -20,11 +20,19 @@ class ControladorRol {
     //     return Rol::eliminarRol($id_Rol);
     // }
     public static function editarRolUsuario($nuevoRol){
-       return Rol::editarRol($nuevoRol);
+       Rol::editarRol($nuevoRol);
     }
 
     public static function rolExiste($rol){
         return Rol::rolExistente($rol);
+    }
+
+    public static function eliminandoRol($rol){
+        return Rol::eliminarRol($rol);
+    }
+
+    public static function obtenerRolesUsuarioPDF($buscar){
+        return Rol::obtenerRolesUsuarioPDF($buscar);
     }
 
 }

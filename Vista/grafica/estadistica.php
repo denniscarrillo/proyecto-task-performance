@@ -37,10 +37,10 @@
             $urlIndex = '../index.php';
             // Rendimiento
             $urlMisTareas = '../rendimiento/v_tarea.php';
-            $urlConsultarTareas = '../crud/DataTableTarea/gestionDataTableTarea.php'; //PENDIENTE
-            $urlBitacoraTarea = ''; //PENDIENTE
+            $urlCotizacion = '../rendimiento/cotizacion/gestionCotizacion.php';
+            $urlConsultarTareas = '../crud/DataTableTarea/gestionDataTableTarea.php'; 
             $urlMetricas = '../crud/Metricas/gestionMetricas.php';
-            $urlEstadisticas = './estadistica.php'; //PENDIENTE
+            $urlEstadisticas = './estadistica.php'; 
             //Solicitud
             $urlSolicitud = '../crud/DataTableSolicitud/gestionDataTableSolicitud.php';
             //Comisión
@@ -55,6 +55,7 @@
             $urlBitacoraSistema = '../crud/bitacora/gestionBitacora.php';
             //Mantenimiento
             $urlUsuarios = '../crud/usuario/gestionUsuario.php';
+            $urlEstadoUsuario = '../crud/estadoUsuario/gestionEstadoUsuario.php';
             $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
             $urlPreguntas = '../crud/pregunta/gestionPregunta.php';
             $urlParametros = '../crud/parametro/gestionParametro.php';
@@ -65,6 +66,8 @@
             $urlPerfilUsuario = '../crud/PerfilUsuario/gestionPerfilUsuario.php';
             $urlPerfilContraseniaUsuarios='../crud/PerfilUsuario/gestionPerfilContrasenia.php';
             $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
+            $urlRazonSocial = '../crud/RazonSocial/gestionRazonSocial.php';
+            $urlRubroComercial = '../crud/RubroComercial/gestionRubroComercial.php';
             require_once '../layout/sidebar.php';
           ?>
         </div>    

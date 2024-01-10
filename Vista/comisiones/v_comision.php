@@ -20,6 +20,7 @@ require_once("validacionesComision.php");
   <link href='../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href='../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <link href='../../Recursos/css/layout/footer.css' rel='stylesheet'>
+  <link href='../../Recursos/css/modalVerIdComision.css' rel='stylesheet'>
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
   <title> Comision </title>
 </head>
@@ -50,6 +51,7 @@ require_once("validacionesComision.php");
         $urlBitacoraSistema = '../crud/bitacora/gestionBitacora.php';
         //Mantenimiento
         $urlUsuarios = '../crud/usuario/gestionUsuario.php';
+        $urlEstadoUsuario = '../crud/estadoUsuario/gestionEstadoUsuario.php';
         $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
         $urlPreguntas = '../crud/pregunta/gestionPregunta.php';
         $urlParametros = '../crud/parametro/gestionParametro.php';
@@ -59,6 +61,8 @@ require_once("validacionesComision.php");
         $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
         $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
         $urlImg = '../../Recursos/imagenes/Logo-E&C.png';
+        $urlRazonSocial = '../crud/RazonSocial/gestionRazonSocial.php';
+        $urlRubroComercial = '../crud/rubroComercial/gestionRubroComercial.php';
         require_once '../layout/sidebar.php';
         ?>
       </div>
@@ -83,26 +87,32 @@ require_once("validacionesComision.php");
               <input type="date" id="fechaDesdef" name="fechaDesdef" class="form-control">
               <label for="fechaHasta">Fecha hasta:</label>
               <input type="date" id="fechaHastaf" name="fechaHastaf" class="form-control">
-              <button type="button" class="btn btn-primary" id="btnFiltrar">Filtrar</button>
+              <button type="button" class="btn btn-primary" id="btn_filtroALiquidar">Comisiones a liquidar</button>
             </div>
             <div>
               <a href="v_nuevaComision.php" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro"><i
                   class="fa-solid fa-circle-plus"></i> Generar comisión</a>
-              <a href="../fpdf/ReporteComision.php" class="btn_Pdf btn btn-primary"><i class="fas fa-file-pdf"></i>
-                Generar Reportes</a>
-              <a href="ReporteComisionExcel.php" target="_blank" class="btn_Excel btn btn-primary "><i
-                  class="fa-solid fa-file-excel fa-sm"></i> Generar Excel</a>
+              <!-- <a href="../../../TCPDF/examples/reporteriaComision.php" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"><i class="fas fa-file-pdf"></i>
+                Generar Reportes</a> -->
+                <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
+              <!-- <a href="ReporteComisionExcel.php" target="_blank" class="btn_Excel btn btn-primary "><i
+                  class="fa-solid fa-file-excel fa-sm"></i> Generar Excel</a> -->
             </div>
             <table class="table" id="table-Comision">
               <thead>
                 <tr>
                   <th scope="col"> ID COMISION </th>
-                  <th scope="col"> FACTURA </th>
+                  <th scope="col"> N° FACTURA </th>
                   <th scope="col"> TOTAL VENTA </th>
                   <th scope="col"> PORCENTAJE </th>
                   <th scope="col"> COMISION TOTAL </th>
-                  <th scope="col"> ESTADO </th>
-                  <th scope="col"> FECHA </th>
+                  <th scope="col"> ESTADO COMISION </th>
+                  <th scope="col"> ESTADO LIQUIDACION </th>
+                  <th scope="col"> ESTADO COBRO </th>
+                  <th scope="col"> METODO PAGO </th>
+                  <th scope="col"> FECHA CREACION </th>
+                  <th scope="col"> FECHA LIQUIDACION</th>
+                  <th scope="col"> FECHA COBRO VENTA </th>
                   <th scope="col"> ACCIONES </th>
                 </tr>
               </thead>
@@ -114,20 +124,26 @@ require_once("validacionesComision.php");
       </div>
     </div>
     <?php
-    require('modalFiltroVenta.html');
-    require('modalEditarComision.html');
+    // require_once('modalFiltroVenta.html');
+    
+    require_once('modalVerComisiones.html');
+    require_once('modalEditarComision.html');
+    require_once('modalLiquidarComisiones.html');
+    
+    
     ?>
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
     <script src="../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
-    <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
     <script src="../../Recursos/js/comision/dataTableComision.js" type="module"></script>
     <script src="../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
     <!-- <script src="../../Recursos/js/comision/validacionesEditarComision.js" type="module"></script> -->
-    <script src="../../Recursos/js/permiso/gestionPermisos.js"></script>
+    <!-- <script src="../../Recursos/js/permiso/dataTablePermisos.js"></script> -->
     <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
     <script src="../../Recursos/bootstrap5/bootstrap.min.js"></script>
     <script src="../../Recursos/js/index.js"></script>
+
 </body>
 
 </html>

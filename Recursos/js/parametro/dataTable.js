@@ -23,7 +23,10 @@ let procesarPermisoActualizar = data => {
       { "data": "descripcionParametro"},
       { "data": "usuario" },
       {"defaultContent":
-      `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`
+      `<div>
+        <button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>
+        <button class="btn_eliminar btns btn ${(permisos.Eliminar == 'N')? 'hidden': ''}" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button>
+      </div>`
       }
     ]
   });
@@ -79,7 +82,7 @@ $('#form-Edit-Parametro').submit(function (e) {
         //Mostrar mensaje de exito
         Swal.fire(
           'Actualizado!',
-          'El usuario ha sido modificado!',
+          'El parámetro ha sido modificado!',
           'success',
         )
         tablaParametro.ajax.reload(null, false);      
@@ -105,3 +108,54 @@ let limpiarFormEdit = () => {
     $mensaje.innerText = '';
   });
 }
+
+//Eliminar parametro
+$(document).on("click", "#btn_eliminar", function() {
+  let fila = $(this);        
+    let parametro= $(this).closest('tr').find('td:eq(1)').text();		    
+    Swal.fire({
+      title: 'Estas seguro de eliminar el parametro '+parametro+'?',
+      text: "No podras revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borralo!'
+    }).then((result) => {
+      if (result.isConfirmed) {      
+        $.ajax({
+          url: "../../../Vista/crud/parametro/eliminarParametro.php",
+          type: "POST",
+          datatype:"json",    
+          data:  { parametro: parametro},    
+          success: function(data) {
+            let estadoEliminado = data[0].estadoEliminado;
+             console.log(data);
+             if(estadoEliminado == 'eliminado'){
+              tablaParametro.row(fila.parents('tr')).remove().draw();
+              Swal.fire(
+                'Eliminado!',
+                'El parametro ha sido eliminada.',
+                'success'
+              ) 
+              tablaParametro.ajax.reload(null, false);
+            } else {
+               Swal.fire(
+                 'Lo sentimos!',
+                 'El parametro no puede ser eliminado.',
+                 'error'
+               );
+               tablaParametro.ajax.reload(null, false);
+             }           
+          }
+          }); //Fin del AJAX
+      }
+    });                
+});
+
+//Generar Pdf 
+
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-Parametro_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reporteParametros.php?buscar='+buscar, '_blank');
+});                

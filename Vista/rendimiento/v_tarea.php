@@ -30,8 +30,8 @@ require_once('validacionesTarea.php');
         $urlIndex = '../index.php';
         // Rendimiento
         $urlMisTareas = './v_tarea.php';
-        $urlConsultarTareas = '../crud/DataTableTarea/gestionDataTableTarea.php'; 
-        $urlBitacoraTarea = ''; //PENDIENTE
+        $urlCotizacion = './cotizacion/gestionCotizacion.php';
+        $urlConsultarTareas = '../crud/DataTableTarea/gestionDataTableTarea.php';
         $urlMetricas = '../crud/Metricas/gestionMetricas.php';
         $urlEstadisticas = '../grafica/estadistica.php'; 
         //Solicitud
@@ -48,6 +48,7 @@ require_once('validacionesTarea.php');
         $urlBitacoraSistema = '../crud/bitacora/gestionBitacora.php';
         //Mantenimiento
         $urlUsuarios = '../crud/usuario/gestionUsuario.php';
+        $urlEstadoUsuario = '../crud/estadoUsuario/gestionEstadoUsuario.php';
         $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
         $urlPreguntas = '../crud/pregunta/gestionPregunta.php';
         $urlParametros = '../crud/parametro/gestionParametro.php';
@@ -57,6 +58,8 @@ require_once('validacionesTarea.php');
         $urlPerfilUsuarios='../crud/PerfilUsuario/gestionPerfilUsuario.php';
         $urlPerfilContraseniaUsuarios='../crud/PerfilUsuario/gestionPerfilContrasenia.php';
         $urlImg = '../../Recursos/imagenes/Logo-E&C.png';
+        $urlRazonSocial = '../crud/razonSocial/gestionRazonSocial.php';
+        $urlRubroComercial = '../crud/rubroComercial/gestionRubroComercial.php';
         require_once '../layout/sidebar.php';
       ?>
     </div>
@@ -124,21 +127,21 @@ require_once('validacionesTarea.php');
   </div>
   <div id="modals-container">
     <?php
-    require_once('modalSubirEvidencia.html');
     require_once('modalVendedores.html');
     ?>
   </div>
-  <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-  <script src="../../Recursos/bootstrap5/bootstrap.min.js "></script>
+  <script src="../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js" ></script>
+  <script src="../../Recursos/js/librerias/SweetAlert2.all.min.js"></script>
   <script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+  <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
+  <script src="../../Recursos/js/librerias/dataTables.bootstrap5.min.js"></script>
   <script src="../../Recursos/js/librerias/Sortable.min.js"></script>
-  <script src="../../Recursos/js/rendimiento/tarea.js"></script>
+  <script src="../../Recursos/bootstrap5/bootstrap.min.js "></script>
+  <!-- Scripts personalizados -->
   <script src="../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../Recursos/js/index.js"></script>
-  <script src="../../Recursos/js/rendimiento/guardarEvidencia.js"></script>
+  <script src="../../Recursos/js/rendimiento/tarea.js" type="module"></script>
 </body>
 
 </html>

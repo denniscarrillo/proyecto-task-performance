@@ -25,9 +25,11 @@ let procesarPermisoActualizar = data => {
       { "data": "Estado" },
       { "data": "Rol" },
       {"defaultContent":
-          '<div><button class="btns btn" id="btn_ver"><i class="fa-solid fa-eye"></i></button>' +
-          `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`+
-          '<button class="btn_eliminar btns btn" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button>'
+          `<div>
+          <button class="btns btn" id="btn_ver"><i class="fa-solid fa-eye"></i></button>
+          <button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button class="btn_eliminar btns btn ${(permisos.Eliminar == 'N')? 'hidden': ''}" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button>
+          </div>`
       }
     ]
   });
@@ -44,6 +46,7 @@ let obtenerPermisos = function ($idObjeto, callback) {
 }
 // Cuando presionamos el boton aparece el modal con los siguientes campos
 $('#btn_nuevoRegistro').click(async function () {
+  limpiarForm();
   // //Petición para obtener roles 
   obtenerRoles('#rol');
   //Petición para obtener estado de usuario
@@ -52,8 +55,8 @@ $('#btn_nuevoRegistro').click(async function () {
   let fechaC = new Date().toISOString().slice(0, 10);
   $("#fecha_C").val(fechaC);
   //se obtiene la fecha de Vencimiento
-  let vigencia = await obtenerVigencia()
-  let fechaV = new Date()
+  let vigencia = await obtenerVigencia();
+  let fechaV = new Date();
   //se calcula la fecha de hoy + los dias de vigencia
   fechaV.setDate(fechaV.getDate() + parseInt(vigencia['Vigencia']))
   $("#fecha_V").val(fechaV.toISOString().slice(0, 10));
@@ -98,15 +101,15 @@ $('#form-usuario').submit(async function (e) {
         }
       });
      $('#modalNuevoUsuario').modal('hide');
+     limpiarForm();
     } 
 });
 
 //Eliminar usuario
 $(document).on("click", "#btn_eliminar", function() {
   let fila = $(this);        
-    let usuario = $(this).closest('tr').find('td:eq(1)').text();
-    let ROL = $(this).closest('tr').find('td:eq(5)').text();
-    if (ROL == 'Super Administrador'){
+  let usuario = $(this).closest('tr').find('td:eq(1)').text();
+    if (usuario == 'SUPERADMIN'){
       Swal.fire(
         'Sin acceso!',
         'Super Administrador no puede ser eliminado',
@@ -130,7 +133,7 @@ $(document).on("click", "#btn_eliminar", function() {
             data:  { usuario: usuario},    
             success: function(data) {
               let estadoEliminado = data[0].estadoEliminado;
-              // console.log(data);
+               console.log(data);
               if(estadoEliminado == 'eliminado'){
                 tablaUsuarios.row(fila.parents('tr')).remove().draw();
                 Swal.fire(
@@ -151,8 +154,7 @@ $(document).on("click", "#btn_eliminar", function() {
           }); //Fin del AJAX
         }
       });
-    }		    
-                    
+    }		                   
 });
 
 $(document).on("click", "#btn_editar", async function(){		                
@@ -249,7 +251,7 @@ let obtenerVigencia = async () =>{
         type: 'GET',
         dataType: 'JSON'
       });
-      return dato
+      return dato;
     } catch(err) {
       console.error(err)
   }
@@ -344,7 +346,11 @@ let limpiarFormEdit = () => {
   });
 }
 
-
+//Generar reporte PDF
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-Usuarios_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reporteriaListaUsuario.php?buscar='+buscar, '_blank');
+});     
 
 
 

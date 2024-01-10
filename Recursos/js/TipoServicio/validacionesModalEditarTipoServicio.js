@@ -3,7 +3,7 @@ export let estadoValidado = false;
 
 //Objeto con expresiones regulares para los inptus
 const validaciones = {
-    soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
+    soloLetras: /^(?=.'*[^a-zA-Z\s])/, //Solo letras
 }
 //VARIABLES GLOBALES
 let estadoValidaciones = {
@@ -33,4 +33,10 @@ $form.addEventListener('submit', e => {
 $servicio_Tecnico.addEventListener('keyup', () => {
     estadoValidaciones.estadoLetrasServicio_Tecnico = funciones.validarSoloLetras($servicio_Tecnico, validaciones.soloLetras);
     funciones.limitarCantidadCaracteres("E_servicio_Tecnico", 50);
+
 });
+$servicio_Tecnico.addEventListener('focusout', ()=>{
+    
+     let servicio_TecnicoMayus = $servicio_Tecnico.value.toUpperCase();
+     $servicio_Tecnico.value = servicio_TecnicoMayus;  
+ });

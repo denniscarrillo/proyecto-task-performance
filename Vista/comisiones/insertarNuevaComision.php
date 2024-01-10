@@ -4,10 +4,12 @@ require_once('../../Modelo/Usuario.php');
 require_once('../../Controlador/ControladorUsuario.php');
 require_once('../../Modelo/Comision.php');
 require_once('../../Controlador/ControladorComision.php');
+require_once('../../Modelo/Parametro.php');
+require_once('../../Controlador/ControladorParametro.php');
 
-$user = '';
+$user = null;
 session_start();
-if(isset($_POST['idVenta']) || isset($_POST['idComision'])){
+if(isset($_POST['idVenta']) || isset($_POST['idComision']) || isset($_POST['$ComisionTotal'])){
     $user = $_SESSION['usuario'];
     $nuevaComision = new Comision();
     /* $nuevaComision->idComision = intval($_POST['id_Comision']); */
@@ -15,18 +17,18 @@ if(isset($_POST['idVenta']) || isset($_POST['idComision'])){
     $nuevaComision->idPorcentaje = intval($_POST['idPorcentaje']);
     $nuevaComision->comisionTotal = floatval($_POST['comisionTotal']);
     $nuevaComision->estadoComision = 'Activa';
+    $nuevaComision->estadoLiquidacion = 'Pendiente';
+    $nuevaComision->estadoCobro = 'Pendiente Cobro';
+    $nuevaComision->metodoPago = 'Pendiente';
     $nuevaComision->creadoPor = $user;
-    date_default_timezone_set('America/Tegucigalpa');
-    $nuevaComision->fechaComision = date("Y-m-d", strtotime($_POST['fechaComision']));
+    // date_default_timezone_set('America/Tegucigalpa');
+    // $nuevaComision->fechaComision = date("Y-m-d", strtotime($_POST['fechaComision']));
     $idTarea = ControladorComision::traerIdTarea(intval($_POST['idVenta']));
     $vendedores = ControladorComision::traerVendedores($idTarea);
-    
     $idComision = ControladorComision::registroComision($nuevaComision);
-    ControladorComision::guardarComisionVendedor(floatval($_POST['comisionTotal']), $idComision, $vendedores, $user, $_POST['fechaComision']);
+    var_dump($idComision);
+    echo''.$idTarea.''.$idComision.
+    ControladorComision::guardarComisionVendedor(floatval($_POST['comisionTotal']), $idComision, $vendedores, $user);
+    // header('Location: v_comision.php');
     
-    
-    /* $IdComision[] = [
-        'idComision' => $idComision
-    ];
-    print json_encode($IdComision, JSON_UNESCAPED_UNICODE); */
 }

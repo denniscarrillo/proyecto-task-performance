@@ -54,13 +54,12 @@ class Rol {
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             $id=$nuevoRol->id_Rol;
-            $rol=$nuevoRol->rol;
             $descripcion=$nuevoRol->descripcion;
             $modificadoPor=$nuevoRol->ModificadoPor;
             date_default_timezone_set('America/Tegucigalpa'); 
             $fechaModificado = date("Y-m-d h:i:s");
-            $update = "UPDATE tbl_ms_roles SET rol='$rol', descripcion='$descripcion', Modificado_Por='$modificadoPor', Fecha_Modificacion='$fechaModificado' WHERE id_Rol='$id' ";
-            $ejecutar_update = sqlsrv_query($abrirConexion, $update);
+            $update = "UPDATE tbl_ms_roles SET descripcion='$descripcion', Modificado_Por='$modificadoPor', Fecha_Modificacion='$fechaModificado' WHERE id_Rol='$id' ";
+            sqlsrv_query($abrirConexion, $update);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
@@ -79,6 +78,37 @@ class Rol {
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $existeRol;
+    }
+
+    public static function eliminarRol($rol){
+        try{
+            $conn = new Conexion();
+            $conexion = $conn->abrirConexionDB();
+            $query = "DELETE FROM tbl_MS_Roles WHERE id_Rol = '$rol';";
+            $estadoEliminado = sqlsrv_query($conexion, $query);
+        }catch (Exception $e) {
+            $estadoEliminado = 'Error SQL:' . $e;
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estadoEliminado;
+    }
+
+    public static function obtenerRolesUsuarioPDF($buscar){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB();
+        $query = "SELECT id_Rol, rol, descripcion FROM tbl_ms_roles
+        WHERE CONCAT(id_Rol, rol, descripcion) LIKE '%' + '$buscar' + '%';";
+        $obtenerRoles = sqlsrv_query($consulta, $query);
+        $roles = array();
+        while($fila = sqlsrv_fetch_array($obtenerRoles, SQLSRV_FETCH_ASSOC)){
+            $roles [] = [
+                'id_Rol' => $fila["id_Rol"],
+                'rol' => $fila["rol"],
+                'descripcion' => $fila["descripcion"]
+            ];
+        }
+        sqlsrv_close($consulta); #Cerramos la conexión.
+        return $roles;
     }
 
 }

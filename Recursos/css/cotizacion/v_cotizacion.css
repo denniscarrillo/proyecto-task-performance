@@ -1,0 +1,345 @@
+.encabezado {
+    position: sticky;
+    top: 0;
+    color: #f1d2c7;
+    background-color: #615f5e;
+    margin: 1rem;
+    margin-left: 0.4rem;
+    margin-bottom: 1rem;
+    border-radius: 1rem;
+}
+.title-dashboard-task {
+    text-align: left;
+    font-weight: 600;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    padding: 0.6rem;
+    padding-left: 1.5rem;
+    margin: 0;
+}
+.container-cotizacion {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 1rem;
+    overflow: hidden;
+}
+.datos-cotizacion {
+    padding: 0.5rem;
+}
+.container-input-cant-desc {
+    display: inline-block;
+    margin-left: 0.4rem;
+}
+.container-input-cant-desc input {
+    border: none;
+    border-radius: 0.2rem;
+    height: 2rem;
+    width: 4rem;
+    outline-color: #ee894f;
+    text-align: center;
+}
+input[type=number]::-webkit-inner-spin-button {
+    opacity: 1
+}
+.hidden {
+    display: none !important;
+}
+/* ESTILOS PARA SECCION DATOS DEL CLIENTE */
+#input-fecha{
+    width: 35rem;
+    margin-left: auto;
+}
+#fecha {
+    display: inline-block;
+    width: 25rem;
+}
+#input-validez{
+    max-width:12rem;
+}
+.colum-horizontal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: .5rem;
+}
+.resumen-cotizacion {
+    display: flex;
+    justify-content: end;
+}
+.inputs {
+    width: fit-content;
+    /* background-color: aliceblue; */
+    border-radius: 0.4rem;
+}
+.align-in-column {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 1.5rem;
+    width: 27rem;
+    max-width: 30rem;
+    padding: 0.5rem;
+    padding-left: 1rem;
+    /* margin: 0.4rem; */
+    border-radius: 0.4rem;
+    background-color: #dbd2c0;
+    border: 1.5px solid #efa173
+}
+.align-end {
+    display: flex;
+    justify-content: center;
+}
+#sub-total, #descuento, #sub-descuento, #impuesto, #total {
+    width: 15rem;
+}
+.nuevo-producto {
+    display: flex;
+    padding: 1rem  0rem  1rem  0rem;
+    gap: 0.8rem;
+}
+.table {
+    border: 2px solid #efa173
+}
+.table>:not(caption)>*>* {
+    border-bottom-width: 1px;
+}
+.fila-producto {
+    outline: none;
+    border: none;
+    height: 2rem;
+    padding: 0.2rem;
+    padding-left: 0.5rem;
+    border-radius: 0.4rem;
+}
+.fila-producto:focus {
+    box-shadow: 1px 0px 2px 3px #efa173;
+}
+#id-producto {
+    width: 350px;
+}
+#descripcion {
+    width: 348px;
+}
+.th-col-row {
+    border: 2px solid #ee9866;
+    text-align: center;
+}
+.btn-agregar-producto {
+    padding: 0.2rem;
+    width: 150px;
+    border-radius: 0.4rem;
+    border: none;
+    background-color: #ee9866;
+    color: white;
+}
+.btn-agregar-producto:hover {
+    background-color: #ee9866;
+}
+.fa-pencil, .fa-circle-xmark {
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: color ease 0.6s;
+}
+.fa-pencil:hover {
+    color: #ee894f;
+}
+.fa-circle-xmark:hover {
+    color: #ee894f;
+}
+#btn-submit-cotizacion {
+    position: absolute;
+    bottom: 1rem;
+    left: 40%;
+    border: none;
+    width: 10rem;
+    height: 2.5rem;
+    border-radius: 0.4rem;
+    font-size: 1.1rem;
+    color: aliceblue;
+    background-color: #ee9866;
+    box-shadow: 1px 2px 2px 0px #9e9e9e;
+}
+#btn-submit-cotizacion:hover{
+    cursor: pointer;
+    color: aliceblue;
+    background-color: #ee894f;
+}
+#marca {
+    width: 210px;
+}
+#cantidad {
+    width: 275px;
+}
+#precio {
+    width: 205px;
+}
+.btn-agregar-producto {
+    margin-right: 1.2rem;
+    max-height: 2.2rem;
+    min-width: 8rem;
+}
+#btn-productos {
+    min-width: 4rem;
+    max-height: 2.1rem;
+}
+.bold {
+    font-weight: 500;
+    color: #2d2c2c;
+}
+.icon-column {
+    display: flex;
+    align-items: center;
+    justify-self: end;
+}
+.icon-container{
+    float: left;
+    left: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-right: 1.5rem;
+}
+#button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    gap: 1rem;
+}
+.fa-circle-check {
+    cursor: pointer;
+    color: #0c9327
+}
+.fa-ban {
+    cursor: pointer;
+    color: #e43e24
+}
+.fa-circle-check:hover {
+    color: #0c9327
+}
+.fa-ban:hover {
+    color: #e43e24
+}
+.table .new-product .selected{
+    background-color: #6aa5c366;
+}
+.btn_article i {
+    color: #615f5e;
+    font-size: 1.2rem;
+}
+.btn_article i:hover {
+    color: #ee894f;
+}
+.select-articulo { 
+    color: #ee894f !important;
+}
+.input-cant {
+    max-height: 1.4rem;
+    max-width: 6rem;
+    padding: 0.1rem;
+    padding-left: 0.5rem;
+    border: none;
+    background-color: #e8e0d2;
+    border-radius: 0.1rem;
+}
+.input-cant:focus {
+    outline: none;
+}
+.input-cant::placeholder{
+    font-size: 13px;
+}
+#btn-nueva-cot {
+    position: absolute;
+    right: 10rem;
+}
+.estado-cot {
+    margin-left: 0.3rem;
+}
+.btn-pdf-cotizacion {
+   position: relative;
+}
+.container-btns-cotizacion {
+    position: relative;
+    height: 1rem;
+}
+.btn-salir-cotizacion {
+    position: fixed;
+    bottom: 1rem;
+    padding: 0.4rem;
+    border-radius: 0.4rem;
+    text-decoration: none;
+    color: #fffdfa;
+}
+.btn-primary {
+    background-color: #534f4a;
+    border-color: #534f4a;
+}
+.btn-primary:hover {
+    background-color: #ee9866;
+    border-color: #ee9866;
+}
+.btn-primary:active {
+    background-color: #ee9827 !important;
+    border-color: #ee9827 !important;
+}
+#btn_Pdf {
+    position: absolute;
+    right: 0;
+    font-size: 1.2rem;
+    background-color: #992505;
+    border-color: #ff4e2f;
+    font-size: 1rem;
+}
+#id-cotizacion {
+    margin-left: 0.2rem;
+}
+.modal-Productos, #table-productos{
+    min-width: 100%;
+}
+#table-productos {
+    margin: 0 auto;
+}
+.modal-dialog {
+    min-width: 40%;
+}
+.table-conteiner-productos{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#btn_agregar {
+    display: inline-block;
+    margin:  0 auto;
+}
+.btn-agregar-producto:active {
+    background-color: #ee9827;
+}
+.btn-salir-cotizacion label {
+    cursor: pointer;
+}
+#estado-desc {
+    display: inline;
+    margin-left: 0.4rem;
+    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+    max-width: 7.5rem;
+}
+.mensaje_error {
+    box-shadow: 0 0 0 .15rem #e15e3eac;
+    border-color: red;
+}
+.mensaje_error:focus {
+    box-shadow: 0 0 0 .25rem rgba(226, 73, 35, 0.455);
+    border-color: red;
+}
+.mensaje {
+    position: absolute;
+    margin-top: 3px;
+    color: red;
+    font-size: 10px;
+}
+.nuevo-producto{
+    margin-bottom: 1rem;
+}

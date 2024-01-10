@@ -17,6 +17,7 @@ export const validarEspacios = elemento => {
     }
     return estado;
 };
+
 // VALIDAR QUE SE CUMPLAN LAS REGLAS MÍNIMAS PARA LA CONTRASEÑA
 export const validarPassword = (elemento, objetoRegex) => {
     let mensaje = elemento.parentElement.querySelector('p');
@@ -48,6 +49,41 @@ export const validarSoloLetras = (elemento, objetoRegex) => {
     }
     return estado;
 }
+export const validarSoloLetrasNumeros = (elemento, objetoRegex) => {
+  let mensaje = elemento.parentElement.querySelector('p');
+  let estado;
+  let input = elemento.value;
+  if (!objetoRegex.test(input)){
+    mensaje.innerText = '*Solo #- letras y números';
+    elemento.classList.add('mensaje_error');
+    estado = false;
+  } else {
+    mensaje.innerText = '';
+    elemento.classList.remove('mensaje_error');
+    estado = true;
+  }
+  return estado;
+}
+
+//Funcion para validar mayor a cero
+export const MayorACero = (elemento) => {
+    let mensaje = elemento.parentElement.querySelector('p');
+    let estado;
+    let input = parseFloat(elemento.value.trim()); // Convertir a número y eliminar espacios en blanco
+
+    if (isNaN(input) || input <= 0) {
+        mensaje.innerText = '*Debe ser un número mayor a cero';
+        elemento.classList.add('mensaje_error');
+        estado = false;
+    } else {
+        mensaje.innerText = '';
+        elemento.classList.remove('mensaje_error');
+        estado = true;
+    }
+    return estado;
+}
+
+
 //Funcion para validar campos vacios
 export const validarCampoVacio = elemento => {
     let estado;
@@ -59,6 +95,21 @@ export const validarCampoVacio = elemento => {
     } else {
         elemento.classList.remove('mensaje_error');
         mensaje.innerText = '';
+        estado = true;
+    }
+    return estado;
+}
+//Funcion para validar campos vacios cantidad cotizacion
+export const validarCampoVacioCant = elemento => {
+    let estado;
+    // let mensaje = elemento.parentElement.querySelector('p');
+    if (elemento.value.trim() === ''){
+        // mensaje.innerText = '*';
+        elemento.classList.add('mensaje_error');
+        estado = false;
+    } else {
+        elemento.classList.remove('mensaje_error');
+        // mensaje.innerText = '';
         estado = true;
     }
     return estado;
@@ -83,7 +134,23 @@ export const limiteMismoCaracter = (elemento, objetoRegex) => {
     let mensaje = elemento.parentElement.querySelector('p');
     let input = elemento.value;
     if (objetoRegex.test(input)){
-        mensaje.innerText = '*No debe colocar el mismo caracter +3 veces seguidas.';
+        mensaje.innerText = '*No debe colocar el mismo caracter +3 veces seguidas';
+        elemento.classList.add('mensaje_error');
+        estado = false;
+    } else {
+        mensaje.innerText = '';
+        elemento.classList.remove('mensaje_error');
+        estado = true;
+    }
+    return estado;
+}
+
+export const validarMismoNumeroConsecutivo = (elemento, objetoRegex) => {
+    let estado;
+    let mensaje = elemento.parentElement.querySelector('p');
+    let input = elemento.value;
+    if (objetoRegex.test(input)){
+        mensaje.innerText = '*No debe colocar el mismo número +5 veces seguidas';
         elemento.classList.add('mensaje_error');
         estado = false;
     } else {
@@ -98,8 +165,8 @@ export const validarCorreo = (elemento, objetoRegex) => {
     let estado;
     let mensaje = elemento.parentElement.querySelector('p');
     let correo = elemento.value;
-    if (!objetoRegex.test(correo)){
-        mensaje.innerText = '*Correo no válido, verifiquélo';
+    if (!objetoRegex.test(correo)){ 
+        mensaje.innerText = '*Ingrese un correo válido';
         elemento.classList.add('mensaje_error');
         estado = false;
     } else {
@@ -115,7 +182,7 @@ export const validarSoloNumeros = (elemento, objetoRegex) => {
     let estado;
     let input = elemento.value;
     if (!objetoRegex.test(input)){
-        mensaje.innerText = '*Solo se permiten Numeros.';
+        mensaje.innerText = '*Solo se permiten números';
         elemento.classList.add('mensaje_error');
         estado = false;
     } else {
@@ -132,6 +199,20 @@ export const limitarCantidadCaracteres = (elemento, cantMax) => {
         limitText: '',
 		limitTextShow: true
     });
+}
+export const caracteresMinimo = (elemento, min) => {
+  let mensaje = elemento.parentElement.querySelector('p');
+  let estado;
+  if(elemento.value.length < min){
+    mensaje.innerText = '*Debe ingresar mínimo '+min+' caracteres';
+        elemento.classList.add('mensaje_error');
+        estado = false;
+  } else {
+    elemento.classList.remove('mensaje_error');
+        mensaje.innerText = '';
+        estado = true;
+  }
+  return estado;
 }
 
 export const validarMasdeUnEspacio = elemento => {
@@ -170,15 +251,14 @@ export const cantidadParametrosContrasenia = async (elemento) => {
             elemento.classList.remove('mensaje_error');
             estado = true;
         }
-        // //Limitar cantidad de caracters maximo segun el parametro
-        // $('#'+elemento.id).inputlimiter({
-        //     limit: maxLength
-        // });
     } catch (error) {
         console.log(error);
     }
     return estado;
 };
+
+
+
 
     
 

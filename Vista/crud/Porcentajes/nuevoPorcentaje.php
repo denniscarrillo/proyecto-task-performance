@@ -16,7 +16,7 @@
         $nuevoPorcentaje->descripcionPorcentaje= $_POST['descripcionPorcentaje'];
         $nuevoPorcentaje->estadoPorcentaje = $_POST['estadoPorcentaje'];
         $nuevoPorcentaje->CreadoPor = $user;
-        Porcentajes::registroNuevoPorcentaje($nuevoPorcentaje);
+        Porcentajes::registroPorcentaje($nuevoPorcentaje);
         /* ========================= Evento Creacion nuevo porcentaje. ======================*/
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();

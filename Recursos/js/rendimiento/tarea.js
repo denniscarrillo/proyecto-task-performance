@@ -1,3 +1,13 @@
+import * as funciones from '../funcionesValidaciones.js';
+const validaciones = {
+  soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
+  correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
+  soloNumeros: /^[0-9 ]*$/,
+  caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
+  caracterMas5veces: /^(?=.*(...)\1)/,
+  letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
+  direccion: /^[a-zA-Z0-9 #.,-]+$/
+}
 //Elementos HTML seleccionados a traves de su atributo ID
 let $contenedorLlamada = document.getElementById('conteiner-llamada');
 let $contadorLlamadas = document.getElementById('circle-count-llamadas');
@@ -13,59 +23,81 @@ let $columnaCotizaciones = document.getElementById('conteiner-cotizacion');
 let $columnaVentas = document.getElementById('conteiner-venta');
 let $ArticulosInteres = [];
 let $idTarea = '';
-
+let item = 0;
+let tableVendedor = '';
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top',
+  showConfirmButton: false,
+  timer: 5000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+});
+let validarInputTitulo = ($titleTarea) => {
+  let estadoValidaciones = {
+      estadoCV: false,
+      estadoME: false,
+      estadoSLN: false
+  }
+  estadoValidaciones.estadoCV = funciones.validarCampoVacio($titleTarea);
+  (estadoValidaciones.estadoCV) ? estadoValidaciones.estadoSLN = funciones.validarSoloLetrasNumeros($titleTarea, validaciones.letrasNumeros) : '';
+  (estadoValidaciones.estadoSLN) ? estadoValidaciones.estadoME = funciones.validarMasdeUnEspacio($titleTarea) : '';
+  (estadoValidaciones.estadoME) ? funciones.limiteMismoCaracter($titleTarea, validaciones.caracterMas3veces) : '';
+}
 //Una vez este cargado el documento o pagina web se va a ejecutar lo que esta dentro
 $(document).ready(function () {
   obtenerTareas($contenedorLlamada, $contadorLlamadas, 'Llamada');
   obtenerTareas($contenedorLeads, $contadorLeads, 'Lead');
   obtenerTareas($contenedorCotizaciones, $contadorCotizaciones, 'Cotizacion');
   obtenerTareas($contenedorVentas, $contadorVentas, 'Venta');
-  obtenerVendedores();
 
-  new Sortable(document.getElementById('conteiner-llamada'), {
-    group: 'shared', // set both lists to same group
-    animation: 200,
-    easing: "cubic-bezier(1, 0, 0, 1)",
-    chosenClass: 'seleccionado',
-    dragClass: 'drag',
-    onEnd: () => {
-      actualizarContadores();
-      $('#modal-evidencia').modal('show');
-    }
-  });
-  new Sortable(document.getElementById('conteiner-lead'), {
-    group: 'shared',
-    animation: 200,
-    easing: "cubic-bezier(1, 0, 0, 1)",
-    chosenClass: 'seleccionado',
-    dragClass: 'drag',
-    onEnd: () => {
-      actualizarContadores();
-      $('#modal-evidencia').modal('show');
-    }
-  });
-  new Sortable(document.getElementById('conteiner-cotizacion'), {
-    group: 'shared',
-    animation: 200,
-    easing: "cubic-bezier(1, 0, 0, 1)",
-    chosenClass: 'seleccionado',
-    dragClass: 'drag',
-    onEnd: () => {
-      actualizarContadores();
-      $('#modal-evidencia').modal('show');
-    }
-  });
-  new Sortable(document.getElementById('conteiner-venta'), {
-    group: 'shared',
-    animation: 200,
-    easing: "cubic-bezier(1, 0, 0, 1)",
-    chosenClass: 'seleccionado',
-    dragClass: 'drag',
-    onEnd: () => {
-      actualizarContadores();
-      $('#modal-evidencia').modal('show');
-    }
-  });
+  // new Sortable(document.getElementById('conteiner-llamada'), {
+  //   group: 'shared', // set both lists to same group
+  //   animation: 200,
+  //   easing: "cubic-bezier(1, 0, 0, 1)",
+  //   chosenClass: 'seleccionado',
+  //   dragClass: 'drag',
+  //   onEnd: () => {
+  //     actualizarContadores();
+  //     $('#modal-evidencia').modal('show');
+  //   }
+  // });
+  // new Sortable(document.getElementById('conteiner-lead'), {
+  //   group: 'shared',
+  //   animation: 200,
+  //   easing: "cubic-bezier(1, 0, 0, 1)",
+  //   chosenClass: 'seleccionado',
+  //   dragClass: 'drag',
+  //   onEnd: () => {
+  //     actualizarContadores();
+  //     $('#modal-evidencia').modal('show');
+  //   },
+  // });
+  // new Sortable(document.getElementById('conteiner-cotizacion'), {
+  //   group: 'shared',
+  //   animation: 200,
+  //   easing: "cubic-bezier(1, 0, 0, 1)",
+  //   chosenClass: 'seleccionado',
+  //   dragClass: 'drag',
+  //   onEnd: () => {
+  //     actualizarContadores();
+  //     $('#modal-evidencia').modal('show');
+  //   },
+  // });
+  // new Sortable(document.getElementById('conteiner-venta'), {
+  //   group: 'shared',
+  //   animation: 200,
+  //   easing: "cubic-bezier(1, 0, 0, 1)",
+  //   chosenClass: 'seleccionado',
+  //   dragClass: 'drag',
+  //   onEnd: () => {
+  //     actualizarContadores();
+  //     $('#modal-evidencia').modal('show');
+  //   },
+  // });
 });
 //Evento
 $('#btn-NuevaLLamada').click(function () {
@@ -125,26 +157,37 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
       //Recorremo arreglo de objetos con un forEach para mostrar tareas
       objData.forEach(tarea => {
         if (tarea.tipoTarea == tipoTarea) {
-          let fechaIni = tarea.fechaInicio.date.split(" ");
           $tareas +=
-            `<div class="card_task dragged-element" draggable="true" id="${tarea.id}">
+          // `<div class="card_task dragged-element" draggable="true" id="${tarea.id}" >
+            `<div class="card_task dragged-element" data-id="${item+=1}" style="order: ${item+=1}">
+              <div class="tarea-id">N° ${tarea.id}
+                ${(tarea.idEstadoAvance != 4)? `<button class="menu-estados"><i class="fa-solid fa-arrow-right-long"></i></button>` : ''}
+              </div>
+                ${(tarea.idEstadoAvance != 4)?  
+                  `<div class="menu-estado ${tarea.idEstadoAvance}" hidden>
+                  <p class="item-menu ${tarea.id} 1" id="newEstado-llamada">Llamada</p>
+                  <p class="item-menu ${tarea.id} 2" id="newEstado-lead">Lead</p>
+                  <p class="item-menu ${tarea.id} 3" id="newEstado-cotizacion">Cotización</p>
+                  <p class="item-menu ${tarea.id} 4" id="newEstado-venta">Venta</p>
+                  </div>`
+                : ''}
               <div class="conteiner-text-task">
-                <p>${tarea.tituloTarea}</p>
-                <p>${fechaIni[0]}</p>
+                <p style="min-height: 2.5rem;">${tarea.tituloTarea}</p>
               </div>
               <div class="conteiner-icons-task">
+              <p style="margin-right: 3rem; font-size: 14px;"> Hace ${tarea.diasAntiguedad} días</p>
               <div>
                 <a href="#" class="btn-vendedor btn-vendedores" data-bs-toggle="modal" data-bs-target="#modalVendedores" id="${tarea.id}"><i class="fa-solid-btn fa-solid fa-user-plus"></i></a>
               </div>
               <div>
-                <a href="../../../Vista/rendimiento/v_editarTarea.php?idTarea=${tarea.id}&estadoTarea=${tarea.idEstadoAvance}" class="btn-editar"><i class="fa-solid-btn fa-solid fa-pen-to-square"></i></a>
+                <a href="../../../Vista/rendimiento/v_editarTarea.php?idTarea=${tarea.id}" class="btn-editar"><i class="fa-solid-btn fa-solid fa-pen-to-square"></i></a>
               </div>
               <i class="fa-solid-btn fa-solid fa-tag"></i>
               </div>
             </div>`;
           $elemento.innerHTML = $tareas;
           count++;
-          id = "btn_nuevoRegistro"
+          // id = "btn_nuevoRegistro"
         }
       });
       //Si no hay tareas del tipo buscado el contador se mantiene en cero y se indica en el HTML
@@ -152,16 +195,6 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
     }
   });
 }
-$(document).on('click', `#1`, function(){
-  let newFormulario = document.createElement("div");
-  newFormulario.setAttribute('class', 'nuevaTarea'); //Añadimos clase al div
-  newFormulario.innerHTML = `
-    <form action="" method="" id="" class="priority-menu">
-
-    </form>
-  `;
-  $('#1').append(newFormulario);
-});
 let crearNuevaTarea = ($contenedor, $idConteinerForm, $idForm, $placeholder, $tarea) => {
   // Validamos si no existe el formulrio para nueva tarea, solo entonces se agrega.
   if (document.getElementById($idForm) == null) {
@@ -170,7 +203,10 @@ let crearNuevaTarea = ($contenedor, $idConteinerForm, $idForm, $placeholder, $ta
     newFormulario.setAttribute('id', $idConteinerForm); //Añadimos clase al div
     newFormulario.innerHTML = `
       <form action="" method="" id="${$idForm}" class="new-form">
+        <div class="data-container">
         <textarea id="title-task" class="input-title" placeholder="${$placeholder}"></textarea>
+        <p class="mensaje"></p>
+        </div>
         <div class="btns">
           <button type="submit" class="btn btn-primary" id="btn-submit-${$tarea}">Guardar</button>
           <button type="button" class="btn btn-secondary" id="btn-cancelar-${$tarea}">Cancelar</button>
@@ -191,66 +227,83 @@ let cerrarFormTarea = ($elementoPadre, $elementoCerrar) => {
   $elementoPadre.removeChild($elementoCerrar);
 }
 let guardarTarea = ($btnGuardar, $tarea, $actualizarTarea, $elementoPadre, $elementoCerrar) => {
+  document.getElementById('title-task').addEventListener('keyup', () =>{
+    let titulo =  document.getElementById('title-task').value.toUpperCase();
+    document.getElementById('title-task').value =  titulo;
+  })
+  funciones.limitarCantidadCaracteres('title-task', 45);
   //Agregamos el evento click al boton de guardar tarea
   $btnGuardar.addEventListener('click', function (e) {
     e.preventDefault();
-    let titulo = document.getElementById('title-task').value;
-    let tarea = null;
-    console.log(titulo);
-    if (document.getElementById('title-task').value.trim() == '' || document.getElementById('title-task').value.trim() == null) {
-      document.getElementById('title-task').setAttribute('placeholder', 'Debe poner un titulo!');
-    } else {
-      if ($btnGuardar.getAttribute('id') == $tarea) {
-        const str = $btnGuardar.getAttribute('id').split('-');
-        tarea = str[2];
+    //Validaciones textArea
+    validarInputTitulo(document.getElementById('title-task'));
+    //Si cumple las validaciones dejara crear la tarea
+    if(document.querySelectorAll('.mensaje_error').length == 0){
+      let titulo = document.getElementById('title-task').value;
+      let tarea = null;
+      if (document.getElementById('title-task').value.trim() == '' || document.getElementById('title-task').value.trim() == null) {
+        document.getElementById('title-task').setAttribute('placeholder', 'Debe poner un titulo!');
+      } else {
+        if ($btnGuardar.getAttribute('id') == $tarea) {
+          const str = $btnGuardar.getAttribute('id').split('-');
+          tarea = str[2];
+        }
+        let objTarea = {
+          tipoTarea: tarea,
+          titulo: titulo,
+        }
+        $.ajax({
+          url: "../../../Vista/rendimiento/nuevaTarea.php",
+          type: "POST",
+          datatype: "JSON",
+          data: objTarea
+        });
+        /*
+          LLamamos a la funcion correspondiente para obtener la actualizacion del contenedor de tarea,
+          además de cerrar el formulario en el que se creo la tarea.
+        */
+        switch ($actualizarTarea) {
+          case 1: {
+            cerrarFormTarea($elementoPadre, $elementoCerrar)
+            obtenerTareas($contenedorLlamada, $contadorLlamadas, 'Llamada');
+            break;
+          }
+          case 2: {
+            cerrarFormTarea($elementoPadre, $elementoCerrar)
+            obtenerTareas($contenedorLeads, $contadorLeads, 'Lead');
+            break;
+          }
+          case 3: {
+            cerrarFormTarea($elementoPadre, $elementoCerrar)
+            obtenerTareas($contenedorCotizaciones, $contadorCotizaciones, 'Cotizacion');
+            break;
+          }
+          case 4: {
+            cerrarFormTarea($elementoPadre, $elementoCerrar)
+            obtenerTareas($contenedorVentas, $contadorVentas, 'Venta');
+            break;
+          }
+        } //Fin de los casos
       }
-      let objTarea = {
-        tipoTarea: tarea,
-        titulo: titulo,
-      }
-      $.ajax({
-        url: "../../../Vista/rendimiento/nuevaTarea.php",
-        type: "POST",
-        datatype: "JSON",
-        data: objTarea,
-        success: function () {
-        }
-      });
-      /*
-        LLamamos a la funcion correspondiente para obtener la actualizacion del contenedor de tarea,
-        además de cerrar el formulario en el que se creo la tarea.
-      */
-      switch ($actualizarTarea) {
-        case 1: {
-          cerrarFormTarea($elementoPadre, $elementoCerrar)
-          obtenerTareas($contenedorLlamada, $contadorLlamadas, 'Llamada');
-          break;
-        }
-        case 2: {
-          cerrarFormTarea($elementoPadre, $elementoCerrar)
-          obtenerTareas($contenedorLeads, $contadorLeads, 'Lead');
-          break;
-        }
-        case 3: {
-          cerrarFormTarea($elementoPadre, $elementoCerrar)
-          obtenerTareas($contenedorCotizaciones, $contadorCotizaciones, 'Cotizacion');
-          break;
-        }
-        case 4: {
-          cerrarFormTarea($elementoPadre, $elementoCerrar)
-          obtenerTareas($contenedorVentas, $contadorVentas, 'Venta');
-          break;
-        }
-      } //Fin de los casos
     }
   });
 }
+$(document).on('click', '.btn-vendedor', function () {
+  $idTarea = this.getAttribute('id'); //Obtenemos el id de la tara que se le van a agregar los vendedores
+  obtenerVendedores($idTarea);
+  console.log($idTarea);
+});
 let obtenerVendedores = function () {
+  console.log($idTarea);
   if (document.getElementById('table-Vendedores_wrapper') == null) {
-    $('#table-Vendedores').DataTable({
+    tableVendedor = $('#table-Vendedores').DataTable({
       "ajax": {
         "url": "../../../Vista/rendimiento/obtenerVendedores.php",
-        "dataSrc": ""
+        "type": "POST",
+        "data": {
+          "idTarea": $idTarea 
+        },
+        "dataSrc": "",
       },
       "language": {
         "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
@@ -270,9 +323,6 @@ let obtenerVendedores = function () {
 $(document).on('click', '.btn_select-Vendedores', function () {
   selectVendedores(this);
 });
-$(document).on('click', '.btn-vendedor', function () {
-  $idTarea = this.getAttribute('id'); //Obtenemos el id de la tara que se le van a agregar los vendedores
-});
 $(document).on('click', '#btn_agregarVendedores', function () {
   //Tiendiendo los vendedores y el idTarea enviamos los datos al servidor
   agregarVendedores($idTarea);
@@ -284,33 +334,50 @@ let selectVendedores = function ($elementoHtml) {
 let agregarVendedores = function ($id_Tarea) {
   let $Vendedores = [];
   let vendedoresSeleccionados = document.querySelectorAll('.select-vendedor');
-  vendedoresSeleccionados.forEach(function (vendedor) {
-    if (vendedor.classList.contains('select-vendedor')) {
-      let $idVendedor = $(vendedor).closest('tr').find('td:eq(0)').text();
-      let $vendedor = {
-        idVendedor: $idVendedor
+  console.log(vendedoresSeleccionados);
+  console.log(vendedoresSeleccionados.length);
+  if(vendedoresSeleccionados.length > 0){
+    vendedoresSeleccionados.forEach(function (vendedor) {
+      if (vendedor.classList.contains('select-vendedor')) {
+        let $idVendedor = $(vendedor).closest('tr').find('td:eq(0)').text();
+        let $vendedor = {
+          idVendedor: $idVendedor
+        }
+        $Vendedores.push($vendedor);
       }
-      $Vendedores.push($vendedor);
+    });
+    //AJAX para almacenar vendedores en la base de datos
+    $.ajax({
+      url: "../../../Vista/rendimiento/agregarVendedoresTarea.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {
+        "idTarea": $id_Tarea,
+        "vendedores": JSON.stringify($Vendedores)
+      },
+      success: function (res) {
+          $('#modalVendedores').modal('hide');
+          Toast.fire({
+            icon: 'success',
+            title: 'Los vendedores han sido agregados en la tarea #'+$id_Tarea,
+          });
+          tableVendedor.destroy();
+      }
+    }); //Fin AJAX
+  }else{
+    if(tableVendedor.rows().count() < 1){
+      Toast.fire({
+        icon: 'error',
+        title: 'No hay vendedores disponibles'
+      });
+    }else{
+      Toast.fire({
+        icon: 'error',
+        title: 'No ha seleccionado vendedores'
+      });
     }
-  });
-  //AJAX para almacenar vendedores en la base de datos
-  $.ajax({
-    url: "../../../Vista/rendimiento/agregarVendedoresTarea.php",
-    type: "POST",
-    datatype: "JSON",
-    data: {
-      "idTarea": $id_Tarea,
-      "vendedores": JSON.stringify($Vendedores)
-    },
-    success: function (res) {
-      $('#modalVendedores').modal('hide');
-      Swal.fire(
-        'Exito!',
-        'Los vendedores han sido agregados',
-        'success',
-      )
-    }
-  }); //Fin AJAX
+  }
+  
 }
 let actualizarContadores = () => {
   //Actualizar contador llamadas
@@ -330,3 +397,176 @@ let actualizarContadores = () => {
   divPadre = document.getElementById('conteiner-venta');
   contVentas.textContent = divPadre.querySelectorAll('.card_task').length;
 }
+
+$(document).on("click", ".menu-estados", function() {
+  if(this.parentElement.parentElement.children[1].getAttribute('hidden') != null){
+    this.parentElement.parentElement.children[1].removeAttribute('hidden');
+  }else{
+    this.parentElement.parentElement.children[1].setAttribute('hidden', 'true');
+  }
+  // document.querySelectorAll('.card_task').forEach(card => {
+  //   card.addEventListener('mouseenter', () => {
+  //     console.log(this.parentElement.parentElement.children[1]);
+  //     if(this.parentElement.parentElement.children[1].getAttribute('hidden') != null){
+  //       this.parentElement.parentElement.children[1].removeAttribute('hidden');
+  //     }
+  //   })
+  // });
+  this.parentElement.parentElement.children[1].addEventListener('mouseleave', function() {
+    console.log(this.parentElement.parentElement.children[1]);
+    document.querySelectorAll('.menu-estado').forEach(menu => {
+      menu.setAttribute('hidden', 'true');
+    })
+  })
+});
+
+$(document).on("click", "#newEstado-llamada", function() {
+  let $idTarea = this.getAttribute('class').split(' ')[1];
+  let $estadoActual = parseInt(this.parentElement.getAttribute('class').split(' ')[1]);
+  let $nuevoEstado = parseInt(this.getAttribute('class').split(' ')[2]);
+  console.log($estadoActual);
+  console.log($nuevoEstado);
+  if($nuevoEstado < $estadoActual || $nuevoEstado == $estadoActual){
+    if($nuevoEstado < $estadoActual){
+      Toast.fire({
+        icon: 'error',
+        title: 'No puedes volver a un estado anterior'
+      });
+    }
+  }else{
+    console.log('no entro')
+    cambiarEstado($idTarea, $nuevoEstado);
+    location.href ='./v_tarea.php';
+  }
+  this.parentElement.setAttribute('hidden', 'true');
+})
+$(document).on("click", "#newEstado-lead", function() {
+  let $idTarea = this.getAttribute('class').split(' ')[1];
+  let $estadoActual = parseInt(this.parentElement.getAttribute('class').split(' ')[1]);
+  let $nuevoEstado = parseInt(this.getAttribute('class').split(' ')[2]);
+  console.log($estadoActual);
+  console.log($nuevoEstado);
+  if($nuevoEstado < $estadoActual || $nuevoEstado == $estadoActual){
+    if($nuevoEstado < $estadoActual){
+      Toast.fire({
+        icon: 'error',
+        title: 'No puedes volver a un estado anterior'
+      });
+    }
+  }else{
+    cambiarEstado($idTarea, $nuevoEstado);
+    location.href ='./v_tarea.php';
+  }
+  this.parentElement.setAttribute('hidden', 'true');
+})
+$(document).on("click", "#newEstado-cotizacion", function() {
+  let $idTarea = this.getAttribute('class').split(' ')[1];
+  let $estadoActual = parseInt(this.parentElement.getAttribute('class').split(' ')[1]);
+  let $nuevoEstado = parseInt(this.getAttribute('class').split(' ')[2]);
+  console.log($estadoActual);
+  console.log($nuevoEstado);
+  if($nuevoEstado < $estadoActual || $nuevoEstado == $estadoActual){
+    if($nuevoEstado < $estadoActual){
+      Toast.fire({
+        icon: 'error',
+        title: 'No puedes volver a un estado anterior'
+      });
+    }
+  }else{
+    cambiarEstado($idTarea, $nuevoEstado);
+    location.href ='./v_tarea.php';
+  }
+  this.parentElement.setAttribute('hidden', 'true');
+})
+$(document).on("click", "#newEstado-venta", function() {
+  let $idTarea = this.getAttribute('class').split(' ')[1];
+  let $estadoActual = parseInt(this.parentElement.getAttribute('class').split(' ')[1]);
+  let $nuevoEstado = parseInt(this.getAttribute('class').split(' ')[2]);
+  console.log($estadoActual);
+  console.log($nuevoEstado);
+  if($nuevoEstado < $estadoActual || $nuevoEstado == $estadoActual){
+    if($nuevoEstado < $estadoActual){
+      Toast.fire({
+        icon: 'error',
+        title: 'No puedes volver a un estado anterior'
+      });
+    }
+  }else{
+    console.log('venta')
+    cambiarEstado($idTarea, $nuevoEstado);
+    location.href ='./v_tarea.php';
+  }
+  this.parentElement.setAttribute('hidden', 'true');
+})
+let cambiarEstado = ($idTarea, $nuevoEstado) => {
+  $.ajax({
+    url: "../../../Vista/rendimiento/cambiarEstadoTarea.php",
+    type: "POST",
+    datatype:"json",    
+    data:  { 
+      idTarea: $idTarea,
+      nuevoEstado: $nuevoEstado
+    },    
+    success: function(data) {
+                 
+    }
+  }); //Fin del AJAX
+}
+$(document).on("click", "#btn-close-modal-Vendedores", function(){
+  tableVendedor.destroy();
+})
+// $(document).on("click", "#btn_agregarVendedores", function(){
+//   tableVendedor.destroy();
+// })
+// $(document).on("click", "#btn_eliminar", function() {
+//   let fila = $(this);        
+//     let usuario = $(this).closest('tr').find('td:eq(1)').text();
+//     let ROL = $(this).closest('tr').find('td:eq(5)').text();
+//     if (ROL == 'Super Administrador'){
+//       Swal.fire(
+//         'Sin acceso!',
+//         'Super Administrador no puede ser eliminado',
+//         'error'
+//       )
+//     }else{
+//       Swal.fire({
+//         title: 'Estas seguro de eliminar a '+usuario+'?',
+//         text: "No podras revertir esto!",
+//         icon: 'warning',
+//         showCancelButton: true,
+//         confirmButtonColor: '#3085d6',
+//         cancelButtonColor: '#d33',
+//         confirmButtonText: 'Si, borralo!'
+//       }).then((result) => {
+//         if (result.isConfirmed) {      
+//           $.ajax({
+//             url: "../../../Vista/crud/usuario/eliminarUsuario.php",
+//             type: "POST",
+//             datatype:"json",    
+//             data:  { usuario: usuario},    
+//             success: function(data) {
+//               let estadoEliminado = data[0].estadoEliminado;
+//                console.log(data);
+//               if(estadoEliminado == 'eliminado'){
+//                 tablaUsuarios.row(fila.parents('tr')).remove().draw();
+//                 Swal.fire(
+//                   'Eliminado!',
+//                   'El usuario ha sido eliminado.',
+//                   'success'
+//                 ) 
+//                 tablaUsuarios.ajax.reload(null, false); 
+//               } else {
+//                 Swal.fire(
+//                   'Lo sentimos!',
+//                   'El usuario no puede ser eliminado, se ha inactivado.',
+//                   'error'
+//                 );
+//                 tablaUsuarios.ajax.reload(null, false);
+//               }           
+//             }
+//           }); //Fin del AJAX
+//         }
+//       });
+//     }		                   
+// });
+

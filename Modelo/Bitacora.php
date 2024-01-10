@@ -44,7 +44,6 @@
             ];
             return $acciones;
         }
-
         public static function obtenerBitacorasUsuario(){
             $conn = new Conexion();
             $consulta = $conn->abrirConexionDB();
@@ -72,5 +71,28 @@
             $resultado = sqlsrv_query($conexion, $query);
             // sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
             sqlsrv_close($conexion);
+        }
+
+        public static function obtenerBitacoraPdf($buscar){
+            $conn = new Conexion();
+            $consulta = $conn->abrirConexionDB();
+            $query= "SELECT B.id_Bitacora, B.fecha, u.usuario, o.objeto, B.accion, B.descripcion FROM tbl_ms_bitacora AS B
+            INNER JOIN tbl_ms_Usuario AS u ON u.id_Usuario = B.id_Usuario
+            INNER JOIN tbl_ms_objetos AS o ON o.id_Objeto = B.id_Objeto
+            WHERE CONCAT(B.id_Bitacora, B.fecha, u.usuario, o.objeto, B.accion, B.descripcion) 
+            LIKE '%' + '$buscar' + '%';";
+            $obtenerBitacoras = sqlsrv_query($consulta, $query);
+            while($fila = sqlsrv_fetch_array($obtenerBitacoras, SQLSRV_FETCH_ASSOC)){
+                $bitacoras [] = [
+                    'id_Bitacora' => $fila["id_Bitacora"],
+                    'fecha' => $fila["fecha"],
+                    'Usuario' => $fila["usuario"],
+                    'Objeto' => $fila["objeto"],
+                    'accion' => $fila["accion"],
+                    'descripcion' => $fila["descripcion"],
+                ];
+            }
+            sqlsrv_close($consulta); #Cerramos la conexión.
+            return $bitacoras;
         }
     }

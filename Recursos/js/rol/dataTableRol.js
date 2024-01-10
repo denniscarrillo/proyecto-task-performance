@@ -23,7 +23,8 @@ let procesarPermisoActualizar = data => {
       { "data": 'descripcion' },
       {
         "defaultContent":
-        `<button class="btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`
+        `<button class="btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`+
+        `<button class="btn_eliminar btns btn ${(permisos.Eliminar == 'N')? 'hidden': ''}" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button>`
       }
     ]
   });
@@ -74,19 +75,27 @@ $(document).on("click", "#btn_editar", function(){
   id_Rol = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		            
   rol = fila.find('td:eq(1)').text(),
   descripcion = fila.find('td:eq(2)').text();
-  $("#E_idRol").val(id_Rol);
-  $("#E_rol").val(rol);
-  $("#E_descripcion").val(descripcion);
-  $(".modal-header").css("background-color", "#007bff");
-  $(".modal-header").css("color", "white");	
-  $('#modalEditarRol').modal('show');		   
+  if (rol == 'Super Administrador'){
+    Swal.fire(
+      'Sin acceso!',
+      'Super Administrador no puede ser editado',
+      'error'
+    )
+  }else{
+    $("#E_idRol").val(id_Rol);
+    $("#E_rol").val(rol);
+    $("#E_descripcion").val(descripcion);
+    $(".modal-header").css("background-color", "#007bff");
+    $(".modal-header").css("color", "white");	
+    $('#modalEditarRol').modal('show')
+  }
+ ;		   
 });
 
 $('#form-Edit-Rol').submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
    //Obtener datos del nuevo Usuario
    let idRol = $('#E_idRol').val(),
-   rol =  $('#E_rol').val(),
    descripcion = $('#E_descripcion').val();
    if(valido){
     $.ajax({
@@ -95,7 +104,6 @@ $('#form-Edit-Rol').submit(function (e) {
       datatype: "JSON",
       data: {
        idRol: idRol,
-       rol: rol,
        descripcion: descripcion
       },
       success: function () {
@@ -152,3 +160,64 @@ let limpiarFormEdit = () => {
     $mensaje.innerText = '';
   });
 }
+
+
+//Eliminar Rol
+$(document).on("click", "#btn_eliminar", function() {
+     
+  let fila = $(this).closest("tr"),	        
+    id_Rol = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		            
+    ROL = $(this).closest('tr').find('td:eq(1)').text();
+    if (ROL == 'Super Administrador'){
+      Swal.fire(
+        'Sin acceso!',
+        'Super Administrador no puede ser eliminado',
+        'error'
+      )
+      }else{
+        Swal.fire({
+          title: 'Estas seguro de eliminar el Rol '+ROL+'?',
+          text: "No podras revertir esto!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, borralo!'
+    }).then((result) => {
+      if (result.isConfirmed) {      
+        $.ajax({
+          url: "../../../Vista/crud/rol/eliminarRol.php",
+          type: "POST",
+          datatype:"json",    
+          data:  { id_Rol : id_Rol},    
+          success: function(data) {
+            let estadoEliminado = data[0].estadoEliminado;
+             console.log(data);
+             if(estadoEliminado == 'eliminado'){
+              tablaRol.row(fila.parents('tr')).remove().draw();
+              Swal.fire(
+                'Eliminado!',
+                'El Rol ha sido eliminada.',
+                'success'
+              ) 
+              tablaRol.ajax.reload(null, false);
+            } else {
+               Swal.fire(
+                 'Lo sentimos!',
+                 'El Rol no puede ser eliminado.',
+                 'error'
+               );
+               tablaRol.ajax.reload(null, false);
+             }           
+          }
+          }); //Fin del AJAX
+      }
+    });  
+  }              
+});
+
+//Generar reporte PDF
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-Rol_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reporteRoles.php?buscar='+buscar, '_blank');
+}); 

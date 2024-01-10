@@ -38,4 +38,50 @@ class Articulo
         sqlsrv_close($abrirConexion); //Cerrar conexion
         return $articulo;
     }
+
+
+    public static function obtenerArticuloxId($CodArt){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $query = "SELECT ARTICULO FROM view_articulos where CODARTICULO = $CodArt;";
+        $resultado = sqlsrv_query($consulta, $query);
+        $articulo = array();
+        //Recorremos el resultado de tareas y almacenamos en el arreglo.
+        while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+            $articulo[] = [
+                'articulo' => $fila['ARTICULO'],
+            ];
+        }
+        sqlsrv_close($consulta); #Cerramos la conexión.
+        return $articulo;
+    }
+
+    public static function obtenerArticuloPdf($buscar)
+    {
+        $articulo = null;
+        try {
+            $articulo = array();
+            $con = new Conexion();
+            $abrirConexion = $con->abrirConexionDB();
+            $query = "SELECT CODARTICULO, ARTICULO, DETALLE, MARCA FROM view_articulos 
+            WHERE CONCAT(CODARTICULO, ARTICULO, DETALLE, MARCA) 
+            LIKE '%' + '$buscar' + '%';";
+            $resultado = sqlsrv_query($abrirConexion, $query);
+            $articulo = array();
+            //Recorremos el resultado de tareas y almacenamos en el arreglo.
+            while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+                $articulo[] = [
+                    'codigo' => $fila['CODARTICULO'],
+                    'articulo' => $fila['ARTICULO'],
+                    'detalle' => $fila['DETALLE'],
+                    'marcaArticulo' => $fila['MARCA']
+                ];
+            }
+        } catch (Exception $e) {
+            $articulo = 'Error SQL:' . $e;
+        }
+        sqlsrv_close($abrirConexion); //Cerrar conexion
+        return $articulo;
+    }
+
 }

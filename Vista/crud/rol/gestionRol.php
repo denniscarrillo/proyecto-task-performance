@@ -11,10 +11,13 @@ session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
-  $permisoRol = ControladorUsuario::permisosRol($idRolUsuario);
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionRol.php');
-  $objetoPermitido = ControladorUsuario::permisoSobreObjeto($_SESSION['usuario'], $idObjetoActual, $permisoRol);
-  if(!$objetoPermitido){
+  (!($_SESSION['usuario'] == 'SUPERADMIN'))
+  ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
+  : 
+    $permisoConsulta = true;
+  ;
+  if(!$permisoConsulta){
     /* ==================== Evento intento de ingreso sin permiso a mantenimiento rol. ==========================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
@@ -91,8 +94,8 @@ if (isset($_SESSION['usuario'])) {
           $urlIndex = '../../index.php';
           // Rendimiento
           $urlMisTareas = '../../rendimiento/v_tarea.php';
+          $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
           $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
-          $urlBitacoraTarea = ''; //PENDIENTE
           $urlMetricas = '../Metricas/gestionMetricas.php';
           $urlEstadisticas = '../../grafica/estadistica.php'; 
           //Solicitud
@@ -109,6 +112,7 @@ if (isset($_SESSION['usuario'])) {
           $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
           //Mantenimiento
           $urlUsuarios = '../usuario/gestionUsuario.php';
+          $urlEstadoUsuario = '../estadoUsuario/gestionEstadoUsuario.php';
           $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
           $urlPreguntas = '../pregunta/gestionPregunta.php';
           $urlParametros = '../parametro/gestionParametro.php';
@@ -118,6 +122,8 @@ if (isset($_SESSION['usuario'])) {
           $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
           $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
           $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
+          $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
+          $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
           require_once '../../layout/sidebar.php';
         ?>
       </div>
@@ -135,7 +141,8 @@ if (isset($_SESSION['usuario'])) {
         <div class="table-conteiner">
           <div>
             <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoRol"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
-            <a href="../../fpdf/ReporteRol.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> 
+            <!-- <a href="../../../TCPDF/examples/reporteRoles.php" target="_blank" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>  -->
+            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"><i class="fas fa-file-pdf"></i> Generar PDF</button>
           </div>
           <table class="table" id="table-Rol">
             <thead>

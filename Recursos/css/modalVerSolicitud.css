@@ -1,0 +1,15 @@
+
+ .form-label{
+    font-weight:bold;
+    color: #050505;
+    text-align: center;
+}
+
+.form-label-V{
+    color: #3a3838; 
+}
+
+.btn-guardar {
+    left: 28%;
+    width: 100%;
+}

@@ -20,4 +20,16 @@ class ControladorTipoServicio {
        return TipoServicio::editarTipoServicio($nuevoTipoServicio);
     }
 
+    public static function eliminandoTipoServicio($TipoServicio){
+        return TipoServicio::eliminarTipoServicio($TipoServicio);
+    }
+
+    public static function obtenerTipoServicioPDF($buscar){
+        return TipoServicio::obtenerTipoServicioPDF($buscar);
+    }
+
+    public static function obtenerTipoServicioID($id){
+        return TipoServicio::obtenerTipoServicioID($id);
+       } 
+
 }

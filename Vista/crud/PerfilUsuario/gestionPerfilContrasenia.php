@@ -12,22 +12,7 @@ if (isset($_SESSION['usuario'])) {
  
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
-  $permisoRol = ControladorUsuario::permisosRol($idRolUsuario);
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
-  $objetoPermitido = ControladorUsuario::permisoSobreObjeto($_SESSION['usuario'], $idObjetoActual, $permisoRol);
-  if(!$objetoPermitido){
-    /* ==================== Evento intento de ingreso sin permiso a mantenimiento usuario. ==========================*/
-    $accion = ControladorBitacora::accion_Evento();
-    date_default_timezone_set('America/Tegucigalpa');
-    $newBitacora->fecha = date("Y-m-d h:i:s");
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
-    $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-    $newBitacora->accion = $accion['fallido'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a mantenimiento usuario';
-    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-    /* ===============================================================================================================*/
-    header('location: ../../v_errorSinPermiso.php');
-    die();
   }else{
     if(isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])){
       /* ====================== Evento salir. ================================================*/
@@ -54,10 +39,6 @@ if (isset($_SESSION['usuario'])) {
     $_SESSION['descripcionObjeto'] = 'mantenimiento usuario';
     /* =======================================================================================*/
   }
-} else {
-  header('location: ../../login/login.php');
-  die();
-}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -91,8 +72,8 @@ if (isset($_SESSION['usuario'])) {
           $urlIndex = '../../index.php';
           // Rendimiento
           $urlMisTareas = '../../rendimiento/v_tarea.php';
+          $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
           $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
-          $urlBitacoraTarea = ''; //PENDIENTE
           $urlMetricas = '../Metricas/gestionMetricas.php';
           $urlEstadisticas = '../../grafica/estadistica.php'; 
           //Solicitud
@@ -106,11 +87,12 @@ if (isset($_SESSION['usuario'])) {
           $urlObjetos = '../DataTableObjeto/gestionDataTableObjeto.php';
           $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
           //Mantenimiento
-          $urlUsuarios = './gestionUsuario.php';
+          $urlUsuarios = '../usuario/gestionUsuario.php';
+          $urlEstadoUsuario = '../estadoUsuario/gestionEstadoUsuario.php';
           $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
           $urlPreguntas = '../pregunta/gestionPregunta.php';
           $urlParametros = '../parametro/gestionParametro.php';
-          $urlPermisos = '../permiso/gestionPermiso.php';
+          $urlPermisos = '../permiso/gestionPermisos.php';
           $urlRoles = '../rol/gestionRol.php';
           $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
           $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
@@ -118,6 +100,8 @@ if (isset($_SESSION['usuario'])) {
           $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
           $urlEditarCamposPerfil='../PerfilUsuario/EditarCamposPerfilUsuario.php';
           $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
+          $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
+          $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
           require_once '../../layout/sidebar.php';
         ?>
       </div>

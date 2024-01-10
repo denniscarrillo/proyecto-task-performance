@@ -11,10 +11,14 @@ session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
-  $permisoRol = ControladorUsuario::permisosRol($idRolUsuario);
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionCliente.php');
-  $objetoPermitido = ControladorUsuario::permisoSobreObjeto($_SESSION['usuario'], $idObjetoActual, $permisoRol);
-  if(!$objetoPermitido){
+  //Se valida el usuario, si es SUPERADMIN por defecto tiene permiso caso contrario se valida el permiso vrs base de datos
+  (!($_SESSION['usuario'] == 'SUPERADMIN')) 
+  ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
+  : 
+    $permisoConsulta = true;
+  ;
+  if(!$permisoConsulta){
     /* ====================== Evento intento de ingreso sin permiso a vista cliente. ================================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
@@ -92,8 +96,8 @@ if (isset($_SESSION['usuario'])) {
         $urlIndex = '../../index.php';
         // Rendimiento
         $urlMisTareas = '../../rendimiento/v_tarea.php';
+        $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
         $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
-        $urlBitacoraTarea = ''; //PENDIENTE
         $urlMetricas = '../Metricas/gestionMetricas.php';
         $urlEstadisticas = '../../grafica/estadistica.php'; 
         //Solicitud
@@ -110,6 +114,7 @@ if (isset($_SESSION['usuario'])) {
         $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
         //Mantenimiento
         $urlUsuarios = '../usuario/gestionUsuario.php';
+        $urlEstadoUsuario = '../estadoUsuario/gestionEstadoUsuario.php';
         $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
         $urlPreguntas = '../pregunta/gestionPregunta.php';
         $urlParametros = '../parametro/gestionParametro.php';
@@ -119,6 +124,8 @@ if (isset($_SESSION['usuario'])) {
         $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
         $urlPerfilUsuarios='../PerfilUsuario/gestionPerfilUsuario.php';
         $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
+        $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
+        $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
         require_once '../../layout/sidebar.php';
       ?>
       </div>
@@ -148,7 +155,8 @@ if (isset($_SESSION['usuario'])) {
               </tr>
             </thead>
             <div class ="text-left mb-2">
-            <a href="../../fpdf/ReporteClientes.php" target="_blank" class="btn btn-success" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
+            <!-- <a href="../../../TCPDF/examples/reporteriaClientes.php" target="_blank" class="btn btn-success hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> -->
+            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
             </div>
             <tbody class="table-group-divider">
             </tbody>
@@ -163,7 +171,7 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script src="../../../Recursos/js/VistaClientes/dataTable.js" type="module"></script>
-  <script src="../../../Recursos/js/permiso/gestionPermisos.js"></script>
+  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>

@@ -69,8 +69,7 @@ class CarteraClientes{
             $modificadoPor = $nuevoCliente->modificadoPor;
             date_default_timezone_set('America/Tegucigalpa');
             $fechaModificacion = date("Y-m-d");
-            $update = "UPDATE tbl_carteracliente SET nombre_Cliente='$nombre', rtn_Cliente='$rtn', telefono='$telefono',
-            correo='$correo', direccion='$direccion', estadoContacto = '$estadoContacto', Modificado_Por = '$modificadoPor', Fecha_Modificacion = '$fechaModificacion' WHERE id_CarteraCliente='$id' ";
+            $update = "UPDATE tbl_carteracliente SET  telefono='$telefono', correo='$correo', direccion='$direccion', estadoContacto = '$estadoContacto', Modificado_Por = '$modificadoPor', Fecha_Modificacion = '$fechaModificacion' WHERE id_CarteraCliente='$id' ";
             $nuevoCliente = sqlsrv_query($abrirConexion, $update);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
@@ -94,6 +93,47 @@ class CarteraClientes{
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $existeRtn;
+    }
+
+    public static function eliminarCliente($nuevoCliente){
+        try {
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $id=$nuevoCliente->idcarteraCliente;
+            $estadoContacto=$nuevoCliente->estadoContacto;
+            $modificadoPor = $nuevoCliente->modificadoPor;
+            date_default_timezone_set('America/Tegucigalpa');
+            $fechaModificacion = date("Y-m-d");
+            $update = "UPDATE tbl_carteracliente SET  estadoContacto = '$estadoContacto', Modificado_Por = '$modificadoPor', Fecha_Modificacion = '$fechaModificacion' WHERE id_CarteraCliente='$id' ";
+            $nuevoCliente = sqlsrv_query($abrirConexion, $update);
+        } catch (Exception $e) {
+            echo 'Error SQL:' . $e;
+        }
+        sqlsrv_close($abrirConexion); //Cerrar conexion
+    }
+
+    //Método para obtener todos los clientes que existen.
+    public static function obtenerCarteraClientesPDF($buscar){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB();
+        $obtenerCarteraCliente = "SELECT id_CarteraCliente, nombre_Cliente, rtn_Cliente, telefono, correo, 
+        direccion, estadoContacto FROM tbl_CarteraCliente
+        WHERE CONCAT(id_CarteraCliente, nombre_Cliente, rtn_Cliente, telefono, correo, direccion, estadoContacto) LIKE '%' + '$buscar' + '%';";
+        $resultado = sqlsrv_query($consulta, $obtenerCarteraCliente);
+        $carteraCliente = array();
+        while($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)){
+            $carteraCliente [] = [
+                'idcarteraCliente' => $fila["id_CarteraCliente"],
+                'nombre' => $fila["nombre_Cliente"],
+                'rtn' => $fila["rtn_Cliente"],
+                'telefono' => $fila["telefono"],
+                'correo' => $fila["correo"],
+                'direccion' => $fila["direccion"],
+                'estadoContacto' => $fila["estadoContacto"]
+            ];
+        }
+        sqlsrv_close($consulta); #Cerramos la conexión.
+        return $carteraCliente;
     }
 }#Fin de la clase
 

@@ -11,10 +11,14 @@ session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
-  $permisoRol = ControladorUsuario::permisosRol($idRolUsuario);
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('ComisionesVendedores.php');
-  $objetoPermitido = ControladorUsuario::permisoSobreObjeto($_SESSION['usuario'], $idObjetoActual, $permisoRol);
-  if(!$objetoPermitido){
+  //Se valida el usuario, si es SUPERADMIN por defecto tiene permiso caso contrario se valida el permiso vrs base de datos
+  (!($_SESSION['usuario'] == 'SUPERADMIN'))
+  ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
+  : 
+    $permisoConsulta = true;
+  ;
+  if(!$permisoConsulta){
     /* ====================== Evento intento de ingreso sin permiso a la vista comisiones por vendedor. ================================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
@@ -72,6 +76,7 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link href="../../../Recursos/css/ComisionesVendedores.css" rel="stylesheet" />
   <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
   <!-- <link href="../../../Recursos/css/modalNuevaComision.css" rel="stylesheet"> -->
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
@@ -91,10 +96,10 @@ if (isset($_SESSION['usuario'])) {
         $urlIndex = '../../index.php';
         // Rendimiento
         $urlMisTareas = '../../rendimiento/v_tarea.php';
-        $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php'; //PENDIENTE
-        $urlBitacoraTarea = ''; //PENDIENTE
+        $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
+        $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
         $urlMetricas = '../Metricas/gestionMetricas.php';
-        $urlEstadisticas = '../../grafica/estadistica.php'; //PENDIENTE
+        $urlEstadisticas = '../../grafica/estadistica.php'; 
         //Solicitud
         $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
         //Comisión
@@ -108,6 +113,7 @@ if (isset($_SESSION['usuario'])) {
         $urlObjetos = '../DataTableObjeto/gestionDataTableObjeto.php';
         //Mantenimiento
         $urlUsuarios = '../usuario/gestionUsuario.php';
+        $urlEstadoUsuario = '../estadoUsuario/gestionEstadoUsuario.php';
         $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
         $urlPreguntas = '../pregunta/gestionPregunta.php';
         $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
@@ -116,6 +122,8 @@ if (isset($_SESSION['usuario'])) {
         $urlRoles = '../rol/gestionRol.php';
         $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
         $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
+        $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
+        $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
         require_once '../../layout/sidebar.php';
       ?>
       </div>
@@ -134,19 +142,35 @@ if (isset($_SESSION['usuario'])) {
             </div>  
           </div>    
         <div class="table-conteiner">
+          <div class="filtros">
+            <div class="filtro-fecha">
+              <label for="fechaDesde">Fecha desde:</label>
+              <input type="date" id="fechaDesdef" name="fechaDesdef" class="form-control">
+              <label for="fechaHasta">Fecha hasta:</label>
+              <input type="date" id="fechaHastaf" name="fechaHastaf" class="form-control">
+              <button type="button" class="btn btn-primary" id="btnFiltrar">Sumar Comisiones</button>
+            </div>
         <div>
             <!-- <a href="ComisionPorVendedor.php" class="btn_nuevoRegistro btn btn-primary"><i class="fa-solid fa-circle-plus"></i> Comision total por vendedor</a> -->
-            <a href="ReporteComisionExcel.php" class="btn_Excel btn btn-primary "><i class="fa-solid fa-file-excel fa-sm"></i> Generar Excel</a>
+            <!-- <a href="../../../TCPDF/examples/reporteriaComisionVendedores.php" class="btn_Pdf btn btn-primary hidden" id= "btn_Pdf"><i class="fas fa-file-pdf"></i>
+                Generar Reportes</a> -->
+                <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
           </div>
           <table class="table" id="table-ComisionVendedor">
             <thead>
               <tr>
-                <th scope="col"> ID COMISION VENDEDOR</th>
-                <th scope="col"> ID VENDEDOR </th>
-                <th scope="col"> VENDEDOR </th>
-                <th scope="col"> ESTADO  </th>
-                <th scope="col"> COMISION TOTAL </th>
-                <th scope="col"> FECHA </th>
+                <th scope="col">ID COMISION VENDEDOR</th>
+                <th scope="col">ID COMISION</th>
+                <th scope="col">ID VENDEDOR</th>
+                <th scope="col">VENDEDOR</th>
+                <th scope="col">COMISION TOTAL</th>
+                <th scope="col">ESTADO </th>
+                <th scope="col">LIQUIDACION</th>
+                <th scope="col">ESTADO COBRO VENTA</th>
+                <th scope="col">METODO PAGO</th>
+                <th scope="col">FECHA CREACION</th>
+                <th scope="col">FECHA LIQUIDACION</th>
+                <th scope="col">FECHA COBRO</th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -157,13 +181,15 @@ if (isset($_SESSION['usuario'])) {
     </div>
   </div>
   <?php
-    require('modalFiltroComisiones.html');
+    // require('modalFiltroComisiones.html');
+    require('modalComisionesV.html');
   ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
-  <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="//cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
   <script src="../../../Recursos/js/comision/dataTableComision_V.js" type="module"></script>
+  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>

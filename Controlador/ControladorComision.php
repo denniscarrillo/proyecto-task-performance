@@ -19,8 +19,8 @@
         public static function calcularComisionTotal($porcentaje, $totalVenta){
             return Comision::calcularComision($porcentaje, $totalVenta);
         }
-        public static function guardarComisionVendedor($comision, $idComision, $vendedores, $user, $fechaComision){
-            Comision::dividirComisionVendedores($comision, $idComision, $vendedores, $user, $fechaComision);
+        public static function guardarComisionVendedor($comision, $idComision, $vendedores, $user){
+            Comision::dividirComisionVendedores($comision, $idComision, $vendedores, $user);
         }
         public static function actualizarComision($nuevaComision){
             Comision::editarComision($nuevaComision);
@@ -39,5 +39,38 @@
         } 
         public static function editarEstadoComisionVendedor($comision){
             return Comision::actualizarEstadoComisionVendedor($comision);
+        }
+
+        public static function traerIdComision($idComision){
+            return Comision::ComisionPorId($idComision);
+        }
+       
+        public static function SimularAnularComision($idComision){
+            return Comision::anularComision($idComision);
+        }
+        public static function SimularAnularComisionVendedor($idComision){
+            return Comision::anularComisionPorVendedor($idComision);
+        }
+
+        public static function eliminandoComision($idComision){
+            return Comision::eliminarComision($idComision);
+        }
+        public static function getComisionesPdf($buscar){
+            return Comision::obtenerTodasLasComisionesPdf($buscar);
+        }
+        public static function getComisionesVendedorPdf($buscar){
+            return Comision::obtenerComisionesPorVendedorPdf($buscar);
+        }
+        public static function liquidandoComisiones($fechaDesde, $fechaHasta){
+            return Comision::liquidarComisiones($fechaDesde, $fechaHasta);
+        }
+        public static function ComisionesGenerales_a_Liquidar($fechaDesde, $fechaHasta){
+            return Comision::Obtenercomisiones_A_Liquidar($fechaDesde, $fechaHasta);
+        }
+        public static function LiquidandoComisionesGenerales($idComision){
+            return Comision::LiquidandoComisionesGenerales($idComision);
+        }
+        public static function LiquidandoComisionesVendedores($idVendedor, $fechaDesde, $fechaHasta){
+            return Comision::liquidandoComisionesPorVendedor($idVendedor, $fechaDesde, $fechaHasta);
         }
     }

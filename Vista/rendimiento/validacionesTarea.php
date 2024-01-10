@@ -11,11 +11,15 @@ require_once("../../Controlador/ControladorBitacora.php");
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
-  $permisoRol = ControladorUsuario::permisosRol($idRolUsuario);
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('v_tarea.php');
-  $objetoPermitido = ControladorUsuario::permisoSobreObjeto($_SESSION['usuario'], $idObjetoActual, $permisoRol);
-  if(!$objetoPermitido){
-    /* ====================== Evento intento de ingreso sin permiso a mantenimiento de usuario. =====================*/
+  //Se valida el usuario, si es SUPERADMIN por defecto tiene permiso caso contrario se valida el permiso vrs base de datos
+  (!($_SESSION['usuario'] == 'SUPERADMIN')) 
+    ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
+    : 
+      $permisoConsulta = true;
+    ;
+  if(!$permisoConsulta){
+    /* ====================== Evento intento de ingreso sin permiso a tablero tareas. =====================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
     $newBitacora->fecha = date("Y-m-d h:i:s");
@@ -29,7 +33,7 @@ if (isset($_SESSION['usuario'])) {
     /* =======================================================================================*/
     header('location: ../v_errorSinPermiso.php');
     die();
-  }else{
+  } else {
     if(isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])){
       /* ====================== Evento salir. =====================*/
       $accion = ControladorBitacora::accion_Evento();
@@ -56,7 +60,7 @@ if (isset($_SESSION['usuario'])) {
     /* =======================================================================================*/
   }
 } else {
-  header('location: ../../login/login.php');
+  header('location: ../login/login.php');
   die();
 }
 

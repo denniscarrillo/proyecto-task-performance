@@ -4,10 +4,10 @@ $(document).ready(function () {
     obtenerPermisos($idObjetoSistema, manejarPermisoInsertar);
 });
 let manejarPermisoInsertar = (permisos) => {
-    let $idObjetoSistema = document.querySelector('.title-dashboard-task').id
+    let user = document.getElementById('username').textContent;
     let objPermisos = JSON.parse(permisos);
     //Valida los permisos de Insertar
-    if(objPermisos.Insertar == 'Y'){
+    if((objPermisos.Insertar == 'Y') || (user == 'SUPERADMIN')){
         let $objTarea = document.querySelector('.title-dashboard-task').getAttribute('name');
         if($objTarea == 'v_tarea.php'){ //Para cuando sea la vista de kanban tareas
             let $btnsNuevaTarea = document.querySelectorAll('.btn_nuevoRegistro');
@@ -15,8 +15,12 @@ let manejarPermisoInsertar = (permisos) => {
                 $btnNuevaTarea.classList.remove('hidden');
             });
         }else{
-            document.getElementById('btn_nuevoRegistro').classList.remove('hidden');
+            (document.getElementById('btn_nuevoRegistro') != null) ?  document.getElementById('btn_nuevoRegistro').classList.remove('hidden') : '';
+           
         }
+    }
+    if((objPermisos.Reporte == 'Y') || (user == 'SUPERADMIN')){
+        document.getElementById('btn_Pdf').classList.remove('hidden');
     }
 }
 //Peticion  AJAX que trae los permisos

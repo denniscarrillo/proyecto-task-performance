@@ -4,7 +4,7 @@ import * as funciones from '../funcionesValidaciones.js';
 export let estadoValidado = false;
 //Objeto con expresiones regulares para los inptus
 const validaciones = {
-    soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
+    soloLetras: /^(?=.*[^a-zA-Z\/ .ÑñáéíóúÁÉÍÓÚs])+$/, //Solo letras
 }
 
 
@@ -69,13 +69,15 @@ $form.addEventListener('submit', e => {
 
 $MotivoCancelacion.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasMotivo = funciones.validarSoloLetras($MotivoCancelacion, validaciones.soloLetras);
-   funciones.limitarCantidadCaracteres("E_MotivoCancelacion", 50);
+   funciones.limitarCantidadCaracteres("E_MotivoCancelacion", 300);
 });
 
 $MotivoCancelacion.addEventListener('focusout', ()=>{
     if(estadoMasdeUnEspacio.estadoMasEspacioMotivo){
         funciones.validarMasdeUnEspacio($MotivoCancelacion);
     }
+    let descripcionMayus = $MotivoCancelacion.value.toUpperCase();
+     $MotivoCancelacion.value = descripcionMayus; 
    
 });
 

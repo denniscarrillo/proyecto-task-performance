@@ -1,24 +1,32 @@
 <!-- Modal -->
 <div class="modal fade" id="modalComisionesV" tabindex="-1" aria-labelledby="modal_ComisionesV" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-active">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content modal-ComisionesV">
         <div class="modal-header">
-          <h5 class="modal-title" id="modal_ComisionesV"> Buscar comisiones por vendedor </h5>
+          <h5 class="modal-title" id="modal_ComisionesV"> Comisiones totales de los vendedores </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal-comisiones"></button>
         </div>
         <div class="modal-body">
             <H1>Comisiones por vendedor encontradas</H1>
             <div class="table-conteiner">
               <div>
-                <a href="../../fpdf/ReporteComisionVendedor.php" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
+                <!-- <button class="btn_nuevoRegistro btn btn-primary " id="btn_liquidar"> <i class="fa-solid fa-marker"></i> Liquidar Comision</button> -->
+                <!-- <a href="../../../TCPDF/examples/reporteSumaComiVendedores.php" class="btn_Pdf btn btn-primary" id="btn_PdfComisiones"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> -->
+                <button class="btn_Pdf btn btn-primary " id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
+                <div id="pdfContainer"></div>
               </div>
+              <label class="label-text" id="fechasLabel"></label>
               <table class="table table-striped" id="table-comisionesVendedor">
                 <thead>
                   <tr>
+                    <!-- <th scope="col"> ID COMISION </th>
+                    <th scope="col"> ID COMISION VENDEDOR</th> -->
                     <th scope="col"> ID VENDEDOR </th>
                     <th scope="col"> VENDEDOR </th>
+                    <!-- <th scope="col"> FECHA INICIAL </th>
+                    <th scope="col"> FECHA FINAL </th> -->
+                    <!-- <th scope="col"> ESTADO </th> -->
                     <th scope="col"> COMISION TOTAL </th>
-                    <th scope="col"> ESTADO </th>
                     <th scope="col"> ACCIONES </th>
                   </tr>
                 </thead>

@@ -30,7 +30,10 @@ let procesarPermisoActualizar = data => {
       { "data": "descripcionPorcentaje" },
       { "data": "estadoPorcentaje" },
       {"defaultContent":
-        `<div><button class="btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}"" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button></div>`
+        `<div>
+          <button class="btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}"" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button class="btn_eliminar btns btn ${(permisos.Eliminar == 'N')? 'hidden': ''}" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button>
+        </div>`
       }
     ]
   });
@@ -84,7 +87,10 @@ $('#form-Porcentajes').submit(function (e) {
      $('#modalNuevoPorcentaje').modal('hide');
     } 
 });
-
+$('#modalNuevoPorcentaje').on('hidden.bs.modal', function (e) {
+  // Limpia los valores de los campos del formulario
+  $('#form-Porcentajes')[0].reset();
+});
 // let obtenerContactoCliente = function (idElemento) {
 //   //Petición para obtener estados contacto clientes
 //   $.ajax({
@@ -100,7 +106,8 @@ $('#form-Porcentajes').submit(function (e) {
 //     }
 //   });
 // }
-
+document.getElementById('E_valorPorcentaje').setAttribute('disabled', true);
+document.getElementById('E_descripcionPorcentaje').setAttribute('disabled', true);
 //Editar Porcentaje
 $(document).on("click", "#btn_editar", function(){		        
   let fila = $(this).closest("tr"),	        
@@ -117,12 +124,11 @@ $(document).on("click", "#btn_editar", function(){
   $('#modalEditarPorcentaje').modal('show');		   
 });
 
+
 $('#form-Edit-Porcentaje').submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
    //Obtener datos del nuevo Cliente
    let idPorcentaje = $('#E_idPorcentaje').val(),
-   valorPorcentaje = $('#E_valorPorcentaje').val(),
-   descripcionPorcentaje =  $('#E_descripcionPorcentaje').val(),
    estadoPorcentaje = $('#E_estadoPorcentaje').val();
    if(valido){
     $.ajax({
@@ -131,8 +137,6 @@ $('#form-Edit-Porcentaje').submit(function (e) {
       datatype: "JSON",
       data: {
        idPorcentaje: idPorcentaje,
-       valorPorcentaje: valorPorcentaje,
-       descripcionPorcentaje: descripcionPorcentaje,
        estadoPorcentaje: estadoPorcentaje
       },
       success: function () {
@@ -188,3 +192,50 @@ let limpiarFormEdit = () => {
     $mensaje.innerText = '';
   });
 }
+
+//Eliminar porcentajes
+$(document).on("click", "#btn_eliminar", function() {
+  let fila = $(this).closest("tr"),
+     idPorcentaje = $(this).closest('tr').find('td:eq(0)').text(), 
+     porcentaje = fila.find('td:eq(1)').text(),
+     estado = 'Inactivo';
+     
+    Swal.fire({
+      title: 'Estas seguro de eliminar el pocentaje'+porcentaje+'?',
+      text: "No podras revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borralo!'
+      
+    }).then((result) => {
+      if (result.isConfirmed) {      
+        $.ajax({
+          url: "../../../Vista/crud/Porcentajes/eliminarPorcentajes.php",
+          type: "POST",
+          datatype: "JSON",
+          data: { 
+            idPorcentaje: idPorcentaje,
+            estado: estado,
+          },
+          success: function (data) {
+            console.log(data);
+            Swal.fire(
+              'Lo sentimos!',
+              'El porcentaje no puede ser eliminado, se ha Inactivado.',
+              'error'
+            );
+            tablaPorcentajes.ajax.reload(null, false);
+          }
+        });
+      
+      }//Fin del AJAX
+      
+    });                
+});
+
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-Porcentajes_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reporteriaPorcentaje.php?buscar='+buscar, '_blank');
+});

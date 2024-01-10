@@ -13,10 +13,10 @@
         $user = $_SESSION['usuario'];
         $nuevoPorcentaje = new Porcentajes();
         $nuevoPorcentaje->idPorcentaje = $_POST['idPorcentaje'];
-        $nuevoPorcentaje->valorPorcentaje = $_POST['valorPorcentaje'];
-        $nuevoPorcentaje->descripcionPorcentaje = $_POST['descripcionPorcentaje'];
         $nuevoPorcentaje->estadoPorcentaje = $_POST['estadoPorcentaje'];
-        $nuevoPorcentaje->ModificadoPor = 'SUPERADMIN';
+        $nuevoPorcentaje->ModificadoPor = $user;
+        // date_default_timezone_set('America/Tegucigalpa');
+        // $nuevoPorcentaje->fechaModificacion = date("Y-m-d");
         ControladorPorcentajes::editarPorcentaje($nuevoPorcentaje);
         // Porcentajes::editarPorcentaje($nuevoPorcentaje);
         /* ========================= Evento editar porcentaje. ======================*/

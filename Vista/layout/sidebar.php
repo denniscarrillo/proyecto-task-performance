@@ -34,20 +34,18 @@
           <ul class="dropdown-menu__content__secundario">
             <li class="dropdown-menu__content__list__item">
               <a href="<?php echo $urlMisTareas; ?>" class="dropdown-menu__content__secundario__link">
-              <!-- <i class="fa-solid fa-list-check"></i> -->
                 <span>Mis Tareas</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlCotizacion; ?>" class="dropdown-menu__content__secundario__link">
+                <span>Ver Cotizaciones</span>
               </a>
             </li>
             <li class="dropdown-menu__content__list__item">
               <a href="<?php echo $urlConsultarTareas; ?>" class="dropdown-menu__content__secundario__link">
                 <i class=""></i>
-                <span>Consultar Tareas</span>
-              </a>
-            </li>
-            <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo $urlBitacoraTarea; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Bitácora Tarea</span>
+                <span>Ver Tareas</span>
               </a>
             </li>
             <li class="dropdown-menu__content__list__item">
@@ -92,7 +90,7 @@
               <li class="dropdown-menu__content__list__item">
                 <a href="<?php echo $urlComision; ?>" class="dropdown-menu__content__secundario__link">
                 <!-- <i class="fa-solid fa-list-check"></i> -->
-                  <span>Nueva Comisión</span>
+                  <span>Comisiones</span>
                 </a>
               </li>
               <li class="dropdown-menu__content__list__item">
@@ -175,6 +173,12 @@
               </a>
             </li>
             <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlEstadoUsuario; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Estado Usuario</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
               <a href="<?php echo $urlCarteraCliente; ?>" class="dropdown-menu__content__secundario__link">
                 <i class=""></i>
                 <span>Cartera Cliente</span>
@@ -210,6 +214,17 @@
                 <span>Servicios Técnicos</span>
               </a>
             </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlRazonSocial; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Razón Social</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlRubroComercial; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Rubro Comercial</span>
+              </a>
           </ul>
         </div>
       </li>

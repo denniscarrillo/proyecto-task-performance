@@ -45,7 +45,7 @@ if (isset($_POST["submit"])) {
                     }
             }
         } else {
-            if ($rolUsuario == 1) {
+            if ($rolUsuario == 1 && $_POST["userName"]!= 'SUPERADMIN') {
                 $mensaje = 'Contacte con su administrador, aún no tiene rol asignado';
             } else {
                 $existeUsuario = ControladorUsuario::login($_POST["userName"], $_POST["userPassword"]);
@@ -84,7 +84,9 @@ if (isset($_POST["submit"])) {
                                     if ($intentosFallidos > 0) {
                                         ControladorUsuario::resetearIntentos($_POST["userName"]);
                                     }
-                                    if ($rolUsuario > 1 && ($cantPreguntasContestadas == $cantPreguntasParametro)) {
+                                    if ($rolUsuario > 1 && ($cantPreguntasContestadas == $cantPreguntasParametro) 
+                                                        //Si el usuario es SUPERADMIN no necesitara de ningun ROL para poder interactuar con acceso a todos los modulos
+                                                        || ($_POST["userName"] == 'SUPERADMIN') && ($cantPreguntasContestadas == $cantPreguntasParametro)) {
                                         header('location: ../index.php');
                                     }else{
                                         header('location: configRespuestas.php');
@@ -104,9 +106,9 @@ if (isset($_POST["submit"])) {
                         $incremento = ControladorUsuario::incrementarIntentos($_POST["userName"], $intentosFallidos);
                         $nuevoEstado = Usuario::bloquearUsuario($intentosMax, $incremento, $_POST["userName"]);
                         if (($intentosFallidos + 1) == $intentosMax) {
-                            $mensaje = 'Ha alcanzado el limite de intentos fallidos, no debe equivocarse de nuevo';
+                            $mensaje = 'Ha alcanzado el límite de intentos fallidos, no debe equivocarse de nuevo';
                         } else if ($nuevoEstado == true || $estadoUsuario == 4) {
-                            $mensaje = 'Su ussuario ha sido bloqueado por exceder el número de intentos fallidos';
+                            $mensaje = 'Su usuario ha sido bloqueado por exceder el número de intentos fallidos';
                         } else {
                             $mensaje = 'Usuario y/o Contraseña incorrectos';
                         }

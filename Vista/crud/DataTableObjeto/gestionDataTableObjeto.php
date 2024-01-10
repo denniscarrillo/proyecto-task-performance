@@ -11,10 +11,14 @@ session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
-  $permisoRol = ControladorUsuario::permisosRol($idRolUsuario);
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionObjeto.php');
-  $objetoPermitido = ControladorUsuario::permisoSobreObjeto($_SESSION['usuario'], $idObjetoActual, $permisoRol);
-  if(!$objetoPermitido){
+  //Se valida el usuario, si es SUPERADMIN por defecto tiene permiso caso contrario se valida el permiso vrs base de datos
+  (!($_SESSION['usuario'] == 'SUPERADMIN')) 
+  ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
+  : 
+    $permisoConsulta = true;
+  ;
+  if(!$permisoConsulta){
     /* ====================== Evento intento de ingreso sin permiso a la vista objetos. ================================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
@@ -65,21 +69,21 @@ if (isset($_SESSION['usuario'])) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
-  <!-- Boostrap5 -->
+  <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
+  <link href="https://cdn.datatables.net/buttons/2.3.3/css/buttons.bootstrap5.min.css" rel="stylesheet" type="text/css" />
   <link href='../../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-  <!-- DataTables -->
-  <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
-  <!-- <link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" rel="stylesheet"> -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
+  
   <!-- Estilos personalizados -->
-  <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
-
+  <!-- <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" /> -->
+  <link href="../../../Recursos/css/gestionCarteraClientes.css" rel="stylesheet" />
+  <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <title> Estado De Objetos</title>
 </head>
 
@@ -91,8 +95,8 @@ if (isset($_SESSION['usuario'])) {
           $urlIndex = '../../index.php';
           // Rendimiento
           $urlMisTareas = '../../rendimiento/v_tarea.php';
+          $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
           $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
-          $urlBitacoraTarea = ''; //PENDIENTE
           $urlMetricas = '../Metricas/gestionMetricas.php';
           $urlEstadisticas = '../../grafica/estadistica.php'; 
           //Solicitud
@@ -109,6 +113,7 @@ if (isset($_SESSION['usuario'])) {
           $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
           //Mantenimiento
           $urlUsuarios = '../usuario/gestionUsuario.php';
+          $urlEstadoUsuario = '../estadoUsuario/gestionEstadoUsuario.php';
           $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
           $urlPreguntas = '../pregunta/gestionPregunta.php';
           $urlParametros = '../parametro/gestionParametro.php';
@@ -119,6 +124,8 @@ if (isset($_SESSION['usuario'])) {
           $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
           $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
           $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
+          $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
+          $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
           require_once '../../layout/sidebar.php';
         ?>
       </div>
@@ -129,12 +136,14 @@ if (isset($_SESSION['usuario'])) {
                 <?php include_once '../../layout/navbar.php'?>                             
             </div>        
             <div class ="titulo">
-                  <H2 class="title-dashboard-task"> Objetos</H2>
+                  <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionObjeto.php');?>"> Objetos</H2>
             </div>  
           </div> 
         <div class="table-conteiner">
           <div>
-            <a href="../../fpdf/ReporteRol.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> 
+          <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoObjeto"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
+            <!-- <a href="../../../TCPDF/examples/reporteriaObjetos.php" target="_blank" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>  -->
+            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
           </div>
           <table class="table" id="table-Objeto">
             <thead>
@@ -143,7 +152,7 @@ if (isset($_SESSION['usuario'])) {
                 <th scope="col"> OBJETO</th>
                 <th scope="col"> DESCRIPCION</th>
                 <th scope="col"> TIPO OBJETO </th>
-            
+                <th scope="col"> ACCIONES </th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -153,15 +162,21 @@ if (isset($_SESSION['usuario'])) {
       </div> <!-- Fin de la columna -->
     </div>
   </div>
- 
-  <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
-  <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
-  <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
+  <?php
+  require_once('modalNuevoObjeto.html');
+  ?>
+  <!-- Librerias externas -->
+  <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+    <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
+    <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <!-- Scripts propios -->
   <script src="../../../Recursos/js/DataTableObjeto/dataTableObjeto.js" type="module"></script>
+  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
+  <script src="../../../Recursos/js/DataTableObjeto/validacionesNuevoObjeto.js"  type="module"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-  <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
 </body>
 

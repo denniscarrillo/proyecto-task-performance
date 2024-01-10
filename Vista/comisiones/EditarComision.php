@@ -14,13 +14,16 @@ if (isset($_SESSION['usuario'])) {
     if (isset($_POST['idComision'])) {
         $nuevaComision = new Comision();
         $nuevaComision->idComision = intval($_POST['idComision']);
-        $nuevaComision->estadoComision = $_POST['estadoComision'];
+        // $nuevaComision->estadoComision = $_POST['estadoComision'];
+        $nuevaComision->estadoCobro = $_POST['estadoCobro'];
+        $nuevaComision->estadoLiquidacion = $_POST['estadoLiquidacion'];
+        $nuevaComision->metodoPago = $_POST['metodoPago'];
         $nuevaComision->ModificadoPor = $user;
-        date_default_timezone_set('America/Tegucigalpa');
-        $nuevaComision->fechaModificacion = date("Y-m-d");
+        // date_default_timezone_set('America/Tegucigalpa');
+        // $nuevaComision->fechaModificacion = date("Y-m-d");
         ControladorComision::actualizarComision($nuevaComision);
 
-        ControladorComision::editarEstadoComisionVendedor($nuevaComision);
+        // ControladorComision::editarEstadoComisionVendedor($nuevaComision);
         /* ========================= Evento Editar Comision. ======================*/
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();

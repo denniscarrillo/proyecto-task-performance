@@ -24,7 +24,8 @@ let procesarPermisoActualizar = data => {
       { "data": 'estadoPregunta' },
       {
         "defaultContent":
-        `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>` 
+        `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`+
+        `<button class="btn_eliminar btns btn ${(permisos.Eliminar == 'N')? 'hidden': ''}" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button>`
       }
     ]
   });
@@ -114,8 +115,11 @@ $('#form-Pregunta-Editar').submit(function (e) {
 
 //Eliminar pregunta
 $(document).on("click", "#btn_eliminar", function() {
-  let fila = $(this);        
-    let pregunta = $(this).closest('tr').find('td:eq(1)').text();		    
+  let fila = $(this).closest("tr"),
+     idPregunta = $(this).closest('tr').find('td:eq(0)').text(), 
+     pregunta = fila.find('td:eq(1)').text(),
+     estado = 'Inactiva';
+     
     Swal.fire({
       title: 'Estas seguro de eliminar la pregunta '+pregunta+'?',
       text: "No podras revertir esto!",
@@ -123,34 +127,31 @@ $(document).on("click", "#btn_eliminar", function() {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, borralo!'
+      confirmButtonText: 'Si, Borralo!'
+      
     }).then((result) => {
       if (result.isConfirmed) {      
         $.ajax({
           url: "../../../Vista/crud/pregunta/eliminarPregunta.php",
           type: "POST",
-          datatype:"json",    
-          data:  { pregunta: pregunta},    
-          success: function() {
-            // let estadoEliminado = data[0].estadoEliminado;
-            // console.log(data);
-            // if(estadoEliminado == 'eliminado'){
-              tablaPregunta.row(fila.parents('tr')).remove().draw();
-              Swal.fire(
-                'Eliminado!',
-                'La pregunta ha sido eliminada.',
-                'success'
-              ) 
-            // } else {
-            //   Swal.fire(
-            //     'Lo sentimos!',
-            //     'la pregunta no puede ser eliminado.',
-            //     'error'
-            //   );
-            // }           
+          datatype: "JSON",
+          data: { 
+            idPregunta: idPregunta,
+            pregunta: pregunta,
+            estado: estado
+          },
+          success: function () {
+            Swal.fire(
+              'Lo sentimos!',
+              'La pregunta no puede ser eliminada, se ha Inactivado.',
+              'error'
+            );
+            tablaPregunta.ajax.reload(null, false);
           }
-          }); //Fin del AJAX
-      }
+        });
+      
+      }//Fin del AJAX
+      
     });                
 });
 
@@ -192,3 +193,9 @@ let limpiarFormEdit = () => {
     $mensaje.innerText = '';
   });
 }
+
+//Generar reporte PDF
+$(document).on("click", "#btn_Pdf", function() {
+  let buscar = $('#table-Pregunta_filter > label > input[type=search]').val();
+  window.open('../../../TCPDF/examples/reportePreguntas.php?buscar='+buscar, '_blank');
+});     

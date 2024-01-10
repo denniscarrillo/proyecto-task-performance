@@ -12,9 +12,7 @@ class ControladorPregunta {
         return Pregunta::editarPregunta($insertarPregunta);
     }
 
-    public static function eliminandoPregunta($pregunta){
-        return Pregunta::eliminarPregunta($pregunta);
-    }
+    
     public static function preguntaExiste($pregunta){
         return Pregunta::preguntaExistente($pregunta);
     }
@@ -29,4 +27,16 @@ class ControladorPregunta {
     public static function actualizarRespuesta($idUsuario, $respuestas){
         Pregunta::actualizarRespuesta($idUsuario, $respuestas);
     }
+    public static function eliminarPregunta($pregunta){
+         return Pregunta::eliminarPregunta($pregunta);
+    }
+
+    public static function verificarPreguntaActiva($idPregunta){
+        return Pregunta::verificarPreguntaActiva($idPregunta);
+   }
+
+    public static function obtenerPreguntasUsuarioPDF($buscar){
+    return Pregunta::obtenerPreguntasUsuarioPDF($buscar);
+    }
+       
 }

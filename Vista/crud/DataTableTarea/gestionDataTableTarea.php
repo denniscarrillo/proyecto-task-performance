@@ -11,10 +11,14 @@ session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
-  $permisoRol = ControladorUsuario::permisosRol($idRolUsuario);
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionConsultaTarea.php');
-  $objetoPermitido = ControladorUsuario::permisoSobreObjeto($_SESSION['usuario'], $idObjetoActual, $permisoRol);
-  if(!$objetoPermitido){
+  //Se valida el usuario, si es SUPERADMIN por defecto tiene permiso caso contrario se valida el permiso vrs base de datos
+  (!($_SESSION['usuario'] == 'SUPERADMIN')) 
+  ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
+  : 
+    $permisoConsulta = true;
+  ;
+  if(!$permisoConsulta){
     /* ====================== Evento intento de ingreso sin permiso a consultar tareas. ================================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
@@ -78,9 +82,9 @@ if (isset($_SESSION['usuario'])) {
 
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
-  <title> Avance Tareas </title>
+  <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
+  <title> Ver Tareas </title>
 </head>
 
 <body style="overflow: hidden;">
@@ -91,8 +95,8 @@ if (isset($_SESSION['usuario'])) {
           $urlIndex = '../../index.php';
           // Rendimiento
           $urlMisTareas = '../../rendimiento/v_tarea.php';
+          $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
           $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
-          $urlBitacoraTarea = ''; //PENDIENTE
           $urlMetricas = '../Metricas/gestionMetricas.php';
           $urlEstadisticas = '../../grafica/estadistica.php'; 
           //Solicitud
@@ -109,6 +113,7 @@ if (isset($_SESSION['usuario'])) {
           $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
           //Mantenimiento
           $urlUsuarios = '../usuario/gestionUsuario.php';
+          $urlEstadoUsuario = '../estadoUsuario/gestionEstadoUsuario.php';
           $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
           $urlPreguntas = '../pregunta/gestionPregunta.php';
           $urlParametros = '../parametro/gestionParametro.php';
@@ -118,6 +123,8 @@ if (isset($_SESSION['usuario'])) {
           $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
           $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
           $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
+          $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
+          $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
           require_once '../../layout/sidebar.php';
         ?>
       </div>
@@ -129,22 +136,26 @@ if (isset($_SESSION['usuario'])) {
                   <?php include_once '../../layout/navbar.php'?>                             
               </div>        
               <div class ="titulo">
-                    <H2 class="title-dashboard-task">Avance de Tareas</H2>
-              </div>  
+              <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionConsultaTarea.php');?>">Ver Tareas</H2>
+            </div> 
             </div>
-
         <div class="table-conteiner">
           <div>
-            
-            <a href="../../fpdf/ReporteRol.php" target="_blank" class="btn_Pdf btn btn-primary" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> 
+            <a href="../../../TCPDF/examples/reporteConsulTarea.php" target="_blank" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> 
           </div>
           <table class="table" id="table-Tareas">
             <thead>
               <tr>
                 <th scope="col"> ID </th>
-                <th scope="col"> NOMBRE </th>
+                <th scope="col"> TIPO </th>
+                <th scope="col"> RTN </th>
+                <th scope="col"> CLIENTE </th>
                 <th scope="col"> TITULO </th>
-                <th scope="col"> AVANCE DE LA TAREA </th>
+                <th scope="col"> CREADO POR </th>
+                <th scope="col"> ESTADO FINALIZACION </th>
+                <th scope="col"> FECHA FINALIZACION </th>
+                <th scope="col"> ANTIGÜEDAD(DIAS)</th>
+                <th scope="col"> ACCION </th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -161,6 +172,7 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
   <!-- Scripts propios -->
   <script src="../../../Recursos/js/DataTableTarea/dataTableTarea.js" type="module"></script>
+  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>

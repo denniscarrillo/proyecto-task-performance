@@ -57,6 +57,16 @@
                             }
                             header("location: preguntasResponder.php");
                             ControladorUsuario::reiniciarIntentosFallidosRespuesta($usuario);
+                          
+                            // $idPregunta = obtenerIdPreguntaUsuario($usuario); // Reemplaza esto con la lógica real para obtener el ID de la pregunta
+
+                            // // Validar si la pregunta está activa antes de redirigir
+                            // if (ControladorPregunta::verificarPreguntaActiva($idPregunta)) {
+                            //     header("location: preguntasResponder.php");
+                            // } else {
+                            //     $mensaje = "La pregunta está inactiva. Selecciona otra pregunta activa.";
+                            // }
+
                         } else {
                             $mensaje = "Su usuario no tiene preguntas configuradas";
                             unset($_SESSION['usuario']); //Eliminamos la variable

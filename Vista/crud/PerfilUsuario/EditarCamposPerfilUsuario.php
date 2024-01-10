@@ -14,13 +14,15 @@ $data = ControladorUsuario::obtenerDatosPerfilUsuario($_SESSION['usuario']);
 $preguntas = ControladorPregunta::obtenerPreguntasXusuario($_SESSION['usuario']);
 
 if (isset($_SESSION['usuario'])) {
-
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
-  $permisoRol = ControladorUsuario::permisosRol($idRolUsuario);
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
-  $objetoPermitido = ControladorUsuario::permisoSobreObjeto($_SESSION['usuario'], $idObjetoActual, $permisoRol);
-  if (!$objetoPermitido) {
+  (!($_SESSION['usuario'] == 'SUPERADMIN'))
+  ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
+  : 
+    $permisoConsulta = true;
+  ;
+  if (!$permisoConsulta){
     /* ==================== Evento intento de ingreso sin permiso a mantenimiento usuario. ==========================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
@@ -97,8 +99,8 @@ if (isset($_SESSION['usuario'])) {
           $urlIndex = '../../index.php';
           // Rendimiento
           $urlMisTareas = '../../rendimiento/v_tarea.php';
+          $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
           $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
-          $urlBitacoraTarea = ''; //PENDIENTE
           $urlMetricas = '../Metricas/gestionMetricas.php';
           $urlEstadisticas = '../../grafica/estadistica.php'; 
           //Solicitud
@@ -112,11 +114,12 @@ if (isset($_SESSION['usuario'])) {
           $urlObjetos = '../DataTableObjeto/gestionDataTableObjeto.php';
           $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
           //Mantenimiento
-          $urlUsuarios = './gestionUsuario.php';
+          $urlUsuarios = '../usuario/gestionUsuario.php';
+          $urlEstadoUsuario = '../estadoUsuario/gestionEstadoUsuario.php';
           $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
           $urlPreguntas = '../pregunta/gestionPregunta.php';
           $urlParametros = '../parametro/gestionParametro.php';
-          $urlPermisos = '../permiso/gestionPermiso.php';
+          $urlPermisos = '../permiso/gestionPermisos.php';
           $urlRoles = '../rol/gestionRol.php';
           $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
           $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';

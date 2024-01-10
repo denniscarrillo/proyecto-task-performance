@@ -17,4 +17,28 @@ class ControladorParametro {
     public static function obtenerVigenciaToken(){
         return Parametro::obtenerVigenciaToken();
     }
+
+    public static function obtenerDatosReporte(){
+        return Parametro::obtenerDatosReporte();
+    }
+    public static function eliminandoParametro($parametro){
+        return Parametro::eliminarParametro($parametro);
+    }
+    public static function obtenerLosParametrosPDF($buscar){
+        return Parametro::obtenerLosParametrosPDF($buscar);
+    }
+    
+    public static function obtenerVigenciaLiquidar(){
+        return Parametro::obtenerVigenciaLiquidacion();
+    }
+
+    public static function obtenerCorreoDestino(){
+        return Parametro::obtenerCorreoDestino();
+    }
+
+    public static function obtenerCarpetaDestino(){
+        return Parametro::obtenerCarpetaDestino();
+    }
+    
+  
 }
