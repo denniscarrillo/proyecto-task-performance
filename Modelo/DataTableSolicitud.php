@@ -19,20 +19,16 @@ class DataTableSolicitud
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
             $query = "SELECT id_Solicitud,
-            CASE
-                WHEN cc.nombre_Cliente IS NOT NULL AND cc.nombre_Cliente <> '' THEN cc.nombre_Cliente COLLATE Modern_Spanish_CI_AS
-                ELSE c.NOMBRECLIENTE COLLATE Modern_Spanish_CI_AS
-            END AS NombreCliente,
-            t.servicio_Tecnico,
-            telefono_cliente,
-            EstadoAvance,
-            s.Fecha_Creacion
-        FROM [tbl_Solicitud] AS s
-        INNER JOIN tbl_TipoServicio AS t ON t.id_TipoServicio = s.id_TipoServicio
-        LEFT JOIN View_Clientes AS c ON c.CIF COLLATE Modern_Spanish_CI_AS = s.rtn_cliente COLLATE Modern_Spanish_CI_AS 
-        LEFT JOIN tbl_CarteraCliente AS cc ON cc.rtn_Cliente = s.rtn_clienteCartera 
-        WHERE (c.CODCLIENTE = TRY_CAST(s.cod_Cliente AS INT)) OR s.cod_Cliente IS NULL OR s.cod_Cliente = 'NULL' OR s.cod_Cliente = '' 
-        ORDER BY id_Solicitud;";
+                        cc.nombre_Cliente AS NombreCliente,
+                        t.servicio_Tecnico,
+                        telefono_cliente,
+                        EstadoAvance,
+                        s.Fecha_Creacion
+                    FROM [tbl_Solicitud] AS s
+                    INNER JOIN tbl_TipoServicio AS t ON t.id_TipoServicio = s.id_TipoServicio
+                    LEFT JOIN tbl_CarteraCliente AS cc ON cc.rtn_Cliente = s.rtn_clienteCartera 
+                    WHERE s.cod_Cliente IS NULL OR s.cod_Cliente = 'NULL' OR s.cod_Cliente = '' 
+                    ORDER BY id_Solicitud;";
 
            $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
@@ -282,23 +278,19 @@ class DataTableSolicitud
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
             $query = "SELECT id_Solicitud,
-            CASE
-                WHEN cc.nombre_Cliente IS NOT NULL AND cc.nombre_Cliente <> '' THEN cc.nombre_Cliente COLLATE Modern_Spanish_CI_AS
-                ELSE c.NOMBRECLIENTE COLLATE Modern_Spanish_CI_AS
-            END AS NombreCliente,
-            t.servicio_Tecnico,
-            telefono_cliente,
-            EstadoAvance,
-            s.Fecha_Creacion
-        FROM [tbl_Solicitud] AS s
-        INNER JOIN tbl_TipoServicio AS t ON t.id_TipoServicio = s.id_TipoServicio
-        LEFT JOIN View_Clientes AS c ON c.CIF COLLATE Modern_Spanish_CI_AS = s.rtn_cliente COLLATE Modern_Spanish_CI_AS 
-        LEFT JOIN tbl_CarteraCliente AS cc ON cc.rtn_Cliente = s.rtn_clienteCartera 
-        WHERE ((c.CODCLIENTE = TRY_CAST(s.cod_Cliente AS INT)) OR s.cod_Cliente IS NULL OR s.cod_Cliente = 'NULL' OR s.cod_Cliente = '' )
-		and CONCAT( id_Solicitud,  cc.nombre_Cliente, c.NOMBRECLIENTE, t.servicio_Tecnico, 
-                telefono_cliente, EstadoAvance, s.Fecha_Creacion) 
-                COLLATE Modern_Spanish_CI_AS LIKE '%' + '$buscar' + '%' COLLATE Modern_Spanish_CI_AS
-        ORDER BY id_Solicitud;";
+            cc.nombre_Cliente AS NombreCliente,
+           t.servicio_Tecnico,
+           telefono_cliente,
+           EstadoAvance,
+           s.Fecha_Creacion
+       FROM [tbl_Solicitud] AS s
+       INNER JOIN tbl_TipoServicio AS t ON t.id_TipoServicio = s.id_TipoServicio
+       LEFT JOIN tbl_CarteraCliente AS cc ON cc.rtn_Cliente = s.rtn_clienteCartera 
+       WHERE s.cod_Cliente IS NULL OR s.cod_Cliente = 'NULL' OR s.cod_Cliente = '' 
+       and CONCAT( id_Solicitud,  cc.nombre_Cliente, t.servicio_Tecnico, 
+               telefono_cliente, EstadoAvance, s.Fecha_Creacion) 
+               LIKE '%' + '$buscar' + '%' 
+       ORDER BY id_Solicitud;";
 
            $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
