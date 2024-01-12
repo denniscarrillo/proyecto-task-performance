@@ -1,6 +1,7 @@
 <?php
 
-class Parametro {
+class Parametro
+{
     public $idParametro;
     public $parametro;
     public $valor;
@@ -11,7 +12,8 @@ class Parametro {
     public $FechaModificacion;
 
     //Método para obtener todos los usuarios que existen.
-    public static function obtenerTodosLosParametros(){
+    public static function obtenerTodosLosParametros()
+    {
         $parametros = null;
         try {
             $parametros = array();
@@ -33,18 +35,19 @@ class Parametro {
         } catch (Exception $e) {
             $parametros = 'Error SQL:' . $e;
         }
-       sqlsrv_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
         return $parametros;
     }
-    public static function editarParametros($nuevoParametro){
+    public static function editarParametros($nuevoParametro)
+    {
         try {
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $id=$nuevoParametro->idParametro;
-            $parametro=$nuevoParametro->parametro;
-            $valor=$nuevoParametro->valor;
-            $usuario=$nuevoParametro->idUsuario;
-            $ModificadoPor=$nuevoParametro->ModificadoPor;
+            $id = $nuevoParametro->idParametro;
+            $parametro = $nuevoParametro->parametro;
+            $valor = $nuevoParametro->valor;
+            $usuario = $nuevoParametro->idUsuario;
+            $ModificadoPor = $nuevoParametro->ModificadoPor;
             date_default_timezone_set('America/Tegucigalpa');
             $fechaModificacion = date("Y-m-d");
             $query = "UPDATE tbl_ms_parametro SET parametro='$parametro', valor='$valor', id_Usuario='$usuario', Modificado_Por='$ModificadoPor', Fecha_Modificacion='$fechaModificacion'  WHERE id_Parametro='$id' ";
@@ -52,10 +55,11 @@ class Parametro {
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
-       sqlsrv_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
-    public static function dataServerEmail(){
-        try{
+    public static function dataServerEmail()
+    {
+        try {
             $parametrosEmail = array();
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB();
@@ -66,39 +70,42 @@ class Parametro {
                     'valorParametro' => $fila['valor']
                 ];
             }
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
         return $parametrosEmail;
     }
-    public static function obtenerVigencia(){
+    public static function obtenerVigencia()
+    {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query="SELECT valor FROM  tbl_MS_Parametro where parametro = 'ADMIN VIGENCIA'";
+        $query = "SELECT valor FROM  tbl_MS_Parametro where parametro = 'ADMIN VIGENCIA'";
         $resultado = sqlsrv_query($conexion, $query);
         $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
         $vigencia = [
-            'Vigencia' => $fila['valor']   
+            'Vigencia' => $fila['valor']
         ];
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $vigencia;
     }
-    public static function obtenerVigenciaToken(){
+    public static function obtenerVigenciaToken()
+    {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query="SELECT valor FROM  tbl_MS_Parametro where parametro = 'HORAS VIGENCIA TOKEN'";
+        $query = "SELECT valor FROM  tbl_MS_Parametro where parametro = 'HORAS VIGENCIA TOKEN'";
         $resultado = sqlsrv_query($conexion, $query);
         $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
-        $vigencia =  $fila['valor'];
+        $vigencia = $fila['valor'];
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $vigencia;
     }
 
-    public static function obtenerDatosReporte(){
+    public static function obtenerDatosReporte()
+    {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query="SELECT (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='SYS NOMBRE')as NombreEmpresa,
+        $query = "SELECT (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='SYS NOMBRE')as NombreEmpresa,
         (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='ADMIN CORREO') as Correo,
 		(SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='ADMIN DIRECCION') as direccion,
 		(SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='ADMIN SITIO WEB') as sitioWed,
@@ -107,7 +114,7 @@ class Parametro {
 		(SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='CORREO SERVICIO TEC') as CorreoServicio;";
         $resultado = sqlsrv_query($conexion, $query);
         while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
-            $datos [] = [
+            $datos[] = [
                 'NombreEmpresa' => $fila['NombreEmpresa'],
                 'Correo' => $fila['Correo'],
                 'direccion' => $fila['direccion'],
@@ -116,18 +123,19 @@ class Parametro {
                 'Telefono2' => $fila['Telefono2'],
                 'CorreoServicio' => $fila['CorreoServicio']
             ];
-        }        
+        }
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $datos;
     }
 
-    public static function eliminarParametro($parametro){
-        try{
+    public static function eliminarParametro($parametro)
+    {
+        try {
             $conn = new Conexion();
             $conexion = $conn->abrirConexionDB();
             $query = "DELETE FROM tbl_MS_Parametro WHERE id_Parametro = '$parametro';";
             $estadoEliminado = sqlsrv_query($conexion, $query);
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             $estadoEliminado = 'Error SQL:' . $e;
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
@@ -135,7 +143,8 @@ class Parametro {
     }
 
     //Método para generar reporte.
-    public static function obtenerLosParametrosPDF($buscar){
+    public static function obtenerLosParametrosPDF($buscar)
+    {
         $parametros = null;
         try {
             $parametros = array();
@@ -159,53 +168,68 @@ class Parametro {
         } catch (Exception $e) {
             $parametros = 'Error SQL:' . $e;
         }
-       sqlsrv_close($abrirConexion); //Cerrar conexion
+        sqlsrv_close($abrirConexion); //Cerrar conexion
         return $parametros;
     }
 
-    public static function obtenerVigenciaLiquidacion(){
+    public static function obtenerVigenciaLiquidacion()
+    {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query="SELECT valor FROM  tbl_MS_Parametro where parametro = 'ADMINLIQUIDACION'";
+        $query = "SELECT valor FROM  tbl_MS_Parametro where parametro = 'ADMINLIQUIDACION'";
         $resultado = sqlsrv_query($conexion, $query);
         $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
         $liquidacion = [
-            'liquidacion' => $fila['valor']   
+            'liquidacion' => $fila['valor']
         ];
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $liquidacion;
     }
 
-    public static function obtenerCorreoDestino(){
+    public static function obtenerCorreoDestino()
+    {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query="SELECT (SELECT VALOR  FROM tbl_MS_Parametro 
+        $query = "SELECT (SELECT VALOR  FROM tbl_MS_Parametro 
         WHERE parametro ='CORREO SERVICIO TEC') as CorreoServicio;;";
         $resultado = sqlsrv_query($conexion, $query);
         while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
-            $datos [] = [
+            $datos[] = [
                 'CorreoServicio' => $fila['CorreoServicio']
             ];
-        }        
+        }
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $datos;
     }
 
 
-    public static function obtenerCarpetaDestino(){
+    public static function obtenerCarpetaDestino()
+    {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query="SELECT (SELECT VALOR  FROM tbl_MS_Parametro 
+        $query = "SELECT (SELECT VALOR  FROM tbl_MS_Parametro 
         WHERE parametro ='ADMIN GARANTIA') as CarpetaGarantia;";
         $resultado = sqlsrv_query($conexion, $query);
         while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
-            $datos [] = [
+            $datos[] = [
                 'CarpetaGarantia' => $fila['CarpetaGarantia']
             ];
-        }        
+        }
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $datos;
     }
 
+    public static function obtenerUrlLogo()
+    {
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='URL_LOGO') as url_logo";
+        $resultado = sqlsrv_query($conexion, $query);
+        $urlLogo = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+        $urlLogo = $urlLogo['url_logo'];
+
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $urlLogo;
+    }
 
 }

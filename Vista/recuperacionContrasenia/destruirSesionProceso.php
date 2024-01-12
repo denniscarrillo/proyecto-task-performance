@@ -11,11 +11,11 @@ if (isset($_SESSION["usuario"]) && isset($_GET['url'])) {
     session_unset(); // Limpia todas las variables de sesión
     session_destroy(); // Destruye la sesión
     // Verifica si la url es 1 redirige a los metodos de recuperacion
-    if($_GET['url'] == '1'){
+    if ($_GET['url'] == '1') {
         // Redirigir a la página de metodo de recuperacion
-        header("Location: ./v_recuperarContrasena.html");
+        header("Location: ./v_recuperarContrasena.php");
         exit(); // Asegurarse de que el script termine aquí
-    }else{
+    } else {
         // Redirigir al login
         header("Location: ../login/login.php");
         exit(); // Asegurarse de que el script termine aquí

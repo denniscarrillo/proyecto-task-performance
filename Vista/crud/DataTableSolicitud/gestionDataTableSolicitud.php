@@ -6,6 +6,9 @@ require_once("../../../Controlador/ControladorDataTableSolicitud.php");
 require_once("../../../Controlador/ControladorBitacora.php");
 require_once('../../../Modelo/Usuario.php');
 require_once('../../../Controlador/ControladorUsuario.php');
+require_once('../../../Modelo/Parametro.php');
+require_once('../../../Controlador/ControladorParametro.php');
+
 
 session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
@@ -14,11 +17,11 @@ if (isset($_SESSION['usuario'])) {
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionSolicitud.php');
   //Se valida el usuario, si es SUPERADMIN por defecto tiene permiso caso contrario se valida el permiso vrs base de datos
   (!($_SESSION['usuario'] == 'SUPERADMIN'))
-  ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
-  : 
+    ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual)
+    :
     $permisoConsulta = true;
   ;
-  if(!$permisoConsulta){
+  if (!$permisoConsulta) {
     /* ====================== Evento intento de ingreso sin permiso a solicitud. ================================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
@@ -31,8 +34,8 @@ if (isset($_SESSION['usuario'])) {
     /* ===============================================================================================================*/
     header('location: ../../v_errorSinPermiso.php');
     die();
-  }else{
-    if(isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])){
+  } else {
+    if (isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])) {
       /* ====================== Evento salir. ================================================*/
       $accion = ControladorBitacora::accion_Evento();
       date_default_timezone_set('America/Tegucigalpa');
@@ -40,9 +43,9 @@ if (isset($_SESSION['usuario'])) {
       $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
       $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
       $newBitacora->accion = $accion['Exit'];
-      $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de '.$_SESSION['descripcionObjeto'];
+      $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de ' . $_SESSION['descripcionObjeto'];
       ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-    /* =======================================================================================*/
+      /* =======================================================================================*/
     }
     /* ====================== Evento ingreso a vista solicitud. =====================*/
     $accion = ControladorBitacora::accion_Evento();
@@ -64,6 +67,7 @@ if (isset($_SESSION['usuario'])) {
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -86,7 +90,7 @@ if (isset($_SESSION['usuario'])) {
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href="../../../Recursos/css/modalVerSolicitud.css" rel="stylesheet">
 
-  
+
   <title> Consulta solicitudes</title>
 </head>
 
@@ -101,7 +105,7 @@ if (isset($_SESSION['usuario'])) {
         $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
         $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
         $urlMetricas = '../Metricas/gestionMetricas.php';
-        $urlEstadisticas = '../../grafica/estadistica.php'; 
+        $urlEstadisticas = '../../grafica/estadistica.php';
         //Solicitud
         $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
         //Comisión
@@ -123,29 +127,33 @@ if (isset($_SESSION['usuario'])) {
         $urlPermisos = '../permiso/gestionPermisos.php';
         $urlRoles = '../rol/gestionRol.php';
         $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
-        $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
-        $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
-        $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
+        $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
+        $urlPerfilUsuario = '../PerfilUsuario/gestionPerfilUsuario.php';
+        $urlPerfilContraseniaUsuarios = '../PerfilUsuario/gestionPerfilContrasenia.php';
         $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
         $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
         require_once '../../layout/sidebar.php';
         ?>
       </div>
       <div class="conteiner-main">
-      <div class= "encabezado">
-            <div class="navbar-conteiner">
-                <!-- Aqui va la barra -->
-                <?php include_once '../../layout/navbar.php'?>                             
-            </div>        
-            <div class ="titulo">
-                  <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionSolicitud.php');?>"> Solicitudes De Servicios</H2>
-            </div>  
-      </div>    
+        <div class="encabezado">
+          <div class="navbar-conteiner">
+            <!-- Aqui va la barra -->
+            <?php include_once '../../layout/navbar.php' ?>
+          </div>
+          <div class="titulo">
+            <H2 class="title-dashboard-task"
+              id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionSolicitud.php'); ?>"> Solicitudes De Servicios
+            </H2>
+          </div>
+        </div>
         <div class="table-conteiner">
           <div>
-            <a href="./v_Solicitud.php" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro"><i class="fa-solid fa-circle-plus"></i> Generar solicitud de Servicios</a>
+            <a href="./v_Solicitud.php" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro"><i
+                class="fa-solid fa-circle-plus"></i> Generar solicitud de Servicios</a>
             <!-- <a href="../../../TCPDF/examples/reporteriaSolicitud.php" target="_blank" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>  -->
-          <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
+            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
+              PDF</button>
           </div>
           <table class="table" id="table-Solicitud">
             <thead>
@@ -184,7 +192,7 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/DataTableSolicitud/validacionesModalEditarSolicitud.js" type="module"></script>
   <script src="../../../Recursos/js/DataTableSolicitud/guardarEvidencia.js" type="module"></script>
   <script src="../../../Recursos/js/index.js"></script>
-  
+
 </body>
 
 </html>

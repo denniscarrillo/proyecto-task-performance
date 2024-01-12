@@ -1,6 +1,8 @@
 <?php
 require_once('validacionesComision.php');
 require_once('obtenerEstadoComision.php');
+require_once('../../Modelo/Parametro.php');
+require_once('../../Controlador/ControladorParametro.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -23,56 +25,56 @@ require_once('obtenerEstadoComision.php');
 </head>
 
 <body style="overflow: hidden;">
-  
-    <div class="conteiner-global">
-      <!-- row gx-0 row-conteiner -->
-      <div class="sidebar-conteiner">
-        <?php
-        $urlIndex = '../index.php';
-        // Rendimiento
-        $urlMisTareas = '../rendimiento/v_tarea.php';
-        $urlCotizacion = '../rendimiento/cotizacion/gestionCotizacion.php';
-        $urlConsultarTareas = '../crud/DataTableTarea/gestionDataTableTarea.php';
-        $urlMetricas = '../crud/Metricas/gestionMetricas.php';
-        $urlEstadisticas = '../grafica/estadistica.php';
-        //Solicitud
-        $urlSolicitud = '../crud/DataTableSolicitud/gestionDataTableSolicitud.php';
-        //Comisión
-        $urlComision = './v_comision.php';
-        $comisionVendedor = '../crud/ComisionesVendedores/ComisionesVendedores.php';
-        $urlPorcentajes = '../crud/Porcentajes/gestionPorcentajes.php';
-        //Consulta
-        $urlClientes = '../crud/cliente/gestionCliente.php';
-        $urlVentas = '../crud/Venta/gestionVenta.php';
-        $urlArticulos = '../crud/articulo/gestionArticulo.php';
-        $urlObjetos = '../crud/DataTableObjeto/gestionDataTableObjeto.php';
-        $urlBitacoraSistema = '../crud/bitacora/gestionBitacora.php';
-        //Mantenimiento
-        $urlUsuarios = '../crud/usuario/gestionUsuario.php';
-        $urlEstadoUsuario = '../crud/estadoUsuario/gestionEstadoUsuario.php';
-        $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
-        $urlPreguntas = '../crud/pregunta/gestionPregunta.php';
-        $urlParametros = '../crud/parametro/gestionParametro.php';
-        $urlPermisos = '../crud/permiso/gestionPermisos.php';
-        $urlRoles = '../crud/rol/gestionRol.php';
-        $urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
-        $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
-          $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
-        $urlImg = '../../Recursos/imagenes/Logo-E&C.png';
-        $urlRazonSocial = '../crud/RazonSocial/gestionRazonSocial.php';
-        $urlRubroComercial = '../crud/rubroComercial/gestionRubroComercial.php';
-        require_once '../layout/sidebar.php';
-        ?>
-      </div>
 
-      <div class="conteiner-main">
-        <!-- Encabezado -->
-          <div class= "encabezado">
-            <div class="navbar-conteiner">
-                <!-- Aqui va la barra -->
-                <?php include_once '../layout/navbar.php'?>                             
-            </div>          
-          </div>
+  <div class="conteiner-global">
+    <!-- row gx-0 row-conteiner -->
+    <div class="sidebar-conteiner">
+      <?php
+      $urlIndex = '../index.php';
+      // Rendimiento
+      $urlMisTareas = '../rendimiento/v_tarea.php';
+      $urlCotizacion = '../rendimiento/cotizacion/gestionCotizacion.php';
+      $urlConsultarTareas = '../crud/DataTableTarea/gestionDataTableTarea.php';
+      $urlMetricas = '../crud/Metricas/gestionMetricas.php';
+      $urlEstadisticas = '../grafica/estadistica.php';
+      //Solicitud
+      $urlSolicitud = '../crud/DataTableSolicitud/gestionDataTableSolicitud.php';
+      //Comisión
+      $urlComision = './v_comision.php';
+      $comisionVendedor = '../crud/ComisionesVendedores/ComisionesVendedores.php';
+      $urlPorcentajes = '../crud/Porcentajes/gestionPorcentajes.php';
+      //Consulta
+      $urlClientes = '../crud/cliente/gestionCliente.php';
+      $urlVentas = '../crud/Venta/gestionVenta.php';
+      $urlArticulos = '../crud/articulo/gestionArticulo.php';
+      $urlObjetos = '../crud/DataTableObjeto/gestionDataTableObjeto.php';
+      $urlBitacoraSistema = '../crud/bitacora/gestionBitacora.php';
+      //Mantenimiento
+      $urlUsuarios = '../crud/usuario/gestionUsuario.php';
+      $urlEstadoUsuario = '../crud/estadoUsuario/gestionEstadoUsuario.php';
+      $urlCarteraCliente = '../crud/carteraCliente/gestionCarteraClientes.php';
+      $urlPreguntas = '../crud/pregunta/gestionPregunta.php';
+      $urlParametros = '../crud/parametro/gestionParametro.php';
+      $urlPermisos = '../crud/permiso/gestionPermisos.php';
+      $urlRoles = '../crud/rol/gestionRol.php';
+      $urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
+      $urlPerfilUsuario = '../PerfilUsuario/gestionPerfilUsuario.php';
+      $urlPerfilContraseniaUsuarios = '../PerfilUsuario/gestionPerfilContrasenia.php';
+      $urlImg = '../../Recursos/' . ControladorParametro::obtenerUrlLogo();
+      $urlRazonSocial = '../crud/RazonSocial/gestionRazonSocial.php';
+      $urlRubroComercial = '../crud/rubroComercial/gestionRubroComercial.php';
+      require_once '../layout/sidebar.php';
+      ?>
+    </div>
+
+    <div class="conteiner-main">
+      <!-- Encabezado -->
+      <div class="encabezado">
+        <div class="navbar-conteiner">
+          <!-- Aqui va la barra -->
+          <?php include_once '../layout/navbar.php' ?>
+        </div>
+      </div>
 
       <div class="col-10 form-conteiner">
         <form action="" method="post" id="form-Comision">
@@ -93,14 +95,15 @@ require_once('obtenerEstadoComision.php');
           <div class="conteiner-id-venta form-element">
             <label>Venta N°</label>
             <input type=" text" class="form-control" id="id-venta">
-            <button type="button" class="btn-call-modal btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalfiltroVenta">
+            <button type="button" class="btn-call-modal btn btn-primary" data-bs-toggle="modal"
+              data-bs-target="#modalfiltroVenta">
               Seleccionar...
             </button>
           </div>
           <div class="form-element">
             <label>Estado Comision:</label>
             <label id="mensaje-estado"></label>
-            <p class="mensaje" id= "mensaje"></p>
+            <p class="mensaje" id="mensaje"></p>
           </div>
 
           <div class="form-element">
@@ -113,12 +116,12 @@ require_once('obtenerEstadoComision.php');
             <select name="porcentajeComision" class="form-control" id="porcentaje-comision">
               <option value="0">Seleccionar...</option>
               <?php
-                foreach ($porcentajes as $porcentaje) {
+              foreach ($porcentajes as $porcentaje) {
                 // Formatear el porcentaje sin decimales y con el símbolo de porcentaje
                 $porcentajeFormateado = number_format($porcentaje['porcentaje'] * 100, 0) . '%';
                 $opcion = '<option value="' . $porcentaje['idPorcentaje'] . '">' . $porcentajeFormateado . ' - ' . $porcentaje['descripcion'] . '</option>';
                 echo $opcion;
-                }
+              }
               ?>
             </select>
           </div>
@@ -140,13 +143,10 @@ require_once('obtenerEstadoComision.php');
           </div>
         </form>
       </div>
-          <!-- Footer -->
-          <div class="footer-conteiner">
-                <?php
-                require_once '../layout/footer.php';
-                ?>
-          </div>
+      <!-- Footer -->
+      <!-- <div class="footer-conteiner"> -->
     </div>
+  </div>
   </div>
   <?php
   require_once 'modalFiltroVenta.html';

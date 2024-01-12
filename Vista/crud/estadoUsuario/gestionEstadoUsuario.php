@@ -4,6 +4,8 @@ require_once("../../../Modelo/Usuario.php");
 require_once("../../../Modelo/Bitacora.php");
 require_once("../../../Controlador/ControladorUsuario.php");
 require_once("../../../Controlador/ControladorBitacora.php");
+require_once('../../../Modelo/Parametro.php');
+require_once('../../../Controlador/ControladorParametro.php');
 
 session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
@@ -11,11 +13,11 @@ if (isset($_SESSION['usuario'])) {
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionEstadoUsuario.php');
   (!($_SESSION['usuario'] == 'SUPERADMIN'))
-  ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
-  : 
+    ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual)
+    :
     $permisoConsulta = true;
   ;
-  if(!$permisoConsulta){
+  if (!$permisoConsulta) {
     /* ==================== Evento intento de ingreso sin permiso a mantenimiento estado usuario. ==========================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
@@ -28,8 +30,8 @@ if (isset($_SESSION['usuario'])) {
     /* ===============================================================================================================*/
     header('location: ../../v_errorSinPermiso.php');
     die();
-  }else{
-    if(isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])){
+  } else {
+    if (isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])) {
       /* ====================== Evento salir. ================================================*/
       $accion = ControladorBitacora::accion_Evento();
       date_default_timezone_set('America/Tegucigalpa');
@@ -37,9 +39,9 @@ if (isset($_SESSION['usuario'])) {
       $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
       $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
       $newBitacora->accion = $accion['Exit'];
-      $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de '.$_SESSION['descripcionObjeto'];
+      $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de ' . $_SESSION['descripcionObjeto'];
       ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-    /* =======================================================================================*/
+      /* =======================================================================================*/
     }
     /* ====================== Evento ingreso a mantenimiento estado usuario. ========================*/
     $accion = ControladorBitacora::accion_Evento();
@@ -61,6 +63,7 @@ if (isset($_SESSION['usuario'])) {
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -79,8 +82,8 @@ if (isset($_SESSION['usuario'])) {
   <link href="../../../Recursos/css/modalNuevoEstado.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <title> Gestión Estados de Usuarios </title>
 </head>
 
@@ -89,60 +92,64 @@ if (isset($_SESSION['usuario'])) {
     <div class="conteiner-global">
       <div class="sidebar-conteiner">
         <?php
-          $urlIndex = '../../index.php';
-          // Rendimiento
-          $urlMisTareas = '../../rendimiento/v_tarea.php';
-          $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
-          $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
-          $urlMetricas = '../Metricas/gestionMetricas.php';
-          $urlEstadisticas = '../../grafica/estadistica.php'; 
-          //Solicitud
-          $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
-          //Comisión
-          $urlComision = '../../comisiones/v_comision.php';
-          $comisionVendedor = '../ComisionesVendedores/ComisionesVendedores.php';
-          $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
-          //Consulta
-          $urlClientes = '../cliente/gestionCliente.php';
-          $urlVentas = '../Venta/gestionVenta.php';
-          $urlArticulos = '../articulo/gestionArticulo.php';
-          $urlObjetos = '../DataTableObjeto/gestionDataTableObjeto.php';
-          $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
-          //Mantenimiento
-          $urlUsuarios = '../usuario/gestionUsuario.php';
-          $urlEstadoUsuario = './gestionEstadoUsuario.php';
-          $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
-          $urlPreguntas = '../pregunta/gestionPregunta.php';
-          $urlParametros = '../parametro/gestionParametro.php';
-          $urlPermisos = '../permiso/gestionPermisos.php';
-          $urlRoles = '../rol/gestionRol.php';
-          $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
-          $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
-          $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
-          $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
-          $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
-          $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
-          require_once '../../layout/sidebar.php';
+        $urlIndex = '../../index.php';
+        // Rendimiento
+        $urlMisTareas = '../../rendimiento/v_tarea.php';
+        $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
+        $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
+        $urlMetricas = '../Metricas/gestionMetricas.php';
+        $urlEstadisticas = '../../grafica/estadistica.php';
+        //Solicitud
+        $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
+        //Comisión
+        $urlComision = '../../comisiones/v_comision.php';
+        $comisionVendedor = '../ComisionesVendedores/ComisionesVendedores.php';
+        $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
+        //Consulta
+        $urlClientes = '../cliente/gestionCliente.php';
+        $urlVentas = '../Venta/gestionVenta.php';
+        $urlArticulos = '../articulo/gestionArticulo.php';
+        $urlObjetos = '../DataTableObjeto/gestionDataTableObjeto.php';
+        $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
+        //Mantenimiento
+        $urlUsuarios = '../usuario/gestionUsuario.php';
+        $urlEstadoUsuario = './gestionEstadoUsuario.php';
+        $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
+        $urlPreguntas = '../pregunta/gestionPregunta.php';
+        $urlParametros = '../parametro/gestionParametro.php';
+        $urlPermisos = '../permiso/gestionPermisos.php';
+        $urlRoles = '../rol/gestionRol.php';
+        $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+        $urlPerfilUsuario = '../PerfilUsuario/gestionPerfilUsuario.php';
+        $urlPerfilContraseniaUsuarios = '../PerfilUsuario/gestionPerfilContrasenia.php';
+        $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
+        $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
+        $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
+        require_once '../../layout/sidebar.php';
         ?>
       </div>
 
       <!-- CONTENIDO DE LA PAGINA - 2RA PARTE -->
-        <div class="conteiner-main">
-            <!-- Encabezado -->
-          <div class= "encabezado">
-            <div class="navbar-conteiner">
-                <!-- Aqui va la barra -->
-                <?php include_once '../../layout/navbar.php'?>                             
-            </div>        
-            <div class ="titulo">
-              <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionEstadoUsuario.php');?>">Gestión Estado de Usuarios</H2>
-            </div>  
+      <div class="conteiner-main">
+        <!-- Encabezado -->
+        <div class="encabezado">
+          <div class="navbar-conteiner">
+            <!-- Aqui va la barra -->
+            <?php include_once '../../layout/navbar.php' ?>
           </div>
-  
+          <div class="titulo">
+            <H2 class="title-dashboard-task"
+              id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionEstadoUsuario.php'); ?>">Gestión Estado de
+              Usuarios</H2>
+          </div>
+        </div>
+
         <div class="table-conteiner">
           <div>
-            <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoEstadoUsuario"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
-            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
+            <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal"
+              data-bs-target="#modalNuevoEstadoUsuario"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
+            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
+              PDF</button>
           </div>
           <table class="table" id="table-EstadoUsuarios">
             <thead>
@@ -163,7 +170,7 @@ if (isset($_SESSION['usuario'])) {
   </div>
   <?php
   require('modalNuevoEstado.html');
-//   require('modalEditarUsuario.html');
+  //   require('modalEditarUsuario.html');
   ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
@@ -179,4 +186,5 @@ if (isset($_SESSION['usuario'])) {
   <!-- <script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script> -->
   <script src="../../../Recursos/js/index.js"></script>
 </body>
+
 </html>

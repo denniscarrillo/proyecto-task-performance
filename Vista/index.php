@@ -4,6 +4,9 @@ require_once("../Modelo/Usuario.php");
 require_once("../Modelo/Bitacora.php");
 require_once("../Controlador/ControladorUsuario.php");
 require_once("../Controlador/ControladorBitacora.php");
+require_once('../Modelo/Parametro.php');
+require_once('../Controlador/ControladorParametro.php');
+
 session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
@@ -66,9 +69,9 @@ if (isset($_SESSION['usuario'])) {
       // Rendimiento
       $urlMisTareas = './rendimiento/v_tarea.php';
       $urlCotizacion = './rendimiento/cotizacion/gestionCotizacion.php';
-      $urlConsultarTareas = './crud/DataTableTarea/gestionDataTableTarea.php'; 
+      $urlConsultarTareas = './crud/DataTableTarea/gestionDataTableTarea.php';
       $urlMetricas = './crud/Metricas/gestionMetricas.php';
-      $urlEstadisticas = './grafica/estadistica.php'; 
+      $urlEstadisticas = './grafica/estadistica.php';
       //Solicitud
       $urlSolicitud = './crud/DataTableSolicitud/gestionDataTableSolicitud.php';
       //Comisión
@@ -93,7 +96,7 @@ if (isset($_SESSION['usuario'])) {
       $urlPerfilUsuario = './crud/PerfilUsuario/gestionPerfilUsuario.php';
       $urlPerfilContraseniaUsuarios = './crud/PerfilUsuario/gestionPerfilContrasenia.php';
       $urlEditarCamposPerfil = './crud/PerfilUsuario/EditarCamposPerfilUsuario.php';
-      $urlImg = '../Recursos/imagenes/Logo-E&C.png';
+      $urlImg = '/Recursos/' . ControladorParametro::obtenerUrlLogo();
       $urlRazonSocial = './crud/RazonSocial/gestionRazonSocial.php';
       $urlRubroComercial = './crud/RubroComercial/gestionRubroComercial.php';
       require_once 'layout/sidebar.php';
@@ -140,11 +143,11 @@ if (isset($_SESSION['usuario'])) {
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-    crossorigin="anonymous"></script>
+    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
+  </script>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <!-- <script src="../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../Recursos/js/validacionesSidebar.js"></script> -->

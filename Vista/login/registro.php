@@ -3,78 +3,94 @@ require_once('../../Vista/login/validarRegistro.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link href="../../Recursos/css/registro.css" rel="stylesheet">
-    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1862/1862358.png">
-    <title>Registrarse</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <link href="../../Recursos/css/registro.css" rel="stylesheet">
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1862/1862358.png">
+  <title>Registrarse</title>
 </head>
+
 <body class="container">
-    <div class="ancho">
-        <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" id="formRegis">
-            <div class="logo-empresa">
-                <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="240px">
-            </div>
-            <p class="line-space"></p>
-            <h2 class ="titulo-registro">Regístrate</h2>
-            <p class="line-space"></p>
-            <div class = "input-container">
-            <div class = "form-grupo">
-                <!-- input para nombre -->
-                <div class="wrap-input mb-3">
-                    <label><b>Nombre Completo</b></label>
-                    <input type="text" class="form-control input" name="nombre" id="nombre" maxlength="30" placeholder="Nombre">
-                    <p class="mensaje"></p>
-                </div>
-                <!-- input para usuario -->
-                <div class="wrap-input mb-3">
-                    <label><b>Usuario</b></label>
-                    <input type="text" class="form-control input" name="usuario" id="usuario" maxlength="14" placeholder="Usuario">
-                    <p class="mensaje"></p>
-                </div>
-                <!-- input para correo electronico -->
-                <div class="wrap-input mb-3">
-                    <label><b>Correo Electrónico</b></label>
-                    <input type="email" class="form-control input" name="correoElectronico" id="correo" maxlength="50" placeholder="Correo Electrónico">
-                    <p class="mensaje"></p>
-                </div>
-            </div>
-            <div class = "form-grupo">
-                <!-- input para Contraseña -->
-                <div class="wrap-input mb-3" id="grupo__password">
-                    <label><b>Contraseña</b></label>
-                    <input type="password" class="form-control input" name="contraseña" id="password" placeholder="Contraseña">
-                    <p class="mensaje"></p>
-                    <br>
-                </div>
-                <!-- input para confirmación Contraseña -->
-                <div class="wrap-input mb-3" id="grupo__password2">
-                    <label><b>Confirmar contraseña</b></label>
-                    <input type="password" class="form-control input" name="confirmarContraseña" id="password2" maxlength="20" placeholder="Confirmar Contraseña">
-                    <!-- <i class="form-control__validacion-estado fas fa-times-circle"></i> -->
-                    <p class="mensaje"></p>
-                </div>
-                <div>
-                <input type="checkbox" id="checkbox"> Mostrar Contraseñas
-                </div>
-            </div>
-            </div>
-            <button type="submit" class="btn btn-primary" name="submit" id= "click">Crear cuenta</button>
-            <?php 
+  <div class="ancho">
+    <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" id="formRegis">
+      <div class="logo-empresa">
+        <img src="<?php echo '/Recursos/' . ControladorParametro::obtenerUrlLogo() ?>" height="220px">
+      </div>
+      <div style="display: flex; justify-content: center;">
+        <p
+          style="display: flex; justify-content: center; font-size: 2rem; font-weight: 500; width: 390px; 
+                margin-bottom: 2rem; color: gray; text-transform: uppercase; background-color: #ffc90e; border-radius: 3rem;">
+          Task
+          Performance
+        </p>
+      </div>
+      <p class="line-space"></p>
+      <h2 class="titulo-registro">Regístrate</h2>
+      <p class="line-space"></p>
+      <div class="input-container">
+        <div class="form-grupo">
+          <!-- input para nombre -->
+          <div class="wrap-input mb-3">
+            <label><b>Nombre Completo</b></label>
+            <input type="text" class="form-control input" name="nombre" id="nombre" maxlength="30" placeholder="Nombre">
+            <p class="mensaje"></p>
+          </div>
+          <!-- input para usuario -->
+          <div class="wrap-input mb-3">
+            <label><b>Usuario</b></label>
+            <input type="text" class="form-control input" name="usuario" id="usuario" maxlength="14"
+              placeholder="Usuario">
+            <p class="mensaje"></p>
+          </div>
+          <!-- input para correo electronico -->
+          <div class="wrap-input mb-3">
+            <label><b>Correo Electrónico</b></label>
+            <input type="email" class="form-control input" name="correoElectronico" id="correo" maxlength="50"
+              placeholder="Correo Electrónico">
+            <p class="mensaje"></p>
+          </div>
+        </div>
+        <div class="form-grupo">
+          <!-- input para Contraseña -->
+          <div class="wrap-input mb-3" id="grupo__password">
+            <label><b>Contraseña</b></label>
+            <input type="password" class="form-control input" name="contraseña" id="password" placeholder="Contraseña">
+            <p class="mensaje"></p>
+            <br>
+          </div>
+          <!-- input para confirmación Contraseña -->
+          <div class="wrap-input mb-3" id="grupo__password2">
+            <label><b>Confirmar contraseña</b></label>
+            <input type="password" class="form-control input" name="confirmarContraseña" id="password2" maxlength="20"
+              placeholder="Confirmar Contraseña">
+            <!-- <i class="form-control__validacion-estado fas fa-times-circle"></i> -->
+            <p class="mensaje"></p>
+          </div>
+          <div>
+            <input type="checkbox" id="checkbox"> Mostrar Contraseñas
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" name="submit" id="click">Crear cuenta</button>
+      <?php
             //   if(!$mensaje==''){
             //     echo '<h2 class="mensaje-error">'. $mensaje. '</h2>';
             //   }
             ?>
-            <label>¿Ya tienes cuenta?</label><a href = "login.php" class="label-text">Inicia sesión</a>
-        </form>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-    <script src="../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
-    <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-    <script src="../../Recursos/js/validacionesRegistro.js" type="module"></script>
+      <label>¿Ya tienes cuenta?</label><a href="login.php" class="label-text">Inicia sesión</a>
+    </form>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
+  </script>
+  <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
+  <script src="../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
+  <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
+  <script src="../../Recursos/js/validacionesRegistro.js" type="module"></script>
 </body>
 
 </html>

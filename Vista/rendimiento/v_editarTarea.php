@@ -1,20 +1,23 @@
 <?php
-	session_start(); //Reanudamos sesion
-	require_once('../../db/Conexion.php');
-	require_once('../../Modelo/Tarea.php');
-	require_once('../../Modelo/Bitacora.php');
-	require_once('../../Controlador/ControladorTarea.php');
-	require_once('../../Controlador/ControladorBitacora.php');
-	$clasificacionLeads = ControladorTarea::obtenerClasificacionLead();
-	$estadosTarea = ControladorTarea::traerEstadosTarea();
-	$origenLeads = ControladorTarea::obtenerOrigenLead();
-	$razonSociales = ControladorTarea::obtenerRazonSocial();
-	$rubroSociales = ControladorTarea::obtenerRubroComercial();
-	//Valida si tiene sesion
-	if (!isset($_SESSION['usuario'])) {
-		header('location: ../login/login.php');
-   die();
-	}
+session_start(); //Reanudamos sesion
+require_once('../../db/Conexion.php');
+require_once('../../Modelo/Tarea.php');
+require_once('../../Modelo/Bitacora.php');
+require_once('../../Controlador/ControladorTarea.php');
+require_once('../../Controlador/ControladorBitacora.php');
+require_once('../../Modelo/Parametro.php');
+require_once('../../Controlador/ControladorParametro.php');
+
+$clasificacionLeads = ControladorTarea::obtenerClasificacionLead();
+$estadosTarea = ControladorTarea::traerEstadosTarea();
+$origenLeads = ControladorTarea::obtenerOrigenLead();
+$razonSociales = ControladorTarea::obtenerRazonSocial();
+$rubroSociales = ControladorTarea::obtenerRubroComercial();
+//Valida si tiene sesion
+if (!isset($_SESSION['usuario'])) {
+	header('location: ../login/login.php');
+	die();
+}
 ?>
 
 <!DOCTYPE html>
@@ -73,7 +76,7 @@
 			$urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
 			$urlPerfilUsuarios = '../crud/PerfilUsuario/gestionPerfilUsuario.php';
 			$urlPerfilContraseniaUsuarios = '../crud/PerfilUsuario/gestionPerfilContrasenia.php';
-			$urlImg = '../../Recursos/imagenes/Logo-E&C.png';
+			$urlImg = '../../Recursos/' . ControladorParametro::obtenerUrlLogo();
 			$urlRazonSocial = '../crud/razonSocial/gestionRazonSocial.php';
 			$urlRubroComercial = '../crud/rubroComercial/gestionRubroComercial.php';
 			require_once '../layout/sidebar.php';
@@ -82,26 +85,28 @@
 		<div class="conteiner-main">
 			<div class="navbar-conteiner">
 				<!-- Aqui va la barra -->
-				<?php include_once '../layout/navbar.php';?>
+				<?php include_once '../layout/navbar.php'; ?>
 			</div>
 			<div class="side-panel-container">
 			</div>
 			<div class="side-panel-content">
 				<div class="title-container">
-					<h2 class="title-text tab-selected" id="tab-comment" name="<?php echo (isset($_SESSION['usuario']))? $_SESSION['usuario']: '';?>">Comentarios</h2>
+					<h2 class="title-text tab-selected" id="tab-comment"
+						name="<?php echo (isset($_SESSION['usuario'])) ? $_SESSION['usuario'] : ''; ?>">Comentarios</h2>
 					<h2 class="title-text" id="tab-history">Historial</h2>
 					<button type="button" id="btn-close-comment" class="btn-close" aria-label="Close"></button>
 				</div>
 				<div id="comment-history-container" class="comments-container">
 					<div class="comments-container-list" id="comments-container-list">
-					<!-- Aqui van todos los comentarios -->	
+						<!-- Aqui van todos los comentarios -->
 					</div>
 					<div class="history-container" id="history-container">
 
 					</div>
 					<form action="" id="form-comentario" class="container-chat">
 						<textarea id="input-comentario" class="input-comentario" placeholder="Escribe un comentario..."></textarea>
-						<button type="submit" id="btn-guardarComentario" class="btn btn-primary btn-Comentario"><i class="fa-solid fa-paper-plane"></i></button>
+						<button type="submit" id="btn-guardarComentario" class="btn btn-primary btn-Comentario"><i
+								class="fa-solid fa-paper-plane"></i></button>
 					</form>
 				</div>
 			</div>
@@ -113,25 +118,33 @@
 						<div class="encabezado-tarea">
 							<div class="mb-3">
 								<label class="text-cliente">Tipo cliente:</label>
-								<label id="tipoCliente" hidden><?php echo ControladorTarea::obtenerTipoCliente(intval($_GET['idTarea'])) ?></label>
-								<input type="radio" name="radioOption" id="cliente-existente" class="radio"
-									value="Existente"><label for="cliente-existente"
-									class="radio-label form-label">Existente</label>
-								<input type="radio" name="radioOption" id="cliente-nuevo" class="radio" value="Nuevo"
-									checked><label for="cliente-nuevo" class="radio-label form-label">Nuevo</label>
+								<label id="tipoCliente" hidden>
+									<?php echo ControladorTarea::obtenerTipoCliente(intval($_GET['idTarea'])) ?>
+								</label>
+								<input type="radio" name="radioOption" id="cliente-existente" class="radio" value="Existente"><label
+									for="cliente-existente" class="radio-label form-label">Existente</label>
+								<input type="radio" name="radioOption" id="cliente-nuevo" class="radio" value="Nuevo" checked><label
+									for="cliente-nuevo" class="radio-label form-label">Nuevo</label>
 							</div>
 							<div class="mb-3 data-container title_container">
 								<div class="data-container title_container">
 									<label for="input-titulo-tarea" class="form-label label-title-task">Título de la tarea</label>
-									<input type="text" name="input-titulo-tarea" id="input-titulo-tarea" class="form-control" value="<?php echo ControladorTarea::obtenerEstadoTarea(intval($_GET['idTarea']))['titulo'] ?>">
+									<input type="text" name="input-titulo-tarea" id="input-titulo-tarea" class="form-control"
+										value="<?php echo ControladorTarea::obtenerEstadoTarea(intval($_GET['idTarea']))['titulo'] ?>">
 									<p class="mensaje"></p>
 								</div>
-								<button type="button" id="btn-finalizar-tarea" disabled><i class="fa-solid fa-text-slash"></i> Finalizar tarea</button>
-								<label id="estado-finalizacion" hidden><?php echo ControladorTarea::obtenerTareaFinalizada($_GET['idTarea']) ?></label>
+								<button type="button" id="btn-finalizar-tarea" disabled><i class="fa-solid fa-text-slash"></i> Finalizar
+									tarea</button>
+								<label id="estado-finalizacion" hidden>
+									<?php echo ControladorTarea::obtenerTareaFinalizada($_GET['idTarea']) ?>
+								</label>
 							</div>
 							<div class="mb-3 data-container">
-								<label id="<?php echo ControladorTarea::obtenerEstadoTarea(intval($_GET['idTarea']))['id_estadoAvance'] ?>" class="id-estado-tarea" hidden="true" name="estadoTarea"></label>
-								<input type="text" value="<?php echo $_GET['idTarea']; ?>" id="id-Tarea" class="id-tarea" name="idTarea" hidden="true">
+								<label
+									id="<?php echo ControladorTarea::obtenerEstadoTarea(intval($_GET['idTarea']))['id_estadoAvance'] ?>"
+									class="id-estado-tarea" hidden="true" name="estadoTarea"></label>
+								<input type="text" value="<?php echo $_GET['idTarea']; ?>" id="id-Tarea" class="id-tarea" name="idTarea"
+									hidden="true">
 								<label for="estados-tarea" class="form-label"> Estado: </label>
 								<label id="estado-tarea"></label>
 								<select name="estadoTarea" id="estados-tarea" class="form-select">
@@ -152,17 +165,17 @@
 									<label for="rnt-cliente" class="form-label" name="estadoEdicion" id="true">RTN:</label>
 									<label class="mensaje-rtn"></label>
 									<input type="text" name="rtnCliente" id="rnt-cliente" class="form-control">
-									<p class="mensaje"></p>									
+									<p class="mensaje"></p>
 									<!-- Aqui va el boton del filtro de clientes -->
 								</div>
-								<div class="mb-3 data-container" id="container-num-factura"hidden>
-									<label for="num-factura" class="form-label" >N° FACTURA: </label>
+								<div class="mb-3 data-container" id="container-num-factura" hidden>
+									<label for="num-factura" class="form-label">N° FACTURA: </label>
 									<p class="mensaje"></p>
 									<input type="text" name="num-factura" id="num-factura" class="form-control" disabled>
 								</div>
 								<div class="mb-3 data-container">
 									<label for="nombre" class="form-label">Nombre Cliente:</label>
-									<input type="text" name="nombre" id="nombre-cliente" class="form-control" >
+									<input type="text" name="nombre" id="nombre-cliente" class="form-control">
 									<p class="mensaje"></p>
 								</div>
 								<div class="mb-3 data-container">
@@ -172,7 +185,7 @@
 								</div>
 								<div class="mb-3 data-container" id="container-correo" hidden>
 									<label for="correo" class="form-label" id="label-correo">Correo Electrónico: </label>
-									<input type="text" name="correo" id="correo-cliente" class="form-control" >
+									<input type="text" name="correo" id="correo-cliente" class="form-control">
 									<p class="mensaje"></p>
 								</div>
 							</div>
@@ -236,8 +249,10 @@
 									<p class="mensaje"></p>
 								</div>
 								<div hidden="true" id="btn-container-cotizacion">
-									<a href="./cotizacion/v_cotizacion.php?idTarea=" class="link-nueva-cotizacion" id="link-nueva-cotizacion" >
-									<img src="https://cdn-icons-png.flaticon.com/128/7164/7164888.png" alt="icono-cotizacion" height="50px" >
+									<a href="./cotizacion/v_cotizacion.php?idTarea=" class="link-nueva-cotizacion"
+										id="link-nueva-cotizacion">
+										<img src="https://cdn-icons-png.flaticon.com/128/7164/7164888.png" alt="icono-cotizacion"
+											height="50px">
 										Generar cotización
 									</a>
 								</div>
@@ -246,8 +261,8 @@
 						<div class="table-conteiner">
 							<div class="mb-3 conteiner-id-articulo">
 								<p class="titulo-articulo">Artículos de interés</p>
-								<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-									data-bs-target="#modalArticulos" id="btn-articulos">
+								<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalArticulos"
+									id="btn-articulos">
 									Seleccionar... <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
 								</button>
 							</div>
@@ -261,17 +276,18 @@
 											<th scope="col" class="th-col-row">Cantidad</th>
 										</tr>
 									</thead>
-										<tbody id="list-articulos" class="table-group-divider">
-											<!-- Articulos de interes -->
-										</tbody>								
+									<tbody id="list-articulos" class="table-group-divider">
+										<!-- Articulos de interes -->
+									</tbody>
 								</table>
 							</div>
 						</div>
 						<!-- Botones -->
 						<div class="btn-guardar">
-							<a href="./v_tarea.php"><button type="button" id="btn-cerrar2" class="btn btn-primary"><i class="fa-solid fa-angle-left"></i> Cancelar</button></a>
+							<a href="./v_tarea.php"><button type="button" id="btn-cerrar2" class="btn btn-primary"><i
+										class="fa-solid fa-angle-left"></i> Cancelar</button></a>
 							<button type="submit" id="btn-guardar" class="btn btn-secondary" name="actualizarTarea">
-							<i class="fa-regular fa-floppy-disk"></i>
+								<i class="fa-regular fa-floppy-disk"></i>
 								Guardar
 							</button>
 						</div>

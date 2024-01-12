@@ -1,5 +1,7 @@
 <?php
-  require_once("./validacionesPermisos.php");
+require_once("./validacionesPermisos.php");
+require_once('../../../Modelo/Parametro.php');
+require_once('../../../Controlador/ControladorParametro.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -27,58 +29,59 @@
     <!-- Sidebar 1RA PARTE -->
     <div class="conteiner-global">
       <div class="sidebar-conteiner">
-      <?php
-          $urlIndex = '../../index.php';
-          // Rendimiento
-          $urlMisTareas = '../../rendimiento/v_tarea.php';
-          $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
-          $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
-          $urlMetricas = '../Metricas/gestionMetricas.php';
-          $urlEstadisticas = '../../grafica/estadistica.php'; 
-          //Solicitud
-          $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
-          //Comisión
-          $urlComision = '../../comisiones/v_comision.php';
-          $comisionVendedor = '../ComisionesVendedores/ComisionesVendedores.php';
-          $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
-          //Consulta
-          $urlClientes = '../cliente/gestionCliente.php';
-          $urlVentas = '../Venta/gestionVenta.php';
-          $urlArticulos = '../articulo/gestionArticulo.php';
-          $urlObjetos = '../DataTableObjeto/gestionDataTableObjeto.php';
-          $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
-          //Mantenimiento
-          $urlUsuarios = '../usuario/gestionUsuario.php';
-          $urlEstadoUsuario = '../estadoUsuario/gestionEstadoUsuario.php';
-          $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
-          $urlPreguntas = '../pregunta/gestionPregunta.php';
-          $urlParametros = '../parametro/gestionParametro.php';
-          $urlPermisos = './gestionPermisos.php';
-          $urlRoles = '../rol/gestionRol.php';
-          $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
-          $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
-          $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
-          $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
-          $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
-          $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
-          require_once '../../layout/sidebar.php';
+        <?php
+        $urlIndex = '../../index.php';
+        // Rendimiento
+        $urlMisTareas = '../../rendimiento/v_tarea.php';
+        $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
+        $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
+        $urlMetricas = '../Metricas/gestionMetricas.php';
+        $urlEstadisticas = '../../grafica/estadistica.php';
+        //Solicitud
+        $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
+        //Comisión
+        $urlComision = '../../comisiones/v_comision.php';
+        $comisionVendedor = '../ComisionesVendedores/ComisionesVendedores.php';
+        $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
+        //Consulta
+        $urlClientes = '../cliente/gestionCliente.php';
+        $urlVentas = '../Venta/gestionVenta.php';
+        $urlArticulos = '../articulo/gestionArticulo.php';
+        $urlObjetos = '../DataTableObjeto/gestionDataTableObjeto.php';
+        $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
+        //Mantenimiento
+        $urlUsuarios = '../usuario/gestionUsuario.php';
+        $urlEstadoUsuario = '../estadoUsuario/gestionEstadoUsuario.php';
+        $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
+        $urlPreguntas = '../pregunta/gestionPregunta.php';
+        $urlParametros = '../parametro/gestionParametro.php';
+        $urlPermisos = './gestionPermisos.php';
+        $urlRoles = '../rol/gestionRol.php';
+        $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+        $urlPerfilUsuario = '../PerfilUsuario/gestionPerfilUsuario.php';
+        $urlPerfilContraseniaUsuarios = '../PerfilUsuario/gestionPerfilContrasenia.php';
+        $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
+        $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
+        $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
+        require_once '../../layout/sidebar.php';
         ?>
       </div>
       <div class="conteiner-main">
-            <!-- Encabezado -->
-          <div class= "encabezado">
-            <div class="navbar-conteiner">
-                <!-- Aqui va la barra -->
-                <?php include_once '../../layout/navbar.php'?>
-            </div>        
-            <div class ="titulo">
-                <H2 class="title-dashboard-task" id="<?php echo $idObjetoActual; ?>">Gestión de Permisos</H2>
-            </div>  
+        <!-- Encabezado -->
+        <div class="encabezado">
+          <div class="navbar-conteiner">
+            <!-- Aqui va la barra -->
+            <?php include_once '../../layout/navbar.php' ?>
           </div>
+          <div class="titulo">
+            <H2 class="title-dashboard-task" id="<?php echo $idObjetoActual; ?>">Gestión de Permisos</H2>
+          </div>
+        </div>
         <div class="table-conteiner">
-        <div>
+          <div>
             <!-- <a href="../../../TCPDF/examples/reportePermisos.php" target="_blank" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> -->
-            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
+            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
+              PDF</button>
           </div>
           <table class="table" id="table-Permisos">
             <thead>
@@ -95,7 +98,7 @@
             </thead>
             <tbody class="table-group-divider">
               <?php
-                imprimirPermisos(ControladorPermiso::obtenerPermisosSistema(), $idObjetoActual);
+              imprimirPermisos(ControladorPermiso::obtenerPermisosSistema(), $idObjetoActual);
               ?>
             </tbody>
           </table>

@@ -1,5 +1,7 @@
 <?php
 require_once("validacionesComision.php");
+require_once('../../Modelo/Parametro.php');
+require_once('../../Controlador/ControladorParametro.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -58,9 +60,9 @@ require_once("validacionesComision.php");
         $urlPermisos = '../crud/permiso/gestionPermisos.php';
         $urlRoles = '../crud/rol/gestionRol.php';
         $urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
-        $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
-        $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
-        $urlImg = '../../Recursos/imagenes/Logo-E&C.png';
+        $urlPerfilUsuario = '../PerfilUsuario/gestionPerfilUsuario.php';
+        $urlPerfilContraseniaUsuarios = '../PerfilUsuario/gestionPerfilContrasenia.php';
+        $urlImg = '../../Recursos/' . ControladorParametro::obtenerUrlLogo();
         $urlRazonSocial = '../crud/RazonSocial/gestionRazonSocial.php';
         $urlRubroComercial = '../crud/rubroComercial/gestionRubroComercial.php';
         require_once '../layout/sidebar.php';
@@ -94,7 +96,8 @@ require_once("validacionesComision.php");
                   class="fa-solid fa-circle-plus"></i> Generar comisión</a>
               <!-- <a href="../../../TCPDF/examples/reporteriaComision.php" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"><i class="fas fa-file-pdf"></i>
                 Generar Reportes</a> -->
-                <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
+              <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
+                PDF</button>
               <!-- <a href="ReporteComisionExcel.php" target="_blank" class="btn_Excel btn btn-primary "><i
                   class="fa-solid fa-file-excel fa-sm"></i> Generar Excel</a> -->
             </div>
@@ -129,8 +132,8 @@ require_once("validacionesComision.php");
     require_once('modalVerComisiones.html');
     require_once('modalEditarComision.html');
     require_once('modalLiquidarComisiones.html');
-    
-    
+
+
     ?>
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>

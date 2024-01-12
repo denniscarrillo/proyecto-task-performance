@@ -39,6 +39,9 @@ class ControladorParametro {
     public static function obtenerCarpetaDestino(){
         return Parametro::obtenerCarpetaDestino();
     }
+
+    public static function obtenerUrlLogo(){
+        return Parametro::obtenerUrlLogo();
+    }
     
-  
 }
