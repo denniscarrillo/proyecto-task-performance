@@ -134,30 +134,6 @@
         <div class="dropdown__content">
           <ul class="dropdown-menu__content__secundario">
             <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo $urlClientes; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Clientes</span>
-              </a>
-            </li>
-            <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo $urlVentas; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Ventas</span>
-              </a>
-            </li>
-            <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo $urlArticulos; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Artículos</span>
-              </a>
-            </li>
-            <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo $urlObjetos; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Objetos Sistema</span>
-              </a>
-            </li>
-            <li class="dropdown-menu__content__list__item">
               <a href="<?php echo $urlBitacoraSistema; ?>" class="dropdown-menu__content__secundario__link">
                 <i class=""></i>
                 <span>Bitácora Sistema</span>
@@ -198,9 +174,61 @@
               </a>
             </li>
             <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlServiciosTecnicos; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Servicios Técnicos</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlRazonSocial; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Razón Social</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlRubroComercial; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Rubro Comercial</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlVentas; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Ventas</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlArticulos; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Artículos</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <!-- Seguridad -->
+      <li class="dropdown-menu__content__list">
+        <span class="check__conteiner dropdown__link__span"
+          id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionCliente.php');?>">
+          <div class="icon-menu-principal__conteiner">
+            <i class="icon-menu-principal fa-solid fa-shield-halved"></i>
+          </div>
+          <p class="list__menu__principal-text">Seguridad</p>
+          <i class="dropdown__arrow fa-solid fa-angle-down"></i>
+          <input type="checkbox" class="dropdown-menu__content__list__check">
+        </span>
+        <div class="dropdown__content">
+          <ul class="dropdown-menu__content__secundario">
+            <li class="dropdown-menu__content__list__item">
               <a href="<?php echo $urlPreguntas; ?>" class="dropdown-menu__content__secundario__link">
                 <i class=""></i>
                 <span>Preguntas</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlObjetos; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Objetos Sistema</span>
               </a>
             </li>
             <li class="dropdown-menu__content__list__item">
@@ -221,23 +249,6 @@
                 <span>Roles</span>
               </a>
             </li>
-            <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo $urlServiciosTecnicos; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Servicios Técnicos</span>
-              </a>
-            </li>
-            <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo $urlRazonSocial; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Razón Social</span>
-              </a>
-            </li>
-            <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo $urlRubroComercial; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Rubro Comercial</span>
-              </a>
           </ul>
         </div>
       </li>

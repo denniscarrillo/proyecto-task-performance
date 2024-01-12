@@ -92,7 +92,7 @@ rtnCliente.addEventListener('change', function () {
     $btnBuscar.classList.add('btnbuscarcliente');
     
     $btnBuscar.innerHTML = `
-    <button type="button" class="btn btn-primary" id="btnclientes" data-bs-toggle="modal" data-bs-target="#modalMenuClientes">
+    <button type="button" class="btn btn-primary" id="btnclientes" data-bs-toggle="modal" data-bs-target="#modalCarteraCliente">
       Buscar <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
     </button>
     `;
