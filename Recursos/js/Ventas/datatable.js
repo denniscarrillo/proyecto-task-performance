@@ -10,13 +10,11 @@ $(document).ready(function () {
     },
     "columns": [
       { "data": "numFactura"},
-      { "data": "codCliente"},
       { "data": "nombreCliente"},
       { "data": "rtnCliente"},
-      { "data": "fechaEmision.date" },
-      { "data": "totalBruto"},
-      { "data": "totalImpuesto"},
-      { "data": "totalNeto" }
+      { "data": "totalVenta"},
+      { "data": "creadoPor"},
+      { "data": "fechaCreacion.date" }
     ]
   });
 });

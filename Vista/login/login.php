@@ -23,7 +23,7 @@ require_once('../../Controlador/ControladorParametro.php');
       id="<?php echo (isset($registro) && intval($registro) > 0) ? $registro : 0; ?>"></span>
     <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" id="formLogin">
       <div class="logo-empresa" style="text-align: center;">
-        <img src="<?php echo '/Recursos/' . ControladorParametro::obtenerUrlLogo() ?>" height=" 220px">
+        <img src="<?php echo '../../Recursos/' . ControladorParametro::obtenerUrlLogo() ?>" height=" 220px">
       </div>
       <div style="display: flex; justify-content: center;">
         <p style="display: flex; justify-content: center; font-size: 2rem; font-weight: 500; width: 390px; 

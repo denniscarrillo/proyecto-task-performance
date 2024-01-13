@@ -138,22 +138,22 @@ if (isset($_SESSION['usuario'])) {
             </div>  
           </div>
         <div class="table-conteiner">
+        <div class ="text-left mb-2">
+          <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal"
+          data-bs-target="#modalNuevaVenta"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
+          <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
+        </div>
           <table class="table" id="table-Ventas">
             <thead>
               <tr>
-                <th scope="col"> N° </th>
-                <th scope="col"> COD_CLIENTE </th>
-                <th scope="col"> CLIENTE</th>
+                <th scope="col"> N° FACTURA </th>
+                <th scope="col"> NOMBRE CLIENTE </th>
                 <th scope="col"> RTN/DNI</th>
-                <th scope="col"> FECHA </th>
-                <th scope="col"> TOTAL BRUTO </th>
-                <th scope="col"> IMPUESTO </th>
-                <th scope="col"> TOTAL </th>
+                <th scope="col"> TOTAL VENTA </th>
+                <th scope="col"> CREADO POR </th>
+                <th scope="col"> FECHA CREACION </th>
               </tr>
             </thead>
-            <div class ="text-left mb-2">
-            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
-          </div>
             <tbody class="table-group-divider">
             </tbody>
           </table>
@@ -161,6 +161,10 @@ if (isset($_SESSION['usuario'])) {
       </div>
     </div>
   </div>
+  <?php
+  require('modalNuevaVenta.html');
+  // require('modalEditarRol.html');
+  ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
