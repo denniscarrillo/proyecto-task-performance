@@ -78,8 +78,9 @@ if (isset($_SESSION['usuario'])) {
     <link href='../../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
     <!-- Boxicons CSS -->
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
-    <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
+   <!-- <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />-->
+    <link href="../../../Recursos/css/gestionArticulos.css" rel="stylesheet" />|
+    <link href="../../../Recursos/css/modalNuevoArticulo.css" rel="stylesheet">
     <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
     <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
@@ -145,6 +146,7 @@ if (isset($_SESSION['usuario'])) {
 
           <div class="table-conteiner"  >
             <div>
+            <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal" data-bs-target="#modalNuevoArticulo"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
               <!-- <a href="../../../TCPDF/examples/reporteriaArticulos.php" class="btn_Pdf btn btn-primary hidden" target="_blank"  id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> -->
               <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
             </div>
@@ -155,6 +157,7 @@ if (isset($_SESSION['usuario'])) {
                   <th scope="col"> ARTICULO </th>
                   <th scope="col"> DETALLE </th>
                   <th scope="col"> MARCA </th>
+                  <th scope="col"> ACCIONES</th>
                 </tr>
               </thead>
               <!-- <div class ="text-left mb-2">
@@ -166,17 +169,24 @@ if (isset($_SESSION['usuario'])) {
           </div>
         </div>
     </div>
+  </div>
+    <?php
+  require_once('modalNuevoArticulo.html');
+  require_once('modalEditarArticulo.html');
+  
+  ?>
     <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
     <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
     <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="../../../Recursos/js/articulo/dataTableArticulo.js" type="module"></script>
-    <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
+  
     <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
     <!-- <script src="../../../Recursos/js/Porcentajes/ValidacionesModalNuevoPorcentaje.js"  type="module"></script>
     <script src="../../../Recursos/js/Porcentajes/ValidacionesModalEditarPorcentaje.js" type="module"></script> -->
     <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
     <script src="../../../Recursos/js/index.js"></script>
+    <script src="../../../Recursos/js/articulo/dataTableArticulo.js" type="module"></script>
+    <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   </body>
 
 </html>

@@ -1,0 +1,120 @@
+.btn-guardar {
+    /* position: absolute; */
+    bottom: 0rem;
+    left: 40%;
+    right:30%;
+    margin-top: 6rem;
+}
+
+#form_Articulo, #form_EditarArticulo {
+    display: flex;
+    padding: 2rem;
+    padding-bottom: 4rem;
+    position: relative;
+}
+
+.btn-Acciones{
+    background-color: rgb(109, 179, 156);
+    margin: 1rem;
+    margin-left: 0;
+}
+.table-conteiner{
+    width: 95%;
+    margin: 40px auto;
+}
+h1{
+    text-align: center;
+    color: #f5971d;
+    
+}
+.modal-header{
+    background-color: #4d4b4a;
+    color: #ee9827;
+    height: 3rem;
+}
+
+.grupo-form {
+    width: 40rem;
+}
+.mb-3 {
+    margin: 0.8rem;
+}
+.btn-guardar {
+    position: absolute;
+    bottom: 0rem;
+    left: 40%;
+    right:30%;
+}
+.btn_nuevoRegistro {
+    margin-bottom: 1rem;
+    padding: 0.3rem;
+    font-size: 1.2rem;
+    background-color: rgb(86, 174, 86);
+    border-color: greenyellow;
+}
+.btns{
+    margin-right: 0.6rem;
+    padding: 0.3rem;
+    font-size: 1.4rem;
+    color: aliceblue;
+}
+#btn_ver{
+    background-color: rgb(86, 174, 86);
+}
+#btn_editar{
+    background-color: rgb(45, 111, 203);
+}
+#btn_eliminar{
+    background-color: rgba(255, 0, 0, 0.855);
+}
+.btn_Pdf {
+    margin-bottom: 1rem;
+    padding: 0.3rem;
+    font-size: 1.2rem;
+    background-color: rgb(153, 37, 5);
+    border-color: rgb(255, 78, 47);
+}
+
+.mensaje {
+    position: absolute;
+    color: red;
+    font-size: 15px;
+}
+.mensaje_error {
+    box-shadow: 0 0 0 .15rem #e15e3eac;
+    border-color: red;
+}
+.mensaje_error:focus {
+    box-shadow: 0 0 0 .25rem rgba(226, 73, 35, 0.455);
+    border-color: red;
+}
+.form-control {
+    padding-left: 20px;
+}
+
+.btns{
+    margin-right: 0.6rem;
+    padding: 0.3rem;
+    font-size: 1.4rem;
+    color: aliceblue;
+}
+#btn_ver{
+    background-color: rgb(86, 174, 86);
+    margin-left: -1rem;
+    margin-right: 0.1rem;
+}
+#btn_pdf{
+    background-color: rgb(255, 120, 47);
+    margin-left: -1rem; 
+    margin-right: 1.1rem;
+}
+#btn_editar{
+    background-color: rgb(45, 111, 203);
+    margin-right: 0.1rem;
+}
+#btn_eliminar{
+    background-color: rgba(255, 0, 0, 0.855);
+}
+#btn_pdf_id{
+    background-color: #f5971d;
+}
