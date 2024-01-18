@@ -154,6 +154,33 @@ $(document).on("click", "#btn_eliminar", function() {
     }
   });
 });
+//Limpiar modal de crear
+document.getElementById('btn-cerrar').addEventListener('click', ()=>{
+  limpiarForm();
+})
+document.getElementById('btn-x').addEventListener('click', ()=>{
+  limpiarForm();
+})
+let limpiarForm = () => {
+  let $inputs = document.querySelectorAll('.mensaje_error');
+  let $mensajes = document.querySelectorAll('.mensaje');
+  let $mensajeRTN = document.querySelector('.mensaje-rtn')
+  $mensajeRTN.innerText = '';
+  $inputs.forEach($input => {
+    $input.classList.remove('mensaje_error');
+  });
+  $mensajes.forEach($mensaje =>{
+    $mensaje.innerText = '';
+  });
+  $mensajeRTN.classList.remove('.mensaje-existe-cliente');
+  let rtnCliente = document.getElementById('rtn'),
+  nombreCliente = document.getElementById('cliente'),
+  venta = document.getElementById('totalVenta');
+  //Vaciar campos cliente
+  rtnCliente.value = '';
+  nombreCliente.value = '';
+  venta.value = '';
+}
 
 //Generar reporte PDF
 $(document).on("click", "#btn_Pdf", function() {
