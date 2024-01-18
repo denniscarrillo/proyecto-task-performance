@@ -1,0 +1,36 @@
+<div class="modal fade" id="modalNuevoArticulo" tabindex="-1" aria-labelledby="nuevoModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="nuevoModalLabel">Crear Nuevo Articulo</h1>
+                <button type="button" class="btn-close" id ="btn-x" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" id="form_Articulo">
+                    <div class="grupo-form">
+                        <div class="mb-3">
+                            <label for="Articulo" class="form-label">Articulo:</label>
+                            <input type="text" name="Articulo" id="Articulo" class="form-control">
+                            <p class="mensaje"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Detalle" class="form-label">Detalle:</label> 
+                            <input type="text" name="Detalle" id="Detalle" class="form-control">
+                            <p class="mensaje" id="mensaje"></p>
+                        </div>            
+                        <div class="mb-3">
+                            <label for="Marca" class="form-label">Marca:</label>
+                            <input type="text" name="Marca" id="Marca" class="form-control">
+                            <p class="mensaje" id="mensaje"></p>
+                        </div> 
+                        <div class="btn-guardar">
+                            <button type="button" class="btn btn-secondary" id="btn-cerrar" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary" id="btn-submit"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                        </div>
+                        
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
