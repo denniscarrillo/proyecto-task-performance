@@ -1,0 +1,35 @@
+<div class="modal fade" id="modalNuevaVenta" tabindex="-1" aria-labelledby="nuevoEditarLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="nuevoModalLabel">Crear Nueva Venta</h1>
+                <button type="button" class="btn-close" id ="btn-x" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" id="form-New-Venta">
+                    <div class="grupo-form">
+                        <div class="mb-3">
+                            <label for="rtn" class="form-label">RTN/DNI CLIENTE:</label>
+                            <p class="mensaje-rtn"></p>
+                            <input type="text" name="rtn" id="rtn" class="form-control" placeholder="RTN cliente">
+                            <p class="mensaje"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cliente" class="form-label">Cliente:</label>
+                            <input type="text" name="cliente" id="cliente" class="form-control" disabled placeholder="Nombre cliente">
+                        </div>
+                        <div class="mb-3">
+                            <label for="totalVenta" class="form-label">Total Venta:</label>
+                            <input type="text" name="totalVenta" id="totalVenta" class="form-control" placeholder="Lps 0.00">
+                            <p class="mensaje"></p>
+                        </div>
+                    </div>
+                    <div class="btn-guardar">
+                        <button type="button" class="btn btn-secondary" id="btn-cerrar" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary" id="btn-submit" data-bs-dismiss="modal"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
