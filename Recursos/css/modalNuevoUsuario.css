@@ -18,3 +18,12 @@
 .modal-content{
     min-height: 25rem;
 }
+.mensaje-existe-cliente{
+    display: inline-block;
+    background-color: #f2a694;
+    color: rgb(209, 18, 18);
+    border-radius: 0.2rem;
+    margin-left: 0.8rem;
+    margin-bottom: 0;
+    padding: 0 0.6rem;
+}
