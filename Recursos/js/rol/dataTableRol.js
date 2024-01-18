@@ -210,7 +210,7 @@ $(document).on("click", "#btn_eliminar", function() {
                tablaRol.ajax.reload(null, false);
              }           
           }
-          }); //Fin del AJAX
+        }); //Fin del AJAX
       }
     });  
   }              

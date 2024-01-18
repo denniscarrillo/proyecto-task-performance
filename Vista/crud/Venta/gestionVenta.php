@@ -152,6 +152,7 @@ if (isset($_SESSION['usuario'])) {
                 <th scope="col"> TOTAL VENTA </th>
                 <th scope="col"> CREADO POR </th>
                 <th scope="col"> FECHA CREACION </th>
+                <th scope="col"> ACCIONES </th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -160,11 +161,10 @@ if (isset($_SESSION['usuario'])) {
         </div>
       </div>
     </div>
+    <?php
+      require('modalNuevaVenta.html');
+    ?>
   </div>
-  <?php
-  require('modalNuevaVenta.html');
-  // require('modalEditarRol.html');
-  ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
