@@ -43,5 +43,8 @@ class ControladorParametro {
     public static function obtenerUrlLogo(){
         return Parametro::obtenerUrlLogo();
     }
+    public static function obteniendoFooter(){
+        return Parametro::obtenerParametrosFooter();
+    }
     
 }
