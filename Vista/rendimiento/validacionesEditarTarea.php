@@ -117,11 +117,14 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
     if(isset($_POST['idTarea'])){
         //Obtenener todos los datos de la tarea a editar(cuando ya existen)
         if(ControladorTarea::validarEstadoClienteTarea(intval($_POST['idTarea']))){
-            $estadoTarea = (intval($_POST['idEstado']) == 2) ? 2: 0;
+            $estadoTarea = (intval($_POST['idEstado']) == 2) ? 2: 0; //Saber si es 2 es Lead, cualquier otro tipo se consulta igual, por ello se usa 0.
             $datosTarea = ControladorTarea::obtenerDatosTarea($estadoTarea, intval($_POST['idTarea']));
-            $datosTarea += [
-                'productos' => ControladorTarea::obtenerProductosInteres($_POST['idTarea'])
-            ];
+            $productos = ControladorTarea::obtenerProductosInteres($_POST['idTarea']);
+            if($productos != []) {
+                $datosTarea += [
+                    'productos' => $productos
+                ];
+            }
             print json_encode($datosTarea, JSON_UNESCAPED_UNICODE);
         } else {
             $datosTarea = [

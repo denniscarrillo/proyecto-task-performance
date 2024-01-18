@@ -138,7 +138,7 @@ class Tarea
             $articulos = array();
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $select = "SELECT * FROM view_articulos";
+            $select = "SELECT * FROM tbl_ARTICULOS";
             $listaArticulos = sqlsrv_query($abrirConexion, $select);
             while($fila = sqlsrv_fetch_array($listaArticulos, SQLSRV_FETCH_ASSOC)){
                 $articulos[] = [
@@ -173,34 +173,35 @@ class Tarea
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
     }
-    public static function validarTipoCliente($rtn){
-        try{
-            $estadoCliente = null;
-            $conn = new Conexion();
-            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $selectCliente = "SELECT CODCLIENTE FROM view_clientes WHERE CIF = '$rtn'";
-            $consulta = sqlsrv_query($abrirConexion, $selectCliente);
-            if(sqlsrv_has_rows($consulta)){
-                $arrCodCliente= sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC);
-                $codCliente = $arrCodCliente['CODCLIENTE'];
-                $selectFacturas = "SELECT COUNT(NUMFACTURA) AS CANT FROM View_FACTURASVENTA WHERE CODCLIENTE = '$codCliente';";
-                $consulta= sqlsrv_query($abrirConexion, $selectFacturas);
-                $cantFacturas = sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC);
-                $facturas = intval($cantFacturas['CANT']);
-                if($facturas > 0){
-                    $estadoCliente = true;
-                }else{
-                    $estadoCliente = false;
-                } 
-            }else{
-                $estadoCliente = false;
-            }
-            return $estadoCliente;
-        }catch(Exception $e){
-            echo 'Error SQL:' . $e;
-        }
-        sqlsrv_close($abrirConexion); //Cerrar conexion
-    }
+    //------------------------------------ ELIMINAR YA NO SE NECESITA
+    // public static function validarTipoCliente($rtn){
+    //     try{
+    //         $estadoCliente = null;
+    //         $conn = new Conexion();
+    //         $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+    //         $selectCliente = "SELECT CODCLIENTE FROM view_clientes WHERE CIF = '$rtn'";
+    //         $consulta = sqlsrv_query($abrirConexion, $selectCliente);
+    //         if(sqlsrv_has_rows($consulta)){
+    //             $arrCodCliente= sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC);
+    //             $codCliente = $arrCodCliente['CODCLIENTE'];
+    //             $selectFacturas = "SELECT COUNT(NUMFACTURA) AS CANT FROM View_FACTURASVENTA WHERE CODCLIENTE = '$codCliente';";
+    //             $consulta= sqlsrv_query($abrirConexion, $selectFacturas);
+    //             $cantFacturas = sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC);
+    //             $facturas = intval($cantFacturas['CANT']);
+    //             if($facturas > 0){
+    //                 $estadoCliente = true;
+    //             }else{
+    //                 $estadoCliente = false;
+    //             } 
+    //         }else{
+    //             $estadoCliente = false;
+    //         }
+    //         return $estadoCliente;
+    //     }catch(Exception $e){
+    //         echo 'Error SQL:' . $e;
+    //     }
+    //     sqlsrv_close($abrirConexion); //Cerrar conexion
+    // }
     public static function validarClienteExistenteCarteraCliente($rtn){
         try{
             $estadoCliente = null;
@@ -211,7 +212,7 @@ class Tarea
             $consulta = sqlsrv_query($abrirConexion, $selectCliente);
             if(sqlsrv_has_rows($consulta)){
                 while($fila = sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC)){
-                    $datosCliente[] = [
+                    $datosCliente = [
                         'nombre' => $fila['nombre_Cliente'],
                         'telefono' => $fila['telefono'],
                         'correo' => $fila['correo'],
@@ -232,15 +233,16 @@ class Tarea
             $clientes = array();
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $select = "SELECT CODCLIENTE, NOMBRECLIENTE, CIF, TELEFONO1, DIRECCION1 FROM view_clientes";
+            $select = "SELECT id_CarteraCliente, nombre_Cliente, rtn_Cliente, telefono, correo, direccion FROM tbl_CarteraCliente";
             $listaClientes = sqlsrv_query($abrirConexion, $select);
             while($fila = sqlsrv_fetch_array($listaClientes, SQLSRV_FETCH_ASSOC)){
                 $clientes[] = [
-                    'codCliente' => $fila['CODCLIENTE'],
-                    'nombre' => $fila['NOMBRECLIENTE'],
-                    'rtn' =>$fila['CIF'],
-                    'telefono' =>$fila['TELEFONO1'],
-                    'direccion' =>$fila['DIRECCION1']
+                    'codCliente' => $fila['id_CarteraCliente'],
+                    'nombre' => $fila['nombre_Cliente'],
+                    'rtn' =>$fila['rtn_Cliente'],
+                    'telefono' =>$fila['telefono'],
+                    'correo' =>$fila['correo'],
+                    'direccion' =>$fila['direccion']
                 ];
             }
             return $clientes;
@@ -516,10 +518,6 @@ class Tarea
         try {
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $selectTipoCliente = "SELECT estado_Cliente_Tarea FROM tbl_Tarea WHERE id_Tarea = '$idTarea'";
-            $resultado = sqlsrv_query($abrirConexion, $selectTipoCliente);
-            $tipoCliente = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
-            if($tipoCliente['estado_Cliente_Tarea'] == 'Nuevo'){
                 switch($tipoTarea){
                     case 0:{
                         $consultaDatos = "SELECT tr.titulo,tr.estado_Cliente_Tarea, tr.id_EstadoAvance, (SELECT evidencia FROM tbl_AdjuntoEvidencia WHERE id_Tarea = '$idTarea') as evidencia, tr.RTN_Cliente, cc.nombre_Cliente as NOMBRECLIENTE, 
@@ -540,30 +538,9 @@ class Tarea
                         break;
                     }
                 }
-            } else {
-                switch($tipoTarea){
-                    case 0:{
-                        $consultaDatos = "SELECT tr.titulo, tr.estado_Cliente_Tarea, tr.id_EstadoAvance, (SELECT evidencia FROM tbl_AdjuntoEvidencia WHERE id_Tarea = '$idTarea') as evidencia, tr.RTN_Cliente, vc.NOMBRECLIENTE, vc.TELEFONO1 as TELEFONO,
-                        vc.DIRECCION1 as DIRECCION, rs.id_razon_Social, rc.id_rubro_Comercial FROM COCINAS_Y_EQUIPOS.dbo.View_Clientes vc 
-                        INNER JOIN tbl_Tarea tr ON vc.CIF COLLATE Latin1_General_CS_AI = tr.RTN_Cliente
-						INNER JOIN tbl_razon_Social rs ON tr.id_razon_Social = rs.id_razon_Social
-						INNER JOIN tbl_rubro_Comercial rc ON tr.id_rubro_Comercial = rc.id_rubro_Comercial
-                        WHERE tr.id_Tarea = '$idTarea'  and vc.CODCLIENTE = (SELECT cod_Cliente FROM tbl_Tarea WHERE id_Tarea = '$idTarea');";
-                        break;
-                    }
-                    case 2:{
-                        $consultaDatos = "SELECT tr.titulo, tr.estado_Cliente_Tarea, tr.id_EstadoAvance, (SELECT evidencia FROM tbl_AdjuntoEvidencia WHERE id_Tarea = '$idTarea') as evidencia, tr.id_ClasificacionLead , tr.id_OrigenLead,
-                        tr.RTN_Cliente, vc.NOMBRECLIENTE, vc.TELEFONO1 as TELEFONO, vc.DIRECCION1 as DIRECCION, rs.id_razon_Social, rc.id_rubro_Comercial FROM COCINAS_Y_EQUIPOS.dbo.View_Clientes vc 
-                        INNER JOIN tbl_Tarea tr ON vc.CIF COLLATE Latin1_General_CS_AI = tr.RTN_Cliente
-						INNER JOIN tbl_razon_Social rs ON tr.id_razon_Social = rs.id_razon_Social
-						INNER JOIN tbl_rubro_Comercial rc ON tr.id_rubro_Comercial = rc.id_rubro_Comercial
-                        WHERE tr.id_Tarea = '$idTarea'  and vc.CODCLIENTE = (SELECT cod_Cliente FROM tbl_Tarea WHERE id_Tarea = '$idTarea');";
-                        break;
-                    }
-                }
-            }
             $resultado2 = sqlsrv_query($abrirConexion, $consultaDatos);
             $datosTarea = sqlsrv_fetch_array($resultado2, SQLSRV_FETCH_ASSOC);
+            
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
@@ -599,18 +576,10 @@ class Tarea
     public static function obtenerDatos($idTarea, $estadoCliente){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $select = '';
-        if($estadoCliente == "Existente"){
-            $select = "SELECT vc.CIF AS RTN, vc.NOMBRECLIENTE AS NOMBRE, vc.TELEFONO1 AS TELEFONO, us.nombre_Usuario AS VENDEDOR, us.telefono AS TELVENDEDOR FROM COCINAS_Y_EQUIPOS.dbo.View_Clientes vc 
-            INNER JOIN tbl_Tarea tr ON vc.CIF COLLATE Latin1_General_CS_AI = tr.RTN_Cliente
-            INNER JOIN tbl_MS_Usuario us ON us.usuario = tr.Creado_Por
-            WHERE tr.id_Tarea = '$idTarea';";
-        }else{
-            $select = "SELECT cc.rtn_Cliente AS RTN, cc.nombre_Cliente AS NOMBRE, cc.telefono AS TELEFONO, us.nombre_Usuario AS VENDEDOR, us.telefono AS TELVENDEDOR FROM tbl_CarteraCliente cc
-            INNER JOIN tbl_Tarea tr ON cc.rtn_Cliente = tr.RTN_Cliente
-            INNER JOIN tbl_MS_Usuario us ON us.usuario = tr.Creado_Por
-            WHERE tr.id_Tarea = '$idTarea';";
-        }
+        $select = "SELECT cc.rtn_Cliente AS RTN, cc.nombre_Cliente AS NOMBRE, cc.telefono AS TELEFONO, us.nombre_Usuario AS VENDEDOR, us.telefono AS TELVENDEDOR FROM tbl_CarteraCliente cc
+        INNER JOIN tbl_Tarea tr ON cc.rtn_Cliente = tr.RTN_Cliente
+        INNER JOIN tbl_MS_Usuario us ON us.usuario = tr.Creado_Por
+        WHERE tr.id_Tarea = '$idTarea';";
         $ejecutar = sqlsrv_query($conexion, $select);
         $fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC);
         //Obtenemos el valor del parametro dias vigencia cotizacion y lo agregamos al array datos del cliente para cotizacion
@@ -984,16 +953,18 @@ class Tarea
         $productos = array();
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query = "SELECT pi.id_Articulo, va.ARTICULO AS descripcion, va.MARCA, pi.cantidad FROM COCINAS_Y_EQUIPOS.dbo.View_ARTICULOS va 
-                    INNER JOIN tbl_ProductoInteres pi ON pi.id_Articulo = va.CODARTICULO WHERE pi.id_Tarea = '$idTarea'";
+        $query = "SELECT pi.id_Articulo, va.ARTICULO AS descripcion, va.MARCA, pi.cantidad FROM tbl_ARTICULOS va 
+        INNER JOIN tbl_ProductoInteres pi ON pi.id_Articulo = va.CODARTICULO WHERE pi.id_Tarea = '$idTarea'";
         $result = sqlsrv_query($conexion, $query);
-        while($fila = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)){
-            $productos [] = [
-                'id' => $fila['id_Articulo'],
-                'descripcion' => $fila['descripcion'],
-                'marca' => $fila['MARCA'],
-                'cantidad' => $fila['cantidad']
-            ];
+        if(sqlsrv_has_rows($result)) {
+            while($fila = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)){
+                $productos [] = [
+                    'id' => $fila['id_Articulo'],
+                    'descripcion' => $fila['descripcion'],
+                    'marca' => $fila['MARCA'],
+                    'cantidad' => $fila['cantidad']
+                ];
+            }
         }
         sqlsrv_close($conexion);
         return $productos;
