@@ -6,6 +6,8 @@ require_once('../../../Modelo/Usuario.php');
 require_once('../../../Controlador/ControladorUsuario.php');
 require_once("../../../Modelo/Bitacora.php");
 require_once("../../../Controlador/ControladorBitacora.php");
+require_once('../../../Modelo/Parametro.php');
+require_once('../../../Controlador/ControladorParametro.php');
 
 session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
@@ -85,11 +87,11 @@ if (isset($_SESSION['usuario'])) {
   <title> Ventas </title>
 </head>
 
-<body  style="overflow: hidden;">
+<body style="overflow: hidden;">
   <div class="conteiner">
     <div class="conteiner-global">
       <div class="sidebar-conteiner">
-      <?php
+        <?php
         $urlIndex = '../../index.php';
         // Rendimiento
         $urlMisTareas = '../../rendimiento/v_tarea.php';
@@ -118,7 +120,7 @@ if (isset($_SESSION['usuario'])) {
         $urlPermisos = '../permiso/gestionPermisos.php';
         $urlRoles = '../rol/gestionRol.php';
         $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
-        $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
+        $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
         $urlPerfilUsuarios='../PerfilUsuario/gestionPerfilUsuario.php';
         $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
         $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
@@ -138,11 +140,12 @@ if (isset($_SESSION['usuario'])) {
             </div>  
           </div>
         <div class="table-conteiner">
-        <div class ="text-left mb-2">
-          <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal"
-          data-bs-target="#modalNuevaVenta"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
-          <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
-        </div>
+          <div class="text-left mb-2">
+            <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal"
+              data-bs-target="#modalNuevaVenta"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
+            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
+              PDF</button>
+          </div>
           <table class="table" id="table-Ventas">
             <thead>
               <tr>
@@ -155,6 +158,10 @@ if (isset($_SESSION['usuario'])) {
                 <th scope="col"> ACCIONES </th>
               </tr>
             </thead>
+            <div class="text-left mb-2">
+              <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
+                PDF</button>
+            </div>
             <tbody class="table-group-divider">
             </tbody>
           </table>
@@ -165,7 +172,9 @@ if (isset($_SESSION['usuario'])) {
       require('modalNuevaVenta.html');
     ?>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
+  </script>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>

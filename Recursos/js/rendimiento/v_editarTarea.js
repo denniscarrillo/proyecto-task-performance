@@ -356,6 +356,7 @@ let obtenerClientes = function () {
         { "data": 'nombre' },
         { "data": 'rtn' },
         { "data": 'telefono' },
+        { "data": 'correo' },
         { "data": 'direccion' },
         {
           "defaultContent":
@@ -380,6 +381,36 @@ document.getElementById('estados-tarea').addEventListener('change', async () => 
     }, 100);
   }
 });
+
+// let $rtn = document.getElementById('rnt-cliente');
+// $rtn.addEventListener('focusout', function () {
+//   let $mensaje = document.querySelector('.mensaje-rtn');
+//   $mensaje.innerText = '';
+//   $mensaje.classList.remove('mensaje-existe-cliente');
+//   if($rtn.value.trim() != ''){
+//     $.ajax({
+//       url: "../../../Vista/rendimiento/validarTipoCliente.php",
+//       type: "POST",
+//       datatype: "JSON",
+//       data: {
+//         rtnCliente: $rtn.value
+//       },
+//       success: function (cliente){
+//         let $objCliente = JSON.parse(cliente);
+//         if ($objCliente.estado == 'true'){
+//           $mensaje.innerText = 'Cliente existente'
+//           $mensaje.classList.add('mensaje-existe-cliente');
+//         } else {
+//           $mensaje.innerText = '';
+//           $mensaje.classList.remove('mensaje-existe-cliente');
+//           if($objCliente != 'true' && $objCliente != false){
+//             setearDatosClienteCartera($objCliente);
+//           }
+//         }
+//       }
+//     }); //Fin AJAX   
+//   }
+// });
 
 let $rtn = document.getElementById('rnt-cliente');
 $rtn.addEventListener('focusout', function () {
@@ -410,6 +441,7 @@ $rtn.addEventListener('focusout', function () {
     }); //Fin AJAX   
   }
 });
+
 let setearDatosClienteCartera = (cliente) => {
   document.getElementById('nombre-cliente').value = cliente[0].nombre;
   document.getElementById('telefono-cliente').value = cliente[0].telefono;
@@ -513,7 +545,6 @@ let obtenerComentarios = ($idTarea) => {
       let ObjComentarios = JSON.parse(comentarios);
       let conteinerComments = document.getElementById('comments-container-list');
       let $tabContainer = document.getElementById('tab-comment').getAttribute('name');
-      // console.log($tabContainer);
       ObjComentarios.forEach((comentario) => {
         comments +=
         `<div class="card-comment ${($tabContainer == comentario.creadoPor)? 'align-right': ''}">
@@ -583,7 +614,7 @@ let obtenerDatosTarea = ($idTarea, $idEstadoTarea) => {
   });
 }
 let setearDatosTarea = ($datosTarea) => {
-    setArticulosInteres($datosTarea.productos);
+    ($datosTarea.productos != undefined) ? setArticulosInteres($datosTarea.productos) : '';
     document.getElementById('num-factura').removeAttribute('disabled');
     let nuevo = document.getElementById('cliente-nuevo');
     let existe =  document.getElementById('cliente-existente');
@@ -610,7 +641,6 @@ let setearDatosTarea = ($datosTarea) => {
     }
     document.getElementById('rubrocomercial').value = $datosTarea.id_rubro_Comercial,
     document.getElementById('razonsocial').value = $datosTarea.id_razon_Social
-    console.log($datosTarea.estado_Cliente_Tarea);
     if(($datosTarea.estado_Cliente_Tarea == 'Existente')){
       nuevo.removeAttribute('checked');
       nuevo.disabled = true;

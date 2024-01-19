@@ -61,7 +61,7 @@ require_once('../../Controlador/ControladorParametro.php');
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
   < /script>  <
   script src = "https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js" >
-    </script>
+  </script>
   <script src="../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js"></script>
   <script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
