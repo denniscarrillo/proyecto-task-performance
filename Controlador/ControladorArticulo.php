@@ -22,8 +22,8 @@ class ControladorArticulo {
         return Articulo::editarArticulo($nuevoArticulo);
     }
 
-    public static function eliminarArticulo($Articulos){
-        return Articulo::eliminarArticulo($Articulos);
+    public static function eliminarArticulo($CodArticulo){
+        return Articulo::eliminarArticulo($CodArticulo);
     }
 
 

@@ -1,4 +1,4 @@
- import {estadoValidado as validado } from './ValidacionesModalNuevoArticulo.js';
+ //import {estadoValidado as validado } from './ValidacionesModalNuevoArticulo.js';
 import {estadoValidado as valido } from './ValidacionesModalEditarArticulo.js';
 
 
@@ -42,7 +42,7 @@ $('#form_Articulo').submit(function (e) {
      let Articulo = $('#Articulo').val();
      let Detalle= $('#Detalle').val();
      let Marca= $('#Marca').val();
-    if(validado){
+    if(true){
       $.ajax({
         url: "../../../Vista/crud/articulo/nuevoArticulo.php",
         type: "POST",
@@ -56,12 +56,11 @@ $('#form_Articulo').submit(function (e) {
         },
         success: function () {
           //Mostrar mensaje de exito
-          Swal.fire({
-            title: 'Registrado!',
-            text: 'Se ha registrado un nuevo Articulo de Usuario!',
-            icon: 'success',
-            position: 'top-end', // Centrar la alerta en la pantalla
-          });
+          Swal.fire(
+            'Registrado!',
+            'Se ha registrado un Nuevo Articulo!',
+            'success',
+          )
          tablaArticulo.ajax.reload(null, false);
         }
       });
@@ -127,10 +126,11 @@ $('#form_EditarArticulo').submit(function (e) {
 
 $(document).on("click", "#btn_eliminar", function() {
   let fila = $(this);        
-  let  Articulo = $(this).closest('tr').find('td:eq(1)').text();
+  let  Articulo = $(this).closest('tr').find('td:eq(0)').text();
+  let nameARTICULO=$(this).closest('tr').find('td:eq(1)').text();
     
       Swal.fire({
-        title: 'Estas seguro de eliminar a '+Articulo+'?',
+        title: 'Estas seguro de eliminar a '+nameARTICULO+'?',
         text: "No podras revertir esto!",
         icon: 'warning',
         showCancelButton: true,
@@ -143,7 +143,7 @@ $(document).on("click", "#btn_eliminar", function() {
             url: "../../../Vista/crud/articulo/eliminarArticulo.php",
             type: "POST",
             datatype:"json",    
-            data:  { Articulo: Articulo},    
+            data:  { CodArticulo : Articulo},    
             success: function(data) {
               let estadoEliminado = data[0].estadoEliminado;
                console.log(data);
