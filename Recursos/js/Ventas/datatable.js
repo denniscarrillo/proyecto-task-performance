@@ -131,9 +131,7 @@ $(document).on("click", "#btn_eliminar", function() {
         datatype:"json",    
         data:  { numFactura : factura},    
         success: function(data) {
-          let estadoEliminado = data.estadoEliminado;
-          // console.log(data);
-          // console.log(estadoEliminado);
+          let estadoEliminado = JSON.parse(data).estadoEliminado;
           if(estadoEliminado == 'eliminado'){
             tablaVentas.row(fila.parents('tr')).remove().draw();
             Swal.fire(
