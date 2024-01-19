@@ -114,7 +114,7 @@ class Articulo
         return $articulo;
     }
 
-    public static function eliminarArticulo($articulo){
+    public static function eliminarArticulo($CodArticulo){
         try{
             $conn = new Conexion();
             $conexion = $conn->abrirConexionDB();

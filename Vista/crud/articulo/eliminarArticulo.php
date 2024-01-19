@@ -5,16 +5,18 @@
     require_once ("../../../Modelo/Articulo.php");
     require_once("../../../Controlador/ControladorArticulo.php");
 
-    if(isset($_POST['usuario'])){
-        $Articulo= $_POST['Articulo'];
-        $estadoEliminado = ControladorArticulo::eliminarArticulo($Articulo);
+ 
+        $codArticulo= $_POST['CodArticulo'];
+        $estadoEliminado = ControladorArticulo::eliminarArticulo($codArticulo);
         $data = array();
         if($estadoEliminado == false) {
             $data []= [
-                'estadoEliminado' => 'inactivado'
+                'estadoEliminado' => 'eliminado'
             ];
            
             print json_encode($data, JSON_UNESCAPED_UNICODE);
         }
-    }
+    
+
+    
 ?>

@@ -82,7 +82,6 @@ if (isset($_SESSION['usuario'])) {
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <!-- <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />-->
   <link href="../../../Recursos/css/gestionArticulos.css" rel="stylesheet" />
-  <link href="../../../Recursos/css/modalNuevoArticulo.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
@@ -180,19 +179,7 @@ if (isset($_SESSION['usuario'])) {
   require_once('modalEditarArticulo.html');
   
   ?>
-  <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
-  <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
-  <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-
-  <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-  <!-- <script src="../../../Recursos/js/Porcentajes/ValidacionesModalNuevoPorcentaje.js"  type="module"></script>
-    <script src="../../../Recursos/js/Porcentajes/ValidacionesModalEditarPorcentaje.js" type="module"></script> -->
-  <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
-  <script src="../../../Recursos/js/index.js"></script>
-  <script src="../../../Recursos/js/articulo/dataTableArticulo.js" type="module"></script>
-  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
-</body>
+ 
 <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
 <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
