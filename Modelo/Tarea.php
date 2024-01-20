@@ -173,38 +173,27 @@ class Tarea
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
     }
-    //------------------------------------ ELIMINAR YA NO SE NECESITA
-    // public static function validarTipoCliente($rtn){
-    //     try{
-    //         $estadoCliente = null;
-    //         $conn = new Conexion();
-    //         $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-    //         $selectCliente = "SELECT CODCLIENTE FROM view_clientes WHERE CIF = '$rtn'";
-    //         $consulta = sqlsrv_query($abrirConexion, $selectCliente);
-    //         if(sqlsrv_has_rows($consulta)){
-    //             $arrCodCliente= sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC);
-    //             $codCliente = $arrCodCliente['CODCLIENTE'];
-    //             $selectFacturas = "SELECT COUNT(NUMFACTURA) AS CANT FROM View_FACTURASVENTA WHERE CODCLIENTE = '$codCliente';";
-    //             $consulta= sqlsrv_query($abrirConexion, $selectFacturas);
-    //             $cantFacturas = sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC);
-    //             $facturas = intval($cantFacturas['CANT']);
-    //             if($facturas > 0){
-    //                 $estadoCliente = true;
-    //             }else{
-    //                 $estadoCliente = false;
-    //             } 
-    //         }else{
-    //             $estadoCliente = false;
-    //         }
-    //         return $estadoCliente;
-    //     }catch(Exception $e){
-    //         echo 'Error SQL:' . $e;
-    //     }
-    //     sqlsrv_close($abrirConexion); //Cerrar conexion
-    // }
+
+    public static function validarTipoCliente($rtn){
+        try{
+            $estadoCliente = false;
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $selectFacturas = "SELECT num_Factura FROM tbl_FacturasVenta WHERE rtn_Cliente = '$rtn'";
+            $facturas = sqlsrv_query($abrirConexion, $selectFacturas);
+            if(sqlsrv_has_rows($facturas)){
+                $estadoCliente = true;         
+            }
+            sqlsrv_close($abrirConexion); //Cerrar conexion
+            return $estadoCliente;
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
+    }
+    
     public static function validarClienteExistenteCarteraCliente($rtn){
         try{
-            $estadoCliente = null;
+            $estadoCliente = false;
             $datosCliente = array();
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
@@ -222,7 +211,7 @@ class Tarea
                 sqlsrv_close($abrirConexion); //Cerrar conexion
                 return $datosCliente;
             } else {
-               return $estadoCliente = false;
+               return $estadoCliente;
             }
         }catch(Exception $e){
             echo 'Error SQL:' . $e;
@@ -1005,7 +994,7 @@ class Tarea
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
         $estadoUpdate = false;
-        $query = "UPDATE tbl_Tarea SET estado_Finalizacion = 'Finalizada', fecha_Finalizacion = GETDATE() WHERE id_Tarea = '$idTarea';";
+        $query = "UPDATE tbl_Tarea SET estado_Finalizacion = 'FINALIZADA', fecha_Finalizacion = GETDATE() WHERE id_Tarea = '$idTarea';";
         if(sqlsrv_rows_affected(sqlsrv_query($conexion, $query)) > 0){
             $estadoUpdate = true;
         }
@@ -1018,7 +1007,7 @@ class Tarea
         $existeTarea = 0;
         $query = "SELECT estado_Finalizacion FROM tbl_Tarea WHERE id_Tarea = '$idTarea';";
         $ejecutar = sqlsrv_query($conexion, $query);
-        if(sqlsrv_has_rows($ejecutar) > 0){
+        if(sqlsrv_has_rows($ejecutar)){
             $tarea = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC);
             $existeTarea = $tarea['estado_Finalizacion'];
         }
@@ -1090,7 +1079,7 @@ class Tarea
         try{
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $selectCliente = "SELECT estado_cliente_tarea AS tipo_cliente FROM tbl_Tarea WHERE id_Tarea = '$idTarea'";
+            $selectCliente = "SELECT TRIM(estado_Finalizacion) AS tipo_cliente FROM tbl_Tarea WHERE id_Tarea = '$idTarea'";
             $consulta = sqlsrv_query($abrirConexion, $selectCliente);
             if(sqlsrv_has_rows($consulta)){
                 $tipoCliente = sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC);
