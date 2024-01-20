@@ -231,5 +231,25 @@ class Parametro
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $urlLogo;
     }
+    public static function obtenerParametrosFooter(){
+        $conn = new Conexion();
+        $Conexion = $conn->abrirConexionDB();
+        $query = "SELECT (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='TIENDA_ONLINE') as tiendaOnline,
+        (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='CORREO_ELECTRONICO') as correoElectronico,
+        (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='FACEBOOK_LINK') as facebookLink,
+        (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='TELEFONO_EMPRESA') as telefonoEmpresa
+        FROM tbl_MS_Parametro;";
+        $resultado = sqlsrv_query($Conexion, $query);
+        while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+            $footer[] = [
+                'tiendaOnline' => $fila['tiendaOnline'],
+                'correoElectronico' => $fila['correoElectronico'],
+                'facebookLink' => $fila['facebookLink'],
+                'telefonoEmpresa' => $fila['telefonoEmpresa']
+            ];
+        }
+        sqlsrv_close($Conexion); #Cerramos la conexión.
+        return $footer;
+    }
 
 }

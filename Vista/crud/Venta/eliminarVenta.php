@@ -8,10 +8,9 @@
         $estadoEliminado = ControladorVenta::eliminarVenta($numFactura);
         $data = array();
         if($estadoEliminado == true) {
-            $data []= [
+            $data = [
                 'estadoEliminado' => 'eliminado'
             ];
-           
             print json_encode($data, JSON_UNESCAPED_UNICODE);
         }
     

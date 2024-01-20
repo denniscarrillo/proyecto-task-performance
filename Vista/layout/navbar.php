@@ -1,8 +1,8 @@
 <nav class="navbar">
   <div class="navbar-content">
-    <div class="notifations-conteiner">
+    <!-- <div class="notifations-conteiner">
     <p>Notificaciones</p><span class="notification-conteiner"><i class="notification-icon fa-solid fa-bell"></i></span> 
-    </div>
+    </div> -->
     <div class="profile-conteiner">
         <title>Menú Dropdown</title>
         </head>
