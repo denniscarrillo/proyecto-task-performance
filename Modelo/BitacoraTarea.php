@@ -1,6 +1,9 @@
 <?php
 class BitacoraTarea
 {
+    public $idTarea;
+    public $descripcionEvento;
+        
     public static function agregarComentarioTarea($idTarea, $comentario, $CreadoPor){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
@@ -122,6 +125,3 @@ class BitacoraTarea
         return $tarea;
     }
 }
-
-
-
