@@ -12,7 +12,7 @@ const validaciones = {
 //VARIABLES GLOBALES
 
 let estadoEspacioInput = {
-    estadoEspacioCodarticulo: true,
+   
     estadoEspacioArticulo: true,
     estadoEspacioDetalle: true,
     estadoEspacioMarca: true,
@@ -22,7 +22,7 @@ let estadoEspacioInput = {
 
 
 let estadoSelect = {
-    estadoSelectCodarticulo: true,
+   
     estadoSelectArticulo: true,
     estadoSelectDetalle: true,
     estadoSelectMarca: true,
@@ -30,7 +30,7 @@ let estadoSelect = {
 }
 
 let estadoMasdeUnEspacio = {
-        estadoMasEspacioCodarticulo:true,
+       
         estadoMasEspacioArticulo:true,
         estadoMasEspacioDetalle:true,
         estadoMasEspacioMarca:true,
@@ -46,7 +46,7 @@ let estadoSoloLetras = {
 
 
 const $form = document.getElementById('form_Articulo');
-const $codarticulo= document.getElementById('CodArticulo');
+
 const $articulo = document.getElementById('Articulo');
 const $detalle= document.getElementById('Detalle');
 const $marca = document.getElementById('Marca');
@@ -59,23 +59,23 @@ const $marca = document.getElementById('Marca');
 */
 $form.addEventListener('submit', e => {
     //Validamos que algún campo no esté vacío.
-    let estadoInputCodarticulo = funciones.validarCampoVacio($codarticulo);
+
     let estadoInputarticulo = funciones.validarCampoVacio($articulo);
     let estadoInputdetalle= funciones.validarCampoVacio($detalle);
     let estadoInputmarca = funciones.validarCampoVacio($marca);
   
     // Comprobamos que todas las validaciones se hayan cumplido 
-    if (estadoInputCodarticulo == false || estadoInputarticulo  == false || estadoInputdetalle == false || estadoInputmarca == false  ) {
+    if ( estadoInputarticulo  == false || estadoInputdetalle == false || estadoInputmarca == false  ) {
         e.preventDefault();
     }else{
-        if(estadoEspacioInput.estadoEspacioCodarticulo == false || estadoEspacioInput.estadoEspacioArticulo  == false || estadoEspacioInput.estadoEspacioMarca== false || estadoEspacioInput.estadoEspacioDetalle == false ){ 
+        if(estadoEspacioInput.estadoEspacioArticulo  == false || estadoEspacioInput.estadoEspacioMarca== false || estadoEspacioInput.estadoEspacioDetalle == false ){ 
             e.preventDefault();
-            estadoEspacioInput.estadoEspacioCodarticulo = funciones.validarEspacios($codarticulo);  
+       
             estadoEspacioInput.estadoEspacioArticulo= funciones.validarEspacios($articulo);  
             estadoEspacioInput.estadoEspacioDetalle = funciones.validarEspacios($detalle); 
             estadoEspacioInput.estadoEspacioMarca = funciones.validarEspacios($marca);   
         }
-        estadoMasdeUnEspacio.estadoMasEspacioCodarticulo= funciones.validarMasdeUnEspacio($codarticulo);
+      
         estadoMasdeUnEspacio.estadoMasEspacioArticulo= funciones.validarMasdeUnEspacio($articulo);
         estadoMasdeUnEspacio.estadoMasEspacioDetalle = funciones.validarMasdeUnEspacio($detalle);
         estadoMasdeUnEspacio.estadoMasEspacioMarca = funciones.validarMasdeUnEspacio($marca);

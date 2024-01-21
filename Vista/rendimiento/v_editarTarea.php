@@ -13,6 +13,7 @@ $estadosTarea = ControladorTarea::traerEstadosTarea();
 $origenLeads = ControladorTarea::obtenerOrigenLead();
 $razonSociales = ControladorTarea::obtenerRazonSocial();
 $rubroSociales = ControladorTarea::obtenerRubroComercial();
+$estadoTarea = ControladorTarea::obtenerTipoCliente(intval($_GET['idTarea']));
 //Valida si tiene sesion
 if (!isset($_SESSION['usuario'])) {
 	header('location: ../login/login.php');
@@ -118,9 +119,7 @@ if (!isset($_SESSION['usuario'])) {
             <div class="encabezado-tarea">
               <div class="mb-3">
                 <label class="text-cliente">Tipo cliente:</label>
-                <label id="tipoCliente" hidden>
-                  <?php echo ControladorTarea::obtenerTipoCliente(intval($_GET['idTarea'])) ?>
-                </label>
+                <label id="tipoCliente" hidden><?php print $estadoTarea ?></label>
                 <input type="radio" name="radioOption" id="cliente-existente" class="radio" value="Existente"><label
                   for="cliente-existente" class="radio-label form-label">Existente</label>
                 <input type="radio" name="radioOption" id="cliente-nuevo" class="radio" value="Nuevo" checked><label
@@ -133,10 +132,11 @@ if (!isset($_SESSION['usuario'])) {
                     value="<?php echo ControladorTarea::obtenerEstadoTarea(intval($_GET['idTarea']))['titulo'] ?>">
                   <p class="mensaje"></p>
                 </div>
-                <button type="button" id="btn-finalizar-tarea" disabled><i class="fa-solid fa-text-slash"></i> Finalizar
-                  tarea</button>
-                <label id="estado-finalizacion" hidden>
-                  <?php echo ControladorTarea::obtenerTareaFinalizada($_GET['idTarea']) ?>
+                <button type="button" id="btn-finalizar-tarea">
+                  <?php ($estadoTarea == 'FINALIZADA') ? print 'Tarea finalizada' : print '<i class="fa-solid fa-text-slash"></i> Finalizar tarea'; ?>
+                </button>
+                <label id="estado-finalizacion"
+                  hidden><?php echo ControladorTarea::obtenerTareaFinalizada($_GET['idTarea']) ?>
                 </label>
               </div>
               <div class="mb-3 data-container">
@@ -186,7 +186,7 @@ if (!isset($_SESSION['usuario'])) {
                     placeholder="Número de teléfono">
                   <p class=" mensaje"></p>
                 </div>
-                <div class="mb-3 data-container" id="container-correo" hidden>
+                <div class="mb-3 data-container" id="container-correo">
                   <label for="correo" class="form-label" id="label-correo">Correo Electrónico: </label>
                   <input type="text" name="correo" id="correo-cliente" class="form-control"
                     placeholder="Correo electrónico">

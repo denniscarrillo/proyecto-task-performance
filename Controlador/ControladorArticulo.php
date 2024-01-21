@@ -14,16 +14,16 @@ class ControladorArticulo {
     }
 
     public static function registroNuevoArticulo($nuevoArticulo){
-        return Articulo::registroNuevoArticulo($nuevoArticulo);
+        Articulo::registroNuevoArticulo($nuevoArticulo);
     }
 
     
-    public static function editarArticulo($nuevoArticulo){
-        return Articulo::editarArticulo($nuevoArticulo);
+    public static function editarArticulo($editarArticulo){
+        Articulo::editarArticulo($editarArticulo);
     }
 
-    public static function eliminarArticulo($Articulos){
-        return Articulo::eliminarArticulo($Articulos);
+    public static function eliminarArticulo($CodArticulo){
+        return Articulo::eliminarArticulo($CodArticulo);
     }
 
 

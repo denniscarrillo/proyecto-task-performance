@@ -39,40 +39,7 @@ rdGeneral.addEventListener("change", function () {
     }
 });
 
-// ////////////////Boton Filtrar
-// let RadioGeneral = document.getElementById("RadioGeneral");
-// let btnFiltrar= document.getElementById("btnFiltrar");
-// RadioGeneral.addEventListener("change", function(){
-//     if (RadioGeneral.checked ) {
-//         // Habilitar el botón seleccionar vendedores
-//         btnFiltrar.removeAttribute("disabled");
-//       } else {
-//         btnFiltrar.setAttribute("disabled", "true");
-//     }    
-// });
 
-// let radioVendedores = document.getElementById("RadioPorVendedor");
-// radioVendedores.addEventListener("change", function () {
-//     if (radioVendedores.checked) {
-//       // Si se deselecciona el radio rdGeneral, deshabilita el botón
-//       btnFiltrar.setAttribute("disabled", "true");
-//     }
-// });
-//////////////////////
-// let $mensaje2 = document.querySelector(".grafica_Vendedor");
-// let  graficasVendedor = document.getElementById("grafica_Vendedor");
-// let  seleccion = document.getElementById("#btn_seleccionar");
-// graficasVendedor.addEventListener("change", function () {
-//     if (graficasVendedor.checked) {
-//       // Si se deselecciona el radio rdGeneral, deshabilita el botón
-//       seleccion.setAttribute("enable", "true");
-//     }else {
-//      seleccion.setAttribute("disable", "false");
-//      $mensaje2.classList.remove('.grafica_Vendedor')
-//     }
-// }); 
-
-////////////////////////////////////////////////////////////////////////////////////
 ////Validaciones de fechas
 $tablaVendedores = "";
 let $mensaje = document.querySelector(".mensaje");
@@ -116,231 +83,295 @@ if (fechaDesdes === "" && fechaHastas === "" ) {
     $mensaje.classList.remove('.mensaje')
 }
 });
-/////////////////////////Grafica de Metas
-//funcion que obtiene y manda datos a la primera grafica de meta
-let obtenerMetaMetricas = function(){
-    $.ajax({
-        url: "../../../Vista/grafica/obtenerDatosMetrica.php",
-        type: "POST",
-        datatype: "JSON",
-        data: {
-        },
-        success: function (resp) {
-            datosGrafica = JSON.parse(resp);  
-            console.log(datosGrafica) ;
-           
-            const $grafica = document.querySelector("#grafica");
-            const etiquetas = ["Meta Llamadas" ,"Meta Lead" ,"Meta Cotizacion","Meta Ventas" ]
-            const color = ['rgba(133, 52, 0 )','rgba( 202, 117, 24)','rgba(255, 152, 0)','rgba(255, 212, 120)']
-
-            const datosIngresos = {
-                data: [datosGrafica[0].meta, datosGrafica[1].meta, datosGrafica[2].meta, datosGrafica[3].meta],
-                backgroundColor: color,
-            };
-            new Chart($grafica, {
-                type: 'pie',
-                data: {
-                    labels: etiquetas,
-                    datasets: [
-                        datosIngresos,
-                    ]
-                },
-            });
-        }
-    });
-}
-//Carga la grafica Metas 
-function cargarGraficaMetas() {
-    obtenerMetaMetricas();
-}
-document.addEventListener('DOMContentLoaded', cargarGraficaMetas);
 
 
-/////////////////////////////////////GRAFICAS GENERALES///////////////////////////////////
-// Obtener datos Genrales para las 4 graficas de cada tarea
-let obtenerDatosGrafica = function(fechaDesde, fechaHasta){
-    $.ajax({
-        url: "../../../Vista/grafica/obtenerCantTareas.php",
-        type: "POST",
-        datatype: "JSON",
-        data: {
-            fechaDesde: fechaDesde,
-            fechaHasta: fechaHasta
-        },
-        success: function (resp) {
-            
-            datosGrafica = JSON.parse(resp);   
-            generarGraficas(datosGrafica);
-            console.log(datosGrafica);
-            
-        }
-    });
-}
-
-//funcion que genera los datos GENERALES(todos los vendedores) de cada tarea
-let generarGraficas = function(data) {
-    ///////////////////////////////////////////////////GRAFICA GENERAL LLAMADA//////////////////////////////////////////////////// 
-    const datosIngresos_llamada = {
-        data: [data.TotalLlamadas, data.metaGeneralLlamada], 
-        backgroundColor: color_Llamada,
-    };
-    new Chart($grafica_llamada, {
-        type: 'doughnut',// Tipo de gráfica. Puede ser doughnut o pie 
-        data: {
-            labels: etiquetas_llamada,
-            datasets: [
-                datosIngresos_llamada
-            ]
-        }
-    });
-    ////////////////////////////////////////////////////GRAFICA GENERAL LEAD////////////////////////////////////////////////////
-    const datosIngresos_lead = {
-        data: [data.TotalLead, data.metaGeneralLead], 
-        backgroundColor: color_Lead,
-    }
-    new Chart($grafica_lead, {
-        type: 'doughnut',
-        data: {
-            labels: etiquetas_lead,
-            datasets: [
-                datosIngresos_lead
-            ]
-        }
-    });   
-    ////////////////////////////////////////////////////GRAFICA GENERAL COTIZACION////////////////////////////////////////////////////
-    const datosIngresos_Cotizacion = {
-        data: [data.TotalCotizacion, data.metaGeneralCotizacion],
-        backgroundColor: color_Cotizacion,
-    };
-    new Chart($grafica_Cotizacion, {
-        type: 'doughnut',
-        data: {
-            labels: etiquetas_Cotizacion,
-            datasets: [
-                datosIngresos_Cotizacion,
-            ]
-        },       
-    });
-    
-    ////////////////////////////////////////////////////GRAFICA GENERAL VENTAS////////////////////////////////////////////////////  
-    const datosIngresos_Venta = {
-        data: [data.TotalVenta, data.metaGeneralVentas], 
-        backgroundColor: color_Venta,
-    };
-    new Chart($grafica_Venta, {
-        type: 'doughnut',
-        data: {
-            labels: etiquetas_Venta,
-            datasets: [
-                datosIngresos_Venta,
-            ]
-        },
-    });
-}
-
-////////////////////GRAFICA POR VENDENDOR////
-
-//funcion para llenar el modal de vendedores
+let tablaEstadistica = '';
 $(document).ready(function () {
-    $tablaVendedores = $("#table-Traer-Vendedor").DataTable({
-        "ajax": {
-            "url": "../../../Vista/grafica/obtenerFiltroVendedores.php",
-            "type": "POST",
-            "datatype": "JSON",
-            "dataSrc": "",
-        },
-        "language": {
-        "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
-        },
-        "columns": [
-            { "data": "idUsuario_Vendedor" },
-            { "data": "nombreVendedor" },
-        {
-            "defaultContent":
-            '<button class="btns btn " id="btn_seleccionar"><i class="icon-select  fa-solid fa-circle-check"></i></button>',
-        },
-        ],
-    });
+  let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
+  // console.log($idObjetoSistema);
+  obtenerPermisos($idObjetoSistema, procesarPermisoActualizar);     
 });
-
-//////////Obtiene los datos para seleccionar las tareas de los vendedores
-let obtenerTareaVendedor = function(idUsuario_Vendedor,fechaDesde,fechaHasta){
-    
-   $.ajax({
-        url: "../../../Vista/grafica/obtenerTareasPorVendedor.php",
-        type: "POST",
-        datatype: "JSON",
-            data: {
-             idUsuario_Vendedor:idUsuario_Vendedor,
-             fechaDesde: fechaDesde,
-             fechaHasta: fechaHasta
-            },
-         success: function (resp) {
-             datosGrafica= JSON.parse(resp);  
-             generarGraficasVendedores(datosGrafica);
-            //  console.log(datosGrafica) ;      
-            }
-     }); 
-};
-
-let generarGraficasVendedores = function(data) {
-  ////////////////////////////////////////////////////GRAFICA  LLAMADA////////////////////////////////////////////////////   
-    const datosIngresos_llamada = {
-        data: [data.TotalLlamadas, data.metaLlamada], 
-        backgroundColor: color_Llamada,
-    };
-    new Chart($grafica_llamada, {
-        type: 'doughnut',// Tipo de gráfica. Puede ser doughnut o pie 
-        data: {
-            labels: etiquetas_llamada,
-            datasets: [
-                datosIngresos_llamada
-            ]          
-        }
-    });
-    ////////////////////////////////////////////////////GRAFICA  LEAD////////////////////////////////////////////////////
-    const datosIngresos_lead = {
-        data: [data.TotalLead, data.metaLead], 
-        backgroundColor: color_Lead,
-    }
-    new Chart($grafica_lead, {
-        type: 'doughnut',
-        data: {
-            labels: etiquetas_lead,
-            datasets: [
-                datosIngresos_lead
-            ]
-        }
-    });   
-    ////////////////////////////////////////////////////GRAFICA  COTIZACION////////////////////////////////////////////////////
-    const datosIngresos_Cotizacion = {
-        data: [data.TotalCotizacion, data.metaCotizacion],
-        backgroundColor: color_Cotizacion,
-    };
-    new Chart($grafica_Cotizacion, {
-        type: 'doughnut',
-        data: {
-            labels: etiquetas_Cotizacion,
-            datasets: [
-                datosIngresos_Cotizacion,
-            ]
-        },       
-    });   
-    ////////////////////////////////////////////////////GRAFICA  VENTAS////////////////////////////////////////////////////  
-    const datosIngresos_Venta = {
-        data: [data.TotalVenta, data.metaVentas], 
-        backgroundColor: color_Venta,
-    };
-    new Chart($grafica_Venta, {
-        type: 'doughnut',
-        data: {
-            labels: etiquetas_Venta,
-            datasets: [
-                datosIngresos_Venta,
-            ]
-        },
-    });                    
+//Recibe la respuesta de la peticion AJAX y la procesa
+let procesarPermisoActualizar = data => {
+  let permisos = JSON.parse(data);
+  tablaEstadistica = $('#table-Estadistica').DataTable({
+    "ajax": {
+      "url": "../../../Vista/crud/Metricas/obtenerMetricas.php",
+      "dataSrc": ""
+    },
+    "language":{
+      "url":"//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+    },  
+    "columns": [
+      { "data": "Tarea"},
+      { "data": "Meta"},
+      { "data": "Alcance"},
+      { "data": "Porcentaje"}                
+    ]  
+  });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// /////////////////////////Grafica de Metas
+// //funcion que obtiene y manda datos a la primera grafica de meta
+// let obtenerMetaMetricas = function(){
+//     $.ajax({
+//         url: "../../../Vista/grafica/obtenerDatosMetrica.php",
+//         type: "POST",
+//         datatype: "JSON",
+//         data: {
+//         },
+//         success: function (resp) {
+//             datosGrafica = JSON.parse(resp);  
+//             console.log(datosGrafica) ;
+           
+//             const $grafica = document.querySelector("#grafica");
+//             const etiquetas = ["Meta Llamadas" ,"Meta Lead" ,"Meta Cotizacion","Meta Ventas" ]
+//             const color = ['rgba(133, 52, 0 )','rgba( 202, 117, 24)','rgba(255, 152, 0)','rgba(255, 212, 120)']
+
+//             const datosIngresos = {
+//                 data: [datosGrafica[0].meta, datosGrafica[1].meta, datosGrafica[2].meta, datosGrafica[3].meta],
+//                 backgroundColor: color,
+//             };
+//             new Chart($grafica, {
+//                 type: 'pie',
+//                 data: {
+//                     labels: etiquetas,
+//                     datasets: [
+//                         datosIngresos,
+//                     ]
+//                 },
+//             });
+//         }
+//     });
+// }
+// //Carga la grafica Metas 
+// function cargarGraficaMetas() {
+//     obtenerMetaMetricas();
+// }
+// document.addEventListener('DOMContentLoaded', cargarGraficaMetas);
+
+
+// /////////////////////////////////////GRAFICAS GENERALES///////////////////////////////////
+// // Obtener datos Genrales para las 4 graficas de cada tarea
+// let obtenerDatosGrafica = function(fechaDesde, fechaHasta){
+//     $.ajax({
+//         url: "../../../Vista/grafica/obtenerCantTareas.php",
+//         type: "POST",
+//         datatype: "JSON",
+//         data: {
+//             fechaDesde: fechaDesde,
+//             fechaHasta: fechaHasta
+//         },
+//         success: function (resp) {
+            
+//             datosGrafica = JSON.parse(resp);   
+//             generarGraficas(datosGrafica);
+//             console.log(datosGrafica);
+            
+//         }
+//     });
+// }
+
+// //funcion que genera los datos GENERALES(todos los vendedores) de cada tarea
+// let generarGraficas = function(data) {
+//     ///////////////////////////////////////////////////GRAFICA GENERAL LLAMADA//////////////////////////////////////////////////// 
+//     const datosIngresos_llamada = {
+//         data: [data.TotalLlamadas, data.metaGeneralLlamada], 
+//         backgroundColor: color_Llamada,
+//     };
+//     new Chart($grafica_llamada, {
+//         type: 'doughnut',// Tipo de gráfica. Puede ser doughnut o pie 
+//         data: {
+//             labels: etiquetas_llamada,
+//             datasets: [
+//                 datosIngresos_llamada
+//             ]
+//         }
+//     });
+//     ////////////////////////////////////////////////////GRAFICA GENERAL LEAD////////////////////////////////////////////////////
+//     const datosIngresos_lead = {
+//         data: [data.TotalLead, data.metaGeneralLead], 
+//         backgroundColor: color_Lead,
+//     }
+//     new Chart($grafica_lead, {
+//         type: 'doughnut',
+//         data: {
+//             labels: etiquetas_lead,
+//             datasets: [
+//                 datosIngresos_lead
+//             ]
+//         }
+//     });   
+//     ////////////////////////////////////////////////////GRAFICA GENERAL COTIZACION////////////////////////////////////////////////////
+//     const datosIngresos_Cotizacion = {
+//         data: [data.TotalCotizacion, data.metaGeneralCotizacion],
+//         backgroundColor: color_Cotizacion,
+//     };
+//     new Chart($grafica_Cotizacion, {
+//         type: 'doughnut',
+//         data: {
+//             labels: etiquetas_Cotizacion,
+//             datasets: [
+//                 datosIngresos_Cotizacion,
+//             ]
+//         },       
+//     });
+    
+//     ////////////////////////////////////////////////////GRAFICA GENERAL VENTAS////////////////////////////////////////////////////  
+//     const datosIngresos_Venta = {
+//         data: [data.TotalVenta, data.metaGeneralVentas], 
+//         backgroundColor: color_Venta,
+//     };
+//     new Chart($grafica_Venta, {
+//         type: 'doughnut',
+//         data: {
+//             labels: etiquetas_Venta,
+//             datasets: [
+//                 datosIngresos_Venta,
+//             ]
+//         },
+//     });
+// }
+
+// ////////////////////GRAFICA POR VENDENDOR////
+
+// //funcion para llenar el modal de vendedores
+// $(document).ready(function () {
+//     $tablaVendedores = $("#table-Traer-Vendedor").DataTable({
+//         "ajax": {
+//             "url": "../../../Vista/grafica/obtenerFiltroVendedores.php",
+//             "type": "POST",
+//             "datatype": "JSON",
+//             "dataSrc": "",
+//         },
+//         "language": {
+//         "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
+//         },
+//         "columns": [
+//             { "data": "idUsuario_Vendedor" },
+//             { "data": "nombreVendedor" },
+//         {
+//             "defaultContent":
+//             '<button class="btns btn " id="btn_seleccionar"><i class="icon-select  fa-solid fa-circle-check"></i></button>',
+//         },
+//         ],
+//     });
+// });
+
+// //////////Obtiene los datos para seleccionar las tareas de los vendedores
+// let obtenerTareaVendedor = function(idUsuario_Vendedor,fechaDesde,fechaHasta){
+    
+//    $.ajax({
+//         url: "../../../Vista/grafica/obtenerTareasPorVendedor.php",
+//         type: "POST",
+//         datatype: "JSON",
+//             data: {
+//              idUsuario_Vendedor:idUsuario_Vendedor,
+//              fechaDesde: fechaDesde,
+//              fechaHasta: fechaHasta
+//             },
+//          success: function (resp) {
+//              datosGrafica= JSON.parse(resp);  
+//              generarGraficasVendedores(datosGrafica);
+//             //  console.log(datosGrafica) ;      
+//             }
+//      }); 
+// };
+
+// let generarGraficasVendedores = function(data) {
+//   ////////////////////////////////////////////////////GRAFICA  LLAMADA////////////////////////////////////////////////////   
+//     const datosIngresos_llamada = {
+//         data: [data.TotalLlamadas, data.metaLlamada], 
+//         backgroundColor: color_Llamada,
+//     };
+//     new Chart($grafica_llamada, {
+//         type: 'doughnut',// Tipo de gráfica. Puede ser doughnut o pie 
+//         data: {
+//             labels: etiquetas_llamada,
+//             datasets: [
+//                 datosIngresos_llamada
+//             ]          
+//         }
+//     });
+//     ////////////////////////////////////////////////////GRAFICA  LEAD////////////////////////////////////////////////////
+//     const datosIngresos_lead = {
+//         data: [data.TotalLead, data.metaLead], 
+//         backgroundColor: color_Lead,
+//     }
+//     new Chart($grafica_lead, {
+//         type: 'doughnut',
+//         data: {
+//             labels: etiquetas_lead,
+//             datasets: [
+//                 datosIngresos_lead
+//             ]
+//         }
+//     });   
+//     ////////////////////////////////////////////////////GRAFICA  COTIZACION////////////////////////////////////////////////////
+//     const datosIngresos_Cotizacion = {
+//         data: [data.TotalCotizacion, data.metaCotizacion],
+//         backgroundColor: color_Cotizacion,
+//     };
+//     new Chart($grafica_Cotizacion, {
+//         type: 'doughnut',
+//         data: {
+//             labels: etiquetas_Cotizacion,
+//             datasets: [
+//                 datosIngresos_Cotizacion,
+//             ]
+//         },       
+//     });   
+//     ////////////////////////////////////////////////////GRAFICA  VENTAS////////////////////////////////////////////////////  
+//     const datosIngresos_Venta = {
+//         data: [data.TotalVenta, data.metaVentas], 
+//         backgroundColor: color_Venta,
+//     };
+//     new Chart($grafica_Venta, {
+//         type: 'doughnut',
+//         data: {
+//             labels: etiquetas_Venta,
+//             datasets: [
+//                 datosIngresos_Venta,
+//             ]
+//         },
+//     });                    
+// }
 
 
 

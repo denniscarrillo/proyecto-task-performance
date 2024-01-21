@@ -10,17 +10,14 @@
 
     session_start(); //Reanudamos session
     if(isset($_SESSION['usuario'])){
-        $nuevoCliente = new CarteraClientes();
-        $nuevoCliente->idcarteraCliente = $_POST['id'];
-        $nuevoCliente->nombre = $_POST['nombre'];
-        $nuevoCliente->rtn = $_POST['rtn'];
-        $nuevoCliente->telefono = $_POST['telefono'];
-        $nuevoCliente->correo= $_POST['correo'];
-        $nuevoCliente->direccion = $_POST['direccion'];
-        $nuevoCliente->estadoContacto = $_POST['estadoContacto'];
-        date_default_timezone_set('America/Tegucigalpa');
-        $nuevoCliente->modificadoPor = $_SESSION['usuario'];
-        ControladorCarteraClientes::editarCliente($nuevoCliente);
+        $editarCliente = new CarteraClientes();
+        $editarCliente->rtn = $_POST['rtn'];
+        $editarCliente->telefono = $_POST['telefono'];
+        $editarCliente->correo= $_POST['correo'];
+        $editarCliente->direccion = $_POST['direccion'];
+        $editarCliente->estadoContacto = $_POST['estadoContacto'];
+        $editarCliente->modificadoPor = $_SESSION['usuario'];
+        ControladorCarteraClientes::editarCliente($editarCliente);
         print json_encode($data = ['estado'=>'false']);
         /* ========================= Evento Editar cartera cliente. ======================*/
         $newBitacora = new Bitacora();
