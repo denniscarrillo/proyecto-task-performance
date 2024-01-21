@@ -20,7 +20,7 @@ class Articulo
             $articulo = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $query = "SELECT CODARTICULO, ARTICULO, DETALLE, MARCA FROM tbl_ARTICULOS;";
+            $query = "SELECT CODARTICULO, ARTICULO, DETALLE, MARCA, Creado_Por, Fecha_Creacion FROM tbl_ARTICULOS;";
             $resultado = sqlsrv_query($abrirConexion, $query);
             $articulo = array();
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
@@ -29,7 +29,9 @@ class Articulo
                     'codigo' => $fila['CODARTICULO'],
                     'articulo' => $fila['ARTICULO'],
                     'detalle' => $fila['DETALLE'],
-                    'marcaArticulo' => $fila['MARCA']
+                    'marcaArticulo' => $fila['MARCA'],
+                    'creadoPor' => $fila['Creado_Por'],
+                    'fechaCreacion' => $fila['Fecha_Creacion']
                 ];
             }
         } catch (Exception $e) {
@@ -59,27 +61,20 @@ class Articulo
     public static function registroNuevoArticulo($nuevoArticulo){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB
-       // $codArticulo = $nuevoArticulo->codArticulo;
-        $Articulo = $nuevoArticulo->Articulo;
-        $Detalle = $nuevoArticulo->Detalle;
-        $Marca = $nuevoArticulo->Marca;
-        $query = "INSERT INTO tbl_ARTICULOS( ARTICULO, DETALLE,MARCA) 
-        VALUES  ('$Articulo', '$Detalle','$Marca');";
-        $nuevoArticulo = sqlsrv_query($consulta, $query);
+        $query = "INSERT INTO tbl_ARTICULOS (ARTICULO, DETALLE,MARCA, Creado_Por, Fecha_Creacion) 
+        VALUES  ('$nuevoArticulo->Articulo', '$nuevoArticulo->Detalle','$nuevoArticulo->Marca', '$nuevoArticulo->Creado_Por', GETDATE());";
+        sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerramos la conexión.
-        return $nuevoArticulo;
     }
 
-    public static function editarArticulo($nuevoArticulo){
+    public static function editarArticulo($editarArticulo){
         try {
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $codArticulo = $nuevoArticulo->codArticulo;
-            $Articulo = $nuevoArticulo->Articulo;
-            $Detalle = $nuevoArticulo->Detalle;
-            $Marca = $nuevoArticulo->Marca;
-            $update = "	UPDATE tbl_ARTICULOS SET ARTICULO='$Articulo' ,DETALLE='$Detalle',MARCA='$Marca' WHERE CODARTICULO='$codArticulo' ";
-            $nuevoArticulo = sqlsrv_query($abrirConexion, $update);
+            $update = "UPDATE tbl_ARTICULOS SET ARTICULO='$editarArticulo->Articulo',DETALLE='$editarArticulo->Detalle',
+            MARCA='$editarArticulo->Marca', Modificado_Por='$editarArticulo->Modificado_Por', Fecha_Modificacion = GETDATE() 
+            WHERE CODARTICULO='$editarArticulo->codArticulo'";
+            sqlsrv_query($abrirConexion, $update);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
@@ -114,7 +109,7 @@ class Articulo
         return $articulo;
     }
 
-    public static function eliminarArticulo($articulo){
+    public static function eliminarArticulo($CodArticulo){
         try{
             $conn = new Conexion();
             $conexion = $conn->abrirConexionDB();

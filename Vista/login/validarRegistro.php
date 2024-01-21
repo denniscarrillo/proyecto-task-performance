@@ -5,6 +5,7 @@
     require_once("../../Controlador/ControladorUsuario.php");
     require_once ("../../Modelo/Parametro.php");
     require_once("../../Controlador/ControladorParametro.php");
+    
     if(isset($_POST["submit"])){
         $nuevoUsuario = new Usuario();        
         $nuevoUsuario->usuario = $_POST["usuario"];

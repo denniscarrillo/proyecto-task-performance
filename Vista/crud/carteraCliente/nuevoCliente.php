@@ -17,7 +17,7 @@
         $nuevoCliente->telefono = $_POST['telefono'];
         $nuevoCliente->correo = $_POST['correo'];
         $nuevoCliente->direccion = $_POST['direccion'];
-        $nuevoCliente->estadoContacto = 'En Proceso';
+        $nuevoCliente->estadoContacto = 'EN PROCESO';
         $nuevoCliente->CreadoPor = $user;
         ControladorCarteraClientes::registroCliente($nuevoCliente);
        /* ========================= Evento Creacion cartera cliente. =============================*/
