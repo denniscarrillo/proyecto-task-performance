@@ -18,12 +18,11 @@ class Comision
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $listaComision =
-            $query = "SELECT co.id_Comision, co.id_Venta, v.TOTALNETO, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, 
-            co.estado_Liquidacion, co.fecha_Liquidacion, co.Fecha_Creacion, co.estado_Cobro_venta, co.fecha_Cobro, co.metodo_de_Pago
+            $query = "SELECT co.id_Comision, co.id_Venta, v.total_Venta, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, 
+            co.estado_Liquidacion, co.fecha_Liquidacion, co.Fecha_Creacion
             FROM tbl_Comision AS co
-            INNER JOIN VIEW_FACTURASVENTA AS v ON co.id_Venta = v.NUMFACTURA
-            INNER JOIN  tbl_Porcentaje AS po ON co.id_Porcentaje = po.id_Porcentaje
-			WHERE v.TOTALNETO > 0;";
+            INNER JOIN tbl_FacturasVenta AS v ON co.id_Venta = v.num_Factura
+            INNER JOIN  tbl_Porcentaje AS po ON co.id_Porcentaje = po.id_Porcentaje;";
         $listaComision = sqlsrv_query($consulta, $query);
         $Comision = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
@@ -31,16 +30,16 @@ class Comision
             $Comision[] = [
                 'idComision' => $fila["id_Comision"],
                 'factura' => $fila["id_Venta"],
-                'totalVenta' => $fila["TOTALNETO"],
+                'totalVenta' => $fila["total_Venta"],
                 'porcentaje' => $fila["valor_Porcentaje"],
                 'comisionTotal' => $fila["comision_TotalVenta"],
                 'estadoComisionar' => $fila["estadoComision"],
                 'estadoLiquidacion' => $fila["estado_Liquidacion"],
                 'fechaComision' => $fila["Fecha_Creacion"],
-                'fechaLiquidacion' => $fila["fecha_Liquidacion"],
-                'estadoCobro' => $fila["estado_Cobro_venta"],
-                'fechaCobro' => $fila["fecha_Cobro"],
-                'metodoPago' => $fila["metodo_de_Pago"]
+                'fechaLiquidacion' => $fila["fecha_Liquidacion"]
+                // 'estadoCobro' => $fila["estado_Cobro_venta"],
+                // 'fechaCobro' => $fila["fecha_Cobro"],
+                // 'metodoPago' => $fila["metodo_de_Pago"]
             ];
         }
         sqlsrv_close($consulta); #Cerramos la conexión.
@@ -54,9 +53,9 @@ class Comision
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         // Preparamos la insercion en la base de datos
         $query = "INSERT INTO tbl_comision (id_Venta, id_Porcentaje, 
-        comision_TotalVenta, estadoComision, estado_Liquidacion, Creado_Por, Fecha_Creacion, estado_Cobro_venta, metodo_de_Pago)  
+        comision_TotalVenta, estadoComision, estado_Liquidacion, Creado_Por, Fecha_Creacion)  
         VALUES ('$nuevaComision->idVenta','$nuevaComision->idPorcentaje','$nuevaComision->comisionTotal', '$nuevaComision->estadoComision',
-         '$nuevaComision->estadoLiquidacion', '$nuevaComision->creadoPor', GETDATE(), '$nuevaComision->estadoCobro', '$nuevaComision->metodoPago');";
+         '$nuevaComision->estadoLiquidacion', '$nuevaComision->creadoPor', GETDATE());";
         // Ejecutamos la consulta y comprobamos si fue exitosa
         sqlsrv_query($conexion, $query);
         $query2 = "SELECT SCOPE_IDENTITY() AS id_Comision";
@@ -133,15 +132,15 @@ class Comision
 
         $estadoComisionVendedor = 'Activa';
         $estadoLiquidacion = 'Pendiente';
-        $estadoCobro = 'Pendiente Cobro';
-        $metodoPago = 'Pendiente';
+        // $estadoCobro = 'Pendiente Cobro';
+        // $metodoPago = 'Pendiente';
         $comisionVendedor = $comisionTotal / count($vendedores);
 
         foreach ($vendedores as $vendedor) {
             $idVendedor = $vendedor['idVendedor'];
 
-            $insert = "INSERT INTO tbl_Comision_Por_Vendedor (id_Comision, id_usuario_vendedor, total_Comision, estadoComisionVendedor, estado_Liquidacion, estado_Cobro_venta, metodo_de_Pago, Creado_Por, Fecha_Creacion) 
-                    VALUES ('$idComision', '$idVendedor', '$comisionVendedor', '$estadoComisionVendedor', '$estadoLiquidacion', '$estadoCobro', '$metodoPago', '$user', GETDATE());";
+            $insert = "INSERT INTO tbl_Comision_Por_Vendedor (id_Comision, id_usuario_vendedor, total_Comision, estadoComisionVendedor, estado_Liquidacion, Creado_Por, Fecha_Creacion) 
+                    VALUES ('$idComision', '$idVendedor', '$comisionVendedor', '$estadoComisionVendedor', '$estadoLiquidacion', '$user', GETDATE());";
 
             sqlsrv_query($abrirConexion, $insert);
         }
@@ -170,7 +169,7 @@ class Comision
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $query = "SELECT vt.id_Comision_Por_Vendedor, vt.id_Comision, vt.id_usuario_vendedor, u.usuario, vt.total_Comision, vt.estadoComisionVendedor, 
-            vt.estado_Liquidacion, vt.fecha_Liquidacion, vt.Fecha_Creacion, vt.estado_Cobro_venta, vt.fecha_Cobro, vt.metodo_de_Pago
+            vt.estado_Liquidacion, vt.fecha_Liquidacion, vt.Fecha_Creacion
             FROM tbl_ms_usuario AS u
             INNER JOIN tbl_comision_por_vendedor AS vt ON u.id_Usuario = vt.id_usuario_vendedor;";
         $listaComision = sqlsrv_query($consulta, $query);
@@ -185,11 +184,8 @@ class Comision
                 'comisionTotal' => $fila["total_Comision"],
                 'estadoComision' => $fila["estadoComisionVendedor"],
                 'estadoLiquidacion' => $fila["estado_Liquidacion"],
-                'estadoCobro' => $fila["estado_Cobro_venta"],
-                'metodoPago' => $fila["metodo_de_Pago"],
                 'fechaComision' => $fila["Fecha_Creacion"],
-                'fechaLiquidacion' => $fila["fecha_Liquidacion"],
-                'fechaCobro' => $fila["fecha_Cobro"]
+                'fechaLiquidacion' => $fila["fecha_Liquidacion"]
             ];
         }
         sqlsrv_close($consulta); #Cerramos la conexión.
@@ -280,7 +276,7 @@ class Comision
     $consulta = $conn->abrirConexionDB(); // Abrimos la conexión a la DB.
 
     // Obtener el estado_Cobro_venta y fecha_cobro actual
-    $queryEstadoActual = "SELECT estado_Cobro_venta, fecha_cobro, estado_Liquidacion, fecha_Liquidacion FROM tbl_comision WHERE id_Comision = '$nuevaComision->idComision';";
+    $queryEstadoActual = "SELECT estado_Liquidacion, fecha_Liquidacion FROM tbl_comision WHERE id_Comision = '$nuevaComision->idComision';";
     $resultEstadoActual = sqlsrv_query($consulta, $queryEstadoActual);
 
     if ($resultEstadoActual === false) {
@@ -290,14 +286,14 @@ class Comision
     $rowEstadoActual = sqlsrv_fetch_array($resultEstadoActual);
     $estadoActual = $rowEstadoActual['estado_Cobro_venta'];
     $estadoActual2 = $rowEstadoActual['estado_Liquidacion'];
-    $fechaCobroActual = $rowEstadoActual['fecha_cobro'];
+    // $fechaCobroActual = $rowEstadoActual['fecha_cobro'];
     $fechaLiquidacionActual = $rowEstadoActual['fecha_Liquidacion'];
 
     // Actualizar tbl_comision
     $query1 = "UPDATE tbl_comision 
                SET estado_Liquidacion = '$nuevaComision->estadoLiquidacion', 
-                   estado_Cobro_venta = '$nuevaComision->estadoCobro', 
-                   metodo_de_Pago = '$nuevaComision->metodoPago', 
+                --    estado_Cobro_venta = '$nuevaComision->estadoCobro', 
+                --    metodo_de_Pago = '$nuevaComision->metodoPago', 
                    Modificado_Por ='$nuevaComision->ModificadoPor', 
                    Fecha_Modificacion = GETDATE()";
 
@@ -306,37 +302,36 @@ class Comision
         $query1 .= ", fecha_Liquidacion = GETDATE()";
     }
 
-    // Agregar la condición para actualizar la fecha_cobro solo si estado_Cobro_venta cambia
-    if ($estadoActual != $nuevaComision->estadoCobro) {
-        $query1 .= ", fecha_Cobro = GETDATE()";
-    }
+    // // Agregar la condición para actualizar la fecha_cobro solo si estado_Cobro_venta cambia
+    // if ($estadoActual != $nuevaComision->estadoCobro) {
+    //     $query1 .= ", fecha_Cobro = GETDATE()";
+    // }
 
-    $query1 .= " WHERE id_Comision = '$nuevaComision->idComision';";
+    // $query1 .= " WHERE id_Comision = '$nuevaComision->idComision';";
 
-    $result1 = sqlsrv_query($consulta, $query1);
+    // $result1 = sqlsrv_query($consulta, $query1);
 
-    if ($result1 === false) {
-        die(print_r(sqlsrv_errors(), true)); // Manejo de errores
-    }
+    // if ($result1 === false) {
+    //     die(print_r(sqlsrv_errors(), true)); // Manejo de errores
+    // }
 
     // Actualizar tbl_comision_por_vendedor
     $query2 = "UPDATE tbl_comision_por_vendedor 
-               SET estado_Cobro_venta = '$nuevaComision->estadoCobro', 
-                   metodo_de_Pago = '$nuevaComision->metodoPago', 
+               SET 
                    Modificado_Por ='$nuevaComision->ModificadoPor'";
 
     // Agregar la condición para actualizar la fecha_cobro solo si estado_Cobro_venta cambia
-    if ($estadoActual != $nuevaComision->estadoCobro) {
-        $query2 .= ", fecha_cobro = GETDATE()";
-    }
+    // if ($estadoActual != $nuevaComision->estadoCobro) {
+    //     $query2 .= ", fecha_cobro = GETDATE()";
+    // }
 
-    $query2 .= " WHERE id_Comision = '$nuevaComision->idComision';";
+    // $query2 .= " WHERE id_Comision = '$nuevaComision->idComision';";
 
-    $result2 = sqlsrv_query($consulta, $query2);
+    // $result2 = sqlsrv_query($consulta, $query2);
 
-    if ($result2 === false) {
-        die(print_r(sqlsrv_errors(), true)); // Manejo de errores
-    }
+    // if ($result2 === false) {
+    //     die(print_r(sqlsrv_errors(), true)); // Manejo de errores
+    // }
 
     sqlsrv_close($consulta); // Cerramos la conexión.
 }
@@ -349,28 +344,28 @@ class Comision
     {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $query1 = "SELECT co.id_Comision, co.id_Venta, v.TOTALNETO, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, co.estado_Liquidacion, co.estado_Cobro_venta, co.metodo_de_Pago,  co.fecha_Liquidacion, co.Creado_Por,
-            co.Fecha_Creacion, co.fecha_Cobro, co.Modificado_Por, co.Fecha_Modificacion
-            FROM tbl_Comision AS co INNER JOIN VIEW_FACTURASVENTA AS v ON co.id_Venta = v.NUMFACTURA
+        $query1 = "SELECT co.id_Comision, co.id_Venta, v.total_Venta, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, co.estado_Liquidacion, co.fecha_Liquidacion, co.Creado_Por,
+            co.Fecha_Creacion, co.Modificado_Por, co.Fecha_Modificacion
+            FROM tbl_Comision AS co INNER JOIN tbl_FacturasVenta AS v ON co.id_Venta = v.num_Factura
             INNER JOIN  tbl_Porcentaje AS po ON co.id_Porcentaje = po.id_Porcentaje
-            WHERE co.id_Comision = '$idComision' and TOTALNETO >0;";
+            WHERE co.id_Comision = '$idComision';";
         $listaComision = sqlsrv_query($conexion, $query1);
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
         $fila = sqlsrv_fetch_array($listaComision, SQLSRV_FETCH_ASSOC);
         $ComisionVer = [
             'idComision' => $fila["id_Comision"],
             'idFactura' => $fila["id_Venta"],
-            'ventaTotal' => $fila["TOTALNETO"],
+            'ventaTotal' => $fila["total_Venta"],
             'valorPorcentaje' => $fila["valor_Porcentaje"],
             'comisionT' => $fila["comision_TotalVenta"],
             'estadoComision' => $fila["estadoComision"],
             'estadoLiquidacion' => $fila["estado_Liquidacion"],
-            'estadoCobro' => $fila["estado_Cobro_venta"],
-            'metodoPago' => $fila["metodo_de_Pago"],
+            // 'estadoCobro' => $fila["estado_Cobro_venta"],
+            // 'metodoPago' => $fila["metodo_de_Pago"],
             'FechaLiquidacion' => $fila["fecha_Liquidacion"],
             'CreadoPor' => $fila["Creado_Por"],
             'FechaComision' => $fila["Fecha_Creacion"],
-            'FechaCobro' => $fila["fecha_Cobro"],
+            // 'FechaCobro' => $fila["fecha_Cobro"],
             'ModificadoPor' => $fila["Modificado_Por"],
             'FechaModificacion' => $fila["Fecha_Modificacion"]
         ];
@@ -430,13 +425,13 @@ class Comision
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $listaComision =
-            $query = "SELECT co.id_Comision, co.id_Venta, v.TOTALNETO, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, co.estado_Liquidacion,
-            co.estado_Cobro_Venta, co.metodo_de_Pago, co.fecha_Liquidacion,
-             co.Fecha_Creacion, co.fecha_Cobro FROM tbl_Comision AS co
-            INNER JOIN VIEW_FACTURASVENTA AS v ON co.id_Venta = v.NUMFACTURA
+            $query = "SELECT co.id_Comision, co.id_Venta, v.total_Venta, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, co.estado_Liquidacion,
+             co.fecha_Liquidacion,
+             co.Fecha_Creacion FROM tbl_Comision AS co
+            INNER JOIN tbl_FacturasVenta AS v ON co.id_Venta = v.num_Factura    
             INNER JOIN  tbl_Porcentaje AS po ON co.id_Porcentaje = po.id_Porcentaje
-            WHERE CONCAT(co.id_Comision, co.id_Venta, v.TOTALNETO, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, co.estado_Liquidacion, co.estado_Cobro_Venta, co.metodo_de_Pago, co.fecha_Liquidacion, co.Fecha_Creacion, co.fecha_Cobro)
-            LIKE '%' + '$buscar' + '%' AND v.TOTALNETO > 0;";
+            WHERE CONCAT(co.id_Comision, co.id_Venta, v.total_Venta, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, co.estado_Liquidacion, co.fecha_Liquidacion, co.Fecha_Creacion)
+            LIKE '%' + '$buscar' + '%';";
         $listaComision = sqlsrv_query($consulta, $query);
         $Comision = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
@@ -444,16 +439,16 @@ class Comision
             $Comision[] = [
                 'idComision' => $fila["id_Comision"],
                 'factura' => $fila["id_Venta"],
-                'totalVenta' => $fila["TOTALNETO"],
+                'totalVenta' => $fila["total_Venta"],
                 'porcentaje' => $fila["valor_Porcentaje"],
                 'comisionTotal' => $fila["comision_TotalVenta"],
                 'estadoComisionar' => $fila["estadoComision"],
                 'estadoLiquidacion' => $fila["estado_Liquidacion"],
-                'estadoCobro' => $fila["estado_Cobro_Venta"],
-                'metodoPago' => $fila["metodo_de_Pago"],
+                // 'estadoCobro' => $fila["estado_Cobro_Venta"],
+                // 'metodoPago' => $fila["metodo_de_Pago"],
                 'fechaComision' => $fila["Fecha_Creacion"],
-                'fechaLiquidacion' => $fila["fecha_Liquidacion"],
-                'fechaCobro' => $fila["fecha_Cobro"]
+                'fechaLiquidacion' => $fila["fecha_Liquidacion"]
+                // 'fechaCobro' => $fila["fecha_Cobro"]
             ];
         }
         sqlsrv_close($consulta); #Cerramos la conexión.
@@ -464,9 +459,9 @@ class Comision
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $query = "SELECT vt.id_Comision_Por_Vendedor, vt.id_Comision, vt.id_usuario_vendedor, u.usuario, vt.total_Comision,
-             vt.estadoComisionVendedor, vt.estado_Liquidacion, vt.estado_Cobro_venta, vt.metodo_de_Pago ,vt.fecha_Liquidacion, vt.Fecha_Creacion, vt.fecha_Cobro FROM tbl_ms_usuario AS u
+             vt.estadoComisionVendedor, vt.estado_Liquidacion, vt.fecha_Liquidacion, vt.Fecha_Creacion FROM tbl_ms_usuario AS u
             INNER JOIN tbl_comision_por_vendedor AS vt ON u.id_Usuario = vt.id_usuario_vendedor
-            WHERE CONCAT(vt.id_Comision_Por_Vendedor, vt.id_Comision, vt.id_usuario_vendedor, u.usuario, vt.total_Comision, vt.estadoComisionVendedor, vt.estado_Liquidacion, vt.estado_Cobro_venta, vt.metodo_de_Pago ,vt.fecha_Liquidacion, vt.Fecha_Creacion, vt.fecha_Cobro)
+            WHERE CONCAT(vt.id_Comision_Por_Vendedor, vt.id_Comision, vt.id_usuario_vendedor, u.usuario, vt.total_Comision, vt.estadoComisionVendedor, vt.estado_Liquidacion,vt.fecha_Liquidacion, vt.Fecha_Creacion)
             LIKE '%' + '$buscar' + '%';";
         $listaComision = sqlsrv_query($consulta, $query);
         $ComisionVendedor = array();
@@ -480,11 +475,11 @@ class Comision
                 'comisionTotal' => $fila["total_Comision"],
                 'estadoComision' => $fila["estadoComisionVendedor"],
                 'estadoLiquidacion' => $fila["estado_Liquidacion"],
-                'estadoCobro' => $fila["estado_Cobro_venta"],
-                'metodoPago' => $fila["metodo_de_Pago"],
+                // 'estadoCobro' => $fila["estado_Cobro_venta"],
+                // 'metodoPago' => $fila["metodo_de_Pago"],
                 'fechaComision' => $fila["Fecha_Creacion"],
-                'fechaLiquidacion' => $fila["fecha_Liquidacion"],
-                'fechaCobro' => $fila["fecha_Cobro"]
+                'fechaLiquidacion' => $fila["fecha_Liquidacion"]
+                // 'fechaCobro' => $fila["fecha_Cobro"]
             ];
         }
         sqlsrv_close($consulta); #Cerramos la conexión.

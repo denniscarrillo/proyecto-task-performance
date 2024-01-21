@@ -75,18 +75,15 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de comision por vendedores</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 40px">N°</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 70px;">ID COMISION</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 80px;">ID VENDEDOR</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">VENDEDOR</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 70px;">ESTADO COMISION</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">COMISION TOTAL</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">ESTADO LIQUIDACION</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 80px;">ESTADO COBRO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 70px;">METODO PAGO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">FECHA COMISION</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">FECHA LIQUIDAR </td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">FECHA COBRO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 50px">N°</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">ID COMISION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">ID VENDEDOR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">VENDEDOR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">ESTADO COMISION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 130px;">COMISION TOTAL</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 130px;">ESTADO LIQUIDACION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">FECHA COMISION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">FECHA LIQUIDAR </td>
 </tr>
 ';
 $ComisionVendedor = ControladorComision::getComisionesVendedorPdf($_GET['buscar']);
@@ -98,8 +95,8 @@ foreach($ComisionVendedor as $ComisionV){
     $Estado = $ComisionV['estadoComision'];
     $comisionTotal = 'Lps. ' . number_format($ComisionV['comisionTotal'], 2, '.', ',');
     $liquidacion = $ComisionV['estadoLiquidacion'];
-    $estadoCobro = $ComisionV['estadoCobro'];
-    $metodoPago = $ComisionV['metodoPago'];
+   /*  $estadoCobro = $ComisionV['estadoCobro'];
+    $metodoPago = $ComisionV['metodoPago']; */
     // Verificar si $fecha está definido y no es null
     if (isset($ComisionV['fechaComision']) && $ComisionV['fechaComision'] !== null) {
         $fecha = $ComisionV['fechaComision'];
@@ -118,14 +115,14 @@ foreach($ComisionVendedor as $ComisionV){
     } else {
         $fechaLiquidacion = ''; // Otra acción si $fechaLiquidacion es nulo
     }
-    if(isset($ComisionV['fechaCobro']) && $ComisionV['fechaCobro'] !== null){
+  /*   if(isset($ComisionV['fechaCobro']) && $ComisionV['fechaCobro'] !== null){
         $fechaC = $ComisionV['fechaCobro'];
         $timestamp = $fechaC->getTimestamp();
         // Verificar si la fecha es no nula antes de formatearla
         $fechaCobro = date('Y-m-d H:i:s', $timestamp);
     } else {
         $fechaCobro = ''; // Otra acción si $fechaCobro es nulo
-    }
+    } */
     $Cont++;
     
 
@@ -138,11 +135,8 @@ foreach($ComisionVendedor as $ComisionV){
 	<td style="text-align: center">'.$Estado.'</td>
     <td style="text-align: center">'.$comisionTotal.'</td>
     <td style="text-align: center">'.$liquidacion.'</td>
-    <td style="text-align: center">'.$estadoCobro.'</td>
-    <td style="text-align: center">'.$metodoPago.'</td>
     <td style="text-align: center">'.$fechaComision.'</td>
     <td style="text-align: center">'.$fechaLiquidacion.'</td>
-    <td style="text-align: center">'.$fechaCobro.'</td>
     </tr>
     ';
     
