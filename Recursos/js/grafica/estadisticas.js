@@ -69,7 +69,9 @@ $(document).ready(function () {
                 obtenerDatosEstadisticaG(fechaDesde, fechaHasta);
                 console.log('primera opcion')
             }else if(rdVendedores.checked){
-                console.log('holaaaa');
+                if ($.fn.DataTable.isDataTable('#table-Estadistica')) {
+                    tablaEstadistica.clear();
+                }
 
             }            
             $mensaje.innerText = '';
