@@ -149,23 +149,21 @@ $(document).on("click", "#btn_eliminar", function () {
         datatype: "json",
         data: { codArticulo: codArticulo },
         success: function (data) {
-          let estadoEliminado = JSON.parse(data).estadoEliminado;
-          if(estadoEliminado){
-            tablaArticulo.row(fila.parents('tr')).remove().draw();
+          if(JSON.parse(data).estadoEliminado){
             Swal.fire(
               'Eliminado!',
               'El artículo ha sido eliminado',
               'success'
             ) 
-            tablaArticulo.ajax.reload(null, false);
           } else {
             Swal.fire(
               'Lo sentimos!',
               'El artículo no puede ser eliminado',
               'error'
             );
-            tablaArticulo.ajax.reload(null, false);
+            return;
           }
+          tablaArticulo.ajax.reload(null, false);
         },
       }); //Fin del AJAX
     }

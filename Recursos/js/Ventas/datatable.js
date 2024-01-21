@@ -130,23 +130,21 @@ $(document).on("click", "#btn_eliminar", function() {
         datatype:"json",    
         data:  { numFactura : factura},    
         success: function(data) {
-          let estadoEliminado = JSON.parse(data).estadoEliminado;
-          if(estadoEliminado){
-            tablaVentas.row(fila.parents('tr')).remove().draw();
+          if(JSON.parse(data).estadoEliminado){
             Swal.fire(
               'Eliminado!',
               'La venta ha sido eliminada',
               'success'
-            ) 
-            tablaVentas.ajax.reload(null, false);
+            )
           } else {
             Swal.fire(
               'Lo sentimos!',
               'La venta no puede ser eliminada',
               'error'
             );
-            tablaVentas.ajax.reload(null, false);
-          }           
+            return;
+          }   
+          tablaVentas.ajax.reload(null, false);        
         }
       }); //Fin del AJAX
     }

@@ -115,11 +115,13 @@ class Articulo
             $conexion = $conn->abrirConexionDB();
             $query = "DELETE FROM tbl_ARTICULOS WHERE CODARTICULO  = '$CodArticulo';";
             $estadoEliminado = sqlsrv_query($conexion, $query);
+            if(!$estadoEliminado) {
+                return false;
+            }
+            sqlsrv_close($conexion); //Cerrar conexion
+            return true;
         }catch (Exception $e) {
             $estadoEliminado = 'Error SQL:' . $e;
         }
-        sqlsrv_close($conexion); #Cerramos la conexión.
-        return $estadoEliminado;
     }
-
 }
