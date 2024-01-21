@@ -9,16 +9,21 @@
             return CarteraClientes::registroNuevoCliente($nuevoCliente);
         }
 
-        public static function editarCliente($nuevoCliente){
-            CarteraClientes::editarCliente($nuevoCliente);
+        public static function editarCliente($Cliente){
+            CarteraClientes::editarCliente($Cliente);
         }
 
         public static function rtnExiste($rtn){
             return CarteraClientes::rtnExistente($rtn);
         }
-
-        public static function eliminarCliente($CarteraCliente){
-            return CarteraClientes::eliminarCliente($CarteraCliente);
+        
+      /**
+      *Elimina un cliente, devuelve `true` si fue eliminado y `false` en caso contrario
+      *@param string $rtnCliente
+      *@return boolean true | false
+      */
+        public static function eliminarCliente($rtnCliente){
+            return CarteraClientes::eliminarCliente($rtnCliente);
         }
 
         public static function obtenerCarteraClientesPDF($buscar){
