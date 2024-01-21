@@ -80,13 +80,13 @@ let setEstado = function ($estado) {
   //Setear tipo de tarea
   for (let i = 0; i < $select.length; i++) {
     let option = $select[i];
-    console.log(option.getAttribute("selected"));
+    // console.log(option.getAttribute("selected"));
     if (!option.getAttribute("selected") == null) {
       option.removeAttribute("selected");
     }
     if ($estado === option.textContent) {
       option.setAttribute("selected", "true");
-      console.log($estado, option.textContent);
+      // console.log($estado, option.textContent);
       break;
     }
   }
@@ -119,7 +119,8 @@ $(document).on("click", "#btn_editar", function () {
 $("#form-editar-carteraCliente").submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
   //Obtener datos del nuevo Cliente
-  let idcarteraCliente = $("#E_Cliente").val(),
+  let rtnCliente = $("#E_Rtn").val(),
+    cliente = $("#E_Nombre").val(),
     telefono = $("#E_Telefono").val(),
     correo = $("#E_Correo").val(),
     direccion = $("#E_Direccion").val(),
@@ -130,14 +131,15 @@ $("#form-editar-carteraCliente").submit(function (e) {
       type: "POST",
       datatype: "JSON",
       data: {
-        id: idcarteraCliente,
+        rtn: rtnCliente,
+        nombre: cliente,
         telefono: telefono,
         correo: correo,
         direccion: direccion,
         estadoContacto: estadoContacto,
       },
       success: function (res) {
-        console.log(res);
+        // console.log(res);
         //Mostrar mensaje de exito
         Swal.fire("Actualizado!", "El cliente ha sido modificado!", "success");
         tablaCarteraClientes.ajax.reload(null, false);

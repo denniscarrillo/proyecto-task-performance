@@ -59,8 +59,8 @@ class CarteraClientes{
         try {
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $update = "UPDATE tbl_carteracliente SET telefono='$Cliente->telefono', correo='$Cliente->correo', direccion='$Cliente->direccion', 
-                        estadoContacto = '$Cliente->estadoContacto', Modificado_Por = '$Cliente->modificadoPor', Fecha_Modificacion = 'GETDATE()'
+            $update = "UPDATE tbl_carteraCliente SET telefono='$Cliente->telefono', correo='$Cliente->correo', direccion='$Cliente->direccion', 
+                        estadoContacto = '$Cliente->estadoContacto', Modificado_Por = '$Cliente->modificadoPor', Fecha_Modificacion = GETDATE()
                         WHERE rtn_Cliente = '$Cliente->rtn'";
             sqlsrv_query($abrirConexion, $update);
             sqlsrv_close($abrirConexion); //Cerrar conexion

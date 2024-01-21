@@ -12,10 +12,10 @@
     if(isset($_SESSION['usuario'])){
         $user = $_SESSION['usuario'];
         $nuevoArticulo = new Articulo();
-        //$nuevoArticulo->codArticulo = $_POST['CodArticulo'];
         $nuevoArticulo->Articulo = $_POST['Articulo'];
         $nuevoArticulo->Detalle = $_POST['Detalle'];
         $nuevoArticulo->Marca = $_POST['Marca'];
+        $nuevoArticulo->Creado_Por = $user;
         ControladorArticulo::registroNuevoArticulo($nuevoArticulo);
    
     }
