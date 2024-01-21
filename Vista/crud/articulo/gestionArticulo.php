@@ -161,6 +161,8 @@ if (isset($_SESSION['usuario'])) {
               <th scope="col"> ARTICULO </th>
               <th scope="col"> DETALLE </th>
               <th scope="col"> MARCA </th>
+              <th scope="col"> CREADO POR </th>
+              <th scope="col"> FECHA CREACION </th>
               <th scope="col"> ACCIONES</th>
             </tr>
           </thead>

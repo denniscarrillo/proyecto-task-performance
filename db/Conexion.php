@@ -1,7 +1,7 @@
 <?php
  class Conexion {
      private $ServerName = "DANIELA\ESTEFANI";
-     private $ConexionInfo = array("Database"=>"RENDIMIENTO_TAREAS", "CharacterSet"=>"UTF-8");
+     private $ConexionInfo = array("Database"=>"COCINAS_Y_EQUIPOS", "CharacterSet"=>"UTF-8");
      
      #Abrir conexión al servidor de MySQL
     public function abrirConexionDB(){

@@ -90,7 +90,6 @@ $rtn.addEventListener('focusout', function () {
       },
       success: function (cliente){
         let $objCliente = JSON.parse(cliente);
-        console.log($objCliente);
         if (!$objCliente){
           $mensaje.innerText = 'El cliente no existe';
           $mensaje.classList.add('mensaje-existe-cliente');
@@ -132,7 +131,7 @@ $(document).on("click", "#btn_eliminar", function() {
         data:  { numFactura : factura},    
         success: function(data) {
           let estadoEliminado = JSON.parse(data).estadoEliminado;
-          if(estadoEliminado == 'eliminado'){
+          if(estadoEliminado){
             tablaVentas.row(fila.parents('tr')).remove().draw();
             Swal.fire(
               'Eliminado!',
