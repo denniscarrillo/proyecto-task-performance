@@ -20,7 +20,8 @@ require_once('../../Controlador/ControladorParametro.php');
   <div class="ancho">
     <!-- Esto para detectar cuando viene de autoregistro y mostrarle un Toast con javascript -->
     <span class="registro-exitoso"
-      id="<?php echo (isset($registro) && intval($registro) > 0) ? $registro : 0; ?>"></span>
+      id="<?php echo (isset($registro) && intval($registro) > 0) ? $registro :  0; ?>"></span>
+
     <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" id="formLogin">
       <div class="logo-empresa" style="text-align: center;">
         <img src="<?php echo '../../Recursos/' . ControladorParametro::obtenerUrlLogo() ?>" height=" 220px">
@@ -57,14 +58,11 @@ require_once('../../Controlador/ControladorParametro.php');
       ?>
     </form>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
-  < /script>  <
-  script src = "https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js" >
-  </script>
+  <script src="../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js"></script>
   <script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
+  <script src="../../Recursos/js/librerias/SweetAlert2.all.min.js"></script>
   <script src="../../Recursos/js/validacionesLogin.js" type="module"></script>
 </body>
 

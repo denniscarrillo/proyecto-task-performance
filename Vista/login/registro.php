@@ -76,11 +76,6 @@ require_once('../../Vista/login/validarRegistro.php');
         </div>
       </div>
       <button type="submit" class="btn btn-primary" name="submit" id="click">Crear cuenta</button>
-      <?php
-            //   if(!$mensaje==''){
-            //     echo '<h2 class="mensaje-error">'. $mensaje. '</h2>';
-            //   }
-            ?>
       <label>¿Ya tienes cuenta?</label><a href="login.php" class="label-text">Inicia sesión</a>
     </form>
   </div>

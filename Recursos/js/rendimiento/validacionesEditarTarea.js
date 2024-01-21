@@ -117,17 +117,15 @@ inputsEditarTarea.razonSocial.addEventListener("change", () => {
 // ============================================================================================================
 //Funcion principal que aplica validaciones a los inptus de forma dinamica segun tipo cliente y tipo tarea
 let validarInputs = (funciones, tipoCliente) => {
+  console.log($estadoTarea.value);
   switch ($estadoTarea.value) {
     case "2": {
-      //Leads
       validarInputRTN(tipoCliente);
       validarInputNombreCliente(tipoCliente);
       validarInputTitulo();
-      if (tipoCliente != "Existente") {
-        validarInputTelefono();
-        validarInputCorreo();
-        validarInputDireccion();
-      }
+      validarInputTelefono();
+      validarInputCorreo();
+      validarInputDireccion();
       funciones.validarCampoVacio(inputsEditarTarea.rubroComercial);
       funciones.validarCampoVacio(inputsEditarTarea.razonSocial);
       funciones.validarCampoVacio(inputsEditarTarea.clasificacionLead);
@@ -139,11 +137,9 @@ let validarInputs = (funciones, tipoCliente) => {
       validarInputRTN(tipoCliente);
       validarInputNombreCliente(tipoCliente);
       validarInputTitulo();
-      if (tipoCliente != "Existente") {
-        validarInputTelefono();
-        validarInputCorreo();
-        validarInputDireccion();
-      }
+      validarInputTelefono();
+      validarInputCorreo();
+      validarInputDireccion();
       funciones.validarCampoVacio(inputsEditarTarea.rubroComercial);
       funciones.validarCampoVacio(inputsEditarTarea.razonSocial);
       break;
@@ -153,11 +149,9 @@ let validarInputs = (funciones, tipoCliente) => {
       validarInputRTN(tipoCliente);
       validarInputNombreCliente(tipoCliente);
       validarInputTitulo();
-      if (tipoCliente != "Existente") {
-        validarInputTelefono();
-        validarInputCorreo();
-        validarInputDireccion();
-      }
+      validarInputTelefono();
+      validarInputCorreo();
+      validarInputDireccion();
       funciones.validarCampoVacio(inputsEditarTarea.rubroComercial);
       funciones.validarCampoVacio(inputsEditarTarea.razonSocial);
       break;

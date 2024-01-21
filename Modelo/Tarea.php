@@ -292,12 +292,12 @@ class Tarea
                 //Actualizamos los datos de la tarea de tipo Lead
                 if(isset($datosTarea['rtn']) && !empty($datosTarea['rtn'])){
                     $update = "UPDATE tbl_tarea SET RTN_Cliente = '$rtn', cod_Cliente = '$codCliente', titulo = '$titulo', estado_Cliente_Tarea = '$estadoCliente', 
-                    id_ClasificacionLead = '$idClasificacionLead', id_OrigenLead = '$idOrigen', id_razon_Social = '$idRubro', id_rubro_Comercial ='$idRazon',
+                    id_ClasificacionLead = '$idClasificacionLead', id_OrigenLead = '$idOrigen', id_razon_Social = '$idRazon', id_rubro_Comercial ='$idRubro',
                     Modificado_Por = '$ModificadoPor', Fecha_Modificacion = GETDATE() WHERE id_Tarea = '$idTarea';";
                 } 
                 else {
                     $update = "UPDATE tbl_tarea SET estado_Cliente_Tarea = '$estadoCliente', 
-                    id_ClasificacionLead = '$idClasificacionLead', id_OrigenLead = '$idOrigen', titulo = '$titulo', id_razon_Social = '$idRubro', id_rubro_Comercial ='$idRazon',
+                    id_ClasificacionLead = '$idClasificacionLead', id_OrigenLead = '$idOrigen', titulo = '$titulo', id_razon_Social = '$idRazon', id_rubro_Comercial ='$idRubro',
                     Modificado_Por = '$ModificadoPor', Fecha_Modificacion = GETDATE() WHERE id_Tarea = '$idTarea';";
                 }
             } else { //Otros tipos de tarea
@@ -307,7 +307,7 @@ class Tarea
                     $update = "UPDATE tbl_tarea SET RTN_Cliente = '$rtn', cod_Cliente = '$codCliente', titulo = '$titulo', estado_Cliente_Tarea = '$estadoCliente', id_razon_Social = '$idRubro', 
                     id_rubro_Comercial ='$idRazon', Modificado_Por = '$ModificadoPor', Fecha_Modificacion = GETDATE() WHERE id_Tarea = '$idTarea';"; 
                 } else {
-                    $update = "UPDATE tbl_tarea SET estado_Cliente_Tarea = '$estadoCliente', titulo = '$titulo', id_razon_Social = '$idRubro', id_rubro_Comercial ='$idRazon'
+                    $update = "UPDATE tbl_tarea SET estado_Cliente_Tarea = '$estadoCliente', titulo = '$titulo', id_razon_Social = '$idRazon', id_rubro_Comercial ='$idRubro'
                     , Modificado_Por = '$ModificadoPor', Fecha_Modificacion = GETDATE() WHERE id_Tarea = '$idTarea';";
                 }
             }
@@ -391,7 +391,7 @@ class Tarea
         try {
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $estadoContacto = 'En Proceso';
+            $estadoContacto = 'EN PROCESO';
             $existeCliente = "SELECT rtn_Cliente FROM tbl_CarteraCliente WHERE rtn_Cliente = '$rtn'";
             $query = '';
             if(sqlsrv_has_rows(sqlsrv_query($abrirConexion, $existeCliente)) > 0){
@@ -402,10 +402,10 @@ class Tarea
                 VALUES('$nombre', '$rtn', '$telefono', '$correo', '$direccion', '$estadoContacto', '$Creado_Por', GETDATE());";
             }
             sqlsrv_query($abrirConexion, $query); 
+            sqlsrv_close($abrirConexion); //Cerrar conexion
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
-        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
     public static function obtenerCantTarea($FechaDesde, $FechaHasta) {
         $conn = new Conexion();

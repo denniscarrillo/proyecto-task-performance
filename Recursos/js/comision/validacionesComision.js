@@ -13,8 +13,8 @@ $(document).ready(function () {
   document.getElementById("fecha-comision").value = now;
   document.getElementById("fecha-comision").setAttribute("disabled", "true");
   document.getElementById("id-venta").setAttribute("disabled", "true");
-  document.getElementById("fecha_V").value = now;
-  document.getElementById("fecha_V").setAttribute("disabled", "true");
+  // document.getElementById("fecha_V").value = now;
+  // document.getElementById("fecha_V").setAttribute("disabled", "true");
   document.getElementById("monto-total").setAttribute("disabled", "true");
   document.getElementById("comision-total").setAttribute("disabled", "true");
 });
@@ -65,13 +65,12 @@ let iniciarDataTable = function (fechaDesde, fechaHasta) {
     },
     columns: [
       { data: "numFactura" },
-      { data: "fechaEmision.date" },
-      { data: "codCliente" },
       { data: "nombreCliente" },
       { data: "rtnCliente" },
-      { data: "totalBruto" },
-      { data: "totalImpuesto" },
       { data: "totalVenta" },
+      { data: "creadoPor" },
+      { data: "fechaCreacion"
+      },
       {
         defaultContent:
           '<button class="btns btn" id="btn_seleccionar"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>',
@@ -84,8 +83,8 @@ let iniciarDataTable = function (fechaDesde, fechaHasta) {
 $(document).on("click", "#btn_seleccionar", function () {
   let fila = $(this).closest("tr");
   let idVenta = fila.find("td:eq(0)").text(); //captura el ID DE LA FACTURA
-  let rtnClienteVenta = fila.find("td:eq(4)").text();
-  let montoVenta = fila.find("td:eq(7)").text(); //captura el MONTO TOTAL DE LA FACTURA
+  let rtnClienteVenta = fila.find("td:eq(2)").text();
+  let montoVenta = fila.find("td:eq(3)").text(); //captura el MONTO TOTAL DE LA FACTURA
    
   document.getElementById("id-venta").value = idVenta;
   document.getElementById("monto-total").value = montoVenta;

@@ -186,7 +186,7 @@ if (!isset($_SESSION['usuario'])) {
                     placeholder="Número de teléfono">
                   <p class=" mensaje"></p>
                 </div>
-                <div class="mb-3 data-container" id="container-correo" hidden>
+                <div class="mb-3 data-container" id="container-correo">
                   <label for="correo" class="form-label" id="label-correo">Correo Electrónico: </label>
                   <input type="text" name="correo" id="correo-cliente" class="form-control"
                     placeholder="Correo electrónico">

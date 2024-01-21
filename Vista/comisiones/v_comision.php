@@ -84,13 +84,13 @@ require_once('../../Controlador/ControladorParametro.php');
         </div>
         <div class="table-conteiner">
           <div class="filtros">
-            <div class="filtro-fecha">
+            <!-- <div class="filtro-fecha">
               <label for="fechaDesde">Fecha desde:</label>
               <input type="date" id="fechaDesdef" name="fechaDesdef" class="form-control">
               <label for="fechaHasta">Fecha hasta:</label>
               <input type="date" id="fechaHastaf" name="fechaHastaf" class="form-control">
               <button type="button" class="btn btn-primary" id="btn_filtroALiquidar">Comisiones a liquidar</button>
-            </div>
+            </div> -->
             <div>
               <a href="v_nuevaComision.php" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro"><i
                   class="fa-solid fa-circle-plus"></i> Generar comisión</a>
@@ -111,11 +111,11 @@ require_once('../../Controlador/ControladorParametro.php');
                   <th scope="col"> COMISION TOTAL </th>
                   <th scope="col"> ESTADO COMISION </th>
                   <th scope="col"> ESTADO LIQUIDACION </th>
-                  <th scope="col"> ESTADO COBRO </th>
-                  <th scope="col"> METODO PAGO </th>
+                  <!-- <th scope="col"> ESTADO COBRO </th>
+                  <th scope="col"> METODO PAGO </th> -->
                   <th scope="col"> FECHA CREACION </th>
                   <th scope="col"> FECHA LIQUIDACION</th>
-                  <th scope="col"> FECHA COBRO VENTA </th>
+                  <!-- <th scope="col"> FECHA COBRO VENTA </th> -->
                   <th scope="col"> ACCIONES </th>
                 </tr>
               </thead>
