@@ -21,10 +21,14 @@ require_once('../../../Controlador/ControladorParametro.php');
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+  <link rel='stylesheet' href="../../../Recursos/components/css/loader.css">
   <title> Permisos </title>
 </head>
 
 <body style="overflow: hidden;">
+  <div class="loader-section">
+    <span class="loader"></span>
+  </div>
   <div class="conteiner">
     <!-- Sidebar 1RA PARTE -->
     <div class="conteiner-global">
@@ -113,6 +117,7 @@ require_once('../../../Controlador/ControladorParametro.php');
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/permiso/dataTablePermisos.js" type="module"></script>
+  <script src="../../../Recursos/components/js/loader.js" type="module"></script>
   <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
 </body>

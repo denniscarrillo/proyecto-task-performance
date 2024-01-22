@@ -41,10 +41,14 @@ if (!isset($_SESSION['usuario'])) {
   <link rel='stylesheet' href="../../Recursos/components/css/sidePanel.css">
   <link rel='stylesheet' href="../../Recursos/css/v_EditarTarea.css">
   <link rel='stylesheet' href="../../Recursos/css/estilosMensajesError.css">
+  <link rel='stylesheet' href="../../Recursos/components/css/loader.css">
   <title>Editar tarea</title>
 </head>
 
 <body style="overflow: hidden;">
+  <div class="loader-section">
+    <span class="loader"></span>
+  </div>
   <!-- Sidebar -->
   <div class="conteiner-global">
     <div class="sidebar-conteiner">
@@ -286,6 +290,7 @@ if (!isset($_SESSION['usuario'])) {
                     <!-- Articulos de interes -->
                   </tbody>
                 </table>
+                <label for="" id="sin-productos-interes">Aún no se agregan productos de interés</label>
               </div>
             </div>
             <!-- Botones -->
@@ -313,6 +318,7 @@ if (!isset($_SESSION['usuario'])) {
   <script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
   <script src="../../Recursos/js/librerias/dataTables.bootstrap5.min.js"></script>
   <script src="../../Recursos/js/librerias/SweetAlert2.all.min.js"></script>
+  <script src="../../Recursos/components/js/loader.js" type="module"></script>
   <script src="../../Recursos/js/rendimiento/validacionesEditarTarea.js" type="module"></script>
   <script src="../../Recursos/js/rendimiento/v_editarTarea.js" type="module"></script>
 </body>

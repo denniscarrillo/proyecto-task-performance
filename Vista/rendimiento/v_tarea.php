@@ -22,11 +22,15 @@ require_once('../../Controlador/ControladorParametro.php');
   <!-- Estilos layout -->
   <link rel='stylesheet' href='../../Recursos/css/layout/navbar.css'>
   <link rel="stylesheet" href="../../Recursos/css/layout/sidebar.css">
+  <link rel='stylesheet' href="../../Recursos/components/css/loader.css">
   <!-- ================================ -->
   <title>Tareas</title>
 </head>
 
 <body>
+  <div class="loader-section">
+    <span class="loader"></span>
+  </div>
   <div class="conteiner-global">
     <div class="sidebar-conteiner sidebar locked">
       <?php
@@ -148,6 +152,7 @@ require_once('../../Controlador/ControladorParametro.php');
   <script src="../../Recursos/bootstrap5/bootstrap.min.js "></script>
   <!-- Scripts personalizados -->
   <script src="../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
+  <script src="../../Recursos/components/js/loader.js" type="module"></script>
   <script src="../../Recursos/js/index.js"></script>
   <script src="../../Recursos/js/rendimiento/tarea.js" type="module"></script>
 </body>

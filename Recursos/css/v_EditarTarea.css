@@ -254,3 +254,19 @@
     background-color: #9b9fa436;
     border-radius: 0.4rem;
 }
+#table-container{
+    position: relative;
+  }
+#sin-productos-interes {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    top: 50%;
+    color: #919696;
+    font-size: 1.5rem;
+}
+.text-label-sweetAlert {
+    font-weight: 500;
+    color: #534f4a;
+}
