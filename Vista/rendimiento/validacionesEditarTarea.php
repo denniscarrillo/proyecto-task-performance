@@ -51,18 +51,6 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
                 ];
             }
             if(count($tarea) > 0){
-                ControladorTarea::actualizarTarea($id_Tarea, $tipo_Tarea, $tarea);
-                editarTareaBitacora($id_Tarea, $estadoTarea, $_SESSION['usuario']);
-                //Validar que no exista esa misma evidencia en la tabla evidencia
-                if(isset($_POST['nFactura']) && intval($_POST['idEstado'] ) == 4 && $estadoE['estado'] == false){
-                    // $idTarea, $evidencia, $accion, $creadoPor
-                    ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia, intval($_POST['accion']), $Creado_Por);
-                    if(intval($_POST['accion']) == 0){
-                        guardarFacturaTareaBitacora($id_Tarea, $evidencia, $estadoTarea, $_SESSION['usuario']);
-                    }else{
-                        editoFacturaTareaBitacora($id_Tarea, $evidencia, $estadoTarea, $_SESSION['usuario']);
-                    }
-                }
                 if(isset($_POST['nombre']) && isset($_POST['rtnCliente'])){
                     $nombre = $_POST['nombre'];
                     $rtn = $_POST['rtnCliente'];
@@ -75,6 +63,18 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
                     $updateTarea->direccion = $_POST['direccion'];
                     $updateTarea->Modificado_Por = $Modificador_Por;
                     ControladorTarea::editarNuevoClienteTarea($updateTarea);
+                }
+                ControladorTarea::actualizarTarea($id_Tarea, $tipo_Tarea, $tarea);
+                editarTareaBitacora($id_Tarea, $estadoTarea, $_SESSION['usuario']);
+                //Validar que no exista esa misma evidencia en la tabla evidencia
+                if(isset($_POST['nFactura']) && intval($_POST['idEstado'] ) == 4 && $estadoE['estado'] == false){
+                    // $idTarea, $evidencia, $accion, $creadoPor
+                    ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia, intval($_POST['accion']), $Creado_Por);
+                    if(intval($_POST['accion']) == 0){
+                        guardarFacturaTareaBitacora($id_Tarea, $evidencia, $estadoTarea, $_SESSION['usuario']);
+                    }else{
+                        editoFacturaTareaBitacora($id_Tarea, $evidencia, $estadoTarea, $_SESSION['usuario']);
+                    }
                 }
             }
         } else {

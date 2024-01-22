@@ -457,10 +457,22 @@ $rtn_Cliente.addEventListener("focusout", function () {
 });
 
 let setearDatosClienteCartera = (cliente) => {
-  document.getElementById("nombre-cliente").value = cliente.nombre;
-  document.getElementById("telefono-cliente").value = cliente.telefono;
-  document.getElementById("correo-cliente").value = cliente.correo;
-  document.getElementById("direccion-cliente").value = cliente.direccion;
+  let nombre = document.getElementById("nombre-cliente"),
+    // rtn = document.getElementById("rnt-cliente"),
+    telefono = document.getElementById("telefono-cliente"),
+    correo = document.getElementById("correo-cliente"),
+    direccion = document.getElementById("direccion-cliente");
+  //Setear los datos
+  nombre.value = cliente.nombre;
+  telefono.value = cliente.telefono;
+  correo.value = cliente.correo;
+  direccion.value = cliente.direccion;
+  //Desahabilitar los inputs
+  nombre.disabled = true;
+  // rtn.disabled = true;
+  telefono.disabled = true;
+  correo.disabled = true;
+  direccion.disabled = true;
 };
 
 let limpiarForm = () => {
@@ -642,7 +654,9 @@ let obtenerDatosTarea = ($idTarea, $idEstadoTarea) => {
       document.getElementsByClassName("estadoEdicion").textContent == "false"
         ? document.getElementById("num-factura").removeAttribute("disabled")
         : "";
-      // (!(Object.keys(datos).length > 0)) ? document.getElementById('num-factura').removeAttribute('disabled') : '';
+      !(Object.keys(datos).length > 0)
+        ? document.getElementById("num-factura").removeAttribute("disabled")
+        : "";
     },
   });
 };
