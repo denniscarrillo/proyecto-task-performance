@@ -46,7 +46,6 @@ let obtenerPermisos = function ($idObjeto, callback) {
 }
 // Cuando presionamos el boton aparece el modal con los siguientes campos
 $('#btn_nuevoRegistro').click(async function () {
-  limpiarForm();
   // //Petición para obtener roles 
   obtenerRoles('#rol');
   //Petición para obtener estado de usuario
@@ -199,7 +198,6 @@ $('#form-Edit-Usuario').submit(function (e) {
    correo = $('#E_correo').val(),
    rol = document.getElementById('E_rol').value,
    estado = document.getElementById('E_estado').value;
-   console.log(valido)
    if(valido){
     $.ajax({
       url: "../../../Vista/crud/usuario/editarUsuario.php",

@@ -66,6 +66,7 @@ $('#form-Rol').submit(function (e) {
         }
       });
      $('#modalNuevoRol').modal('hide');
+     limpiarForm();
     } 
 });
 

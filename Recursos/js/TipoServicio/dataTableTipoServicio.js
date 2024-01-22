@@ -63,6 +63,7 @@ let obtenerPermisos = function ($idObjeto, callback) {
           }
         });
        $('#modalNuevoTipoServicio').modal('hide');
+       limpiarForm();
       } 
   });
 

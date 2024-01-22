@@ -72,6 +72,7 @@ $("#form_Articulo").submit(function (e) {
       },
     });
     $("#modalNuevoArticulo").modal("hide");
+    limpiarForm();
   }
 });
 
@@ -169,3 +170,45 @@ $(document).on("click", "#btn_eliminar", function () {
     }
   });
 });
+
+document.getElementById('btn-cerrar').addEventListener('click', ()=>{
+  limpiarForm();
+})
+document.getElementById('btn-x').addEventListener('click', ()=>{
+  limpiarForm();
+})
+let limpiarForm = () => {
+  let $inputs = document.querySelectorAll('.mensaje_error');
+  let $mensajes = document.querySelectorAll('.mensaje');
+  $inputs.forEach($input => {
+    $input.classList.remove('mensaje_error');
+  });
+  $mensajes.forEach($mensaje =>{
+    $mensaje.innerText = '';
+  });
+  let articulo = document.getElementById('Articulo'),
+    detalle = document.getElementById('Detalle'),
+    marca = document.getElementById('Marca');
+  //Vaciar campos cliente
+    articulo.value = '';
+    detalle.value = '';
+    marca.value = '';
+}
+
+//Limpiar modal de editar
+// document.getElementById('button-cerrar').addEventListener('click', ()=>{
+//   limpiarFormEdit();
+// })
+// document.getElementById('button-x').addEventListener('click', ()=>{
+//   limpiarFormEdit();
+// })
+// let limpiarFormEdit = () => {
+//   let $inputs = document.querySelectorAll('.mensaje_error');
+//   let $mensajes = document.querySelectorAll('.mensaje');
+//   $inputs.forEach($input => {
+//     $input.classList.remove('mensaje_error');
+//   });
+//   $mensajes.forEach($mensaje =>{
+//     $mensaje.innerText = '';
+//   });
+// }
