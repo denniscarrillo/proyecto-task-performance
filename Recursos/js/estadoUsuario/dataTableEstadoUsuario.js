@@ -48,7 +48,6 @@ let obtenerPermisos = function ($idObjeto, callback) {
 $('#form-estado').submit(function (e) {
     e.preventDefault();
     let estado = $('#estado').val();
-    console.log(estado);
     if(validado){
       $.ajax({
         url: "../../../Vista/crud/estadoUsuario/nuevoEstadoUsuario.php",
@@ -68,5 +67,27 @@ $('#form-estado').submit(function (e) {
          }
        });
         $('#modalNuevoEstadoUsuario').modal('hide');
+        limpiarForm();
       }
   });
+
+  //Limpiar modal de crear
+document.getElementById('btn-cerrar').addEventListener('click', ()=>{
+  limpiarForm();
+})
+document.getElementById('btn-x').addEventListener('click', ()=>{
+  limpiarForm();
+})
+let limpiarForm = () => {
+  // let $inputs = document.querySelectorAll('.mensaje_error');
+  // let $mensajes = document.querySelectorAll('.mensaje');
+  // $inputs.forEach($input => {
+  //   $input.classList.remove('mensaje_error');
+  // });
+  // $mensajes.forEach($mensaje =>{
+  //   $mensaje.innerText = '';
+  // });
+  let estado = document.getElementById('estado');
+  //Vaciar campos cliente
+    estado.value = '';
+}

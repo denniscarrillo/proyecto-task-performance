@@ -65,6 +65,7 @@ $('#form-razonSocial').submit(function (e) {
          }
        });
         $('#modalNuevaRazonSocial').modal('hide');
+        limpiarForm();
       }
   });
   
@@ -180,9 +181,11 @@ $('#form-razonSocial').submit(function (e) {
     $mensajes.forEach($mensaje =>{
       $mensaje.innerText = '';
     });
-    let razonSocial = document.getElementById('razonSocial');
+    let razonSocial = document.getElementById('razonSocial'),
+    descripcion = document.getElementById('descripcion');
     //Vaciar campos cliente
       razonSocial.value = '';
+      descripcion.value = '';
   }
   
   //Limpiar modal de editar

@@ -72,6 +72,7 @@ $("#form-carteraCliente").submit(function (e) {
       },
     });
     $("#modalNuevoCliente").modal("hide");
+    limpiarForm();
   }
 });
 //PENDIENTE TERMINAR
