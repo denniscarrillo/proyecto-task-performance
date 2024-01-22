@@ -32,7 +32,7 @@
             return Metricas::obtenerEstadisticasGeneral($FechaInicial, $FechaFinal);
         }
 
-        public static function obtenerEstadisticasPorVed($Usuario, $FechaInicial, $FechaFinal){
-            return Metricas::obtenerEstadisticasPorVed($Usuario, $FechaInicial, $FechaFinal);
+        public static function obtenerEstadisticasPorVed($idUsuario, $FechaInicial, $FechaFinal){
+            return Metricas::obtenerEstadisticasPorVed($idUsuario, $FechaInicial, $FechaFinal);
         }
     }

@@ -65,10 +65,8 @@ class Tarea
             $idTarea = null;
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $estadoFinalizacion = 'Pendiente';
-            $insert = "INSERT INTO tbl_tarea (id_EstadoAvance, titulo, fecha_Inicio, estado_Finalizacion, Creado_Por, Fecha_Creacion) 
-                            VALUES ('$tarea->idEstadoAvance','$tarea->titulo', 
-                                    '$tarea->fechaInicio', '$estadoFinalizacion', '$tarea->Creado_Por', '$tarea->fechaInicio')"; 
+            $insert = "INSERT INTO tbl_Tarea (id_EstadoAvance, titulo, fecha_Inicio, estado_Finalizacion, Creado_Por, Fecha_Creacion) 
+                            VALUES ('$tarea->idEstadoAvance','$tarea->titulo', GETDATE(), 'PENDIENTE', '$tarea->Creado_Por', GETDATE())"; 
             sqlsrv_query($abrirConexion, $insert);
             $query = "SELECT SCOPE_IDENTITY() AS id_Tarea";
             $resultado = sqlsrv_query($abrirConexion, $query);
@@ -77,11 +75,11 @@ class Tarea
             $insertUsuarioTarea = "INSERT INTO tbl_vendedores_tarea (id_Tarea, id_usuario_vendedor, vend_Identificador) 
                                     VALUES ('$idTarea', '$tarea->idUsuario', 'Creador');";
             sqlsrv_query($abrirConexion, $insertUsuarioTarea);
+            sqlsrv_close($abrirConexion); //Cerrar conexion
+            return $idTarea;
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
-        sqlsrv_close($abrirConexion); //Cerrar conexion
-        return $idTarea;
     }
     public static function obtenerEstadoClienteTarea($rtnCliente)
     {
