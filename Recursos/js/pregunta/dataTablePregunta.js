@@ -118,12 +118,10 @@ $("#form-Pregunta-Editar").submit(function (e) {
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
     idPregunta = $(this).closest("tr").find("td:eq(0)").text(),
-    pregunta = fila.find("td:eq(1)").text(),
-    estado = "Inactiva";
-
+    pregunta = fila.find("td:eq(1)").text();
   Swal.fire({
-    title: "Estas seguro de eliminar la pregunta " + pregunta + "?",
-    text: "No podras revertir esto!",
+    title: "Estás seguro de eliminar la pregunta "+pregunta,
+    text: "No podrás revertir esto!",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
@@ -138,14 +136,22 @@ $(document).on("click", "#btn_eliminar", function () {
         data: {
           idPregunta: idPregunta,
           pregunta: pregunta,
-          estado: estado,
         },
-        success: function () {
-          Swal.fire(
-            "Lo sentimos!",
-            "La pregunta no puede ser eliminada, se ha Inactivado.",
-            "error"
-          );
+        success: function (data) {
+          if (JSON.parse(data).estadoEliminado) {
+            Swal.fire(
+              "Eliminado!", 
+              "La pregunta ha sido eliminado.", 
+              "success"
+            );
+          } else {
+            Swal.fire(
+              "Lo sentimos!",
+              "La pregunta no puede ser eliminada.",
+              "error"
+            );
+            return;
+          }
           tablaPregunta.ajax.reload(null, false);
         },
       });
