@@ -10,6 +10,7 @@ const validaciones = {
   letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
   direccion: /^[a-zA-Z0-9 #.,-]+$/,
 };
+
 const $estadoTarea = document.getElementById("estados-tarea");
 const $radioButton = document.getElementsByName("radioOption");
 let $tipoCliente = "";
@@ -26,6 +27,7 @@ let inputsEditarTarea = {
   origenLead: document.getElementById("origen-lead"),
   nFactura: document.getElementById("num-factura"),
 };
+
 $(document).ready(function () {
   if (
     document.getElementById("tipoCliente").textContent != "" &&
@@ -46,15 +48,17 @@ $(document).ready(function () {
     ) {
       estadoValidado = true;
     } else {
-      console.log(document.querySelectorAll(".mensaje_error").length);
+      // console.log(document.querySelectorAll(".mensaje_error").length);
       estadoValidado = false;
     }
   });
-  //Volver a validar cuando se han introducido datos de un cliente existente
+
+  // Volver a validar cuando se han introducido datos de un cliente existente
   $(document).on("click", "#btn_select-cliente", function () {
     validarInputs(funciones, $tipoCliente);
   });
 });
+
 let optionExistente = document.getElementById("cliente-existente");
 optionExistente.addEventListener("change", function () {
   $tipoCliente = $tipoCliente = $radioButton[1].checked
@@ -77,6 +81,7 @@ optionNuevo.addEventListener("change", function () {
     input.parentElement.querySelector("p").innerHTML = "";
   });
 });
+
 //VALIDACIONES EN LOS DISTINTOS EVENTOS MIENTRAS EDITA =====================================================
 inputsEditarTarea.titulo.addEventListener("keyup", () => {
   validarInputTitulo();
@@ -114,6 +119,7 @@ inputsEditarTarea.rubroComercial.addEventListener("change", () => {
 inputsEditarTarea.razonSocial.addEventListener("change", () => {
   funciones.validarCampoVacio(inputsEditarTarea.razonSocial);
 });
+
 // ============================================================================================================
 //Funcion principal que aplica validaciones a los inptus de forma dinamica segun tipo cliente y tipo tarea
 let validarInputs = (funciones, tipoCliente) => {
@@ -189,6 +195,7 @@ let validarInputRTN = ($tipoCliente) => {
     ? funciones.caracteresMinimo(inputsEditarTarea.rtn, 13)
     : "";
 };
+
 //Validaciones campo nombre cliente
 let validarInputNombreCliente = ($tipoCliente) => {
   let usuarioMayus = inputsEditarTarea.nombre.value.toUpperCase();
@@ -287,6 +294,7 @@ let validarInputTitulo = () => {
       )
     : "";
 };
+
 let validarInputDireccion = () => {
   let estadoValidaciones = {
     estadoCV: false,

@@ -42,6 +42,10 @@ $(document).ready(async function () {
   setEstadoTarea();
   obtenerComentarios($idTarea);
   obtenerDatosTarea($idTarea, $idEstadoTarea);
+  document.getElementById("list-articulos").childElementCount > 0
+    ? (document.getElementById("sin-productos-interes").hidden = true)
+    : "";
+
   estadoRTN = await $.ajax({
     url: "../../../Vista/rendimiento/cotizacion/obtenerRTN_Tarea.php",
     type: "POST",
@@ -182,9 +186,9 @@ document
       actualizarDatosTarea($datosTarea);
       enviarProductosInteres($idTask); //Enviamos los productos de interes a almacenar
       obtenerDatosTarea($idTarea, $idEstadoTarea);
-      // setTimeout(() => {
-      //   location.href = "../../../Vista/rendimiento/v_tarea.php";
-      // }, 2000);
+      setTimeout(() => {
+        location.href = "../../../Vista/rendimiento/v_tarea.php";
+      }, 2000);
     }
   });
 // CARGAR LOS ARTICULOS A AGREGAR A LA TAREA
@@ -292,11 +296,10 @@ let carritoArticulos = ($productos) => {
   idsProducto.forEach(function (idProducto) {
     idProducto.setAttribute("disabled", "true");
   });
-
   if ($productos.length > 0) {
-    document.getElementById("sin-productos-interes").hidden = false;
-  } else {
     document.getElementById("sin-productos-interes").hidden = true;
+  } else {
+    document.getElementById("sin-productos-interes").hidden = false;
   }
 };
 let setEstadoTarea = function () {

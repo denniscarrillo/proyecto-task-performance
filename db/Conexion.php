@@ -1,6 +1,6 @@
 <?php
  class Conexion {
-     private $ServerName = "DANIELA\ESTEFANI";
+     private $ServerName = "PC-CARRILLO\SQLEXPRESS";
      private $ConexionInfo = array("Database"=>"RENDIMIENTO_TAREAS", "CharacterSet"=>"UTF-8");
      
      #Abrir conexión al servidor de MySQL
@@ -15,4 +15,5 @@
         catch(Exception $e){
             echo "Ocurrió un error al conectar a la base de datos: ". $e->getMessage();
         }
-    }}
+    }
+}

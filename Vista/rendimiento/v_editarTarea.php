@@ -131,7 +131,7 @@ if (!isset($_SESSION['usuario'])) {
               </div>
               <div class="mb-3 data-container title_container">
                 <div class="data-container title_container">
-                  <label for="input-titulo-tarea" class="form-label label-title-task">Título de la tarea</label>
+                  <label for="input-titulo-tarea" class="form-label label-title-task">Titulo de la tarea</label>
                   <input type="text" name="input-titulo-tarea" id="input-titulo-tarea" class="form-control"
                     value="<?php echo ControladorTarea::obtenerEstadoTarea(intval($_GET['idTarea']))['titulo'] ?>">
                   <p class="mensaje"></p>
@@ -270,7 +270,7 @@ if (!isset($_SESSION['usuario'])) {
             </div>
             <div class="table-conteiner">
               <div class="mb-3 conteiner-id-articulo">
-                <p class="titulo-articulo">Artículos de interés</p>
+                <p class="titulo-articulo">Productos de interés</p>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalArticulos"
                   id="btn-articulos">
                   Seleccionar... <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
