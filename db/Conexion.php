@@ -15,5 +15,5 @@
         catch(Exception $e){
             echo "Ocurrió un error al conectar a la base de datos: ". $e->getMessage();
         }
-    }}
-    ?>
+    }
+}

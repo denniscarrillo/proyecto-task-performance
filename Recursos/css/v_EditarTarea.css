@@ -53,10 +53,13 @@
 .label-title-task {
     border-top-right-radius: 0.4rem;
     border-top-left-radius: 0.4rem;
-    padding: 0.2rem;
-    color: whitesmoke;
+    padding: 0.3rem;
+    text-transform: uppercase;
+    color: #c8bfbd;
     background: #534f4a;
-    margin-bottom: 0
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
 }
 .btn-guardar {
     display: flex;
@@ -253,4 +256,28 @@
     padding: 0.4rem 0.2rem 0.2rem 0.4rem;
     background-color: #9b9fa436;
     border-radius: 0.4rem;
+}
+#table-container{
+    position: relative;
+  }
+#sin-productos-interes {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    top: 50%;
+    color: #919696;
+    font-size: 1.5rem;
+}
+.text-label-sweetAlert {
+    font-weight: 500;
+    color: #534f4a;
+}
+.titulo-articulo{
+    display: inline-block;
+    margin: 0;
+    color: #534f4a;
+    font-weight: 600;
+    font-size: 1.4rem;
+    font-family: sans-serif;
 }

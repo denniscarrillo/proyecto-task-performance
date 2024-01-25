@@ -85,6 +85,7 @@ $('#form-Porcentajes').submit(function (e) {
         }
       });
      $('#modalNuevoPorcentaje').modal('hide');
+     limpiarForm();
     } 
 });
 $('#modalNuevoPorcentaje').on('hidden.bs.modal', function (e) {

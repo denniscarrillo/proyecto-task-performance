@@ -56,11 +56,15 @@ if (isset($_SESSION['usuario'])) {
   <link rel='stylesheet' href='../Recursos/css/layout/navbar.css'>
   <link rel='stylesheet' href='../Recursos/css/layout/footer.css'>
   <link rel='stylesheet' href="../Recursos/css/layout/sidebar.css">
+  <link rel='stylesheet' href="../Recursos/components/css/loader.css">
   <!-- ================================ -->
   <title>Dashboard</title>
 </head>
 
 <body style="overflow: hidden;">
+  <div class="loader-section">
+    <span class="loader"></span>
+  </div>
   <!-- Sidebar -->
   <div class="conteiner-global">
     <div class="sidebar-conteiner">
@@ -151,6 +155,7 @@ if (isset($_SESSION['usuario'])) {
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <!-- <script src="../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../Recursos/js/validacionesSidebar.js"></script> -->
+  <script src="../Recursos/components/js/loader.js" type="module"></script>
   <script src="../Recursos/js/index.js"></script>
 </body>
 

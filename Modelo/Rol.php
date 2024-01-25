@@ -86,11 +86,14 @@ class Rol {
             $conexion = $conn->abrirConexionDB();
             $query = "DELETE FROM tbl_MS_Roles WHERE id_Rol = '$rol';";
             $estadoEliminado = sqlsrv_query($conexion, $query);
-        }catch (Exception $e) {
-            $estadoEliminado = 'Error SQL:' . $e;
+            if(!$estadoEliminado) {
+                return false;
+            }
+            sqlsrv_close($conexion); //Cerrar conexion
+            return true;
+        } catch (Exception $e) {
+            echo 'Error SQL:' . $e;
         }
-        sqlsrv_close($conexion); #Cerramos la conexión.
-        return $estadoEliminado;
     }
 
     public static function obtenerRolesUsuarioPDF($buscar){

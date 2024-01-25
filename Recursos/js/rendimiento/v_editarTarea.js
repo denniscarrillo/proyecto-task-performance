@@ -42,6 +42,10 @@ $(document).ready(async function () {
   setEstadoTarea();
   obtenerComentarios($idTarea);
   obtenerDatosTarea($idTarea, $idEstadoTarea);
+  document.getElementById("list-articulos").childElementCount > 0
+    ? (document.getElementById("sin-productos-interes").hidden = true)
+    : "";
+
   estadoRTN = await $.ajax({
     url: "../../../Vista/rendimiento/cotizacion/obtenerRTN_Tarea.php",
     type: "POST",
@@ -176,17 +180,15 @@ document
     let tipoCliente = radioOption[1].checked
       ? radioOption[1].value
       : radioOption[0].value;
-    console.log(estadoValidado);
     if (estadoValidado) {
       //Si se cumplen todas las validacinones se guardara la data
       let $datosTarea = validarCamposEnviar(tipoCliente);
-      console.log($datosTarea);
       actualizarDatosTarea($datosTarea);
       enviarProductosInteres($idTask); //Enviamos los productos de interes a almacenar
-      // obtenerDatosTarea($idTarea, $idEstadoTarea);
-      // setTimeout(() => {
-      //   location.href = "../../../Vista/rendimiento/v_tarea.php";
-      // }, 2000);
+      obtenerDatosTarea($idTarea, $idEstadoTarea);
+      setTimeout(() => {
+        location.href = "../../../Vista/rendimiento/v_tarea.php";
+      }, 2000);
     }
   });
 // CARGAR LOS ARTICULOS A AGREGAR A LA TAREA
@@ -268,18 +270,15 @@ let agregarArticulos = function () {
     .rows(".ArtSelec")
     .data();
   for (let i = 0; i < productosSeleccionados.length; i++) {
-    console.log(productosSeleccionados[i]);
     $Articulos.push({
       id: productosSeleccionados[i].codArticulo,
       nombre: productosSeleccionados[i].articulo,
       marca: productosSeleccionados[i].marcaArticulo,
     });
   }
-
   carritoArticulos($Articulos);
 };
 let carritoArticulos = ($productos) => {
-  console.log($productos);
   let productos = "";
   let $tableArticulos = document.getElementById("list-articulos");
   $productos.forEach((producto) => {
@@ -297,6 +296,11 @@ let carritoArticulos = ($productos) => {
   idsProducto.forEach(function (idProducto) {
     idProducto.setAttribute("disabled", "true");
   });
+  if ($productos.length > 0) {
+    document.getElementById("sin-productos-interes").hidden = true;
+  } else {
+    document.getElementById("sin-productos-interes").hidden = false;
+  }
 };
 let setEstadoTarea = function () {
   let $select = document.getElementById("estados-tarea");
@@ -457,10 +461,22 @@ $rtn_Cliente.addEventListener("focusout", function () {
 });
 
 let setearDatosClienteCartera = (cliente) => {
-  document.getElementById("nombre-cliente").value = cliente.nombre;
-  document.getElementById("telefono-cliente").value = cliente.telefono;
-  document.getElementById("correo-cliente").value = cliente.correo;
-  document.getElementById("direccion-cliente").value = cliente.direccion;
+  let nombre = document.getElementById("nombre-cliente"),
+    // rtn = document.getElementById("rnt-cliente"),
+    telefono = document.getElementById("telefono-cliente"),
+    correo = document.getElementById("correo-cliente"),
+    direccion = document.getElementById("direccion-cliente");
+  //Setear los datos
+  nombre.value = cliente.nombre;
+  telefono.value = cliente.telefono;
+  correo.value = cliente.correo;
+  direccion.value = cliente.direccion;
+  //Desahabilitar los inputs
+  nombre.disabled = true;
+  // rtn.disabled = true;
+  telefono.disabled = true;
+  correo.disabled = true;
+  direccion.disabled = true;
 };
 
 let limpiarForm = () => {
@@ -526,6 +542,9 @@ let enviarProductosInteres = ($idTarea) => {
         allowOutsideClick: false,
         allowEscapeKey: false,
         timer: 2000,
+        customClass: {
+          title: "text-label-sweetAlert",
+        },
       });
     },
   }); //Fin AJAX
@@ -642,14 +661,17 @@ let obtenerDatosTarea = ($idTarea, $idEstadoTarea) => {
       document.getElementsByClassName("estadoEdicion").textContent == "false"
         ? document.getElementById("num-factura").removeAttribute("disabled")
         : "";
-      // (!(Object.keys(datos).length > 0)) ? document.getElementById('num-factura').removeAttribute('disabled') : '';
+      !(Object.keys(datos).length > 0)
+        ? document.getElementById("num-factura").removeAttribute("disabled")
+        : "";
     },
   });
 };
 let setearDatosTarea = ($datosTarea) => {
-  $datosTarea.productos != undefined
-    ? setArticulosInteres($datosTarea.productos)
-    : "";
+  if ($datosTarea.productos != undefined) {
+    setArticulosInteres($datosTarea.productos);
+    document.getElementById("sin-productos-interes").hidden = true;
+  }
   document.getElementById("num-factura").removeAttribute("disabled");
   let nuevo = document.getElementById("cliente-nuevo");
   let existe = document.getElementById("cliente-existente");

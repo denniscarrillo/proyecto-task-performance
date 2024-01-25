@@ -141,29 +141,6 @@ class Metricas{
         return $estadisticas;
     }
 
-    // public static function obtenerEstadisticas(){
-    //     $estadisticas = null;
-    //     try {
-    //         $estadisticas = array();
-    //         $con = new Conexion();
-    //         $abrirConexion = $con->abrirConexionDB();
-    //         $query = "";
-    //         $resultado = sqlsrv_query($abrirConexion, $query);
-    //         //Recorremos el resultado de tareas y almacenamos en el arreglo.
-    //         while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
-    //             $estadisticas[] = [
-    //                 'Descripcion' => $fila['descripcion'],
-    //                 'Meta' => $fila['meta'],
-    //                 'Alcance' => $fila['Alcance'],
-    //                 'Porcentaje' => $fila['Porcentaje']
-    //             ];
-    //         }
-    //     } catch (Exception $e) {
-    //         $estadisticas = 'Error SQL:' . $e;
-    //     }
-    //     sqlsrv_close($abrirConexion); //Cerrar conexion
-    //     return $estadisticas;
-    // }
 
     public static function obtenerEstadisticasGeneral($FechaInicial, $FechaFinal){
         $estadisticasG = null;
@@ -176,7 +153,7 @@ class Metricas{
                       FROM tbl_Metrica AS M
                       INNER JOIN tbl_EstadoAvance AS E ON M.id_EstadoAvance = E.id_EstadoAvance
                         INNER JOIN tbl_Tarea AS T ON T.id_EstadoAvance = E.id_EstadoAvance
-                        WHERE T.fecha_Inicio BETWEEN $FechaInicial AND $FechaFinal
+                        WHERE T.fecha_Finalizacion BETWEEN '$FechaInicial' AND '$FechaFinal'
                         GROUP BY E.descripcion, M.meta;";
             $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
@@ -190,12 +167,17 @@ class Metricas{
             }
         } catch (Exception $e) {
             $estadisticasG = 'Error SQL:' . $e;
-        }
-        sqlsrv_close($abrirConexion); //Cerrar conexion
+        } finally {
+            if ($abrirConexion !== null) {
+                sqlsrv_close($abrirConexion); // Cierra la conexión en el bloque finally
+            }
+        
+            }
+        // sqlsrv_close($abrirConexion); //Cerrar conexion
         return $estadisticasG;
     }
 
-    public static function obtenerEstadisticasPorVed($Usuario, $FechaInicial, $FechaFinal){
+    public static function obtenerEstadisticasPorVed($idUsuario, $FechaInicial, $FechaFinal){
         $estadisticasV = null;
         try {
             $estadisticasV = array();
@@ -203,13 +185,13 @@ class Metricas{
             $abrirConexion = $con->abrirConexionDB();
             $query = "SELECT E.descripcion, M.meta, COUNT(*) AS Alcance,
                             CONCAT(CAST(COUNT(*) * 100.0 / M.meta AS DECIMAL(10,0)), '%') AS Porcentaje
-                      FROM tbl_Metrica AS M
-                      INNER JOIN tbl_EstadoAvance AS E ON M.id_EstadoAvance = E.id_EstadoAvance
-                      INNER JOIN tbl_Tarea AS T ON T.id_EstadoAvance = E.id_EstadoAvance
-                      INNER JOIN tbl_vendedores_tarea AS VT ON VT.id_Tarea = T.id_Tarea
-                      INNER JOIN tbl_MS_Usuario AS U ON u.id_Usuario = VT.id_usuario_vendedor
-                      WHERE T.fecha_Inicio BETWEEN $FechaInicial AND $FechaFinal AND usuario = $Usuario
-                      GROUP BY E.descripcion, M.meta;";
+                        FROM tbl_Metrica AS M
+                        INNER JOIN tbl_EstadoAvance AS E ON M.id_EstadoAvance = E.id_EstadoAvance
+                        INNER JOIN tbl_Tarea AS T ON T.id_EstadoAvance = E.id_EstadoAvance
+                        INNER JOIN tbl_vendedores_tarea AS VT ON VT.id_Tarea = T.id_Tarea
+                        INNER JOIN tbl_MS_Usuario AS U ON u.id_Usuario = VT.id_usuario_vendedor
+                        WHERE T.fecha_Finalizacion BETWEEN '$FechaInicial' AND '$FechaFinal' AND id_Usuario = '$idUsuario'
+                        GROUP BY E.descripcion, M.meta;";
             $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
             while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
@@ -222,8 +204,12 @@ class Metricas{
             }
         } catch (Exception $e) {
             $estadisticasV = 'Error SQL:' . $e;
-        }
-        sqlsrv_close($abrirConexion); //Cerrar conexion
+        } finally {
+            if ($abrirConexion !== null) {
+                sqlsrv_close($abrirConexion); // Cierra la conexión en el bloque finally
+            }
+        
+            }
         return $estadisticasV;
     }
 

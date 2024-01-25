@@ -90,7 +90,6 @@ $form.addEventListener("submit", (e) => {
       estadoValidaciones.campoVacioPassword =
         funciones.validarCampoVacio($password);
     }
-    console.log("Entro");
   } else if (
     estadoValidaciones.espaciosUser == false ||
     estadoValidaciones.espaciosPassword == false

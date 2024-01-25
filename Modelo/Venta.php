@@ -71,11 +71,14 @@ class Venta {
             $conexion = $conn->abrirConexionDB();
             $query = "DELETE FROM tbl_FacturasVenta WHERE num_Factura = '$numFactura';";
             $estadoEliminado = sqlsrv_query($conexion, $query);
+            if(!$estadoEliminado) {
+                return false;
+            }
+            sqlsrv_close($conexion); //Cerrar conexion
+            return true;
         }catch (Exception $e) {
             $estadoEliminado = 'Error SQL:' . $e;
         }
-        sqlsrv_close($conexion); #Cerramos la conexión.
-        return $estadoEliminado;
     }
     public static function obtenerVentasPorFechas($fechaDesde, $fechaHasta){
         $conn = new Conexion();

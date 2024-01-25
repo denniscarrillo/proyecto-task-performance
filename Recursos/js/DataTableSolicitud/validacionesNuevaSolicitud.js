@@ -308,6 +308,10 @@ let obtenerValidarRtnExiste = (rtn) => {
                 document.getElementById('rtnCliente').classList.remove('mensaje_error');
                 document.getElementById('rtnCliente').parentElement.querySelector('p').innerText = '';
             }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            // Manejar errores de la solicitud AJAX
+            console.error('Error en la solicitud AJAX:', textStatus, errorThrown);
         }
     });
 };

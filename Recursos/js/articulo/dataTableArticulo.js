@@ -72,6 +72,7 @@ $("#form_Articulo").submit(function (e) {
       },
     });
     $("#modalNuevoArticulo").modal("hide");
+    limpiarForm();
   }
 });
 
@@ -149,25 +150,65 @@ $(document).on("click", "#btn_eliminar", function () {
         datatype: "json",
         data: { codArticulo: codArticulo },
         success: function (data) {
-          let estadoEliminado = JSON.parse(data).estadoEliminado;
-          if(estadoEliminado){
-            tablaArticulo.row(fila.parents('tr')).remove().draw();
+          if(JSON.parse(data).estadoEliminado){
             Swal.fire(
               'Eliminado!',
               'El artículo ha sido eliminado',
               'success'
             ) 
-            tablaArticulo.ajax.reload(null, false);
           } else {
             Swal.fire(
               'Lo sentimos!',
               'El artículo no puede ser eliminado',
               'error'
             );
-            tablaArticulo.ajax.reload(null, false);
+            return;
           }
+          tablaArticulo.ajax.reload(null, false);
         },
       }); //Fin del AJAX
     }
   });
 });
+
+document.getElementById('btn-cerrar').addEventListener('click', ()=>{
+  limpiarForm();
+})
+document.getElementById('btn-x').addEventListener('click', ()=>{
+  limpiarForm();
+})
+let limpiarForm = () => {
+  let $inputs = document.querySelectorAll('.mensaje_error');
+  let $mensajes = document.querySelectorAll('.mensaje');
+  $inputs.forEach($input => {
+    $input.classList.remove('mensaje_error');
+  });
+  $mensajes.forEach($mensaje =>{
+    $mensaje.innerText = '';
+  });
+  let articulo = document.getElementById('Articulo'),
+    detalle = document.getElementById('Detalle'),
+    marca = document.getElementById('Marca');
+  //Vaciar campos cliente
+    articulo.value = '';
+    detalle.value = '';
+    marca.value = '';
+}
+
+//Limpiar modal de editar
+// document.getElementById('button-cerrar').addEventListener('click', ()=>{
+//   limpiarFormEdit();
+// })
+// document.getElementById('button-x').addEventListener('click', ()=>{
+//   limpiarFormEdit();
+// })
+// let limpiarFormEdit = () => {
+//   let $inputs = document.querySelectorAll('.mensaje_error');
+//   let $mensajes = document.querySelectorAll('.mensaje');
+//   $inputs.forEach($input => {
+//     $input.classList.remove('mensaje_error');
+//   });
+//   $mensajes.forEach($mensaje =>{
+//     $mensaje.innerText = '';
+//   });
+// }
