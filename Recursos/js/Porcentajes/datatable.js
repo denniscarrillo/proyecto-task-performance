@@ -198,10 +198,10 @@ $(document).on("click", "#btn_eliminar", function() {
   let fila = $(this).closest("tr"),
      idPorcentaje = $(this).closest('tr').find('td:eq(0)').text(), 
      porcentaje = fila.find('td:eq(1)').text(),
-     estado = 'Inactivo';
+     estado = 'INACTIVO';
      
     Swal.fire({
-      title: 'Estas seguro de eliminar el pocentaje'+porcentaje+'?',
+      title: 'Estas seguro de eliminar el porcentaje '+porcentaje+'?',
       text: "No podras revertir esto!",
       icon: 'warning',
       showCancelButton: true,
