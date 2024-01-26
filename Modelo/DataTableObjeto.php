@@ -115,11 +115,9 @@ class DataTableObjeto
             $conn = new Conexion();
             $conexion = $conn->abrirConexionDB();
             $query = "DELETE FROM tbl_MS_Objetos WHERE id_Objeto = '$id_Objeto' 
-                AND objeto NOT IN('LOGIN.PHP','configRespuestas.php', 'v_nuevaContrasenia.php', 'preguntasResponder.php', 'index.php');";
+                AND objeto NOT IN('LOGIN.PHP','CONFIGRESPUESTAS.PHP', 'V_NUEVACONTRASENIA.PHP', 'PREGUNTASRESPONDER.PHP', 'INDEX.PHP');";
             $estadoEliminado = sqlsrv_query($conexion, $query);
             if ($estadoEliminado === false) {
-               // Maneja el error de ejecución de la consulta
-                // Puedes usar sqlsrv_errors() para obtener información detallada sobre los errores
                 return false;
             }
             $rowsAffected = sqlsrv_rows_affected($estadoEliminado);
