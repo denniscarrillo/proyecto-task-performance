@@ -8,13 +8,19 @@
     require_once ("../../../Controlador/ControladorBitacora.php");
     
     $user = '';
+    $eliminar = '';
     session_start();
     if(isset($_SESSION['usuario'])){
         $user = $_SESSION['usuario'];
         $idPregunta = ($_POST['idPregunta']);
         $estadoEliminado = ControladorPregunta::eliminarPregunta($idPregunta);
         print json_encode(['estadoEliminado'=>$estadoEliminado], JSON_UNESCAPED_UNICODE);
-        /* ========================= Evento Editar pregunta. ====================================*/
+        /* ========================= Evento Eliminar pregunta. ====================================*/
+        if($estadoEliminado){
+            $eliminar = " eliminó ";
+        }else{
+            $eliminar = " intentó eliminar ";
+        }
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();
         date_default_timezone_set('America/Tegucigalpa');
@@ -22,7 +28,7 @@
         $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionPregunta.php');
         $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
         $newBitacora->accion = $accion['Update'];
-        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' modificó la pregunta '.$_POST['pregunta'];
+        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].$eliminar.'la pregunta #'.$idPregunta.' '.$_POST['pregunta'];
         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
         /* =======================================================================================*/
     }

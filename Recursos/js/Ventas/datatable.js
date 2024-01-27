@@ -1,4 +1,4 @@
-// import {estadoValidado as validado} from './validacionesModalNuevaVenta.html';
+import {estadoValidado as validado} from './validacionesNuevaVenta.js';
 let tablaVentas = '';
 $(document).ready(function () {
   let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
@@ -53,7 +53,7 @@ $('#form-New-Venta').submit(function (e) {
      //Obtener datos del nuevo tipo servicio
      let rtnCliente = $('#rtn').val();
      let totalVenta = $('#totalVenta').val();
-    /* if(validado){ */
+    if(validado){
       $.ajax({
         url: "../../../Vista/crud/Venta/nuevaVenta.php",
         type: "POST",
@@ -73,7 +73,8 @@ $('#form-New-Venta').submit(function (e) {
          limpiarForm();
         }
       });
-    /* }  */
+      $('#modalNuevaVenta').modal('hide');
+    }
 });
 
 let $rtn = document.getElementById('rtn');
