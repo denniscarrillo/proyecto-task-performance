@@ -78,18 +78,10 @@ function enviarCorreoSolicitud($nuevaSolicitud, $productosSolicitud, $idSolicitu
     <P style="text-align: center; font-size: 18px;"><b>REPORTE DE LA SOLICITUD</b></P>
     <table cellpadding="5"  border= "1" >
     ';
-    // $SolicitudesId = ControladorDataTableSolicitud::VerSolicitudesPorId($_GET['idSolicitud']);
+
         $id = $idSolicitud;
         $idFactura = $nuevaSolicitud->idFactura;
-        $rtnCliente = $nuevaSolicitud->rtnCliente;
-        if ($rtnCliente == 'NULL') {
-            $rtnCliente = '';
-          };
         $rtnClienteCartera = $nuevaSolicitud->rtnClienteC;
-        if ($rtnClienteCartera == 'NULL') {
-            $rtnClienteCartera = '';
-          };
-        //$NombreCliente = $nuevaSolicitud->NombreCliente;
         $descripcion = $nuevaSolicitud->descripcion;
         $servicioTecnico = $nuevaSolicitud->tipoServicio;
         $tipoServ = ControladorTipoServicio::obtenerTipoServicioID($servicioTecnico);
@@ -103,9 +95,6 @@ function enviarCorreoSolicitud($nuevaSolicitud, $productosSolicitud, $idSolicitu
         $fechaHoy = new DateTime();
         $fechaFormateadaC = $fechaHoy->format('Y-m-d');
         
-        
-  
-       
         $html .= '
         <tr>
             <td style="background-color: #c9c9c9; width: 200px;"><b>ID:</b></td>
@@ -215,13 +204,13 @@ function enviarCorreoSolicitud($nuevaSolicitud, $productosSolicitud, $idSolicitu
         $mail->isSMTP();                                            //Send using SMTP
         $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = $getDataServerEmail[1]['valorParametro'];                //SMTP username
-        $mail->Password   = $getDataServerEmail[2]['valorParametro'];                      //SMTP password
+        $mail->Username   = $getDataServerEmail['ADMIN_CORREO'];                //SMTP username
+        $mail->Password   = $getDataServerEmail['ADMIN_PASSWORD'];                      //SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-        $mail->Port       = intval($getDataServerEmail[3]['valorParametro']);  //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+        $mail->Port       = intval($getDataServerEmail['ADMIN_PUERTO']);  //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
        //Recipients
-       $mail->setFrom($getDataServerEmail[1]['valorParametro'], $getDataServerEmail[0]['valorParametro']);
+       $mail->setFrom($getDataServerEmail['ADMIN_CORREO'], $getDataServerEmail['ADMIN_USER']);
        $mail->addAddress($destinario);  
        
        // Adjuntar el PDF al correo
