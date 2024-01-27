@@ -35,11 +35,11 @@ class DataTableTarea
                     ];
                 }
             }
-            $select = "SELECT ta.id_Tarea, ea.descripcion AS estado, cc.CIF AS rtn_Cliente, cc.NOMBRECLIENTE AS nombre_Cliente, ta.titulo, us.nombre_Usuario AS Creado_Por, ta.estado_Finalizacion, ta.fecha_Finalizacion, DATEDIFF(day, ta.Fecha_Creacion, GETDATE()) AS dias_Transcurridos 
+            $select = "SELECT ta.id_Tarea, ea.descripcion AS estado, cc.rtn_Cliente AS rtn_Cliente, cc.nombre_Cliente AS nombre_Cliente, ta.titulo, us.nombre_Usuario AS Creado_Por, ta.estado_Finalizacion, ta.fecha_Finalizacion, DATEDIFF(day, ta.Fecha_Creacion, GETDATE()) AS dias_Transcurridos 
             FROM tbl_Tarea ta
             INNER JOIN tbl_EstadoAvance ea ON ta.id_EstadoAvance = ea.id_EstadoAvance
-            INNER JOIN View_Clientes cc ON ta.RTN_Cliente = cc.CIF COLLATE Latin1_General_CS_AI
-            INNER JOIN tbl_MS_Usuario us ON ta.Creado_Por = us.usuario and cc.CODCLIENTE IN(SELECT cod_Cliente FROM tbl_Tarea);";
+            INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente COLLATE Latin1_General_CS_AI
+            INNER JOIN tbl_MS_Usuario us ON ta.Creado_Por = us.usuario and cc.rtn_Cliente IN(SELECT cod_Cliente FROM tbl_Tarea);";
             $ejecutar = sqlsrv_query($conexion, $select);
             if(sqlsrv_has_rows($ejecutar)){
                 while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
