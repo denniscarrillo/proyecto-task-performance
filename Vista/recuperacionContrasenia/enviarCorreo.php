@@ -18,13 +18,13 @@ function enviarCorreo($destinario, $token, $horasVigencia){
         $mail->isSMTP();                                            //Send using SMTP
         $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = $getDataServerEmail[1]['valorParametro'];                //SMTP username
-        $mail->Password   = $getDataServerEmail[2]['valorParametro'];                      //SMTP password
+        $mail->Username   = $getDataServerEmail['ADMIN_CORREO'];                //SMTP username
+        $mail->Password   = $getDataServerEmail['ADMIN_PASSWORD'];                      //SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-        $mail->Port       = intval($getDataServerEmail[3]['valorParametro']);  //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+        $mail->Port       = intval($getDataServerEmail['ADMIN_PUERTO']);  //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         //Recipients
-        $mail->setFrom($getDataServerEmail[1]['valorParametro'], $getDataServerEmail[0]['valorParametro']);
+        $mail->setFrom($getDataServerEmail['ADMIN_CORREO'], $getDataServerEmail['ADMIN_USER']);
         $mail->addAddress($destinario);                             //Add a recipient
         //Content
         $mail->isHTML(true);                                        //Set email format to HTML
@@ -45,10 +45,8 @@ function enviarCorreo($destinario, $token, $horasVigencia){
           } else {
             $confirmacion = true;
           }
-
+          return $confirmacion;
     } catch (Exception $e) {
         $confirmacion =  'No se ha podido enviar el mensaje Mailer Error: '.$mail->ErrorInfo;
     }
-    return $confirmacion;
 }
-
