@@ -94,24 +94,19 @@ class DataTableSolicitud
         $conexion = $conn->abrirConexionDB();
         $query="SELECT id_Solicitud
         ,idFactura,s.rtn_cliente,s.rtn_clienteCartera,
-        CASE
-        WHEN cc.nombre_Cliente IS NOT NULL AND cc.nombre_Cliente <> '' THEN cc.nombre_Cliente COLLATE Modern_Spanish_CI_AS
-          ELSE c.NOMBRECLIENTE COLLATE Modern_Spanish_CI_AS
-        END AS NombreCliente
+         cc.nombre_Cliente AS NombreCliente
         ,descripcion,t.servicio_Tecnico,s.correo,telefono_cliente,ubicacion_instalacion,EstadoAvance
         ,EstadoSolicitud,motivo_cancelacion,s.Creado_Por,s.Fecha_Creacion,s.Modificado_Por,s.Fecha_Modificacion
         FROM [tbl_Solicitud] as s
         inner join tbl_TipoServicio as t on t.id_TipoServicio = s.id_TipoServicio
-        LEFT join View_Clientes as c on c.CIF COLLATE Modern_Spanish_CI_AS = s.rtn_cliente COLLATE Modern_Spanish_CI_AS
         LEFT join tbl_CarteraCliente as cc on cc.rtn_Cliente = s.rtn_clienteCartera
-        Where (c.CODCLIENTE = TRY_CAST(s.cod_Cliente AS INT) OR c.CODCLIENTE IS NULL OR s.cod_Cliente = 'NULL' OR s.cod_Cliente = '') 
+        Where s.cod_Cliente IS NULL OR s.cod_Cliente = 'NULL' OR s.cod_Cliente = '' 
 		AND id_Solicitud = $idSolicitud;";
         $resultado = sqlsrv_query($conexion, $query);
         $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
         $datosVerSolicitudes = [
             'idSolicitud' => $fila['id_Solicitud'],
             'idFactura' => $fila['idFactura'],
-            'rtnCliente' => $fila['rtn_cliente'],
             'rtnClienteCartera' => $fila['rtn_clienteCartera'],
             'NombreCliente' => $fila['NombreCliente'],
             'Descripcion' => $fila['descripcion'],
