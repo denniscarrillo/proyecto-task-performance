@@ -47,9 +47,6 @@ $(document).ready(function () {
       document.querySelectorAll(".mensaje-existe-cliente").length == 0
     ) {
       estadoValidado = true;
-    } else {
-      // console.log(document.querySelectorAll(".mensaje_error").length);
-      estadoValidado = false;
     }
   });
 

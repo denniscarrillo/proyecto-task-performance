@@ -211,7 +211,7 @@ class Parametro
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
         $query = "SELECT (SELECT VALOR  FROM tbl_MS_Parametro 
-        WHERE parametro ='CORREO SERVICIO TEC') as CorreoServicio;;";
+        WHERE parametro ='CORREO SERVICIO TEC') as CorreoServicio;";
         $resultado = sqlsrv_query($conexion, $query);
         while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
             $datos[] = [

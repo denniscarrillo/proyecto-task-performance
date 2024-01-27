@@ -10,18 +10,24 @@ require_once("../../../Controlador/ControladorBitacora.php");
 $user = '';
 session_start();
 if (isset($_SESSION['usuario'])) {
-    $rol = $_POST['idRol'];
-    $estadoEliminado = ControladorRol::eliminarRol($rol);
+    $idRol = $_POST['idRol'];
+    $rol = $_POST['rol'];
+    $estadoEliminado = ControladorRol::eliminarRol($idRol);
     print json_encode(['estadoEliminado' => $estadoEliminado], JSON_UNESCAPED_UNICODE);
-    /* ========================= Evento Editar pregunta. ====================================*/
-    // $newBitacora = new Bitacora();
-    // $accion = ControladorBitacora::accion_Evento();
-    // date_default_timezone_set('America/Tegucigalpa');
-    // $newBitacora->fecha = date("Y-m-d h:i:s"); 
-    // $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('GESTIONROL.PHP');
-    // $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-    // $newBitacora->accion = $accion['Update'];
-    // $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' modificó la pregunta '.$_POST['pregunta'];
-    // ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+    /* ========================= Evento Eliminar pregunta. ====================================*/
+    if($estadoEliminado){
+        $eliminar = " eliminó ";
+    }else{
+        $eliminar = " intentó eliminar ";
+    }
+    $newBitacora = new Bitacora();
+    $accion = ControladorBitacora::accion_Evento();
+    date_default_timezone_set('America/Tegucigalpa');
+    $newBitacora->fecha = date("Y-m-d h:i:s"); 
+    $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionPregunta.php');
+    $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+    $newBitacora->accion = $accion['Update'];
+    $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].$eliminar.'el rol #'.$idRol.' '.$rol;
+    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     /* =======================================================================================*/
 }
