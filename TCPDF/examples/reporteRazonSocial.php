@@ -72,11 +72,11 @@ $pdf->setFont('Helvetica', '', 11);
 $pdf->AddPage();
 // create some HTML content
 $html = '
-<P style="text-align: center; font-size: 18px;"><b>Reporte de Razon Social</b></P>
+<P style="text-align: center; font-size: 18px;"><b>Reporte de Razón Social</b></P>
 <table border="1" cellpadding="4">
 <tr>
 <td style="background-color: #e54037;color: white; text-align: center; width: 60px;">N°</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 220px;">Razon Social</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 220px;">RAZÓN SOCIAL</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 360px;">DESCRIPCIÓN</td>
 </tr>
 ';

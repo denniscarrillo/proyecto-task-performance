@@ -29,15 +29,19 @@ function enviarCorreo($destinario, $token, $horasVigencia){
         //Content
         $mail->isHTML(true);                                        //Set email format to HTML
         $mail->Subject = 'Has iniciado el proceso de recuperación';
-        $mail->Body    = 
-        '<div style="background-color: #dc6414; border-radius: 4rem; padding: 2rem;">
-        <h1> Recuperación de contraseña </h1>
-        <p style="font-size: 3rem;"> Hola, usted ha iniciado el proceso de restablecer contraseña, le hemos enviado este token.</p>
-        <p style="font-size: 3rem;"> Cópielo e ingréselo en el formulario de Validación para poder continuar con el proceso </p>
-            <h2>Este es su token de recuperación</h2>
-            <h1> ============== <b>'.$token.'</b> ==============</h1>
-        <h3> ----------------------- Este token expirará dentro de '.$horasVigencia.' hrs ---------------------</h3>
-        <p> Saludos, Cocinas y Equipos</p>
+        $mail->Body = '
+        <div style="background-color: #fff; border-radius: 20px; padding: 20px; max-width: 600px; margin: auto; font-family: Arial, sans-serif; color: #000;">
+            <h1 style="color: #000;">Recuperación de contraseña</h1>
+            <p style="font-size: 16px; color: #000;">Hola, has iniciado el proceso de restablecer tu contraseña. Te hemos enviado un token para validar tu identidad.</p>
+            <p style="font-size: 16px; color: #000;">Por favor, cópialo e ingrésalo en el formulario de validación para continuar con el proceso.</p>
+            
+            <div style="background-color: #000; color: #fff; padding: 15px; border-radius: 10px; margin-top: 20px;">
+                <h2 style="color: #fff;">Este es tu token de recuperación:</h2>
+                <h1 style="background-color: #fff; padding: 10px; border-radius: 10px; color: #000; margin: 10px 0;">'.$token.'</h1>
+                <p style="font-size: 14px; color: #fff;">Este token expirará en '.$horasVigencia.' horas.</p>
+            </div>
+            
+            <p style="font-size: 16px; margin-top: 20px;">Saludos,<br>Task Performance</p>
         </div>';
         $mail->CharSet = 'UTF-8'; // Setear UTF-8 para caracteres especiales
         if(!$mail->Send()) {

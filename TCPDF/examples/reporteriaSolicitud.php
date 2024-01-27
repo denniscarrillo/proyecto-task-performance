@@ -76,8 +76,8 @@ $html = '
 <tr>
 <td style="background-color: #e54037;color: white; text-align: center; width: 40px;">ID</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 243px;">NOMBRE CLIENTE</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 190px;">SERVICIO TECNICO</td>
-<td style="background-color: #e54037;color: white; text-align: center">TELEFONO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 190px;">SERVICIO TÉCNICO</td>
+<td style="background-color: #e54037;color: white; text-align: center">TELÉFONO</td>
 <td style="background-color: #e54037;color: white; text-align: center">AVANCE DE SOLICITUD</td>
 <td style="background-color: #e54037;color: white; text-align: center">FECHA DE CREACIÓN</td>
 </tr>

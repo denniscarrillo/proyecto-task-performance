@@ -157,7 +157,7 @@ if (isset($_SESSION['usuario'])) {
                 <th scope="col"> ID </th>
                 <th scope="col"> ESTADO </th>
                 <th scope="col"> CREADO POR </th>
-                <th scope="col"> FECHA CREACION </th>
+                <th scope="col"> FECHA CREACIÓN </th>
                 <th scope="col"> ACCIONES </th>
               </tr>
             </thead>

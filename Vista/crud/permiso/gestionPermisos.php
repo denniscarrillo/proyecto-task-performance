@@ -97,7 +97,7 @@ require_once('../../../Controlador/ControladorParametro.php');
                 <th scope="col"> ACTUALIZAR </th>
                 <th scope="col"> ELIMINAR </th>
                 <th scope="col"> REPORTE </th>
-                <th scope="col"> ACCION </th>
+                <th scope="col"> ACCIÓN </th>
               </tr>
             </thead>
             <tbody class="table-group-divider">

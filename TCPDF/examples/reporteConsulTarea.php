@@ -83,7 +83,7 @@ $html = '
 <td style="background-color: #e54037;color: white; text-align: center; width: 160px;">CREADO POR</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 110px;">ESTADO FINALICACIÓN</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 105;">FECHA FINALICACIÓN</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 100;">ANTIGUEDAD</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 100;">ANTIGÜEDAD</td>
 </tr>
 ';
 session_start();

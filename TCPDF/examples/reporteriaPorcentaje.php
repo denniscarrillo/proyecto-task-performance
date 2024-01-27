@@ -77,7 +77,7 @@ $html = '
 <tr>
 <td style="background-color: #e54037;color: white; text-align: center; width: 40px;">N°</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 160px;">PORCENTAJE</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 300px;">DESCRIPCION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 300px;">DESCRIPCIÓN</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 137px;">ESTADO</td>
 </tr>
 ';

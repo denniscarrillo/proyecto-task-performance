@@ -72,17 +72,17 @@ $pdf->setFont('Helvetica', '', 9);
 $pdf->AddPage();
 // create some HTML content
 $html = '
-<P style="text-align: center; font-size: 18px;"><b>Reporte de comision por vendedores</b></P>
+<P style="text-align: center; font-size: 18px;"><b>Reporte de comisión por vendedores</b></P>
 <table border="1" cellpadding="4">
 <tr>
 <td style="background-color: #e54037;color: white; text-align: center; width: 50px">N°</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">ID COMISION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">ID COMISIÓN</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 100px;">ID VENDEDOR</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 110px;">VENDEDOR</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">ESTADO COMISION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">ESTADO COMISIÓN</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 130px;">COMISION TOTAL</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 130px;">ESTADO LIQUIDACION</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">FECHA COMISION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 130px;">ESTADO LIQUIDACIÓN</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">FECHA COMISIÓN</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 110px;">FECHA LIQUIDAR </td>
 </tr>
 ';

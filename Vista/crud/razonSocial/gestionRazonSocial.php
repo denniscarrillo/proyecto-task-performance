@@ -140,7 +140,7 @@ if (isset($_SESSION['usuario'])) {
           </div>
           <div class="titulo">
             <H2 class="title-dashboard-task"
-              id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionRazonSocial.php'); ?>">Gestión Razon Social
+              id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionRazonSocial.php'); ?>">Gestión Razón Social
             </H2>
           </div>
         </div>
@@ -156,8 +156,8 @@ if (isset($_SESSION['usuario'])) {
             <thead>
               <tr>
                 <th scope="col"> ID </th>
-                <th scope="col"> RAZON SOCIAL </th>
-                <th scope="col"> DESCRIPCION </th>
+                <th scope="col"> RAZÓN SOCIAL </th>
+                <th scope="col"> DESCRIPCIÓN </th>
                 <th scope="col"> ACCIONES </th>
               </tr>
             </thead>

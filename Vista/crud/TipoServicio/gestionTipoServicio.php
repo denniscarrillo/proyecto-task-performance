@@ -157,7 +157,7 @@ if (isset($_SESSION['usuario'])) {
             <thead>
               <tr>
                 <th scope="col"> ID </th>
-                <th scope="col"> SERVICIO TECNICO </th>
+                <th scope="col"> SERVICIO TÉCNICO </th>
                 <th scope="col"> ACCIONES </th>
               </tr>
             </thead>

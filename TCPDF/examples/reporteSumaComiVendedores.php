@@ -87,7 +87,7 @@ $html = '
 <tr>
 <td style="background-color: #e54037;color: white; text-align: center; width: 110px">ID VENDEDOR</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 100px;">VENDEDOR</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 130px;">COMISION TOTAL</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 130px;">COMISIÓN TOTAL</td>
 </tr>
 ';
 

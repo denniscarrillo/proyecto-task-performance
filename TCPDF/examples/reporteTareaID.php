@@ -147,8 +147,8 @@ $html .='
 <table border="1" cellpadding="4">
 <tr>
 <td style="background-color: #e54037;color: white; text-align: center; width: 60px;">CANT</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">CODIGO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 268px;">DESCRIPCION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">CÓDIGO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 268px;">DESCRIPCIÓN</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 210px;">MARCA</td>
 </tr>
 ';
