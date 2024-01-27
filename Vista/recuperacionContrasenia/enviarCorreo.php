@@ -30,7 +30,7 @@ function enviarCorreo($destinario, $token, $horasVigencia){
         $mail->isHTML(true);                                        //Set email format to HTML
         $mail->Subject = 'Has iniciado el proceso de recuperación';
         $mail->Body = '
-        <div style="background-color: #fff; border-radius: 20px; padding: 20px; max-width: 600px; margin: auto; font-family: Arial, sans-serif; color: #000;">
+        <div style="background-color: #fff; border-radius: 20px; padding: 20px; max-width: 600px; margin: auto; font-family: Arial, sans-serif; color: #000; text-align: left; margin-left: 0;">
             <h1 style="color: #000;">Recuperación de contraseña</h1>
             <p style="font-size: 16px; color: #000;">Hola, has iniciado el proceso de restablecer tu contraseña. Te hemos enviado un token para validar tu identidad.</p>
             <p style="font-size: 16px; color: #000;">Por favor, cópialo e ingrésalo en el formulario de validación para continuar con el proceso.</p>
