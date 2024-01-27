@@ -1,5 +1,5 @@
-//import {estadoValidado as validado } from './ValidacionesModalNuevoArticulo.js';
-import { estadoValidado as valido } from "./ValidacionesModalEditarArticulo.js";
+import {estadoValidado } from './ValidacionesModalNuevoArticulo.js';
+import { estadoValido } from "./ValidacionesModalEditarArticulo.js";
 
 let tablaArticulo = "";
 $(document).ready(function () {
@@ -51,7 +51,8 @@ $("#form_Articulo").submit(function (e) {
   let Articulo = $("#Articulo").val();
   let Detalle = $("#Detalle").val();
   let Marca = $("#Marca").val();
-  if (true) {
+ 
+  if (estadoValidado) {
     $.ajax({
       url: "../../../Vista/crud/articulo/nuevoArticulo.php",
       type: "POST",
@@ -108,7 +109,8 @@ $("#form_EditarArticulo").submit(function (e) {
     Articulo = $("#A_Articulo").val(),
     Detalle = $("#A_Detalle").val(),
     Marca = $("#A_Marca").val();
-  if (true) {
+ 
+  if ( estadoValido) {
     $.ajax({
       url: "../../../Vista/crud/articulo/editarArticulo.php",
       type: "POST",

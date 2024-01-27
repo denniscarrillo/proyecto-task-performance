@@ -1,151 +1,95 @@
 import * as funciones from '../funcionesValidaciones.js';
 export let estadoValidado = false;
-//Objeto con expresiones regulares para los inptus
-
 
 const validaciones = {
-    soloLetras: /^(?=.*[^a-zA-Z\/ .ÑñáéíóúÁÉÍÓÚs])+$/, //Solo letras
+    soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
-    soloNumeros: /^[0-9,-]*$/,
-    MismoCaracter: /^(?=.*(..)\1)/, 
-}
-//VARIABLES GLOBALES
+    soloNumeros: /^[0-9 ]*$/,
+    caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
+    caracterMas5veces: /^(?=.*(...)\1)/,
+    letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
+    direccion: /^[a-zA-Z0-9 #.,-]+$/,
+};
 
-let estadoEspacioInput = {
+let inputsNuevoArticulo = {
    
-    estadoEspacioArticulo: true,
-    estadoEspacioDetalle: true,
-    estadoEspacioMarca: true,
-
+    Articulo: document.getElementById('Articulo'),
+    Detalle: document.getElementById('Detalle'),
+    Marca: document.getElementById('Marca')
+    
 }
+let btnGuardar = document.getElementById('btn-submit');
+
+btnGuardar.addEventListener('click', () => {
   
-
-
-let estadoSelect = {
-   
-    estadoSelectArticulo: true,
-    estadoSelectDetalle: true,
-    estadoSelectMarca: true,
-  
-}
-
-let estadoMasdeUnEspacio = {
-       
-        estadoMasEspacioArticulo:true,
-        estadoMasEspacioDetalle:true,
-        estadoMasEspacioMarca:true,
-
-}
-
-let estadoSoloLetras = {
-    estadoLetrasArticulo:true,
-    estadoLetrasMarca:true,
-  
-
-}
-
-
-const $form = document.getElementById('form_Articulo');
-
-const $articulo = document.getElementById('Articulo');
-const $detalle= document.getElementById('Detalle');
-const $marca = document.getElementById('Marca');
-
-
-/* ---------------- VALIDACIONES FORMULARIO GESTION NUEVO USUARIO ----------------------*/
-/* 
-    Antes de enviar datos del formulario, se comprobara que todas  
-    las validaciones se hayan cumplido.
-*/
-$form.addEventListener('submit', e => {
-    //Validamos que algún campo no esté vacío.
-
-    let estadoInputarticulo = funciones.validarCampoVacio($articulo);
-    let estadoInputdetalle= funciones.validarCampoVacio($detalle);
-    let estadoInputmarca = funciones.validarCampoVacio($marca);
-  
-    // Comprobamos que todas las validaciones se hayan cumplido 
-    if ( estadoInputarticulo  == false || estadoInputdetalle == false || estadoInputmarca == false  ) {
-        e.preventDefault();
-    }else{
-        if(estadoEspacioInput.estadoEspacioArticulo  == false || estadoEspacioInput.estadoEspacioMarca== false || estadoEspacioInput.estadoEspacioDetalle == false ){ 
-            e.preventDefault();
-       
-            estadoEspacioInput.estadoEspacioArticulo= funciones.validarEspacios($articulo);  
-            estadoEspacioInput.estadoEspacioDetalle = funciones.validarEspacios($detalle); 
-            estadoEspacioInput.estadoEspacioMarca = funciones.validarEspacios($marca);   
-        }
-      
-        estadoMasdeUnEspacio.estadoMasEspacioArticulo= funciones.validarMasdeUnEspacio($articulo);
-        estadoMasdeUnEspacio.estadoMasEspacioDetalle = funciones.validarMasdeUnEspacio($detalle);
-        estadoMasdeUnEspacio.estadoMasEspacioMarca = funciones.validarMasdeUnEspacio($marca);
-       
-        if(estadoMasdeUnEspacio.estadoMasEspacioArticulo == false || estadoMasdeUnEspacio.estadoMasEspacioDetalle == false || estadoMasdeUnEspacio.estadoMasEspacioMarca == false ){
-            e.preventDefault();
-            console.log(estadoMasdeUnEspacio.estadoMasEspacioDireccion);
-           
-               
-        }else{
-            if(estadoSoloLetras.estadoLetrasArticulo == false ||  estadoSoloLetras.estadoLetrasMarca == false ){
-                e.preventDefault();
-                estadoLetrasArticulo = funciones.validarSoloLetras($articulo, validaciones.soloLetras);
-                estadoLetrasMarca = funciones.validarSoloLetras($marca, validaciones.soloLetras);
-               
-            }else{
-                if( estadoSelect == false ){
-                    e.preventDefault();         
-                   // estadoSelect = funciones.validarCampoVacio($name);
-                    estadoSelect = funciones.validarCampoVacio($articulo);
-                    estadoSelect = funciones.validarCampoVacio($detalle);
-                    estadoSelect = funciones.validarCampoVacio($marca);
-                } else {
-                    estadoValidado = true; // 
-                }  
-            }
-        
-        } 
+    validarInputArticulo();
+    validarInputDetalle();
+    validarInputMarca();
+    if (document.querySelectorAll(".mensaje_error").length == 0) {
+        estadoValido = true;
     }
 });
-$articulo.addEventListener('keyup', ()=>{
-    estadoSoloLetras.estadoLetrasArticulo = funciones.validarSoloLetras($articulo, validaciones.soloLetras);
-   funciones.limitarCantidadCaracteres("A_Articulo", 50);
-});
-$marca.addEventListener('keyup', ()=>{
-    estadoSoloLetras.estadoLetrasMarca= funciones.validarSoloLetras($marca, validaciones.soloLetras);
-   funciones.limitarCantidadCaracteres("A_Marca", 50);
-});
 
-$articulo.addEventListener('focusout', ()=>{
-    if(estadoMasdeUnEspacio.estadoMasEspacioArticulo){
-        funciones.validarMasdeUnEspacio($articulo);
+
+let validarInputArticulo = function () {
+    let ArticuloMayus = inputsNuevoArticulo.Articulo.value.toUpperCase();
+    inputsNuevoArticulo.Articulo.value = ArticuloMayus;
+    let estadoValidaciones = {
+        estadoCampoVacio: false,
+        estadoSoloLetras: false,
+        estadoNoMasdeUnEspacios: false,
+        estadoNoCaracteresSeguidos: false
+    }
+    estadoValidaciones.estadoCampoVacio = funciones.validarCampoVacio(inputsNuevoArticulo.Articulo);
+    if(estadoValidaciones.estadoCampoVacio) {
+        estadoValidaciones.estadoSoloLetras = funciones.validarSoloLetras(inputsNuevoArticulo.Articulo, validaciones.soloLetras);
     } 
-    let articuloMayus = $articulo.value.toUpperCase();
-    $articulo.value = articuloMayus; 
-});
+    if(estadoValidaciones.estadoSoloLetras) {
+        estadoValidaciones.estadoNoMasdeUnEspacios = funciones.validarMasdeUnEspacio(inputsNuevoArticulo.Articulo);
+    }
+    if(estadoValidaciones.estadoNoMasdeUnEspacios) {
+        estadoValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter(inputsNuevoArticulo.Articulo, validaciones.caracterMas3veces);
+    }
+}
 
-$detalle.addEventListener('focusout', ()=>{
-    if(estadoMasdeUnEspacio.estadoMasEspacioDetalle){
-        funciones.validarMasdeUnEspacio($detalle);
+let validarInputDetalle = function () {
+    let DetalleMayus =  inputsNuevoArticulo.Detalle.value.toUpperCase();
+     inputsNuevoArticulo.Detalle.value = DetalleMayus;
+    let estadoValidaciones = {
+        estadoCampoVacio: false,
+        estadoSoloLetras: false,
+        estadoNoMasdeUnEspacios: false,
+        estadoNoCaracteresSeguidos: false
+    }
+    estadoValidaciones.estadoCampoVacio = funciones.validarCampoVacio( inputsNuevoArticulo.Detalle);
+    if(estadoValidaciones.estadoCampoVacio) {
+        estadoValidaciones.estadoSoloLetras = funciones.validarSoloLetras( inputsNuevoArticulo.Detalle, validaciones.soloLetras);
     } 
-    let detalleMayus = $detalle.value.toUpperCase();
-    $detalle.value = detalleMayus; 
-});
+    if(estadoValidaciones.estadoSoloLetras) {
+        estadoValidaciones.estadoNoMasdeUnEspacios = funciones.validarMasdeUnEspacio( inputsNuevoArticulo.Detalle);
+    }
+    if(estadoValidaciones.estadoNoMasdeUnEspacios) {
+        estadoValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter( inputsNuevoArticulo.Detalle, validaciones.caracterMas3veces);
+    }
+}
 
-$marca.addEventListener('focusout', ()=>{
-    if(estadoMasdeUnEspacio.estadoMasEspacioMarca){
-        funciones.validarMasdeUnEspacio($marca);
+let validarInputMarca = function () {
+    let MarcaMayus =  inputsNuevoArticulo.Marca.value.toUpperCase();
+     inputsNuevoArticulo.Marca.value = MarcaMayus;
+    let estadoValidaciones = {
+        estadoCampoVacio: false,
+        estadoSoloLetras: false,
+        estadoNoMasdeUnEspacios: false,
+        estadoNoCaracteresSeguidos: false
+    }
+    estadoValidaciones.estadoCampoVacio = funciones.validarCampoVacio( inputsNuevoArticulo.Marca);
+    if(estadoValidaciones.estadoCampoVacio) {
+        estadoValidaciones.estadoSoloLetras = funciones.validarSoloLetras( inputsNuevoArticulo.Marca, validaciones.soloLetras);
     } 
-    let marcaMayus = $marca.value.toUpperCase();
-    $marca.value = marcaMayus;  
-
-});
-
-$articulo.addEventListener('change', ()=>{
-    estadoSelect.estadoSelectArticulo = funciones.validarCampoVacio($articulo);
-});
-$detalle.addEventListener('change', ()=>{
-    estadoSelect.estadoSelectDetalle = funciones.validarCampoVacio($detalle);
-});
-$marca.addEventListener('change', ()=>{
-    estadoSelect.estadoSelectMarca = funciones.validarCampoVacio($marca);
-});
+    if(estadoValidaciones.estadoSoloLetras) {
+        estadoValidaciones.estadoNoMasdeUnEspacios = funciones.validarMasdeUnEspacio( inputsNuevoArticulo.Marca);
+    }
+    if(estadoValidaciones.estadoNoMasdeUnEspacios) {
+        estadoValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter( inputsNuevoArticulo.Marca, validaciones.caracterMas3veces);
+    }
+}

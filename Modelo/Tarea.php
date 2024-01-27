@@ -109,7 +109,7 @@ class Tarea
             $estado = array();
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $select = "SELECT COUNT(*) AS clienteExistente FROM tbl_tarea WHERE RTN_Cliente = '$rtnCliente'";
+            $select = "SELECT COUNT(*) AS clienteExistente FROM tbl_tarea WHERE rtn_Cliente = '$rtnCliente'";
             $estadoCliente = sqlsrv_query($abrirConexion, $select);
             while ($fila = sqlsrv_fetch_array($estadoCliente, SQLSRV_FETCH_ASSOC)) {
                 $estado [] = [

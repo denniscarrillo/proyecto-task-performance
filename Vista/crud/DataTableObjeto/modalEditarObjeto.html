@@ -1,4 +1,4 @@
-<div class="modal fade" id="modalNuevoObjeto" tabindex="-1" aria-labelledby="nuevoModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal fade" id="modalEditarObjeto" tabindex="-1" aria-labelledby="nuevoModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -6,27 +6,26 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" id ="btn-x" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" method="post" id="form-Nuevo-Objeto">
+                <form action="" method="post" id="formEditarObjeto">
                     <div class="grupo-form">
                         <div class="mb-3">
-                            <label for="objetoL" class="form-label">Objeto:</label>
-                            <input type="text" name="objeto" id="objeto" maxlength="45" class="form-control" placeholder="Nombre del objeto">
+                            <label for="objetoL" class="form-label">Id Objeto:</label>
+                            <input type="text" name="A_objeto" id="A_objeto"  class="form-control" disabled>
                             <p class="mensaje"></p>
                         </div>
                         <div class="mb-3">
                             <label for="descripcionL" class="form-label">Descripcion:</label>
-                            <input type="text" name="descripcion" id="descripcion" maxlength="100" class="form-control" placeholder="Descripción">
+                            <input type="text" name="A_descripcion" id="A_descripcion"  class="form-control" placeholder="Descripción">
                             <p class="mensaje"></p>
                         </div>
                     </div>
                     <div class="btn-guardar">
                         <button type="button" href = "gestionDataTableObjeto.php" class="btn btn-secondary" id="btn-cerrar" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" name="submit" class="btn btn-primary" id="btn-submit"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                        <button type="submit" name="submit" class="btn btn-primary" id="btn-editarsubmit"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
                     </div>
                 </form>
-                </div>
+               </div>
             </div>
         </div>
     </div>
 </div>
-

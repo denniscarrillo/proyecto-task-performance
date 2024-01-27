@@ -82,7 +82,10 @@ if (isset($_SESSION['usuario'])) {
 
   <!-- Estilos personalizados -->
   <!-- <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" /> -->
-  <link href="../../../Recursos/css/gestionCarteraClientes.css" rel="stylesheet" />
+
+   <link href="../../../Recursos/css/gestionObjetos.css" rel="stylesheet" />
+  <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
@@ -157,8 +160,10 @@ if (isset($_SESSION['usuario'])) {
               <tr>
                 <th scope="col"> ID </th>
                 <th scope="col"> OBJETO</th>
-                <th scope="col"> DESCRIPCION</th>
-                <th scope="col"> TIPO OBJETO </th>
+                <th scope="col"> DESCRIPCIÓN</th>
+                <th scope="col"> TIPO OBJETO</th>
+                <!-- <th scope="col"> CREADO POR</th>
+                <th scope="col"> FECHA DE CREACIÓN</th> -->
                 <th scope="col"> ACCIONES </th>
               </tr>
             </thead>
@@ -171,6 +176,7 @@ if (isset($_SESSION['usuario'])) {
   </div>
   <?php
   require_once('modalNuevoObjeto.html');
+  require_once('modalEditarObjeto.html');
   ?>
   <!-- Librerias externas -->
   <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
@@ -182,7 +188,8 @@ if (isset($_SESSION['usuario'])) {
   <!-- Scripts propios -->
   <script src="../../../Recursos/js/DataTableObjeto/dataTableObjeto.js" type="module"></script>
   <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
-  <script src="../../../Recursos/js/DataTableObjeto/validacionesNuevoObjeto.js" type="module"></script>
+  <script src="../../../Recursos/js/DataTableObjeto/validacionNuevoObjeto.js" type="module"></script>
+  <script src="../../../Recursos/js/DataTableObjeto/validacionesEditarObjeto.js" type="module"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
 </body>

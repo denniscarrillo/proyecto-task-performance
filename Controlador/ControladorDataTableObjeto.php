@@ -15,4 +15,14 @@ class ControladorDataTableObjeto {
     public static function CrearObjeto($nuevoObjeto){
         return DataTableObjeto::CrearObjeto($nuevoObjeto);
     }
+
+    public static function editarObjeto($editarObjeto){
+        return DataTableObjeto::editarObjeto(editarObjeto);
+    }
+
+    public static function eliminarObjeto($id_Objeto, $objeto){
+        return  DataTableObjeto::eliminarObjeto($id_Objeto, $objeto);
+    }
+
+
 }
