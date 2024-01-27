@@ -186,7 +186,7 @@ class DataTableSolicitud
             $conexion = $conn->abrirConexionDB();
             $query="SELECT id_Solicitud, Cod_Articulo, ARTICULO, Cant
             FROM tbl_ProductosSolicitud as p
-            INNER JOIN view_ARTICULOS as a on a.CODARTICULO = p.Cod_Articulo
+            INNER JOIN tbl_ARTICULOS as a on a.CODARTICULO = p.Cod_Articulo
             Where id_Solicitud = $idSolicitud;";
             $resultado = sqlsrv_query($conexion, $query);
             while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
