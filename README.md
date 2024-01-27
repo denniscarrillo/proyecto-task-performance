@@ -14,7 +14,6 @@
 - Configurar la extensión PHP Server para que levante php.exe previamente instalado, siga el tutorial : https://code.visualstudio.com/docs/languages/php
 - Sql Server 2022 : https://www.microsoft.com/es-es/sql-server/sql-server-downloads
 
-
 # Dependencias en Producción
 - Apache 2.4.58 : https://www.apachelounge.com/download/ (Elejir el ejectutable segun su Sistema Operativo, en este caso Windows, instalar Apache x64 = Win64  o x86 = Win32)
 - Asegúrese de haber instalado la última versión 14.38.33130 de Visual C++ Redistributable Visual Studio 2015-2022 
@@ -23,10 +22,13 @@
 
 - PHP 8.3 (8.3.1) : https://windows.php.net/download/ (Instalar la versión que incluye Thread Safe. Y descargarla según su Sistema Operativo)
 - Sql Server 2022 : https://www.microsoft.com/es-es/sql-server/sql-server-downloads
+- Luego de haber descargado todo lo anterior, en ruta disco local C:\ crear una nueva carpeta con nombre **www** donde alojaremos el servidor Apache y PHP
+  
+  ![image](https://github.com/dennisJcarrillo/Task-Performance/assets/117254003/85260120-a48d-4d33-8826-37d5f728fe3f)
 
 # Configuraciones necesarias tanto para el ambiente de Desarrrollo como para Produccción:
-  
-1. Descomprimir la carpeta PHP previamente descargada, en la siguiente ruta (disco local): **C:\**
+   
+1. Descomprimir la carpeta PHP previamente descargada, en la siguiente ruta, **Desarrollo:**   C:\ **<--------------> Producción:** C:\www\
 2. Ahora, descargar y descomprimir el paquete de Drivers que provee Microsoft para conectar PHP & SQL Server: https://learn.microsoft.com/en-us/sql/connect/php/download-drivers-php-sql-server?view=sql-server-ver16 :  **SQLSRV511.ZIP** *(nombre de la carpeta que se descargará)*
 3. Habiendo descomprimido la carpeta de Drivers, proceder a identificar los siguientes 2 archivos y copiarlos:
 
