@@ -1,126 +1,170 @@
-.filtros{
-    margin-left: 15%;
-    margin-right: 15%;
-    margin-bottom: 2%;
-    padding: 20px;
-    background-color:  #8f8f8f; 
-    display: flex;
-    border-radius:8px;
+.filtros {
+  display: flex;
+  justify-content: space-between;
+  max-width: 80%;
+  margin: 0 auto;
+  gap: 1rem;
+  border-radius: 8px;
+  background-color: #534f4a;
+  padding: 15px;
 }
-.filtro-fecha{
-    font-size: 1rem;
-    padding: 0.6rem;
-    padding-right: 1rem;
-    margin: 1;  
+.filtro-Input form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
 }
-.filtro-Input{
-    padding: 0.6rem;
-   
-    width: 80%;  
+.filtro-fecha {
+  font-size: 1rem;
+  padding: 0.6rem;
+  padding-right: 1rem;
+  margin-right: 1.5rem;
+}
+.filtro-Input {
+  padding: 0.6rem;
+
+  width: 80%;
+}
+#table-Estadistica_wrapper {
+  max-width: 98%;
+  margin: 0 auto;
+}
+legend {
+  font-size: 1rem;
+  color: #ee9827;
+  font-size: 1.2rem;
+  /* font-weight: 500; */
 }
 
-legend{
-    font-size: 1rem;
+.filtro-fecha .mensaje {
+  background-color: #8f8f8f;
 }
-
-.filtro-fecha .mensaje{
-    background-color:  #8f8f8f;
+.btn-primary {
+  padding: 5px;
+  margin: 1%;
+  margin-left: 1.5%;
+  display: block;
+  min-width: 8rem;
+  width: 10%;
 }
-
-.btn-primary{
-    padding: 5px;
-    margin: 1%;
-    margin-left: 1.5%;
-    display: block;
-    min-width: 8rem;
-    width: 10%;
-     
+.filtro-PorVendedor {
+  min-height: 100%;
+  font-size: 15px;
+  border-radius: 45px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  margin-right: 45;
 }
-
-.filtro-PorVendedor{
-    text-align:center;
-    padding-top: 15px;
-    width: 100%; 
-    font-size: 15px;
-    border-radius:45px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    margin-right:45;
+.btn-success {
+  background-color: #ef904d;
+  border: none;
+  font-size: 17px;
+  color: #fff;
 }
-
-.btn-success{
-    background-color: #ef904d;
-    border: none;
-    font-size: 17px;
-    color: #fff;
+.btn-success:hover {
+  background-color: #f2a670;
 }
-
-.btn-success:hover{
-    background-color: #f2a670;
-}
-
 .btn-success:disabled {
-    background-color: gray; 
-    cursor: not-allowed;
+  background-color: gray;
+  cursor: not-allowed;
 }
-.Graficoss{
-    margin-bottom: 5%;
-    position: relative;
+.Graficoss {
+  margin-bottom: 5%;
+  position: relative;
 }
-#grafica{
-    width: 100%; 
+#grafica {
+  width: 100%;
 }
- #grafica_llamada{
-    max-width: 500px;
-    float:left; 
-    margin-bottom: 5%;
-  
+#grafica_llamada {
+  max-width: 500px;
+  float: left;
+  margin-bottom: 5%;
 }
- #grafica_lead{
-    max-width: 500px;
-    float:right; 
-    margin-bottom: 5%;
-}
-
- #grafica_Cotizacion{
-    max-width: 500px;  
-    float:left; 
-    margin-bottom: 5%;
+#grafica_lead {
+  max-width: 500px;
+  float: right;
+  margin-bottom: 5%;
 }
 
- #grafica_Ventas{
-    max-width: 500px; 
-    float:right; 
-    margin-bottom: 5%;
+#grafica_Cotizacion {
+  max-width: 500px;
+  float: left;
+  margin-bottom: 5%;
 }
-
-.footer-conteiner{
-    clear:both;
+#grafica_Ventas {
+  max-width: 500px;
+  float: right;
+  margin-bottom: 5%;
 }
-
-.grafica_Tareas{
-    margin-left: 25%;
-    margin-right: 25%;
-    margin-bottom: 2%;
-    padding: 15px;
-    background-color:  #b8b8b8; 
-    display: flex;
-    border-radius:10px;
-    box-shadow: 2px 2px 5px rgba(110, 109, 109, 0.5),
-               -2px -2px 5px rgba(110, 109, 109, 0.5);
+.footer-conteiner {
+  clear: both;
 }
-
-    .graficosPorTareas{
-        margin-left: 2%;
-        margin-right: 2%;
-        margin-bottom: 2%;
-        padding: 15px;
-        background-color:  #8f8f8f; 
-        display:flow-root;
-        border-radius:10px;
-        box-shadow: 2px 2px 5px rgba(110, 109, 109, 0.5),
-               -2px -2px 5px rgba(110, 109, 109, 0.5);
-    }
-
-   
-    
-
+.grafica_Tareas {
+  margin-left: 25%;
+  margin-right: 25%;
+  margin-bottom: 2%;
+  padding: 15px;
+  background-color: #b8b8b8;
+  display: flex;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px rgba(110, 109, 109, 0.5),
+    -2px -2px 5px rgba(110, 109, 109, 0.5);
+}
+.graficosPorTareas {
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-bottom: 2%;
+  padding: 15px;
+  background-color: #8f8f8f;
+  display: flow-root;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px rgba(110, 109, 109, 0.5),
+    -2px -2px 5px rgba(110, 109, 109, 0.5);
+}
+.filtro-PorVendedor {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 35rem;
+  gap: 0.2rem;
+}
+.radio-label {
+  color: #c8bfbd;
+}
+.date-label {
+  color: #c8bfbd;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+  margin-top: 0.8rem;
+}
+.label-select-vendedor {
+  color: #c8bfbd;
+}
+.btn-info {
+  background-color: #ee9827;
+  color: #534f4a;
+  min-width: 5rem;
+  margin-left: 0.8rem;
+  -webkit-box-shadow: 10px 10px 36px -19px rgba(46, 44, 46, 1);
+  -moz-box-shadow: 10px 10px 36px -19px rgba(46, 44, 46, 1);
+  box-shadow: 10px 10px 36px -19px rgba(46, 44, 46, 1);
+}
+.btn-info:hover {
+  background-color: #dbd2c0;
+  color: #424140;
+}
+.btn-info:active {
+  background-color: #747470 !important;
+  color: #ddd6c9 !important;
+}
+.btn-success {
+  background-color: #dbd2c0;
+  color: #534f4a;
+}
+.btn-success:hover {
+  background-color: #e6e0d4;
+  color: #534f4a;
+}
+.btn-success:active {
+  background-color: #747470 !important;
+  color: #ddd6c9 !important;
+}

@@ -63,12 +63,32 @@ class Parametro
             $parametrosEmail = array();
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB();
-            $query = "SELECT parametro, valor FROM tbl_MS_Parametro WHERE id_Parametro IN(2,3,4,5);";
+            $query = "SELECT parametro, valor FROM tbl_MS_Parametro 
+            WHERE parametro IN('ADMIN CUSER','ADMIN CORREO','ADMIN CPASS','ADMIN CPUERTO');";
             $resultado = sqlsrv_query($abrirConexion, $query);
-            while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
-                $parametrosEmail[] = [
-                    'valorParametro' => $fila['valor']
-                ];
+            while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)){
+                switch ($fila['parametro']) {
+                    case 'ADMIN CUSER':
+                        $parametrosEmail += [
+                            'ADMIN_USER' => $fila['valor']
+                        ];
+                        break;
+                    case 'ADMIN CORREO':
+                        $parametrosEmail += [
+                            'ADMIN_CORREO' => $fila['valor']
+                        ];
+                        break;
+                    case 'ADMIN CPASS':
+                        $parametrosEmail += [
+                            'ADMIN_PASSWORD' => $fila['valor']
+                        ];
+                        break;
+                    default:
+                        $parametrosEmail += [
+                            'ADMIN_PUERTO' => $fila['valor']
+                        ];
+                        break;
+                }
             }
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;

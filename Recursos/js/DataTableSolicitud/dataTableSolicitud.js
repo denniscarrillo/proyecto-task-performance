@@ -64,8 +64,8 @@ $(document).on("click", "#btn_ver", async function (){
   idSolicitudLabel.innerText = SolicitudXid.idSolicitud;
   const idFacturaLabel = document.getElementById('V_IdFactura');
   idFacturaLabel.innerText = SolicitudXid.idFactura; 
-  const rtnClienteLabel = document.getElementById('V_rtnCliente');
-  rtnClienteLabel.innerText = SolicitudXid.rtnCliente;
+  // const rtnClienteLabel = document.getElementById('V_rtnCliente');
+  // rtnClienteLabel.innerText = SolicitudXid.rtnCliente;
   const rtnClienteCarteraLabel = document.getElementById('V_rtnClienteCartera');
   rtnClienteCarteraLabel.innerText = SolicitudXid.rtnClienteCartera;
   const nombreLabel = document.getElementById('V_NombreC');

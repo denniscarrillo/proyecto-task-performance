@@ -1,10 +1,10 @@
 <?php
-    //Esto es por lo que no funcionaba, esto se pasara a un archivo aparte donde se manejara la bitcora
-    //TOMAR NOTA POR FAVOR
-    session_start();
-    require_once('../../db/Conexion.php');
-    require_once("../../Modelo/Bitacora.php");
-    require_once("../../Controlador/ControladorBitacora.php");
+  session_start();
+  require_once('../../db/Conexion.php');
+  require_once("../../Modelo/Bitacora.php");
+  require_once("../../Controlador/ControladorBitacora.php");
+  require_once('../../Modelo/Parametro.php');
+  require_once('../../Controlador/ControladorParametro.php');
 ?>
 
 <!DOCTYPE html>
@@ -23,8 +23,8 @@
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <!-- <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" /> -->
   <link href='../../Recursos/css/estadisticas.css' rel='stylesheet'>
-    <link href="../../Recursos/css/modalFiltroVendedor.css" rel="stylesheet" />
-    <link href="../../Recursos/css/modalFiltroVendedor.css" rel="stylesheet" />
+  <link href="../../Recursos/css/modalFiltroVendedor.css" rel="stylesheet" />
+  <link href="../../Recursos/css/modalFiltroVendedor.css" rel="stylesheet" />
 
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
@@ -68,7 +68,7 @@
         $urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
         $urlPerfilUsuario = '../crud/PerfilUsuario/gestionPerfilUsuario.php';
         $urlPerfilContraseniaUsuarios = '../crud/PerfilUsuario/gestionPerfilContrasenia.php';
-        //$urlImg = '../../Recursos/' . ControladorParametro::obtenerUrlLogo();
+        $urlImg = '../../Recursos/' . ControladorParametro::obtenerUrlLogo();
         $urlRazonSocial = '../crud/razonSocial/gestionRazonSocial.php';
         $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
         require_once '../layout/sidebar.php';
@@ -81,52 +81,42 @@
             <!-- Aqui va la barra -->
             <?php include_once '../layout/navbar.php' ?>
           </div>
-
-          
-
           <div class="titulo">
             <H2 class="title-dashboard-task" id="<?php echo $idObjetoActual; ?>">Estadísticas</H2>
           </div>
         </div>
-
-
         <div class="filtros">
-                    <div class="filtro-fecha">
-                        <label for="fechaDesde">Fecha desde:</label>
-                        <input type="date" id="fechaDesdef" name="fechaDesdef" class="form-control">
-                        <label for="fechaHasta">Fecha hasta:</label>
-                        <input type="date" id="fechaHastaf" name="fechaHastaf" class="form-control">
-                        <p class="mensaje"></p>
-                       
-                    </div>
-                    
-                    <div class="filtro-Input"> 
-                        
-                        <form> 
-                            <fieldset> 
-                                <legend>Elige el tipo de gráfico</legend>
-                                <input type="radio" id="RadioGeneral" name="fav_language" value="General" checked>
-                                <label for="html">General</label><br>
-                                
-                                <input type="radio" id="RadioPorVendedor" name="fav_language" value="Por Vendedor">
-                                <label for="css">Por Vendedor</label><br>
-                            </fieldset> 
-                        </form>    
-                    </div>
-                    
-                    <div class="filtro-PorVendedor" id="PorVendedor">
-                        <label for="PorTarea" class="form-label">Seleccione Vendedores:</label>
-                        <button type="button" class="btn btn-success" id="btnVendedores" data-bs-toggle="modal"  
-                        data-bs-target="#modalTraerVendedores" disabled>Seleccionar...<i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i></button>
-                    </div> 
-                        <button type="button" class="btn btn-info" id="btnFiltrar">Filtrar <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i></button>
-        </div> 
-                
-
-
+          <div class="filtro-fecha">
+            <label for="fechaDesde" class="date-label">Fecha desde:</label>
+            <input type="date" id="fechaDesdef" name="fechaDesdef" class="form-control">
+            <label for="fechaHasta" class="date-label">Fecha hasta:</label>
+            <input type="date" id="fechaHastaf" name="fechaHastaf" class="form-control">
+            <p class="mensaje"></p>
+          </div>
+          <div class="filtro-Input">
+            <form>
+              <fieldset>
+                <legend>Elige el tipo de gráfico</legend>
+                <input type="radio" id="RadioGeneral" name="fav_language" value="General" checked>
+                <label for="RadioGeneral" class="radio-label">General</label><br>
+                <input type="radio" id="RadioPorVendedor" name="fav_language" value="Por Vendedor">
+                <label for="RadioPorVendedor" class="radio-label">Por Vendedor</label><br>
+              </fieldset>
+            </form>
+          </div>
+          <div class="filtro-PorVendedor" id="PorVendedor">
+            <label for="PorTarea" class="form-label label-select-vendedor">Seleccione un vendedor:</label>
+            <button type="button" class="btn btn-success" id="btnVendedores" data-bs-toggle="modal"
+              data-bs-target="#modalTraerVendedores" disabled>Seleccionar...<i
+                class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i></button>
+          </div>
+          <button type="button" class="btn btn-info" id="btnFiltrar">Filtrar
+            <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i></button>
+        </div>
         <div class="table-conteiner">
           <div>
-            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
+            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
+              PDF</button>
           </div>
           <table class="table" id="table-Estadistica">
             <thead>
@@ -138,18 +128,14 @@
               </tr>
             </thead>
             <tbody class="table-group-divider">
-              
-             
-
             </tbody>
           </table>
         </div>
       </div>
-   
     </div>
     <?php
-                require_once('modalFiltroVendedores.html');
-                ?>
+      require_once('modalFiltroVendedores.html');
+     ?>
   </div>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
@@ -161,7 +147,7 @@
   <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
   <script src="../../Recursos/js/grafica/estadisticas.js"></script>
-  
+
 </body>
 
 </html>
