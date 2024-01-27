@@ -187,7 +187,8 @@ $(document).on("click", "#btn_eliminar", function () {
           url: "../../../Vista/crud/rol/eliminarRol.php",
           type: "POST",
           datatype: "json",
-          data: { idRol: idRol},
+          data: { idRol: idRol,
+          rol: rol},
           success: function (data) {
             if (JSON.parse(data).estadoEliminado) {
               Swal.fire("Eliminado!", "El Rol ha sido eliminado.", "success");
