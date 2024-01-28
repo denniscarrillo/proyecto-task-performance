@@ -18,7 +18,6 @@ let inputseditarServicioTecnico = {
 let btnGuardar = document.getElementById('btn-editarsubmit');
 
 btnGuardar.addEventListener('click', () => {
-  
     validarInputServicioTecnico();
     if (document.querySelectorAll(".mensaje_error").length == 0) {
         estadoValido = true;

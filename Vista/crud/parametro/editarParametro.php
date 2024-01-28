@@ -15,6 +15,7 @@
         $nuevoParametro->idParametro = $_POST['idParametro'];
         $nuevoParametro->parametro = $_POST['parametro'];
         $nuevoParametro->valor = $_POST['valor'];
+        $nuevoParametro->descripcion = $_POST['descripcion'];
         $nuevoParametro->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
         $nuevoParametro->ModificadoPor = $_SESSION['usuario'];    
             if ($_POST['parametro'] == 'ADMIN PREGUNTAS'){

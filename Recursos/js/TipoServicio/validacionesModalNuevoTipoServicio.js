@@ -20,6 +20,8 @@ btnGuardar.addEventListener('click', () => {
     validarInputServicioTecnico();
     if (document.querySelectorAll(".mensaje_error").length == 0) {
         estadoValidado = true;
+    }else {
+        estadoValidado = false;
     }
 });
 

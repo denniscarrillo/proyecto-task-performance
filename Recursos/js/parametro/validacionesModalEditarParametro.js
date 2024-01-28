@@ -1,47 +1,55 @@
 import * as funciones from '../funcionesValidaciones.js';
-export let estadoValidado = false;
-//Objeto con expresiones regulares para los inptus
+export let estadoValido = false;
+
+
 const validaciones = {
-    soloNumeros: /^[0-9]*$/
-    // soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
-    // correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
-    
-}
-let estasdoMasdeUnEspacio = {
-    estadoMasEspacioValor: true
+    //soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
+    soloLetras: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ\s])/,
+    correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
+    soloNumeros: /^[0-9 ]*$/,
+    caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
+    caracterMas5veces: /^(?=.*(...)\1)/,
+    letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
+    direccion: /^[a-zA-Z0-9 #.,-]+$/,
+};
+
+let inputseditarParametro = {
    
+    descripcionParametro: document.getElementById('E_descripcion')
 }
+let btnGuardar = document.getElementById('btn-editarsubmit');
 
-const $form = document.getElementById('form-Edit-Parametro');
-const $valor = document.getElementById('E_valor');
-
-/* ---------------- VALIDACIONES FORMULARIO GESTION NUEVO USUARIO ----------------------*/
-/* 
-    Antes de enviar datos del formulario, se comprobara que todas  
-    las validaciones se hayan cumplido.
-*/
-$form.addEventListener('submit', e => {   
-    //Validamos que algún campo no esté vacío.
-    let estadoInputValor = funciones.validarCampoVacio($valor);
-    // Comprobamos que todas las validaciones se hayan cumplido 
-    if (estadoInputValor == false) {
-        e.preventDefault();
-    } else {
-        if (estasdoMasdeUnEspacio.estadoMasEspacioValor == false) {
-            e.preventDefault();
-           // estasdoMasdeUnEspacio.estadoMasEspacioValor = funciones.validarMasdeUnEspacio($valor);
-        } else {
-        estadoValidado = true;    
-       }
+btnGuardar.addEventListener('click', () => {
+  
+    validarInputDescripcionParametro();
+    if (document.querySelectorAll(".mensaje_error").length == 0) 
+    {
+        estadoValido = true;
+    }else {
+        estadoValido = false;
     }
-    
 });
 
 
-$valor.addEventListener('focusout', ()=>{
-    if(estasdoMasdeUnEspacio.estadoMasEspacioValor){
-        funciones.validarMasdeUnEspacio($valor);
-    }  
-     let valorMayus = $valor.value.toUpperCase();
-     $valor.value = valorMayus;  
- });
+
+let validarInputDescripcionParametro = function () {
+    let descripcionParametroMayus = inputseditarParametro.descripcionParametro.value.toUpperCase();
+    inputseditarParametro.descripcionParametro.value = descripcionParametroMayus;
+    let estadoValidaciones = {
+        estadoCampoVacio: false,
+        estadoSoloLetras: false,
+        estadoNoMasdeUnEspacios: false,
+        estadoNoCaracteresSeguidos: false
+    }
+    estadoValidaciones.estadoCampoVacio = funciones.validarCampoVacio(inputseditarParametro.descripcionParametro);
+    if(estadoValidaciones.estadoCampoVacio) {
+        estadoValidaciones.estadoSoloLetras = funciones.validarSoloLetras(inputseditarParametro.descripcionParametro, validaciones.soloLetras);
+    } 
+    if(estadoValidaciones.estadoSoloLetras) {
+        estadoValidaciones.estadoNoMasdeUnEspacios = funciones.validarMasdeUnEspacio(inputseditarParametro.descripcionParametro);
+    }
+    if(estadoValidaciones.estadoNoMasdeUnEspacios) {
+        estadoValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter(inputseditarParametro.descripcionParametro, validaciones.caracterMas3veces);
+    }
+}
+
