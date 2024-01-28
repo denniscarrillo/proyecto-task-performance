@@ -13,13 +13,13 @@ class Metricas{
             $metricas = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $query = "SELECT m.id_Metrica,e.descripcion,m.meta FROM tbl_metrica as m
+            $query = "SELECT e.id_EstadoAvance,e.descripcion,m.meta FROM tbl_metrica as m
             inner join tbl_estadoavance AS e ON m.id_EstadoAvance = e.id_EstadoAvance;";
             $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
             while ($fila = sqlsrv_fetch_array( $resultado, SQLSRV_FETCH_ASSOC)) {
                 $metricas[] = [
-                    'idMetrica' => $fila['id_Metrica'],
+                    'id_EstadoAvance' => $fila['id_EstadoAvance'],
                     'descripcion' => $fila['descripcion'],
                     'meta' => $fila['meta'],
                 ];
@@ -38,7 +38,7 @@ class Metricas{
             $id=$nuevaMetrica->idMetrica;
             $meta=$nuevaMetrica->meta;
             $modificadoPor=$nuevaMetrica->modificadoPor;
-            $query ="UPDATE tbl_metrica SET meta='$meta', Modificado_Por='$modificadoPor', Fecha_Modificacion = GETDATE() WHERE id_Metrica='$id';";
+            $query ="UPDATE tbl_metrica SET meta='$meta', Modificado_Por='$modificadoPor', Fecha_Modificacion = GETDATE() WHERE  id_EstadoAvance='$id';";
             $nuevaMetrica = sqlsrv_query($abrirConexion, $query);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
@@ -83,13 +83,16 @@ class Metricas{
         try{
             $conn = new Conexion();
             $conexion = $conn->abrirConexionDB();
-            $query = "DELETE FROM tbl_Metrica WHERE id_Metrica = '$metrica';";
+            $query = "DELETE FROM tbl_estadoavance WHERE id_EstadoAvance = '$metrica';";
             $estadoEliminado = sqlsrv_query($conexion, $query);
+            if(!$estadoEliminado) {
+                return false;
+            }
+            sqlsrv_close($conexion); //Cerrar conexion
+            return true;
         }catch (Exception $e) {
             $estadoEliminado = 'Error SQL:' . $e;
         }
-        sqlsrv_close($conexion); #Cerramos la conexión.
-        return $estadoEliminado;
     }
     
     public static function obtenerLasMetricasPDF($buscar){
