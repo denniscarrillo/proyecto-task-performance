@@ -1,4 +1,4 @@
-import { estadoValidado as valido } from "./validacionesModalEditarParametro.js";
+import {estadoValido} from './validacionesModalEditarParametro.js';
 
 let tablaParametro = "";
 $(document).ready(function () {
@@ -39,21 +39,23 @@ let procesarPermisoActualizar = (data) => {
 //Peticion  AJAX que trae los permisos
 let obtenerPermisos = function ($idObjeto, callback) {
   $.ajax({
-    url: "../../../Vista/crud/permiso/obtenerPermisos.php",
-    type: "POST",
-    datatype: "JSON",
-    data: { idObjeto: $idObjeto },
-    success: callback,
-  });
-};
-$(document).on("click", "#btn_editar", function () {
-  let fila = $(this).closest("tr"),
-    idParametro = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
-    parametro = fila.find("td:eq(1)").text(),
-    valor = fila.find("td:eq(2)").text();
+      url: "../../../Vista/crud/permiso/obtenerPermisos.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {idObjeto: $idObjeto},
+      success: callback
+    });
+}
+$(document).on("click", "#btn_editar", function(){		        
+  let fila = $(this).closest("tr"),	        
+  idParametro = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		            
+  parametro = fila.find('td:eq(1)').text(),
+  valor = fila.find('td:eq(2)').text(),
+  descripcion = fila.find('td:eq(3)').text();
   $("#E_idParametro").val(idParametro);
   $("#E_parametro").val(parametro);
   $("#E_valor").val(valor);
+  $("#E_descripcion").val(descripcion);
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");
   $("#modalEditarParametro").modal("show");
@@ -61,19 +63,21 @@ $(document).on("click", "#btn_editar", function () {
 
 $("#form-Edit-Parametro").submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
-  //Obtener datos del nuevo Usuario
-  let idParametro = $("#E_idParametro").val(),
-    parametro = $("#E_parametro").val(),
-    valor = $("#E_valor").val();
-  if (valido) {
+   //Obtener datos del nuevo Usuario
+   let idParametro = $('#E_idParametro').val(),
+   parametro =  $('#E_parametro').val(),
+   valor = $('#E_valor').val(),
+   descripcion = $('#E_descripcion').val();;
+   if(estadoValido){
     $.ajax({
       url: "../../../Vista/crud/parametro/editarParametro.php",
       type: "POST",
       datatype: "JSON",
       data: {
-        idParametro: idParametro,
-        parametro: parametro,
-        valor: valor,
+       idParametro: idParametro,
+       parametro: parametro,
+       valor: valor,
+       descripcion : descripcion
       },
       success: function (data) {
         let resp = JSON.parse(data);
