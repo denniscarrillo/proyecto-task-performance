@@ -149,7 +149,7 @@ if (isset($_SESSION['usuario'])) {
           <div>
             <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal"
               data-bs-target="#modalNuevoEstadoUsuario"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
-            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
+              <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
               PDF</button>
           </div>
           <table class="display nowrap table" id="table-EstadoUsuarios" style="width:100%">
@@ -182,7 +182,7 @@ if (isset($_SESSION['usuario'])) {
   <!-- Scripts propios -->
   <script src="../../../Recursos/js/estadoUsuario/dataTableEstadoUsuario.js" type="module"></script>
   <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
-  <script src="../../../Recursos/js/DataTableObjeto/validacionNuevoEstadoUsuario.js" type="module"></script>
+  <script src="../../../Recursos/js/estadoUsuario/validacionesNuevoEstadoUsuario.js" type="module"></script>
   <script src="../../../Recursos/js/validacionesSidebar.js"></script>
   <!-- <script src="../../../Recursos/js/validacionesModalNuevoUsuario.js" type="module"></script> -->
   <!-- <script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script> -->
