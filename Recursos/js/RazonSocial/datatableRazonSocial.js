@@ -58,7 +58,7 @@ $('#form-razonSocial').submit(function (e) {
         //Mostrar mensaje de exito
           Swal.fire(
             'Registrado!',
-            'La razon Social ha sido registrada.',
+            'La razón Social ha sido registrada.',
             'success',
           )
           tablaRazonSocial.ajax.reload(null, false);
@@ -104,10 +104,11 @@ $('#form-razonSocial').submit(function (e) {
           //Mostrar mensaje de exito
           Swal.fire(
             'Actualizado!',
-            'La razon social ha sido modificado!',
+            'La razón social ha sido modificado!',
             'success',
           )
            tablaRazonSocial.ajax.reload(null, false);
+           limpiarFormEdit();
         }
       });
       $('#modalEditarRazonSocial').modal('hide');
@@ -145,14 +146,14 @@ $('#form-razonSocial').submit(function (e) {
                 tablaRazonSocial.row(fila.parents('tr')).remove().draw();
               Swal.fire(
                 'Lo sentimos!',
-                'La razon Social no puede ser eliminada.',
+                'La razón Social no puede ser eliminada.',
                 'error'
               );
               tablaRazonSocial.ajax.reload(null, false);
                } else{
                 Swal.fire(
                   'Eliminada!',
-                  'La razon Social ha sido Eliminada!.',
+                  'La razón Social ha sido Eliminada!.',
                   'success'
                 );
                 tablaRazonSocial.ajax.reload(null, false);
@@ -189,21 +190,24 @@ $('#form-razonSocial').submit(function (e) {
   }
   
   //Limpiar modal de editar
-  document.getElementById('btn-cerrar').addEventListener('click', ()=>{
+  document.getElementById('btn-cerrar-Editar').addEventListener('click', ()=>{
     limpiarFormEdit();
   })
   document.getElementById('btn-x').addEventListener('click', ()=>{
     limpiarFormEdit();
   })
   let limpiarFormEdit = () => {
-    let $inputs = document.querySelectorAll('.mensaje_error');
-    let $mensajes = document.querySelectorAll('.mensaje');
-    $inputs.forEach($input => {
-      $input.classList.remove('mensaje_error');
+    let $inputsE = document.querySelectorAll('.mensaje_error');
+    let $mensajesE = document.querySelectorAll('.mensaje');
+    $inputsE.forEach($inputE => {
+      $inputE.classList.remove('mensaje_error');
     });
-    $mensajes.forEach($mensaje =>{
-      $mensaje.innerText = '';
+    $mensajesE.forEach($mensajeE =>{
+      $mensajeE.innerText = '';
     });
+    let descripcionE = document.getElementById('E_descripcion');
+    // Vaciar descripcion
+    descripcionE.value = '';
   }
   
   //Generar reporte PDF

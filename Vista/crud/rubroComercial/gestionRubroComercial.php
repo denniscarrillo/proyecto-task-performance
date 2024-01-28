@@ -121,7 +121,7 @@ if (isset($_SESSION['usuario'])) {
         $urlPermisos = '../permiso/gestionPermisos.php';
         $urlRoles = '../rol/gestionRol.php';
         $urlServiciosTecnicos = './gestionTipoServicio.php';
-        $urlRazonSocial = './gestionRazonSocial.php';
+        $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
         $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
         $urlPerfilUsuario = '../PerfilUsuario/gestionPerfilUsuario.php';
         $urlPerfilContraseniaUsuarios = '../PerfilUsuario/gestionPerfilContrasenia.php';
