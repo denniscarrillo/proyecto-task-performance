@@ -169,17 +169,17 @@ class DataTableTarea
             INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente
             INNER JOIN tbl_MS_Usuario us ON ta.Creado_Por = us.usuario
             WHERE CONCAT(ta.id_Tarea, ea.descripcion, cc.rtn_Cliente, cc.nombre_Cliente, ta.titulo,
-            us.nombre_Usuario, ta.estado_Finalizacion, ta.fecha_Finalizacion, DATEDIFF(day, ta.Fecha_Creacion, GETDATE())) COLLATE Latin1_General_CI_AI LIKE '%' + '$buscar' + '%'
-            UNION
-            SELECT ta.id_Tarea, ea.descripcion AS estado, cc.CIF AS rtn_Cliente, cc.NOMBRECLIENTE AS nombre_Cliente, 
-            ta.titulo, us.nombre_Usuario AS Creado_Por, ta.estado_Finalizacion, ta.fecha_Finalizacion,DATEDIFF(day, ta.Fecha_Creacion, GETDATE()) AS dias_Transcurridos 
-            FROM tbl_Tarea ta
-            INNER JOIN tbl_EstadoAvance ea ON ta.id_EstadoAvance = ea.id_EstadoAvance
-            INNER JOIN View_Clientes cc ON ta.RTN_Cliente = cc.CIF COLLATE Latin1_General_CI_AI
-            INNER JOIN tbl_MS_Usuario us ON ta.Creado_Por = us.usuario
-            WHERE CONCAT(ta.id_Tarea, ea.descripcion, cc.CIF, cc.NOMBRECLIENTE, 
-            ta.titulo, us.nombre_Usuario , ta.estado_Finalizacion, ta.fecha_Finalizacion, DATEDIFF(day, ta.Fecha_Creacion, GETDATE())) COLLATE Latin1_General_CI_AI
-            LIKE '%' + '$buscar' + '%' COLLATE Latin1_General_CI_AI;";
+            us.nombre_Usuario, ta.estado_Finalizacion, ta.fecha_Finalizacion, DATEDIFF(day, ta.Fecha_Creacion, GETDATE())) COLLATE Latin1_General_CI_AI LIKE '%' + '$buscar' + '%';";
+            // UNION
+            // SELECT ta.id_Tarea, ea.descripcion AS estado, cc.CIF AS rtn_Cliente, cc.NOMBRECLIENTE AS nombre_Cliente, 
+            // ta.titulo, us.nombre_Usuario AS Creado_Por, ta.estado_Finalizacion, ta.fecha_Finalizacion,DATEDIFF(day, ta.Fecha_Creacion, GETDATE()) AS dias_Transcurridos 
+            // FROM tbl_Tarea ta
+            // INNER JOIN tbl_EstadoAvance ea ON ta.id_EstadoAvance = ea.id_EstadoAvance
+            // INNER JOIN View_Clientes cc ON ta.RTN_Cliente = cc.CIF COLLATE Latin1_General_CI_AI
+            // INNER JOIN tbl_MS_Usuario us ON ta.Creado_Por = us.usuario
+            // WHERE CONCAT(ta.id_Tarea, ea.descripcion, cc.CIF, cc.NOMBRECLIENTE, 
+            // ta.titulo, us.nombre_Usuario , ta.estado_Finalizacion, ta.fecha_Finalizacion, DATEDIFF(day, ta.Fecha_Creacion, GETDATE())) COLLATE Latin1_General_CI_AI
+            // LIKE '%' + '$buscar' + '%' COLLATE Latin1_General_CI_AI;";
             $ejecutar = sqlsrv_query($conexion, $select);
             if(sqlsrv_has_rows($ejecutar)){
                 while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
@@ -207,21 +207,21 @@ class DataTableTarea
             WHERE ta.Creado_Por = '$usuario'
             AND CONCAT(ta.id_Tarea, ea.descripcion, cc.rtn_Cliente, cc.nombre_Cliente, 
             ta.titulo, us.nombre_Usuario,ta.estado_Finalizacion, ta.fecha_Finalizacion, DATEDIFF(day, ta.Fecha_Creacion, GETDATE())) COLLATE Latin1_General_CI_AI 
-            LIKE '%' + '$buscar' + '%'
-            UNION
-            SELECT ta.id_Tarea, ea.descripcion AS estado, cc.rtn_Cliente COLLATE Latin1_General_CS_AI AS rtn_Cliente, 
-            cc.nombre_Cliente COLLATE Latin1_General_CS_AI AS nombre_Cliente, 
-            ta.titulo, us.nombre_Usuario AS Creado_Por, ta.estado_Finalizacion, ta.fecha_Finalizacion,
-            DATEDIFF(day, ta.Fecha_Creacion, GETDATE()) AS dias_Transcurridos 
-            FROM tbl_Tarea ta
-            INNER JOIN tbl_EstadoAvance ea ON ta.id_EstadoAvance = ea.id_EstadoAvance
-            INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente COLLATE Latin1_General_CS_AI
-            INNER JOIN tbl_MS_Usuario us ON ta.Creado_Por = us.usuario
-            WHERE ta.Creado_Por = '$usuario'
-            AND CONCAT(ta.id_Tarea, ea.descripcion, cc.rtn_Cliente, 
-            cc.nombre_Cliente, ta.titulo, us.nombre_Usuario, ta.estado_Finalizacion, ta.fecha_Finalizacion,
-            DATEDIFF(day, ta.Fecha_Creacion, GETDATE())) COLLATE Latin1_General_CI_AI 
-            LIKE '%' + '$buscar' + '%' COLLATE Latin1_General_CI_AI;";
+            LIKE '%' + '$buscar' + '%';";
+           
+            // -- SELECT ta.id_Tarea, ea.descripcion AS estado, cc.rtn_Cliente COLLATE Latin1_General_CS_AI AS rtn_Cliente, 
+            // -- cc.nombre_Cliente COLLATE Latin1_General_CS_AI AS nombre_Cliente, 
+            // -- ta.titulo, us.nombre_Usuario AS Creado_Por, ta.estado_Finalizacion, ta.fecha_Finalizacion,
+            // -- DATEDIFF(day, ta.Fecha_Creacion, GETDATE()) AS dias_Transcurridos 
+            // -- FROM tbl_Tarea ta
+            // -- INNER JOIN tbl_EstadoAvance ea ON ta.id_EstadoAvance = ea.id_EstadoAvance
+            // -- INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente COLLATE Latin1_General_CS_AI
+            // -- INNER JOIN tbl_MS_Usuario us ON ta.Creado_Por = us.usuario
+            // -- WHERE ta.Creado_Por = '$usuario'
+            // -- AND CONCAT(ta.id_Tarea, ea.descripcion, cc.rtn_Cliente, 
+            // -- cc.nombre_Cliente, ta.titulo, us.nombre_Usuario, ta.estado_Finalizacion, ta.fecha_Finalizacion,
+            // -- DATEDIFF(day, ta.Fecha_Creacion, GETDATE())) COLLATE Latin1_General_CI_AI 
+            // -- LIKE '%' + '$buscar' + '%' COLLATE Latin1_General_CI_AI;";
             $ejecutar = sqlsrv_query($conexion, $select);
             if(sqlsrv_has_rows($ejecutar)){
                 while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
