@@ -1,5 +1,5 @@
 import { estadoValidado as validado } from "./validacionesModalNuevoRol.js";
-import { estadoValidado as valido } from "./validacionesModalEditarRol.js";
+import { validarEditar as valido } from "./validacionesModalEditarRol.js";
 let tablaRol = "";
 $(document).ready(function () {
   let $idObjetoSistema = document.querySelector(".title-dashboard-task").id;
@@ -71,6 +71,33 @@ $("#form-Rol").submit(function (e) {
     });
     $("#modalNuevoRol").modal("hide");
     limpiarForm();
+  }
+});
+
+let $rol = document.getElementById('rol');
+$rol.addEventListener('focusout', function () {
+  let $mensaje = document.querySelector('.mensaje-rol');
+  $mensaje.innerText = '';
+  $mensaje.classList.remove('mensaje-existe-rol');
+  if($rol.value.trim() != ''){
+    $.ajax({
+      url: "../../../Vista/crud/rol/rolExistente.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {
+        rol: $rol.value
+      },
+      success: function (estado){
+        let $objExiste = JSON.parse(estado);
+        if ($objExiste){
+          $mensaje.innerText = 'Rol existente';
+          $mensaje.classList.add('mensaje-existe-rol');
+        } else {
+          $mensaje.innerText = '';
+          $mensaje.classList.remove('mensaje-existe-rol');
+        }
+      }
+    }); //Fin AJAX   
   }
 });
 

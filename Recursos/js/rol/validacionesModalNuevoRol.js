@@ -1,99 +1,91 @@
 import * as funciones from '../funcionesValidaciones.js';
 export let estadoValidado = false;
-
-let estadoExisteRol = false;
-
+//Objeto con expresiones regulares para los inptus
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
-};
-
-let estadoSoloLetras = {
-    estadoLetrasRol: true,
-    estadoLetrasDescripcion: true,
-};
-let estadoMasdeUnEspacio = {
-    estadoMasEspacioRol: true,
-    estadoMasEspacioDescripcion: true,
-};
-
-const $form = document.getElementById('form-Rol');
-const $Rol = document.getElementById('rol');
-const $Descripcion = document.getElementById('descripcion');
-
-$form.addEventListener('submit', e => {
-    const estadoInputRol = funciones.validarCampoVacio($Rol);
-    const estadoInputDescripcion = funciones.validarCampoVacio($Descripcion);
-
-    if (estadoInputRol === false || estadoInputDescripcion === false) {
-        e.preventDefault();
-    } else {
-        if(estadoSoloLetras.estadoLetrasRol == false || estadoSoloLetras.estadoLetrasDescripcion == false){
-            e.preventDefault();
-            estadoSoloLetras.estadoLetrasRol = funciones.validarSoloLetras($Rol, validaciones.soloLetras);
-            estadoSoloLetras.estadoLetrasDescripcion = funciones.validarSoloLetras($Descripcion, validaciones.soloLetras);
-        } else{ 
-            if(estadoMasdeUnEspacio.estadoMasEspacioRol == false || estadoMasdeUnEspacio.estadoMasEspacioDescripcion == false){
-            e.preventDefault();
-            estadoMasdeUnEspacio.estadoMasEspacioRol = funciones.validarMasdeUnEspacio($Rol);
-            estadoMasdeUnEspacio.estadoMasEspacioDescripcion = funciones.validarMasdeUnEspacio($Descripcion);
-           } else {
-            if(estadoExisteRol == false){
-                e.preventDefault();
-                estadoExisteRol = obtenerRolExiste($('#rol').val());
-        } else {
-            estadoValidado = true;
-        }
-     }
-    }
+    caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
+    caracterMas5veces: /^(?=.*(...)\1)/,
+  };
+let inputEditarRol = {
+    rol: document.getElementById('rol'),
+    descripcion: document.getElementById('descripcion')
 }
-});
-
-$Rol.addEventListener('keyup', () => {
-    estadoSoloLetras.estadoLetrasRol = funciones.validarSoloLetras($Rol, validaciones.soloLetras);
-   funciones.limitarCantidadCaracteres("rol", 45);
-});
-$Descripcion.addEventListener('keyup', () => {
-    estadoSoloLetras.estadoLetrasRol = funciones.validarSoloLetras($Descripcion, validaciones.soloLetras);
-    funciones.limitarCantidadCaracteres("descripcion", 45);
-});
-$Rol.addEventListener('focusout', () => {
-    let roles = estadoMasdeUnEspacio.estadoMasEspacioRol = funciones.validarMasdeUnEspacio($Rol);
-    if(roles){
-          let rol = $('#rol').val();
-          estadoExisteRol = obtenerRolExiste(rol);
+$(document).ready(function (){
+    //Evento clic para hacer todas las validaciones
+  document.getElementById("btn-submit").addEventListener("click", () => {
+    validarInputRol();
+    validarInputDescripcion();
+    if (
+      document.querySelectorAll(".mensaje_error").length == 0 &&
+      document.querySelectorAll(".mensaje-existe-rol").length == 0
+    ) {
+      estadoValidado = true;
+    }else{
+      estadoValidado = false;
     }
-    let rolMayus = $Rol.value.toUpperCase();
-     $Rol.value = rolMayus;  
-});
-
-$Descripcion.addEventListener('focusout', ()=>{
-    if(estadoMasdeUnEspacio.estadoMasEspacioDescripcion){
-        funciones.validarMasdeUnEspacio($Descripcion);
-     }
-     let descripcionMayus = $Descripcion.value.toUpperCase();
-     $Descripcion.value = descripcionMayus;  
- });
-
-let obtenerRolExiste = ($rol) => {
-    $.ajax({
-        url: "../../../Vista/crud/rol/rolExistente.php",
-        type: "POST",
-        datatype: "JSON",
-        data: {
-            rol: $rol
-        },
-        success: function (rol) {
-            let $objrol = JSON.parse(rol);
-            if ($objrol.estado == 'true') {
-                document.getElementById('rol').classList.add('mensaje_error');
-                document.getElementById('rol').parentElement.querySelector('p').innerText = '*El rol ya existe';
-                estadoExisteRol = false; // rol es existente, es false
-            } else {
-                document.getElementById('rol').classList.remove('mensaje_error');
-                document.getElementById('rol').parentElement.querySelector('p').innerText = '';
-                estadoExisteRol = true; // rol no existe, es true
-            }
-        }
-        
-    });
+  });
+})
+inputEditarRol.rol.addEventListener("keyup", ()=>{
+    validarInputRol();
+    funciones.limitarCantidadCaracteres("rol", 30);
+})
+inputEditarRol.descripcion.addEventListener("keyup", ()=>{
+    validarInputDescripcion();
+    funciones.limitarCantidadCaracteres("descripcion", 70);
+})
+let validarInputRol = () =>{
+  inputEditarRol.rol.value = inputEditarRol.rol.value.toUpperCase();
+  let estadoValidacion = {
+      estCampoVacio: false,
+      estSoloLetras: false,
+      estaMasDeUnEspacio: false,
+      estMismoCaracter: false,
+  }
+  estadoValidacion.estCampoVacio = funciones.validarCampoVacio(
+    inputEditarRol.rol
+  );
+  estadoValidacion.estCampoVacio
+  ? (estadoValidacion.estSoloLetras = funciones.validarSoloLetras(
+    inputEditarRol.rol, 
+    validaciones.soloLetras
+  )):"";
+  estadoValidacion.estSoloLetras
+  ?(estadoValidacion.estaMasDeUnEspacio = funciones.validarMasdeUnEspacio(
+    inputEditarRol.rol
+  )):"";
+  estadoValidacion.estaMasDeUnEspacio
+  ?(estadoValidacion.estMismoCaracter = funciones.limiteMismoCaracter(
+    inputEditarRol.rol,
+    validaciones.caracterMas3veces
+  )):"";
+  estadoValidacion.estMismoCaracter 
+  ? funciones.caracteresMinimo(inputEditarRol.rol, 7):"";
 }
+let validarInputDescripcion = () =>{
+    inputEditarRol.descripcion.value = inputEditarRol.descripcion.value.toUpperCase();
+    let estadoValidacion = {
+        estCampoVacio: false,
+        estSoloLetras: false,
+        estaMasDeUnEspacio: false,
+        estMismoCaracter: false,
+    }
+    estadoValidacion.estCampoVacio = funciones.validarCampoVacio(
+      inputEditarRol.descripcion
+    );
+    estadoValidacion.estCampoVacio
+    ? (estadoValidacion.estSoloLetras = funciones.validarSoloLetras(
+      inputEditarRol.descripcion, 
+      validaciones.soloLetras
+    )):"";
+    estadoValidacion.estSoloLetras
+    ?(estadoValidacion.estaMasDeUnEspacio = funciones.validarMasdeUnEspacio(
+      inputEditarRol.descripcion
+    )):"";
+    estadoValidacion.estaMasDeUnEspacio
+    ?(estadoValidacion.estMismoCaracter = funciones.limiteMismoCaracter(
+      inputEditarRol.descripcion,
+      validaciones.caracterMas3veces
+    )):"";
+    estadoValidacion.estMismoCaracter 
+    ? funciones.caracteresMinimo(inputEditarRol.descripcion, 7):"";
+  }
