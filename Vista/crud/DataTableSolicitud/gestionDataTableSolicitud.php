@@ -179,15 +179,15 @@ if (isset($_SESSION['usuario'])) {
   require('modalEditarSolicitud.html');
   require('modalVerDataTableSolicitud.html');
   ?>
-  <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+  <script src="../../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js" crossorigin="anonymous"></script>
+  <script src="../../../Recursos/js/librerias/Sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
+  <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
+  <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <!-- Scripts propios -->
   <script src="../../../Recursos/js/DataTableSolicitud/dataTableSolicitud.js" type="module"></script>
   <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
-  <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-  <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/DataTableSolicitud/validacionesModalEliminarSolicitud.js" type="module"></script>
   <script src="../../../Recursos/js/DataTableSolicitud/validacionesModalEditarSolicitud.js" type="module"></script>
   <script src="../../../Recursos/js/DataTableSolicitud/guardarEvidencia.js" type="module"></script>

@@ -151,11 +151,11 @@ if (isset($_SESSION['usuario'])) {
             <div class="radio-conteiner-existente">
                 <input type="radio" name="radioOption" id="clienteExistente" class="radio-solicitud" value="Existente">
                 <label for="clienteExistente" class="radio-label-solicitud">Existente</label>
-            </div>
-            <div class="radio-conteiner-nuevo">
-                <input type="radio" name="radioOption" id="clienteNuevo" class="radio-solicitud" value="Nuevo">
-                <label for="clienteNuevo" id="radioCliente" class="radio-label-solicitud">Nuevo</label>
-            </div>
+              </div>
+              <div class="radio-conteiner-nuevo">
+                <input type="radio" name="radioOption" id="clientenuevo" class="radio-solicitud" value="Nuevo">
+                <label for="clientenuevo" id="radioCliente" class="radio-label-solicitud">Nuevo</label>
+              </div>
             </div>
           </div>
           <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post" id="form-solicitud">
@@ -163,39 +163,39 @@ if (isset($_SESSION['usuario'])) {
             <div class="group-form">
               <div class="form-element input-conteiner" id="containerFacturacliente">
                 <label for="id-factura" class="form-label">N° Factura:</label>
-                <input type="text" id="idfactura" name="numeroFactura" class="form-control" readonly>
+                <input type="text" id="idfactura" name="numeroFactura" class="form-control"  placeholder="N° Factura" readonly>
                 <p class="mensaje"></p>
               </div>
               <div class="form-element input-conteiner" id="containerrtncliente">
-                <label for="rtn-cliente" class="form-label" id="" name="codC">RTN:</label>
-                <input type="text" id="rtnCliente" name="rtnCliente" class="form-control">
+                <label for="rtn-cliente" class="form-label" id="" name="codC"  >RTN:</label>
+                <input type="text" id="rtnCliente" name="rtnCliente" class="form-control" placeholder="RTN" >
                 <p class="mensaje"></p>
               </div>
               <div class="form-element input-conteiner">
                 <label for="nombre" class="form-label">Nombre Cliente:</label>
-                <input type="text" id="nombre" name="nombre" class="form-control" disabled>
+                <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre Cliente" disabled>
                 <p class="mensaje"></p>
               </div>
               <div class="form-element input-conteiner">
                 <label for="telefono" class="form-label">Teléfono:</label>
-                <input type="text" id="telefono" name="telefono" class="form-control" disabled>
+                <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Teléfono" disabled>
                 <p class="mensaje"></p>
               </div>
               <div class="form-element input-conteiner" id="containerCorreocliente">
                 <label for="correoL" class="form-label">Correo electrónico Cliente</label>
-                <input type="text" id="correoCliente" name="correoElectronico" class="form-control">
+                <input type="text" id="correoCliente" name="correoElectronico" class="form-control" placeholder="Correo Electrónico">
                 <p class="mensaje"></p>
               </div>
               <div class="form-element input-conteiner">
                 <label for="correoL" class="form-label">Correo electrónico destinado:</label>
-                <input type="text" id="correo" name="correoElectronico" class="form-control" disabled>
+                <input type="text" id="correo" name="correoElectronico" class="form-control" placeholder="Correo electrónico destinado" disabled>
                 <p class="mensaje"></p>
               </div>
             </div>
             <div class="group-form">
               <div class="form-element input-conteiner">
-                <label for="fecha-solicitud" class="form-label">Fecha solicitud:</label>
-                <input type="date" id="fechasolicitud" name="fechaSolicitud" class="form-control" disabled>
+                <label for="fecha-solicitud" class="form-label">Fecha Solicitud:</label>
+                <input type="date" id="fechasolicitud" name="fechaSolicitud" class="form-control" placeholder="Fecha Solicitud" disabled>
                 <p class="mensaje"></p>
               </div>
               <div class="form-element input-conteiner">
@@ -206,12 +206,12 @@ if (isset($_SESSION['usuario'])) {
 
               <div class="form-element input-conteiner">
                 <label for="direccion" class="form-label">Ubicación instalación:</label>
-                <input type="text" id="direccion" name="ubicacionInstalacion" class="form-control" disabled>
+                <input type="text" id="direccion" name="ubicacionInstalacion" class="form-control" placeholder="Ubicación instalación" disabled>
                 <p class="mensaje"></p>
               </div>
               <div class="form-element input-conteiner">
                 <label for="descripcion" class="form-label">Descripción De Servicios:</label>
-                <textarea type="text" id="descripcion" name="descripcion" class="form-control" disabled></textarea>
+                <textarea type="text" id="descripcion" name="descripcion" class="form-control" placeholder="Descripción" disabled></textarea>
                 <p class="mensaje"></p>
               </div>
             </div>
@@ -259,13 +259,13 @@ if (isset($_SESSION['usuario'])) {
   require_once('modalCarteraCliente.html');
   
 ?>
-  <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+ <script src="../../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js" crossorigin="anonymous"></script>
+  <script src="../../../Recursos/js/librerias/Sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
-  <!-- Scripts propios -->
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
+  <!-- Scripts propios -->
   <script src="../../../Recursos/js/index.js"></script>
   <script src="../../../Recursos/js/DataTableSolicitud/vistaClienteFrecuente.js" type="module"></script>
   <script src="../../../Recursos/js/DataTableSolicitud/validacionesNuevaSolicitud.js" type="module"></script>
