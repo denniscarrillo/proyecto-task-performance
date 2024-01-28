@@ -2,8 +2,8 @@
 // Include the main TCPDF library (search for installation path).
 require_once('../tcpdf.php');
 require_once("../../db/Conexion.php");
-require_once("../../Modelo/Articulo.php");
-require_once("../../Controlador/ControladorArticulo.php");
+require_once("../../Modelo/EstadoUsuario.php");
+require_once("../../Controlador/ControladorEstadoUsuario.php");
 require_once("../../Modelo/Parametro.php");
 require_once("../../Controlador/ControladorParametro.php");
 ob_start();
@@ -14,10 +14,8 @@ foreach($datosParametro  as $datos){
     $nombreP = $datos['NombreEmpresa'];
     $correoP = $datos['Correo'];
     $direccionP = $datos['direccion'];
-    // $sitioWebP = str_replace("http://", "", $datos['sitioWed']);
     $telefonoP = $datos['Telefono'];
     $telefono2P = $datos['Telefono2'];
-    
 }
 
 date_default_timezone_set('America/Tegucigalpa');
@@ -28,14 +26,15 @@ $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8',
 // set document information
 $pdf->setCreator(PDF_CREATOR);
 $pdf->setAuthor('Nicola Asuni');
-$pdf->setTitle('ReporteArticulos');
+$pdf->setTitle('ReporteEstadoUsuario');
 $pdf->setSubject('TCPDF Tutorial');
 $pdf->setKeywords('TCPDF, PDF, example, test, guide');
-
+//vertical 64
+//horizontal 152
 $width = 64; // Define el ancho que desea para su cadena de encabezado
 
 $PDF_HEADER_TITLE =  $nombreP;
-$PDF_HEADER_STRING = $direccionP . "\n"  .'Correo: ' . $correoP ."\nTeléfono: +" . $telefonoP.  ", +" . $telefono2P;
+$PDF_HEADER_STRING = $direccionP . "\n"  .'Correo: ' . $correoP ."\nTeléfono: +" . $telefonoP.  ", +" . $telefono2P ;
 $PDF_HEADER_STRING .= str_repeat(' ', $width - strlen($fechaActual)) . $fechaActual;
 $PDF_HEADER_LOGO = '../../../Recursos/' . ControladorParametro::obtenerUrlLogoReporte();
 // set default header data
@@ -54,7 +53,8 @@ $pdf->setHeaderMargin(PDF_MARGIN_HEADER);
 $pdf->setFooterMargin(PDF_MARGIN_FOOTER);
 
 // set auto page breaks
-$pdf->setAutoPageBreak(TRUE, 10);
+//$pdf->setAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+$pdf->setAutoPageBreak(TRUE, 13);
 
 // set image scale factor
 $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
@@ -73,38 +73,31 @@ $pdf->setFont('Helvetica', '', 11);
 $pdf->AddPage();
 // create some HTML content
 $html = '
-<P style="text-align: center; font-size: 18px;"><b>Reporte de Articulos</b></P>
+<P style="text-align: center; font-size: 18px;"><b>Reporte de Estado de Usuarios</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 40px">N°</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 150px">COD ARTÍCULO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">ARTÍCULO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 200px;">DETALLE</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 80px;">MARCA</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">CREADO POR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 60px;">ID</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 220px;">ESTADO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 180px;">CREADO POR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 180px;">FECHA CREACIÓN</td>
 </tr>
 ';
-$articulos = ControladorArticulo:: obtenerArticuloPdf($_GET['buscar']);
-foreach($articulos as $articulo){
-    $IdArticulo = $articulo['codigo'];
-    $nombreArticulo = $articulo['articulo'];
-    $Detalle = $articulo['detalle'];
-    $Marca = $articulo['marcaArticulo'];
-    $CreadoPor = $articulo['CreadoPor'];
-    $Cont++;
 
+$EstadoUsuario = ControladorEstadoUsuario::obtenerLosEstadoUsuarioPDF($_GET['buscar']);
+foreach($EstadoUsuario as $estados){
+    $idEstado = $estados['idEstado'];
+    $estadoU = $estados['estado'];
+    $creadoPor = $estados['CreadoPor'];
+    $fechaCreacion = $estados['FechaCreacion']->format('Y-m-d');
+    //$Cont++;
     $html .= '
     <tr>
-    <td style="text-align: center">'.$Cont.'</td>
-    <td style="text-align: center">'.$IdArticulo.'</td>
-    <td >'.$nombreArticulo.'</td>
-    <td >'.$Detalle.'</td>
-    <td style="text-align: center">'.$Marca.'</td>
-    <td >'.$CreadoPor.'</td>
+    <td style="text-align: center">'.$idEstado.'</td>
+    <td >'.$estadoU.'</td>
+    <td >'.$creadoPor.'</td>
+    <td >'.$fechaCreacion.'</td>
     </tr>
     ';
-    
-
 }
 
 $html.='
@@ -115,4 +108,4 @@ $html.='
 $pdf->writeHTML($html, true, false, true, false);
 //Close and output PDF document
 ob_end_clean();
-$pdf->Output('Reporte Articulos.pdf', 'I');
+$pdf->Output('ReporteEstadoUsuario.pdf', 'I');

@@ -153,7 +153,7 @@ $(document).on("click", "#btn_eliminar", function () {
           } else {
             Swal.fire(
               "Lo sentimos!",
-              "El parametro no puede ser eliminado.",
+              "El parámetro no puede ser eliminado.",
               "error"
             );
             tablaParametro.ajax.reload(null, false);
@@ -161,6 +161,14 @@ $(document).on("click", "#btn_eliminar", function () {
         },
       }); //Fin del AJAX
     }
+  });
+});
+
+$(document).on("click", "#btn_nuevoRegistro", function () {
+  Swal.fire({
+    icon: "error",
+    title: "Oops...",
+    text: "No se pueden ingresar nuevos parámetros!",
   });
 });
 

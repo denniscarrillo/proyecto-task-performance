@@ -14,4 +14,8 @@
         public static function eliminarEstadoU($idEstadoU){
             return  EstadoUsuario::eliminarEstadoU($idEstadoU);
         }
+
+        public static function obtenerLosEstadoUsuarioPDF($buscar){
+            return  EstadoUsuario::obtenerLosEstadoUsuarioPDF($buscar);
+        }
     }

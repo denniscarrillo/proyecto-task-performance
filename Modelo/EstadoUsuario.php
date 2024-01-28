@@ -83,4 +83,24 @@ class EstadoUsuario{
         }
     }
     
+    public static function obtenerLosEstadoUsuarioPDF($buscar){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT id_Estado_Usuario, descripcion, Creado_Por,
+         Fecha_Creacion FROM tbl_Estado_Usuario
+         WHERE CONCAT(id_Estado_Usuario, descripcion, Creado_Por, Fecha_Creacion) 
+         LIKE '%' + '$buscar' + '%';";
+        $estadoUsuario = sqlsrv_query($conexion, $query);
+        $estados = array();
+        while ($fila = sqlsrv_fetch_array($estadoUsuario, SQLSRV_FETCH_ASSOC)) {
+            $estados [] = [
+                'idEstado' => $fila['id_Estado_Usuario'],
+                'estado' => $fila['descripcion'],
+                'CreadoPor' => $fila['Creado_Por'],
+                'FechaCreacion' => $fila['Fecha_Creacion']
+            ];
+        }
+        sqlsrv_close($conexion);
+        return $estados;
+    }
 }

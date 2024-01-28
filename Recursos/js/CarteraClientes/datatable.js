@@ -1,5 +1,5 @@
 import { estadoValidado as validado } from "./ValidacionesModalNuevoCliente.js";
-import { estadoValidado as valido } from "./ValidacionesModalEditarCliente.js";
+import { validarEditar as valido } from "./ValidacionesModalEditarCliente.js";
 
 let tablaCarteraClientes = "";
 $(document).ready(function () {
@@ -74,6 +74,32 @@ $("#form-carteraCliente").submit(function (e) {
     });
     $("#modalNuevoCliente").modal("hide");
     limpiarForm();
+  }
+});
+let $rtn = document.getElementById('rtn');
+$rtn.addEventListener('focusout', function () {
+  let $mensaje = document.querySelector('.mensaje-rtn');
+  $mensaje.innerText = '';
+  $mensaje.classList.remove('mensaje-existe-cliente');
+  if($rtn.value.trim() != ''){
+    $.ajax({
+      url: "../../../Vista/crud/Venta/validarRtnCliente.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {
+        rtnCliente: $rtn.value
+      },
+      success: function (estado){
+        let $objExiste = JSON.parse(estado);
+        if ($objExiste){
+          $mensaje.innerText = 'RTN/DNI existente';
+          $mensaje.classList.add('mensaje-existe-cliente');
+        } else {
+          $mensaje.innerText = '';
+          $mensaje.classList.remove('mensaje-existe-cliente');
+        }
+      }
+    }); //Fin AJAX   
   }
 });
 //PENDIENTE TERMINAR

@@ -1,5 +1,5 @@
-import { estadoValidado } from "./vaidacionesNuevoEstadoUsuario.js";
-// import {estadoValidado as valido } from './validacionesModalEditarRol.js';
+import {estadoValidado} from "./validacionesNuevoEstadoUsuario.js";
+import {estadoValido} from './validacionesEditarEstadousuario.js';
 
 let tablaEstadoUsuario = "";
 $(document).ready(function () {
@@ -25,7 +25,7 @@ let procesarPermisoActualizar = (data) => {
       {
         data: "FechaCreacion.date",
         render: function (data) {
-          return data.slice(0, 19);
+          return data.slice(0, 10);
         },
       },
       {
@@ -93,7 +93,7 @@ $("#formEditEstadoU").submit(function (e) {
   //Obtener datos del nuevo Cliente
   let idEstadoU = $("#E_idEstadoU").val(),
     descripcion = $("#E_descripcion").val();
-  if (valido) {
+  if (estadoValido) {
     $.ajax({
       url: "../../../Vista/crud/estadoUsuario/editarEstadoUsuario.php",
       type: "POST",
@@ -113,6 +113,7 @@ $("#formEditEstadoU").submit(function (e) {
       },
     });
     $("#modalEditarEstadoU").modal("hide");
+    limpiarForm();
   }
 });
 
@@ -160,6 +161,12 @@ $(document).on("click", "#btn_eliminar", function () {
   });
 });
 
+// document.getElementById("button-x").addEventListener("click", () => {
+//   limpiarForm();
+// });
+// document.getElementById("btn-editarsubmit").addEventListener("click", () => {
+//   limpiarForm();
+// });
 document.getElementById("btn-cerrar").addEventListener("click", () => {
   limpiarForm();
 });
@@ -175,7 +182,19 @@ let limpiarForm = () => {
   $mensajes.forEach(($mensaje) => {
     $mensaje.innerText = "";
   });
-  let estado = document.getElementById("estado");
+  let estado = document.getElementById("estado"),
+   descripcion = document.getElementById("E_descripcion");
   //Vaciar campos cliente
   estado.value = "";
+  descripcion.value = "";
 };
+
+//Generar Pdf
+
+$(document).on("click", "#btn_Pdf", function () {
+  let buscar = $("#table-EstadoUsuarios_filter > label > input[type=search]").val();
+  window.open(
+    "../../../TCPDF/examples/reporteEstadoUsuario.php?buscar=" + buscar,
+    "_blank"
+  );
+});

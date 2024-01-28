@@ -2,7 +2,7 @@ import * as funciones from '../funcionesValidaciones.js';
 export let estadoValidado = false;
 //Objeto con expresiones regulares para los inptus
 const validaciones = {
-    soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
+    soloLetras: /^(?=.*[^a-zA-Z\/ .ÑñáéíóúÁÉÍÓÚs])+$/, //Solo letras
     caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
     caracterMas5veces: /^(?=.*(...)\1)/,
   };
@@ -23,7 +23,7 @@ $(document).ready(function (){
 })
 inputNuevaPregunta.addEventListener("keyup", ()=>{
     validarInputPregunta();
-    funciones.limitarCantidadCaracteres("pregunta", 30);
+    funciones.limitarCantidadCaracteres("pregunta", 60);
 })
 let validarInputPregunta = () =>{
   inputNuevaPregunta.value = inputNuevaPregunta.value.toUpperCase();

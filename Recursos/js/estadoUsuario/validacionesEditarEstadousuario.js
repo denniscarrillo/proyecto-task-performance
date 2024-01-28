@@ -2,7 +2,8 @@ import * as funciones from '../funcionesValidaciones.js';
 export let estadoValido = false;
 
 const validaciones = {
-    soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
+    //soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
+    soloLetras: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ\s])/,//Lentras, acentos y Ñ
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
     soloNumeros: /^[0-9 ]*$/,
     caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
@@ -11,40 +12,42 @@ const validaciones = {
     direccion: /^[a-zA-Z0-9 #.,-]+$/,
 };
 
-let inputseditarServicioTecnico = {
+let inputseditarEstado = {
    
-    EServicioTecnico: document.getElementById('E_servicio_Tecnico')
+    descripcionEstado: document.getElementById('E_descripcion')
 }
 let btnGuardar = document.getElementById('btn-editarsubmit');
 
 btnGuardar.addEventListener('click', () => {
-    validarInputServicioTecnico();
+  
+    validarInputDescripcionEstado();
     if (document.querySelectorAll(".mensaje_error").length == 0) {
         estadoValido = true;
     }else{
         estadoValido = false;
     }
+
 });
 
 
 
-let validarInputServicioTecnico = function () {
-    let EServicioTecnicoMayus = inputseditarServicioTecnico.EServicioTecnico.value.toUpperCase();
-    inputseditarServicioTecnico.EServicioTecnico.value = EServicioTecnicoMayus;
+let validarInputDescripcionEstado = function () {
+    let descripcionEstadoMayus = inputseditarEstado.descripcionEstado.value.toUpperCase();
+    inputseditarEstado.descripcionEstado.value = descripcionEstadoMayus;
     let estadoValidaciones = {
         estadoCampoVacio: false,
         estadoSoloLetras: false,
         estadoNoMasdeUnEspacios: false,
         estadoNoCaracteresSeguidos: false
     }
-    estadoValidaciones.estadoCampoVacio = funciones.validarCampoVacio(inputseditarServicioTecnico.EServicioTecnico);
+    estadoValidaciones.estadoCampoVacio = funciones.validarCampoVacio(inputseditarEstado.descripcionEstado);
     if(estadoValidaciones.estadoCampoVacio) {
-        estadoValidaciones.estadoSoloLetras = funciones.validarSoloLetras(inputseditarServicioTecnico.EServicioTecnico, validaciones.soloLetras);
+        estadoValidaciones.estadoSoloLetras = funciones.validarSoloLetras(inputseditarEstado.descripcionEstado, validaciones.soloLetras);
     } 
     if(estadoValidaciones.estadoSoloLetras) {
-        estadoValidaciones.estadoNoMasdeUnEspacios = funciones.validarMasdeUnEspacio(inputseditarServicioTecnico.EServicioTecnico);
+        estadoValidaciones.estadoNoMasdeUnEspacios = funciones.validarMasdeUnEspacio(inputseditarEstado.descripcionEstado);
     }
     if(estadoValidaciones.estadoNoMasdeUnEspacios) {
-        estadoValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter(inputseditarServicioTecnico.EServicioTecnico, validaciones.caracterMas3veces);
+        estadoValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter(inputseditarEstado.descripcionEstado, validaciones.caracterMas3veces);
     }
 }

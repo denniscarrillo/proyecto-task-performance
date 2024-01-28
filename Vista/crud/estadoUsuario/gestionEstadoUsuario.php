@@ -149,7 +149,7 @@ if (isset($_SESSION['usuario'])) {
           <div>
             <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal"
               data-bs-target="#modalNuevoEstadoUsuario"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
-            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
+              <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
               PDF</button>
           </div>
           <table class="display nowrap table" id="table-EstadoUsuarios" style="width:100%">
@@ -173,8 +173,8 @@ if (isset($_SESSION['usuario'])) {
   require('modalNuevoEstado.html');
   require('modalEditarEstadoUsuario.html');
   ?>
-  <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+ <script src="../../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js" crossorigin="anonymous"></script>
+  <script src="../../../Recursos/js/librerias/Sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
@@ -182,7 +182,7 @@ if (isset($_SESSION['usuario'])) {
   <!-- Scripts propios -->
   <script src="../../../Recursos/js/estadoUsuario/dataTableEstadoUsuario.js" type="module"></script>
   <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
-  <script src="../../../Recursos/js/DataTableObjeto/validacionNuevoEstadoUsuario.js" type="module"></script>
+  <script src="../../../Recursos/js/estadoUsuario/validacionesNuevoEstadoUsuario.js" type="module"></script>
   <script src="../../../Recursos/js/validacionesSidebar.js"></script>
   <!-- <script src="../../../Recursos/js/validacionesModalNuevoUsuario.js" type="module"></script> -->
   <!-- <script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script> -->
