@@ -27,6 +27,8 @@ btnGuardar.addEventListener('click', () => {
     validarInputMarca();
     if (document.querySelectorAll(".mensaje_error").length == 0) {
         estadoValido = true;
+    }else{
+        estadoValido = false;
     }
 });
 
