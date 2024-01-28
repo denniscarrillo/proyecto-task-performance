@@ -7,56 +7,58 @@
                 </div>
                 <div class="modal-body">
                     <form action="" method="post" id="form-usuario">
-                        <div class="grupo-form">
-                            <div class="mb-3">
-                                <label for="nombre" class="form-label">Nombre:</label>
-                                <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre del usuario">
-                                <p class="mensaje" id="mensaje"></p>
-                            </div>
-                            <div class="mb-3">
-                                <label for="usuario" class="form-label">Usuario:</label>
-                                <input type="text" name="usuario" id="usuario" class="form-control" placeholder="Usuario">
-                                <p class="mensaje"></p>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Contraseña:</label>
-                                
-                                <input type="password" name="password" id="password" class="form-control" placeholder="Contraseña">
-                                <p class="mensaje"></p>
-                            </div>            
-                            <div class="mb-3">
-                                <label for="password2" class="form-label">Confirmar Contraseña:</label>
-                                <input type="password" name="password2" id="password2" class="form-control" placeholder="Confirmar contraseña">
-                                <p class="mensaje"></p>
-                            </div> 
-                            <div>
-                                <input type="checkbox" id="checkbox"> Mostrar Contraseñas
-                            </div> 
-                        </div>
-                        <div class="grupo-form">
-                            <div class="mb-3">
-                                <label for="correo" class="form-label">Correo Electrónico:</label>
-                                <input type="text" name="correo" id="correo" class="form-control" placeholder="Correo electrónico">
-                                <p class="mensaje"></p>
-                            </div>
-                            <div class="mb-3">
-                                <label for="rol" class="form-label">Rol:</label>
-                                <!-- <input type="text" class="form-control" name="rol" id="rol" placeholder="Predeterminado" disabled> -->
-                                <select name="rol" id="rol" class="form-control"> 
-                                </select>
-                                <p class="mensaje"></p>
+                        <div class="container-group-form">
+                            <div class="grupo-form">
+                                <div class="mb-3">
+                                    <label for="nombre" class="form-label">Nombre:</label>
+                                    <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre del usuario">
+                                    <p class="mensaje" id="mensaje"></p>
                                 </div>
-                            <div class="mb-3">
-                                <label for="estado" class="form-label">Estado:</label>
-                                <input type="text" class="form-control" name="estado" id="estado" placeholder="Nuevo" disabled>
+                                <div class="mb-3">
+                                    <label for="usuario" class="form-label">Usuario:</label>
+                                    <input type="text" name="usuario" id="usuario" class="form-control" placeholder="Usuario">
+                                    <p class="mensaje"></p>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Contraseña:</label>
+                                    
+                                    <input type="password" name="password" id="password" class="form-control" placeholder="Contraseña">
+                                    <p class="mensaje"></p>
+                                </div>            
+                                <div class="mb-3">
+                                    <label for="password2" class="form-label">Confirmar Contraseña:</label>
+                                    <input type="password" name="password2" id="password2" class="form-control" placeholder="Confirmar contraseña">
+                                    <p class="mensaje"></p>
+                                </div> 
+                                <div>
+                                    <input type="checkbox" id="checkbox"> Mostrar Contraseñas
+                                </div> 
                             </div>
-                            <div class="mb-3">
-                                <label for="fecha_C" class="form-label">Fecha de Creación:</label>
-                                <input type="date" class="form-control" name="fecha_C" id="fecha_C"  disabled>
-                            </div>
-                            <div class="mb-3">
-                                <label for="fecha_V" class="form-label">Vencimiento de Contraseña:</label>
-                                <input type="date" class="form-control" name="fecha_V" id="fecha_V"  disabled>
+                            <div class="grupo-form">
+                                <div class="mb-3">
+                                    <label for="correo" class="form-label">Correo Electrónico:</label>
+                                    <input type="text" name="correo" id="correo" class="form-control" placeholder="Correo electrónico">
+                                    <p class="mensaje"></p>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="rol" class="form-label">Rol:</label>
+                                    <!-- <input type="text" class="form-control" name="rol" id="rol" placeholder="Predeterminado" disabled> -->
+                                    <select name="rol" id="rol" class="form-control"> 
+                                    </select>
+                                    <p class="mensaje"></p>
+                                    </div>
+                                <div class="mb-3">
+                                    <label for="estado" class="form-label">Estado:</label>
+                                    <input type="text" class="form-control" name="estado" id="estado" placeholder="Nuevo" disabled>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="fecha_C" class="form-label">Fecha de Creacion:</label>
+                                    <input type="date" class="form-control" name="fecha_C" id="fecha_C"  disabled>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="fecha_V" class="form-label">Vencimiento de Contraseña:</label>
+                                    <input type="date" class="form-control" name="fecha_V" id="fecha_V"  disabled>
+                                </div>
                             </div>
                         </div>
                         <div class="btn-guardar">

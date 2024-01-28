@@ -1,5 +1,5 @@
 import { estadoValidado as validado } from "./validacionesModalNuevoRol.js";
-import { estadoValidado as valido } from "./validacionesModalEditarRol.js";
+import { validarEditar as valido } from "./validacionesModalEditarRol.js";
 let tablaRol = "";
 $(document).ready(function () {
   let $idObjetoSistema = document.querySelector(".title-dashboard-task").id;
@@ -17,6 +17,7 @@ let procesarPermisoActualizar = (data) => {
     language: {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
+    scrollX: true,
     columns: [
       { data: "id_Rol" },
       { data: "rol" },
@@ -71,6 +72,33 @@ $("#form-Rol").submit(function (e) {
     });
     $("#modalNuevoRol").modal("hide");
     limpiarForm();
+  }
+});
+
+let $rol = document.getElementById('rol');
+$rol.addEventListener('focusout', function () {
+  let $mensaje = document.querySelector('.mensaje-rol');
+  $mensaje.innerText = '';
+  $mensaje.classList.remove('mensaje-existe-rol');
+  if($rol.value.trim() != ''){
+    $.ajax({
+      url: "../../../Vista/crud/rol/rolExistente.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {
+        rol: $rol.value
+      },
+      success: function (estado){
+        let $objExiste = JSON.parse(estado);
+        if ($objExiste){
+          $mensaje.innerText = 'Rol existente';
+          $mensaje.classList.add('mensaje-existe-rol');
+        } else {
+          $mensaje.innerText = '';
+          $mensaje.classList.remove('mensaje-existe-rol');
+        }
+      }
+    }); //Fin AJAX   
   }
 });
 
@@ -169,7 +197,7 @@ $(document).on("click", "#btn_eliminar", function () {
   if (rol == "SUPER ADMINISTRADOR" || rol == "PREDETERMINADO") {
     Swal.fire(
       "Sin acceso!",
-      "El rol "+rol+" no puede ser eliminado",
+      "El rol " + rol + " no puede ser eliminado",
       "error"
     );
   } else {
@@ -187,8 +215,7 @@ $(document).on("click", "#btn_eliminar", function () {
           url: "../../../Vista/crud/rol/eliminarRol.php",
           type: "POST",
           datatype: "json",
-          data: { idRol: idRol,
-          rol: rol},
+          data: { idRol: idRol, rol: rol },
           success: function (data) {
             if (JSON.parse(data).estadoEliminado) {
               Swal.fire("Eliminado!", "El Rol ha sido eliminado.", "success");

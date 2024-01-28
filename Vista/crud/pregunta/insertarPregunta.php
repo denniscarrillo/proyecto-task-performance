@@ -12,7 +12,7 @@
         $user = $_SESSION['usuario'];
         $insertarPregunta = new Pregunta();
         $insertarPregunta->pregunta = ($_POST['pregunta']);
-        $insertarPregunta->estadoPregunta = $_POST['estadoPregunta'];
+        $insertarPregunta->estadoPregunta = "ACTIVA";
         $insertarPregunta->CreadoPor = $user;
         ControladorPregunta::agregarPregunta($insertarPregunta);
         /* ========================= Evento Creacion pregunta. ==================================*/

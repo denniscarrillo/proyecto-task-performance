@@ -7,57 +7,54 @@
             </div>
             <div class="modal-body">
                 <form action="" method="post" id="form-Edit-Usuario">
-                    <div class="grupo-form">
-                        <div class="mb-3" hidden="true">
-                            <label for="nombre" class="form-label">ID :</label>
-                            <input type="text" name="nombre" id="E_IdUsuario" class="form-control" required>
+                    <div class="container-group-form">
+                        <div class="grupo-form">
+                            <div class="mb-3" hidden="true">
+                                <label for="nombre" class="form-label">ID:</label>
+                                <input type="text" name="nombre" id="E_IdUsuario" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre:</label>
+                                <input type="text" name="nombre" id="E_nombre" class="form-control">
+                                <p class="mensaje"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label for="usuario" class="form-label">Usuario:</label>
+                                <input type="text" name="usuario" id="E_usuario" class="form-control" disabled>
+                                <p class="mensaje"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label for="correo" class="form-label">Correo Electrónico:</label>
+                                <input type="text" name="correo" id="E_correo" class="form-control">
+                                <p class="mensaje"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label for="rol" class="form-label">Rol:</label>
+                                <select name="rol" id="E_rol" class="form-control">
+                                </select>
+                                <p class="mensaje"></p>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre:</label>
-                            <input type="text" name="nombre" id="E_nombre" class="form-control">
-                            <p class="mensaje"></p>
-                        </div>
-                        <div class="mb-3">
-                            <label for="usuario" class="form-label">Usuario:</label>
-                            <input type="text" name="usuario" id="E_usuario" class="form-control" disabled>
-                            <p class="mensaje"></p>
-                        </div>
-                        <!-- <div class="mb-3">
-                            <label for="password" class="form-label">Contraseña:</label>
-                            <input type="text" name="password" id="E_password" class="form-control" disabled required>
-                            <p class="mensaje"></p>
-                        </div> -->
-                        <div class="mb-3">
-                            <label for="correo" class="form-label">Correo Electrónico:</label>
-                            <input type="text" name="correo" id="E_correo" class="form-control">
-                            <p class="mensaje"></p>
-                        </div>
-                        <div class="mb-3">
-                            <label for="rol" class="form-label">Rol:</label>
-                            <select name="rol" id="E_rol" class="form-control">
-                            </select>
-                            <p class="mensaje"></p>
-                        </div>
-                    </div>
-                    <div class="grupo-form">
-                        
-                        <div class="mb-3">
-                            <label for="estado" class="form-label">Estado:</label>
-                            <select name="estado" id="E_estado" class="form-control">
-                            </select>
-                            <p class="mensaje"></p>
-                        </div>
-                        <div class="mb-3">
-                            <label for="fecha_C" class="form-label">Fecha de Creación:</label>
-                            <input type="date" name="fecha_C" id="E_fecha_C" class="form-control" disabled >
-                            </select>
-                            <p class="mensaje"></p>
-                        </div>
-                        <div class="mb-3">
-                            <label for="fecha_V" class="form-label">Vencimiento de Contraseña:</label>
-                            <input type="date" name="fecha_V" id="E_fecha_V" class="form-control" disabled>
-                            </select>
-                            <p class="mensaje"></p>
+                        <div class="grupo-form">
+                            
+                            <div class="mb-3">
+                                <label for="estado" class="form-label">Estado:</label>
+                                <select name="estado" id="E_estado" class="form-control">
+                                </select>
+                                <p class="mensaje"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label for="fecha_C" class="form-label">Fecha de Creacion:</label>
+                                <input type="date" name="fecha_C" id="E_fecha_C" class="form-control" disabled >
+                                </select>
+                                <p class="mensaje"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label for="fecha_V" class="form-label">Vencimiento de Contraseña:</label>
+                                <input type="date" name="fecha_V" id="E_fecha_V" class="form-control" disabled>
+                                </select>
+                                <p class="mensaje"></p>
+                            </div>
                         </div>
                     </div>
                     <div class="btn-guardar">

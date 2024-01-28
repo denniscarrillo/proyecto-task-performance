@@ -79,7 +79,8 @@ if (isset($_SESSION['usuario'])) {
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
   <!-- Estilos personalizados -->
   <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
-  <link href="../../../Recursos/css/modalNuevoEstado.css" rel="stylesheet">
+  <link href="../../../Recursos/css/ModalNuevoestado.css" rel="stylesheet">
+  <!-- <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet"> -->
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
@@ -151,7 +152,7 @@ if (isset($_SESSION['usuario'])) {
             <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
               PDF</button>
           </div>
-          <table class="table" id="table-EstadoUsuarios">
+          <table class="display nowrap table" id="table-EstadoUsuarios" style="width:100%">
             <thead>
               <tr>
                 <th scope="col"> ID </th>
@@ -170,7 +171,7 @@ if (isset($_SESSION['usuario'])) {
   </div>
   <?php
   require('modalNuevoEstado.html');
-  //   require('modalEditarUsuario.html');
+  require('modalEditarEstadoUsuario.html');
   ?>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
@@ -181,6 +182,7 @@ if (isset($_SESSION['usuario'])) {
   <!-- Scripts propios -->
   <script src="../../../Recursos/js/estadoUsuario/dataTableEstadoUsuario.js" type="module"></script>
   <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
+  <script src="../../../Recursos/js/DataTableObjeto/validacionNuevoEstadoUsuario.js" type="module"></script>
   <script src="../../../Recursos/js/validacionesSidebar.js"></script>
   <!-- <script src="../../../Recursos/js/validacionesModalNuevoUsuario.js" type="module"></script> -->
   <!-- <script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script> -->

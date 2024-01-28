@@ -1,69 +1,58 @@
 import * as funciones from '../funcionesValidaciones.js';
-export let estadoValidado = false;
+export let validarEditar = false;
 //Objeto con expresiones regulares para los inptus
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
+    caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
+    caracterMas5veces: /^(?=.*(...)\1)/,
+  };
+let inputEditarRol = {
+    descripcion: document.getElementById('E_descripcion')
 }
-//VARIABLES GLOBALES
-let estadoSoloLetras = {
-    estadoLetrasRol: true,
-    estadoLetrasDescripcion: true,
-};
-let estadoMasdeUnEspacio = {
-    estadoMasEspacioRol: true,
-    estadoMasEspacioDescripcion: true,
-};
+$(document).ready(function (){
+    //Evento clic para hacer todas las validaciones
+  document.getElementById("btn-guardar").addEventListener("click", () => {
+    validarInputDescripcion();
+    if (
+      document.querySelectorAll(".mensaje_error").length == 0 &&
+      document.querySelectorAll(".mensaje-existe-rol").length == 0
+    ) {
+        validarEditar = true;
+    }else{
+        validarEditar = false;
+    }
+  });
+})
 
-const $form = document.getElementById('form-Edit-Rol');
-const $Rol = document.getElementById('E_rol');
-const $Descripcion = document.getElementById('E_descripcion');
-
-/* ---------------- VALIDACIONES FORMULARIO GESTION NUEVO USUARIO ----------------------*/
-/* 
-    Antes de enviar datos del formulario, se comprobara que todas  
-    las validaciones se hayan cumplido.
-*/
-$form.addEventListener('submit', e => {
-    const estadoInputRol = funciones.validarCampoVacio($Rol);
-    const estadoInputDescripcion = funciones.validarCampoVacio($Descripcion);
-    if (estadoInputRol === false || estadoInputDescripcion === false) {
-        e.preventDefault();
-    } else {
-        if(estadoSoloLetras.estadoLetrasRol == false || estadoSoloLetras.estadoLetrasDescripcion == false){
-            e.preventDefault();
-            estadoSoloLetras.estadoLetrasRol = funciones.validarSoloLetras($Rol, validaciones.soloLetras);
-            estadoSoloLetras.estadoLetrasDescripcion = funciones.validarSoloLetras($Descripcion, validaciones.soloLetras);
-        } else{ 
-        if(estadoMasdeUnEspacio.estadoMasEspacioRol == false || estadoMasdeUnEspacio.estadoMasEspacioDescripcion == false){
-            e.preventDefault();
-            estadoMasdeUnEspacio.estadoMasEspacioRol = funciones.validarMasdeUnEspacio($Rol);
-            estadoMasdeUnEspacio.estadoMasEspacioDescripcion = funciones.validarMasdeUnEspacio($Descripcion);
-        } else {
-            estadoValidado = true;
-        } 
-      }
-   }
-});
-
-$Rol.addEventListener('keyup', () => {
-    estadoSoloLetras.estadoLetrasRol = funciones.validarSoloLetras($Rol, validaciones.soloLetras);
-    funciones.limitarCantidadCaracteres("E_rol", 45);
-});
-$Descripcion.addEventListener('keyup', () => {
-    estadoSoloLetras.estadoLetrasRol = funciones.validarSoloLetras($Descripcion, validaciones.soloLetras);
-    funciones.limitarCantidadCaracteres("E_descripcion", 300);
-});
-$Rol.addEventListener('focusout', () => {
-    if(estadoMasdeUnEspacio.estadoMasEspacioRol){
-        funciones.validarMasdeUnEspacio($Rol);
-     }
-     let rolMayus = $Rol.value.toUpperCase();
-     $Rol.value = rolMayus;  
-});
-$Descripcion.addEventListener('focusout', ()=>{
-    if(estadoMasdeUnEspacio.estadoMasEspacioDescripcion){
-        funciones.validarMasdeUnEspacio($Descripcion);
-     }
-     let descripcionMayus = $Descripcion.value.toUpperCase();
-     $Descripcion.value = descripcionMayus;  
- });
+inputEditarRol.descripcion.addEventListener("keyup", ()=>{
+    validarInputDescripcion();
+    funciones.limitarCantidadCaracteres("E_descripcion", 70);
+})
+let validarInputDescripcion = () =>{
+    inputEditarRol.descripcion.value = inputEditarRol.descripcion.value.toUpperCase();
+    let estadoValidacion = {
+        estCampoVacio: false,
+        estSoloLetras: false,
+        estaMasDeUnEspacio: false,
+        estMismoCaracter: false,
+    }
+    estadoValidacion.estCampoVacio = funciones.validarCampoVacio(
+      inputEditarRol.descripcion
+    );
+    estadoValidacion.estCampoVacio
+    ? (estadoValidacion.estSoloLetras = funciones.validarSoloLetras(
+      inputEditarRol.descripcion, 
+      validaciones.soloLetras
+    )):"";
+    estadoValidacion.estSoloLetras
+    ?(estadoValidacion.estaMasDeUnEspacio = funciones.validarMasdeUnEspacio(
+      inputEditarRol.descripcion
+    )):"";
+    estadoValidacion.estaMasDeUnEspacio
+    ?(estadoValidacion.estMismoCaracter = funciones.limiteMismoCaracter(
+      inputEditarRol.descripcion,
+      validaciones.caracterMas3veces
+    )):"";
+    estadoValidacion.estMismoCaracter 
+    ? funciones.caracteresMinimo(inputEditarRol.descripcion, 7):"";
+  }

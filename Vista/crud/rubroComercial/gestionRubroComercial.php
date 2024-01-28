@@ -127,9 +127,7 @@ if (isset($_SESSION['usuario'])) {
         $urlPerfilContraseniaUsuarios = '../PerfilUsuario/gestionPerfilContrasenia.php';
         $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
         require_once '../../layout/sidebar.php';
-        ?>
-      </div>
-
+        ?> </div>
 
       <div class="conteiner-main">
         <!-- Encabezado -->
@@ -152,7 +150,7 @@ if (isset($_SESSION['usuario'])) {
             <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
               PDF</button>
           </div>
-          <table class="table" id="table-RubroComercial">
+          <table class="display nowrap table" id="table-RubroComercial" style="width:100%">
             <thead>
               <tr>
                 <th scope="col"> ID </th>

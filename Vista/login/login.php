@@ -1,8 +1,9 @@
 <?php
-require_once('validacionesLogin.php');
-require_once('../../Modelo/Parametro.php');
-require_once('../../Controlador/ControladorParametro.php');
+  require_once('validacionesLogin.php');
+  require_once('../../Modelo/Parametro.php');
+  require_once('../../Controlador/ControladorParametro.php');
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 

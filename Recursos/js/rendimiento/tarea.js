@@ -182,7 +182,7 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
               <div>
                 <a href="../../../Vista/rendimiento/v_editarTarea.php?idTarea=${tarea.id}" class="btn-editar"><i class="fa-solid-btn fa-solid fa-pen-to-square"></i></a>
               </div>
-              <i class="fa-solid-btn fa-solid fa-tag"></i>
+              <i class=""></i>
               </div>
             </div>`;
           $elemento.innerHTML = $tareas;

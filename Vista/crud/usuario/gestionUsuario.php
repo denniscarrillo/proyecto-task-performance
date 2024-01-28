@@ -75,7 +75,7 @@ if (isset($_SESSION['usuario'])) {
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <!-- DataTables -->
   <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
-  <!-- <link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" rel="stylesheet"> -->
+  <link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
   <!-- Estilos personalizados -->
   <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
@@ -147,12 +147,10 @@ if (isset($_SESSION['usuario'])) {
           <div>
             <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal"
               data-bs-target="#modalNuevoUsuario"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
-            <!-- <a href="../../../TCPDF/examples/reporteriaListaUsuario.php" target="_blank" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> -->
             <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
               PDF</button>
-
           </div>
-          <table class="table" id="table-Usuarios">
+          <table class="display nowrap table" id="table-Usuarios" style="width:100%">
             <thead>
               <tr>
                 <th scope="col"> ID </th>

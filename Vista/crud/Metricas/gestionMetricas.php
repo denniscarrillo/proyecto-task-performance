@@ -203,7 +203,7 @@ if (isset($_SESSION['usuario'])) {
           </div>
           <div class="titulo">
             <H2 class="title-dashboard-task"
-              id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionMetricas.php'); ?>">Gestión de Metricas</H2>
+              id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionMetricas.php'); ?>">Gestión de Métricas</H2>
           </div>
         </div>
 
@@ -215,7 +215,7 @@ if (isset($_SESSION['usuario'])) {
             <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
               PDF</button>
           </div>
-          <table class="table" id="table-Metricas">
+          <table class="display nowrap table" id="table-Metricas" style="width:100%">
             <thead>
               <tr>
                 <th scope="col"> ID </th>

@@ -17,6 +17,7 @@ require_once('../../../Controlador/ControladorParametro.php');
   <link href='../../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
   <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
@@ -87,7 +88,7 @@ require_once('../../../Controlador/ControladorParametro.php');
             <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
               PDF</button>
           </div>
-          <table class="table" id="table-Permisos">
+          <table class="display nowrap table" id="table-Permisos" style="width:100%">
             <thead>
               <tr>
                 <th scope="col"> ROL</th>

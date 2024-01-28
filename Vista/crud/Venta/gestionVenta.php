@@ -78,6 +78,7 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link href="../../../Recursos/css/gestionVenta.css" rel="stylesheet" />
   <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
@@ -129,16 +130,17 @@ if (isset($_SESSION['usuario'])) {
       ?>
       </div>
       <div class="conteiner-main">
-            <!-- Encabezado -->
-          <div class= "encabezado">
-            <div class="navbar-conteiner">
-                <!-- Aqui va la barra -->
-                <?php include_once '../../layout/navbar.php'?>                             
-            </div>        
-            <div class ="titulo">
-                  <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('GESTIONVENTA.PHP');?>">Ventas</H2>
-            </div>  
+        <!-- Encabezado -->
+        <div class="encabezado">
+          <div class="navbar-conteiner">
+            <!-- Aqui va la barra -->
+            <?php include_once '../../layout/navbar.php'?>
           </div>
+          <div class="titulo">
+            <H2 class="title-dashboard-task"
+              id="<?php echo ControladorBitacora::obtenerIdObjeto('GESTIONVENTA.PHP');?>">Ventas</H2>
+          </div>
+        </div>
         <div class="table-conteiner">
           <div class="text-left mb-2">
             <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal"
@@ -146,7 +148,7 @@ if (isset($_SESSION['usuario'])) {
             <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
               PDF</button>
           </div>
-          <table class="table" id="table-Ventas">
+          <table class="display nowrap table" id="table-Ventas" style="width:100%">
             <thead>
               <tr>
                 <th scope="col"> N° FACTURA </th>
@@ -172,17 +174,19 @@ if (isset($_SESSION['usuario'])) {
       require('modalNuevaVenta.html');
     ?>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
-  </script>
-  <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
-  <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
-  <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  </script> -->
+  <script src="../../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js" crossorigin="anonymous"></script>
+  <script src="../../../Recursos/js/librerias/Sweetalert2.all.min.js"></script>
+  <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
+  <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
+  <!-- Scripts propios -->
+  <script src="../../../Recursos/js/Ventas/datatable.js" type="module"></script>
   <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../../Recursos/js/Ventas/validacionesNuevaVenta.js" type="module"></script>
-  <script src="../../../Recursos/js/Ventas/datatable.js" type="module"></script>
 </body>
+
 </html>

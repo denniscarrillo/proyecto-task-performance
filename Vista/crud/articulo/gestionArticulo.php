@@ -154,7 +154,7 @@ if (isset($_SESSION['usuario'])) {
           <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
             PDF</button>
         </div>
-        <table class="table" id="table-Articulos">
+        <table class="display nowrap table" id="table-Articulos" style="width:100%">
           <thead>
             <tr>
               <th scope="col"> CÓD ARTÍCULO</th>
@@ -181,19 +181,19 @@ if (isset($_SESSION['usuario'])) {
   require_once('modalEditarArticulo.html');
   
   ?>
- 
-<script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
-<script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
-<script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
-<script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-<script src="../../../Recursos/js/articulo/ValidacionesModalNuevoArticulo.js" type="module"></script>
-<script src="../../../Recursos/js/articulo/ValidacionesModalEditarArticulo.js" type="module"></script>
-<script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
-<script src="../../../Recursos/js/index.js"></script>
-<script src="../../../Recursos/js/articulo/dataTableArticulo.js" type="module"></script>
-<script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
+  <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+  <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
+  <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+  <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
+  <script src="../../../Recursos/js/articulo/ValidacionesModalNuevoArticulo.js" type="module"></script>
+  <script src="../../../Recursos/js/articulo/ValidacionesModalEditarArticulo.js" type="module"></script>
+  <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
+  <script src="../../../Recursos/js/index.js"></script>
+  <script src="../../../Recursos/js/articulo/dataTableArticulo.js" type="module"></script>
+  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
 </body>
 
 </html>

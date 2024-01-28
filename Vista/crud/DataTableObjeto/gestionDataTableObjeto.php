@@ -83,7 +83,7 @@ if (isset($_SESSION['usuario'])) {
   <!-- Estilos personalizados -->
   <!-- <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" /> -->
 
-   <link href="../../../Recursos/css/gestionObjetos.css" rel="stylesheet" />
+  <link href="../../../Recursos/css/gestionObjetos.css" rel="stylesheet" />
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
@@ -155,7 +155,7 @@ if (isset($_SESSION['usuario'])) {
             <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
               PDF</button>
           </div>
-          <table class="table" id="table-Objeto">
+          <table class="display nowrap table" id="table-Objeto" style="width:100%">
             <thead>
               <tr>
                 <th scope="col"> ID </th>

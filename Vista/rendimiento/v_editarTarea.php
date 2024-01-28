@@ -32,6 +32,7 @@ if (!isset($_SESSION['usuario'])) {
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1862/1862358.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
   <link rel="stylesheet" href="../../Recursos/bootstrap5/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="../../Recursos/js/librerias/css/select.dataTables.min.css"> -->
   <!-- Estilos layout -->
   <link rel='stylesheet' href='../../Recursos/css/layout/estilosEstructura.css'>
   <link rel='stylesheet' href='../../Recursos/css/tarea.css'>
@@ -316,6 +317,7 @@ if (!isset($_SESSION['usuario'])) {
   <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../Recursos/bootstrap5/bootstrap.min.js "></script>
   <script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
+  <!-- <script src="../../Recursos/js/librerias/dataTables.select.min.js"></script> -->
   <script src="../../Recursos/js/librerias/dataTables.bootstrap5.min.js"></script>
   <script src="../../Recursos/js/librerias/SweetAlert2.all.min.js"></script>
   <script src="../../Recursos/components/js/loader.js" type="module"></script>

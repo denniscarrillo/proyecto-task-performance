@@ -20,6 +20,8 @@ $(document).ready(function (){
       document.querySelectorAll(".mensaje-existe-cliente").length == 0
     ) {
       estadoValidado = true;
+    }else{
+      estadoValidado = false;
     }
   });
 });
@@ -42,6 +44,7 @@ let validarInputRTN = () => {
     estadoSN: false,
     estadoCV: false,
     estadoME: false,
+    estadoMO: false,
     estadoMC: false,
   };
   estadoValidaciones.estadoCV = funciones.validarCampoVacio(
@@ -64,7 +67,7 @@ let validarInputRTN = () => {
         validaciones.caracterMas5veces
       ))
     : "";
-  estadoValidaciones.estadoMC
+    estadoValidaciones.estadoMC
     ? funciones.caracteresMinimo(inputsNuevaVentas.rtn, 13)
     : "";
 };
@@ -88,5 +91,9 @@ let validarInputTotalVenta = () => {
         validaciones.numerosDecimales
       ))
     : "";
-    
+    estadoValidaciones.estadoSN
+    ? (estadoValidaciones.estadoMO = funciones.MayorACero(
+      inputsNuevaVentas.totalVenta
+    ))
+    :"";
 };

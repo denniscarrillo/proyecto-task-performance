@@ -55,8 +55,11 @@ h1{
     margin-bottom: 1rem;
     padding: 0.3rem;
     font-size: 1.2rem;
-    background-color: rgb(6, 113, 212);
+    background-color: #ee9827 !important;
     border-color: rgb(47, 210, 255);
+}
+.btn-primary:hover{
+    background-color: #4d4b4a !important;
 }
 .btn_Pdf {
     margin-bottom: 1rem;

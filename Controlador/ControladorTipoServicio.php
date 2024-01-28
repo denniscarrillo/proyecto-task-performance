@@ -20,7 +20,7 @@ class ControladorTipoServicio {
        return TipoServicio::editarTipoServicio($nuevoTipoServicio);
     }
 
-    public static function eliminandoTipoServicio($TipoServicio){
+    public static function eliminarTipoServicio($TipoServicio){
         return TipoServicio::eliminarTipoServicio($TipoServicio);
     }
 

@@ -18,7 +18,7 @@
 .modal-content{
     min-height: 25rem;
 }
-.mensaje-existe-cliente{
+.mensaje-existe-cliente, .mensaje-existe-pregunta{
     display: inline-block;
     background-color: #f2a694;
     color: rgb(209, 18, 18);

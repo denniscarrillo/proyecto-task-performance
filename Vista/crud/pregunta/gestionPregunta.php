@@ -84,7 +84,6 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
-  <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
   <title> Pregunta </title>
 </head>
 
@@ -153,7 +152,7 @@ if (isset($_SESSION['usuario'])) {
             <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
               PDF</button>
           </div>
-          <table class="table" id="table-Pregunta">
+          <table class="display nowrap table" id="table-Pregunta" style="width:100%">
             <thead>
               <tr>
                 <th scope="col"> N° </th>
@@ -177,13 +176,12 @@ if (isset($_SESSION['usuario'])) {
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-  <script src="../../../Recursos/js/pregunta/dataTablePregunta.js" type="module"></script>
+  <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
+  <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../../Recursos/js/pregunta/validacionesModalNuevaPregunta.js" type="module"></script>
   <script src="../../../Recursos/js/pregunta/validacionesModalEditarPregunta.js" type="module"></script>
-  <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-  <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
-  <!--<script src="../../../Recursos/js/validacionesModalEditarUsuario.js" type="module"></script>-->
+  <script src="../../../Recursos/js/pregunta/dataTablePregunta.js" type="module"></script>
 </body>
 
 </html>
