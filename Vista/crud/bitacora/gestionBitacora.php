@@ -150,8 +150,8 @@ if (isset($_SESSION['usuario'])) {
                 <th scope="col"> FECHA </th>
                 <th scope="col"> USUARIO </th>
                 <th scope="col"> OBJETO </th>
-                <th scope="col"> ACCION </th>
-                <th scope="col"> DESCRIPCION </th>
+                <th scope="col"> ACCIÓN </th>
+                <th scope="col"> DESCRIPCIÓN </th>
               </tr>
             </thead>
             <label>Seleccionar Rango:</label>

@@ -37,7 +37,7 @@ $width = 64; // Define el ancho que desea para su cadena de encabezado
 $PDF_HEADER_TITLE =  $nombreP;
 $PDF_HEADER_STRING = $direccionP . "\n"  .'Correo: ' . $correoP ."\nTeléfono: +" . $telefonoP.  ", +" . $telefono2P;
 $PDF_HEADER_STRING .= str_repeat(' ', $width - strlen($fechaActual)) . $fechaActual;
-$PDF_HEADER_LOGO = 'LOGO-reporte.jpg';
+$PDF_HEADER_LOGO = '../../../Recursos/' . ControladorParametro::obtenerUrlLogoReporte();
 // set default header data
 $pdf->setHeaderData($PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, $PDF_HEADER_TITLE, $PDF_HEADER_STRING);
 
@@ -77,8 +77,8 @@ $html = '
 <table border="1" cellpadding="4">
 <tr>
 <td style="background-color: #e54037;color: white; text-align: center; width: 40px">N°</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 120px">CODARTICULO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 200px;">ARTICULO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 120px">COD ARTÍCULO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 200px;">ARTÍCULO</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 200px;">DETALLE</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 80px;">MARCA</td>
 </tr>

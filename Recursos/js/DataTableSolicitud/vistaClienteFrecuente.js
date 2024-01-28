@@ -188,7 +188,7 @@ let obtenerFactura = function () {
       },
       "columns": [
         { "data": 'numFactura'},
-        { "data": 'codCliente' },
+        // { "data": 'codCliente' },
         { "data": 'nombreCliente' },
         { "data": 'rtnCliente' },
         {

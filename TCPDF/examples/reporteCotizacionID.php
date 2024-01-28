@@ -49,7 +49,7 @@ $width = 64; // Define el ancho que desea para su cadena de encabezado
 $PDF_HEADER_TITLE =  $nombreP;
 $PDF_HEADER_STRING = $direccionP . "\n"  .'Correo: ' . $correoP ."\nTeléfono: +" . $telefonoP.  ", +" . $telefono2P ;
 // $PDF_HEADER_STRING .= str_repeat(' ', $width - strlen($fechaActual)) . $fechaActual;
-$PDF_HEADER_LOGO = 'LOGO-reporte.jpg';
+$PDF_HEADER_LOGO = '../../../Recursos/' . ControladorParametro::obtenerUrlLogoReporte();
 // set default header data
 $pdf->setHeaderData($PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, $PDF_HEADER_TITLE, $PDF_HEADER_STRING);
 
@@ -99,12 +99,12 @@ $html .= '
     
     <table border="1" cellpadding="4">
     <tr>
-    <td style="background-color: #e54037;color: white; text-align: center; width: 50px;">Item</td>
-    <td style="background-color: #e54037;color: white; text-align: center; width: 150px;">Descripcion</td>
-    <td style="background-color: #e54037;color: white; text-align: center; width: 120px;">Marca</td>
-    <td style="background-color: #e54037;color: white; text-align: center; width: 80px;">Cant.</td>
-    <td style="background-color: #e54037;color: white; text-align: center; width: 120px;">Precio Unit.</td>
-    <td style="background-color: #e54037;color: white; text-align: center; width: 120px;">Total</td>
+    <td style="background-color: #e54037;color: white; text-align: center; width: 50px;">ITEM</td>
+    <td style="background-color: #e54037;color: white; text-align: center; width: 150px;">DESCRIPCIÓN</td>
+    <td style="background-color: #e54037;color: white; text-align: center; width: 120px;">MARCA</td>
+    <td style="background-color: #e54037;color: white; text-align: center; width: 80px;">CANT.</td>
+    <td style="background-color: #e54037;color: white; text-align: center; width: 120px;">PRECIO UNIT.</td>
+    <td style="background-color: #e54037;color: white; text-align: center; width: 120px;">TOTAL</td>
     </tr>
     ';
     
@@ -183,7 +183,7 @@ $html .= '
         <br>Fecha de trabajo deberá programarse una vez aceptada la cotización.</b>
         <br><br>Atentamente, 
         <br><b>'.$_GET['usuario'].'</b>
-        <br>Cocinas y Equipos
+        <br>Task Performance
         <br>Apoyo Técnico
         
     

@@ -157,12 +157,12 @@ if (isset($_SESSION['usuario'])) {
         <table class="table" id="table-Articulos">
           <thead>
             <tr>
-              <th scope="col"> COD ARTICULO</th>
-              <th scope="col"> ARTICULO </th>
+              <th scope="col"> CÓD ARTÍCULO</th>
+              <th scope="col"> ARTÍCULO </th>
               <th scope="col"> DETALLE </th>
               <th scope="col"> MARCA </th>
               <th scope="col"> CREADO POR </th>
-              <th scope="col"> FECHA CREACION </th>
+              <th scope="col"> FECHA CREACIÓN </th>
               <th scope="col"> ACCIONES</th>
             </tr>
           </thead>

@@ -19,7 +19,7 @@
                     <span class="notification-conteiner"><i class="nb fa-solid fa-circle-user"></i></span>
                     </a>
                     <ul class="dropdown" id="menu" >
-                           <span class="dropdown__span">Configuracion de Perfil</span>
+                           <span class="dropdown__span">Configuración de Perfil</span>
                             <div class="dropdow-divider" role="presentation">
                             
                             </div>

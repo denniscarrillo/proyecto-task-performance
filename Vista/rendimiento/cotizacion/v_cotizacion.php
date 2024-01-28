@@ -176,7 +176,7 @@ $datosCotizacion = ControladorTarea::obtenerDatos(intval($_GET['idTarea']), $_GE
                 <thead>
                   <tr>
                     <th class="th-col-row">ITEM</th>
-                    <th class="th-col-row">DESCRIPCION</th>
+                    <th class="th-col-row">DESCRIPCIÓN</th>
                     <th class="th-col-row">MARCA</th>
                     <th class="th-col-row">CANTIDAD</th>
                     <th class="th-col-row">PRECIO</th>
