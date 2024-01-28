@@ -203,7 +203,7 @@ if (isset($_SESSION['usuario'])) {
           </div>
           <div class="titulo">
             <H2 class="title-dashboard-task"
-              id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionMetricas.php'); ?>">Gestión de Metricas</H2>
+              id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionMetricas.php'); ?>">Gestión de Métricas</H2>
           </div>
         </div>
 
