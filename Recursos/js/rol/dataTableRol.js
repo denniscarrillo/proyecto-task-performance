@@ -17,6 +17,7 @@ let procesarPermisoActualizar = (data) => {
     language: {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
+    scrollX: true,
     columns: [
       { data: "id_Rol" },
       { data: "rol" },
@@ -169,7 +170,7 @@ $(document).on("click", "#btn_eliminar", function () {
   if (rol == "SUPER ADMINISTRADOR" || rol == "PREDETERMINADO") {
     Swal.fire(
       "Sin acceso!",
-      "El rol "+rol+" no puede ser eliminado",
+      "El rol " + rol + " no puede ser eliminado",
       "error"
     );
   } else {
@@ -187,8 +188,7 @@ $(document).on("click", "#btn_eliminar", function () {
           url: "../../../Vista/crud/rol/eliminarRol.php",
           type: "POST",
           datatype: "json",
-          data: { idRol: idRol,
-          rol: rol},
+          data: { idRol: idRol, rol: rol },
           success: function (data) {
             if (JSON.parse(data).estadoEliminado) {
               Swal.fire("Eliminado!", "El Rol ha sido eliminado.", "success");

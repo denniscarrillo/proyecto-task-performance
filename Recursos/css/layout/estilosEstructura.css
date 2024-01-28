@@ -41,7 +41,8 @@
   margin: 0;
 }
 .table-conteiner {
-  margin-top: -0.2%;
+  margin-top: 1rem;
+  /* width: 98%; */
 }
 .dataTables_wrapper .dataTables_length {
   margin-bottom: 8px;
@@ -115,7 +116,6 @@ table.dataTable.no-footer {
 .hidden {
   display: none;
 }
-
 .dataTables_wrapper .dataTables_length {
   margin-top: 14px;
   margin-left: 15px;
@@ -130,4 +130,7 @@ div.dataTables_wrapper {
 }
 .dataTables_scroll {
   box-shadow: 1px 1px 1px 1.2px #8f8f8f;
+}
+.dataTables_paginate {
+  margin-top: 0.4rem !important;
 }

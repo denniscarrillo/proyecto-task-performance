@@ -18,6 +18,7 @@ let procesarPermisoActualizar = (data) => {
     language: {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
+    scrollX: true,
     columns: [
       { data: "id_Pregunta" },
       { data: "pregunta" },
@@ -70,30 +71,30 @@ $("#form-Pregunta").submit(function (e) {
   }
 });
 
-let $pregunta = document.getElementById('pregunta');
-$pregunta.addEventListener('focusout', function () {
-  let $mensaje = document.querySelector('.mensaje-pregunta');
-  $mensaje.innerText = '';
-  $mensaje.classList.remove('mensaje-existe-pregunta');
-  if($pregunta.value.trim() != ''){
+let $pregunta = document.getElementById("pregunta");
+$pregunta.addEventListener("focusout", function () {
+  let $mensaje = document.querySelector(".mensaje-pregunta");
+  $mensaje.innerText = "";
+  $mensaje.classList.remove("mensaje-existe-pregunta");
+  if ($pregunta.value.trim() != "") {
     $.ajax({
       url: "../../../Vista/crud/pregunta/validarPreguntaExistente.php",
       type: "POST",
       datatype: "JSON",
       data: {
-        pregunta: $pregunta.value
+        pregunta: $pregunta.value,
       },
-      success: function (estadoPregunta){
+      success: function (estadoPregunta) {
         let $objPregunta = JSON.parse(estadoPregunta);
-        if ($objPregunta){
-          $mensaje.innerText = 'Pregunta existente';
-          $mensaje.classList.add('mensaje-existe-pregunta');
+        if ($objPregunta) {
+          $mensaje.innerText = "Pregunta existente";
+          $mensaje.classList.add("mensaje-existe-pregunta");
         } else {
-          $mensaje.innerText = '';
-          $mensaje.classList.remove('mensaje-existe-pregunta');
+          $mensaje.innerText = "";
+          $mensaje.classList.remove("mensaje-existe-pregunta");
         }
-      }
-    }); //Fin AJAX   
+      },
+    }); //Fin AJAX
   }
 });
 
@@ -147,7 +148,7 @@ $(document).on("click", "#btn_eliminar", function () {
     idPregunta = $(this).closest("tr").find("td:eq(0)").text(),
     pregunta = fila.find("td:eq(1)").text();
   Swal.fire({
-    title: "Estás seguro de eliminar la pregunta "+pregunta,
+    title: "Estás seguro de eliminar la pregunta " + pregunta,
     text: "No podrás revertir esto!",
     icon: "warning",
     showCancelButton: true,
@@ -167,8 +168,8 @@ $(document).on("click", "#btn_eliminar", function () {
         success: function (data) {
           if (JSON.parse(data).estadoEliminado) {
             Swal.fire(
-              "Eliminado!", 
-              "La pregunta ha sido eliminado.", 
+              "Eliminado!",
+              "La pregunta ha sido eliminado.",
               "success"
             );
           } else {
@@ -187,28 +188,28 @@ $(document).on("click", "#btn_eliminar", function () {
 });
 
 //Limpiar modal de crear
-document.getElementById('btn-cerrar').addEventListener('click', ()=>{
+document.getElementById("btn-cerrar").addEventListener("click", () => {
   limpiarForm();
-})
-document.getElementById('btn-x').addEventListener('click', ()=>{
+});
+document.getElementById("btn-x").addEventListener("click", () => {
   limpiarForm();
-})
+});
 let limpiarForm = () => {
-  let $inputs = document.querySelectorAll('.mensaje_error');
-  let $mensajes = document.querySelectorAll('.mensaje');
-  let $mensajeExiste = document.querySelector('.mensaje-pregunta')
-  $mensajeExiste.innerText = '';
-  $inputs.forEach($input => {
-    $input.classList.remove('mensaje_error');
+  let $inputs = document.querySelectorAll(".mensaje_error");
+  let $mensajes = document.querySelectorAll(".mensaje");
+  let $mensajeExiste = document.querySelector(".mensaje-pregunta");
+  $mensajeExiste.innerText = "";
+  $inputs.forEach(($input) => {
+    $input.classList.remove("mensaje_error");
   });
-  $mensajes.forEach($mensaje =>{
-    $mensaje.innerText = '';
+  $mensajes.forEach(($mensaje) => {
+    $mensaje.innerText = "";
   });
-  $mensajeExiste.classList.remove('.mensaje-existe-pregunta');
-  let pregunta = document.getElementById('pregunta');
+  $mensajeExiste.classList.remove(".mensaje-existe-pregunta");
+  let pregunta = document.getElementById("pregunta");
   //Vaciar campos cliente
-  pregunta.value = '';
-}
+  pregunta.value = "";
+};
 
 //Limpiar modal de editar
 document.getElementById("button-cerrar").addEventListener("click", () => {

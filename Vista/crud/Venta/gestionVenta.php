@@ -130,16 +130,17 @@ if (isset($_SESSION['usuario'])) {
       ?>
       </div>
       <div class="conteiner-main">
-            <!-- Encabezado -->
-          <div class= "encabezado">
-            <div class="navbar-conteiner">
-                <!-- Aqui va la barra -->
-                <?php include_once '../../layout/navbar.php'?>                             
-            </div>        
-            <div class ="titulo">
-                  <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('GESTIONVENTA.PHP');?>">Ventas</H2>
-            </div>  
+        <!-- Encabezado -->
+        <div class="encabezado">
+          <div class="navbar-conteiner">
+            <!-- Aqui va la barra -->
+            <?php include_once '../../layout/navbar.php'?>
           </div>
+          <div class="titulo">
+            <H2 class="title-dashboard-task"
+              id="<?php echo ControladorBitacora::obtenerIdObjeto('GESTIONVENTA.PHP');?>">Ventas</H2>
+          </div>
+        </div>
         <div class="table-conteiner">
           <div class="text-left mb-2">
             <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal"
@@ -147,7 +148,7 @@ if (isset($_SESSION['usuario'])) {
             <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
               PDF</button>
           </div>
-          <table class="table" id="table-Ventas">
+          <table class="display nowrap table" id="table-Ventas" style="width:100%">
             <thead>
               <tr>
                 <th scope="col"> N° FACTURA </th>
@@ -187,4 +188,5 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../../Recursos/js/Ventas/validacionesNuevaVenta.js" type="module"></script>
 </body>
+
 </html>
