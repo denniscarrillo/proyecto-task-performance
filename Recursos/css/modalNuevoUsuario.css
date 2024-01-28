@@ -1,11 +1,12 @@
 .mensaje {
-    position: absolute;
+    /* position: absolute; */
     color: red;
     font-size: 15px;
 }
 .mensaje_error {
     box-shadow: 0 0 0 .15rem #e15e3eac;
     border-color: red;
+    /* margin-bottom: 1rem; */
 }
 .mensaje_error:focus {
     box-shadow: 0 0 0 .25rem rgba(226, 73, 35, 0.455);

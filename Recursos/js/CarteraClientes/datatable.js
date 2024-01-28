@@ -1,5 +1,5 @@
 import { estadoValidado as validado } from "./ValidacionesModalNuevoCliente.js";
-// import { validarEditar as valido } from "./ValidacionesModalEditarCliente.js";
+import { validarEditar as valido } from "./ValidacionesModalEditarCliente.js";
 
 let tablaCarteraClientes = "";
 $(document).ready(function () {
@@ -90,7 +90,6 @@ $rtn.addEventListener('focusout', function () {
         rtnCliente: $rtn.value
       },
       success: function (estado){
-        console.log(estado);
         let $objExiste = JSON.parse(estado);
         if ($objExiste){
           $mensaje.innerText = 'RTN/DNI existente';
