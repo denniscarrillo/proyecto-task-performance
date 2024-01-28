@@ -22,6 +22,8 @@ btnGuardar.addEventListener('click', () => {
     validarInputDescripcionObjeto();
     if (document.querySelectorAll(".mensaje_error").length == 0) {
         estadoValidado = true;
+    }else{
+        estadoValidado = false;
     }
 });
 
