@@ -1,4 +1,4 @@
-import {estadoValidado as valido } from './validacionesModalEditarParametro.js';
+import {estadoValido} from './validacionesModalEditarParametro.js';
 
 let tablaParametro = '';
 $(document).ready(function () {
@@ -45,10 +45,12 @@ $(document).on("click", "#btn_editar", function(){
   let fila = $(this).closest("tr"),	        
   idParametro = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		            
   parametro = fila.find('td:eq(1)').text(),
-  valor = fila.find('td:eq(2)').text();
+  valor = fila.find('td:eq(2)').text(),
+  descripcion = fila.find('td:eq(3)').text();
   $("#E_idParametro").val(idParametro);
   $("#E_parametro").val(parametro);
   $("#E_valor").val(valor);
+  $("#E_descripcion").val(descripcion);
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");	
   $('#modalEditarParametro').modal('show');		   
@@ -59,8 +61,9 @@ $('#form-Edit-Parametro').submit(function (e) {
    //Obtener datos del nuevo Usuario
    let idParametro = $('#E_idParametro').val(),
    parametro =  $('#E_parametro').val(),
-   valor = $('#E_valor').val();
-   if(valido){
+   valor = $('#E_valor').val(),
+   descripcion = $('#E_descripcion').val();;
+   if(estadoValido){
     $.ajax({
       url: "../../../Vista/crud/parametro/editarParametro.php",
       type: "POST",
@@ -68,7 +71,8 @@ $('#form-Edit-Parametro').submit(function (e) {
       data: {
        idParametro: idParametro,
        parametro: parametro,
-       valor: valor
+       valor: valor,
+       descripcion : descripcion
       },
       success: function (data) {
         let resp = JSON.parse(data) 

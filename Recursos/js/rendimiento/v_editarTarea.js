@@ -202,6 +202,17 @@ $("#btn-articulos").click(() => {
       language: {
         url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
       },
+      // select: true,
+      // select: {
+      //   toggleable: true,
+      // },
+      // select: {
+      //   info: false,
+      // },
+      lengthMenu: [
+        [2, 5, 10, 20], //Define la cantidad de rows a mostrar en el DataTable
+        [2, 5, 10, 20], //Es lo que se muestra en el menu desplegable del DataTable
+      ],
       columns: [
         { data: "codArticulo" },
         { data: "articulo" },
@@ -209,7 +220,7 @@ $("#btn-articulos").click(() => {
         { data: "marcaArticulo" },
         {
           defaultContent:
-            '<div><button class="btns btn" id="btn_select-article"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>',
+            '<div class="btn-select-container"><button class="btns btn" id="btn_select-article"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>',
         },
       ],
     });
@@ -219,9 +230,7 @@ $(document).on("click", "tbody tr", function (e) {
   $(this).find("button")[0].classList.toggle("select_articulo");
   e.currentTarget.classList.toggle("ArtSelec");
 });
-$(document).on("click", "#btn_select-article", function () {
-  selectArticulos(this);
-});
+
 $(document).on("click", "#btn_select-cliente", function () {
   let fila = $(this).closest("tr");
   let codCliente = fila.find("td:eq(0)").text();
@@ -260,9 +269,6 @@ $("#btn_agregar").click(function () {
   $("#modalArticulos").modal("hide");
   $("#modalEditarTarea").modal("show");
 });
-let selectArticulos = function ($elementoHtml) {
-  $elementoHtml.classList.toggle("select-articulo");
-};
 let agregarArticulos = function () {
   let $Articulos = [];
   let productosSeleccionados = $("#table-Articulos")
@@ -278,6 +284,7 @@ let agregarArticulos = function () {
   }
   carritoArticulos($Articulos);
 };
+
 let carritoArticulos = ($productos) => {
   let productos = "";
   let $tableArticulos = document.getElementById("list-articulos");

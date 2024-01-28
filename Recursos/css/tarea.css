@@ -1,4 +1,4 @@
-.tareas-main{
+.tareas-main {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -8,7 +8,7 @@
   overflow-y: hidden; /*Aplicar scroll vertical automaticamente*/
   overflow-x: hidden;
 }
-.main-tareas{
+.main-tareas {
   height: 100vh;
   padding: 1rem;
   overflow-x: hidden;
@@ -24,7 +24,7 @@
   margin-bottom: 1rem;
   border-radius: 1rem;
 }
-.title-dashboard-task{
+.title-dashboard-task {
   text-align: left;
   font-weight: 600;
   font-size: 1.5rem;
@@ -33,7 +33,7 @@
   padding-left: 1.5rem;
   margin: 0;
 }
-.colum-task-conteiner{
+.colum-task-conteiner {
   display: flex;
   max-width: 100%;
   padding: 1rem;
@@ -42,18 +42,18 @@
   overflow-y: hidden;
   overflow-x: auto;
 }
-.colum-task-conteiner::-webkit-scrollbar{
+.colum-task-conteiner::-webkit-scrollbar {
   height: 0.5rem;
   border-radius: 4px;
   background: #555351;
 }
-.colum-task-conteiner::-webkit-scrollbar-thumb{
+.colum-task-conteiner::-webkit-scrollbar-thumb {
   background: #f4f2f0;
   border-radius: 4px;
   margin: 0.4rem;
   width: 1rem;
 }
-.task-conteiner{
+.task-conteiner {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -91,7 +91,7 @@ p {
   margin: 0;
 }
 .label-title-task {
-  display: block; 
+  display: block;
   text-align: center;
   margin-bottom: 2px;
 }
@@ -182,7 +182,7 @@ p {
 .input-title:focus {
   outline: none;
 }
-.new-form>button {
+.new-form > button {
   display: inline;
   text-align: center;
 }
@@ -225,14 +225,14 @@ p {
 .conteiner-text-task {
   padding: 0.4rem;
 }
-.conteiner-text-task>p {
+.conteiner-text-task > p {
   margin: 0.1rem;
 }
-#table-Articulos_wrapper .row {
+#table-Articulos_wrapper > .row {
+  align-items: center;
   min-height: -moz-fit-content;
   min-height: fit-content;
   align-content: space-between;
-  margin-top: 1rem;
   margin-bottom: 1rem;
 }
 .fa-solid-icon {
@@ -240,10 +240,12 @@ p {
   transition: color 0.1s ease 0.1s;
 }
 .fa-solid-icon:hover {
-  color: #1289d8;
+  color: #ee9866;
 }
-.select-articulo, .select-cliente, .select-vendedor{
-  color: #1289d8;
+.select-articulo,
+.select-cliente,
+.select-vendedor {
+  color: #ee9866;
 }
 #btn_agregar {
   display: block;
@@ -258,12 +260,12 @@ p {
   margin-bottom: 0;
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
- }
-.card_task.seleccionado{
+}
+.card_task.seleccionado {
   transform: scale(1.02) rotate(-1deg);
   box-shadow: 0px 0px 10px rgba(245, 140, 69, 0.658);
 }
-.card_task.drag{
+.card_task.drag {
   opacity: 0;
 }
 .priority-menu {
@@ -274,7 +276,7 @@ p {
   height: 50px;
   width: 200px;
 }
-.hidden{
+.hidden {
   display: none;
 }
 
@@ -291,10 +293,10 @@ p {
   color: #534f4a;
   transition-duration: 0.3s;
 }
-.fa-comment-dots:hover{
+.fa-comment-dots:hover {
   color: #de563b;
 }
-.tarea-id{
+.tarea-id {
   background-color: #ece9e9;
   color: #242222;
   font-weight: 400;
@@ -303,36 +305,36 @@ p {
   height: fit-content;
   padding-left: 0.3rem;
 }
-.card_task{
+.card_task {
   position: relative;
 }
-.menu-estado{
+.menu-estado {
   position: absolute;
-  background-color:  #e68b4a;
+  background-color: #e68b4a;
   right: 10px;
   box-shadow: 5px 4px 10px #67635f;
   z-index: 110;
 }
-.item-menu{
+.item-menu {
   text-align: left;
   font-size: 16px;
-  color:whitesmoke;
+  color: whitesmoke;
   padding: 0.2rem;
   padding-left: 0.8rem;
   padding-right: 0.8rem;
 }
-.item-menu:hover{
-  background-color:  #e4792c;
+.item-menu:hover {
+  background-color: #e4792c;
   cursor: pointer;
 }
-.menu-estados{
+.menu-estados {
   border: none;
   width: fit-content;
   margin-left: 11.5rem;
   padding-left: 0.4rem;
   padding-right: 0.4rem;
   background: none;
-  color:#242222;
+  color: #242222;
 }
 #btn_agregarVendedores {
   display: block;
@@ -346,7 +348,6 @@ p {
   margin-bottom: 0.2rem;
 }
 .mensaje {
-
   color: red;
   font-size: 12px;
   margin-bottom: 0.2rem;
@@ -354,24 +355,23 @@ p {
   text-align: left;
 }
 .mensaje_error {
-  box-shadow: 0 0 0 .15rem #e15e3eac;
+  box-shadow: 0 0 0 0.15rem #e15e3eac;
   border-color: red;
 }
 .mensaje_error:focus {
-  box-shadow: 0 0 0 .25rem rgba(226, 73, 35, 0.455);
+  box-shadow: 0 0 0 0.25rem rgba(226, 73, 35, 0.455);
   border-color: red;
 }
 .form-control-sm {
   border: 1px solid #edb99f;
 }
-#table-Vendedores_filter label input{
+#table-Vendedores_filter label input {
   display: inline;
   width: 17rem;
   margin-left: 0.4rem;
 }
-#table-Vendedores_length label select{
+#table-Vendedores_length label select {
   display: inline;
   border: 1px solid #edb99f;
   width: 4.5rem;
 }
-
