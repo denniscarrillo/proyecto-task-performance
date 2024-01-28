@@ -6,6 +6,9 @@ $(document).ready(function () {
         obtenerPermisos($idObjetoSistema, manejarPermisoInsertar);
         return;
     }
+    if((user == 'SUPERADMIN')){
+        document.getElementById('btn_Pdf').classList.remove('hidden');
+    }
     let $btnsNuevaTarea = document.querySelectorAll('.btn_nuevoRegistro');
     $btnsNuevaTarea.forEach($btnNuevaTarea => {
         $btnNuevaTarea.classList.remove('hidden');

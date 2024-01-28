@@ -17,24 +17,24 @@ h1{
     color: #ee9827;
     height: 3rem;
 }
-#form-usuario, #form-estado {
+/* #form-usuario, #form-estado {
     display: flex;
     padding: 2rem;
     padding-bottom: 4rem;
     position: relative;
-}
+} */
 .grupo-form {
     width: 40rem;
 }
 .mb-3 {
     margin: 0.8rem;
 }
-.btn-guardar {
+/* .btn-guardar {
     position: absolute;
     bottom: 0rem;
     left: 40%;
     right:30%;
-}
+} */
 .btn_nuevoRegistro {
     margin-bottom: 1rem;
     padding: 0.3rem;

@@ -180,6 +180,30 @@ class Pregunta
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $preguntas;
     }
+    public static function validarPreguntaExistente($pregunta){
+        $estadoPregunta = false;
+        try{
+            $preguntaExistente = array();
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $selectCliente = "SELECT pregunta FROM tbl_MS_Preguntas WHERE pregunta = '$pregunta';";
+            $consulta = sqlsrv_query($abrirConexion, $selectCliente);
+            if(sqlsrv_has_rows($consulta)){
+                while($fila = sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC)){
+                    $preguntaExistente = [
+                        'pregunta' => $fila['pregunta']
+                    ];
+                }
+                sqlsrv_close($abrirConexion); //Cerrar conexion
+                return $preguntaExistente;
+            } else {
+               return $estadoPregunta;
+            }
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
+    }
+
 
     // ControladorPregunta.php
 

@@ -36,5 +36,8 @@ class ControladorPregunta {
     public static function obtenerPreguntasUsuarioPDF($buscar){
     return Pregunta::obtenerPreguntasUsuarioPDF($buscar);
     }
+    public static function validarPreguntaExistente($pregunta){
+        return Pregunta::validarPreguntaExistente($pregunta);
+    }
        
 }

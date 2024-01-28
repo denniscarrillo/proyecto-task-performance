@@ -70,10 +70,11 @@ $('#form-New-Venta').submit(function (e) {
            'success',
          )
          tablaVentas.ajax.reload(null, false);
-         limpiarForm();
         }
       });
       $('#modalNuevaVenta').modal('hide');
+      limpiarForm();
+      // validado = false;
     }
 });
 

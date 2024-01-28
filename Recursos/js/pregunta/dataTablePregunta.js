@@ -1,5 +1,5 @@
 import { estadoValidado as validado } from "./validacionesModalNuevaPregunta.js";
-import { estadoValidado as valido } from "./validacionesModalEditarPregunta.js";
+import { validarEditar as valido } from "./validacionesModalEditarPregunta.js";
 let tablaPregunta = "";
 $(document).ready(function () {
   let $idObjetoSistema = document.querySelector(".title-dashboard-task").id;
@@ -67,6 +67,33 @@ $("#form-Pregunta").submit(function (e) {
     });
     $("#modalNuevaPregunta").modal("hide");
     limpiarForm();
+  }
+});
+
+let $pregunta = document.getElementById('pregunta');
+$pregunta.addEventListener('focusout', function () {
+  let $mensaje = document.querySelector('.mensaje-pregunta');
+  $mensaje.innerText = '';
+  $mensaje.classList.remove('mensaje-existe-pregunta');
+  if($pregunta.value.trim() != ''){
+    $.ajax({
+      url: "../../../Vista/crud/pregunta/validarPreguntaExistente.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {
+        pregunta: $pregunta.value
+      },
+      success: function (estadoPregunta){
+        let $objPregunta = JSON.parse(estadoPregunta);
+        if ($objPregunta){
+          $mensaje.innerText = 'Pregunta existente';
+          $mensaje.classList.add('mensaje-existe-pregunta');
+        } else {
+          $mensaje.innerText = '';
+          $mensaje.classList.remove('mensaje-existe-pregunta');
+        }
+      }
+    }); //Fin AJAX   
   }
 });
 
@@ -160,26 +187,28 @@ $(document).on("click", "#btn_eliminar", function () {
 });
 
 //Limpiar modal de crear
-document.getElementById("btn-cerrar").addEventListener("click", () => {
+document.getElementById('btn-cerrar').addEventListener('click', ()=>{
   limpiarForm();
-});
-document.getElementById("btn-x").addEventListener("click", () => {
+})
+document.getElementById('btn-x').addEventListener('click', ()=>{
   limpiarForm();
-});
-
+})
 let limpiarForm = () => {
-  let $inputs = document.querySelectorAll(".mensaje_error");
-  let $mensajes = document.querySelectorAll(".mensaje");
-  $inputs.forEach(($input) => {
-    $input.classList.remove("mensaje_error");
+  let $inputs = document.querySelectorAll('.mensaje_error');
+  let $mensajes = document.querySelectorAll('.mensaje');
+  let $mensajeExiste = document.querySelector('.mensaje-pregunta')
+  $mensajeExiste.innerText = '';
+  $inputs.forEach($input => {
+    $input.classList.remove('mensaje_error');
   });
-  $mensajes.forEach(($mensaje) => {
-    $mensaje.innerText = "";
+  $mensajes.forEach($mensaje =>{
+    $mensaje.innerText = '';
   });
-  let pregunta = document.getElementById("pregunta");
+  $mensajeExiste.classList.remove('.mensaje-existe-pregunta');
+  let pregunta = document.getElementById('pregunta');
   //Vaciar campos cliente
-  pregunta.value = "";
-};
+  pregunta.value = '';
+}
 
 //Limpiar modal de editar
 document.getElementById("button-cerrar").addEventListener("click", () => {

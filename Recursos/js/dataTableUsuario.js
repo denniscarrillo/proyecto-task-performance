@@ -26,7 +26,6 @@ let procesarPermisoActualizar = data => {
       { "data": "Rol" },
       {"defaultContent":
           `<div>
-          <button class="btns btn" id="btn_ver"><i class="fa-solid fa-eye"></i></button>
           <button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>
           <button class="btn_eliminar btns btn ${(permisos.Eliminar == 'N')? 'hidden': ''}" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button>
           </div>`
@@ -65,6 +64,7 @@ $('#btn_nuevoRegistro').click(async function () {
 
 //Crear nuevo usuario
 $('#form-usuario').submit(async function (e) {
+  console.log(validado);
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
      //Obtener datos del nuevo Usuario
      let nombre = $('#nombre').val();
