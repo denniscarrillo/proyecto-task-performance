@@ -1,38 +1,43 @@
 import {estadoValido} from './validacionesModalEditarParametro.js';
 
-let tablaParametro = '';
+let tablaParametro = "";
 $(document).ready(function () {
-  let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
+  let $idObjetoSistema = document.querySelector(".title-dashboard-task").id;
   obtenerPermisos($idObjetoSistema, procesarPermisoActualizar);
 });
 //Recibe la respuesta de la peticion AJAX y la procesa
-let procesarPermisoActualizar = data => {
+let procesarPermisoActualizar = (data) => {
   let permisos = JSON.parse(data);
-  tablaParametro = $('#table-Parametro').DataTable({
-    "ajax": {
-      "url": "../../../Vista/crud/parametro/obtenerParametro.php",
-      "dataSrc": ""
+  tablaParametro = $("#table-Parametro").DataTable({
+    ajax: {
+      url: "../../../Vista/crud/parametro/obtenerParametro.php",
+      dataSrc: "",
     },
-    "language":{
-      "url":"//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+    language: {
+      url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
-    "columns": [
-      { "data": "id"},
-      { "data": "parametro" },
-      { "data": "valorParametro" },
-      { "data": "descripcionParametro"},
-      { "data": "usuario" },
-      {"defaultContent":
-      `<div>
-        <button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>
-        <button class="btn_eliminar btns btn ${(permisos.Eliminar == 'N')? 'hidden': ''}" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button>
-      </div>`
-      }
-    ]
+    scrollX: true,
+    columns: [
+      { data: "id" },
+      { data: "parametro" },
+      { data: "valorParametro" },
+      { data: "descripcionParametro" },
+      { data: "usuario" },
+      {
+        defaultContent: `<div>
+        <button class="btn-editar btns btn ${
+          permisos.Actualizar == "N" ? "hidden" : ""
+        }" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>
+        <button class="btn_eliminar btns btn ${
+          permisos.Eliminar == "N" ? "hidden" : ""
+        }" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button>
+      </div>`,
+      },
+    ],
   });
-}
+};
 //Peticion  AJAX que trae los permisos
-let obtenerPermisos = function ($idObjeto, callback) { 
+let obtenerPermisos = function ($idObjeto, callback) {
   $.ajax({
       url: "../../../Vista/crud/permiso/obtenerPermisos.php",
       type: "POST",
@@ -52,11 +57,11 @@ $(document).on("click", "#btn_editar", function(){
   $("#E_valor").val(valor);
   $("#E_descripcion").val(descripcion);
   $(".modal-header").css("background-color", "#007bff");
-  $(".modal-header").css("color", "white");	
-  $('#modalEditarParametro').modal('show');		   
+  $(".modal-header").css("color", "white");
+  $("#modalEditarParametro").modal("show");
 });
 
-$('#form-Edit-Parametro').submit(function (e) {
+$("#form-Edit-Parametro").submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
    //Obtener datos del nuevo Usuario
    let idParametro = $('#E_idParametro').val(),
@@ -75,91 +80,96 @@ $('#form-Edit-Parametro').submit(function (e) {
        descripcion : descripcion
       },
       success: function (data) {
-        let resp = JSON.parse(data) 
-        let mensaje = document.querySelector('#form-Edit-Parametro > div.grupo-form > div:nth-child(3) > p');
-        if(!resp.estado){                   
+        let resp = JSON.parse(data);
+        let mensaje = document.querySelector(
+          "#form-Edit-Parametro > div.grupo-form > div:nth-child(3) > p"
+        );
+        if (!resp.estado) {
           mensaje.innerText = resp.mensaje;
-          mensaje.classList.add('mensaje_error');
+          mensaje.classList.add("mensaje_error");
           return;
-        }        
-        $('#modalEditarParametro').modal('hide');              
+        }
+        $("#modalEditarParametro").modal("hide");
         //Mostrar mensaje de exito
         Swal.fire(
-          'Actualizado!',
-          'El parámetro ha sido modificado!',
-          'success',
-        )
-        tablaParametro.ajax.reload(null, false);      
-      }     
-    });   
-   }
+          "Actualizado!",
+          "El parámetro ha sido modificado!",
+          "success"
+        );
+        tablaParametro.ajax.reload(null, false);
+      },
+    });
+  }
 });
 
 //Limpiar modal de editar
-document.getElementById('button-cerrar').addEventListener('click', ()=>{
+document.getElementById("button-cerrar").addEventListener("click", () => {
   limpiarFormEdit();
-})
-document.getElementById('button-x').addEventListener('click', ()=>{
+});
+document.getElementById("button-x").addEventListener("click", () => {
   limpiarFormEdit();
-})
+});
 let limpiarFormEdit = () => {
-  let $inputs = document.querySelectorAll('.mensaje_error');
-  let $mensajes = document.querySelectorAll('.mensaje');
-  $inputs.forEach($input => {
-    $input.classList.remove('mensaje_error');
+  let $inputs = document.querySelectorAll(".mensaje_error");
+  let $mensajes = document.querySelectorAll(".mensaje");
+  $inputs.forEach(($input) => {
+    $input.classList.remove("mensaje_error");
   });
-  $mensajes.forEach($mensaje =>{
-    $mensaje.innerText = '';
+  $mensajes.forEach(($mensaje) => {
+    $mensaje.innerText = "";
   });
-}
+};
 
 //Eliminar parametro
-$(document).on("click", "#btn_eliminar", function() {
-  let fila = $(this);        
-    let parametro= $(this).closest('tr').find('td:eq(1)').text();		    
-    Swal.fire({
-      title: 'Estas seguro de eliminar el parametro '+parametro+'?',
-      text: "No podras revertir esto!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, Borralo!'
-    }).then((result) => {
-      if (result.isConfirmed) {      
-        $.ajax({
-          url: "../../../Vista/crud/parametro/eliminarParametro.php",
-          type: "POST",
-          datatype:"json",    
-          data:  { parametro: parametro},    
-          success: function(data) {
-            let estadoEliminado = data[0].estadoEliminado;
-             console.log(data);
-             if(estadoEliminado == 'eliminado'){
-              tablaParametro.row(fila.parents('tr')).remove().draw();
-              Swal.fire(
-                'Eliminado!',
-                'El parametro ha sido eliminada.',
-                'success'
-              ) 
-              tablaParametro.ajax.reload(null, false);
-            } else {
-               Swal.fire(
-                 'Lo sentimos!',
-                 'El parametro no puede ser eliminado.',
-                 'error'
-               );
-               tablaParametro.ajax.reload(null, false);
-             }           
+$(document).on("click", "#btn_eliminar", function () {
+  let fila = $(this);
+  let parametro = $(this).closest("tr").find("td:eq(1)").text();
+  Swal.fire({
+    title: "Estas seguro de eliminar el parametro " + parametro + "?",
+    text: "No podras revertir esto!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Si, Borralo!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: "../../../Vista/crud/parametro/eliminarParametro.php",
+        type: "POST",
+        datatype: "json",
+        data: { parametro: parametro },
+        success: function (data) {
+          let estadoEliminado = data[0].estadoEliminado;
+          console.log(data);
+          if (estadoEliminado == "eliminado") {
+            tablaParametro.row(fila.parents("tr")).remove().draw();
+            Swal.fire(
+              "Eliminado!",
+              "El parametro ha sido eliminada.",
+              "success"
+            );
+            tablaParametro.ajax.reload(null, false);
+          } else {
+            Swal.fire(
+              "Lo sentimos!",
+              "El parametro no puede ser eliminado.",
+              "error"
+            );
+            tablaParametro.ajax.reload(null, false);
           }
-          }); //Fin del AJAX
-      }
-    });                
+        },
+      }); //Fin del AJAX
+    }
+  });
 });
 
-//Generar Pdf 
+//Generar Pdf
 
-$(document).on("click", "#btn_Pdf", function() {
-  let buscar = $('#table-Parametro_filter > label > input[type=search]').val();
-  window.open('../../../TCPDF/examples/reporteParametros.php?buscar='+buscar, '_blank');
-});                
+$(document).on("click", "#btn_Pdf", function () {
+  let buscar = $("#table-Parametro_filter > label > input[type=search]").val();
+  window.open(
+    "../../../TCPDF/examples/reporteParametros.php?buscar=" + buscar,
+    "_blank"
+  );
+});

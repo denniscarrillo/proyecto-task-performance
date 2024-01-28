@@ -131,8 +131,6 @@ if (isset($_SESSION['usuario'])) {
         require_once '../../layout/sidebar.php';
         ?>
       </div>
-
-
       <div class="conteiner-main">
         <!-- Encabezado -->
         <div class="encabezado">
@@ -146,7 +144,6 @@ if (isset($_SESSION['usuario'])) {
               Servicio</H2>
           </div>
         </div>
-
         <div class="table-conteiner">
           <div>
             <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal"
@@ -154,7 +151,7 @@ if (isset($_SESSION['usuario'])) {
             <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
               PDF</button>
           </div>
-          <table class="table" id="table-TipoServicio">
+          <table class="display nowrap table" id="table-TipoServicio" style="width:100%">
             <thead>
               <tr>
                 <th scope="col"> ID </th>
