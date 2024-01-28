@@ -17,6 +17,7 @@ require_once('../../../Controlador/ControladorParametro.php');
   <link href='../../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
   <link href="../../../Recursos/css/gestionComision.css" rel="stylesheet" />
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
@@ -97,7 +98,7 @@ require_once('../../../Controlador/ControladorParametro.php');
                 <th scope="col"> ACTUALIZAR </th>
                 <th scope="col"> ELIMINAR </th>
                 <th scope="col"> REPORTE </th>
-                <th scope="col"> ACCION </th>
+                <th scope="col"> ACCIÓN </th>
               </tr>
             </thead>
             <tbody class="table-group-divider">

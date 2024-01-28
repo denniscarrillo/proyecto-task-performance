@@ -87,7 +87,6 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <title> Gestion Rubro Comercial </title>
 </head>
-
 <body style="overflow: hidden;">
   <div class="conteiner">
     <div class="conteiner-global">
@@ -121,7 +120,7 @@ if (isset($_SESSION['usuario'])) {
         $urlPermisos = '../permiso/gestionPermisos.php';
         $urlRoles = '../rol/gestionRol.php';
         $urlServiciosTecnicos = './gestionTipoServicio.php';
-        $urlRazonSocial = './gestionRazonSocial.php';
+        $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
         $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
         $urlPerfilUsuario = '../PerfilUsuario/gestionPerfilUsuario.php';
         $urlPerfilContraseniaUsuarios = '../PerfilUsuario/gestionPerfilContrasenia.php';
@@ -157,7 +156,7 @@ if (isset($_SESSION['usuario'])) {
               <tr>
                 <th scope="col"> ID </th>
                 <th scope="col"> RUBRO COMERCIAL </th>
-                <th scope="col"> DESCRIPCION </th>
+                <th scope="col"> DESCRIPCIÓN </th>
                 <th scope="col"> ACCIONES </th>
               </tr>
             </thead>

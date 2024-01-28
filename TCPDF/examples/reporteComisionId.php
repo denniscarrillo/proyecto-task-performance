@@ -130,25 +130,25 @@ $html = '
 $html .= '
 
 <dl>
-<div style="flex: 1; text-align: left;"> <b> ID COMISION:  </b>' . $idComision . '</div>
+<div style="flex: 1; text-align: left;"> <b> ID COMISIÓN:  </b>' . $idComision . '</div>
 <div style="flex: 1; text-align: left;"> <b> N° FACTURA:  </b>' . $idFactura . '</div>
 <div style="flex: 1; text-align: left;"> <b> VENTA TOTAL:  </b>' . $VentaTotal . '</div>
 <div style="flex: 1; text-align: left;"> <b> PORCENTAJE:  </b>' . $valorPorcentaje . '%</div>
-<div style="flex: 1; text-align: left;"> <b> COMISION TOTAL:  </b>' . $ComisionT . '</div>
+<div style="flex: 1; text-align: left;"> <b> COMISIÓN TOTAL:  </b>' . $ComisionT . '</div>
 <div style="flex: 1; text-align: left;"> <b> ESTADO:  </b>' . $Estado . '</div>
-<div style="flex: 1; text-align: left;"> <b> ESTADO LIQUIDACION:  </b>' . $EstadoL . '</div>
+<div style="flex: 1; text-align: left;"> <b> ESTADO LIQUIDACIÓN:  </b>' . $EstadoL . '</div>
 <div style="flex: 1; text-align: left;"> <b> CREADO POR:  </b>' . $creadoPor . '</div>
 <div style="flex: 1; text-align: left;"> <b> FECHA DE CREACION:  </b>' . $fechaComision . '</div>
-<div style="flex: 1; text-align: left;"> <b> FECHA DE LIQUIDACION:  </b>' . $fechaLiquidacion . '</div>
+<div style="flex: 1; text-align: left;"> <b> FECHA DE LIQUIDACIÓN:  </b>' . $fechaLiquidacion . '</div>
 <div style="flex: 1; text-align: left;"> <b> MODIFICADO POR:  </b>' . $modificadoPor . '</div>
-<div style="flex: 1; text-align: left;"> <b> FECHA MODIFICACION:  </b>' . $fechaModificacion . '</div>
+<div style="flex: 1; text-align: left;"> <b> FECHA MODIFICACIÓN:  </b>' . $fechaModificacion . '</div>
 </dl>
     <br>
     <table cellpadding="5"  border= "1" >
     <tr>
         <th scope="col" style="background-color: #e54037; color: white;">ID VENDEDOR</th>
         <th scope="col" style="background-color: #e54037; color: white;">NOMBRE VENDEDOR</th>
-        <th scope="col" style="background-color: #e54037; color: white;">COMISION VENDEDOR</th>
+        <th scope="col" style="background-color: #e54037; color: white;">COMISIÓN VENDEDOR</th>
     </tr>';
     
     foreach ($ComisionId['vendedores'] as $vendedor) {

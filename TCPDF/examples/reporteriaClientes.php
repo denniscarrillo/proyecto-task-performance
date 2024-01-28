@@ -78,8 +78,8 @@ $html = '
 <td style="background-color: #e54037;color: white; text-align: center; width: 40px">N°</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 220px;">CLIENTE</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 105px;">RTN</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 92px;">TELEFONO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 190px;">DIRECCION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 92px;">TELÉFONO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 190px;">DIRECCIÓN</td>
 </tr>
 ';
 $clientes = ControladorVistaClientes::getClientesPdf($_GET['buscar']);

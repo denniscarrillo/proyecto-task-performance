@@ -1,22 +1,32 @@
-.btn-guardar {
-    /* position: absolute; */
-    bottom: 0rem;
-    left: 40%;
-    right:30%;
-    margin-top: 6rem;
-}
-
-#form_Articulo, #form_EditarArticulo {
-    display: flex;
-    padding: 2rem;
-    padding-bottom: 4rem;
-    position: relative;
-}
-
 .btn-Acciones{
     background-color: rgb(109, 179, 156);
     margin: 1rem;
     margin-left: 0;
+}
+.btn-guardar {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 1rem;
+}
+
+#form_Articulo, #form_EditarArticulo {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    position: relative;
+    align-items: space-around;
+    gap: 2rem;
+}
+.grupo-form{
+    max-width: 100%;
+    width: 100%;
+}
+.btn-guardar {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 1rem;
 }
 .table-conteiner{
     width: 95%;
@@ -32,25 +42,18 @@ h1{
     color: #ee9827;
     height: 3rem;
 }
-
-.grupo-form {
-    width: 40rem;
-}
 .mb-3 {
     margin: 0.8rem;
-}
-.btn-guardar {
-    position: absolute;
-    bottom: 0rem;
-    left: 40%;
-    right:30%;
 }
 .btn_nuevoRegistro {
     margin-bottom: 1rem;
     padding: 0.3rem;
     font-size: 1.2rem;
-    background-color: rgb(86, 174, 86);
+    background-color: #ee9827 !important;
     border-color: greenyellow;
+}
+.btn-primary:hover{
+    background-color: #4d4b4a !important;
 }
 .btns{
     margin-right: 0.6rem;
@@ -58,11 +61,11 @@ h1{
     font-size: 1.4rem;
     color: aliceblue;
 }
-#btn_ver{
-    background-color: rgb(86, 174, 86);
+.btn-primary{
+    background-color: #ee9827 !important;
 }
 #btn_editar{
-    background-color: rgb(45, 111, 203);
+    background-color: rgb(86, 174, 86) !important;
 }
 #btn_eliminar{
     background-color: rgba(255, 0, 0, 0.855);
@@ -71,10 +74,9 @@ h1{
     margin-bottom: 1rem;
     padding: 0.3rem;
     font-size: 1.2rem;
-    background-color: rgb(153, 37, 5);
+    background-color: rgb(153, 37, 5) !important;
     border-color: rgb(255, 78, 47);
 }
-
 .mensaje {
     position: absolute;
     color: red;
@@ -98,22 +100,10 @@ h1{
     font-size: 1.4rem;
     color: aliceblue;
 }
-#btn_ver{
-    background-color: rgb(86, 174, 86);
-    margin-left: -1rem;
-    margin-right: 0.1rem;
-}
 #btn_pdf{
     background-color: rgb(255, 120, 47);
     margin-left: -1rem; 
     margin-right: 1.1rem;
-}
-#btn_editar{
-    background-color: rgb(45, 111, 203);
-    margin-right: 0.1rem;
-}
-#btn_eliminar{
-    background-color: rgba(255, 0, 0, 0.855);
 }
 #btn_pdf_id{
     background-color: #f5971d;

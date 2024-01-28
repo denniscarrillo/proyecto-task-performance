@@ -76,7 +76,7 @@ $html = '
 <table border="1" cellpadding="4">
 <tr>
 <td style="background-color: #e54037;color: white; text-align: center; width: 100px;">N° FACTURA</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 85px;">CODIGO CLIENTE</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 85px;">CÓDIGO CLIENTE</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 250px;">NOMBRE CLIENTE</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 130px;">RTN</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 110px;">FECHA</td>

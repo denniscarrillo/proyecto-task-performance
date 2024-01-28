@@ -101,7 +101,7 @@ $html = '
 <table border="1" cellpadding="4">
 <tr>
 <td style="background-color: #e54037;color: white; text-align: center; width: 50px;">Item</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 150px;">Descripcion</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 150px;">Descripción</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 120px;">Marca</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 80px;">Cant.</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 120px;">Precio Unit.</td>
@@ -185,7 +185,7 @@ $html .='
     <br>Fecha de trabajo deberá programarse una vez aceptada la cotización.</b>
     <br><br>Atentamente, 
     <br><b>'.$datosCotGenerales['VENDEDOR'].'</b>
-    <br>Cocinas y Equipos
+    <br>Task Performance
     <br>Apoyo Técnico
     <br>'.$datosCotGenerales['TELVENDEDOR'].'
 

@@ -17,24 +17,24 @@ h1{
     color: #ee9827;
     height: 3rem;
 }
-#form-usuario, #form-estado {
+/* #form-usuario, #form-estado {
     display: flex;
     padding: 2rem;
     padding-bottom: 4rem;
     position: relative;
-}
+} */
 .grupo-form {
     width: 40rem;
 }
 .mb-3 {
     margin: 0.8rem;
 }
-.btn-guardar {
+/* .btn-guardar {
     position: absolute;
     bottom: 0rem;
     left: 40%;
     right:30%;
-}
+} */
 .btn_nuevoRegistro {
     margin-bottom: 1rem;
     padding: 0.3rem;
@@ -64,3 +64,20 @@ h1{
     background-color: rgb(153, 37, 5);
     border-color: rgb(255, 78, 47);
 }
+
+
+
+.mensaje {
+    position: absolute;
+    color: red;
+    font-size: 15px;
+}
+.mensaje_error {
+    box-shadow: 0 0 0 .15rem #e15e3eac;
+    border-color: red;
+}
+.mensaje_error:focus {
+    box-shadow: 0 0 0 .25rem rgba(226, 73, 35, 0.455);
+    border-color: red;
+}
+

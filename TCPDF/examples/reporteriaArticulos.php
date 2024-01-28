@@ -77,8 +77,8 @@ $html = '
 <table border="1" cellpadding="4">
 <tr>
 <td style="background-color: #e54037;color: white; text-align: center; width: 40px">N°</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 120px">CODARTICULO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 200px;">ARTICULO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 120px">COD ARTÍCULO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 200px;">ARTÍCULO</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 200px;">DETALLE</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 80px;">MARCA</td>
 </tr>

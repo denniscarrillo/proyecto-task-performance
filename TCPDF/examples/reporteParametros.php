@@ -76,9 +76,9 @@ $html = '
 <table border="1" cellpadding="4">
 <tr>
 <td style="background-color: #e54037;color: white; text-align: center; width: 60px;">N°</td>
-<td style="background-color: #e54037;color: white; text-align: center">PARAMETROS</td>
+<td style="background-color: #e54037;color: white; text-align: center">PARÁMETROS</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 180px;">VALOR</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 327px;">DESCRIPCION</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 327px;">DESCRIPCIÓN</td>
 <td style="background-color: #e54037;color: white; text-align: center">USUARIO</td>
 </tr>
 ';

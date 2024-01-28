@@ -132,7 +132,7 @@ if (!isset($_SESSION['usuario'])) {
               </div>
               <div class="mb-3 data-container title_container">
                 <div class="data-container title_container">
-                  <label for="input-titulo-tarea" class="form-label label-title-task">Titulo de la tarea</label>
+                  <label for="input-titulo-tarea" class="form-label label-title-task">Título de la tarea</label>
                   <input type="text" name="input-titulo-tarea" id="input-titulo-tarea" class="form-control"
                     value="<?php echo ControladorTarea::obtenerEstadoTarea(intval($_GET['idTarea']))['titulo'] ?>">
                   <p class="mensaje"></p>

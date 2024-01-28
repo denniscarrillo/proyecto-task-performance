@@ -219,7 +219,7 @@ if (isset($_SESSION['usuario'])) {
             <thead>
               <tr>
                 <th scope="col"> ID </th>
-                <th scope="col"> METRICA </th>
+                <th scope="col"> MÉTRICA </th>
                 <th scope="col"> META </th>
                 <th scope="col"> ACCIONES </th>
               </tr>

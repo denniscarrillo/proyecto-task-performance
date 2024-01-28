@@ -158,7 +158,7 @@ if (isset($_SESSION['usuario'])) {
               <tr>
                 <th scope="col"> ID PORCENTAJE</th>
                 <th scope="col"> VALOR DE PORCENTAJE </th>
-                <th scope="col"> DESCRIPCION </th>
+                <th scope="col"> DESCRIPCIÓN </th>
                 <th scope="col"> ESTADO DE PORCENTAJE </th>
                 <th scope="col"> ACCIONES </th>
               </tr>

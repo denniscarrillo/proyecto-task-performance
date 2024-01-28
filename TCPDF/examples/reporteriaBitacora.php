@@ -72,15 +72,15 @@ $pdf->setFont('Helvetica', '', 11);
 $pdf->AddPage();
 // create some HTML content
 $html = '
-<P style="text-align: center; font-size: 18px;"><b>Reporte de Bitacora</b></P>
+<P style="text-align: center; font-size: 18px;"><b>Reporte de Bitácora</b></P>
 <table border="1" cellpadding="4">
 <tr>
 <td style="background-color: #e54037;color: white; text-align: center; width: 40px;">N°</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 147px;">FECHA</td>
 <td style="background-color: #e54037;color: white; text-align: center">USUARIO</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 170px;">OBJETO</td>
-<td style="background-color: #e54037;color: white; text-align: center">ACCION</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 277px;">DESCRIPCION</td>
+<td style="background-color: #e54037;color: white; text-align: center">ACCIÓN</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 277px;">DESCRIPCIÓN</td>
 </tr>
 ';
 
