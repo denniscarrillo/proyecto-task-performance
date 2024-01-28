@@ -143,7 +143,7 @@ if (isset($_SESSION['usuario'])) {
           </div>
         </div>
         <div class="table-conteiner">
-          <table class="table" id="table-Bitacora">
+          <table class="display nowrap table" id="table-Bitacora" style="width:100%">
             <thead>
               <tr>
                 <th scope="col"> N° </th>
