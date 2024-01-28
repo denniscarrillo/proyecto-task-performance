@@ -112,6 +112,7 @@ $("#form-Edit_rubroComercial").submit(function (e) {
           "success"
         );
         tablaRubroComercial.ajax.reload(null, false);
+        limpiarFormEdit();
       },
     });
     $("#modalEditarRubroComercial").modal("hide");
@@ -189,7 +190,7 @@ let limpiarForm = () => {
 };
 
 //Limpiar modal de editar
-document.getElementById("btn-cerrar").addEventListener("click", () => {
+document.getElementById("btn-cerrar-Editar").addEventListener("click", () => {
   limpiarFormEdit();
 });
 document.getElementById("btn-x").addEventListener("click", () => {

@@ -109,10 +109,11 @@ $("#form-Edit_razonSocial").submit(function (e) {
         //Mostrar mensaje de exito
         Swal.fire(
           "Actualizado!",
-          "La razon social ha sido modificado!",
+          "La razón social ha sido modificado!",
           "success"
         );
         tablaRazonSocial.ajax.reload(null, false);
+        limpiarFormEdit();
       },
     });
     $("#modalEditarRazonSocial").modal("hide");
@@ -149,14 +150,14 @@ $(document).on("click", "#btn_eliminar", function () {
             tablaRazonSocial.row(fila.parents("tr")).remove().draw();
             Swal.fire(
               "Lo sentimos!",
-              "La razon Social no puede ser eliminada.",
+              "La razón Social no puede ser eliminada.",
               "error"
             );
             tablaRazonSocial.ajax.reload(null, false);
           } else {
             Swal.fire(
               "Eliminada!",
-              "La razon Social ha sido Eliminada!.",
+              "La razón Social ha sido Eliminada!.",
               "success"
             );
             tablaRazonSocial.ajax.reload(null, false);
@@ -191,7 +192,7 @@ let limpiarForm = () => {
 };
 
 //Limpiar modal de editar
-document.getElementById("btn-cerrar").addEventListener("click", () => {
+document.getElementById("btn-cerrar-Editar").addEventListener("click", () => {
   limpiarFormEdit();
 });
 document.getElementById("btn-x").addEventListener("click", () => {

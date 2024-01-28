@@ -69,7 +69,10 @@ let iniciarDataTable = function (fechaDesde, fechaHasta) {
       { data: "rtnCliente" },
       { data: "totalVenta" },
       { data: "creadoPor" },
-      { data: "fechaCreacion"
+      { data: "fechaCreacion",
+      render: function (data) {
+        return data.slice(0, 19);
+      },
       },
       {
         defaultContent:
