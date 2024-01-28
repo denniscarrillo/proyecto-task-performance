@@ -2,7 +2,7 @@ import * as funciones from '../funcionesValidaciones.js';
 export let estadoValidado = false;
 
 const validaciones = {
-    soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
+    soloLetras: /^(?=.,*[^a-zA-Z\s,])/, //Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
     soloNumeros: /^[0-9 ]*$/,
     caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
@@ -44,14 +44,12 @@ let validarInputArticulo = function () {
     }
     estadoValidaciones.estadoCampoVacio = funciones.validarCampoVacio(inputsNuevoArticulo.Articulo);
     if(estadoValidaciones.estadoCampoVacio) {
-        estadoValidaciones.estadoSoloLetras = funciones.validarSoloLetras(inputsNuevoArticulo.Articulo, validaciones.soloLetras);
-    } 
-    if(estadoValidaciones.estadoSoloLetras) {
         estadoValidaciones.estadoNoMasdeUnEspacios = funciones.validarMasdeUnEspacio(inputsNuevoArticulo.Articulo);
-    }
-    if(estadoValidaciones.estadoNoMasdeUnEspacios) {
+    } 
+    if(  estadoValidaciones.estadoNoMasdeUnEspacios) {
         estadoValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter(inputsNuevoArticulo.Articulo, validaciones.caracterMas3veces);
     }
+    
 }
 
 let validarInputDetalle = function () {
