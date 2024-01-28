@@ -17,7 +17,7 @@ h1{
     color: #ee9827;
     height: 3rem;
 }
-#form-usuario, #form-Edit-Usuario, #form-estado{
+#form-usuario, #form-Edit-Usuario, #form-estado, #formEditEstadoU{
     display: flex;
     flex-direction: column;
     padding: 2rem;
