@@ -1,4 +1,4 @@
-import {estadoValidado } from './ValidacionesModalNuevoArticulo.js';
+import { estadoValidado } from "./ValidacionesModalNuevoArticulo.js";
 import { estadoValido } from "./ValidacionesModalEditarArticulo.js";
 
 let tablaArticulo = "";
@@ -19,6 +19,7 @@ let procesarPermisoActualizar = (data) => {
     language: {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
+    scrollX: true,
     columns: [
       { data: "codigo" },
       { data: "articulo" },
@@ -51,7 +52,7 @@ $("#form_Articulo").submit(function (e) {
   let Articulo = $("#Articulo").val();
   let Detalle = $("#Detalle").val();
   let Marca = $("#Marca").val();
- 
+
   if (estadoValidado) {
     $.ajax({
       url: "../../../Vista/crud/articulo/nuevoArticulo.php",
@@ -109,8 +110,8 @@ $("#form_EditarArticulo").submit(function (e) {
     Articulo = $("#A_Articulo").val(),
     Detalle = $("#A_Detalle").val(),
     Marca = $("#A_Marca").val();
- 
-  if ( estadoValido) {
+
+  if (estadoValido) {
     $.ajax({
       url: "../../../Vista/crud/articulo/editarArticulo.php",
       type: "POST",
@@ -152,17 +153,13 @@ $(document).on("click", "#btn_eliminar", function () {
         datatype: "json",
         data: { codArticulo: codArticulo },
         success: function (data) {
-          if(JSON.parse(data).estadoEliminado){
-            Swal.fire(
-              'Eliminado!',
-              'El artículo ha sido eliminado',
-              'success'
-            ) 
+          if (JSON.parse(data).estadoEliminado) {
+            Swal.fire("Eliminado!", "El artículo ha sido eliminado", "success");
           } else {
             Swal.fire(
-              'Lo sentimos!',
-              'El artículo no puede ser eliminado',
-              'error'
+              "Lo sentimos!",
+              "El artículo no puede ser eliminado",
+              "error"
             );
             return;
           }
@@ -173,29 +170,29 @@ $(document).on("click", "#btn_eliminar", function () {
   });
 });
 
-document.getElementById('btn-cerrar').addEventListener('click', ()=>{
+document.getElementById("btn-cerrar").addEventListener("click", () => {
   limpiarForm();
-})
-document.getElementById('btn-x').addEventListener('click', ()=>{
+});
+document.getElementById("btn-x").addEventListener("click", () => {
   limpiarForm();
-})
+});
 let limpiarForm = () => {
-  let $inputs = document.querySelectorAll('.mensaje_error');
-  let $mensajes = document.querySelectorAll('.mensaje');
-  $inputs.forEach($input => {
-    $input.classList.remove('mensaje_error');
+  let $inputs = document.querySelectorAll(".mensaje_error");
+  let $mensajes = document.querySelectorAll(".mensaje");
+  $inputs.forEach(($input) => {
+    $input.classList.remove("mensaje_error");
   });
-  $mensajes.forEach($mensaje =>{
-    $mensaje.innerText = '';
+  $mensajes.forEach(($mensaje) => {
+    $mensaje.innerText = "";
   });
-  let articulo = document.getElementById('Articulo'),
-    detalle = document.getElementById('Detalle'),
-    marca = document.getElementById('Marca');
+  let articulo = document.getElementById("Articulo"),
+    detalle = document.getElementById("Detalle"),
+    marca = document.getElementById("Marca");
   //Vaciar campos cliente
-    articulo.value = '';
-    detalle.value = '';
-    marca.value = '';
-}
+  articulo.value = "";
+  detalle.value = "";
+  marca.value = "";
+};
 
 //Limpiar modal de editar
 // document.getElementById('button-cerrar').addEventListener('click', ()=>{

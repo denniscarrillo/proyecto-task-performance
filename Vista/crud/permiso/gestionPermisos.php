@@ -88,7 +88,7 @@ require_once('../../../Controlador/ControladorParametro.php');
             <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
               PDF</button>
           </div>
-          <table class="table" id="table-Permisos">
+          <table class="display nowrap table" id="table-Permisos" style="width:100%">
             <thead>
               <tr>
                 <th scope="col"> ROL</th>

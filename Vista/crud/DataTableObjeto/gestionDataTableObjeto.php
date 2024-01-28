@@ -155,7 +155,7 @@ if (isset($_SESSION['usuario'])) {
             <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
               PDF</button>
           </div>
-          <table class="table" id="table-Objeto">
+          <table class="display nowrap table" id="table-Objeto" style="width:100%">
             <thead>
               <tr>
                 <th scope="col"> ID </th>

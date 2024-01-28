@@ -78,7 +78,7 @@ if (isset($_SESSION['usuario'])) {
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
-  <link href="../../../Recursos/css/gestionCarteraClientes.css" rel="stylesheet"/>
+  <link href="../../../Recursos/css/gestionCarteraClientes.css" rel="stylesheet" />
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
@@ -152,7 +152,7 @@ if (isset($_SESSION['usuario'])) {
             <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
               PDF</button>
           </div>
-          <table class="table" id="table-Pregunta">
+          <table class="display nowrap table" id="table-Pregunta" style="width:100%">
             <thead>
               <tr>
                 <th scope="col"> N° </th>

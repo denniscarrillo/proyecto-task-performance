@@ -101,7 +101,7 @@ require_once('../../Controlador/ControladorParametro.php');
               <!-- <a href="ReporteComisionExcel.php" target="_blank" class="btn_Excel btn btn-primary "><i
                   class="fa-solid fa-file-excel fa-sm"></i> Generar Excel</a> -->
             </div>
-            <table class="table" id="table-Comision">
+            <table class="display nowrap table" id="table-Comision" style="width:100%">
               <thead>
                 <tr>
                   <th scope="col"> ID COMISION </th>

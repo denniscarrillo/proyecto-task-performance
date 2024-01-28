@@ -148,7 +148,7 @@ if (isset($_SESSION['usuario'])) {
             <a href="../../../TCPDF/examples/reporteConsulTarea.php" target="_blank"
               class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a>
           </div>
-          <table class="table" id="table-Tareas">
+          <table class="display nowrap table" id="table-Tareas" style="width:100%">
             <thead>
               <tr>
                 <th scope="col"> ID </th>
