@@ -3,62 +3,81 @@ export let estadoValidado = false;
 //Objeto con expresiones regulares para los inptus
 
 let estadoRubroComercialExiste = false;
-let estadoMasDeUnEspacioRubroComercial = true;
-let estadoMasdeUnEspacioDescripcion = true;
+// let estadoMasDeUnEspacioRubroComercial = true;
+// let estadoMasdeUnEspacioDescripcion = true;
 
-const $form = document.getElementById('form-rubroComercial');
-const $rubroComercial = document.getElementById('rubroComercial');
-const $descripcion = document.getElementById('descripcion');
+// const $form = document.getElementById('form-rubroComercial');
+// const $rubroComercial = document.getElementById('rubroComercial');
+// const $descripcion = document.getElementById('descripcion');
+const validaciones = {
+    soloLetras: /^(?=.*[^a-zA-Z\s])/, // Letras y espacios
+    caracterMas3Veces: /^(?=.*(..)\1)/,
+}
 
-//Validar inputs
-$form.addEventListener('submit', (e) => {
-    let estadoInputRubroComercial = funciones.validarCampoVacio($rubroComercial);
-    let estadoInputDescripcion = funciones.validarCampoVacio($descripcion);
-    // Comprobamos que todas las validaciones se hayan cumplido 
-    if (estadoInputRubroComercial == false || estadoInputDescripcion == false) {
-        e.preventDefault();
-    } else {
-    if (estadoMasDeUnEspacioRubroComercial == false || estadoMasdeUnEspacioDescripcion == false) {
-                e.preventDefault();
-                estadoMasDeUnEspacioRubroComercial = funciones.validarMasdeUnEspacio($rubroComercial);
-                estadoMasdeUnEspacioDescripcion = funciones.validarMasdeUnEspacio($descripcion);
-            } else {
-                if(estadoRubroComercialExiste == false){
-                    e.preventDefault();
-                    estadoRubroComercialExiste = obtenerRubroComercialExiste($('#rubroComercial').val());
-            } else {
-                   estadoValidado = true; // 
-            }
+let inputsNuvoRubroC = {
+    rubroC: document.getElementById('rubroComercial'),
+    descripcion: document.getElementById('descripcion')
+}
+$(document).ready(function(){
+    document.getElementById("btn-submit").addEventListener("click", () => {
+        ValidarInputRubroC();
+        ValidarInputDescrip();
+        if (
+          document.querySelectorAll(".mensaje_error").length == 0
+        ) {
+          estadoValidado = true;
         }
-    }
+      });
 });
 
-$rubroComercial.addEventListener('keyup', ()=>{
-    funciones.validarCampoVacio($rubroComercial);
+inputsNuvoRubroC.rubroC.addEventListener('keyup', ()=>{
+    ValidarInputRubroC();
     funciones.limitarCantidadCaracteres('rubroComercial', 50);
-    
 });
-$rubroComercial.addEventListener('focusout', ()=>{
-   let rubrosComerciales = estadoMasDeUnEspacioRubroComercial = funciones.validarMasdeUnEspacio($rubroComercial);
-   if(rubrosComerciales){
-         let rubroComercial = $('#rubroComercial').val();
-         estadoRubroComercialExiste = obtenerRubroComercialExiste(rubroComercial);
-   }
-   let rubroComercialMayus = $rubroComercial.value.toUpperCase();
-    $rubroComercial.value = rubroComercialMayus;
-});
-$descripcion.addEventListener('keyup', ()=>{
-    funciones.validarCampoVacio($descripcion);
+inputsNuvoRubroC.descripcion.addEventListener('keyup', ()=>{
+    ValidarInputDescrip();
     funciones.limitarCantidadCaracteres('descripcion', 300);
 });
-$descripcion.addEventListener('focusout', ()=>{
-    estadoMasdeUnEspacioDescripcion = funciones.validarMasdeUnEspacio($descripcion);
-    let descripcionMayus = $descripcion.value.toUpperCase();
-    $descripcion.value = descripcionMayus;
-});
-/* $pregunta.addEventListener('keyup', ()=>{
-    estadoSoloLetras.estadoLetrasPregunta = funciones.validarSoloLetras($pregunta, validaciones.soloLetras);
-}); */
+//Validar inputs
+let ValidarInputRubroC = () =>{
+    let rubroMayus = inputsNuvoRubroC.rubroC.value.toUpperCase();
+    inputsNuvoRubroC.rubroC.value = rubroMayus;
+    let rubroValidaciones = {
+        rubroVacio: false,
+        rubroMasEspacio: false,
+        rubroSoloLetras: false,
+        rubroLimitecaracter: false,
+        rubroexiste: false,
+    }
+    rubroValidaciones.rubroVacio =  funciones.validarCampoVacio(inputsNuvoRubroC.rubroC);
+    rubroValidaciones.rubroVacio ? (rubroValidaciones.rubroMasEspacio =
+    funciones.validarMasdeUnEspacio(inputsNuvoRubroC.rubroC))
+        :'';
+    rubroValidaciones.rubroMasEspacio ? (rubroValidaciones.rubroSoloLetras =
+        funciones.validarSoloLetras(inputsNuvoRubroC.rubroC, validaciones.soloLetras))
+        :'';
+    rubroValidaciones.rubroSoloLetras ? (rubroValidaciones.rubroLimitecaracter =
+        funciones.limiteMismoCaracter(inputsNuvoRubroC.rubroC, validaciones.caracterMas3Veces))
+        :'';
+};
+let ValidarInputDescrip = () =>{
+    let descripcionMayus = inputsNuvoRubroC.descripcion.value.toUpperCase();
+    inputsNuvoRubroC.descripcion.value = descripcionMayus;
+    let descripcionValidaciones = {
+        descripcionVacio: false,
+        descripcionMasEspacio: false,
+        descripcionLimiteCaracter: false,
+    }
+    descripcionValidaciones.descripcionVacio = funciones.validarCampoVacio(inputsNuvoRubroC.descripcion);
+    descripcionValidaciones.descripcionVacio ? (descripcionValidaciones.descripcionMasEspacio =
+        funciones.validarMasdeUnEspacio(inputsNuvoRubroC.descripcion))
+        :'';
+        descripcionValidaciones.descripcionMasEspacio ? (descripcionValidaciones.descripcionLimiteCaracter =
+            funciones.limiteMismoCaracter(inputsNuvoRubroC.descripcion, validaciones.caracterMas3Veces))
+        :'';
+};
+
+
 
 let obtenerRubroComercialExiste = ($rubroComercial) => {
     $.ajax({
@@ -82,4 +101,4 @@ let obtenerRubroComercialExiste = ($rubroComercial) => {
         }
         
     });
-}
+};

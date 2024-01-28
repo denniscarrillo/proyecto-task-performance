@@ -8,7 +8,6 @@
    if(isset($_SESSION['usuario'])){
       $rolUsuario = ControladorUsuario::obtenerRolUser($_SESSION['usuario']);
       $data = ControladorDataTableTarea::obtenerTareasUsuario($_SESSION['usuario'], $rolUsuario);
-      // var_dump($data);
       print json_encode($data, JSON_UNESCAPED_UNICODE);
    }
    
