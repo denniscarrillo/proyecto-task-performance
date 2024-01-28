@@ -82,6 +82,7 @@ if (isset($_SESSION['usuario'])) {
   <!-- Estilos personalizados -->
   <link href="../../../Recursos/css/gestionServicioTecnico.css" rel="stylesheet" />
   <!-- <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet"> -->
+  <link href="../../../Recursos/css/modalNuevoServicioTecnico.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>

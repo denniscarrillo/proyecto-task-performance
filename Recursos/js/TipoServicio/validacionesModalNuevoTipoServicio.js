@@ -1,73 +1,46 @@
 import * as funciones from '../funcionesValidaciones.js';
 export let estadoValidado = false;
 
-let estadoExisteservicioTecnico = false;
-//Objeto con expresiones regulares para los inptus
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
+    correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
+    soloNumeros: /^[0-9 ]*$/,
+    caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
+    caracterMas5veces: /^(?=.*(...)\1)/,
+    letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
+    direccion: /^[a-zA-Z0-9 #.,-]+$/,
 };
 
-//VARIABLES GLOBALES
-let estadoValidaciones = {
-    estadoLetrasServicioTecnico: false,
-    estadoInputServicio_Tecnico: false
-};
+let inputsNuevoServico = {
+    ServicioTecnico:  document.getElementById('servicio_Tecnico'),
+}
+let btnGuardar = document.getElementById('btn-submit');
 
-const $form = document.getElementById('form-TipoServicio');
-const $servicio_Tecnico = document.getElementById('servicio_Tecnico');
-
-$form.addEventListener('submit', e => {
-    estadoValidaciones.estadoInputServicio_Tecnico = funciones.validarCampoVacio($servicio_Tecnico);
-    
-    if (estadoValidaciones.estadoInputServicio_Tecnico === false) {
-        e.preventDefault();
-    } else {
-        estadoValidaciones.estadoLetrasServicioTecnico = funciones.validarSoloLetras($servicio_Tecnico, validaciones.soloLetras);          
-        if(estadoValidaciones.estadoLetrasServicioTecnico == false){
-            e.preventDefault();           
-        } else {
-            if(estadoExisteservicioTecnico == false){
-                e.preventDefault();
-                estadoExisteservicioTecnico = obtenerServicioTecnico($('#servicio_Tecnico').val());
-            } else {
-            estadoValidado = true;
-        } 
-      }
+btnGuardar.addEventListener('click', () => {
+    validarInputServicioTecnico();
+    if (document.querySelectorAll(".mensaje_error").length == 0) {
+        estadoValidado = true;
     }
 });
 
-$servicio_Tecnico.addEventListener('keyup', () => {
-    estadoValidaciones.estadoLetrasServicioTecnico = funciones.validarSoloLetras($servicio_Tecnico, validaciones.soloLetras);
-    funciones.limitarCantidadCaracteres("servicio_Tecnico", 50);
-});
-$servicio_Tecnico.addEventListener('focusout', () => {
-    let servicioTecnico = $('#servicio_Tecnico').val();
-    estadoExisteservicioTecnico = obtenerServicioTecnico(servicioTecnico);
-    let servicio_TecnicoMayus = $servicio_Tecnico.value.toUpperCase();
-    $servicio_Tecnico.value = servicio_TecnicoMayus;  
-});
-
-
-let obtenerServicioTecnico = ($servicioTecnico) => {
-    $.ajax({
-        url: "../../../Vista/crud/TipoServicio/obtenerServicioExistente.php",
-        type: "POST",
-        datatype: "JSON",
-        data: {
-            servicioTecnico: $servicioTecnico
-        },
-        success: function (servicioTecnico) {
-            let $objservicioTecnico = JSON.parse(servicioTecnico);
-            if ($objservicioTecnico.estado == 'true') {
-                document.getElementById('servicio_Tecnico').classList.add('mensaje_error');
-                document.getElementById('servicio_Tecnico').parentElement.querySelector('p').innerText = '*Este servicio tecnico ya existe';
-                estadoExisteservicioTecnico = false; // servicioTecnico es existente, es false
-            } else {
-                document.getElementById('servicio_Tecnico').classList.remove('mensaje_error');
-                document.getElementById('servicio_Tecnico').parentElement.querySelector('p').innerText = '';
-                estadoExisteservicioTecnico = true; // servicioTecnico no existe, es true
-            }
-        }
-        
-    });
+let validarInputServicioTecnico = function () {
+    let ServicioMayus = inputsNuevoServico.ServicioTecnico.value.toUpperCase();
+    inputsNuevoServico.ServicioTecnico.value = ServicioMayus;
+    let estadoValidaciones = {
+        estadoCampoVacio: false,
+        estadoSoloLetras: false,
+        estadoNoMasdeUnEspacios: false,
+        estadoNoCaracteresSeguidos: false
+    }
+    estadoValidaciones.estadoCampoVacio = funciones.validarCampoVacio(inputsNuevoServico.ServicioTecnico);
+    if(estadoValidaciones.estadoCampoVacio) {
+        estadoValidaciones.estadoSoloLetras = funciones.validarSoloLetras(inputsNuevoServico.ServicioTecnico, validaciones.soloLetras);
+    } 
+    if(estadoValidaciones.estadoSoloLetras) {
+        estadoValidaciones.estadoNoMasdeUnEspacios = funciones.validarMasdeUnEspacio(inputsNuevoServico.ServicioTecnico);
+    }
+    if(estadoValidaciones.estadoNoMasdeUnEspacios) {
+        estadoValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter(inputsNuevoServico.ServicioTecnico, validaciones.caracterMas3veces);
+    }
 }
+
