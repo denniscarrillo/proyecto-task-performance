@@ -82,6 +82,7 @@ if (isset($_SESSION['usuario'])) {
   <!-- Estilos personalizados -->
   <link href="../../../Recursos/css/gestionServicioTecnico.css" rel="stylesheet" />
   <!-- <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet"> -->
+  <link href="../../../Recursos/css/modalNuevoServicioTecnico.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
@@ -157,7 +158,7 @@ if (isset($_SESSION['usuario'])) {
             <thead>
               <tr>
                 <th scope="col"> ID </th>
-                <th scope="col"> SERVICIO TECNICO </th>
+                <th scope="col"> SERVICIO TÉCNICO </th>
                 <th scope="col"> ACCIONES </th>
               </tr>
             </thead>

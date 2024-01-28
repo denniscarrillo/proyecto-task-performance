@@ -211,7 +211,7 @@ class Parametro
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
         $query = "SELECT (SELECT VALOR  FROM tbl_MS_Parametro 
-        WHERE parametro ='CORREO SERVICIO TEC') as CorreoServicio;;";
+        WHERE parametro ='CORREO SERVICIO TEC') as CorreoServicio;";
         $resultado = sqlsrv_query($conexion, $query);
         while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
             $datos[] = [
@@ -244,6 +244,19 @@ class Parametro
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
         $query = "SELECT (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='URL_LOGO') as url_logo";
+        $resultado = sqlsrv_query($conexion, $query);
+        $urlLogo = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+        $urlLogo = $urlLogo['url_logo'];
+
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $urlLogo;
+    }
+
+    public static function obtenerUrlLogoReportes()
+    {
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "SELECT (SELECT VALOR  FROM tbl_MS_Parametro WHERE parametro ='URL_LOGO_REPORTES') as url_logo";
         $resultado = sqlsrv_query($conexion, $query);
         $urlLogo = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
         $urlLogo = $urlLogo['url_logo'];

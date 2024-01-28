@@ -67,17 +67,40 @@ class TipoServicio {
         sqlsrv_close($abrirConexion); //Cerrar conexion
     }
 
-    public static function eliminarTipoServicio($TipoServicio){
-        try{
+    // public static function eliminarTipoServicio($TipoServicio){
+    //     try{
+    //         $conn = new Conexion();
+    //         $conexion = $conn->abrirConexionDB();
+    //         $query = "DELETE FROM tbl_TipoServicio WHERE id_TipoServicio = '$TipoServicio';";
+    //         $estadoEliminado = sqlsrv_query($conexion, $query);
+    //     }catch (Exception $e) {
+    //         $estadoEliminado = 'Error SQL:' . $e;
+    //     }
+    //     sqlsrv_close($conexion); #Cerramos la conexión.
+    //     return $estadoEliminado;
+    // }
+    public static function eliminarTipoServicio($idTipoServico){
+        try {
             $conn = new Conexion();
             $conexion = $conn->abrirConexionDB();
-            $query = "DELETE FROM tbl_TipoServicio WHERE id_TipoServicio = '$TipoServicio';";
+            $query = "DELETE FROM tbl_TipoServicio WHERE id_TipoServicio = '$idTipoServico' 
+                        AND servicio_Tecnico NOT IN('MANTENIMIENTOP','INSTALACIÓN', 'REPARACIÓN')
+                        AND id_TipoServicio NOT IN (SELECT id_TipoServicio FROM tbl_Solicitud);";
             $estadoEliminado = sqlsrv_query($conexion, $query);
-        }catch (Exception $e) {
+            if ($estadoEliminado === false) {
+                return false;
+            }
+            $rowsAffected = sqlsrv_rows_affected($estadoEliminado);
+            if ($rowsAffected == 0) {
+                return false; // No hay filas afectadas, no se elimina nada
+            }
+            sqlsrv_close($conexion); // Close the connection
+            return true;
+        } catch (Exception $e) {
+            // Handle other exceptions if needed
             $estadoEliminado = 'Error SQL:' . $e;
+            return false;
         }
-        sqlsrv_close($conexion); #Cerramos la conexión.
-        return $estadoEliminado;
     }
 
     //Generado por PDF

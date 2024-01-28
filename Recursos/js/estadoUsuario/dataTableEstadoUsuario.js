@@ -1,6 +1,6 @@
-// import {estadoValidado as validado} from './validacionesModalNuevoRol.js';
+import {estadoValidado} from './vaidacionesNuevoEstadoUsuario.js';
 // import {estadoValidado as valido } from './validacionesModalEditarRol.js';
-let validado = true;
+
 let tablaEstadoUsuario = '';
 $(document).ready(function () {
   let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
@@ -28,7 +28,7 @@ let procesarPermisoActualizar = data => {
       },
       {
         "defaultContent":
-        `<button class="btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`+
+        `<button class="btn-editar btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>`+
         `<button class="btn_eliminar btns btn ${(permisos.Eliminar == 'N')? 'hidden': ''}" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button>`
       }
     ]
@@ -48,7 +48,7 @@ let obtenerPermisos = function ($idObjeto, callback) {
 $('#form-estado').submit(function (e) {
     e.preventDefault();
     let estado = $('#estado').val();
-    if(validado){
+    if(estadoValidado){
       $.ajax({
         url: "../../../Vista/crud/estadoUsuario/nuevoEstadoUsuario.php",
         type: "POST",
@@ -71,7 +71,94 @@ $('#form-estado').submit(function (e) {
       }
   });
 
-  //Limpiar modal de crear
+
+
+$(document).on("click", "#btn_editar", function(){		        
+  let fila = $(this).closest("tr"),	        
+  idEstadoU = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		
+  descripcion = fila.find('td:eq(1)').text();
+  $("#E_idEstadoU").val(idEstadoU);
+  $("#E_descripcion").val(descripcion);
+  $(".modal-header").css("background-color", "#007bff");
+  $(".modal-header").css("color", "white");	
+  $('#modalEditarEstadoU').modal('show');		   
+});
+
+$('#formEditEstadoU').submit(function (e) {
+  e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
+   //Obtener datos del nuevo Cliente
+   let idEstadoU = $('#E_idEstadoU').val(),
+   descripcion =  $('#E_descripcion').val();
+   if(valido){
+    $.ajax({
+      url: "../../../Vista/crud/estadoUsuario/editarEstadoUsuario.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {
+        idEstadoU: idEstadoU,
+        descripcion: descripcion
+      },
+      success: function () {
+        //Mostrar mensaje de exito
+        Swal.fire(
+          'Actualizado!',
+          'La estado Usuario ha sido modificado!',
+          'success',
+        )
+        tablaEstadoUsuario.ajax.reload(null, false);
+      }
+    });
+    $('#modalEditarEstadoU').modal('hide');
+   }
+});
+
+
+//Eliminar Estado Usuario
+$(document).on("click", "#btn_eliminar", function () {
+  let fila = $(this),
+  idEstadoU = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		            
+   descripcion = $(this).closest('tr').find('td:eq(1)').text();
+  Swal.fire({
+    title: "Estas seguro de eliminar el estado " + descripcion + "?",
+    text: "No podras revertir esto!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Si, borralo!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: "../../../Vista/crud/estadoUsuario/eliminarEstadoU.php",
+        type: "POST",
+        datatype: "json",
+        data: {
+          idEstadoU: idEstadoU
+        },    
+        success: function (data) {
+          if(JSON.parse(data).estadoEliminado){
+            Swal.fire(
+              'Eliminado!',
+              'El estado usuario ha sido eliminado',
+              'success'
+            ) 
+          } else {
+            Swal.fire(
+              'Lo sentimos!',
+              'El estado usuario no puede ser eliminado',
+              'error'
+            );
+            return;
+          }
+          tablaEstadoUsuario.ajax.reload(null, false);
+        },
+      }); //Fin del AJAX
+    }
+  });
+});
+
+
+
 document.getElementById('btn-cerrar').addEventListener('click', ()=>{
   limpiarForm();
 })
@@ -79,15 +166,23 @@ document.getElementById('btn-x').addEventListener('click', ()=>{
   limpiarForm();
 })
 let limpiarForm = () => {
-  // let $inputs = document.querySelectorAll('.mensaje_error');
-  // let $mensajes = document.querySelectorAll('.mensaje');
-  // $inputs.forEach($input => {
-  //   $input.classList.remove('mensaje_error');
-  // });
-  // $mensajes.forEach($mensaje =>{
-  //   $mensaje.innerText = '';
-  // });
+  let $inputs = document.querySelectorAll('.mensaje_error');
+  let $mensajes = document.querySelectorAll('.mensaje');
+  $inputs.forEach($input => {
+    $input.classList.remove('mensaje_error');
+  });
+  $mensajes.forEach($mensaje =>{
+    $mensaje.innerText = '';
+  });
   let estado = document.getElementById('estado');
   //Vaciar campos cliente
-    estado.value = '';
+  estado.value = '';
+    
 }
+
+
+
+
+
+
+

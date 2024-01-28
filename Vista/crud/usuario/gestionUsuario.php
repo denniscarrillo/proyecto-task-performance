@@ -139,7 +139,7 @@ if (isset($_SESSION['usuario'])) {
           </div>
           <div class="titulo">
             <H2 class="title-dashboard-task"
-              id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionUsuario.php'); ?>">Gestión de Usuarios</H2>
+              id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionUsuario.php'); ?>">Gestión Usuarios</H2>
           </div>
         </div>
 

@@ -161,7 +161,7 @@ if (isset($_SESSION['usuario'])) {
                 <th scope="col"> ISV % </th>
                 <th scope="col"> TOTAL </th>
                 <th scope="col"> ESTADO </th>
-                <th scope="col"> ACCION </th>
+                <th scope="col"> ACCIÓN </th>
               </tr>
             </thead>
             <tbody class="table-group-divider">

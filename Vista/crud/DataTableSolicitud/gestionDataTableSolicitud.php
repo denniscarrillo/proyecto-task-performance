@@ -160,10 +160,10 @@ if (isset($_SESSION['usuario'])) {
               <tr>
                 <th scope="col"> ID </th>
                 <th scope="col"> NOMBRE CLIENTE</th>
-                <th scope="col"> SERVICIO TECNICO</th>
-                <th scope="col"> TELEFONO</th>
+                <th scope="col"> SERVICIO TÉCNICO</th>
+                <th scope="col"> TELÉFONO</th>
                 <th scope="col"> AVANCE DE LA SOLICITUD </th>
-                <th scope="col"> FECHA CREACION</th>
+                <th scope="col"> FECHA CREACIÓN</th>
                 <th scope="col"> ACCIONES </th>
               </tr>
             </thead>

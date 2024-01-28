@@ -51,13 +51,20 @@ $btnFiltrar.addEventListener("click", function () {
   let $fechaDesde = document.getElementById("fechaDesdef");
   let $fechaHasta = document.getElementById("fechaHastaf");
   iniciarDataTable($fechaDesde.value, $fechaHasta.value);
-// Agrega un manejador de clic para el botón "Generar PDF"
-$("#btn_PdfComisiones").on("click", function () {
-  obtenerComisionesFiltradas($fechaDesde.value, $fechaHasta.value);
+  
+  // Agrega un manejador de clic para el botón "Generar PDF"
+  $("#btn_PdfComisiones").on("click", function () {
+    obtenerComisionesFiltradas($fechaDesde.value, $fechaHasta.value);
+  });
 });
- });
 
- let iniciarDataTable = function (fechaDesde, fechaHasta) {
+let iniciarDataTable = function (fechaDesde, fechaHasta) {
+  // Destroy existing DataTable before reinitialization
+  var existingTable = $('#table-comisionesVendedor').DataTable();
+  if (existingTable !== null) {
+    existingTable.destroy();
+  }
+
   $tablaComisionesV = $("#table-comisionesVendedor").DataTable({
     ajax: {
       url: "../../../Vista/crud/ComisionesVendedores/obtenerFechasComision.php",
@@ -84,9 +91,11 @@ $("#btn_PdfComisiones").on("click", function () {
 
       // Asumiendo que tengas un elemento con el id "fechasLabel" para mostrar las fechas
       $("#fechasLabel").text('Desde el: ' + fechaDesdeT + ' Hasta el: ' + fechaHastaT);
+
+      // Show the modal after initializing DataTable
+      $("#modalComisionesV").modal("show");
     }
   });
-  $("#modalComisionesV").modal("show");
 };
 
 $("#btn_liquidar").on("click", function () {
@@ -141,8 +150,6 @@ $("#btn_liquidar").on("click", function () {
   });
 });
 
-
-//
 
 
 let obtenerComisionesFiltradas = function (fechaDesde, fechaHasta) {

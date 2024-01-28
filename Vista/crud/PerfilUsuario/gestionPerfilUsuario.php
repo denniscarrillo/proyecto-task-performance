@@ -170,7 +170,7 @@ if (isset($_SESSION['usuario'])) {
             </div>
             <div class="grupo-form">
               <div class="mb-3">
-                <label class="titulos" for="email">Email:</label>
+                <label class="titulos" for="email">Correo Electrónico:</label>
                 <label>
                   <?php echo $datos['correo'] ?>
                 </label>

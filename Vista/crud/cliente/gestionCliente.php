@@ -150,8 +150,8 @@ if (isset($_SESSION['usuario'])) {
                 <th scope="col"> ID </th>
                 <th scope="col"> CLIENTE </th>
                 <th scope="col"> RTN/DNI </th>
-                <th scope="col"> TELEFONO </th>
-                <th scope="col"> DIRECCION </th>
+                <th scope="col"> TELÉFONO </th>
+                <th scope="col"> DIRECCIÓN </th>
               </tr>
             </thead>
             <div class ="text-left mb-2">

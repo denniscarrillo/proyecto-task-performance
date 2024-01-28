@@ -11,36 +11,36 @@ const validaciones = {
     direccion: /^[a-zA-Z0-9 #.,-]+$/,
 };
 
-let inputsNuevoServico = {
-    ServicioTecnico:  document.getElementById('servicio_Tecnico'),
+let inputsNuevoEstadoU = {
+    descripcionEstadoU: document.getElementById('estado')
 }
 let btnGuardar = document.getElementById('btn-submit');
 
 btnGuardar.addEventListener('click', () => {
-    validarInputServicioTecnico();
+    validarInputDescripcionEstadoUsuario();
     if (document.querySelectorAll(".mensaje_error").length == 0) {
         estadoValidado = true;
     }
 });
 
-let validarInputServicioTecnico = function () {
-    let ServicioMayus = inputsNuevoServico.ServicioTecnico.value.toUpperCase();
-    inputsNuevoServico.ServicioTecnico.value = ServicioMayus;
+
+let validarInputDescripcionEstadoUsuario = function () {
+    let descripcionEstadoUMayus = inputsNuevoEstadoU.descripcionEstadoU.value.toUpperCase();
+    inputsNuevoEstadoU.descripcionEstadoU.value = descripcionEstadoUMayus;
     let estadoValidaciones = {
         estadoCampoVacio: false,
         estadoSoloLetras: false,
         estadoNoMasdeUnEspacios: false,
         estadoNoCaracteresSeguidos: false
     }
-    estadoValidaciones.estadoCampoVacio = funciones.validarCampoVacio(inputsNuevoServico.ServicioTecnico);
+    estadoValidaciones.estadoCampoVacio = funciones.validarCampoVacio(inputsNuevoEstadoU.descripcionEstadoU);
     if(estadoValidaciones.estadoCampoVacio) {
-        estadoValidaciones.estadoSoloLetras = funciones.validarSoloLetras(inputsNuevoServico.ServicioTecnico, validaciones.soloLetras);
+        estadoValidaciones.estadoSoloLetras = funciones.validarSoloLetras(inputsNuevoEstadoU.descripcionEstadoU, validaciones.soloLetras);
     } 
     if(estadoValidaciones.estadoSoloLetras) {
-        estadoValidaciones.estadoNoMasdeUnEspacios = funciones.validarMasdeUnEspacio(inputsNuevoServico.ServicioTecnico);
+        estadoValidaciones.estadoNoMasdeUnEspacios = funciones.validarMasdeUnEspacio(inputsNuevoEstadoU.descripcionEstadoU);
     }
     if(estadoValidaciones.estadoNoMasdeUnEspacios) {
-        estadoValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter(inputsNuevoServico.ServicioTecnico, validaciones.caracterMas3veces);
+        estadoValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter(inputsNuevoEstadoU.descripcionEstadoU, validaciones.caracterMas3veces);
     }
 }
-

@@ -157,10 +157,10 @@ if (isset($_SESSION['usuario'])) {
                 <th scope="col"> CLIENTE </th>
                 <th scope="col"> TITULO </th>
                 <th scope="col"> CREADO POR </th>
-                <th scope="col"> ESTADO FINALIZACION </th>
-                <th scope="col"> FECHA FINALIZACION </th>
+                <th scope="col"> ESTADO FINALIZACIÓN </th>
+                <th scope="col"> FECHA FINALIZACIÓN </th>
                 <th scope="col"> ANTIGÜEDAD(DIAS)</th>
-                <th scope="col"> ACCION </th>
+                <th scope="col"> ACCIÓN </th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
