@@ -28,7 +28,7 @@ let manejarPermisoInsertar = (permisos) => {
             (document.getElementById('btn_nuevoRegistro') != null) ?  document.getElementById('btn_nuevoRegistro').classList.remove('hidden') : '';
         }
     }
-    if((objPermisos.Reporte == 'Y')){
+    if((objPermisos.Reporte == 'Y' && $objTarea != 'v_tarea.php')){
         document.getElementById('btn_Pdf').classList.remove('hidden');
     }
 }
