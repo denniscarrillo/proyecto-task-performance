@@ -136,7 +136,6 @@ $(document).on("click", "#btn_eliminar", function () {
           data: { usuario: usuario },
           success: function (data) {
             let estadoEliminado = data[0].estadoEliminado;
-            console.log(data);
             if (estadoEliminado == "eliminado") {
               tablaUsuarios.row(fila.parents("tr")).remove().draw();
               Swal.fire(
@@ -148,7 +147,7 @@ $(document).on("click", "#btn_eliminar", function () {
             } else {
               Swal.fire(
                 "Lo sentimos!",
-                "El usuario no puede ser eliminado, se ha inactivado.",
+                "El usuario no puede ser eliminado",
                 "error"
               );
               tablaUsuarios.ajax.reload(null, false);
