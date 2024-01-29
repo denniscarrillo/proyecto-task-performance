@@ -11,8 +11,6 @@
             $data []= [
                 'estadoEliminado' => 'inactivado'
             ];
-            ControladorUsuario::SimularInactivarUsuario($usuario);
             print json_encode($data, JSON_UNESCAPED_UNICODE);
         }
     }
-?>
