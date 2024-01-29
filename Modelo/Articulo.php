@@ -88,8 +88,8 @@ class Articulo
             $articulo = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $query = "SELECT CODARTICULO, ARTICULO, DETALLE, MARCA FROM tbl_ARTICULOS
-            WHERE CONCAT(CODARTICULO, ARTICULO, DETALLE, MARCA) 
+            $query = "SELECT CODARTICULO, ARTICULO, DETALLE, MARCA, Creado_Por FROM tbl_ARTICULOS
+            WHERE CONCAT(CODARTICULO, ARTICULO, DETALLE, MARCA,Creado_Por) 
             LIKE '%' + '$buscar' + '%';";
             $resultado = sqlsrv_query($abrirConexion, $query);
             $articulo = array();
@@ -99,7 +99,8 @@ class Articulo
                     'codigo' => $fila['CODARTICULO'],
                     'articulo' => $fila['ARTICULO'],
                     'detalle' => $fila['DETALLE'],
-                    'marcaArticulo' => $fila['MARCA']
+                    'marcaArticulo' => $fila['MARCA'],
+                    'CreadoPor' => $fila['Creado_Por']
                 ];
             }
         } catch (Exception $e) {

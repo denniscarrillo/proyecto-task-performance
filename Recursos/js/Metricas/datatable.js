@@ -19,7 +19,7 @@ let procesarPermisoActualizar = (data) => {
     },
     scrollX: true,
     columns: [
-      { data: "idMetrica" },
+      { data: "id_EstadoAvance" },
       { data: "descripcion" },
       { data: "meta" },
       {
@@ -47,10 +47,7 @@ let obtenerPermisos = function ($idObjeto, callback) {
 };
 
 $(document).on("click", "#btn_nuevoRegistro", function () {
-  Swal.fire({
-    icon: "error",
-    title: "No se puede crear un nuevo registro!",
-  });
+  Swal.fire("No permitido!", "No puede registrar una nueva métrica", "error");
 });
 
 $(document).on("click", "#btn_editar", function () {
@@ -108,10 +105,10 @@ let limpiarFormEdit = () => {
   });
 };
 
-//Eliminar Rol
+//Eliminar Metrica
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
-    id_Metrica = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
+    id_Metrica= $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
     metrica = $(this).closest("tr").find("td:eq(1)").text();
 
   Swal.fire({
@@ -128,14 +125,18 @@ $(document).on("click", "#btn_eliminar", function () {
         url: "../../../Vista/crud/Metricas/eliminarMetricas.php",
         type: "POST",
         datatype: "json",
-        data: { id_Metrica: id_Metrica },
+        data: { id_Metrica: id_Metrica},
         success: function (data) {
-          console.log(data);
-          Swal.fire(
-            "Lo sentimos!",
-            "La metrica no puede ser eliminada.",
-            "error"
-          );
+          if (JSON.parse(data).estadoEliminado) {
+            Swal.fire("Eliminado!", "La métrica ha sido eliminado", "success");
+          } else {
+            Swal.fire(
+              "Lo sentimos!",
+              "La métrica no puede ser eliminada",
+              "error"
+            );
+            return;
+          }
           tablaMetricas.ajax.reload(null, false);
         },
       }); //Fin del AJAX

@@ -37,7 +37,8 @@ legend {
 }
 
 .filtro-fecha .mensaje {
-  background-color: #8f8f8f;
+  background-color: #534f4a;
+  color: #ff4747;
 }
 .btn-primary {
   padding: 5px;

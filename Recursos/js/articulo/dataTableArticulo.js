@@ -1,6 +1,9 @@
 import { estadoValidado } from "./ValidacionesModalNuevoArticulo.js";
 import { estadoValido } from "./ValidacionesModalEditarArticulo.js";
 
+
+
+
 let tablaArticulo = "";
 $(document).ready(function () {
   let $idObjetoSistema = document.querySelector(".title-dashboard-task").id;
