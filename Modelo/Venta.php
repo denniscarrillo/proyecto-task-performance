@@ -133,24 +133,21 @@ class Venta {
     public static function obtenerlasventasPDF($buscar){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.        
-        $query = "		SELECT v.NUMFACTURA, v.CODCLIENTE, c.NOMBRECLIENTE, c.CIF, v.FECHA, v.TOTALBRUTO, v.TOTALIMPUESTOS, v.TOTALNETO
-        FROM View_Clientes AS c
-        INNER JOIN View_FACTURASVENTA AS v ON c.CODCLIENTE = v.CODCLIENTE
-        WHERE CONCAT(v.NUMFACTURA, v.CODCLIENTE, c.NOMBRECLIENTE, c.CIF, CONVERT(NVARCHAR, v.FECHA, 23), v.TOTALBRUTO, v.TOTALIMPUESTOS, v.TOTALNETO) 
-        LIKE '%' + '$buscar' + '%' ORDER BY v.NUMFACTURA;";
+        $query = "SELECT vt.num_Factura, cc.nombre_Cliente, vt.rtn_Cliente, vt.total_Venta, vt.Creado_Por, vt.Fecha_Creacion FROM tbl_FacturasVenta vt
+        INNER JOIN tbl_CarteraCliente cc ON vt.rtn_Cliente = cc.rtn_Cliente
+		WHERE CONCAT(vt.num_Factura, cc.nombre_Cliente, vt.rtn_Cliente, vt.total_Venta, vt.Creado_Por, CONVERT(NVARCHAR, vt.Fecha_Creacion , 23)) 
+        LIKE '%' + '$buscar' + '%' ORDER BY vt.num_Factura;";
         $listaVentas = sqlsrv_query($consulta, $query);
         $ventas = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
         while($fila = sqlsrv_fetch_array($listaVentas, SQLSRV_FETCH_ASSOC)){
             $ventas [] = [
-                'numFactura' => $fila["NUMFACTURA"],
-                'codCliente' => $fila["CODCLIENTE"],
-                'nombreCliente'=> $fila["NOMBRECLIENTE"],
-                'rtnCliente' => $fila["CIF"],
-                'fechaEmision'=> $fila["FECHA"],
-                'totalBruto' => $fila["TOTALBRUTO"],
-                'totalImpuesto' => $fila["TOTALIMPUESTOS"],     
-                'totalNeto' => $fila["TOTALNETO"]    
+                'numFactura' => $fila["num_Factura"],
+                'nombreCliente'=> $fila["nombre_Cliente"],
+                'rtnCliente' => $fila["rtn_Cliente"],
+                'totalVenta'=> $fila["total_Venta"],
+                'CreadoPor' => $fila["Creado_Por"],
+                'FechaCreacion' => $fila["Fecha_Creacion"]  
             ];
         }
         sqlsrv_close($consulta); #Cerramos la conexión.
