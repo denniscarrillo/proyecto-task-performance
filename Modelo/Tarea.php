@@ -824,21 +824,13 @@ class Tarea
         $select = '';
         $cotizaciones = array();
         if($usuario == 'SUPERADMIN'){
-            $select = "SELECT ct.id_Cotizacion, us.nombre_Usuario, cc.NOMBRECLIENTE AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
-            FROM tbl_CotizacionTarea ct
-            INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
-            INNER JOIN View_Clientes cc ON ta.RTN_Cliente = cc.CIF COLLATE Latin1_General_CI_AI
-            INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario
-            WHERE CONCAT(ct.id_Cotizacion, us.nombre_Usuario, cc.NOMBRECLIENTE, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion) COLLATE Latin1_General_CI_AI
-            LIKE '%' + '$buscar' + '%' COLLATE Latin1_General_CI_AI 
-            UNION
-            SELECT ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente COLLATE Latin1_General_CI_AI AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
+            $select = "SELECT ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente COLLATE Latin1_General_CI_AI AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
             FROM tbl_CotizacionTarea ct
             INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
             INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente
             INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario
-            WHERE CONCAT(ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion) COLLATE Latin1_General_CI_AI
-            LIKE '%' + '$buscar' + '%' COLLATE Latin1_General_CI_AI 
+            WHERE CONCAT(ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion) 
+            LIKE '%' + '' + '%' 
             ORDER BY id_Cotizacion ASC;";
                 $ejecutar = sqlsrv_query($conexion, $select);
                 if(sqlsrv_has_rows($ejecutar)){
@@ -861,21 +853,10 @@ class Tarea
             INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
             INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente
             INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario
-            WHERE ct.Creado_Por = 'ROGER' 
+            WHERE ct.Creado_Por = '$usuario' 
             AND CONCAT(ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente, ct.subDescuento, ct.isv, 
-            ct.total_Cotizacion, ct.estado_Cotizacion) COLLATE Latin1_General_CI_AI
-            LIKE '%' + '$buscar' + '%' COLLATE Latin1_General_CI_AI 
-            UNION
-            SELECT ct.id_Cotizacion, us.nombre_Usuario, cc.NOMBRECLIENTE COLLATE Latin1_General_CS_AI AS nombre_Cliente, 
-            ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
-            FROM tbl_CotizacionTarea ct
-            INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
-            INNER JOIN View_Clientes cc ON ta.RTN_Cliente = cc.CIF COLLATE Latin1_General_CS_AI
-            INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario
-            WHERE ct.Creado_Por = 'ROGER' 
-            AND CONCAT(ct.id_Cotizacion, us.nombre_Usuario, cc.NOMBRECLIENTE, ct.subDescuento, ct.isv, 
-            ct.total_Cotizacion, ct.estado_Cotizacion) COLLATE Latin1_General_CI_AI
-            LIKE '%' + '$buscar' + '%' COLLATE Latin1_General_CI_AI 
+            ct.total_Cotizacion, ct.estado_Cotizacion) 
+            LIKE '%' + '$buscar' + '%' 
             ORDER BY id_Cotizacion;";
                 $ejecutar = sqlsrv_query($conexion, $select);
                 if(sqlsrv_has_rows($ejecutar)){
