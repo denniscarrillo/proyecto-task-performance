@@ -582,14 +582,14 @@ class Tarea
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
         $idTarea = $nuevaCotizacion['idTarea'];
-        $validez = $nuevaCotizacion['validez'];
+        $validez = intval($nuevaCotizacion['validez']);
         $subTotal = $nuevaCotizacion['subTotal'];
         $descuento = $nuevaCotizacion['descuento'];
         $subDescuento = $nuevaCotizacion['subDescuento'];
         $isv = $nuevaCotizacion['isv'];
         $totalCotizacion = $nuevaCotizacion['total'];
         $insert = "INSERT INTO tbl_CotizacionTarea (estado_Cotizacion, id_Tarea, validez, subTotal, descuento, subDescuento, isv, total_Cotizacion, Creado_Por, Fecha_Creacion)
-        VALUES ('Vigente', '$idTarea', '$validez', '$subTotal', '$descuento', '$subDescuento', '$isv', '$totalCotizacion', '$creadoPor', GETDATE());";
+        VALUES ('VIGENTE', '$idTarea', '$validez', '$subTotal', '$descuento', '$subDescuento', '$isv', '$totalCotizacion', '$creadoPor', GETDATE());";
         sqlsrv_query($conexion, $insert);
         $idCotizacion = sqlsrv_fetch_array(sqlsrv_query($conexion, "SELECT SCOPE_IDENTITY() AS id_Cotizacion"), SQLSRV_FETCH_ASSOC);
         sqlsrv_close($conexion);

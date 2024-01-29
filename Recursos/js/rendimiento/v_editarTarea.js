@@ -202,10 +202,6 @@ $("#btn-articulos").click(() => {
       language: {
         url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
       },
-      // select: true,
-      // select: {
-      //   toggleable: true,
-      // },
       // select: {
       //   info: false,
       // },
