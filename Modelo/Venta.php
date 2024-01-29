@@ -85,7 +85,7 @@ class Venta {
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $select = "SELECT vt.num_Factura, cc.nombre_Cliente, vt.rtn_Cliente, vt.total_Venta, vt.Creado_Por, vt.Fecha_Creacion FROM tbl_FacturasVenta vt
         INNER JOIN tbl_CarteraCliente cc ON vt.rtn_Cliente = cc.rtn_Cliente
-                    WHERE vt.Fecha_Creacion BETWEEN '$fechaDesde' AND '$fechaHasta';";
+                    WHERE vt.Fecha_Creacion BETWEEN '$fechaDesde 00:00:00:00' AND '$fechaHasta 23:59:59:59';";
         $query = $select;
         $listaVentas = sqlsrv_query($conexion, $query);
         $ventas = array();

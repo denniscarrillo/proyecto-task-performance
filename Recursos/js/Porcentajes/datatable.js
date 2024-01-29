@@ -82,7 +82,11 @@ $("#form-Porcentajes").submit(function (e) {
       },
       success: function () {
         //Mostrar mensaje de exito
-        Swal.fire("Porcentaje Registrado!", "success");
+        Swal.fire(
+          "Registrado!",
+          "El Porcentaje ha sido registrado!",
+          "success"
+        );
         tablaPorcentajes.ajax.reload(null, false);
       },
     });
@@ -224,17 +228,43 @@ $(document).on("click", "#btn_eliminar", function () {
         },
         success: function (data) {
           console.log(data);
-          Swal.fire(
-            "Lo sentimos!",
-            "El porcentaje no puede ser eliminado, se ha Inactivado.",
-            "error"
-          );
+
+          // Verificar la respuesta del servidor
+          if (data === 'INACTIVO') {
+            Swal.fire(
+              "Porcentaje Inactivado!",
+              "El porcentaje no se ha podido eliminar, pero en su lugar ha sido inactivado.",
+              "error"
+            );
+          } else if (data === 'ELIMINADO') {
+            Swal.fire(
+              "Porcentaje Eliminado!",
+              "El porcentaje ha sido eliminado.",
+              "success"
+            );
+          } else {
+            Swal.fire(
+              "Lo sentimos!",
+              "El porcentaje no puede ser eliminado.",
+              "error"
+            );
+          }
+
           tablaPorcentajes.ajax.reload(null, false);
         },
+        error: function () {
+          Swal.fire(
+            "Error!",
+            "Hubo un problema al procesar la solicitud.",
+            "error"
+          );
+        }
       });
-    } //Fin del AJAX
+    } // Fin del AJAX
   });
 });
+
+
 
 $(document).on("click", "#btn_Pdf", function () {
   let buscar = $(
