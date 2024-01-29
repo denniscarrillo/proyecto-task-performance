@@ -279,14 +279,6 @@ class Usuario {
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $estadoEliminado;
     }
-    public static function inactivarUsuario($usuario){
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB();
-        $query ="UPDATE tbl_MS_Usuario SET id_Estado_Usuario = 3 WHERE usuario = '$usuario';";
-        $estadoInactivo = sqlsrv_query($conexion, $query);
-        sqlsrv_close($conexion); #Cerramos la conexión.
-        return $estadoInactivo;
-    }
     public static function editarUsuario($nuevoUsuario){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
