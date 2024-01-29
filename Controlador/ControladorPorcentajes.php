@@ -24,9 +24,16 @@ class ControladorPorcentajes
     {
         return Porcentajes::porcentajeExistente($valorPorcentaje);
     }
-
+    public static function verificarUtilizacionEnComision($idPorcentaje)
+    {
+    return Porcentajes::verificarUtilizacionEnComision($idPorcentaje);
+    }
+    public static function inactivarPorcentaje($eliminarPorcentaje)
+    {
+        return Porcentajes::inactivarPorcentaje($eliminarPorcentaje);
+    }
     public static function eliminarPorcentaje($eliminarPorcentaje){
-        return porcentajes::eliminarPorcentaje($eliminarPorcentaje);
+        return Porcentajes::eliminarPorcentaje($eliminarPorcentaje);
    }
    public static function obtenerPorcentajePdf($buscar){
     return Porcentajes::obtenerPorcentajesPdf($buscar);

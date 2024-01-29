@@ -20,6 +20,7 @@ let estadoMayorCero = {
 } 
 let estadoSelect = true;
 
+
 const $form = document.getElementById('form-Porcentajes');
 const $valor = document.getElementById('valorPorcentaje');
 const $descripcion = document.getElementById('descripcionPorcentaje');
@@ -136,6 +137,8 @@ $descripcion.addEventListener('keyup', ()=>{
     $("#descripcionPorcentaje").inputlimiter({
         limit: 50
     });
+    let descripcionMayus = $descripcion.value.toUpperCase();
+     $descripcion.value = descripcionMayus; 
 });
 
 $estado.addEventListener('change', ()=>{
