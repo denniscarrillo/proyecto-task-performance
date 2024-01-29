@@ -170,7 +170,7 @@ if (isset($_SESSION['usuario'])) {
   require('modalNuevoTipoServicio.html');
   require('modalEditarTipoServicio.html');
   ?>
-  <script src="../../../Recursos/js/librerias/Kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
+  <script src="../../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="../../../Recursos/js/librerias//sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
