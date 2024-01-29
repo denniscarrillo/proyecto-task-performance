@@ -127,7 +127,8 @@ class Metricas{
         CONCAT(CAST(COUNT(*) * 100.0 / M.meta AS DECIMAL(10,0)), '%') AS Porcentaje
    FROM tbl_Metrica AS M
    INNER JOIN tbl_EstadoAvance AS E ON M.id_EstadoAvance = E.id_EstadoAvance
-   INNER JOIN tbl_Tarea AS T ON T.id_EstadoAvance = E.id_EstadoAvance
+   INNER JOIN tbl_Tarea AS T ON T.id_EstadoAvance = E.id_EstadoAvance 
+   WHERE T.estado_Finalizacion = 'FINALIZADA'
    GROUP BY E.descripcion, M.meta;";
 
         $resultado = sqlsrv_query($consulta, $query);

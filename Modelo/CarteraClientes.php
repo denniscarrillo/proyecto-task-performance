@@ -75,12 +75,13 @@ class CarteraClientes{
         $conexion = $conn->abrirConexionDB();
         $query = "SELECT rtn_Cliente FROM tbl_CarteraCliente WHERE rtn_Cliente = '$rtn'";
         $rtnCliente = sqlsrv_query($conexion, $query);
-        $query2 = "SELECT CIF FROM View_Clientes WHERE (CIF = '$rtn' AND CIF IS NOT NULL AND CIF != '')
-           OR (CIF IS NOT NULL AND CIF != '' AND '$rtn' IS NULL)";
-        $rtnCliente2 = sqlsrv_query($conexion, $query2);
+        // $query2 = "SELECT CIF FROM View_Clientes WHERE (CIF = '$rtn' AND CIF IS NOT NULL AND CIF != '')
+        //    OR (CIF IS NOT NULL AND CIF != '' AND '$rtn' IS NULL)";
+        // $rtnCliente2 = sqlsrv_query($conexion, $query2);
         $existe = sqlsrv_has_rows($rtnCliente);
-        $existe2 = sqlsrv_has_rows($rtnCliente2);
-        if($existe || $existe2){
+        //$existe2 = sqlsrv_has_rows($rtnCliente2);
+        //|| $existe2
+        if($existe){
             $existeRtn = true;
         }
         sqlsrv_close($conexion); #Cerramos la conexión.

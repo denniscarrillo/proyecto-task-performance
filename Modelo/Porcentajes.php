@@ -84,19 +84,68 @@ class Porcentajes {
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $existePorcentaje;
     }
-    public static function eliminarPorcentaje($eliminarPorcentaje){
+    public static function verificarUtilizacionEnComision($idPorcentaje) {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
+
+        $query = "SELECT COUNT(*) AS total FROM tbl_Comision WHERE id_Porcentaje = '$idPorcentaje';";
+        $params = array($idPorcentaje);
+        $stmt = sqlsrv_query($conexion, $query, $params);
+
+        if ($stmt === false) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+
+        $result = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
+        $totalComisiones = $result['total'];
+
+        sqlsrv_close($conexion);
+
+        return $totalComisiones > 0;
+    }
+
+    public static function inactivarPorcentaje($eliminarPorcentaje) {
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+
         $idPorcentaje = $eliminarPorcentaje->idPorcentaje;
-        $estadoPorcentaje = $eliminarPorcentaje->estadoPorcentaje;
+        $estadoPorcentaje = 'INACTIVO';
         $ModificadoPor = $eliminarPorcentaje->ModificadoPor;
         date_default_timezone_set('America/Tegucigalpa'); 
         $FechaModificacion = date("Y-m-d");
-        $query = "UPDATE tbl_Porcentaje SET estado_Porcentaje ='$estadoPorcentaje', Modificado_Por = '$ModificadoPor', 
-        Fecha_Modificacion = '$FechaModificacion' WHERE id_Porcentaje='$idPorcentaje';";
-        $eliminarPorcentaje = sqlsrv_query($conexion, $query);
-        sqlsrv_close($conexion); #Cerramos la conexión.
+
+        $query = "UPDATE tbl_Porcentaje SET estado_Porcentaje = '$estadoPorcentaje', Modificado_Por = '$ModificadoPor', Fecha_Modificacion = '$FechaModificacion' WHERE id_Porcentaje = '$idPorcentaje';";
+        $params = array($estadoPorcentaje, $ModificadoPor, $FechaModificacion, $idPorcentaje);
+        $stmt = sqlsrv_query($conexion, $query, $params);
+
+        if ($stmt === false) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+
+        sqlsrv_close($conexion);
     }
+
+    public static function eliminarPorcentaje($eliminarPorcentaje) {
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+
+        $idPorcentaje = $eliminarPorcentaje->idPorcentaje;
+
+        // Aquí puedes realizar un DELETE directamente si estás seguro de que no hay dependencias,
+        // o puedes ejecutar otra lógica de eliminación según tus necesidades.
+
+        // Ejemplo de DELETE:
+        $query = "DELETE FROM tbl_Porcentaje WHERE id_Porcentaje = '$idPorcentaje';";
+        $params = array($idPorcentaje);
+        $stmt = sqlsrv_query($conexion, $query, $params);
+
+        if ($stmt === false) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+
+        sqlsrv_close($conexion);
+    }
+    
     public static function obtenerPorcentajesPdf($buscar){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
