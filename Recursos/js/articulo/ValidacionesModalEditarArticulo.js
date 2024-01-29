@@ -60,15 +60,12 @@ let validarInputDetalle = function () {
         estadoNoMasdeUnEspacios: false,
         estadoNoCaracteresSeguidos: false
     }
-    estadoValidaciones.estadoCampoVacio = funciones.validarCampoVacio( inputseditarArticulo.Detalle);
+    estadoValidaciones.estadoCampoVacio = funciones.validarCampoVacio(inputseditarArticulo.Detalle);
     if(estadoValidaciones.estadoCampoVacio) {
-        estadoValidaciones.estadoSoloLetras = funciones.validarSoloLetras( inputseditarArticulo.Detalle, validaciones.soloLetras);
+        estadoValidaciones.estadoNoMasdeUnEspacios = funciones.validarMasdeUnEspacio(inputseditarArticulo.Detalle);
     } 
-    if(estadoValidaciones.estadoSoloLetras) {
-        estadoValidaciones.estadoNoMasdeUnEspacios = funciones.validarMasdeUnEspacio( inputseditarArticulo.Detalle);
-    }
-    if(estadoValidaciones.estadoNoMasdeUnEspacios) {
-        estadoValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter( inputseditarArticulo.Detalle, validaciones.caracterMas3veces);
+    if(  estadoValidaciones.estadoNoMasdeUnEspacios) {
+        estadoValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter(inputseditarArticulo.Detalle, validaciones.caracterMas3veces);
     }
 }
 
