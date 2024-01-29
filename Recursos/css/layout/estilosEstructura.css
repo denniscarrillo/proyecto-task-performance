@@ -78,7 +78,7 @@ table.dataTable.no-footer {
   height: 3rem;
 }
 .btn-guardar .btn-primary {
-  /* background-color: #f5971d; */
+  background-color: #f5971d;
   border: none;
   bottom: 0.2rem;
   left: 40%;

@@ -111,8 +111,8 @@ $(document).on("click", "#btn_editar", function(){
     estadoLiquidacion = fila.find("td:eq(6)").text(),
     // estadoCobro = fila.find("td:eq(7)").text(),
     // metodoPago = fila.find("td:eq(8)").text(),
-    fechaComision = fila.find("td:eq(9)").text(),
-    fechaLiquidacion = fila.find("td:eq(10)").text();
+    fechaComision = fila.find("td:eq(7)").text(),
+    fechaLiquidacion = fila.find("td:eq(8)").text();
     // fechaCobro = fila.find("td:eq(11)").text(); // Agregar punto y coma aquí
 
   $("#idComision_E").val(idComision);
@@ -122,11 +122,8 @@ $(document).on("click", "#btn_editar", function(){
   $("#totalComsion_E").val(comisionTotal);
   $("#estadoComision_E").val(estadoComisionar);
   $("#estadoLiquidacion_E").val(estadoLiquidacion);
-  // $("#estadoCobro_E").val(estadoCobro);
-  // $("#metodoPago_E").val(metodoPago);
   $("#fecha_E").val(fechaComision);
   $("#fecha_EV").val(fechaLiquidacion);
-  // $("#fecha_EC").val(fechaCobro);
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-title").css("color", "white");
   $("#modalEditarComision").modal("show");
@@ -148,10 +145,7 @@ $("#form-Edit-Comision").submit(function (e) {
     datatype: "JSON",
     data: {
       idComision: idComision,
-      // estadoComision: estadoComision,
-      // estadoCobro: estadoCobro,
       estadoLiquidacion: estadoLiquidacion,
-      // metodoPago: metodoPago,
     },
     success: function (data) {
       console.log(data);

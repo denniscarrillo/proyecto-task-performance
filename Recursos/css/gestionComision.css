@@ -30,10 +30,10 @@ h1{
     margin: 0.10rem;
 }
 .btn-guardar {
-    position: absolute;
-    bottom: 0.2rem;
-    left: 7.5%;
-    right:30%;
+    display: flex;
+    width: 80%;
+    justify-content: center;
+    gap: 1rem;
 }
 .btn_nuevoRegistro {
     margin-bottom: 1rem;
