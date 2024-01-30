@@ -67,17 +67,27 @@ class Rol {
     }
 
     public static function rolExistente($rol){
-        $existeRol = false;
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB();
-        $query = "SELECT rol FROM tbl_MS_Roles WHERE rol = '$rol'";
-        $roles = sqlsrv_query($conexion, $query);
-        $existe = sqlsrv_has_rows($roles);
-        if($existe){
-            $existeRol = true;
+        $estado = false;
+        try{
+            $existente = array();
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $selectCliente = "SELECT rol FROM tbl_MS_Roles WHERE rol = '$rol'";
+            $consulta = sqlsrv_query($abrirConexion, $selectCliente);
+            if(sqlsrv_has_rows($consulta)){
+                while($fila = sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC)){
+                    $existente = [
+                        'rol' => $fila['rol']
+                    ];
+                }
+                sqlsrv_close($abrirConexion); //Cerrar conexion
+                return $existente;
+            } else {
+               return $estado;
+            }
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
         }
-        sqlsrv_close($conexion); #Cerramos la conexión.
-        return $existeRol;
     }
 
     public static function eliminarRol($rol){
@@ -86,11 +96,14 @@ class Rol {
             $conexion = $conn->abrirConexionDB();
             $query = "DELETE FROM tbl_MS_Roles WHERE id_Rol = '$rol';";
             $estadoEliminado = sqlsrv_query($conexion, $query);
-        }catch (Exception $e) {
-            $estadoEliminado = 'Error SQL:' . $e;
+            if(!$estadoEliminado) {
+                return false;
+            }
+            sqlsrv_close($conexion); //Cerrar conexion
+            return true;
+        } catch (Exception $e) {
+            echo 'Error SQL:' . $e;
         }
-        sqlsrv_close($conexion); #Cerramos la conexión.
-        return $estadoEliminado;
     }
 
     public static function obtenerRolesUsuarioPDF($buscar){

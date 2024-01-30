@@ -5,10 +5,13 @@ require_once("../../../Modelo/Usuario.php");
 require_once("../../../Modelo/Bitacora.php");
 require_once("../../../Controlador/ControladorUsuario.php");
 require_once("../../../Controlador/ControladorBitacora.php");
-require_once ("../../../Modelo/Pregunta.php");
+require_once("../../../Modelo/Pregunta.php");
 require_once("../../../Controlador/ControladorPregunta.php");
+require_once('../../../Modelo/Parametro.php');
+require_once('../../../Controlador/ControladorParametro.php');
 require_once("actualizarPerfilUsuario.php");
 require_once("actualizarPreguntasUsuario.php");
+
 
 $data = ControladorUsuario::obtenerDatosPerfilUsuario($_SESSION['usuario']);
 $preguntas = ControladorPregunta::obtenerPreguntasXusuario($_SESSION['usuario']);
@@ -18,11 +21,11 @@ if (isset($_SESSION['usuario'])) {
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
   (!($_SESSION['usuario'] == 'SUPERADMIN'))
-  ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
-  : 
+    ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual)
+    :
     $permisoConsulta = true;
   ;
-  if (!$permisoConsulta){
+  if (!$permisoConsulta) {
     /* ==================== Evento intento de ingreso sin permiso a mantenimiento usuario. ==========================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
@@ -96,38 +99,38 @@ if (isset($_SESSION['usuario'])) {
     <div class="conteiner-global">
       <div class="sidebar-conteiner">
         <?php
-          $urlIndex = '../../index.php';
-          // Rendimiento
-          $urlMisTareas = '../../rendimiento/v_tarea.php';
-          $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
-          $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
-          $urlMetricas = '../Metricas/gestionMetricas.php';
-          $urlEstadisticas = '../../grafica/estadistica.php'; 
-          //Solicitud
-          $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
-          //Comisión
-          $urlComision = '../../comisiones/v_comision.php';
-          //Consulta
-          $urlClientes = '../cliente/gestionCliente.php';
-          $urlVentas = '../Venta/gestionVenta.php';
-          $urlArticulos = '../articulo/gestionArticulo.php';
-          $urlObjetos = '../DataTableObjeto/gestionDataTableObjeto.php';
-          $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
-          //Mantenimiento
-          $urlUsuarios = '../usuario/gestionUsuario.php';
-          $urlEstadoUsuario = '../estadoUsuario/gestionEstadoUsuario.php';
-          $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
-          $urlPreguntas = '../pregunta/gestionPregunta.php';
-          $urlParametros = '../parametro/gestionParametro.php';
-          $urlPermisos = '../permiso/gestionPermisos.php';
-          $urlRoles = '../rol/gestionRol.php';
-          $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
-          $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
-          $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
-          $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
-          $urlEditarCamposPerfil='../PerfilUsuario/EditarCamposPerfilUsuario.php';
-          $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
-          require_once '../../layout/sidebar.php';
+        $urlIndex = '../../index.php';
+        // Rendimiento
+        $urlMisTareas = '../../rendimiento/v_tarea.php';
+        $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
+        $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
+        $urlMetricas = '../Metricas/gestionMetricas.php';
+        $urlEstadisticas = '../../grafica/estadistica.php';
+        //Solicitud
+        $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
+        //Comisión
+        $urlComision = '../../comisiones/v_comision.php';
+        //Consulta
+        $urlClientes = '../cliente/gestionCliente.php';
+        $urlVentas = '../Venta/gestionVenta.php';
+        $urlArticulos = '../articulo/gestionArticulo.php';
+        $urlObjetos = '../DataTableObjeto/gestionDataTableObjeto.php';
+        $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
+        //Mantenimiento
+        $urlUsuarios = '../usuario/gestionUsuario.php';
+        $urlEstadoUsuario = '../estadoUsuario/gestionEstadoUsuario.php';
+        $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
+        $urlPreguntas = '../pregunta/gestionPregunta.php';
+        $urlParametros = '../parametro/gestionParametro.php';
+        $urlPermisos = '../permiso/gestionPermisos.php';
+        $urlRoles = '../rol/gestionRol.php';
+        $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
+        $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+        $urlPerfilUsuario = '../PerfilUsuario/gestionPerfilUsuario.php';
+        $urlPerfilContraseniaUsuarios = '../PerfilUsuario/gestionPerfilContrasenia.php';
+        $urlEditarCamposPerfil = '../PerfilUsuario/EditarCamposPerfilUsuario.php';
+        $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
+        require_once '../../layout/sidebar.php';
         ?>
       </div>
       <div class="conteiner-main">
@@ -172,77 +175,79 @@ if (isset($_SESSION['usuario'])) {
 
 
             </div>
-            <div class="grupo-form" >
-              
-                <div class="mb-3">
-                    <label for="email">Email:</label>
-                    <input type="email" class="form-control" name="email" id="E_email" value="<?php echo $data['correo'] ?>">
-                    <p class="mensaje"></p>
-                  </div>
-                  <div class="mb-3">
-                    <label for="telefono">Teléfono:</label>
-                    <input type="tex" class="form-control" name="telefono"  id="E_telefono" value="<?php echo $data['telefono'] ?>">
-                    <p class="mensaje"></p>
-                </div>
-                <div class="mb-3">
-                      <label for="nombre">Dirección:</label>
-                      <input type="text" class="form-control" name="direccion"   id="E_direccion"  value="<?php echo $data['direccion'] ?>" >
-                      <p class="mensaje"></p>
-                </div>
-                  <div class="btn-guardar">
-                        <button type="button"  class="btn btn-uno" ><a class=" btn-uno"  href="gestionPerfilUsuario.php"  >Cancelar</a></button>
-                        <button type="submit" name="guardar" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
-                   </div>
-            </div>
-            
-            </form>
-            </div>
-            <div class="container">
-      <div class="title-form">
-                <div class="img-content">
-                  <img class="img" src="https://cdn-icons-png.flaticon.com/128/7887/7887104.png" height="50px">
-             </div>
-                <h2 class="text-title-form">Editar Preguntas Del Usuario</h2>
-            </div>
-         <form  action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>"  method="post" id="form-Edit-Preguntas"> 
-          
-                  <div class="mb-3">
-                  <label  for="preguntas">Preguntas:</label>
-                  <?php
-                    $preguntasArray = $preguntas['preguntas'];
-                    $respuestasArray = $preguntas['respuestas'];
-                    $totalPreguntas = count($preguntasArray);
+            <div class="grupo-form">
 
-                    for ($i = 0; $i < $totalPreguntas; $i++) {
-                        $respuesta = $i; // El índice se utilizará como respuesta
-                        $pregunta = $preguntasArray[$i];
-                        $respuestaName = "respuestas $respuesta";
-                        $respuestaId = "E_respuestas $respuesta";
-                        $valorRespuesta = isset($respuestasArray[$respuesta]) ? $respuestasArray[$respuesta] : '';
-                    ?>
-                    <br>
-                    <label><?php echo $pregunta; ?></label>
-                    <input type="text" class="form-control" name="respuestas" <?php echo $respuestaName; ?> id="<?php echo $respuestaId; ?>" value="<?php echo $valorRespuesta; ?>">
-                    <?php
-                      }
-                    ?>
-                    <p class="mensaje"></p>
-                  </div>
-                  <div class="btn-guardar">
-                        <button type="button"  class="btn btn-uno" ><a class=" btn-uno"  href="gestionPerfilUsuario.php"  >Cancelar</a></button>
-                        <button type="submit" name="guardarRespuestas" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
-                   </div>
+              <div class="mb-3">
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" class="form-control" name="email" id="E_email"
+                  value="<?php echo $data['correo'] ?>">
+                <p class="mensaje"></p>
+              </div>
+              <div class="mb-3">
+                <label for="telefono">Teléfono:</label>
+                <input type="tex" class="form-control" name="telefono" id="E_telefono"
+                  value="<?php echo $data['telefono'] ?>">
+                <p class="mensaje"></p>
+              </div>
+              <div class="mb-3">
+                <label for="nombre">Dirección:</label>
+                <input type="text" class="form-control" name="direccion" id="E_direccion"
+                  value="<?php echo $data['direccion'] ?>">
+                <p class="mensaje"></p>
+              </div>
+              <div class="btn-guardar">
+                <button type="button" class="btn btn-uno"><a class=" btn-uno"
+                    href="gestionPerfilUsuario.php">Cancelar</a></button>
+                <button type="submit" name="guardar" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i>
+                  Guardar</button>
+              </div>
             </div>
-            
-            </form>
-           
-      <!-- Footer -->
-      <div class="footer-conteiner">
-                <?php
-                require_once '../../layout/footer.php';
-                ?>
-          </div>
+
+          </form>
         </div>
+        <div class="container">
+          <div class="title-form">
+            <div class="img-content">
+              <img class="img" src="https://cdn-icons-png.flaticon.com/128/7887/7887104.png" height="50px">
+            </div>
+            <h2 class="text-title-form">Editar Preguntas Del Usuario</h2>
+          </div>
+          <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" id="form-Edit-Preguntas">
+
+            <div class="mb-3">
+              <label for="preguntas">Preguntas:</label>
+              <?php
+              $preguntasArray = $preguntas['preguntas'];
+              $respuestasArray = $preguntas['respuestas'];
+              $totalPreguntas = count($preguntasArray);
+
+              for ($i = 0; $i < $totalPreguntas; $i++) {
+                $respuesta = $i; // El índice se utilizará como respuesta
+                $pregunta = $preguntasArray[$i];
+                $respuestaName = "respuestas $respuesta";
+                $respuestaId = "E_respuestas $respuesta";
+                $valorRespuesta = isset($respuestasArray[$respuesta]) ? $respuestasArray[$respuesta] : '';
+                ?>
+              <br>
+              <label>
+                <?php echo $pregunta; ?>
+              </label>
+              <input type="text" class="form-control" name="respuestas" <?php echo $respuestaName; ?>
+                id="<?php echo $respuestaId; ?>" value="<?php echo $valorRespuesta; ?>">
+              <?php
+              }
+              ?>
+              <p class="mensaje"></p>
+            </div>
+            <div class="btn-guardar">
+              <button type="button" class="btn btn-uno"><a class=" btn-uno"
+                  href="gestionPerfilUsuario.php">Cancelar</a></button>
+              <button type="submit" name="guardarRespuestas" class="btn btn-primary"><i
+                  class="fa-solid fa-floppy-disk"></i> Guardar</button>
+            </div>
+        </div>
+        </form>
+      </div>
     </div>
   </div>
   </div>

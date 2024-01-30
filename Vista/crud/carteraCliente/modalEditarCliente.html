@@ -7,50 +7,50 @@
             </div>
             <div class="modal-body">
                 <form action="" method="post" id="form-editar-carteraCliente">
-                    <div class="grupo-form">
-                        <div class="mb-3" hidden="true">
-                            <label for="id" class="form-label">ID:</label>
-                            <input type="text" name="id" id="E_Cliente" class="form-control" required>
+                    <div class="container-group-form">
+                        <div class="grupo-form">
+                            <div class="mb-3" hidden="true">
+                                <label for="id" class="form-label">ID:</label>
+                                <input type="text" name="id" id="E_Cliente" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre:</label>
+                                <input type="text" name="nombre" id="E_Nombre" maxlength="50" class="form-control" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="rtn" class="form-label">RTN:</label>
+                                <input type="text" name="rtn" id="E_Rtn" maxlength="14" class="form-control" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="telefono" class="form-label">Teléfono:</label>
+                                <input type="text" name="telefono" id="E_Telefono" maxlength="18" class="form-control">
+                                <p class="mensaje"></p>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre:</label>
-                            <input type="text" name="nombre" id="E_Nombre" maxlength="50" class="form-control" disabled>
-                            <p class="mensaje"></p>
-                        </div>
-                        <div class="mb-3">
-                            <label for="rtn" class="form-label">RTN:</label>
-                            <input type="text" name="rtn" id="E_Rtn" maxlength="14" class="form-control" disabled>
-                            <p class="mensaje"></p>
-                        </div>
-                        <div class="mb-3">
-                            <label for="telefono" class="form-label">Teléfono:</label>
-                            <input type="text" name="telefono" id="E_Telefono" maxlength="18" class="form-control">
-                            <p class="mensaje"></p>
-                        </div>
-                    </div>
-                    <div class="grupo-form">
-                        <div class="mb-3">
-                            <label for="correo" class="form-label">Correo Electrónico:</label>
-                            <input type="text" name="correo" id="E_Correo" class="form-control">
-                            <p class="mensaje"></p>
-                        </div>
-                        <div class="mb-3">
-                            <label for="direccion" class="form-label">Dirección:</label>
-                            <input type="text" name="direccion" id="E_Direccion" maxlength="100" class="form-control">
-                            <p class="mensaje"></p>
-                        </div>
-                        <div class="mb-3">
-                            <label for="estadoContacto" class="form-label">Estado Contacto:</label>
-                            <select  id="E_estadoContacto" class="form-control">
-                                <option>En proceso</option>
-                                <option>Finalización</option>
-                            </select>
-                            <p class="mensaje"></p>
+                        <div class="grupo-form">
+                            <div class="mb-3">
+                                <label for="correo" class="form-label">Correo Electrónico:</label>
+                                <input type="text" name="correo" id="E_Correo" class="form-control">
+                                <p class="mensaje"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label for="direccion" class="form-label">Dirección:</label>
+                                <input type="text" name="direccion" id="E_Direccion" maxlength="100" class="form-control">
+                                <p class="mensaje"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label for="estadoContacto" class="form-label">Estado Contacto:</label>
+                                <select  id="E_estadoContacto" class="form-control">
+                                    <option>EN PROCESO</option>
+                                    <option>FINALIZADO</option>
+                                </select>
+                                <p class="mensaje"></p>
+                            </div>
                         </div>
                     </div>
                     <div class="btn-guardar">
                         <button type="button" class="btn btn-secondary" id="button-cerrar" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit"  class="btn btn-primary" id="btn-submit"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                        <button type="submit"  class="btn btn-primary" id="btn-guardar"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
                     </div>
                 </form>
             </div>

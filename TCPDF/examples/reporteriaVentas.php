@@ -36,7 +36,7 @@ $width = 154; // Define el ancho que desea para su cadena de encabezado
 $PDF_HEADER_TITLE =  $nombreP;
 $PDF_HEADER_STRING = $direccionP . "\n"  .'Correo: ' . $correoP ."\nTeléfono: +" . $telefonoP.  ", +" . $telefono2P ;
 $PDF_HEADER_STRING .= str_repeat(' ', $width - strlen($fechaActual)) . $fechaActual;
-$PDF_HEADER_LOGO = 'LOGO-reporte.jpg';
+$PDF_HEADER_LOGO = '../../../Recursos/' . ControladorParametro::obtenerUrlLogoReporte();
 // set default header data
 $pdf->setHeaderData($PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, $PDF_HEADER_TITLE, $PDF_HEADER_STRING);
 
@@ -75,38 +75,36 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de Ventas</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">N° FACTURA</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 85px;">CODIGO CLIENTE</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 250px;">NOMBRE CLIENTE</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 130px;">RTN</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">FECHA</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">TOTAL BRUTO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">IMPUESTO</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">TOTAL</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">N° FACTURA</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 300px;">NOMBRE CLIENTE</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 130px;">RTN/DNI</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 150px;">TOTAL VENTA</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 120px;">CREADO POR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 130px;">FECHA CREACIÓN</td>
+
 </tr>
 ';
 $Ventas = ControladorVenta::obtenerlasventasPDF($_GET['buscar']);
 foreach($Ventas as $Venta){
-    $idVenta = $Venta['numFactura'];
-    $idCliente = $Venta['codCliente'];
+    $numFactura = $Venta['numFactura'];
     $nombre = $Venta['nombreCliente'];
     $RTN  = $Venta['rtnCliente'];
-    $fechaEmision  = $Venta['fechaEmision'];
+    $totalVenta = $Venta['totalVenta'];
+    $CreadoPor = $Venta['CreadoPor'];
+    $fechaEmision  = $Venta['FechaCreacion'];
     $fechaFormateada = $fechaEmision->format('Y/m/d');
-    $totalBruto = $Venta['totalBruto'];
-    $totalImpuesto = $Venta['totalImpuesto'];
-    $totalVenta = $Venta['totalNeto'];
+    
     $Cont++;
     $html .= '
     <tr>
-    <td style="text-align: center">'.$idVenta.'</td>
-    <td style="text-align: center">'.$idCliente.'</td>
+    <td style="text-align: center">'.$numFactura.'</td>
     <td>'.$nombre.'</td>
-    <td>'.$RTN.'</td>
+    <td style="text-align: center">'.$RTN.'</td>
+    <td style="text-align: center; background-color: #b7b7b7">'.'Lps.'.$totalVenta.'</td>
+    <td style="text-align: center">'.$CreadoPor.'</td>
     <td style="text-align: center">'.$fechaFormateada.'</td>
-    <td style="text-align: center">'.$totalBruto.'</td>
-    <td style="text-align: center">'.$totalImpuesto.'</td>
-    <td style="text-align: center; background-color: #b7b7b7">'.$totalVenta.'</td>
+   
+    
     </tr>
     ';
 }

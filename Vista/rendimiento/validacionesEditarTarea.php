@@ -51,21 +51,7 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
                 ];
             }
             if(count($tarea) > 0){
-                ControladorTarea::actualizarTarea($id_Tarea, $tipo_Tarea, $tarea);
-                editarTareaBitacora($id_Tarea, $estadoTarea, $_SESSION['usuario']);
-                //Valiar que no exista esa misma evidencia en la tabla evidencia
-                if(isset($_POST['nFactura']) && intval($_POST['idEstado'] ) == 4 && $estadoE['estado'] == false){
-                    // $idTarea, $evidencia, $accion, $creadoPor
-                    ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia, intval($_POST['accion']), $Creado_Por);
-                    if(intval($_POST['accion']) == 0){
-                        guardarFacturaTareaBitacora($id_Tarea, $evidencia, $estadoTarea, $_SESSION['usuario']);
-                    }else{
-                        editoFacturaTareaBitacora($id_Tarea, $evidencia, $estadoTarea, $_SESSION['usuario']);
-                    }
-                }
-                // !isset($datosTareaDB['RTN_Cliente']) && (isset($_POST['nombre']) && isset($_POST['rtnCliente']))
                 if(isset($_POST['nombre']) && isset($_POST['rtnCliente'])){
-                    var_dump($_POST['rtnCliente']);
                     $nombre = $_POST['nombre'];
                     $rtn = $_POST['rtnCliente'];
                     ControladorTarea::insertarNuevoCliente($nombre, $rtn, $telefono, $correo, $direccion, $Creado_Por);
@@ -78,6 +64,18 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
                     $updateTarea->Modificado_Por = $Modificador_Por;
                     ControladorTarea::editarNuevoClienteTarea($updateTarea);
                 }
+                ControladorTarea::actualizarTarea($id_Tarea, $tipo_Tarea, $tarea);
+                editarTareaBitacora($id_Tarea, $estadoTarea, $_SESSION['usuario']);
+                //Validar que no exista esa misma evidencia en la tabla evidencia
+                if(isset($_POST['nFactura']) && intval($_POST['idEstado'] ) == 4 && $estadoE['estado'] == false){
+                    // $idTarea, $evidencia, $accion, $creadoPor
+                    ControladorTarea::guardarFacturaTarea($id_Tarea, $evidencia, intval($_POST['accion']), $Creado_Por);
+                    if(intval($_POST['accion']) == 0){
+                        guardarFacturaTareaBitacora($id_Tarea, $evidencia, $estadoTarea, $_SESSION['usuario']);
+                    }else{
+                        editoFacturaTareaBitacora($id_Tarea, $evidencia, $estadoTarea, $_SESSION['usuario']);
+                    }
+                }
             }
         } else {
             $tarea = [
@@ -85,6 +83,7 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
                 'tipoCliente' => $_POST['tipoCliente'],
                 'rubro' => $_POST['rubrocomercial'],
                 'razon' => $_POST['razonsocial'],
+                'correo' => $_POST['correo'],
                 'ModificadoPor' => $Modificador_Por
             ];
             //Se valida el estado del cliente de la tarea cliente es existente
@@ -117,11 +116,14 @@ if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
     if(isset($_POST['idTarea'])){
         //Obtenener todos los datos de la tarea a editar(cuando ya existen)
         if(ControladorTarea::validarEstadoClienteTarea(intval($_POST['idTarea']))){
-            $estadoTarea = (intval($_POST['idEstado']) == 2) ? 2: 0;
+            $estadoTarea = (intval($_POST['idEstado']) == 2) ? 2: 0; //Saber si es 2 es Lead, cualquier otro tipo se consulta igual, por ello se usa 0.
             $datosTarea = ControladorTarea::obtenerDatosTarea($estadoTarea, intval($_POST['idTarea']));
-            $datosTarea += [
-                'productos' => ControladorTarea::obtenerProductosInteres($_POST['idTarea'])
-            ];
+            $productos = ControladorTarea::obtenerProductosInteres($_POST['idTarea']);
+            if($productos != []) {
+                $datosTarea += [
+                    'productos' => $productos
+                ];
+            }
             print json_encode($datosTarea, JSON_UNESCAPED_UNICODE);
         } else {
             $datosTarea = [

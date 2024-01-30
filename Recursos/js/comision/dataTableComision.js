@@ -39,8 +39,8 @@ let procesarPermisoActualizar = data => {
       { "data": "comisionTotal", "render": $.fn.dataTable.render.number(',', '.', 2, ' Lps. ') },
       { "data": "estadoComisionar" },
       { "data": "estadoLiquidacion" },
-      { "data": "estadoCobro" },
-      { "data": "metodoPago" },
+      // { "data": "estadoCobro" },
+      // { "data": "metodoPago" },
       {
         "data": 'fechaComision.date',
         "render": function (data) {
@@ -53,12 +53,12 @@ let procesarPermisoActualizar = data => {
           return data ? data.slice(0, 19) : '';
         },
       },
-      {
-        "data": 'fechaCobro.date',
-        "render": function (data) {
-          return data ? data.slice(0, 19) : '';
-        },
-      },
+      // {
+      //   "data": 'fechaCobro.date',
+      //   "render": function (data) {
+      //     return data ? data.slice(0, 19) : '';
+      //   },
+      // },
       {
         "defaultContent":
           `<div>
@@ -109,11 +109,11 @@ $(document).on("click", "#btn_editar", function(){
     comisionTotal = fila.find("td:eq(4)").text(),
     estadoComisionar = fila.find("td:eq(5)").text(),
     estadoLiquidacion = fila.find("td:eq(6)").text(),
-    estadoCobro = fila.find("td:eq(7)").text(),
-    metodoPago = fila.find("td:eq(8)").text(),
-    fechaComision = fila.find("td:eq(9)").text(),
-    fechaLiquidacion = fila.find("td:eq(10)").text(), 
-    fechaCobro = fila.find("td:eq(11)").text(); // Agregar punto y coma aquí
+    // estadoCobro = fila.find("td:eq(7)").text(),
+    // metodoPago = fila.find("td:eq(8)").text(),
+    fechaComision = fila.find("td:eq(7)").text(),
+    fechaLiquidacion = fila.find("td:eq(8)").text();
+    // fechaCobro = fila.find("td:eq(11)").text(); // Agregar punto y coma aquí
 
   $("#idComision_E").val(idComision);
   $("#idVenta_E").val(idVenta);
@@ -122,11 +122,8 @@ $(document).on("click", "#btn_editar", function(){
   $("#totalComsion_E").val(comisionTotal);
   $("#estadoComision_E").val(estadoComisionar);
   $("#estadoLiquidacion_E").val(estadoLiquidacion);
-  $("#estadoCobro_E").val(estadoCobro);
-  $("#metodoPago_E").val(metodoPago);
   $("#fecha_E").val(fechaComision);
   $("#fecha_EV").val(fechaLiquidacion);
-  $("#fecha_EC").val(fechaCobro);
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-title").css("color", "white");
   $("#modalEditarComision").modal("show");
@@ -139,19 +136,16 @@ $("#form-Edit-Comision").submit(function (e) {
   e.preventDefault();
   let idComision = $("#idComision_E").val();
   // let estadoComision = document.getElementById("estadoComision_E").value;
-  let estadoCobro = document.getElementById("estadoCobro_E").value;
+  // let estadoCobro = document.getElementById("estadoCobro_E").value;
   let estadoLiquidacion = document.getElementById("estadoLiquidacion_E").value;
-  let metodoPago = document.getElementById("metodoPago_E").value;
+  // let metodoPago = document.getElementById("metodoPago_E").value;
   $.ajax({
     url: "../../../Vista/comisiones/EditarComision.php",
     type: "POST",
     datatype: "JSON",
     data: {
       idComision: idComision,
-      // estadoComision: estadoComision,
-      estadoCobro: estadoCobro,
       estadoLiquidacion: estadoLiquidacion,
-      metodoPago: metodoPago,
     },
     success: function (data) {
       console.log(data);
@@ -199,38 +193,38 @@ if (!isNaN(porcentajeDecimal)) {
   estadoComisionLabel.innerText = idComisionVer.estadoComision;
   const estadoLiquidacionLabel = document.getElementById('V_EstadoLiquidar');
   estadoLiquidacionLabel.innerText = idComisionVer.estadoLiquidacion;
-  const estadoCobroLabel = document.getElementById('V_EstadoCobro');
-  estadoCobroLabel.innerText = idComisionVer.estadoCobro;
-  const metodoPagoLabel = document.getElementById('V_metodoPago');
-  metodoPagoLabel.innerText = idComisionVer.metodoPago;
+  // const estadoCobroLabel = document.getElementById('V_EstadoCobro');
+  // estadoCobroLabel.innerText = idComisionVer.estadoCobro;
+  // const metodoPagoLabel = document.getElementById('V_metodoPago');
+  // metodoPagoLabel.innerText = idComisionVer.metodoPago;
   const fechaLiquidacionLabel = document.getElementById('V_fechaLiquidacion');
   if(idComisionVer.FechaLiquidacion !== null){
     fechaLiquidacionLabel.innerText = idComisionVer.FechaLiquidacion.date.slice(0, 19).replace("T", " ");
   } else {
-    fechaLiquidacionLabel.innerText = '';
+    fechaLiquidacionLabel.innerText = 'Sin liquidar';
   }
-  const fechaCobroLabel = document.getElementById('V_fechaCobro');
-  if(idComisionVer.FechaCobro !== null){
-    fechaCobroLabel.innerText = idComisionVer.FechaCobro.date.slice(0, 19).replace("T", " ");
-  } else {
-    fechaCobroLabel.innerText = '';
-  }
+  // const fechaCobroLabel = document.getElementById('V_fechaCobro');
+  // if(idComisionVer.FechaCobro !== null){
+  //   fechaCobroLabel.innerText = idComisionVer.FechaCobro.date.slice(0, 19).replace("T", " ");
+  // } else {
+  //   fechaCobroLabel.innerText = '';
+  // }
   const CreadoPorLabel = document.getElementById('V_CreadoPor');
   CreadoPorLabel.innerText = idComisionVer.CreadoPor;
   const fechaComisionLabel = document.getElementById('V_fechaCreacion');
   fechaComisionLabel.innerText = idComisionVer.FechaComision.date.slice(0, 19).replace("T", " ");
   const ModificadoPorLabel = document.getElementById('V_ModificadoPor');
-  ModificadoPorLabel.innerText = idComisionVer.modificadoPor;
-  if(idComisionVer.modificadoPor !== null){
+  ModificadoPorLabel.innerText = idComisionVer.ModificadoPor;
+  if(idComisionVer.ModificadoPor !== null){
     ModificadoPorLabel.innerText = idComisionVer.ModificadoPor;
   }else{
-    ModificadoPorLabel.innerText = '';
+    ModificadoPorLabel.innerText = 'Sin modificador';
   }
   const fechaModificacionLabel = document.getElementById('V_FechaModificado');
   if(idComisionVer.FechaModificacion !== null){
     fechaModificacionLabel.innerText = idComisionVer.FechaModificacion.date.slice(0, 19).replace("T", " ");
   } else {
-    fechaModificacionLabel.innerText = '';
+    fechaModificacionLabel.innerText = 'Sin modificar';
   }
   let vendedores = idComisionVer.vendedores; // Supongamos que los datos de los vendedores están en un arreglo
   vendedores.forEach(vendedor => {
@@ -327,31 +321,31 @@ $(document).on("click", "#btn_pdf_id",  function (){
       window.open('../../../TCPDF/examples/reporteriaComision.php?buscar='+buscar, '_blank');
     });
     
-    let $btnFiltrar = document.getElementById("btn_filtroALiquidar");
-    let $tablaComisionesLiquidadas = "";
-    let $fechaDesde = document.getElementById('fechaDesdef');
-    let $fechaHasta = document.getElementById('fechaHastaf');
+  //   let $btnFiltrar = document.getElementById("btn_filtroALiquidar");
+  //   let $tablaComisionesLiquidadas = "";
+  //   let $fechaDesde = document.getElementById('fechaDesdef');
+  //   let $fechaHasta = document.getElementById('fechaHastaf');
     
-    $btnFiltrar.addEventListener("click", function(){
-      // Obtener las fechas desde el modal
-  const fechaDesdeT = $fechaDesde.value;
-  const fechaHastaT = $fechaHasta.value;
+  //   $btnFiltrar.addEventListener("click", function(){
+  //     // Obtener las fechas desde el modal
+  // const fechaDesdeT = $fechaDesde.value;
+  // const fechaHastaT = $fechaHasta.value;
 
-  if(new Date($fechaDesde.value) > new Date($fechaHasta.value))
-  {
-    Swal.fire({
-      icon: 'error',
-      title: 'Error al filtrar comisiones',
-      text: 'La fecha desde no puede ser mayor a la fecha hasta.',
-    });
-    return;
-  }
+  // if(new Date($fechaDesde.value) > new Date($fechaHasta.value))
+  // {
+  //   Swal.fire({
+  //     icon: 'error',
+  //     title: 'Error al filtrar comisiones',
+  //     text: 'La fecha desde no puede ser mayor a la fecha hasta.',
+  //   });
+  //   return;
+  // }
 
 
-  // Asumiendo que tengas un elemento con el id "fechasLabel" para mostrar las fechas
-  $("#fechasLabel").text('Desde el: ' + fechaDesdeT + ' Hasta el: ' + fechaHastaT);
-      iniciarDataTable($fechaDesde.value, $fechaHasta.value);
-    });
+  // // Asumiendo que tengas un elemento con el id "fechasLabel" para mostrar las fechas
+  // $("#fechasLabel").text('Desde el: ' + fechaDesdeT + ' Hasta el: ' + fechaHastaT);
+  //     iniciarDataTable($fechaDesde.value, $fechaHasta.value);
+  //   });
     
     let iniciarDataTable = function (fechaDesde, fechaHasta) {
       $tablaComisionesLiquidadas = $("#table-comisiones_ALiquidar").DataTable({

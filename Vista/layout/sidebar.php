@@ -2,14 +2,22 @@
   <!-- Logo del siberbar -->
   <div class="logo_items flex-log">
     <span class="nav_image">
-      <a href="<?php echo $urlIndex; ?>">
+      <a href="<?php echo $urlIndex; ?>" style="height: 87px;">
         <img src="<?php echo $urlImg; ?>" alt="logo_img" height="80px">
       </a>
     </span>
   </div>
   <div class="flex-log">
     <a href="<?php echo $urlIndex; ?>" style="text-decoration: none;">
-      <span class="logo_name" >Cocinas&Equipos</span>
+      <!-- <span class="logo_name">Task Performance</span> -->
+      <div style="display: flex; justify-content: center;">
+        <p
+          style="display: flex; justify-content: center; font-size: 1rem; font-weight: 500; width: 200px; 
+        margin-bottom: 0.5rem; color: black; text-transform: uppercase; background-color: #ffc90e; border-radius: 3rem;">
+          Task
+          Performance
+        </p>
+      </div>
     </a>
   </div>
   <span class="flex-log">
@@ -22,11 +30,12 @@
     <ul class="dropdown-menu__content">
       <!-- Lista rendimiento -->
       <li class="dropdown-menu__content__list">
-        <span class="check__conteiner dropdown__link__span" id="<?php echo ControladorBitacora::obtenerIdObjeto('v_tarea.php');?>">
-        <div class="icon-menu-principal__conteiner">
-          <i class="icon-menu-principal fa-solid fa-square-poll-vertical"></i>  
-        </div>
-        <p class="list__menu__principal-text" >Rendimiento</p>
+        <span class="check__conteiner dropdown__link__span"
+          id="<?php echo ControladorBitacora::obtenerIdObjeto('v_tarea.php'); ?>">
+          <div class="icon-menu-principal__conteiner">
+            <i class="icon-menu-principal fa-solid fa-square-poll-vertical"></i>
+          </div>
+          <p class="list__menu__principal-text">Rendimiento</p>
           <i class="dropdown__arrow fa-solid fa-angle-down"></i>
           <input type="checkbox" class="dropdown-menu__content__list__check">
         </span>
@@ -66,34 +75,36 @@
       <!-- Solicitud -->
       <li class="dropdown-menu__content__list">
         <a href="<?php echo $urlSolicitud; ?>" class="dropdown__link">
-          <span class="check__conteiner dropdown__link__span" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionDataTableSolicitud.php');?>">
-          <div class="icon-menu-principal__conteiner">
-            <i class="icon-menu-principal fa-solid fa-envelopes-bulk icon-size"></i>
-          </div>
-          <p class="list__menu__principal-text">Solicitud</p>
+          <span class="check__conteiner dropdown__link__span"
+            id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionDataTableSolicitud.php'); ?>">
+            <div class="icon-menu-principal__conteiner">
+              <i class="icon-menu-principal fa-solid fa-envelopes-bulk icon-size"></i>
+            </div>
+            <p class="list__menu__principal-text">Solicitud</p>
           </span>
         </a>
       </li>
       <!-- Comision -->
       <li class="dropdown-menu__content__list">
-          <i class=""></i>
-          <span class="check__conteiner dropdown__link__span" id="<?php echo ControladorBitacora::obtenerIdObjeto('v_comision.php');?>">
+        <i class=""></i>
+        <span class="check__conteiner dropdown__link__span"
+          id="<?php echo ControladorBitacora::obtenerIdObjeto('v_comision.php'); ?>">
           <div class="icon-menu-principal__conteiner">
-           <i class="icon-menu-principal fa-solid fa-file-invoice-dollar icon-size"></i>
+            <i class="icon-menu-principal fa-solid fa-file-invoice-dollar icon-size"></i>
           </div>
           <p class="list__menu__principal-text">Comisión</p>
           <i class="dropdown__arrow fa-solid fa-angle-down"></i>
           <input type="checkbox" class="dropdown-menu__content__list__check">
-          </span>
-          <div class="dropdown__content">
-            <ul class="dropdown-menu__content__secundario">
-              <li class="dropdown-menu__content__list__item">
-                <a href="<?php echo $urlComision; ?>" class="dropdown-menu__content__secundario__link">
+        </span>
+        <div class="dropdown__content">
+          <ul class="dropdown-menu__content__secundario">
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlComision; ?>" class="dropdown-menu__content__secundario__link">
                 <!-- <i class="fa-solid fa-list-check"></i> -->
-                  <span>Comisiones</span>
-                </a>
-              </li>
-              <li class="dropdown-menu__content__list__item">
+                <span>Comisiones</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
               <a href="<?php echo $comisionVendedor; ?>" class="dropdown-menu__content__secundario__link">
                 <i class=""></i>
                 <span>Total Vendedores</span>
@@ -105,46 +116,23 @@
                 <span>Porcentajes</span>
               </a>
             </li>
-            </ul>
-          </div>
+          </ul>
+        </div>
         </a>
       </li>
       <!-- Consulta -->
       <li class="dropdown-menu__content__list">
-        <span class="check__conteiner dropdown__link__span" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionCliente.php');?>">
-        <div class="icon-menu-principal__conteiner">
-          <i class="icon-menu-principal fa-solid fa-magnifying-glass-arrow-right"></i>
-        </div>
-        <p class="list__menu__principal-text">Consulta</p>
-        <i class="dropdown__arrow fa-solid fa-angle-down"></i>
+        <span class="check__conteiner dropdown__link__span"
+          id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionCliente.php'); ?>">
+          <div class="icon-menu-principal__conteiner">
+            <i class="icon-menu-principal fa-solid fa-magnifying-glass-arrow-right"></i>
+          </div>
+          <p class="list__menu__principal-text">Consulta</p>
+          <i class="dropdown__arrow fa-solid fa-angle-down"></i>
           <input type="checkbox" class="dropdown-menu__content__list__check">
         </span>
         <div class="dropdown__content">
           <ul class="dropdown-menu__content__secundario">
-            <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo  $urlClientes; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Clientes</span>
-              </a>
-            </li>
-            <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo $urlVentas; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Ventas</span>
-              </a>
-            </li>
-            <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo $urlArticulos; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Artículos</span>
-              </a>
-            </li>
-            <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo $urlObjetos; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Objetos Sistema</span>
-              </a>
-            </li>
             <li class="dropdown-menu__content__list__item">
               <a href="<?php echo $urlBitacoraSistema; ?>" class="dropdown-menu__content__secundario__link">
                 <i class=""></i>
@@ -156,7 +144,8 @@
       </li>
       <!-- Mantenimiento -->
       <li class="dropdown-menu__content__list">
-        <span class="check__conteiner dropdown__link__span" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');?>">
+        <span class="check__conteiner dropdown__link__span"
+          id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionUsuario.php'); ?>">
           <div class="icon-menu-principal__conteiner">
             <i class="icon-menu-principal fa-solid fa-business-time"></i>
           </div>
@@ -185,9 +174,61 @@
               </a>
             </li>
             <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlServiciosTecnicos; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Servicios Técnicos</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlRazonSocial; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Razón Social</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlRubroComercial; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Rubro Comercial</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlVentas; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Ventas</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlArticulos; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Artículos</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <!-- Seguridad -->
+      <li class="dropdown-menu__content__list">
+        <span class="check__conteiner dropdown__link__span"
+          id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionCliente.php');?>">
+          <div class="icon-menu-principal__conteiner">
+            <i class="icon-menu-principal fa-solid fa-shield-halved"></i>
+          </div>
+          <p class="list__menu__principal-text">Seguridad</p>
+          <i class="dropdown__arrow fa-solid fa-angle-down"></i>
+          <input type="checkbox" class="dropdown-menu__content__list__check">
+        </span>
+        <div class="dropdown__content">
+          <ul class="dropdown-menu__content__secundario">
+            <li class="dropdown-menu__content__list__item">
               <a href="<?php echo $urlPreguntas; ?>" class="dropdown-menu__content__secundario__link">
                 <i class=""></i>
                 <span>Preguntas</span>
+              </a>
+            </li>
+            <li class="dropdown-menu__content__list__item">
+              <a href="<?php echo $urlObjetos; ?>" class="dropdown-menu__content__secundario__link">
+                <i class=""></i>
+                <span>Objetos Sistema</span>
               </a>
             </li>
             <li class="dropdown-menu__content__list__item">
@@ -208,23 +249,6 @@
                 <span>Roles</span>
               </a>
             </li>
-            <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo $urlServiciosTecnicos; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Servicios Técnicos</span>
-              </a>
-            </li>
-            <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo $urlRazonSocial; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Razón Social</span>
-              </a>
-            </li>
-            <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo $urlRubroComercial; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Rubro Comercial</span>
-              </a>
           </ul>
         </div>
       </li>

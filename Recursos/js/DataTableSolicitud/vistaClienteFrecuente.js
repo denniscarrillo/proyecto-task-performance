@@ -13,8 +13,6 @@ $(document).on('click', '#clienteExistente', function () {
  Factura .removeAttribute('hidden');
  containerFacturacliente.style.display = 'block';
 
-
- 
 });
 
 $(document).on('click', '#clientenuevo', function () {
@@ -25,9 +23,9 @@ $(document).on('click', '#clientenuevo', function () {
  
   let Factura = document.getElementById('containerFacturacliente');
   Factura.setAttribute('hidden', 'false');
-
- 
 });
+
+
 let obtenerClientes = function () {
   if (document.getElementById('table-ClienteFrecuente_wrapper') == null) {
     $('#table-ClienteFrecuente').DataTable({
@@ -52,6 +50,7 @@ let obtenerClientes = function () {
     });
   }
 }
+
 $(document).on("click", "#btn_selectcliente", function () {
   let fila = $(this).closest("tr");
   let codCliente = fila.find("td:eq(0)").text();
@@ -92,13 +91,11 @@ rtnCliente.addEventListener('change', function () {
     $btnBuscar.classList.add('btnbuscarcliente');
     
     $btnBuscar.innerHTML = `
-    <button type="button" class="btn btn-primary" id="btnclientes" data-bs-toggle="modal" data-bs-target="#modalMenuClientes">
+    <button type="button" class="btn btn-primary" id="btnclientes" data-bs-toggle="modal" data-bs-target="#modalCarteraCliente">
       Buscar <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
     </button>
     `;
-    
     $containerRTN.appendChild($btnBuscar);
-
   }
   
 });
@@ -123,9 +120,6 @@ document.getElementById('clientenuevo').addEventListener('change', function () {
 
 
 let limpiarForm = () => {
-   //$mensaje = document.getElementById('mensaje');
-  //$mensaje.innerText = '';
-  //$mensaje.classList.remove('mensaje-existe-cliente');
   let   rtn = document.getElementById('rtnCliente'),
     telefono = document.getElementById('telefono'),
     direccion = document.getElementById('direccion'),
@@ -194,7 +188,7 @@ let obtenerFactura = function () {
       },
       "columns": [
         { "data": 'numFactura'},
-        { "data": 'codCliente' },
+        // { "data": 'codCliente' },
         { "data": 'nombreCliente' },
         { "data": 'rtnCliente' },
         {
@@ -424,12 +418,7 @@ $('#form-solicitud').submit(function (e) {
   let rtnclienteC = $('#rtnCliente').val();
   let codigoClieteF = document.querySelector('[name="codC"]');
   let codigo = codigoClieteF.getAttribute('id');
-// var radio = document.getElementById("clienteExistente");
-// if (radio.checked) {
-//   rtnclienteC = $('#rtnCliente').val();
-//   rtncliente = 'NULL'; 
-//   idFactura = null;
-//} 
+
 
 let $idProductos = document.querySelectorAll('.idproducto');
 let $cantProducto = document.querySelectorAll('.cantproducto');
@@ -558,7 +547,6 @@ $(document).on("click", "#btn_selectcarteraCliente", function () {
   let telefonoCartera = fila.find('td:eq(3)').text();
   let direccionCartera = fila.find('td:eq(5)').text();
   let nombre = document.getElementById("nombre");
-  //let rtn = document.getElementById("rtnCliente");
   let rtn = document.querySelector('[name="rtnCliente"]');
   let codigoC = document.querySelector('[name="codC"]');
   let telefono = document.getElementById("telefono");

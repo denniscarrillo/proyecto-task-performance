@@ -77,7 +77,7 @@ const validaciones = {
     // Mismo Caracter: Valida la repetición de cualquier par de caracteres
      MismoCaracter: /^(?=.*(..)\1)/,
        // Solo letras: Permite solo letras (mayúsculas y minúsculas) y algunos caracteres especiales
-     soloLetras: /^[a-zA-Z\/ .ÑñáéíóúÁÉÍÓÚs]+$/,
+       soloLetras: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ\s,])/,//Lentras, acentos y Ñ //Solo letras
      // Correo electrónico: Valida un formato básico de dirección de correo electrónico
      correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
      // Solo números: Permite solo dígitos numéricos, comas y guiones
@@ -308,6 +308,10 @@ let obtenerValidarRtnExiste = (rtn) => {
                 document.getElementById('rtnCliente').classList.remove('mensaje_error');
                 document.getElementById('rtnCliente').parentElement.querySelector('p').innerText = '';
             }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            // Manejar errores de la solicitud AJAX
+            console.error('Error en la solicitud AJAX:', textStatus, errorThrown);
         }
     });
 };

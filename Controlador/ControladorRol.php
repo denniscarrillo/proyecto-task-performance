@@ -16,9 +16,9 @@ class ControladorRol {
     public static function ingresarNuevoRol($nuevoRol){
         return Rol::registroRol($nuevoRol);
     }
-    // public static function eliminarRol($id_Rol){
-    //     return Rol::eliminarRol($id_Rol);
-    // }
+    public static function eliminarRol($id_Rol){
+        return Rol::eliminarRol($id_Rol);
+    }
     public static function editarRolUsuario($nuevoRol){
        Rol::editarRol($nuevoRol);
     }

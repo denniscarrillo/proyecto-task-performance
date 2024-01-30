@@ -1,6 +1,7 @@
 <?php
 
-class Pregunta {
+class Pregunta
+{
 
     public $idPregunta;
     public $pregunta;
@@ -11,24 +12,26 @@ class Pregunta {
     public $ModificadoPor;
     public $FechaModificacion;
 
-    public static function obtenerPreguntasUsuario(){
+    public static function obtenerPreguntasUsuario()
+    {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB();
         $query = "SELECT id_Pregunta, pregunta, estado FROM tbl_ms_preguntas;";
         $obtenerPreguntas = sqlsrv_query($consulta, $query);
         $preguntas = array();
-        while($fila = sqlsrv_fetch_array($obtenerPreguntas, SQLSRV_FETCH_ASSOC)){
-            $preguntas [] = [
+        while ($fila = sqlsrv_fetch_array($obtenerPreguntas, SQLSRV_FETCH_ASSOC)) {
+            $preguntas[] = [
                 'id_Pregunta' => $fila["id_Pregunta"],
                 'pregunta' => $fila["pregunta"],
-                'estadoPregunta' => $fila["estado"]               
+                'estadoPregunta' => $fila["estado"]
             ];
         }
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $preguntas;
     }
 
-    public static function insertarPregunta($insertarPregunta){
+    public static function insertarPregunta($insertarPregunta)
+    {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB();
         $pregunta = $insertarPregunta->pregunta;
@@ -42,14 +45,15 @@ class Pregunta {
         return $insertarPregunta;
     }
 
-    public static function editarPregunta($insertarPregunta){
+    public static function editarPregunta($insertarPregunta)
+    {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB();
         $idPregunta = $insertarPregunta->idPregunta;
         $pregunta = $insertarPregunta->pregunta;
         $estado = $insertarPregunta->estado;
         $ModificadoPor = $insertarPregunta->ModificadoPor;
-        date_default_timezone_set('America/Tegucigalpa'); 
+        date_default_timezone_set('America/Tegucigalpa');
         $FechaModificacion = date("Y-m-d");
         $query = "UPDATE tbl_ms_preguntas SET pregunta = '$pregunta', estado = '$estado', Modificado_Por = '$ModificadoPor', Fecha_Modificacion = '$FechaModificacion'
          WHERE id_Pregunta = '$idPregunta'";
@@ -57,71 +61,65 @@ class Pregunta {
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $insertarPregunta;
     }
-
-     public static function eliminarPregunta($pregunta){
+    public static function eliminarPregunta($pregunta)
+    {
         try {
-            
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB();
-        $queryExiste = "SELECT id_Pregunta FROM tbl_MS_Preguntas_X_Usuario WHERE id_Pregunta = '$pregunta';";
-        $resultCheck = sqlsrv_query($conexion, $queryExiste);
-          if ($resultCheck && sqlsrv_has_rows($resultCheck)) {
-                // La pregunta existe en tbl_MS_Preguntas_X_Usuario, enviar mensaje
-                 $queryupdate= "UPDATE tbl_MS_Preguntas SET estado = 'Inactivo' WHERE id_Pregunta = '$pregunta';";
-                $estadoPregunta = false;
-         } else {
-                 // La pregunta no existe en tbl_MS_Preguntas_X_Usuario, proceder con la eliminación
-                 $queryDelete = "DELETE FROM tbl_MS_Preguntas WHERE id_Pregunta = '$pregunta';";
-                 $estadoPregunta = true;
-                    sqlsrv_query($conexion, $queryDelete);
-                 }
-     } catch (Exception $e) {
-            $estadoPregunta = 'Error SQL:' . $e;
-    } finally {
-        sqlsrv_close($conexion); # Cerramos la conexión.
-         }    
-         return $estadoPregunta;
-  }
+            $conn = new Conexion();
+            $conexion = $conn->abrirConexionDB();
+            $query = "DELETE FROM tbl_MS_Preguntas WHERE id_Pregunta = '$pregunta';";
+            $estadoEliminado = sqlsrv_query($conexion, $query);
+            if (!$estadoEliminado) {
+                return false;
+            }
+            sqlsrv_close($conexion); //Cerrar conexion
+            return true;
+        } catch (Exception $e) {
+            echo 'Error SQL:' . $e;
+        }
+    }
 
-    public static function preguntaExistente($pregunta){
+    public static function preguntaExistente($pregunta)
+    {
         $existePregunta = false;
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
         $query = "SELECT pregunta FROM tbl_MS_Preguntas WHERE pregunta = '$pregunta'";
         $preguntas = sqlsrv_query($conexion, $query);
         $existe = sqlsrv_has_rows($preguntas);
-        if($existe){
+        if ($existe) {
             $existePregunta = true;
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $existePregunta;
     }
 
-    public static function obtenerCantPreguntas(){
+    public static function obtenerCantPreguntas()
+    {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
         $query = "SELECT COUNT(id_Pregunta)as cantP FROM tbl_MS_Preguntas WHERE estado = 'Activa'";
         $result = sqlsrv_query($conexion, $query);
         $resultArray = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC);
-        $CantPreguntas = $resultArray['cantP'];  
+        $CantPreguntas = $resultArray['cantP'];
         sqlsrv_close($conexion);
         return $CantPreguntas;
-    } 
-    
+    }
 
-    public static function obtenerPreguntasXusuario($Usuario) {
+
+    public static function obtenerPreguntasXusuario($Usuario)
+    {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
         $query = "SELECT p.pregunta, pu.respuesta FROM tbl_MS_Preguntas AS p
             INNER JOIN tbl_MS_Preguntas_X_Usuario AS pu ON p.id_Pregunta = pu.id_Pregunta
             INNER JOIN tbl_MS_Usuario AS u ON u.id_Usuario = pu.id_Usuario
-            WHERE u.usuario = '$Usuario';";   
+            WHERE u.usuario = '$Usuario';";
         $listaP = sqlsrv_query($conexion, $query);
         $listaPreguntas = array();
         while ($arrayPreguntas = sqlsrv_fetch_array($listaP, SQLSRV_FETCH_ASSOC)) {
             $listaPreguntas['preguntas'][] = $arrayPreguntas['pregunta'];
-            $listaPreguntas['respuestas'][]= $arrayPreguntas['respuesta'];
-            
+            $listaPreguntas['respuestas'][] = $arrayPreguntas['respuesta'];
+
         }
         sqlsrv_close($conexion); // Cerramos la conexión.
         return $listaPreguntas;
@@ -137,18 +135,19 @@ class Pregunta {
     //       sqlsrv_query($conexion, $query);
     //       sqlsrv_close($conexion);
     //   }
-      public static function actualizarRespuesta($Usuario, $respuestas) {
+    public static function actualizarRespuesta($Usuario, $respuestas)
+    {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-    
+
         // Recorrer la matriz de respuestas y actualizar cada respuesta
         foreach ($respuestas as $indice => $nuevaRespuesta) {
             $idPregunta = $Usuario[$indice]['idPregunta']; // Supongo que tienes un índice para relacionar las respuestas con las preguntas
-    
+
             // Realizar la actualización para cada respuesta
             $query = "UPDATE tbl_MS_Preguntas_X_Usuario SET respuesta ='$respuestas'  WHERE Creado_Por = '$Usuario' AND id_Pregunta = '$idPregunta';";
             $params = array($nuevaRespuesta, $Usuario, $idPregunta);
-    
+
             $stmt = sqlsrv_prepare($conexion, $query, $params);
             if (sqlsrv_execute($stmt)) {
                 // Éxito: la respuesta se actualizó correctamente
@@ -156,31 +155,56 @@ class Pregunta {
                 // Manejar errores en la actualización
                 echo "Error en la actualización: " . sqlsrv_errors();
             }
-    
+
             sqlsrv_free_stmt($stmt);
         }
-    
+
         sqlsrv_close($conexion);
     }
 
-    public static function obtenerPreguntasUsuarioPDF($buscar){
+    public static function obtenerPreguntasUsuarioPDF($buscar)
+    {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB();
         $query = "SELECT id_Pregunta, pregunta, estado FROM tbl_ms_preguntas
         WHERE CONCAT(id_Pregunta, pregunta, estado) LIKE '%' + '$buscar' + '%';";
         $obtenerPreguntas = sqlsrv_query($consulta, $query);
         $preguntas = array();
-        while($fila = sqlsrv_fetch_array($obtenerPreguntas, SQLSRV_FETCH_ASSOC)){
-            $preguntas [] = [
+        while ($fila = sqlsrv_fetch_array($obtenerPreguntas, SQLSRV_FETCH_ASSOC)) {
+            $preguntas[] = [
                 'id_Pregunta' => $fila["id_Pregunta"],
                 'pregunta' => $fila["pregunta"],
-                'estadoPregunta' => $fila["estado"]               
+                'estadoPregunta' => $fila["estado"]
             ];
         }
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $preguntas;
     }
-    
+    public static function validarPreguntaExistente($pregunta){
+        $estadoPregunta = false;
+        try{
+            $preguntaExistente = array();
+            $conn = new Conexion();
+            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+            $selectCliente = "SELECT pregunta FROM tbl_MS_Preguntas WHERE pregunta = '$pregunta';";
+            $consulta = sqlsrv_query($abrirConexion, $selectCliente);
+            if(sqlsrv_has_rows($consulta)){
+                while($fila = sqlsrv_fetch_array($consulta, SQLSRV_FETCH_ASSOC)){
+                    $preguntaExistente = [
+                        'pregunta' => $fila['pregunta']
+                    ];
+                }
+                sqlsrv_close($abrirConexion); //Cerrar conexion
+                return $preguntaExistente;
+            } else {
+               return $estadoPregunta;
+            }
+        }catch(Exception $e){
+            echo 'Error SQL:' . $e;
+        }
+    }
+
+
     // ControladorPregunta.php
 
 
@@ -220,22 +244,22 @@ class Pregunta {
     // public static function actualizarRespuesta($Usuario, $respuestas) {
     //      $conn = new Conexion();
     //      $conexion = $conn->abrirConexionDB();
-    
+
     //      // Recorre las respuestas y actualiza cada una
     //      foreach ($respuestas as $idPregunta => $respuesta) {
     //          // Evita la posibilidad de inyección SQL utilizando sentencias preparadas
     //          $query = "UPDATE tbl_MS_Preguntas_X_Usuario SET respuesta = '$respuesta' WHERE Creado_Por = '$Usuario' AND id_Pregunta = '$idPregunta';";
-    
+
     //          $params = array($respuesta, $Usuario->usuario, $idPregunta);
-    
+
     //          $stmt = sqlsrv_prepare($conexion, $query, $params);
-    
+
     //          if (sqlsrv_execute($stmt) === false) {
     //              die(print_r(sqlsrv_errors(), true)); // Manejo de errores
     //          }
     //      }
-    
+
     //      sqlsrv_close($conexion);
     //  }
-    
+
 }

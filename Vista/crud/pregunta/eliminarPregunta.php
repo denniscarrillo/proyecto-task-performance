@@ -1,21 +1,26 @@
 <?php
     require_once ("../../../db/Conexion.php");
     require_once ("../../../Modelo/Pregunta.php");
-    require_once("../../../Controlador/ControladorPregunta.php");
     require_once ("../../../Modelo/Usuario.php");
+    require_once ("../../../Modelo/Bitacora.php");
+    require_once("../../../Controlador/ControladorPregunta.php");
     require_once ("../../../Controlador/ControladorUsuario.php");
+    require_once ("../../../Controlador/ControladorBitacora.php");
     
     $user = '';
+    $eliminar = '';
     session_start();
     if(isset($_SESSION['usuario'])){
         $user = $_SESSION['usuario'];
-        $insertarPregunta = new Pregunta();
-        $insertarPregunta->idPregunta = ($_POST['idPregunta']);
-        $insertarPregunta->pregunta = ($_POST['pregunta']);
-        $insertarPregunta->estado = ($_POST['estado']);
-        $insertarPregunta->ModificadoPor = $user;
-        ControladorPregunta::actualizarPregunta($insertarPregunta);
-        /* ========================= Evento Editar pregunta. ====================================*/
+        $idPregunta = ($_POST['idPregunta']);
+        $estadoEliminado = ControladorPregunta::eliminarPregunta($idPregunta);
+        print json_encode(['estadoEliminado'=>$estadoEliminado], JSON_UNESCAPED_UNICODE);
+        /* ========================= Evento Eliminar pregunta. ====================================*/
+        if($estadoEliminado){
+            $eliminar = " eliminó ";
+        }else{
+            $eliminar = " intentó eliminar ";
+        }
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();
         date_default_timezone_set('America/Tegucigalpa');
@@ -23,9 +28,7 @@
         $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionPregunta.php');
         $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
         $newBitacora->accion = $accion['Update'];
-        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' modificó la pregunta '.$_POST['pregunta'];
+        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].$eliminar.'la pregunta #'.$idPregunta.' '.$_POST['pregunta'];
         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
         /* =======================================================================================*/
     }
-
-?>

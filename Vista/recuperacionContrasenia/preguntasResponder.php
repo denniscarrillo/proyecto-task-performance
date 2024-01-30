@@ -1,5 +1,8 @@
 <?php
 require_once('verificarUsuarioPreguntas.php');
+require_once('../../Modelo/Parametro.php');
+require_once('../../Controlador/ControladorParametro.php');
+
 $preguntas = '';
 if (isset($_SESSION['usuario'])) {
   $usuario = $_SESSION['usuario'];
@@ -13,7 +16,8 @@ if (isset($_SESSION['usuario'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1862/1862358.png">
   <link href="../../Recursos/css/login.css" rel="stylesheet">
   <link href="../../Recursos/css/preguntasResponder.css" rel="stylesheet">
@@ -24,7 +28,14 @@ if (isset($_SESSION['usuario'])) {
   <div class="ancho">
     <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" id="formPreguntasRes">
       <div class="logo-empresa">
-        <img src="../../Recursos/imagenes/LOGO-HD-transparente.jpg" height="220px">
+        <img src="<?php echo '/Recursos/' . ControladorParametro::obtenerUrlLogo() ?>" height="220px">
+      </div>
+      <div style="display: flex; justify-content: center;">
+        <p style="display: flex; justify-content: center; font-size: 2rem; font-weight: 500; width: 390px; 
+        margin-bottom: 2rem; color: gray; text-transform: uppercase; background-color: #ffc90e; border-radius: 3rem;">
+          Task
+          Performance
+        </p>
       </div>
       <div class="input-container">
         <p class="line-space"></p>
@@ -38,31 +49,36 @@ if (isset($_SESSION['usuario'])) {
           ?>
         </select>
         <div class="wrap-input mb-3">
-          <input type="text" class="form-control"  name="Respuesta" id="Respuesta" maxlength="50" placeholder="Respuesta">
+          <input type="text" class="form-control" name="Respuesta" id="Respuesta" maxlength="50"
+            placeholder="Respuesta">
           <p class="mensaje"></p>
         </div>
         <div class="btn-container mt-4">
           <a href="./destruirSesionProceso.php?url=1" class="btn btn-secondary btn-cancel">Cancelar</a>
           <button type="submit" class="btn btn-primary btn-block" name="submit">Responder</button>
         </div>
-        <?php 
-          if(!empty($mensaje) && !empty($mensaje2)){
-            echo '<div class="message-container mensaje-error"><i class="fa-solid fa-circle-exclamation"></i><h2 class="message-text">'. $mensaje. '</h2></div>';
-            echo "<div class='info-content' style='margin-top: 0.3rem;'><i class='fa-solid fa-circle-info'></i><p class='mensaje-instruccion'>".$mensaje2."</p>";
-          } else if(!empty($mensaje)) {
-            echo '<div class="message-container mensaje-error"><i class="fa-solid fa-circle-exclamation"></i><h2 class="message-text">'. $mensaje. '</h2></div>';
-          }
+        <?php
+        if (!empty($mensaje) && !empty($mensaje2)) {
+          echo '<div class="message-container mensaje-error"><i class="fa-solid fa-circle-exclamation"></i><h2 class="message-text">' . $mensaje . '</h2></div>';
+          echo "<div class='info-content' style='margin-top: 0.3rem;'><i class='fa-solid fa-circle-info'></i><p class='mensaje-instruccion'>" . $mensaje2 . "</p>";
+        } else if (!empty($mensaje)) {
+          echo '<div class="message-container mensaje-error"><i class="fa-solid fa-circle-exclamation"></i><h2 class="message-text">' . $mensaje . '</h2></div>';
+        }
         ?>
       </div>
   </div>
   </div>
   </form>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-  <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
+  < /scri pt> <
+  script src = "https://kit.fontawesome.com/2317ff25a4.js"
+  crossorigin = "anonymous" >
+  </script>
   <script src="../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-  <script src="../../Recursos/js/validacionesPreguntasResponder.js" type ="module"></script>
+  <script src="../../Recursos/js/validacionesPreguntasResponder.js" type="module"></script>
 </body>
 
 </html>

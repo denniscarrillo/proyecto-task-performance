@@ -1,95 +1,102 @@
-import {estadoValidado as validado } from './ValidacionesModalNuevoPorcentaje.js';
-import {estadoValidado as valido } from './ValidacionesModalEditarPorcentaje.js';
+import { estadoValidado as validado } from "./ValidacionesModalNuevoPorcentaje.js";
+import { estadoValidado as valido } from "./ValidacionesModalEditarPorcentaje.js";
 
-let tablaPorcentajes = '';
+let tablaPorcentajes = "";
 $(document).ready(function () {
-  let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
+  let $idObjetoSistema = document.querySelector(".title-dashboard-task").id;
   obtenerPermisos($idObjetoSistema, procesarPermisoActualizar);
 });
 //Recibe la respuesta de la peticion AJAX y la procesa
-let procesarPermisoActualizar = data => {
+let procesarPermisoActualizar = (data) => {
   let permisos = JSON.parse(data);
-  tablaPorcentajes = $('#table-Porcentajes').DataTable({
-    "ajax": {
-      "url": "../../../Vista/crud/Porcentajes/obtenerPorcentajes.php",
-      "dataSrc": ""
+  tablaPorcentajes = $("#table-Porcentajes").DataTable({
+    ajax: {
+      url: "../../../Vista/crud/Porcentajes/obtenerPorcentajes.php",
+      dataSrc: "",
     },
-    "language":{
-      "url":"//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+    language: {
+      url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
-    "columns": [
-      { "data": "idPorcentaje"},
-      { "data": "valorPorcentaje",
-       "render": function (data, type) {
-          if (type === 'display') {
-          return (parseFloat(data) * 100).toFixed(0) + '%'; // Formatea el porcentaje
+    scrollX: true,
+    columns: [
+      { data: "idPorcentaje" },
+      {
+        data: "valorPorcentaje",
+        render: function (data, type) {
+          if (type === "display") {
+            return (parseFloat(data) * 100).toFixed(0) + "%"; // Formatea el porcentaje
           }
           return data; // En otras ocasiones, devuelve el valor sin formato
-        }
+        },
       },
-      { "data": "descripcionPorcentaje" },
-      { "data": "estadoPorcentaje" },
-      {"defaultContent":
-        `<div>
-          <button class="btns btn ${(permisos.Actualizar == 'N')? 'hidden': ''}"" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>
-          <button class="btn_eliminar btns btn ${(permisos.Eliminar == 'N')? 'hidden': ''}" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button>
-        </div>`
-      }
-    ]
+      { data: "descripcionPorcentaje" },
+      { data: "estadoPorcentaje" },
+      {
+        defaultContent: `<div>
+          <button class="btns btn ${
+            permisos.Actualizar == "N" ? "hidden" : ""
+          }"" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button class="btn_eliminar btns btn ${
+            permisos.Eliminar == "N" ? "hidden" : ""
+          }" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button>
+        </div>`,
+      },
+    ],
   });
-}
+};
 //Peticion  AJAX que trae los permisos
-let obtenerPermisos = function ($idObjeto, callback) { 
+let obtenerPermisos = function ($idObjeto, callback) {
   $.ajax({
-      url: "../../../Vista/crud/permiso/obtenerPermisos.php",
-      type: "POST",
-      datatype: "JSON",
-      data: {idObjeto: $idObjeto},
-      success: callback
-    });
-}
-$('#btn_nuevoRegistro').click(function () {
+    url: "../../../Vista/crud/permiso/obtenerPermisos.php",
+    type: "POST",
+    datatype: "JSON",
+    data: { idObjeto: $idObjeto },
+    success: callback,
+  });
+};
+$("#btn_nuevoRegistro").click(function () {
   // //Petición para obtener
-
   // obtenerContactoCliente('#estadoContacto');
   //Petición para obtener estado de usuario
   // obtenerEstadoUsuario('#estado');
   // $(".modal-header").css("background-color", "#007bff");
-  // $(".modal-header").css("color", "white");	 
+  // $(".modal-header").css("color", "white");
 });
 //Crear nuevo usuario
-$('#form-Porcentajes').submit(function (e) {
+$("#form-Porcentajes").submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
-     //Obtener datos del nuevo Usuario
-     let valorPorcentaje = $('#valorPorcentaje').val();
-     let descripcionPorcentaje = $('#descripcionPorcentaje').val();
-     let estadoPorcentaje= $('#estadoPorcentaje').val();
-    //  let estado = document.getElementById('estado').value;
-    if(validado){
-      $.ajax({
-        url: "../../../Vista/crud/Porcentajes/nuevoPorcentaje.php",
-        type: "POST",
-        datatype: "JSON",
-        data: {
-          valorPorcentaje: valorPorcentaje,
-          descripcionPorcentaje: descripcionPorcentaje,
-          estadoPorcentaje: estadoPorcentaje          
-        },
-        success: function () {
-          //Mostrar mensaje de exito
-          Swal.fire(
-           'Porcentaje Registrado!',
-           'success',
-         )
-         tablaPorcentajes.ajax.reload(null, false);
-        }
-      });
-     $('#modalNuevoPorcentaje').modal('hide');
-    } 
+  //Obtener datos del nuevo Usuario
+  let valorPorcentaje = $("#valorPorcentaje").val();
+  let descripcionPorcentaje = $("#descripcionPorcentaje").val();
+  let estadoPorcentaje = $("#estadoPorcentaje").val();
+  //  let estado = document.getElementById('estado').value;
+  if (validado) {
+    $.ajax({
+      url: "../../../Vista/crud/Porcentajes/nuevoPorcentaje.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {
+        valorPorcentaje: valorPorcentaje,
+        descripcionPorcentaje: descripcionPorcentaje,
+        estadoPorcentaje: estadoPorcentaje,
+      },
+      success: function () {
+        //Mostrar mensaje de exito
+        Swal.fire(
+          "Registrado!",
+          "El Porcentaje ha sido registrado!",
+          "success"
+        );
+        tablaPorcentajes.ajax.reload(null, false);
+      },
+    });
+    $("#modalNuevoPorcentaje").modal("hide");
+    limpiarForm();
+  }
 });
-$('#modalNuevoPorcentaje').on('hidden.bs.modal', function (e) {
+$("#modalNuevoPorcentaje").on("hidden.bs.modal", function (e) {
   // Limpia los valores de los campos del formulario
-  $('#form-Porcentajes')[0].reset();
+  $("#form-Porcentajes")[0].reset();
 });
 // let obtenerContactoCliente = function (idElemento) {
 //   //Petición para obtener estados contacto clientes
@@ -106,136 +113,165 @@ $('#modalNuevoPorcentaje').on('hidden.bs.modal', function (e) {
 //     }
 //   });
 // }
-document.getElementById('E_valorPorcentaje').setAttribute('disabled', true);
-document.getElementById('E_descripcionPorcentaje').setAttribute('disabled', true);
+document.getElementById("E_valorPorcentaje").setAttribute("disabled", true);
+document
+  .getElementById("E_descripcionPorcentaje")
+  .setAttribute("disabled", true);
 //Editar Porcentaje
-$(document).on("click", "#btn_editar", function(){		        
-  let fila = $(this).closest("tr"),	        
-  idPorcentaje = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		            
-  valorPorcentaje = fila.find('td:eq(1)').text(),
-  descripcionPorcentaje = fila.find('td:eq(2)').text(),
-  estadoPorcentaje = fila.find('td:eq(3)').text();
+$(document).on("click", "#btn_editar", function () {
+  let fila = $(this).closest("tr"),
+    idPorcentaje = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
+    valorPorcentaje = fila.find("td:eq(1)").text(),
+    descripcionPorcentaje = fila.find("td:eq(2)").text(),
+    estadoPorcentaje = fila.find("td:eq(3)").text();
   $("#E_idPorcentaje").val(idPorcentaje);
   $("#E_valorPorcentaje").val(valorPorcentaje);
   $("#E_descripcionPorcentaje").val(descripcionPorcentaje);
   $("#E_estadoPorcentaje").val(estadoPorcentaje);
   $(".modal-header").css("background-color", "#007bff");
-  $(".modal-header").css("color", "white");	
-  $('#modalEditarPorcentaje').modal('show');		   
+  $(".modal-header").css("color", "white");
+  $("#modalEditarPorcentaje").modal("show");
 });
 
-
-$('#form-Edit-Porcentaje').submit(function (e) {
+$("#form-Edit-Porcentaje").submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
-   //Obtener datos del nuevo Cliente
-   let idPorcentaje = $('#E_idPorcentaje').val(),
-   estadoPorcentaje = $('#E_estadoPorcentaje').val();
-   if(valido){
+  //Obtener datos del nuevo Cliente
+  let idPorcentaje = $("#E_idPorcentaje").val(),
+    estadoPorcentaje = $("#E_estadoPorcentaje").val();
+  if (valido) {
     $.ajax({
       url: "../../../Vista/crud/Porcentajes/editarPorcentaje.php",
       type: "POST",
       datatype: "JSON",
       data: {
-       idPorcentaje: idPorcentaje,
-       estadoPorcentaje: estadoPorcentaje
+        idPorcentaje: idPorcentaje,
+        estadoPorcentaje: estadoPorcentaje,
       },
       success: function () {
         //Mostrar mensaje de exito
         Swal.fire(
-          'Actualizado!',
-          'El Porcentaje ha sido modificado!',
-          'success',
-        )
-         tablaPorcentajes.ajax.reload(null, false);
-      }
+          "Actualizado!",
+          "El Porcentaje ha sido modificado!",
+          "success"
+        );
+        tablaPorcentajes.ajax.reload(null, false);
+      },
     });
-    $('#modalEditarPorcentaje').modal('hide');
-   }
+    $("#modalEditarPorcentaje").modal("hide");
+  }
 });
 //Limpiar el formulario de crear
-document.getElementById('btn-cerrar').addEventListener('click', ()=>{
+document.getElementById("btn-cerrar").addEventListener("click", () => {
   limpiarForm();
-})
-document.getElementById('btn-x').addEventListener('click', ()=>{
+});
+document.getElementById("btn-x").addEventListener("click", () => {
   limpiarForm();
-})
+});
 let limpiarForm = () => {
-  let $inputs = document.querySelectorAll('.mensaje_error');
-  let $mensajes = document.querySelectorAll('.mensaje');
-  $inputs.forEach($input => {
-    $input.classList.remove('mensaje_error');
+  let $inputs = document.querySelectorAll(".mensaje_error");
+  let $mensajes = document.querySelectorAll(".mensaje");
+  $inputs.forEach(($input) => {
+    $input.classList.remove("mensaje_error");
   });
-  $mensajes.forEach($mensaje =>{
-    $mensaje.innerText = '';
+  $mensajes.forEach(($mensaje) => {
+    $mensaje.innerText = "";
   });
-  let valorPorcentaje = document.getElementById('valorPorcentaje'),
-    descripcionPorcentaje = document.getElementById('descripcionPorcentaje');
+  let valorPorcentaje = document.getElementById("valorPorcentaje"),
+    descripcionPorcentaje = document.getElementById("descripcionPorcentaje");
   //Vaciar campos cliente
-    valorPorcentaje.value = '';
-    descripcionPorcentaje.value = '';
-}
+  valorPorcentaje.value = "";
+  descripcionPorcentaje.value = "";
+};
 
 //Limpiar el formulario de editar
-document.getElementById('button-cerrar').addEventListener('click', ()=>{
+document.getElementById("button-cerrar").addEventListener("click", () => {
   limpiarFormEdit();
-})
-document.getElementById('button-x').addEventListener('click', ()=>{
+});
+document.getElementById("button-x").addEventListener("click", () => {
   limpiarFormEdit();
-})
+});
 let limpiarFormEdit = () => {
-  let $inputs = document.querySelectorAll('.mensaje_error');
-  let $mensajes = document.querySelectorAll('.mensaje');
-  $inputs.forEach($input => {
-    $input.classList.remove('mensaje_error');
+  let $inputs = document.querySelectorAll(".mensaje_error");
+  let $mensajes = document.querySelectorAll(".mensaje");
+  $inputs.forEach(($input) => {
+    $input.classList.remove("mensaje_error");
   });
-  $mensajes.forEach($mensaje =>{
-    $mensaje.innerText = '';
+  $mensajes.forEach(($mensaje) => {
+    $mensaje.innerText = "";
   });
-}
+};
 
 //Eliminar porcentajes
-$(document).on("click", "#btn_eliminar", function() {
+$(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
-     idPorcentaje = $(this).closest('tr').find('td:eq(0)').text(), 
-     porcentaje = fila.find('td:eq(1)').text(),
-     estado = 'Inactivo';
-     
-    Swal.fire({
-      title: 'Estas seguro de eliminar el pocentaje'+porcentaje+'?',
-      text: "No podras revertir esto!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, Borralo!'
-      
-    }).then((result) => {
-      if (result.isConfirmed) {      
-        $.ajax({
-          url: "../../../Vista/crud/Porcentajes/eliminarPorcentajes.php",
-          type: "POST",
-          datatype: "JSON",
-          data: { 
-            idPorcentaje: idPorcentaje,
-            estado: estado,
-          },
-          success: function (data) {
-            console.log(data);
+    idPorcentaje = $(this).closest("tr").find("td:eq(0)").text(),
+    porcentaje = fila.find("td:eq(1)").text(),
+    estado = "INACTIVO";
+
+  Swal.fire({
+    title: "Estas seguro de eliminar el porcentaje " + porcentaje + "?",
+    text: "No podras revertir esto!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Si, Borralo!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: "../../../Vista/crud/Porcentajes/eliminarPorcentajes.php",
+        type: "POST",
+        datatype: "JSON",
+        data: {
+          idPorcentaje: idPorcentaje,
+          estado: estado,
+        },
+        success: function (data) {
+          console.log(data);
+
+          // Verificar la respuesta del servidor
+          if (data === 'INACTIVO') {
             Swal.fire(
-              'Lo sentimos!',
-              'El porcentaje no puede ser eliminado, se ha Inactivado.',
-              'error'
+              "Porcentaje Inactivado!",
+              "El porcentaje no se ha podido eliminar, pero en su lugar ha sido inactivado.",
+              "error"
             );
-            tablaPorcentajes.ajax.reload(null, false);
+          } else if (data === 'ELIMINADO') {
+            Swal.fire(
+              "Porcentaje Eliminado!",
+              "El porcentaje ha sido eliminado.",
+              "success"
+            );
+          } else {
+            Swal.fire(
+              "Lo sentimos!",
+              "El porcentaje no puede ser eliminado.",
+              "error"
+            );
           }
-        });
-      
-      }//Fin del AJAX
-      
-    });                
+
+          tablaPorcentajes.ajax.reload(null, false);
+        },
+        error: function () {
+          Swal.fire(
+            "Error!",
+            "Hubo un problema al procesar la solicitud.",
+            "error"
+          );
+        }
+      });
+    } // Fin del AJAX
+  });
 });
 
-$(document).on("click", "#btn_Pdf", function() {
-  let buscar = $('#table-Porcentajes_filter > label > input[type=search]').val();
-  window.open('../../../TCPDF/examples/reporteriaPorcentaje.php?buscar='+buscar, '_blank');
+
+
+$(document).on("click", "#btn_Pdf", function () {
+  let buscar = $(
+    "#table-Porcentajes_filter > label > input[type=search]"
+  ).val();
+  window.open(
+    "../../../TCPDF/examples/reporteriaPorcentaje.php?buscar=" + buscar,
+    "_blank"
+  );
 });

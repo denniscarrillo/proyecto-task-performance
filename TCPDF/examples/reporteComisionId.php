@@ -11,7 +11,6 @@ require_once("../../Controlador/ControladorParametro.php");
 
 ob_start();
 
-
 //cargar el encabezado
 $datosParametro = ControladorParametro::obtenerDatosReporte();
 foreach($datosParametro  as $datos){
@@ -40,7 +39,7 @@ $width = 64; // Define el ancho que desea para su cadena de encabezado
 $PDF_HEADER_TITLE =  $nombreP;
 $PDF_HEADER_STRING = $direccionP . "\n"  .'Correo: ' . $correoP ."\nTeléfono: +" . $telefonoP.  ", +" . $telefono2P ;
 $PDF_HEADER_STRING .= str_repeat(' ', $width - strlen($fechaActual)) . $fechaActual;
-$PDF_HEADER_LOGO = 'LOGO-reporte.jpg';
+$PDF_HEADER_LOGO = '../../../Recursos/' . ControladorParametro::obtenerUrlLogoReporte();
 // set default header data
 $pdf->setHeaderData($PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, $PDF_HEADER_TITLE, $PDF_HEADER_STRING);
 
@@ -83,8 +82,8 @@ $valorPorcentaje = $ComisionId['valorPorcentaje'] * 100;
 $ComisionT =  'Lps. ' . number_format($ComisionId['comisionT'], 2, '.', ',');
 $Estado = $ComisionId['estadoComision'];
 $EstadoL = $ComisionId['estadoLiquidacion'];
-$EstadoC = $ComisionId['estadoCobro'];
-$metodoPago = $ComisionId['metodoPago'];
+// $EstadoC = $ComisionId['estadoCobro'];
+// $metodoPago = $ComisionId['metodoPago'];
 $creadoPor = $ComisionId['CreadoPor'];
 // Verificar si $fecha está definido y no es null
 if (isset($ComisionId['FechaComision']) && $ComisionId['FechaComision'] !== null) {
@@ -104,14 +103,14 @@ if (isset($ComisionId['FechaLiquidacion']) && $ComisionId['FechaLiquidacion'] !=
 } else {
     $fechaLiquidacion = 'Sin Liquidar'; // Otra acción si $fechaLiquidacion es nulo
 }
-if(isset($ComisionId['FechaCobro']) && $ComisionId['FechaCobro'] !== null){
-    $fechaC = $ComisionId['FechaCobro'];
-    $timestamp = $fechaC->getTimestamp();
-    // Verificar si la fecha es no nula antes de formatearla
-    $fechaCobro = date('Y-m-d H:i:s', $timestamp);
-}else{
-    $fechaCobro = 'Sin Cobrar';
-}
+// if(isset($ComisionId['FechaCobro']) && $ComisionId['FechaCobro'] !== null){
+//     $fechaC = $ComisionId['FechaCobro'];
+//     $timestamp = $fechaC->getTimestamp();
+//     // Verificar si la fecha es no nula antes de formatearla
+//     $fechaCobro = date('Y-m-d H:i:s', $timestamp);
+// }else{
+//     $fechaCobro = 'Sin Cobrar';
+// }
 $modificadoPor = $ComisionId['ModificadoPor'];
 if ($modificadoPor == null) {
     $modificadoPor = "Sin modificaciones";
@@ -131,28 +130,25 @@ $html = '
 $html .= '
 
 <dl>
-<div style="flex: 1; text-align: left;"> <b> ID COMISION:  </b>' . $idComision . '</div>
+<div style="flex: 1; text-align: left;"> <b> ID COMISIÓN:  </b>' . $idComision . '</div>
 <div style="flex: 1; text-align: left;"> <b> N° FACTURA:  </b>' . $idFactura . '</div>
 <div style="flex: 1; text-align: left;"> <b> VENTA TOTAL:  </b>' . $VentaTotal . '</div>
 <div style="flex: 1; text-align: left;"> <b> PORCENTAJE:  </b>' . $valorPorcentaje . '%</div>
-<div style="flex: 1; text-align: left;"> <b> COMISION TOTAL:  </b>' . $ComisionT . '</div>
+<div style="flex: 1; text-align: left;"> <b> COMISIÓN TOTAL:  </b>' . $ComisionT . '</div>
 <div style="flex: 1; text-align: left;"> <b> ESTADO:  </b>' . $Estado . '</div>
-<div style="flex: 1; text-align: left;"> <b> ESTADO LIQUIDACION:  </b>' . $EstadoL . '</div>
-<div style="flex: 1; text-align: left;"> <b> ESTADO COBRO:  </b>' . $EstadoC . '</div>
-<div style="flex: 1; text-align: left;"> <b> METODO PAGO:  </b>' . $metodoPago . '</div>
+<div style="flex: 1; text-align: left;"> <b> ESTADO LIQUIDACIÓN:  </b>' . $EstadoL . '</div>
 <div style="flex: 1; text-align: left;"> <b> CREADO POR:  </b>' . $creadoPor . '</div>
 <div style="flex: 1; text-align: left;"> <b> FECHA DE CREACION:  </b>' . $fechaComision . '</div>
-<div style="flex: 1; text-align: left;"> <b> FECHA DE LIQUIDACION:  </b>' . $fechaLiquidacion . '</div>
-<div style="flex: 1; text-align: left;"> <b> FECHA DE COBRO:  </b>' . $fechaCobro . '</div>
+<div style="flex: 1; text-align: left;"> <b> FECHA DE LIQUIDACIÓN:  </b>' . $fechaLiquidacion . '</div>
 <div style="flex: 1; text-align: left;"> <b> MODIFICADO POR:  </b>' . $modificadoPor . '</div>
-<div style="flex: 1; text-align: left;"> <b> FECHA MODIFICACION:  </b>' . $fechaModificacion . '</div>
+<div style="flex: 1; text-align: left;"> <b> FECHA MODIFICACIÓN:  </b>' . $fechaModificacion . '</div>
 </dl>
     <br>
     <table cellpadding="5"  border= "1" >
     <tr>
         <th scope="col" style="background-color: #e54037; color: white;">ID VENDEDOR</th>
         <th scope="col" style="background-color: #e54037; color: white;">NOMBRE VENDEDOR</th>
-        <th scope="col" style="background-color: #e54037; color: white;">COMISION VENDEDOR</th>
+        <th scope="col" style="background-color: #e54037; color: white;">COMISIÓN VENDEDOR</th>
     </tr>';
     
     foreach ($ComisionId['vendedores'] as $vendedor) {

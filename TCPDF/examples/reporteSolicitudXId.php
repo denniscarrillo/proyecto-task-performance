@@ -38,7 +38,7 @@ $width = 64; // Define el ancho que desea para su cadena de encabezado
 $PDF_HEADER_TITLE =  $nombreP;
 $PDF_HEADER_STRING = $direccionP . "\n"  .'Correo: ' . $correoP ."\nTeléfono: +" . $telefonoP.  ", +" . $telefono2P ;
 $PDF_HEADER_STRING .= str_repeat(' ', $width - strlen($fechaActual)) . $fechaActual;
-$PDF_HEADER_LOGO = 'LOGO-reporte.jpg';
+$PDF_HEADER_LOGO = '../../../Recursos/' . ControladorParametro::obtenerUrlLogoReporte();
 // set default header data
 $pdf->setHeaderData($PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, $PDF_HEADER_TITLE, $PDF_HEADER_STRING);
 
@@ -133,11 +133,11 @@ $SolicitudesId = ControladorDataTableSolicitud::VerSolicitudesPorId($_GET['idSol
             <td>'.$NombreCliente.'</td>
         </tr>        
         <tr>
-            <td style="background-color: #c9c9c9;"><b>DESCRIPCION:</b></td>
+            <td style="background-color: #c9c9c9;"><b>DESCRIPCIÓN:</b></td>
             <td>'.$descripcion.'</td>       
         </tr>        
         <tr>
-            <td style="background-color: #c9c9c9;"><b>SERVICIO TECNICO:</b></td>
+            <td style="background-color: #c9c9c9;"><b>SERVICIO TÉCNICO:</b></td>
             <td>'.$servicioTecnico.'</td>
         </tr>        
         <!--<tr>
@@ -145,7 +145,7 @@ $SolicitudesId = ControladorDataTableSolicitud::VerSolicitudesPorId($_GET['idSol
              <td>'.$correoS.'</td>                    
         </tr>-->
         <tr>
-            <td style="background-color: #c9c9c9;"><b>TELEFONO:</b></td>
+            <td style="background-color: #c9c9c9;"><b>TELÉFONO:</b></td>
             <td>'.$telefono.'</td> 
         </tr>       
         <tr>
@@ -185,12 +185,12 @@ $html .= '
     <table border="1" cellpadding="4">
 
     <tr> 
-        <td style="background-color: #e54037; text-align: center;"><b>LISTA DE ARTICULOS</b></td>
+        <td style="background-color: #e54037; text-align: center;"><b>LISTA DE ARTÍCULOS</b></td>
         </tr>
         <tr >
-            <td style="background-color: #c9c9c9; text-align: center;width: 80px;">Cant</td>
-            <td style="background-color: #c9c9c9; text-align: center;width: 100px;">Codigo</td>
-            <td style="background-color: #c9c9c9; text-align: center;width: 458px;">Descripción</td>
+            <td style="background-color: #c9c9c9; text-align: center;width: 80px;">CANT</td>
+            <td style="background-color: #c9c9c9; text-align: center;width: 100px;">CÓDIGO</td>
+            <td style="background-color: #c9c9c9; text-align: center;width: 458px;">DESCRIPCIÓN</td>
         </tr>
         ';
             //$ListaArticulos = ''; 

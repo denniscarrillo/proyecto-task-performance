@@ -6,6 +6,8 @@ require_once("../../../Modelo/Bitacora.php");
 require_once("../../../Controlador/ControladorUsuario.php");
 require_once("../../../Controlador/ControladorBitacora.php");
 require_once("../../../Modelo/Pregunta.php");
+require_once('../../../Modelo/Parametro.php');
+require_once('../../../Controlador/ControladorParametro.php');
 require_once("../../../Controlador/ControladorPregunta.php");
 require_once("obtenerContraseniaPerfil.php");
 
@@ -16,32 +18,32 @@ if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionPerfilUsuario.php');
-  } else {
-    if (isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])) {
-      /* ====================== Evento salir. ================================================*/
-      $accion = ControladorBitacora::accion_Evento();
-      date_default_timezone_set('America/Tegucigalpa');
-      $newBitacora->fecha = date("Y-m-d h:i:s");
-      $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
-      $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-      $newBitacora->accion = $accion['Exit'];
-      $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de ' . $_SESSION['descripcionObjeto'];
-      ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-      /* =======================================================================================*/
-    }
-    /* ====================== Evento ingreso a mantenimiento usuario. ========================*/
+} else {
+  if (isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])) {
+    /* ====================== Evento salir. ================================================*/
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
     $newBitacora->fecha = date("Y-m-d h:i:s");
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-    $newBitacora->accion = $accion['income'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a mantenimiento usuario';
+    $newBitacora->accion = $accion['Exit'];
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de ' . $_SESSION['descripcionObjeto'];
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-    $_SESSION['objetoAnterior'] = 'gestionUsuario.php';
-    $_SESSION['descripcionObjeto'] = 'mantenimiento usuario';
     /* =======================================================================================*/
   }
+  /* ====================== Evento ingreso a mantenimiento usuario. ========================*/
+  $accion = ControladorBitacora::accion_Evento();
+  date_default_timezone_set('America/Tegucigalpa');
+  $newBitacora->fecha = date("Y-m-d h:i:s");
+  $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
+  $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+  $newBitacora->accion = $accion['income'];
+  $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a mantenimiento usuario';
+  ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+  $_SESSION['objetoAnterior'] = 'gestionUsuario.php';
+  $_SESSION['descripcionObjeto'] = 'mantenimiento usuario';
+  /* =======================================================================================*/
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -74,40 +76,40 @@ if (isset($_SESSION['usuario'])) {
     <div class="conteiner-global">
       <div class="sidebar-conteiner">
         <?php
-          $urlIndex = '../../index.php';
-          // Rendimiento
-          $urlMisTareas = '../../rendimiento/v_tarea.php';
-          $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
-          $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
-          $urlMetricas = '../Metricas/gestionMetricas.php';
-          $urlEstadisticas = '../../grafica/estadistica.php'; 
-          //Solicitud
-          $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
-          //Comisión
-          $urlComision = '../../comisiones/v_comision.php';
-          //Consulta
-          $urlClientes = '../cliente/gestionCliente.php';
-          $urlVentas = '../Venta/gestionVenta.php';
-          $urlArticulos = '../articulo/gestionArticulo.php';
-          $urlObjetos = '../DataTableObjeto/gestionDataTableObjeto.php';
-          $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
-          //Mantenimiento
-          $urlUsuarios = '../usuario/gestionUsuario.php';
-          $urlEstadoUsuario = '../estadoUsuario/gestionEstadoUsuario.php';
-          $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
-          $urlPreguntas = '../pregunta/gestionPregunta.php';
-          $urlParametros = '../parametro/gestionParametro.php';
-          $urlPermisos = '../permiso/gestionPermisos.php';
-          $urlRoles = '../rol/gestionRol.php';
-          $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
-          $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
-          $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
-          $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
-          $urlEditarCamposPerfil='../PerfilUsuario/EditarCamposPerfilUsuario.php';
-          $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
-          $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
-          $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
-          require_once '../../layout/sidebar.php';
+        $urlIndex = '../../index.php';
+        // Rendimiento
+        $urlMisTareas = '../../rendimiento/v_tarea.php';
+        $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
+        $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
+        $urlMetricas = '../Metricas/gestionMetricas.php';
+        $urlEstadisticas = '../../grafica/estadistica.php';
+        //Solicitud
+        $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
+        //Comisión
+        $urlComision = '../../comisiones/v_comision.php';
+        //Consulta
+        $urlClientes = '../cliente/gestionCliente.php';
+        $urlVentas = '../Venta/gestionVenta.php';
+        $urlArticulos = '../articulo/gestionArticulo.php';
+        $urlObjetos = '../DataTableObjeto/gestionDataTableObjeto.php';
+        $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
+        //Mantenimiento
+        $urlUsuarios = '../usuario/gestionUsuario.php';
+        $urlEstadoUsuario = '../estadoUsuario/gestionEstadoUsuario.php';
+        $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
+        $urlPreguntas = '../pregunta/gestionPregunta.php';
+        $urlParametros = '../parametro/gestionParametro.php';
+        $urlPermisos = '../permiso/gestionPermisos.php';
+        $urlRoles = '../rol/gestionRol.php';
+        $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
+        $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+        $urlPerfilUsuario = '../PerfilUsuario/gestionPerfilUsuario.php';
+        $urlPerfilContraseniaUsuarios = '../PerfilUsuario/gestionPerfilContrasenia.php';
+        $urlEditarCamposPerfil = '../PerfilUsuario/EditarCamposPerfilUsuario.php';
+        $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
+        $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
+        $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
+        require_once '../../layout/sidebar.php';
         ?>
       </div>
       <div class="conteiner-main">
@@ -168,7 +170,7 @@ if (isset($_SESSION['usuario'])) {
             </div>
             <div class="grupo-form">
               <div class="mb-3">
-                <label class="titulos" for="email">Email:</label>
+                <label class="titulos" for="email">Correo Electrónico:</label>
                 <label>
                   <?php echo $datos['correo'] ?>
                 </label>
@@ -200,7 +202,7 @@ if (isset($_SESSION['usuario'])) {
   <?php
   require_once('modalConfirmarContrasenia.html');
   ?>
-  
+
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>

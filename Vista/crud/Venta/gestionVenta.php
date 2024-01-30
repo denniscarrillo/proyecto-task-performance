@@ -6,6 +6,8 @@ require_once('../../../Modelo/Usuario.php');
 require_once('../../../Controlador/ControladorUsuario.php');
 require_once("../../../Modelo/Bitacora.php");
 require_once("../../../Controlador/ControladorBitacora.php");
+require_once('../../../Modelo/Parametro.php');
+require_once('../../../Controlador/ControladorParametro.php');
 
 session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
@@ -76,6 +78,7 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
   <!-- Boxicons CSS -->
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link href="../../../Recursos/css/gestionVenta.css" rel="stylesheet" />
   <link href="../../../Recursos/css/gestionUsuario.css" rel="stylesheet" />
   <link href="../../../Recursos/css/modalNuevoUsuario.css" rel="stylesheet">
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
@@ -85,11 +88,11 @@ if (isset($_SESSION['usuario'])) {
   <title> Ventas </title>
 </head>
 
-<body  style="overflow: hidden;">
+<body style="overflow: hidden;">
   <div class="conteiner">
     <div class="conteiner-global">
       <div class="sidebar-conteiner">
-      <?php
+        <?php
         $urlIndex = '../../index.php';
         // Rendimiento
         $urlMisTareas = '../../rendimiento/v_tarea.php';
@@ -118,7 +121,7 @@ if (isset($_SESSION['usuario'])) {
         $urlPermisos = '../permiso/gestionPermisos.php';
         $urlRoles = '../rol/gestionRol.php';
         $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
-        $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
+        $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
         $urlPerfilUsuarios='../PerfilUsuario/gestionPerfilUsuario.php';
         $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
         $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
@@ -127,49 +130,63 @@ if (isset($_SESSION['usuario'])) {
       ?>
       </div>
       <div class="conteiner-main">
-            <!-- Encabezado -->
-          <div class= "encabezado">
-            <div class="navbar-conteiner">
-                <!-- Aqui va la barra -->
-                <?php include_once '../../layout/navbar.php'?>                             
-            </div>        
-            <div class ="titulo">
-                  <H2 class="title-dashboard-task" id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionVenta.php');?>">Ventas</H2>
-            </div>  
+        <!-- Encabezado -->
+        <div class="encabezado">
+          <div class="navbar-conteiner">
+            <!-- Aqui va la barra -->
+            <?php include_once '../../layout/navbar.php'?>
           </div>
+          <div class="titulo">
+            <H2 class="title-dashboard-task"
+              id="<?php echo ControladorBitacora::obtenerIdObjeto('GESTIONVENTA.PHP');?>">Ventas</H2>
+          </div>
+        </div>
         <div class="table-conteiner">
-          <table class="table" id="table-Ventas">
+          <div class="text-left mb-2">
+            <a href="#" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro" data-bs-toggle="modal"
+              data-bs-target="#modalNuevaVenta"><i class="fa-solid fa-circle-plus"></i> Nuevo registro</a>
+            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
+              PDF</button>
+          </div>
+          <table class="display nowrap table" id="table-Ventas" style="width:100%">
             <thead>
               <tr>
-                <th scope="col"> N° </th>
-                <th scope="col"> COD_CLIENTE </th>
-                <th scope="col"> CLIENTE</th>
+                <th scope="col"> N° FACTURA </th>
+                <th scope="col"> NOMBRE CLIENTE </th>
                 <th scope="col"> RTN/DNI</th>
-                <th scope="col"> FECHA </th>
-                <th scope="col"> TOTAL BRUTO </th>
-                <th scope="col"> IMPUESTO </th>
-                <th scope="col"> TOTAL </th>
+                <th scope="col"> TOTAL VENTA </th>
+                <th scope="col"> CREADO POR </th>
+                <th scope="col"> FECHA CREACIÓN </th>
+                <th scope="col"> ACCIONES </th>
               </tr>
             </thead>
-            <div class ="text-left mb-2">
-            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
-          </div>
+            <div class="text-left mb-2">
+              <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
+                PDF</button>
+            </div>
             <tbody class="table-group-divider">
             </tbody>
           </table>
         </div>
       </div>
     </div>
+    <?php
+      require('modalNuevaVenta.html');
+    ?>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-  <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
-  <script src="../../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
-  <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-  <script src="../../../Recursos/js/Ventas/datatable.js" type="module"></script>
-  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
+  </script> -->
+  <script src="../../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js" crossorigin="anonymous"></script>
+  <script src="../../../Recursos/js/librerias/Sweetalert2.all.min.js"></script>
+  <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
+  <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
+  <!-- Scripts propios -->
+  <script src="../../../Recursos/js/Ventas/datatable.js" type="module"></script>
+  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
+  <script src="../../../Recursos/js/Ventas/validacionesNuevaVenta.js" type="module"></script>
 </body>
 
 </html>

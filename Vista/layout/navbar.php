@@ -1,8 +1,8 @@
 <nav class="navbar">
   <div class="navbar-content">
-    <div class="notifations-conteiner">
+    <!-- <div class="notifations-conteiner">
     <p>Notificaciones</p><span class="notification-conteiner"><i class="notification-icon fa-solid fa-bell"></i></span> 
-    </div>
+    </div> -->
     <div class="profile-conteiner">
         <title>Menú Dropdown</title>
         </head>
@@ -19,7 +19,7 @@
                     <span class="notification-conteiner"><i class="nb fa-solid fa-circle-user"></i></span>
                     </a>
                     <ul class="dropdown" id="menu" >
-                           <span class="dropdown__span">Configuracion de Perfil</span>
+                           <span class="dropdown__span">Configuración de Perfil</span>
                             <div class="dropdow-divider" role="presentation">
                             
                             </div>

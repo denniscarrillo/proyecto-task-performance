@@ -1,5 +1,7 @@
 <?php
 require_once("validacionesComision.php");
+require_once('../../Modelo/Parametro.php');
+require_once('../../Controlador/ControladorParametro.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -58,9 +60,9 @@ require_once("validacionesComision.php");
         $urlPermisos = '../crud/permiso/gestionPermisos.php';
         $urlRoles = '../crud/rol/gestionRol.php';
         $urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
-        $urlPerfilUsuario='../PerfilUsuario/gestionPerfilUsuario.php';
-        $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
-        $urlImg = '../../Recursos/imagenes/Logo-E&C.png';
+        $urlPerfilUsuario = '../PerfilUsuario/gestionPerfilUsuario.php';
+        $urlPerfilContraseniaUsuarios = '../PerfilUsuario/gestionPerfilContrasenia.php';
+        $urlImg = '../../Recursos/' . ControladorParametro::obtenerUrlLogo();
         $urlRazonSocial = '../crud/RazonSocial/gestionRazonSocial.php';
         $urlRubroComercial = '../crud/rubroComercial/gestionRubroComercial.php';
         require_once '../layout/sidebar.php';
@@ -82,23 +84,24 @@ require_once("validacionesComision.php");
         </div>
         <div class="table-conteiner">
           <div class="filtros">
-            <div class="filtro-fecha">
+            <!-- <div class="filtro-fecha">
               <label for="fechaDesde">Fecha desde:</label>
               <input type="date" id="fechaDesdef" name="fechaDesdef" class="form-control">
               <label for="fechaHasta">Fecha hasta:</label>
               <input type="date" id="fechaHastaf" name="fechaHastaf" class="form-control">
               <button type="button" class="btn btn-primary" id="btn_filtroALiquidar">Comisiones a liquidar</button>
-            </div>
+            </div> -->
             <div>
               <a href="v_nuevaComision.php" class="btn_nuevoRegistro btn btn-primary hidden" id="btn_nuevoRegistro"><i
                   class="fa-solid fa-circle-plus"></i> Generar comisión</a>
               <!-- <a href="../../../TCPDF/examples/reporteriaComision.php" class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"><i class="fas fa-file-pdf"></i>
                 Generar Reportes</a> -->
-                <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
+              <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
+                PDF</button>
               <!-- <a href="ReporteComisionExcel.php" target="_blank" class="btn_Excel btn btn-primary "><i
                   class="fa-solid fa-file-excel fa-sm"></i> Generar Excel</a> -->
             </div>
-            <table class="table" id="table-Comision">
+            <table class="display nowrap table" id="table-Comision" style="width:100%">
               <thead>
                 <tr>
                   <th scope="col"> ID COMISION </th>
@@ -108,11 +111,11 @@ require_once("validacionesComision.php");
                   <th scope="col"> COMISION TOTAL </th>
                   <th scope="col"> ESTADO COMISION </th>
                   <th scope="col"> ESTADO LIQUIDACION </th>
-                  <th scope="col"> ESTADO COBRO </th>
-                  <th scope="col"> METODO PAGO </th>
+                  <!-- <th scope="col"> ESTADO COBRO </th>
+                  <th scope="col"> METODO PAGO </th> -->
                   <th scope="col"> FECHA CREACION </th>
                   <th scope="col"> FECHA LIQUIDACION</th>
-                  <th scope="col"> FECHA COBRO VENTA </th>
+                  <!-- <th scope="col"> FECHA COBRO VENTA </th> -->
                   <th scope="col"> ACCIONES </th>
                 </tr>
               </thead>
@@ -129,11 +132,11 @@ require_once("validacionesComision.php");
     require_once('modalVerComisiones.html');
     require_once('modalEditarComision.html');
     require_once('modalLiquidarComisiones.html');
-    
-    
+
+
     ?>
-    <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+    <script src="../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js" crossorigin="anonymous"></script>
+    <script src="../../Recursos/js/librerias/Sweetalert2.all.min.js"></script>
     <script src="../../Recursos/js/librerias//jQuery-3.7.0.min.js"></script>
     <script src="../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
     <script src="../../Recursos/js/comision/dataTableComision.js" type="module"></script>

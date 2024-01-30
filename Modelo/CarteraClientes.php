@@ -55,26 +55,18 @@ class CarteraClientes{
     return $nuevoCliente;
     }
 
-    public static function editarCliente($nuevoCliente){
+    public static function editarCliente($Cliente){
         try {
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $id=$nuevoCliente->idcarteraCliente;
-            $nombre=$nuevoCliente->nombre;
-            $rtn=$nuevoCliente->rtn;
-            $telefono=$nuevoCliente->telefono;
-            $correo=$nuevoCliente->correo;
-            $direccion=$nuevoCliente->direccion;
-            $estadoContacto=$nuevoCliente->estadoContacto;
-            $modificadoPor = $nuevoCliente->modificadoPor;
-            date_default_timezone_set('America/Tegucigalpa');
-            $fechaModificacion = date("Y-m-d");
-            $update = "UPDATE tbl_carteracliente SET  telefono='$telefono', correo='$correo', direccion='$direccion', estadoContacto = '$estadoContacto', Modificado_Por = '$modificadoPor', Fecha_Modificacion = '$fechaModificacion' WHERE id_CarteraCliente='$id' ";
-            $nuevoCliente = sqlsrv_query($abrirConexion, $update);
+            $update = "UPDATE tbl_carteraCliente SET telefono='$Cliente->telefono', correo='$Cliente->correo', direccion='$Cliente->direccion', 
+                        estadoContacto = '$Cliente->estadoContacto', Modificado_Por = '$Cliente->modificadoPor', Fecha_Modificacion = GETDATE()
+                        WHERE rtn_Cliente = '$Cliente->rtn'";
+            sqlsrv_query($abrirConexion, $update);
+            sqlsrv_close($abrirConexion); //Cerrar conexion
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
-        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
 // funcion que me muestre si el rtn del cliente existe tanto en cartera de clientes como en la tabla view de clientes
     public static function rtnExistente($rtn){
@@ -83,33 +75,33 @@ class CarteraClientes{
         $conexion = $conn->abrirConexionDB();
         $query = "SELECT rtn_Cliente FROM tbl_CarteraCliente WHERE rtn_Cliente = '$rtn'";
         $rtnCliente = sqlsrv_query($conexion, $query);
-        $query2 = "SELECT CIF FROM View_Clientes WHERE (CIF = '$rtn' AND CIF IS NOT NULL AND CIF != '')
-           OR (CIF IS NOT NULL AND CIF != '' AND '$rtn' IS NULL)";
-        $rtnCliente2 = sqlsrv_query($conexion, $query2);
+        // $query2 = "SELECT CIF FROM View_Clientes WHERE (CIF = '$rtn' AND CIF IS NOT NULL AND CIF != '')
+        //    OR (CIF IS NOT NULL AND CIF != '' AND '$rtn' IS NULL)";
+        // $rtnCliente2 = sqlsrv_query($conexion, $query2);
         $existe = sqlsrv_has_rows($rtnCliente);
-        $existe2 = sqlsrv_has_rows($rtnCliente2);
-        if($existe || $existe2){
+        //$existe2 = sqlsrv_has_rows($rtnCliente2);
+        //|| $existe2
+        if($existe){
             $existeRtn = true;
         }
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $existeRtn;
     }
-
-    public static function eliminarCliente($nuevoCliente){
+    
+    public static function eliminarCliente($rtnCliente){
         try {
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $id=$nuevoCliente->idcarteraCliente;
-            $estadoContacto=$nuevoCliente->estadoContacto;
-            $modificadoPor = $nuevoCliente->modificadoPor;
-            date_default_timezone_set('America/Tegucigalpa');
-            $fechaModificacion = date("Y-m-d");
-            $update = "UPDATE tbl_carteracliente SET  estadoContacto = '$estadoContacto', Modificado_Por = '$modificadoPor', Fecha_Modificacion = '$fechaModificacion' WHERE id_CarteraCliente='$id' ";
-            $nuevoCliente = sqlsrv_query($abrirConexion, $update);
+            $eliminarCliente = "DELETE FROM tbl_CarteraCliente WHERE rtn_Cliente = '$rtnCliente'";
+            $estadoEliminado = sqlsrv_query($abrirConexion, $eliminarCliente);
+            if(!$estadoEliminado) {
+                return false;
+            }
+            sqlsrv_close($abrirConexion); //Cerrar conexion
+            return true;
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
         }
-        sqlsrv_close($abrirConexion); //Cerrar conexion
     }
 
     //Método para obtener todos los clientes que existen.
@@ -136,4 +128,3 @@ class CarteraClientes{
         return $carteraCliente;
     }
 }#Fin de la clase
-

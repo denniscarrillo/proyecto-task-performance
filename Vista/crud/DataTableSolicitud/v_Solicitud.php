@@ -1,4 +1,5 @@
 <?php
+session_start(); //Reanudamos la sesion
 require_once("../../../db/Conexion.php");
 require_once("../../../Modelo/DataTableSolicitud.php");
 require_once("../../../Modelo/Bitacora.php");
@@ -8,10 +9,10 @@ require_once('../../../Modelo/Usuario.php');
 require_once('../../../Controlador/ControladorUsuario.php');
 require_once('../../../Modelo/Tarea.php');
 require_once('../../../Controlador/ControladorTarea.php');
+require_once('../../../Modelo/Parametro.php');
+require_once('../../../Controlador/ControladorParametro.php');
 
 
-
-session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
@@ -70,35 +71,35 @@ if (isset($_SESSION['usuario'])) {
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/3153/3153506.png">
-    <!-- DataTables -->
-    <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
-    <!-- <link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
-    <!-- Boostrap5 -->
-    <link href='../../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/v_nueva_solicitud.css' rel='stylesheet'>
-    <!-- Estilos personalizados -->
-    
-    <link href="../../../Recursos/css/modalClienteFrecuente.css" rel="stylesheet">
-    <!-- <link href="../../../Recursos/css/modalEditarTarea.css" rel="stylesheet"> -->
-    <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
-    <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
-    <link href="../../../Recursos/css/ModalmenuClientes.css" rel="stylesheet">
- 
-    <title>Nueva solicitud</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/3153/3153506.png">
+  <!-- DataTables -->
+  <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+  <!-- <link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
+  <!-- Boostrap5 -->
+  <link href='../../../Recursos/bootstrap5/bootstrap.min.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/v_nueva_solicitud.css' rel='stylesheet'>
+  <!-- Estilos personalizados -->
+
+  <link href="../../../Recursos/css/modalClienteFrecuente.css" rel="stylesheet">
+  <!-- <link href="../../../Recursos/css/modalEditarTarea.css" rel="stylesheet"> -->
+  <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
+  <link href="../../../Recursos/css/ModalmenuClientes.css" rel="stylesheet">
+
+  <title>Nueva solicitud</title>
 </head>
 
 <body>
-    <div class="conteiner">
-        <div class="conteiner-global">
-            <div class="sidebar-conteiner">
-                <?php
+  <div class="conteiner">
+    <div class="conteiner-global">
+      <div class="sidebar-conteiner">
+        <?php
                 $urlIndex = '../../index.php';
                 // Rendimiento
                 $urlMisTareas = '../../rendimiento/v_tarea.php';
@@ -126,128 +127,131 @@ if (isset($_SESSION['usuario'])) {
                 $urlPermisos = '../permiso/gestionPermisos.php';
                 $urlRoles = '../rol/gestionRol.php';
                 $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
-                $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
+                $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
                 $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
                 $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
                 require_once '../../layout/sidebar.php';
                 ?>
-            </div>
-            <div class="conteiner-main">
-    <div class="encabezado">
-        <div class="navbar-conteiner">
+      </div>
+      <div class="conteiner-main">
+        <div class="encabezado">
+          <div class="navbar-conteiner">
             <!-- Aqui va la barra -->
             <?php include_once '../../layout/navbar.php' ?>
-        </div>
-        <div class="titulo">
+          </div>
+          <div class="titulo">
             <h2 class="title-dashboard-task">Generar nueva solicitud de Servicio</h2>
+          </div>
         </div>
-    </div>
-    
-    <div class="form-conteiner">
-        <div class="form-element">
+
+        <div class="form-conteiner">
+          <div class="form-element">
             <label class="titulo-radios">Tipo de Cliente: </label>
             <div class="radio-conteiner-s">
-                <div class="radio-conteiner-existente">
-                    <input type="radio" name="radioOption" id="clienteExistente"  class="radio-solicitud" value="Existente">
-                    <label for="cliente-existente" class="radio-label-solicitud">Existente</label>
-                </div>
-                <div class="radio-conteiner-nuevo">
-                    <input type="radio" name="radioOption" id="clientenuevo" class="radio-solicitud" value="Nuevo" >
-                    <label for="cliente-nuevo" id="radioCliente" class="radio-label-solicitud"  >Nuevo</label>   
-                </div>
+            <div class="radio-conteiner-existente">
+                <input type="radio" name="radioOption" id="clienteExistente" class="radio-solicitud" value="Existente">
+                <label for="clienteExistente" class="radio-label-solicitud">Existente</label>
+              </div>
+              <div class="radio-conteiner-nuevo">
+                <input type="radio" name="radioOption" id="clientenuevo" class="radio-solicitud" value="Nuevo">
+                <label for="clientenuevo" id="radioCliente" class="radio-label-solicitud">Nuevo</label>
+              </div>
+            </div>
+          </div>
+          <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post" id="form-solicitud">
+
+            <div class="group-form">
+              <div class="form-element input-conteiner" id="containerFacturacliente">
+                <label for="id-factura" class="form-label">N° Factura:</label>
+                <input type="text" id="idfactura" name="numeroFactura" class="form-control"  placeholder="N° Factura" readonly>
+                <p class="mensaje"></p>
+              </div>
+              <div class="form-element input-conteiner" id="containerrtncliente">
+                <label for="rtn-cliente" class="form-label" id="" name="codC"  >RTN:</label>
+                <input type="text" id="rtnCliente" name="rtnCliente" class="form-control" placeholder="RTN" >
+                <p class="mensaje"></p>
+              </div>
+              <div class="form-element input-conteiner">
+                <label for="nombre" class="form-label">Nombre Cliente:</label>
+                <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre Cliente" disabled>
+                <p class="mensaje"></p>
+              </div>
+              <div class="form-element input-conteiner">
+                <label for="telefono" class="form-label">Teléfono:</label>
+                <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Teléfono" disabled>
+                <p class="mensaje"></p>
+              </div>
+              <div class="form-element input-conteiner" id="containerCorreocliente">
+                <label for="correoL" class="form-label">Correo electrónico Cliente</label>
+                <input type="text" id="correoCliente" name="correoElectronico" class="form-control" placeholder="Correo Electrónico">
+                <p class="mensaje"></p>
+              </div>
+              <div class="form-element input-conteiner">
+                <label for="correoL" class="form-label">Correo electrónico destinado:</label>
+                <input type="text" id="correo" name="correoElectronico" class="form-control" placeholder="Correo electrónico destinado" disabled>
+                <p class="mensaje"></p>
+              </div>
+            </div>
+            <div class="group-form">
+              <div class="form-element input-conteiner">
+                <label for="fecha-solicitud" class="form-label">Fecha Solicitud:</label>
+                <input type="date" id="fechasolicitud" name="fechaSolicitud" class="form-control" placeholder="Fecha Solicitud" disabled>
+                <p class="mensaje"></p>
+              </div>
+              <div class="form-element input-conteiner">
+                <label for="tipo-servicio" class="form-label">Tipo Servicio: </label>
+                <select name="tiposervicio" id="tiposervicio" class="form-control"></select>
+                <p class="mensaje"></p>
+              </div>
+
+              <div class="form-element input-conteiner">
+                <label for="direccion" class="form-label">Ubicación instalación:</label>
+                <input type="text" id="direccion" name="ubicacionInstalacion" class="form-control" placeholder="Ubicación instalación" disabled>
+                <p class="mensaje"></p>
+              </div>
+              <div class="form-element input-conteiner">
+                <label for="descripcion" class="form-label">Descripción De Servicios:</label>
+                <textarea type="text" id="descripcion" name="descripcion" class="form-control" placeholder="Descripción" disabled></textarea>
+                <p class="mensaje"></p>
+              </div>
             </div>
         </div>
-        <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post" id="form-solicitud">
-          
-        <div class="group-form">
-                <div class="form-element input-conteiner"  id="containerFacturacliente">
-                    <label for="id-factura"  class="form-label">N° Factura:</label>
-                    <input type="text" id="idfactura" name="numeroFactura" class="form-control" readonly>
-                    <p class="mensaje"></p>
-                </div>
-                <div class="form-element input-conteiner" id="containerrtncliente" >
-                    <label for="rtn-cliente" class="form-label" id="" name = "codC" >RTN:</label>
-                    <input type="text" id="rtnCliente" name="rtnCliente" class="form-control">
-                    <p class="mensaje"></p>
-                </div>
-                <div class="form-element input-conteiner">
-                    <label for="nombre" class="form-label">Nombre Cliente:</label>
-                    <input type="text" id="nombre" name="nombre" class="form-control" disabled>
-                    <p class="mensaje"></p>
-                </div>
-                <div class="form-element input-conteiner">
-                    <label for="telefono" class="form-label">Teléfono:</label>
-                    <input type="text" id="telefono" name="telefono" class="form-control" disabled>
-                    <p class="mensaje"></p>
-                </div>
-                <div class="form-element input-conteiner" id="containerCorreocliente" >
-                    <label for="correoL" class="form-label">Correo electrónico Cliente</label>
-                    <input type="text" id="correoCliente" name="correoElectronico" class="form-control">
-                    <p class="mensaje"></p>
-                </div>
-                <div class="form-element input-conteiner">
-                    <label for="correoL"class="form-label">Correo electrónico destinado:</label>
-                    <input type="text" id="correo" name="correoElectronico" class="form-control" disabled>
-                    <p class="mensaje"></p>
-                </div>
-            </div>
-                <div class="group-form">
-                    <div class="form-element input-conteiner">
-                        <label for="fecha-solicitud" class="form-label">Fecha solicitud:</label>
-                        <input type="date" id="fechasolicitud" name="fechaSolicitud" class="form-control" disabled>
-                        <p class="mensaje"></p>
-                    </div>
-                    <div class= "form-element input-conteiner">
-                        <label for="tipo-servicio" class="form-label">Tipo Servicio: </label>
-                        <select name="tiposervicio" id="tiposervicio" class="form-control"></select>
-                        <p class="mensaje"></p>
-                    </div>
-            
-                    <div class="form-element input-conteiner">
-                        <label for="direccion" class="form-label">Ubicación instalación:</label>
-                        <input type="text" id="direccion" name="ubicacionInstalacion" class="form-control" disabled>
-                        <p class="mensaje"></p>
-                    </div>
-                    <div class="form-element input-conteiner">
-                        <label for="descripcion" class="form-label">Descripción De Servicios:</label>
-                        <textarea type="text" id="descripcion" name="descripcion" class="form-control" disabled></textarea>
-                        <p class="mensaje"></p>
-                    </div>
-                </div>
-            </div>
-                <div class="table-conteiner">
-                    <div class="mb-3 conteiner-id-articulo">
-                        <p class="titulo-articulo">Productos Mantenimiento</p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalArticulosSolicitud" id="btnarticulos">
-                            Seleccionar... <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
-                                </button>
-                            </div>
-                            <table id="tablearticulos" class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Id</th>
-                                        <th scope="col">Artículo</th>
-                                        <th scope="col">Marca</th>
-                                        <th scope="col">Cantidad</th>
-                                        <th scope="col"> Acciones </th>   
-                                        </tr>
-                                </thead>
-                                    <tbody id="listarticulos" class="table-group-divider">
-                                            <!-- Articulos de interes -->
-                                        </tbody>
-                                    </table>
-                                </div>
-					<!-- Botones -->
-					<div class="btn-guardar">
-						<a href="./gestionDataTableSolicitud.php"><button type="button" id="btncerrar2" class="btn btn-secondary">Cancelar</button></a>
-						<button   type="submit" name="actualizarTarea"  class="btn btn-primary" ><i class="fa-solid fa-floppy-disk"></i> Guardar y Enviar</button>
-					</div>
-				</form>
-			</div>
-			</main>
-		</div>
-	</div>
-<?php
+        <div class="table-conteiner">
+          <div class="mb-3 conteiner-id-articulo">
+            <p class="titulo-articulo">Productos Mantenimiento</p>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+              data-bs-target="#modalArticulosSolicitud" id="btnarticulos">
+              Seleccionar... <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
+            </button>
+          </div>
+          <table id="tablearticulos" class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Artículo</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col"> Acciones </th>
+              </tr>
+            </thead>
+            <tbody id="listarticulos" class="table-group-divider">
+              <!-- Articulos de interes -->
+            </tbody>
+          </table>
+        </div>
+        <!-- Botones -->
+        <div class="btn-guardar">
+          <a href="./gestionDataTableSolicitud.php"><button type="button" id="btncerrar2"
+              class="btn btn-secondary">Cancelar</button></a>
+          <button type="submit" name="actualizarTarea" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i>
+            Guardar y Enviar</button>
+        </div>
+        </form>
+      </div>
+      </main>
+    </div>
+  </div>
+  <?php
   require_once('modalClienteFrecuente.html');
   require_once('modalArticulosSolicitud.html');
   require_once('modalFacturaSolicitud.html');
@@ -255,15 +259,15 @@ if (isset($_SESSION['usuario'])) {
   require_once('modalCarteraCliente.html');
   
 ?>
- <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+ <script src="../../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js" crossorigin="anonymous"></script>
+  <script src="../../../Recursos/js/librerias/Sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
-  <!-- Scripts propios -->
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
+  <!-- Scripts propios -->
   <script src="../../../Recursos/js/index.js"></script>
   <script src="../../../Recursos/js/DataTableSolicitud/vistaClienteFrecuente.js" type="module"></script>
-  <script src="../../../Recursos/js/DataTableSolicitud/validacionesNuevaSolicitud.js" type="module"></script>   
+  <script src="../../../Recursos/js/DataTableSolicitud/validacionesNuevaSolicitud.js" type="module"></script>
 
 </html>

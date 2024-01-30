@@ -30,16 +30,16 @@ h1{
     margin: 0.10rem;
 }
 .btn-guardar {
-    position: absolute;
-    bottom: 0.2rem;
-    left: 7.5%;
-    right:30%;
+    display: flex;
+    width: 80%;
+    justify-content: center;
+    gap: 1rem;
 }
 .btn_nuevoRegistro {
     margin-bottom: 1rem;
     padding: 0.3rem;
     font-size: 1.2rem;
-    background-color: rgb(6, 113, 212);
+    background-color: #ee9827 !important;
     border-color: rgb(47, 210, 255);
 }
 .btn_Pdf {
@@ -63,10 +63,10 @@ h1{
     color: aliceblue;
 }
 #btn_ver{
-    background-color: rgb(86, 174, 86);
+    background-color: rgb(45, 111, 203);
 }
 #btn_editar{
-    background-color: rgb(45, 111, 203);
+    background-color: rgb(86, 174, 86);
 }
 #btn_eliminar {
     background-color: rgba(255, 0, 0, 0.855);

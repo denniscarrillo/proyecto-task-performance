@@ -23,4 +23,16 @@
         public static function obtenerLasMetricasPDF($buscar){
             return Metricas::obtenerLasMetricasPDF($buscar);
         }
+
+        public static function obtenerEstadisticas(){
+            return Metricas::obtenerEstadisticas();
+        }
+
+        public static function obtenerEstadisticasGeneral($FechaInicial, $FechaFinal){
+            return Metricas::obtenerEstadisticasGeneral($FechaInicial, $FechaFinal);
+        }
+
+        public static function obtenerEstadisticasPorVed($idUsuario, $FechaInicial, $FechaFinal){
+            return Metricas::obtenerEstadisticasPorVed($idUsuario, $FechaInicial, $FechaFinal);
+        }
     }

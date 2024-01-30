@@ -73,13 +73,6 @@ body{
 #group-inputs{
     margin: 0 auto;
 }
-.titulo-articulo{
-    display: inline-block;
-    margin: 0;
-    font-weight: 600;
-    font-size: 1.5rem;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
 .encabezado-tarea{
     display: flex;
     justify-content: space-between;

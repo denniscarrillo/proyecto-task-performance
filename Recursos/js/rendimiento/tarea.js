@@ -49,10 +49,10 @@ let validarInputTitulo = ($titleTarea) => {
 }
 //Una vez este cargado el documento o pagina web se va a ejecutar lo que esta dentro
 $(document).ready(function () {
-  obtenerTareas($contenedorLlamada, $contadorLlamadas, 'Llamada');
-  obtenerTareas($contenedorLeads, $contadorLeads, 'Lead');
-  obtenerTareas($contenedorCotizaciones, $contadorCotizaciones, 'Cotizacion');
-  obtenerTareas($contenedorVentas, $contadorVentas, 'Venta');
+  obtenerTareas($contenedorLlamada, $contadorLlamadas, 'LLAMADA');
+  obtenerTareas($contenedorLeads, $contadorLeads, 'LEAD');
+  obtenerTareas($contenedorCotizaciones, $contadorCotizaciones, 'COTIZACION');
+  obtenerTareas($contenedorVentas, $contadorVentas, 'VENTA');
 
   // new Sortable(document.getElementById('conteiner-llamada'), {
   //   group: 'shared', // set both lists to same group
@@ -182,7 +182,7 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
               <div>
                 <a href="../../../Vista/rendimiento/v_editarTarea.php?idTarea=${tarea.id}" class="btn-editar"><i class="fa-solid-btn fa-solid fa-pen-to-square"></i></a>
               </div>
-              <i class="fa-solid-btn fa-solid fa-tag"></i>
+              <i class=""></i>
               </div>
             </div>`;
           $elemento.innerHTML = $tareas;
@@ -265,22 +265,22 @@ let guardarTarea = ($btnGuardar, $tarea, $actualizarTarea, $elementoPadre, $elem
         switch ($actualizarTarea) {
           case 1: {
             cerrarFormTarea($elementoPadre, $elementoCerrar)
-            obtenerTareas($contenedorLlamada, $contadorLlamadas, 'Llamada');
+            obtenerTareas($contenedorLlamada, $contadorLlamadas, 'LLAMADA');
             break;
           }
           case 2: {
             cerrarFormTarea($elementoPadre, $elementoCerrar)
-            obtenerTareas($contenedorLeads, $contadorLeads, 'Lead');
+            obtenerTareas($contenedorLeads, $contadorLeads, 'LEAD');
             break;
           }
           case 3: {
             cerrarFormTarea($elementoPadre, $elementoCerrar)
-            obtenerTareas($contenedorCotizaciones, $contadorCotizaciones, 'Cotizacion');
+            obtenerTareas($contenedorCotizaciones, $contadorCotizaciones, 'COTIZACION');
             break;
           }
           case 4: {
             cerrarFormTarea($elementoPadre, $elementoCerrar)
-            obtenerTareas($contenedorVentas, $contadorVentas, 'Venta');
+            obtenerTareas($contenedorVentas, $contadorVentas, 'VENTA');
             break;
           }
         } //Fin de los casos

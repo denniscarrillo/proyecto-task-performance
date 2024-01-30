@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="nuevoModalLabel">Editar Pregunta</h5>
+                <h1 class="modal-title fs-5" id="editarModalLabel">Editar Pregunta</h1>
                 <button type="button" class="btn-close" id ="button-x" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -10,6 +10,7 @@
                     <div class="grupo-form">
                         <div class="mb-3">
                             <label for="idPregunta" class="form-label">Id Pregunta:</label>
+                            <span class="mensaje-pregunta"></span>
                             <input type="text" name="idPregunta_E" id="idPregunta_E" class="form-control" disabled>
                             <p class="mensaje"></p>
                         </div>
@@ -21,15 +22,15 @@
                         <div class="mb-3">
                             <label for="estado" class="form-label">Estado Pregunta:</label>
                             <select name="estado" id="E_estado" class="form-control">
-                                <option>Activa</option>
-                                <option>Inactiva</option>
+                                <option>ACTIVA</option>
+                                <option>INACTIVA</option>
                             </select>
                             <p class="mensaje"></p>
                         </div>
                     </div>
-                    <div class="botones">
+                    <div class="btn-guardar">
                         <button type="button" class="btn btn-secondary" id="button-cerrar" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                        <button type="submit" class="btn btn-primary" id="btn-guardar"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
                     </div>
                 </form>
             </div>

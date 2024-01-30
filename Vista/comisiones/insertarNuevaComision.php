@@ -18,8 +18,8 @@ if(isset($_POST['idVenta']) || isset($_POST['idComision']) || isset($_POST['$Com
     $nuevaComision->comisionTotal = floatval($_POST['comisionTotal']);
     $nuevaComision->estadoComision = 'Activa';
     $nuevaComision->estadoLiquidacion = 'Pendiente';
-    $nuevaComision->estadoCobro = 'Pendiente Cobro';
-    $nuevaComision->metodoPago = 'Pendiente';
+    // $nuevaComision->estadoCobro = 'Pendiente Cobro';
+    // $nuevaComision->metodoPago = 'Pendiente';
     $nuevaComision->creadoPor = $user;
     // date_default_timezone_set('America/Tegucigalpa');
     // $nuevaComision->fechaComision = date("Y-m-d", strtotime($_POST['fechaComision']));
