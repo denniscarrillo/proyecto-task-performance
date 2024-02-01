@@ -21,8 +21,6 @@ $(document).ready(function () {
       },
       { data: "estadoComision" },
       { data: "estadoLiquidacion" },
-      // { "data": 'estadoCobro'},
-      // { "data": 'metodoPago'},
       {
         data: "fechaComision.date",
         render: function (data) {
@@ -35,10 +33,7 @@ $(document).ready(function () {
           return data ? data.slice(0, 19) : "";
         },
       },
-      // { "data": 'fechaCobro.date',
-      // "render": function(data) {
-      //   return data ? data.slice(0, 19) : '' },
-      // },
+      
     ],
   });
 });

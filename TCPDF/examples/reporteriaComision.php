@@ -90,33 +90,32 @@ $Comisiones = ControladorComision::getComisionesPdf($_GET['buscar']);
 foreach($Comisiones as $Comision){
     $idFactura = $Comision['factura'];
     // Formatear $totalVenta como "Lps 2,500.99"
-    $totalVenta = 'Lps. ' . number_format($Comision['totalVenta'], 2, '.', ',');
-    $porcentaje = $Comision['porcentaje'] * 100;
-    $comisionTotal = 'Lps. ' . number_format($Comision['comisionTotal'], 2, '.', ',');
+    $totalVenta = isset($Comision['totalVenta']) ? 'Lps. ' . number_format(floatval($Comision['totalVenta']), 2, '.', ',') : '';
+    $porcentaje = isset($Comision['porcentaje']) ? $Comision['porcentaje'] * 100 : '';
+    $comisionTotal = isset($Comision['comisionTotal']) ? 'Lps. ' . number_format(floatval($Comision['comisionTotal']), 2, '.', ',') : '';
+
     $estado = $Comision['estadoComisionar'];
     $liquidacion = $Comision['estadoLiquidacion'];
     /* $estadoCobro = $Comision['estadoCobro'];
     $metodoPago = $Comision['metodoPago']; */
     
     // Verificar si $fecha está definido y no es null
-    if (isset($Comision['fechaComision']) && $Comision['fechaComision'] !== null) {
+    if (isset($Comision['fechaComision']) && $Comision['fechaComision'] instanceof DateTime) {
         $fecha = $Comision['fechaComision'];
         $timestamp = $fecha->getTimestamp();
-        // Verificar si la fecha es no nula antes de formatearla
         $fechaComision = date('Y-m-d H:i:s', $timestamp);
     } else {
-        $fechaComision = ''; // Otra acción si $fechaComision es nulo
+        $fechaComision = ''; // Otra acción si $fechaComision no es un objeto DateTime
     }
-
-    // Verificar si $fechaL está definido y no es null
-    if (isset($Comision['fechaLiquidacion']) && $Comision['fechaLiquidacion'] !== null) {
+    
+    if (isset($Comision['fechaLiquidacion']) && $Comision['fechaLiquidacion'] instanceof DateTime) {
         $fechaL = $Comision['fechaLiquidacion'];
         $timestamp = $fechaL->getTimestamp();
-        // Verificar si la fecha es no nula antes de formatearla
         $fechaLiquidacion = date('Y-m-d H:i:s', $timestamp);
     } else {
-        $fechaLiquidacion = ''; // Otra acción si $fechaLiquidacion es nulo
+        $fechaLiquidacion = ''; // Otra acción si $fechaLiquidacion no es un objeto DateTime
     }
+    
 /*     if (isset($Comision['fechaCobro']) && $Comision['fechaCobro'] !== null) {
         $fechaC = $Comision['fechaCobro'];
         $timestamp = $fechaC->getTimestamp();
