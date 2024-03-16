@@ -29,54 +29,53 @@ require_once('../../Vista/login/validarRegistro.php');
         </p>
       </div>
       <p class="line-space"></p>
-      <h2 class="titulo-registro">Regístrate</h2>
+      <h2 class="titulo-registro">Crear nueva cuenta</h2>
       <p class="line-space"></p>
       <div class="input-container">
         <div class="form-grupo">
           <!-- input para nombre -->
           <div class="wrap-input mb-3">
-            <label><b>Nombre Completo</b></label>
-            <input type="text" class="form-control input" name="nombre" id="nombre" maxlength="30" placeholder="Nombre">
+            <label style="font-weight: 700;"><span style="color: red;">*</span>Nombre completo</label>
+            <input type="text" class="form-control input" name="nombre" id="nombre" placeholder="Nombre del usuario">
             <p class="mensaje"></p>
           </div>
           <!-- input para usuario -->
           <div class="wrap-input mb-3">
-            <label><b>Usuario</b></label>
-            <input type="text" class="form-control input" name="usuario" id="usuario" maxlength="14"
-              placeholder="Usuario">
+            <label style="font-weight: 700;"><span style="color: red;">*</span>Usuario</label>
+            <input type="text" class="form-control input" name="usuario" id="usuario"
+              placeholder="Cuenta de usuario">
             <p class="mensaje"></p>
           </div>
           <!-- input para correo electronico -->
           <div class="wrap-input mb-3">
-            <label><b>Correo Electrónico</b></label>
-            <input type="email" class="form-control input" name="correoElectronico" id="correo" maxlength="50"
-              placeholder="Correo Electrónico">
+          <label style="font-weight: 700;"><span style="color: red;">*</span>Correo electrónico</label>
+            <input type="text" class="form-control input" name="correoElectronico" id="correo"
+              placeholder="ejemplo123@gmail.com">
             <p class="mensaje"></p>
           </div>
         </div>
         <div class="form-grupo">
           <!-- input para Contraseña -->
           <div class="wrap-input mb-3" id="grupo__password">
-            <label><b>Contraseña</b></label>
-            <input type="password" class="form-control input" name="contraseña" id="password" placeholder="Contraseña">
+          <label style="font-weight: 700;"><span style="color: red;">*</span>Contraseña</label>
+            <input type="password" class="form-control input" name="contraseña" id="password" placeholder="Establecer contraseña">
             <p class="mensaje"></p>
-            <br>
           </div>
           <!-- input para confirmación Contraseña -->
           <div class="wrap-input mb-3" id="grupo__password2">
-            <label><b>Confirmar contraseña</b></label>
-            <input type="password" class="form-control input" name="confirmarContraseña" id="password2" maxlength="20"
-              placeholder="Confirmar Contraseña">
+          <label style="font-weight: 700;"><span style="color: red;">*</span>Confirmar contraseña</label>
+            <input type="password" class="form-control input" name="confirmarContraseña" id="password2"
+              placeholder="Confirme su contraseña">
             <!-- <i class="form-control__validacion-estado fas fa-times-circle"></i> -->
             <p class="mensaje"></p>
           </div>
-          <div>
+          <div class="show_password">
             <input type="checkbox" id="checkbox"> Mostrar Contraseñas
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary" name="submit" id="click">Crear cuenta</button>
-      <label>¿Ya tienes cuenta?</label><a href="login.php" class="label-text">Inicia sesión</a>
+      <button type="submit" class="btn btn-primary" name="submit" id="btn_crearCuenta">Registrar cuenta</button>
+      <label>¿Ya tienes cuenta?</label><a href="login.php" class="label-text">Iniciar sesión</a>
     </form>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
