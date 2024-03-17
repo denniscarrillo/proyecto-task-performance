@@ -86,9 +86,12 @@ $("#form-Nuevo-Objeto").submit(function (e) {
 $(document).on("click", "#btn_editar", function () {
   let fila = $(this).closest("tr"),
     id_Objeto = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
+    objeto = $(this).closest("tr").find("td:eq(1)").text(),
     descripcion = fila.find("td:eq(2)").text();
 
-  $("#A_objeto").val(id_Objeto), $("#A_descripcion").val(descripcion);
+  $("#A_objeto").val(id_Objeto), 
+  $("#A_objeto").val(id_Objeto), 
+  $("#A_descripcion").val(descripcion);
 
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");

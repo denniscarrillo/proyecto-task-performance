@@ -16,6 +16,15 @@
         $editarObjeto->descripcion= $_POST['descripcion'];
         $editarObjeto->Modificado_Por = $user;
         DataTableObjeto::editarObjeto($editarObjeto);
-       
+       /* ========================= Evento Editar Objeto. ====================================*/
+       $newBitacora = new Bitacora();
+       $accion = ControladorBitacora::accion_Evento();
+       date_default_timezone_set('America/Tegucigalpa');
+       $newBitacora->fecha = date("Y-m-d h:i:s"); 
+       $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('GESTIONOBJETO.PHP');
+       $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+       $newBitacora->accion = $accion['Update'];
+       $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' modificó el objeto '.$_POST['descripcion'];
+       ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+       /* =======================================================================================*/
     }
-?>
