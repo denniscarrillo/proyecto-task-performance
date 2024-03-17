@@ -1,32 +1,32 @@
 import {estadoValidado as valido } from './validacionesNuevaSolicitud.js';
 
 
-$(document).on('click', '#clienteExistente', function () {
-  obtenerClientes();
-  obtenerCarteraCliente();
- // $("#modalClienteFrecuente").modal("show");
+// $(document).on('click', '#clienteExistente', function () {
+//   //obtenerClientes();
+//   obtenerCarteraCliente();
+//  // $("#modalClienteFrecuente").modal("show");
 
- let correoCliente = document.getElementById('containerCorreocliente');
- correoCliente .setAttribute('hidden', 'false');
+//  let correoCliente = document.getElementById('containerCorreocliente');
+//  correoCliente .setAttribute('hidden', 'false');
 
- let Factura  = document.getElementById('containerFacturacliente');
- Factura .removeAttribute('hidden');
- containerFacturacliente.style.display = 'block';
+//  let Factura  = document.getElementById('containerFacturacliente');
+//  Factura .removeAttribute('hidden');
+//  containerFacturacliente.style.display = 'block';
 
-});
+// });
 
-$(document).on('click', '#clientenuevo', function () {
+// $(document).on('click', '#clientenuevo', function () {
 
-  let correoCliente = document.getElementById('containerCorreocliente');
-  correoCliente.removeAttribute('hidden');
-  containerCorreocliente.style.display = 'block';
+//   let correoCliente = document.getElementById('containerCorreocliente');
+//   correoCliente.removeAttribute('hidden');
+//   containerCorreocliente.style.display = 'block';
  
-  let Factura = document.getElementById('containerFacturacliente');
-  Factura.setAttribute('hidden', 'false');
-});
+//   let Factura = document.getElementById('containerFacturacliente');
+//   Factura.setAttribute('hidden', 'false');
+// });
 
 
-let obtenerClientes = function () {
+/* let obtenerClientes = function () {
   if (document.getElementById('table-ClienteFrecuente_wrapper') == null) {
     $('#table-ClienteFrecuente').DataTable({
       "ajax": {
@@ -77,38 +77,38 @@ $(document).on("click", "#btn_selectcliente", function () {
   //direccion.setAttribute('disabled', 'true');
   $("#modalClienteFrecuente").modal("hide");
 });
+ */
 
 
+// let rtnCliente = document.getElementById('clienteExistente');
+// //let rtnCliente = document.getElementById('rtnCliente');
+// rtnCliente.addEventListener('change', function () {
 
-let rtnCliente = document.getElementById('clienteExistente');
-//let rtnCliente = document.getElementById('rtnCliente');
-rtnCliente.addEventListener('change', function () {
-
-  limpiarForm();
-  let $containerRTN = document.getElementById('containerrtncliente');
-  if (document.getElementById('btnclientes') == null) {
-    let $btnBuscar = document.createElement('div')
-    $btnBuscar.classList.add('btnbuscarcliente');
+//   limpiarForm();
+//   let $containerRTN = document.getElementById('containerrtncliente');
+//   if (document.getElementById('btnclientes') == null) {
+//     let $btnBuscar = document.createElement('div')
+//     $btnBuscar.classList.add('btnbuscarcliente');
     
-    $btnBuscar.innerHTML = `
-    <button type="button" class="btn btn-primary" id="btnclientes" data-bs-toggle="modal" data-bs-target="#modalCarteraCliente">
-      Buscar <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
-    </button>
-    `;
-    $containerRTN.appendChild($btnBuscar);
-  }
+//     $btnBuscar.innerHTML = `
+//     <button type="button" class="btn btn-primary" id="btnclientes" data-bs-toggle="modal" data-bs-target="#modalCarteraCliente">
+//       Buscar <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
+//     </button>
+//     `;
+//     $containerRTN.appendChild($btnBuscar);
+//   }
   
-});
+// });
 //Cuando el cliente es nuevo se oculta el buscador de existir.
-document.getElementById('clientenuevo').addEventListener('change', function () {
-  let $containerRTN = document.getElementById('containerrtncliente');
-  let $btnBuscarCliente = document.querySelector('.btnbuscarcliente');
-  if ($btnBuscarCliente) {
-    $containerRTN.removeChild($btnBuscarCliente);
-   limpiarForm();
-  }
+// document.getElementById('clientenuevo').addEventListener('change', function () {
+//   let $containerRTN = document.getElementById('containerrtncliente');
+//   let $btnBuscarCliente = document.querySelector('.btnbuscarcliente');
+//   if ($btnBuscarCliente) {
+//     $containerRTN.removeChild($btnBuscarCliente);
+//    limpiarForm();
+//   }
   
-});
+// });
 
 
 
@@ -119,32 +119,30 @@ document.getElementById('clientenuevo').addEventListener('change', function () {
 
 
 
-let limpiarForm = () => {
-  let   rtn = document.getElementById('rtnCliente'),
-    telefono = document.getElementById('telefono'),
-    direccion = document.getElementById('direccion'),
-    descripcion = document.getElementById("descripcion"),
-   nombre = document.getElementById('nombre'),
-   correoCliente = document.getElementById('correoCliente');
-  //Vaciar campos cliente
-    rtn.value = '';
-    telefono.value = ''
-    direccion.value = '';
-    descripcion.value = '';
-    nombre.value = '';
-    correoCliente.value = ''; 
+// let limpiarForm = () => {
+//   let   rtn = document.getElementById('rtnCliente'),
+//     telefono = document.getElementById('telefono'),
+//     direccion = document.getElementById('direccion'),
+//     descripcion = document.getElementById("descripcion"),
+//    nombre = document.getElementById('nombre'),
+//    correoCliente = document.getElementById('correoCliente');
+//   //Vaciar campos cliente
+//     rtn.value = '';
+//     telefono.value = ''
+//     direccion.value = '';
+//     descripcion.value = '';
+//     nombre.value = '';
+//     correoCliente.value = ''; 
 
-    correoCliente.removeAttribute('disabled');
-    descripcion.removeAttribute('disabled');
-    rtn.removeAttribute('disabled');
-    telefono.removeAttribute('disabled');
-    direccion.removeAttribute('disabled');
-}
+//     correoCliente.removeAttribute('disabled');
+//     descripcion.removeAttribute('disabled');
+//     rtn.removeAttribute('disabled');
+//     telefono.removeAttribute('disabled');
+//     direccion.removeAttribute('disabled');
+// }
 
-
-let FacturaSolicitud = document.getElementById('clienteExistente');
-FacturaSolicitud.addEventListener('change', function () {
-  limpiarForm();
+// Llama a la función cuando se carga la página de buscar FACTURA
+window.addEventListener('load', function() {
   let $containerFact = document.getElementById('containerFacturacliente');
   if (document.getElementById('btnfactura') == null) {
     let $btnBuscar = document.createElement('div')
@@ -157,24 +155,68 @@ FacturaSolicitud.addEventListener('change', function () {
     $containerFact.appendChild($btnBuscar);
   }
   
- 
+  let $containerRTN = document.getElementById('containerrtncliente');
+  if (document.getElementById('btnclientes') == null) {
+    let $btnBuscar = document.createElement('div')
+    $btnBuscar.classList.add('btnbuscarcliente');
+    
+    $btnBuscar.innerHTML = `
+    <button type="button" class="btn btn-primary" id="btnclientes" data-bs-toggle="modal" data-bs-target="#modalCarteraCliente">
+      Buscar <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
+    </button>
+    `;
+    $containerRTN.appendChild($btnBuscar);
+  }
+
+  obtenerTipoServicio('#tiposervicio');
+  let fechaC = new Date().toISOString().slice(0, 10);
+    $("#fechasolicitud").val(fechaC); 
+  obtenerAdminCorreo('#correo');
+
+
 });
 
-document.getElementById('clientenuevo').addEventListener('change', function () {
-  let $containerRTN = document.getElementById('containerFacturacliente');
-  let $btnBuscarCliente = document.querySelector('.btnbuscarFactura');
-  if ($btnBuscarCliente) {
-    $containerRTN.removeChild($btnBuscarCliente);
-    limpiarForm();
-  }
+
+
+// let FacturaSolicitud = document.getElementById('clienteExistente');
+// FacturaSolicitud.addEventListener('change', function () {
+//   limpiarForm();
+//   let $containerFact = document.getElementById('containerFacturacliente');
+//   if (document.getElementById('btnfactura') == null) {
+//     let $btnBuscar = document.createElement('div')
+//     $btnBuscar.classList.add('btnbuscarFactura');
+//     $btnBuscar.innerHTML = `
+//     <button type="button" class="btn btn-primary" id="btnfactura"  data-bs-toggle="modal "data-bs-target="#modalFacturaSolicitud">
+//       Buscar <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
+//     </button>
+//     `;
+//     $containerFact.appendChild($btnBuscar);
+//   }
+  
  
-});
+// });
+
+// document.getElementById('clientenuevo').addEventListener('change', function () {
+//   let $containerRTN = document.getElementById('containerFacturacliente');
+//   let $btnBuscarCliente = document.querySelector('.btnbuscarFactura');
+//   if ($btnBuscarCliente) {
+//     $containerRTN.removeChild($btnBuscarCliente);
+//     limpiarForm();
+//   }
+ 
+// });
 
 $(document).on('click', '#btnfactura', function () {
   obtenerFactura();  // Lógica para obtener la factura si es necesario
   //$('#modalArticulosSolicitud').modal('show');
   $('#modalFacturaSolicitud').modal('show');  
 });
+
+$(document).on('click', '#btnclientes', function () {
+  obtenerCarteraCliente(); 
+});
+
+
 
 let obtenerFactura = function () {
   if (document.getElementById('table-FacturaSolicitud_wrapper') == null) {
@@ -212,7 +254,7 @@ $(document).on("click", "#btn_selectfactura", function () {
 
 //Activar los campos al tocar los radio existente o nuevo
   // Agregar un controlador de eventos 'click' al elemento de radio
-  clienteExistente.addEventListener("click", function() {
+ /*  clienteExistente.addEventListener("click", function() {
     obtenerTipoServicio('#tiposervicio');
     telefono.disabled = false;
     direccion.disabled = false;
@@ -237,7 +279,7 @@ $(document).on("click", "#btn_selectfactura", function () {
     $("#fechasolicitud").val(fechaC);
     obtenerAdminCorreo('#correo');
   });
- 
+  */
   
   let obtenerTipoServicio = function (idElemento, tipoServicio_id) {
     $.ajax({
@@ -267,9 +309,7 @@ $(document).on("click", "#btn_selectfactura", function () {
         }        
     });
   }
-
-
-  //const table = new DataTable('#table-ArticuloSolicitud');
+ 
 
 ////////////////MODAL DE ARTICULO  
   $('#btnarticulos').click(() => {
@@ -406,7 +446,7 @@ function validarCantidades() {
 ///////////GUARDAR NUEVA SOLICITUD
 $('#form-solicitud').submit(function (e) {
   e.preventDefault(); 
-  //para reporte
+  
   let nombre = document.getElementById("nombre");
   let idFactura = $('#idfactura').val();
   let correo = $('#correo').val();
@@ -414,10 +454,10 @@ $('#form-solicitud').submit(function (e) {
   let tiposervicio = document.getElementById('tiposervicio').value;
   let ubicacion = $('#direccion').val();
   let descripcion = $('#descripcion').val();
-  let rtncliente = $('#rtnClienteV').val();
+  //let rtncliente = $('#rtnClienteV').val();
   let rtnclienteC = $('#rtnCliente').val();
-  let codigoClieteF = document.querySelector('[name="codC"]');
-  let codigo = codigoClieteF.getAttribute('id');
+  // let codigoClieteF = document.querySelector('[name="codC"]');
+  // let codigo = codigoClieteF.getAttribute('id');
 
 
 let $idProductos = document.querySelectorAll('.idproducto');
@@ -441,7 +481,7 @@ $idProductos.forEach(id => {
           datatype: "JSON",
           data: {
               idFactura: idFactura,
-              RTNcliente: rtncliente,
+              //RTNcliente: rtncliente,
               RTNclienteC: rtnclienteC,
               telefono: telefono,
               correo: correo,
@@ -449,8 +489,8 @@ $idProductos.forEach(id => {
               ubicacion: ubicacion,
               descripcion: descripcion,
               nombre: nombre.value,
-              "productos": JSON.stringify(productos),
-              codigo: codigo
+              "productos": JSON.stringify(productos)
+              // codigo: codigo
           },
           success: function () {
            
@@ -483,35 +523,35 @@ function redirigirADataTable() {
 
 
 
-$('#form-solicitud').submit(function (e) {
-  e.preventDefault(); // Evita el comportamiento normal del submit, es decir, la recarga total de la página
-  // Verifica si el radio "Nuevo Cliente" está seleccionado
-  if ($('#clientenuevo').is(':checked')) {
-    let nombreN = $('#nombre').val();
-    let rtnN = $('#rtnCliente').val();
-    let telefonoN = $('#telefono').val();
-    let correoN = $('#correoCliente').val();
-    let direccionN = $('#direccion').val();
-    if (valido) {
-      $.ajax({
-        url: "../../../Vista/crud/carteraCliente/nuevoCliente.php",
-        type: "POST",
-        datatype: "JSON",
-        data: {
-          nombre: nombreN,
-          rtn: rtnN,
-          telefono: telefonoN,
-          correo: correoN,
-          direccion: direccionN
-        },
-        success: function () {
+// $('#form-solicitud').submit(function (e) {
+//   e.preventDefault(); // Evita el comportamiento normal del submit, es decir, la recarga total de la página
+//   // Verifica si el radio "Nuevo Cliente" está seleccionado
+//   if ($('#clientenuevo').is(':checked')) {
+//     let nombreN = $('#nombre').val();
+//     let rtnN = $('#rtnCliente').val();
+//     let telefonoN = $('#telefono').val();
+//     let correoN = $('#correoCliente').val();
+//     let direccionN = $('#direccion').val();
+//     if (valido) {
+//       $.ajax({
+//         url: "../../../Vista/crud/carteraCliente/nuevoCliente.php",
+//         type: "POST",
+//         datatype: "JSON",
+//         data: {
+//           nombre: nombreN,
+//           rtn: rtnN,
+//           telefono: telefonoN,
+//           correo: correoN,
+//           direccion: direccionN
+//         },
+//         success: function () {
   
-        }
-      });
+//         }
+//       });
 
-    }
-  }
-});
+//     }
+//   }
+// });
 
 
 let obtenerCarteraCliente = function () {

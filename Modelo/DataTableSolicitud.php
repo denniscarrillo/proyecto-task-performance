@@ -131,7 +131,7 @@ class DataTableSolicitud
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $idFactura =$nuevaSolicitud->idFactura;
-        $rtnCliente = $nuevaSolicitud->rtnCliente;
+        //$rtnCliente = $nuevaSolicitud->rtnCliente;
         $rtnClienteCartera = $nuevaSolicitud->rtnClienteC;
         $Descripcion = $nuevaSolicitud->descripcion;
         $TipoServicio = $nuevaSolicitud->tipoServicio;
@@ -141,13 +141,13 @@ class DataTableSolicitud
         $EstadoAvance = $nuevaSolicitud->estadoAvance;
         $EstadoSolicitud = $nuevaSolicitud->estadoSolicitud;
         $CreadoPor = $nuevaSolicitud->creadoPor;
-        $codigoC = $nuevaSolicitud->codigoCliente;
+        //$codigoC = $nuevaSolicitud->codigoCliente;
         
-        $query = "INSERT INTO tbl_Solicitud(idFactura, rtn_cliente, rtn_clienteCartera, descripcion, 
+        $query = "INSERT INTO tbl_Solicitud(idFactura, rtn_clienteCartera, descripcion, 
         id_TipoServicio, correo, telefono_cliente, ubicacion_instalacion, EstadoAvance, EstadoSolicitud, 
-        Creado_Por, Fecha_Creacion, cod_Cliente) 
-        VALUES ('$idFactura','$rtnCliente', '$rtnClienteCartera', '$Descripcion', '$TipoServicio', '$Correo',
-        '$telefono', '$ubicacion', '$EstadoAvance', '$EstadoSolicitud','$CreadoPor', GETDATE(), '$codigoC') ;";
+        Creado_Por, Fecha_Creacion) 
+        VALUES ('$idFactura', '$rtnClienteCartera', '$Descripcion', '$TipoServicio', '$Correo',
+        '$telefono', '$ubicacion', '$EstadoAvance', '$EstadoSolicitud','$CreadoPor', GETDATE()) ;";
         $nuevaSolicitud = sqlsrv_query($consulta, $query);
 
         $query2 = "SELECT SCOPE_IDENTITY() AS id_Solicitud";

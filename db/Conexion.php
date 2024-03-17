@@ -1,6 +1,6 @@
 <?php
  class Conexion {
-     private $ServerName = "DANIELA\ESTEFANI";
+     private $ServerName = "DESKTOP-REQKDIP\SQLEXPRESS";
      private $ConexionInfo = array("Database"=>"RENDIMIENTO_TAREAS", "CharacterSet"=>"UTF-8");
      
      #Abrir conexión al servidor de MySQL

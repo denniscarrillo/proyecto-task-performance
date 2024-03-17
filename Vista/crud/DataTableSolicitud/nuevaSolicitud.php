@@ -11,21 +11,21 @@
     session_start(); //Reanudamos session
     if(isset($_SESSION['usuario'])){
         $user = $_SESSION['usuario'];
-        if (empty($_POST['RTNcliente'])) {
+      /*   if (empty($_POST['RTNcliente'])) {
             // Si está vacío, asignar 'NULL' o algún otro valor por defecto
             $_POST['RTNcliente'] = 'NULL';
         }
         if (empty($_POST['RTNclienteC'])) {
             // Si está vacío, asignar 'NULL' o algún otro valor por defecto
             $_POST['RTNclienteC'] = 'NULL';
-        }
-        if (empty($_POST['codigo'])) {
+        } */
+      /*   if (empty($_POST['codigo'])) {
             // Si está vacío, asignar 'NULL' o algún otro valor por defecto
             $_POST['codigo'] = NULL;
-        }
+        } */
         $nuevaSolicitud = new DataTableSolicitud();
         $nuevaSolicitud->idFactura = $_POST['idFactura'];
-        $nuevaSolicitud->rtnCliente = $_POST['RTNcliente'];
+        //$nuevaSolicitud->rtnCliente = $_POST['RTNcliente'];
         $nuevaSolicitud->rtnClienteC = $_POST['RTNclienteC'];
         $nuevaSolicitud->descripcion = $_POST['descripcion'];
         $nuevaSolicitud->tipoServicio = $_POST['tipoServicio'];
@@ -35,7 +35,7 @@
         $nuevaSolicitud->estadoAvance = 'PENDIENTE';
         $nuevaSolicitud->estadoSolicitud = 'ACTIVO';
         $nuevaSolicitud->creadoPor =  $user;
-        $nuevaSolicitud->codigoCliente = $_POST['codigo'];
+        //$nuevaSolicitud->codigoCliente = $_POST['codigo'];
         $productos = json_decode($_POST['productos'], true);
         $nombrePDF =  $_POST['nombre'];
     
