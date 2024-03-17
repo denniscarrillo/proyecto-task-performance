@@ -65,7 +65,6 @@ $form.addEventListener("submit", (event) => {
   validacionesInputUser();
   validacionesInputPassword();
   const error = document.querySelectorAll(".mensaje_error").length;
-  console.log(error)
   if (error > 0) {
     event.preventDefault();
   }
@@ -73,7 +72,7 @@ $form.addEventListener("submit", (event) => {
 
 // Convierte usuario en mayúsuculas de inmediato mientras escribe
 $inputUser.addEventListener("input", () => {
-  funciones.convertirAMayusculas($inputUser);
+  funciones.transformarAMayusculas($inputUser);
   funciones.limitarCantidadCaracteres("userName", 25);
   validacionesInputUser();
 });

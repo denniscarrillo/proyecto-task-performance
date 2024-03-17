@@ -38,15 +38,19 @@ const expresiones = {
 //Cuando se quiera enviar el formulario de registro, se aplicaran todas validaciones a todos los inputs
 $form.addEventListener("submit", (e) => {
   aplicarValidacionesInputs();
+  //Antes de enviar los datos los transformarmos a mayusculas
+  funciones.transformarAMayusculas($nombre);
+  funciones.transformarAMayusculas($usuario);
   const estaValidaciones = document.querySelectorAll(".mensaje_error").length;
   if (estaValidaciones > 0) {
     e.preventDefault();
   }
+  console.log($nombre.value, $usuario.value)
 });
 
 // Llamada a las validaciones en distintos eventos
 $nombre.addEventListener("input", () => {
-  funciones.convertirAMayusculas($nombre);
+  funciones.convertirAMayusculasVisualmente($nombre);
   funciones.limitarCantidadCaracteres("nombre", 60);
   validacionInputNombre();
 });
@@ -55,7 +59,7 @@ $nombre.addEventListener("keydown", () => {
 });
 $usuario.addEventListener("input", () => {
   funciones.limitarCantidadCaracteres("usuario", 25);
-  funciones.convertirAMayusculas($usuario);
+  funciones.convertirAMayusculasVisualmente($usuario);
   validarInputUsuario();
 });
 //Para activar el evento de aceptar solo letras

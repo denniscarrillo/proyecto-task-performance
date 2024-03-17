@@ -333,8 +333,12 @@ export const validarMinMaxCaracteresPassword = (input, minMaxCaracteres) => {
 /**
  * @param {HTMLElement} elemento - input HTML al cual le queremos convertir el texto a mayúsculas mientras se escribe él
  */
-export const convertirAMayusculas = (elemento) => {
+export const convertirAMayusculasVisualmente = (elemento) => {
     elemento.style.textTransform = 'uppercase';
+}
+
+export const transformarAMayusculas = (elemento) => {
+    elemento.value = elemento.value.toUpperCase();
 }
 
 export const soloLetrasSinEspacios = (elemento) => {
