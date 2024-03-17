@@ -341,7 +341,7 @@ export const soloLetrasSinEspacios = (elemento) => {
     elemento.setAttribute('onkeypress', 'return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122))')
 }
 
-export const soloLetrasoConEspacios = (elemento) => {
+export const soloLetrasConEspacios = (elemento) => {
     elemento.setAttribute('onkeypress', 'return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))')
 }
 

@@ -51,7 +51,7 @@ $nombre.addEventListener("input", () => {
   validacionInputNombre();
 });
 $nombre.addEventListener("keydown", () => {
-  funciones.soloLetrasoConEspacios($nombre)
+  funciones.soloLetrasConEspacios($nombre)
 });
 $usuario.addEventListener("input", () => {
   funciones.limitarCantidadCaracteres("usuario", 25);
