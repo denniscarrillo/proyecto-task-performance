@@ -50,11 +50,19 @@ $nombre.addEventListener("input", () => {
   funciones.limitarCantidadCaracteres("nombre", 60);
   validacionInputNombre();
 });
+$nombre.addEventListener("keydown", () => {
+  funciones.soloLetrasoConEspacios($nombre)
+});
 $usuario.addEventListener("input", () => {
   funciones.limitarCantidadCaracteres("usuario", 25);
   funciones.convertirAMayusculas($usuario);
   validarInputUsuario();
 });
+//Para activar el evento de aceptar solo letras
+$usuario.addEventListener("keydown", () => {
+  funciones.soloLetrasSinEspacios($usuario)
+});
+
 $correo.addEventListener("input", () => {
   funciones.limitarCantidadCaracteres("correo", 50);
   validarInputCorreo();
@@ -112,6 +120,7 @@ const validarInputUsuario = async () => {
     soloLetras: false,
     espacios: false,
     caracteresMasTresVeces: false,
+    caracteresMinimo: false,
   };
   estadoValidaciones.campoVacio = funciones.validarCampoVacio($usuario);
   estadoValidaciones.campoVacio
@@ -124,16 +133,19 @@ const validarInputUsuario = async () => {
     ? (estadoValidaciones.espacios = funciones.validarEspacios($usuario))
     : "";
   estadoValidaciones.espacios
-    ? funciones.validarUsuarioExistente(
-        await obtenerUsuarioExiste($usuario.value)
-      )
-    : "";
-  estadoValidaciones.espacios
     ? (estadoValidaciones.caracteresMasTresVeces =
         funciones.limiteMismoCaracter($usuario, expresiones.usuario))
     : "";
   estadoValidaciones.caracteresMasTresVeces
-    ? funciones.caracteresMinimo($usuario, 5)
+    ? (estadoValidaciones.caracteresMinimo = funciones.caracteresMinimo(
+        $usuario,
+        5
+      ))
+    : "";
+  estadoValidaciones.caracteresMinimo
+    ? funciones.validarUsuarioExistente(
+        await obtenerUsuarioExiste($usuario.value)
+      )
     : "";
 };
 

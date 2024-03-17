@@ -334,8 +334,17 @@ export const validarMinMaxCaracteresPassword = (input, minMaxCaracteres) => {
  * @param {HTMLElement} elemento - input HTML al cual le queremos convertir el texto a mayúsculas mientras se escribe él
  */
 export const convertirAMayusculas = (elemento) => {
-    elemento.value = elemento.value.toUpperCase();
+    elemento.style.textTransform = 'uppercase';
 }
+
+export const soloLetrasSinEspacios = (elemento) => {
+    elemento.setAttribute('onkeypress', 'return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122))')
+}
+
+export const soloLetrasoConEspacios = (elemento) => {
+    elemento.setAttribute('onkeypress', 'return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))')
+}
+
 
 /**
  * @param {HTMLElement} elemento - input HTML al cual le queremos aplicar la validación
