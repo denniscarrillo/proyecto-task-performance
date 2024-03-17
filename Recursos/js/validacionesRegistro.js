@@ -25,6 +25,7 @@ let estadoMasdeUnEspacio = {
     estadoMasEspacioNombre: true
 }
 
+//Nuevo comentario
 
 // INPUTS
 const $form = document.getElementById('formRegis');
