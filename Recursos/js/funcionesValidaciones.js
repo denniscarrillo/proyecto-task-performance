@@ -265,7 +265,7 @@ export const caracteresMinimo = (elemento, minCaracteres) => {
   let mensaje = elemento.parentElement.querySelector('p');
   let estado;
   if(elemento.value.length < minCaracteres){
-    mensaje.innerText = '*Debe ingresar mínimo '+minCaracteres+' caracteres';
+    mensaje.innerText = 'Debe ingresar mínimo '+minCaracteres+' caracteres';
         elemento.classList.add('mensaje_error');
         estado = false;
   } else {

@@ -45,29 +45,29 @@ $form.addEventListener("submit", (e) => {
 });
 
 // Llamada a las validaciones en distintos eventos
-$nombre.addEventListener('input', () => {
-  funciones.convertirAMayusculas($nombre)
-  funciones.limitarCantidadCaracteres('nombre', 60)
+$nombre.addEventListener("input", () => {
+  funciones.convertirAMayusculas($nombre);
+  funciones.limitarCantidadCaracteres("nombre", 60);
   validacionInputNombre();
-})
-$usuario.addEventListener('input', () => {
-  funciones.limitarCantidadCaracteres('usuario', 25)
-  funciones.convertirAMayusculas($usuario)
+});
+$usuario.addEventListener("input", () => {
+  funciones.limitarCantidadCaracteres("usuario", 25);
+  funciones.convertirAMayusculas($usuario);
   validarInputUsuario();
-})
-$correo.addEventListener('input', () => {
-  funciones.limitarCantidadCaracteres('correo', 50)
+});
+$correo.addEventListener("input", () => {
+  funciones.limitarCantidadCaracteres("correo", 50);
   validarInputCorreo();
-})
-$correo.addEventListener('focusout', () => {
+});
+$correo.addEventListener("focusout", () => {
   validarInputCorreo();
-})
-$password.addEventListener('input', () => {
+});
+$password.addEventListener("input", () => {
   validarInputPassword();
-})
-$password2.addEventListener('focusout', () => {
+});
+$password2.addEventListener("focusout", () => {
   validarInputConfirmarPassword();
-})
+});
 
 //FUNCIONES VALIDACIONES PARA CADA INPUT DEL FORMULARIO
 const aplicarValidacionesInputs = () => {
@@ -82,10 +82,27 @@ const aplicarValidacionesInputs = () => {
 const validacionInputNombre = () => {
   let estadoValidaciones = {
     campoVacio: false,
+    soloLetras: false,
+    masDeUnEspacio: false,
+    caracteresMasTresVeces: false,
   };
   estadoValidaciones.campoVacio = funciones.validarCampoVacio($nombre);
   estadoValidaciones.campoVacio
-    ? funciones.validarSoloLetras($nombre, expresiones.nombre)
+    ? (estadoValidaciones.soloLetras = funciones.validarSoloLetras(
+        $nombre,
+        expresiones.nombre
+      ))
+    : "";
+  estadoValidaciones.soloLetras
+    ? (estadoValidaciones.masDeUnEspacio =
+        funciones.validarMasdeUnEspacio($nombre))
+    : "";
+  estadoValidaciones.masDeUnEspacio
+    ? (estadoValidaciones.caracteresMasTresVeces =
+        funciones.limiteMismoCaracter($nombre, expresiones.usuario))
+    : "";
+  estadoValidaciones.caracteresMasTresVeces
+    ? funciones.caracteresMinimo($nombre, 10)
     : "";
 };
 
@@ -94,6 +111,7 @@ const validarInputUsuario = async () => {
     campoVacio: false,
     soloLetras: false,
     espacios: false,
+    caracteresMasTresVeces: false,
   };
   estadoValidaciones.campoVacio = funciones.validarCampoVacio($usuario);
   estadoValidaciones.campoVacio
@@ -110,6 +128,13 @@ const validarInputUsuario = async () => {
         await obtenerUsuarioExiste($usuario.value)
       )
     : "";
+  estadoValidaciones.espacios
+    ? (estadoValidaciones.caracteresMasTresVeces =
+        funciones.limiteMismoCaracter($usuario, expresiones.usuario))
+    : "";
+  estadoValidaciones.caracteresMasTresVeces
+    ? funciones.caracteresMinimo($usuario, 5)
+    : "";
 };
 
 const validarInputCorreo = async () => {
@@ -117,6 +142,8 @@ const validarInputCorreo = async () => {
     campoVacio: false,
     espacios: false,
     correo: false,
+    caracteresMasTresVeces: false,
+    caracteresMinimo: false,
   };
   estadoValidaciones.campoVacio = funciones.validarCampoVacio($correo);
   estadoValidaciones.campoVacio
@@ -128,7 +155,17 @@ const validarInputCorreo = async () => {
         expresiones.correo
       ))
     : "";
-  estadoValidaciones.correo
+  estadoValidaciones.espacios
+    ? (estadoValidaciones.caracteresMasTresVeces =
+        funciones.limiteMismoCaracter($correo, expresiones.usuario))
+    : "";
+  estadoValidaciones.caracteresMasTresVeces
+    ? (estadoValidaciones.caracteresMinimo = funciones.caracteresMinimo(
+        $correo,
+        15
+      ))
+    : "";
+  estadoValidaciones.caracteresMinimo
     ? funciones.validarCorreoExistente(await obtenerCorreoExiste($correo.value))
     : "";
 };
@@ -174,14 +211,17 @@ const validarInputConfirmarPassword = () => {
     ? (estadoValidaciones.espacios = funciones.validarEspacios($password2))
     : "";
   estadoValidaciones.espacios
-  ? (estadoValidaciones.coincidir = funciones.validarCoincidirPassword($password, $password2))
-  : "";
+    ? (estadoValidaciones.coincidir = funciones.validarCoincidirPassword(
+        $password,
+        $password2
+      ))
+    : "";
   estadoValidaciones.coincidir
     ? (estadoValidaciones.password = funciones.validarPassword(
-      $password2,
-      expresiones.password
-    ))
-  : "";
+        $password2,
+        expresiones.password
+      ))
+    : "";
 };
 
 let obtenerUsuarioExiste = async ($usuario) => {
