@@ -17,7 +17,7 @@ class ControladorDataTableObjeto {
     }
 
     public static function editarObjeto($editarObjeto){
-        return DataTableObjeto::editarObjeto(editarObjeto);
+        return DataTableObjeto::editarObjeto($editarObjeto);
     }
 
     public static function eliminarObjeto($id_Objeto, $objeto){

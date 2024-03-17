@@ -3,7 +3,6 @@ import { validarEditar as valido } from "./validacionesModalEditarPregunta.js";
 let tablaPregunta = "";
 $(document).ready(function () {
   let $idObjetoSistema = document.querySelector(".title-dashboard-task").id;
-  // console.log($idObjetoSistema);
   obtenerPermisos($idObjetoSistema, procesarPermisoActualizar);
 });
 //Recibe la respuesta de la peticion AJAX y la procesa
@@ -34,7 +33,14 @@ let procesarPermisoActualizar = (data) => {
       },
     ],
   });
+  let filtro = document.querySelector('input[type=search]');
 };
+
+$(document).on("focusout", "input[type=search]", function (e) {
+  let filtro = $(this).val();
+  capturarFiltroDataTable(filtro);
+});
+
 //Peticion  AJAX que trae los permisos
 let obtenerPermisos = function ($idObjeto, callback) {
   $.ajax({
@@ -148,7 +154,7 @@ $(document).on("click", "#btn_eliminar", function () {
     idPregunta = $(this).closest("tr").find("td:eq(0)").text(),
     pregunta = fila.find("td:eq(1)").text();
   Swal.fire({
-    title: "Estás seguro de eliminar la pregunta " + pregunta,
+    title: "Estás seguro de eliminar la pregunta " + pregunta + "?",
     text: "No podrás revertir esto!",
     icon: "warning",
     showCancelButton: true,
@@ -237,3 +243,13 @@ $(document).on("click", "#btn_Pdf", function () {
     "_blank"
   );
 });
+const capturarFiltroDataTable = function(filtro){
+  $.ajax({
+    url: "../../../Vista/crud/pregunta/registrarBitacoraFiltro.php",
+    type: "POST",
+    data: {
+      filtro: filtro
+    }
+  })
+}
+

@@ -25,11 +25,12 @@ if (isset($_POST["submit"])) {
     $intentosMax = ControladorUsuario::intentosLogin();
     $intentosFallidos = ControladorUsuario::intentosFallidos($_POST["userName"]);
     $estadoUsuario = ControladorUsuario::estadoUsuario($_POST["userName"]);
+    $descripcionEstado = ControladorUsuario::obtenerDescripcionEstadoUsuario($estadoUsuario);
     $rolUsuario = ControladorUsuario::obRolUsuario($_POST["userName"]);
     if (empty($_POST["userName"]) or empty($_POST["userPassword"])) {
         $mensaje = 'Debe llenar ambos campos';
     } else {
-        if ($estadoUsuario > 2 && $estadoUsuario <= 5) {
+        if (($_POST["userName"]!='SUPERADMIN' && $estadoUsuario > 2) || ($_POST["userName"]=='SUPERADMIN' && $estadoUsuario == 4)) {
             switch ($estadoUsuario) {
                 case 3: {
                         $mensaje = 'Su usuario se encuentra inactivo';
@@ -43,16 +44,28 @@ if (isset($_POST["submit"])) {
                         $mensaje = 'Usted está de vacaciones';
                         break;
                     }
-            }
-        } else {
+                default: {
+                        $mensaje = "Estado de usuario ".$descripcionEstado." sin acceso";
+                    }
+                }
+            } else {
+                $cantPreguntasContestadas = ControladorUsuario::cantPreguntasContestadas($nombreUsuario);
+                $cantPreguntasParametro = ControladorUsuario::cantidadPreguntas();
+                if($nombreUsuario== 'SUPERADMIN' && $cantPreguntasContestadas == $cantPreguntasParametro){
+                    ControladorUsuario::desbloquearUsuario($nombreUsuario);
+                }else{
+                    ControladorUsuario::setearEstadoNuevoUsuario($nombreUsuario);
+                }
             if ($rolUsuario == 1 && $_POST["userName"]!= 'SUPERADMIN') {
                 $mensaje = 'Contacte con su administrador, aún no tiene rol asignado';
             } else {
                 $existeUsuario = ControladorUsuario::login($_POST["userName"], $_POST["userPassword"]);
                 if ($existeUsuario) {
+                    $estadoUsuario = ControladorUsuario::estadoUsuario($_POST["userName"]);
                     $estadoVencimiento = ControladorUsuario::estadoFechaVencimientoContrasenia($_POST["userName"]);
                     if ($estadoVencimiento) {
                         $_SESSION['usuario'] = $nombreUsuario;
+                        $mensaje = "entro";
                         /* ========================= Capturar evento inicio sesión. =============================*/
                         $newBitacora = new Bitacora();
                         $accion = ControladorBitacora::accion_Evento();
@@ -64,8 +77,6 @@ if (isset($_POST["submit"])) {
                         $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó al sistema exitosamente';
                         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
                         /* =======================================================================================*/
-                        $cantPreguntasContestadas = ControladorUsuario::cantPreguntasContestadas($_SESSION['usuario']);
-                        $cantPreguntasParametro = ControladorUsuario::cantidadPreguntas();
                         switch ($estadoUsuario) {
                             case 1: {
                                     if ($intentosFallidos > 0) {
