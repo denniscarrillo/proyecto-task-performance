@@ -14,8 +14,9 @@
         $nuevoObjeto = new DataTableObjeto();
         $nuevoObjeto->objeto = $_POST['objeto'];
         $nuevoObjeto->descripcion= $_POST['descripcion'];
-        $nuevoObjeto->CreadoPor = $user;
-        DataTableObjeto::CrearObjeto($nuevoObjeto);
+        $nuevoObjeto->creadoPor = $user;
+        $nuevoObjeto->modificadoPor = $user;
+        ControladorDataTableObjeto::CrearObjeto($nuevoObjeto);
         print json_encode($nuevoObjeto, JSON_UNESCAPED_UNICODE);
         /* ========================= Evento Creacion Objeto. ==================================*/
        $newBitacora = new Bitacora();
@@ -25,7 +26,7 @@
        $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('GESTIONOBJETO.PHP');
        $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($user);
        $newBitacora->accion = $accion['Insert'];
-       $newBitacora->descripcion = 'El usuario '.$user.' creó un nuevo objeto '.$_POST['objeto'];
+       $newBitacora->descripcion = 'El usuario '.$user.' creó el objeto '.$_POST['objeto'];
        ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
        /* =======================================================================================*/
     }

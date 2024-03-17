@@ -24,13 +24,6 @@ let procesarPermisoActualizar = (data) => {
       { data: "objeto" },
       { data: "descripcion" },
       { data: "tipo_Objeto" },
-      // { data: "Creado_Por" },
-      // {
-      //   // data: "fechaCreacion.date",
-      //   // render: function (data) {
-      //   //   return data.slice(0, 19);
-      //   // },
-      // },
       {
         defaultContent:
           `<button class="btn-editar btns btn ${
@@ -52,6 +45,7 @@ $(document).on("click", "#btn_Pdf", function () {
   );
 });
 
+
 //Crear nuevo Objeto
 $("#form-Nuevo-Objeto").submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
@@ -68,7 +62,7 @@ $("#form-Nuevo-Objeto").submit(function (e) {
         descripcion: descrip,
       },
       success: function (data) {
-        console.log(data);
+        //console.log(data);
         //Mostrar mensaje de exito
         Swal.fire(
           "Registrado!",
@@ -90,7 +84,7 @@ $(document).on("click", "#btn_editar", function () {
     descripcion = fila.find("td:eq(2)").text();
 
   $("#A_objeto").val(id_Objeto), 
-  $("#A_objeto").val(id_Objeto), 
+  $("#A_obj").val(objeto), 
   $("#A_descripcion").val(descripcion);
 
   $(".modal-header").css("background-color", "#007bff");
@@ -102,8 +96,8 @@ $("#formEditarObjeto").submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
   //Obtener datos del nuevo Cliente
   let id_Objeto = $("#A_objeto").val(),
+    objeto = $("#A_obj").val(),
     descripcion = $("#A_descripcion").val();
-  console.log(estadoValido);
   if (estadoValido) {
     $.ajax({
       url: "../../../Vista/crud/DataTableObjeto/editarObjeto.php",
@@ -111,10 +105,10 @@ $("#formEditarObjeto").submit(function (e) {
       datatype: "JSON",
       data: {
         id_Objeto: id_Objeto,
+        objeto: objeto,
         descripcion: descripcion,
       },
       success: function (res) {
-        console.log(res);
         //Mostrar mensaje de exito
         Swal.fire("Actualizado!", "El Objeto ha sido modificado!", "success");
         tablaDataTableObjeto.ajax.reload(null, false);
@@ -125,31 +119,38 @@ $("#formEditarObjeto").submit(function (e) {
 });
 
 $(document).on("click", "#btn_eliminar", function () {
-  let fila = $(this);
+  let fila = $(this).closest("tr");
   let id_Objeto = $(this).closest("tr").find("td:eq(0)").text();
-  let objeto = $(this).closest("tr").find("td:eq(1)").text();
+  let objeto = fila.find("td:eq(1)").text();
   Swal.fire({
-    title: "Estas seguro de eliminar el artículo " + objeto + "?",
-    text: "No podras revertir esto!",
+    title: "¿Estás seguro de eliminar el objeto " + objeto + "?",
+    text: "¡No podrás revertir esto!",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Si, borralo!",
+    confirmButtonText: "¡Si, borralo!",
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
         url: "../../../Vista/crud/DataTableObjeto/eliminarObjeto.php",
         type: "POST",
-        datatype: "json",
-        data: { id_Objeto: id_Objeto, objeto: objeto },
+        datatype: "JSON",
+        data: { 
+          id_Objeto: id_Objeto, 
+          objeto: objeto 
+        },
         success: function (data) {
           if (JSON.parse(data).estadoEliminado) {
-            Swal.fire("Eliminado!", "El artículo ha sido eliminado", "success");
+            Swal.fire(
+              "¡Eliminado!", 
+              "El objeto ha sido eliminado", 
+              "success"
+            );
           } else {
             Swal.fire(
-              "Lo sentimos!",
-              "El artículo no puede ser eliminado",
+              "¡Lo sentimos!",
+              "El objeto no puede ser eliminado",
               "error"
             );
             return;
