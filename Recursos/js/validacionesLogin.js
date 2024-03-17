@@ -82,6 +82,10 @@ $inputUser.addEventListener("focusout", () => {
   validacionesInputUser();
 });
 
+$inputUser.addEventListener("keydown", () => {
+  funciones.soloLetrasSinEspacios($inputUser)
+});
+
 $inputPassword.addEventListener("input", () => {
   funciones.limitarCantidadCaracteres("userPassword", 25);
   validacionesInputPassword();
