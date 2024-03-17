@@ -48,6 +48,8 @@ $(document).ready(function () {
     });
 });
 
+
+
 //objeto con expresiones regulares para los inptus
 const expresiones = {
 	usuario: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
