@@ -169,9 +169,10 @@ p {
 }
 .input-title {
   display: block;
-  margin: 0.5rem;
+  margin: 0.5rem auto;
   height: 1rem;
-  border: none;
+  border: 2px dotted #747373;
+  border-radius: 0.5rem;
   background-color: #eee3e3;
   color: #3c3a3a;
   padding: 0.3rem;
@@ -181,6 +182,7 @@ p {
 }
 .input-title:focus {
   outline: none;
+  border-color: orange;
 }
 .new-form > button {
   display: inline;
@@ -190,6 +192,7 @@ p {
   display: flex;
   justify-content: center;
   gap: 8px;
+  margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
 .btn-primary {

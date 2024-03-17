@@ -204,7 +204,7 @@ let crearNuevaTarea = ($contenedor, $idConteinerForm, $idForm, $placeholder, $ta
     newFormulario.innerHTML = `
       <form action="" method="" id="${$idForm}" class="new-form">
         <div class="data-container">
-        <textarea id="title-task" class="input-title" placeholder="${$placeholder}"></textarea>
+        <textarea id="titulo-tarea" class="input-title" placeholder="${$placeholder}"></textarea>
         <p class="mensaje"></p>
         </div>
         <div class="btns">
@@ -227,22 +227,23 @@ let cerrarFormTarea = ($elementoPadre, $elementoCerrar) => {
   $elementoPadre.removeChild($elementoCerrar);
 }
 let guardarTarea = ($btnGuardar, $tarea, $actualizarTarea, $elementoPadre, $elementoCerrar) => {
-  document.getElementById('title-task').addEventListener('keyup', () =>{
-    let titulo =  document.getElementById('title-task').value.toUpperCase();
-    document.getElementById('title-task').value =  titulo;
+  let $titulo =  document.getElementById('titulo-tarea');
+  $titulo.addEventListener('input', () => {
+    funciones.convertirAMayusculasVisualmente($titulo)
+    validarInputTitulo($titulo);
   })
-  funciones.limitarCantidadCaracteres('title-task', 45);
+  funciones.limitarCantidadCaracteres('titulo-tarea', 45);
   //Agregamos el evento click al boton de guardar tarea
   $btnGuardar.addEventListener('click', function (e) {
     e.preventDefault();
     //Validaciones textArea
-    validarInputTitulo(document.getElementById('title-task'));
+    validarInputTitulo($titulo);
     //Si cumple las validaciones dejara crear la tarea
     if(document.querySelectorAll('.mensaje_error').length == 0){
-      let titulo = document.getElementById('title-task').value;
+      let titulo = document.getElementById('titulo-tarea').value;
       let tarea = null;
-      if (document.getElementById('title-task').value.trim() == '' || document.getElementById('title-task').value.trim() == null) {
-        document.getElementById('title-task').setAttribute('placeholder', 'Debe poner un titulo!');
+      if (document.getElementById('titulo-tarea').value.trim() === '' || document.getElementById('titulo-tarea').value.trim() == null) {
+        document.getElementById('titulo-tarea').setAttribute('placeholder', 'Debe poner un titulo!');
       } else {
         if ($btnGuardar.getAttribute('id') == $tarea) {
           const str = $btnGuardar.getAttribute('id').split('-');
@@ -250,7 +251,7 @@ let guardarTarea = ($btnGuardar, $tarea, $actualizarTarea, $elementoPadre, $elem
         }
         let objTarea = {
           tipoTarea: tarea,
-          titulo: titulo,
+          titulo: titulo.toUpperCase()
         }
         $.ajax({
           url: "../../../Vista/rendimiento/nuevaTarea.php",

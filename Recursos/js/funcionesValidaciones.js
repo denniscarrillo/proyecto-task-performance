@@ -287,7 +287,7 @@ export const validarMasdeUnEspacio = (elemento) => {
     let regex = /\s\s/g; //Expresión literal para saber si existen mas de un espacio en la cadena
     if (regex.test(input.trim())){ //Evaluamos expresion vs la cadena
         //Si existen especios mostramos mensaje de error
-        mensaje.innerText = '*No se permite más de un espacio entre palabras';
+        mensaje.innerText = 'No se permite más de un espacio entre palabras';
         elemento.classList.add('mensaje_error');
         estado = false;
     } else {

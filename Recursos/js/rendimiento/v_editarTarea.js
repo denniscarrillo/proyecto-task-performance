@@ -188,7 +188,7 @@ document
       obtenerDatosTarea($idTarea, $idEstadoTarea);
       setTimeout(() => {
         location.href = "../../../Vista/rendimiento/v_tarea.php";
-      }, 2000);
+      }, 1800);
     }
   });
 // CARGAR LOS ARTICULOS A AGREGAR A LA TAREA
@@ -210,7 +210,7 @@ $("#btn-articulos").click(() => {
         [2, 5, 10, 20], //Es lo que se muestra en el menu desplegable del DataTable
       ],
       columns: [
-        { data: "codArticulo" },
+        { data: "codArticulo" }, 
         { data: "articulo" },
         { data: "detalleArticulo" },
         { data: "marcaArticulo" },
@@ -748,7 +748,6 @@ let setArticulosInteres = (productos) => {
 
 let validarCamposEnviar = (tipoCliente) => {
   let $datosTarea;
-  console.log($codCliente);
   if (document.getElementsByName("estadoEdicion")[0].id == "false") {
     if ($idEstadoTarea == "2") {
       $datosTarea = {

@@ -4,6 +4,7 @@ export let estadoValidado = false;
 const validaciones = {
   soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
   correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
+  soloMinisculas: /[A-Z]/g, //Valida cuando existen mayusculas en la cadena
   soloNumeros: /^[0-9 ]*$/,
   caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
   caracterMas5veces: /^(?=.*(...)\1)/,
@@ -39,6 +40,9 @@ $(document).ready(function () {
   }
   //Evento clic para hacer todas las validaciones
   document.getElementById("btn-guardar").addEventListener("click", () => {
+    funciones.transformarAMayusculas(inputsEditarTarea.titulo)
+    funciones.transformarAMayusculas(inputsEditarTarea.nombre)
+    funciones.transformarAMayusculas(inputsEditarTarea.direccion)
     validarInputs(funciones, $tipoCliente);
     if (
       document.querySelectorAll(".mensaje_error").length == 0 &&
@@ -75,17 +79,22 @@ optionNuevo.addEventListener("change", function () {
   });
 });
 //VALIDACIONES EN LOS DISTINTOS EVENTOS MIENTRAS EDITA =====================================================
-inputsEditarTarea.titulo.addEventListener("keyup", () => {
+inputsEditarTarea.titulo.addEventListener("input", () => {
   validarInputTitulo();
   funciones.limitarCantidadCaracteres("input-titulo-tarea", 45);
+  funciones.convertirAMayusculasVisualmente(inputsEditarTarea.titulo)
 });
 inputsEditarTarea.rtn.addEventListener("keyup", () => {
   validarInputRTN($tipoCliente);
   funciones.limitarCantidadCaracteres("rnt-cliente", 20);
 });
-inputsEditarTarea.nombre.addEventListener("keyup", () => {
+inputsEditarTarea.nombre.addEventListener("input", () => {
   validarInputNombreCliente($tipoCliente);
   funciones.limitarCantidadCaracteres("nombre-cliente", 50);
+  funciones.convertirAMayusculasVisualmente(inputsEditarTarea.nombre)
+});
+inputsEditarTarea.nombre.addEventListener("keydown", () => {
+  funciones.soloLetrasConEspacios(inputsEditarTarea.nombre)
 });
 inputsEditarTarea.telefono.addEventListener("keyup", () => {
   validarInputTelefono();
@@ -95,9 +104,10 @@ inputsEditarTarea.correo.addEventListener("keyup", () => {
   validarInputCorreo();
   funciones.limitarCantidadCaracteres("correo-cliente", 50);
 });
-inputsEditarTarea.direccion.addEventListener("keyup", () => {
+inputsEditarTarea.direccion.addEventListener("input", () => {
   validarInputDireccion();
   funciones.limitarCantidadCaracteres("direccion-cliente", 100);
+  funciones.convertirAMayusculasVisualmente(inputsEditarTarea.direccion)
 });
 inputsEditarTarea.clasificacionLead.addEventListener("change", () => {
   funciones.validarCampoVacio(inputsEditarTarea.clasificacionLead);
