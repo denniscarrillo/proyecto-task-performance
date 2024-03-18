@@ -18,8 +18,11 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
+    fnCreatedRow: function( rowEl, data) {
+      $(rowEl).attr('id', data['idEstado']);
+    },
     columns: [
-      { data: "idEstado" },
+      { data: "item" },
       { data: "estado" },
       { data: "CreadoPor" },
       {
@@ -79,9 +82,13 @@ $("#form-estado").submit(function (e) {
 
 $(document).on("click", "#btn_editar", function () {
   let fila = $(this).closest("tr"),
-    idEstadoU = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
+    itemEstado= $(this).closest("tr").find("td:eq(0)").text(),
+    idEstadoU = $(this).closest("tr").attr("id"), //Capturar el id
     descripcion = fila.find("td:eq(1)").text();
-  $("#E_idEstadoU").val(idEstadoU);
+    
+  let inputId = document.getElementById('idEstado');
+  inputId.setAttribute("class", idEstadoU);
+  $("#E_idEstadoU").val(itemEstado);
   $("#E_descripcion").val(descripcion);
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");
@@ -89,17 +96,19 @@ $(document).on("click", "#btn_editar", function () {
 });
 
 $("#formEditEstadoU").submit(function (e) {
-  e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
+  e.preventDefault(); //evita el comportamiento normal del submit, es decir, recarga total de la página
   //Obtener datos del nuevo Cliente
-  let idEstadoU = $("#E_idEstadoU").val(),
+  let inputId = document.getElementById('idEstado'),
     descripcion = $("#E_descripcion").val();
+  
+  let idEstado = inputId.getAttribute("class");
   if (estadoValido) {
     $.ajax({
       url: "../../../Vista/crud/estadoUsuario/editarEstadoUsuario.php",
       type: "POST",
       datatype: "JSON",
       data: {
-        idEstadoU: idEstadoU,
+        idEstadoU: idEstado,
         descripcion: descripcion,
       },
       success: function () {
@@ -119,9 +128,9 @@ $("#formEditEstadoU").submit(function (e) {
 
 //Eliminar Estado Usuario
 $(document).on("click", "#btn_eliminar", function () {
-  let fila = $(this),
-    idEstadoU = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
+  let idEstadoU = $(this).closest("tr").attr("id"), //Capturar el id,
     descripcion = $(this).closest("tr").find("td:eq(1)").text();
+    console.log(idEstadoU);
   Swal.fire({
     title: "Estas seguro de eliminar el estado " + descripcion + "?",
     text: "No podras revertir esto!",
