@@ -27,7 +27,7 @@ if (isset($_SESSION['usuario'])) {
     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionPregunta.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['fallido'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a mantenimiento pregunta';
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso al mantenimiento de pregunta';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     /* ===============================================================================================================*/
     header('location: ../../v_errorSinPermiso.php');
@@ -52,10 +52,10 @@ if (isset($_SESSION['usuario'])) {
     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionPregunta.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['income'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a mantenimiento pregunta';
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó al mantenimiento de pregunta';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     $_SESSION['objetoAnterior'] = 'gestionPregunta.php';
-    $_SESSION['descripcionObjeto'] = 'mantenimiento pregunta';
+    $_SESSION['descripcionObjeto'] = 'mantenimiento de pregunta';
     /* =======================================================================================*/
   }
 } else {

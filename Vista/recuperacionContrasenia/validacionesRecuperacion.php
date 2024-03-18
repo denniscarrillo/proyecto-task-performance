@@ -23,6 +23,7 @@
             $metodoRec = $_SESSION['metodo'];
             $userExiste = ControladorUsuario::usuarioExiste($usuario);
             $estadoUsuario = intval(ControladorUsuario::estadoUsuario($usuario));
+            $descripcionEstado = ControladorUsuario::obtenerDescripcionEstadoUsuario($estadoUsuario);
             if($userExiste){
                 if($estadoUsuario == 2 || $estadoUsuario == 4){
                     //Si el método es recuperación por correo
@@ -84,6 +85,10 @@
                         }
                         case 5:{
                             $mensaje = "Usuario está suspendido por vacaciones";
+                            break;
+                        }
+                        default:{
+                            $mensaje = "Estado de usuario ".$descripcionEstado." sin acceso";
                             break;
                         }
                     }

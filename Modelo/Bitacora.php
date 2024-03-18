@@ -32,15 +32,21 @@
         }
         public static function acciones_Evento(){
             $acciones = [
-                'Insert' => 'Creacion',
-                'Update' => 'Actualizacion',
-                'Delete' => 'Eliminacion',
-                'Login'  => 'Iniciar Sesion',
-                'BloqueoPreguntas' => 'recup. contraseña',
-                'Logout'  => 'Cerrar Session',
-                'income'  => 'Ingreso',
-                'fallido' => 'Ingreso fallido',
-                'Exit' => 'Salio'
+                'Insert' => 'Crear',
+                'Update' => 'Actualizar',
+                'Delete' => 'Eliminar',
+                'Report' => 'Generar reporte',
+                'tryDelete' => 'intentar eliminar',
+                'Login'  => 'Iniciar Sesión',
+                'BloqueoPreguntas' => 'Recup. contraseña',
+                'Logout'  => 'Cerrar sesión',
+                'income'  => 'Ingresar',
+                'fallido' => 'Ingresar sin permiso',
+                'Exit' => 'Salir',
+                'filterQuery' => 'Consultar por filtro',
+                'backup' => 'Generar backup',
+                'restorer' => 'Restaurar backup',
+                'debugger' => 'Depurar bitácora'
             ];
             return $acciones;
         }

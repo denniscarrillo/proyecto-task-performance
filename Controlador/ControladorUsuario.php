@@ -31,6 +31,12 @@
         public static function estadoUsuario ($usuario){
             return Usuario::obtenerEstadoUsuario($usuario);
         }
+        public static function setearEstadoNuevoUsuario($usuario){
+            return Usuario::setearEstadoNuevoUsuario($usuario);
+        }
+        public static function obtenerDescripcionEstadoUsuario($idEstado){
+            return Usuario::obtenerDescripcionEstadoUsuario($idEstado);
+        }
         public static function almacenarPreguntas ($preguntas, $usuario){
             Usuario::guardarPreguntas($preguntas, $usuario);
         }

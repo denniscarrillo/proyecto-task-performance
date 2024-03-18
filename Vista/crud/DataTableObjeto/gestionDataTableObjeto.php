@@ -28,7 +28,7 @@ if (isset($_SESSION['usuario'])) {
     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionObjeto.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['fallido'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a la vista de objetos';
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso al mantenimiento de objetos';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     /* ===============================================================================================================*/
     header('location: ../../v_errorSinPermiso.php');
@@ -53,10 +53,10 @@ if (isset($_SESSION['usuario'])) {
     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionObjeto.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['income'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a vista de objetos';
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó al mantenimiento de objetos';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     $_SESSION['objetoAnterior'] = 'gestionObjeto.php';
-    $_SESSION['descripcionObjeto'] = 'vista de objetos';
+    $_SESSION['descripcionObjeto'] = 'mantenimiento de objetos';
     /* =======================================================================================*/
   }
 } else {

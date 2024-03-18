@@ -183,6 +183,19 @@ class Usuario {
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $estado;
     }
+    public static function obtenerDescripcionEstadoUsuario($idEstado){
+        $estado = null;
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $query = "SELECT descripcion FROM tbl_Estado_Usuario WHERE id_Estado_Usuario = '$idEstado'";
+        $consultaEstado = sqlsrv_query($conexion, $query);
+        $fila = sqlsrv_fetch_array($consultaEstado, SQLSRV_FETCH_ASSOC);
+        if(isset($fila["descripcion"])){
+            $estado = $fila["descripcion"];
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $estado;
+    }
     public static function guardarPreguntas($usuario, $preguntas){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
@@ -373,7 +386,14 @@ class Usuario {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
         $query = "UPDATE tbl_MS_Usuario SET id_Estado_Usuario = 2 WHERE usuario = '$usuario';";
-        $ejecutar = sqlsrv_query($conexion, $query);
+        sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion);
+    }
+    public static function setearEstadoNuevoUsuario($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query = "UPDATE tbl_MS_Usuario SET id_Estado_Usuario = 1 WHERE usuario = '$usuario';";
+        sqlsrv_query($conexion, $query);
         sqlsrv_close($conexion);
     }
     public static function aumentarIntentosFallidosRespuesta($usuario, $intentosFallidos){
