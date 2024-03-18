@@ -19,13 +19,12 @@
             // Si está vacío, asignar 'NULL' o algún otro valor por defecto
             $_POST['RTNclienteC'] = 'NULL';
         } */
-      /*   if (empty($_POST['codigo'])) {
-            // Si está vacío, asignar 'NULL' o algún otro valor por defecto
-            $_POST['codigo'] = NULL;
-        } */
+        if (empty($_POST['idFactura'])) {
+         // Si está vacío, asignar 'NULL' o algún otro valor por defecto
+            $_POST['idFactura'] = 0;
+        } 
         $nuevaSolicitud = new DataTableSolicitud();
         $nuevaSolicitud->idFactura = $_POST['idFactura'];
-        //$nuevaSolicitud->rtnCliente = $_POST['RTNcliente'];
         $nuevaSolicitud->rtnClienteC = $_POST['RTNclienteC'];
         $nuevaSolicitud->descripcion = $_POST['descripcion'];
         $nuevaSolicitud->tipoServicio = $_POST['tipoServicio'];
@@ -34,11 +33,10 @@
         $nuevaSolicitud->ubicacion = $_POST['ubicacion'];
         $nuevaSolicitud->estadoAvance = 'PENDIENTE';
         $nuevaSolicitud->estadoSolicitud = 'ACTIVO';
-        $nuevaSolicitud->creadoPor =  $user;
-        //$nuevaSolicitud->codigoCliente = $_POST['codigo'];
+        $nuevaSolicitud->creadoPor = $user;
         $productos = json_decode($_POST['productos'], true);
         $nombrePDF =  $_POST['nombre'];
-    
+
         $productosSolicitud = array();
 
         for($i=0; $i < count($productos); $i++){
@@ -51,10 +49,14 @@
     
         $data = ControladorDataTableSolicitud::NuevaSolicitud($nuevaSolicitud,$productosSolicitud);
         print json_encode($nuevaSolicitud, JSON_UNESCAPED_UNICODE);
+        
         // Acceder a los valores devueltos
         $idSolicitud = $data['idSolicitud'];
+        
         print json_encode($productosSolicitud, JSON_UNESCAPED_UNICODE);
         enviarCorreoSolicitud($nuevaSolicitud, $productosSolicitud, $idSolicitud, $nombrePDF);
+
+        print json_encode($nuevaSolicitud->idFactura, JSON_UNESCAPED_UNICODE);
         /* ========================= Evento Creacion nueva solicitud. ======================
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();

@@ -145,7 +145,7 @@ if (isset($_SESSION['usuario'])) {
         </div>
 
         <div class="form-conteiner">
-          <div class="form-element">
+          <!-- <div class="form-element">
             <label class="titulo-radios">Tipo de Cliente: </label>
             <div class="radio-conteiner-s">
             <div class="radio-conteiner-existente">
@@ -157,7 +157,7 @@ if (isset($_SESSION['usuario'])) {
                 <label for="clientenuevo" id="radioCliente" class="radio-label-solicitud">Nuevo</label>
               </div>
             </div>
-          </div>
+          </div> -->
           <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post" id="form-solicitud">
 
             <div class="group-form">

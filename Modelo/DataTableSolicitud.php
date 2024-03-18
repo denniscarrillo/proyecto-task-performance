@@ -9,6 +9,7 @@ class DataTableSolicitud
     public $TelefonoCliente;
     public $FechaCreacion;
     public $MotivoCancelacion;
+  
 
     // Obtener todas las solicitudes .
     public static function obtenerSolicitud()
@@ -19,16 +20,15 @@ class DataTableSolicitud
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
             $query = "SELECT id_Solicitud,
-                        cc.nombre_Cliente AS NombreCliente,
-                        t.servicio_Tecnico,
-                        telefono_cliente,
-                        EstadoAvance,
-                        s.Fecha_Creacion
-                    FROM [tbl_Solicitud] AS s
-                    INNER JOIN tbl_TipoServicio AS t ON t.id_TipoServicio = s.id_TipoServicio
-                    LEFT JOIN tbl_CarteraCliente AS cc ON cc.rtn_Cliente = s.rtn_clienteCartera 
-                    WHERE s.cod_Cliente IS NULL OR s.cod_Cliente = 'NULL' OR s.cod_Cliente = '' 
-                    ORDER BY id_Solicitud;";
+            cc.nombre_Cliente AS NombreCliente,
+            t.servicio_Tecnico,
+            telefono_cliente,
+            EstadoAvance,
+            s.Fecha_Creacion
+        FROM [tbl_Solicitud] AS s
+        INNER JOIN tbl_TipoServicio AS t ON t.id_TipoServicio = s.id_TipoServicio
+        LEFT JOIN tbl_CarteraCliente AS cc ON cc.rtn_Cliente = s.rtn_clienteCartera 
+ORDER BY id_Solicitud;";
 
            $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
@@ -93,15 +93,14 @@ class DataTableSolicitud
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
         $query="SELECT id_Solicitud
-        ,idFactura,s.rtn_cliente,s.rtn_clienteCartera,
+        ,idFactura,cc.rtn_Cliente,s.rtn_clienteCartera,
          cc.nombre_Cliente AS NombreCliente
         ,descripcion,t.servicio_Tecnico,s.correo,telefono_cliente,ubicacion_instalacion,EstadoAvance
         ,EstadoSolicitud,motivo_cancelacion,s.Creado_Por,s.Fecha_Creacion,s.Modificado_Por,s.Fecha_Modificacion
         FROM [tbl_Solicitud] as s
         inner join tbl_TipoServicio as t on t.id_TipoServicio = s.id_TipoServicio
         LEFT join tbl_CarteraCliente as cc on cc.rtn_Cliente = s.rtn_clienteCartera
-        Where s.cod_Cliente IS NULL OR s.cod_Cliente = 'NULL' OR s.cod_Cliente = '' 
-		AND id_Solicitud = $idSolicitud;";
+        Where id_Solicitud = '$idSolicitud';";
         $resultado = sqlsrv_query($conexion, $query);
         $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
         $datosVerSolicitudes = [
@@ -141,13 +140,17 @@ class DataTableSolicitud
         $EstadoAvance = $nuevaSolicitud->estadoAvance;
         $EstadoSolicitud = $nuevaSolicitud->estadoSolicitud;
         $CreadoPor = $nuevaSolicitud->creadoPor;
-        //$codigoC = $nuevaSolicitud->codigoCliente;
-        
+        //si la factura viene en 0 ó vacia dejarla en NULL
+        if ($idFactura === 0) {
+            $idFacturaValue = 'NULL';
+        } else {
+            $idFacturaValue = $idFactura;
+        }
         $query = "INSERT INTO tbl_Solicitud(idFactura, rtn_clienteCartera, descripcion, 
         id_TipoServicio, correo, telefono_cliente, ubicacion_instalacion, EstadoAvance, EstadoSolicitud, 
-        Creado_Por, Fecha_Creacion) 
-        VALUES ('$idFactura', '$rtnClienteCartera', '$Descripcion', '$TipoServicio', '$Correo',
-        '$telefono', '$ubicacion', '$EstadoAvance', '$EstadoSolicitud','$CreadoPor', GETDATE()) ;";
+        Creado_Por, Fecha_Creacion, Modificado_Por, Fecha_Modificacion) 
+        VALUES ($idFacturaValue, '$rtnClienteCartera', '$Descripcion', '$TipoServicio', '$Correo',
+        '$telefono', '$ubicacion', '$EstadoAvance', '$EstadoSolicitud','$CreadoPor', GETDATE(), '$CreadoPor', GETDATE()) ;";
         $nuevaSolicitud = sqlsrv_query($consulta, $query);
 
         $query2 = "SELECT SCOPE_IDENTITY() AS id_Solicitud";
