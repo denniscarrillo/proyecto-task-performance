@@ -56,7 +56,7 @@ if (isset($_POST["submit"])) {
                 }else{
                     ControladorUsuario::setearEstadoNuevoUsuario($nombreUsuario);
                 }
-            if ($rolUsuario == 1 && $_POST["userName"]!= 'SUPERADMIN') {
+            if ($rolUsuario == 1 && ($_POST["userName"] !== 'SUPERADMIN')) {
                 $mensaje = 'Contacte con su administrador, aún no tiene rol asignado';
             } else {
                 $existeUsuario = ControladorUsuario::login($_POST["userName"], $_POST["userPassword"]);

@@ -20,7 +20,7 @@
 <body id="body">
   <div class="ancho">
     <!-- Esto para detectar cuando viene de autoregistro y mostrarle un Toast con javascript -->
-    <span class="registro-exitoso"
+      <span class="registro-exitoso"
       id="<?php echo (isset($registro) && intval($registro) > 0) ? $registro :  0; ?>"></span>
 
     <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" id="formLogin">
@@ -45,6 +45,7 @@
         <span class="lock conteiner-icon">
           <i class="icon type-lock fa-solid fa-lock"></i>
         </span>
+        <i class="fa-sharp fa-solid fa-eye-slash eye_position hidden"></i>
         <input type="password" class="form-control" id="userPassword" name="userPassword" maxlength="20"
           placeholder="Contraseña">
         <p class="mensaje"></p>

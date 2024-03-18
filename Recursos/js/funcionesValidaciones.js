@@ -1,13 +1,17 @@
 
-//Validar que haya espacios entre palabras
-export const validarEspacios = elemento => {
+/**
+ * Valida que no se incluyan espacios entre palabras
+ * @param {HTMLElement} elemento 
+ * @returns {true|false}
+ */
+export const validarEspacios = (elemento) => {
     let mensaje = elemento.parentElement.querySelector('p');
     let estado;
     let input = elemento.value;
     let regex = /\s/g; //Expresión literal para saber si existen espacios en la cadena
-    if (regex.test(input.trim())){ //Evaluamos expresion vs la cadena
-        //Si existen especios mostramos mensaje de error
-        mensaje.innerText = '*No se permiten espacios';
+    if (regex.test(input)){ //Evaluamos expresion vs la cadena
+        //Si existen espacios mostramos mensaje de error
+        mensaje.innerText = 'No se permiten espacios';
         elemento.classList.add('mensaje_error');
         estado = false;
     } else {
@@ -24,7 +28,7 @@ export const validarPassword = (elemento, objetoRegex) => {
     let estado;
     let input = elemento.value;
     if (!objetoRegex.test(input)){
-        mensaje.innerText = '*Minimo una mayúscula, minúscula, número y caracter especial';
+        mensaje.innerText = 'Minimo una mayúscula, minúscula, número y caracter especial';
         elemento.classList.add('mensaje_error');
         estado =  false;
     } else {
@@ -34,12 +38,19 @@ export const validarPassword = (elemento, objetoRegex) => {
     }
     return estado;
 }
+
+/**
+ * 
+ * @param {HTMLElement} elemento 
+ * @param {RegExp} objetoRegex 
+ * @returns 
+ */
 export const validarSoloLetras = (elemento, objetoRegex) => {
     let mensaje = elemento.parentElement.querySelector('p');
     let estado;
     let input = elemento.value;
     if (objetoRegex.test(input)){
-        mensaje.innerText = '*Solo se permiten letras';
+        mensaje.innerText = 'Solo se permiten letras';
         elemento.classList.add('mensaje_error');
         estado = false;
     } else {
@@ -49,12 +60,13 @@ export const validarSoloLetras = (elemento, objetoRegex) => {
     }
     return estado;
 }
+
 export const validarSoloLetrasNumeros = (elemento, objetoRegex) => {
   let mensaje = elemento.parentElement.querySelector('p');
   let estado;
   let input = elemento.value;
   if (!objetoRegex.test(input)){
-    mensaje.innerText = '*Solo #- letras y números';
+    mensaje.innerText = 'Solo #- letras y números';
     elemento.classList.add('mensaje_error');
     estado = false;
   } else {
@@ -72,7 +84,7 @@ export const MayorACero = (elemento) => {
     let input = parseFloat(elemento.value.trim()); // Convertir a número y eliminar espacios en blanco
 
     if (isNaN(input) || input <= 0) {
-        mensaje.innerText = '*Debe ser un número mayor a cero';
+        mensaje.innerText = 'Debe ser un número mayor a cero';
         elemento.classList.add('mensaje_error');
         estado = false;
     } else {
@@ -83,13 +95,17 @@ export const MayorACero = (elemento) => {
     return estado;
 }
 
-
+/**
+ * 
+ * @param {HTMLElement} elemento 
+ * @returns  {true|false}
+ */
 //Funcion para validar campos vacios
-export const validarCampoVacio = elemento => {
+export const validarCampoVacio = (elemento) => {
     let estado;
     let mensaje = elemento.parentElement.querySelector('p');
     if (elemento.value.trim() === ''){
-        mensaje.innerText = '*Campo vacio';
+        mensaje.innerText = 'Campo requerido';
         elemento.classList.add('mensaje_error');
         estado = false;
     } else {
@@ -99,26 +115,25 @@ export const validarCampoVacio = elemento => {
     }
     return estado;
 }
+
 //Funcion para validar campos vacios cantidad cotizacion
-export const validarCampoVacioCant = elemento => {
+export const validarCampoVacioCant = (elemento) => {
     let estado;
-    // let mensaje = elemento.parentElement.querySelector('p');
     if (elemento.value.trim() === ''){
-        // mensaje.innerText = '*';
         elemento.classList.add('mensaje_error');
         estado = false;
     } else {
         elemento.classList.remove('mensaje_error');
-        // mensaje.innerText = '';
         estado = true;
     }
     return estado;
 }
+
 export const validarCoincidirPassword = (password, password2) => {
     let estado;
     let mensaje = password2.parentElement.querySelector('p');
     if(password.value != password2.value){
-        mensaje.innerText = '*Las contraseñas no coinciden';
+        mensaje.innerText = 'Las contraseñas no coinciden';
         password2.classList.add('mensaje_error');
         estado = false;
         } 
@@ -129,12 +144,13 @@ export const validarCoincidirPassword = (password, password2) => {
     }
     return estado;
 }
+
 export const limiteMismoCaracter = (elemento, objetoRegex) => {
     let estado;
     let mensaje = elemento.parentElement.querySelector('p');
     let input = elemento.value;
     if (objetoRegex.test(input)){
-        mensaje.innerText = '*No debe colocar el mismo caracter +3 veces seguidas';
+        mensaje.innerText = 'No debe colocar el mismo caracter +3 veces seguidas';
         elemento.classList.add('mensaje_error');
         estado = false;
     } else {
@@ -150,7 +166,7 @@ export const validarMismoNumeroConsecutivo = (elemento, objetoRegex) => {
     let mensaje = elemento.parentElement.querySelector('p');
     let input = elemento.value;
     if (objetoRegex.test(input)){
-        mensaje.innerText = '*No debe colocar el mismo número +5 veces seguidas';
+        mensaje.innerText = 'No debe colocar el mismo número +5 veces seguidas';
         elemento.classList.add('mensaje_error');
         estado = false;
     } else {
@@ -166,7 +182,7 @@ export const validarCorreo = (elemento, objetoRegex) => {
     let mensaje = elemento.parentElement.querySelector('p');
     let correo = elemento.value;
     if (!objetoRegex.test(correo)){ 
-        mensaje.innerText = '*Ingrese un correo válido';
+        mensaje.innerText = 'Ingrese un correo válido: ejemplo@gmail.com';
         elemento.classList.add('mensaje_error');
         estado = false;
     } else {
@@ -177,12 +193,50 @@ export const validarCorreo = (elemento, objetoRegex) => {
     return estado;
 }
 
+export const validarCorreoExistente = (estadoCorreo) => {
+    let elemento = document.getElementById('correo');
+    let $mensaje = elemento.parentElement.querySelector('p');
+    let estado = false;
+    if (estadoCorreo === 'true') {
+        elemento.classList.add('mensaje_error');
+        $mensaje.innerText = 'Correo existente';
+        estado = false;
+    } else {
+        elemento.classList.remove('mensaje_error');
+        $mensaje.parentElement.querySelector('p').innerText = '';
+        estado = true;
+    }
+    return estado;
+}
+
+export const validarUsuarioExistente = (estadoUsuario) => {
+    let elemento = document.getElementById('usuario');
+    let $mensaje = elemento.parentElement.querySelector('p');
+    let estado = false;
+    if (estadoUsuario === 'true') {
+        elemento.classList.add('mensaje_error');
+        $mensaje.innerText = 'Usuario existente';
+        estado = false;
+    } else {
+        elemento.classList.remove('mensaje_error');
+        $mensaje.parentElement.querySelector('p').innerText = '';
+        estado = true;
+    }
+    return estado;
+}
+
+/**
+ * 
+ * @param {HTMLElement} elemento 
+ * @param {RegExp} objetoRegex 
+ * @returns {true|false}
+ */
 export const validarSoloNumeros = (elemento, objetoRegex) => {
     let mensaje = elemento.parentElement.querySelector('p');
     let estado;
     let input = elemento.value;
     if (!objetoRegex.test(input)){
-        mensaje.innerText = '*Solo se permiten números';
+        mensaje.innerText = 'Solo se permiten números';
         elemento.classList.add('mensaje_error');
         estado = false;
     } else {
@@ -192,6 +246,7 @@ export const validarSoloNumeros = (elemento, objetoRegex) => {
     }
     return estado;
 }
+
 export const limitarCantidadCaracteres = (elemento, cantMax) => {
     $('#'+elemento).inputlimiter({
         limit: cantMax,
@@ -200,11 +255,17 @@ export const limitarCantidadCaracteres = (elemento, cantMax) => {
 		limitTextShow: true
     });
 }
-export const caracteresMinimo = (elemento, min) => {
+
+/**
+ * @param {HTMLElement} elemento - input HTML al cual le queremos aplicar la validación
+ * @param {number} minCaracteres - cantidad mínima de caracteres que deseamos contenga el input
+ * @returns {false|true} **false** si el texto introducido en el input HTML no satisface el **minCaracteres** requerido. De lo contrario devuelve **true**
+ */
+export const caracteresMinimo = (elemento, minCaracteres) => {
   let mensaje = elemento.parentElement.querySelector('p');
   let estado;
-  if(elemento.value.length < min){
-    mensaje.innerText = '*Debe ingresar mínimo '+min+' caracteres';
+  if(elemento.value.length < minCaracteres){
+    mensaje.innerText = 'Debe ingresar mínimo '+minCaracteres+' caracteres';
         elemento.classList.add('mensaje_error');
         estado = false;
   } else {
@@ -215,7 +276,11 @@ export const caracteresMinimo = (elemento, min) => {
   return estado;
 }
 
-export const validarMasdeUnEspacio = elemento => {
+/**
+ * @param {HTMLElement} elemento - input HTML al cual le queremos aplicar la validación
+ * @returns {false|true} **false** si el texto introducido en el input HTML contiene más de un espacio entre palabra. De lo contrario devuelve **true**
+ */
+export const validarMasdeUnEspacio = (elemento) => {
     let mensaje = elemento.parentElement.querySelector('p');
     let estado;
     let input = elemento.value;
@@ -232,35 +297,69 @@ export const validarMasdeUnEspacio = elemento => {
     }
     return estado;
 };
-export const cantidadParametrosContrasenia = async (elemento) => {
-    let estado = false;
-    let mensaje = elemento.parentElement.querySelector('p');
+
+/**
+ * @param {HTMLElement} elemento - input HTML al cual le queremos aplicar la validación
+ * @returns {true|false}
+ */
+export const obtenerMinMaxCaracteresPassword = async () => {
+    let minMaxParametros = null;
     try {
-        const minMaxParametros = await $.ajax({
+        minMaxParametros = await $.ajax({
             url: "../../Vista/crud/usuario/validarParametrosContrasenia.php",
             type: "POST",
             dataType: "JSON",
         });
-        let minLength = minMaxParametros [0];
-        let maxLength = minMaxParametros [1];
-        if (elemento.value.length < minLength || elemento.value.length > maxLength) {
-            mensaje.innerText = '*Mínimo ' + minLength + ', máximo ' + maxLength + ' caracteres';
-            elemento.classList.add('mensaje_error');
-        } else {
-            mensaje.innerText = '';
-            elemento.classList.remove('mensaje_error');
-            estado = true;
-        }
     } catch (error) {
         console.log(error);
     }
-    return estado;
+    return minMaxParametros;
 };
 
+export const validarMinMaxCaracteresPassword = (input, minMaxCaracteres) => {
+    let estado = false;
+    let mensaje = input.parentElement.querySelector('p');
+    if (input.value.length < minMaxCaracteres.min || input.value.length > minMaxCaracteres.max) {
+        mensaje.innerText = '*Mínimo ' + minMaxCaracteres.min + ', máximo ' + minMaxCaracteres.max + ' caracteres';
+        input.classList.add('mensaje_error');
+    } else {
+        mensaje.innerText = '';
+        input.classList.remove('mensaje_error');
+        estado = true;
+    }
+    return estado;
+}
+
+/**
+ * @param {HTMLElement} elemento - input HTML al cual le queremos convertir el texto a mayúsculas mientras se escribe él
+ */
+export const convertirAMayusculasVisualmente = (elemento) => {
+    elemento.style.textTransform = 'uppercase';
+}
+
+export const transformarAMayusculas = (elemento) => {
+    elemento.value = elemento.value.toUpperCase();
+}
+
+export const soloLetrasSinEspacios = (elemento) => {
+    elemento.setAttribute('onkeypress', 'return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122))')
+}
+
+export const soloLetrasConEspacios = (elemento) => {
+    elemento.setAttribute('onkeypress', 'return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))')
+}
 
 
-
-    
-
-
-
+/**
+ * @param {HTMLElement} elemento - input HTML al cual le queremos aplicar la validación
+ * @param {string} estadoUsuario espera el estado del usuario true o false como un string 
+ */
+export const validarSiExisteUsuario = (elemento, estadoUsuario) => {
+    if (estadoUsuario == 'false') {
+        elemento.classList.add('mensaje_error')
+        elemento.parentElement.querySelector('p').innerText = '*El usuario ingresado no existe'
+    } else {
+        elemento.classList.remove('mensaje_error')
+        elemento.parentElement.querySelector('p').innerText = ''
+    }
+}
