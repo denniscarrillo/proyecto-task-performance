@@ -45,7 +45,6 @@ $form.addEventListener("submit", (e) => {
   if (estaValidaciones > 0) {
     e.preventDefault();
   }
-  console.log($nombre.value, $usuario.value)
 });
 
 // Llamada a las validaciones en distintos eventos

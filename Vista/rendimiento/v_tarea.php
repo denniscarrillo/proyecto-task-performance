@@ -153,7 +153,6 @@ require_once('../../Controlador/ControladorParametro.php');
   <!-- Scripts personalizados -->
   <script src="../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../Recursos/components/js/loader.js" type="module"></script>
-  <script src="../../Recursos/js/index.js"></script>
   <script src="../../Recursos/js/rendimiento/tarea.js" type="module"></script>
 </body>
 
