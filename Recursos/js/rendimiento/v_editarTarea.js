@@ -290,7 +290,7 @@ let carritoArticulos = ($productos) => {
       <td><input type="text" value="${producto.id}" class="id-producto" name="id-producto"></td>
         <td>${producto.nombre}</td>
         <td>${producto.marca}</td>
-        <td><input type="text" id="${producto.id}" class="cant-producto"></td>
+        <td><input type="number" id="${producto.id}" class="cant-producto" value="1" min="1" pattern="^[1-9]+"></td>
       </tr>
     `;
   });
@@ -566,6 +566,7 @@ let nuevoComentario = ($idTarea, $comentario) => {
     },
   }); //Fin AJAX
 };
+
 let obtenerComentarios = ($idTarea) => {
   //Enviamos el nuevo comentario a la base de datos
   $.ajax({

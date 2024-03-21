@@ -349,6 +349,10 @@ export const soloLetrasConEspacios = (elemento) => {
     elemento.setAttribute('onkeypress', 'return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))')
 }
 
+export const permitirSoloNumeros = (event) => {
+    return (event.charCode >= 48 && event.charCode <= 57)
+}
+
 
 /**
  * @param {HTMLElement} elemento - input HTML al cual le queremos aplicar la validación

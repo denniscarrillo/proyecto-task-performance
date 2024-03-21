@@ -290,6 +290,7 @@ p {
   bottom: 1.5rem;
   border: none;
   background-color: transparent;
+  z-index: 1;
 }
 .fa-comment-dots {
   font-size: 3.5rem;
@@ -377,4 +378,7 @@ p {
   display: inline;
   border: 1px solid #edb99f;
   width: 4.5rem;
+}
+.moda-body-white_custom {
+  background-color: #ddd9d9;
 }

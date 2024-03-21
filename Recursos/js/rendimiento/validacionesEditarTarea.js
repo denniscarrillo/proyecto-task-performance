@@ -55,6 +55,19 @@ $(document).ready(function () {
   $(document).on("click", "#btn_select-cliente", function () {
     validarInputs(funciones, $tipoCliente);
   });
+
+  //Evento keypress que solo permite ingresar numeros entre 0-9
+  $(document).on('keypress', '.cant-producto', function(event){
+    return funciones.permitirSoloNumeros(event)
+  })
+  //Evento keyup que si el valor del input ingresado es 0 lo setea a 1 de inmediato
+  $(document).on('keyup', '.cant-producto', function(){
+  const value = $(this).val()
+  if(parseInt(value) < 1 || value === '') {
+    $(this).val(1)
+  }
+})
+
 });
 let optionExistente = document.getElementById("cliente-existente");
 optionExistente.addEventListener("change", function () {

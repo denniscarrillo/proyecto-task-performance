@@ -177,7 +177,7 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
               <div class="conteiner-icons-task">
               <p style="margin-right: 3rem; font-size: 14px;"> Hace ${tarea.diasAntiguedad} días</p>
               <div>
-                <a href="#" class="btn-vendedor btn-vendedores" data-bs-toggle="modal" data-bs-target="#modalVendedores" id="${tarea.id}"><i class="fa-solid-btn fa-solid fa-user-plus"></i></a>
+                <a href="#" class="btn-vendedor btn-vendedores" data-bs-target="#modalVendedores" id="${tarea.id}"><i class="fa-solid-btn fa-solid fa-user-plus"></i></a>
               </div>
               <div>
                 <a href="../../../Vista/rendimiento/v_editarTarea.php?idTarea=${tarea.id}" class="btn-editar"><i class="fa-solid-btn fa-solid fa-pen-to-square"></i></a>
@@ -292,10 +292,13 @@ let guardarTarea = ($btnGuardar, $tarea, $actualizarTarea, $elementoPadre, $elem
 $(document).on('click', '.btn-vendedor', function () {
   $idTarea = this.getAttribute('id'); //Obtenemos el id de la tara que se le van a agregar los vendedores
   obtenerVendedores($idTarea);
-  console.log($idTarea);
+  console.log('se clickeo')
 });
+
 let obtenerVendedores = function () {
-  console.log($idTarea);
+  if(document.getElementById('table-Vendedores_wrapper') !== null) {
+    tableVendedor.destroy();
+  }
   if (document.getElementById('table-Vendedores_wrapper') == null) {
     tableVendedor = $('#table-Vendedores').DataTable({
       "ajax": {
@@ -304,7 +307,20 @@ let obtenerVendedores = function () {
         "data": {
           "idTarea": $idTarea 
         },
-        "dataSrc": "",
+        dataSrc: function (data) {
+          if(data.length < 1) {
+            Toast.fire({
+              icon: 'error',
+              title: 'Vendedores no disponibles',
+              timer: 2000,
+              timerProgressBar: true,
+            });
+            return data.length
+          } else {
+            $('#modalVendedores').modal('show');
+            return data
+          }
+        } 
       },
       "language": {
         "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
