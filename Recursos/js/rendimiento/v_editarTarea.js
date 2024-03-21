@@ -202,9 +202,6 @@ $("#btn-articulos").click(() => {
       language: {
         url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
       },
-      // select: {
-      //   info: false,
-      // },
       lengthMenu: [
         [2, 5, 10, 20], //Define la cantidad de rows a mostrar en el DataTable
         [2, 5, 10, 20], //Es lo que se muestra en el menu desplegable del DataTable

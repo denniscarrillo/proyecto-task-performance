@@ -24,9 +24,7 @@
         $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionPregunta.php');
         $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
         $newBitacora->accion = $accion['Update'];
-        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' modificó la pregunta '.$_POST['pregunta'];
+        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' actualizó la pregunta #'.$_POST['idPregunta'].' '.$_POST['pregunta'];
         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
         /* =======================================================================================*/
     }
-
-?>
