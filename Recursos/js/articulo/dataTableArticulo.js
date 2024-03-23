@@ -23,8 +23,11 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
+    fnCreatedRow: function(rowEl, data) {
+      $(rowEl).attr('id', data['codigo']);
+    },
     columns: [
-      { data: "codigo" },
+      { data: "item" },
       { data: "articulo" },
       { data: "detalle" },
       { data: "marcaArticulo" },
@@ -91,12 +94,16 @@ $(document).on("click", "#btn_Pdf", function () {
 
 $(document).on("click", "#btn_editar", function () {
   let fila = $(this).closest("tr"),
-    CodArticulo = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
+    itemArticulo = $(this).closest("tr").find("td:eq(0)").text(),
+    CodArticulo = $(this).closest("tr").attr('id'), //capturo el ID
     Articulo = fila.find("td:eq(1)").text(),
     Detalle = fila.find("td:eq(2)").text(),
     Marca = fila.find("td:eq(3)").text();
+    console.log(CodArticulo)
 
-  $("#A_CodArticulo").val(CodArticulo);
+  let inputId = document.getElementById('codigo');
+  inputId.setAttribute("class", CodArticulo);
+  $("#A_CodArticulo").val(itemArticulo);
   $("#A_Articulo").val(Articulo);
   $("#A_Detalle").val(Detalle);
   $("#A_Marca").val(Marca);
@@ -109,10 +116,11 @@ $(document).on("click", "#btn_editar", function () {
 $("#form_EditarArticulo").submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
   //Obtener datos del nuevo Cliente
-  let CodArticulo = $("#A_CodArticulo").val(),
+  let inputId = document.getElementById('codigo'),
     Articulo = $("#A_Articulo").val(),
     Detalle = $("#A_Detalle").val(),
     Marca = $("#A_Marca").val();
+    let codigo = inputId.getAttribute("class");
 
   if (estadoValido) {
     $.ajax({
@@ -120,7 +128,7 @@ $("#form_EditarArticulo").submit(function (e) {
       type: "POST",
       datatype: "JSON",
       data: {
-        CodArticulo: CodArticulo,
+        CodArticulo: codigo,
         Articulo: Articulo,
         Detalle: Detalle,
         Marca: Marca,
@@ -138,7 +146,7 @@ $("#form_EditarArticulo").submit(function (e) {
 
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this);
-  let codArticulo = $(this).closest("tr").find("td:eq(0)").text();
+  let codArticulo = $(this).closest("tr").attr('id');
   let nombreArticulo = $(this).closest("tr").find("td:eq(1)").text();
   Swal.fire({
     title: "Estas seguro de eliminar el artículo " + nombreArticulo + "?",
