@@ -16,11 +16,12 @@ class Pregunta
     {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB();
-        $query = "SELECT id_Pregunta, pregunta, estado FROM tbl_ms_preguntas;";
+        $query = "SELECT ROW_NUMBER() OVER(ORDER BY id_Pregunta ASC) AS Num, id_Pregunta, pregunta, estado FROM tbl_ms_preguntas;";
         $obtenerPreguntas = sqlsrv_query($consulta, $query);
         $preguntas = array();
         while ($fila = sqlsrv_fetch_array($obtenerPreguntas, SQLSRV_FETCH_ASSOC)) {
             $preguntas[] = [
+                'item' => $fila["Num"],
                 'id_Pregunta' => $fila["id_Pregunta"],
                 'pregunta' => $fila["pregunta"],
                 'estadoPregunta' => $fila["estado"]

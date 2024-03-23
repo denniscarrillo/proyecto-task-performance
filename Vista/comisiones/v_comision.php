@@ -104,7 +104,7 @@ require_once('../../Controlador/ControladorParametro.php');
             <table class="display nowrap table" id="table-Comision" style="width:100%">
               <thead>
                 <tr>
-                  <th scope="col"> ID COMISION </th>
+                  <th scope="col"> NO. COMISION </th>
                   <th scope="col"> N° FACTURA </th>
                   <th scope="col"> TOTAL VENTA </th>
                   <th scope="col"> PORCENTAJE </th>

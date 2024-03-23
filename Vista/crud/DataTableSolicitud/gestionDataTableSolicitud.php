@@ -158,7 +158,7 @@ if (isset($_SESSION['usuario'])) {
           <table class="display nowrap table" id="table-Solicitud" style="width:100%">
             <thead>
               <tr>
-                <th scope="col"> ID </th>
+                <th scope="col"> No. </th>
                 <th scope="col"> NOMBRE CLIENTE</th>
                 <th scope="col"> SERVICIO TÉCNICO</th>
                 <th scope="col"> TELÉFONO</th>
