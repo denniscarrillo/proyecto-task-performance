@@ -20,8 +20,11 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
+    fnCreatedRow: function(rowEl, data) {
+      $(rowEl).attr('id', data['idcarteraCliente']);
+    },
     columns: [
-      { data: "idcarteraCliente" },
+      { data: "item" },
       { data: "nombre" },
       { data: "rtn" },
       { data: "telefono" },
@@ -122,7 +125,7 @@ let setEstado = function ($estado) {
 //Editar Cliente
 $(document).on("click", "#btn_editar", function () {
   let fila = $(this).closest("tr"),
-    idcarteraCliente = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
+    idcarteraCliente = $(this).closest("tr").attr('id'), //capturo el ID
     nombre = fila.find("td:eq(1)").text(),
     rtn = fila.find("td:eq(2)").text(),
     telefono = fila.find("td:eq(3)").text(),
@@ -227,7 +230,7 @@ let limpiarFormEdit = () => {
 //Eliminar un cliente
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
-    carteraCliente = fila.find("td:eq(1)").text(),
+    carteraCliente = $(this).closest("tr").attr('id'),
     rtn = fila.find("td:eq(2)").text();
   Swal.fire({
     title: "¿Estas seguro de eliminar a " + carteraCliente + "?",

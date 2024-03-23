@@ -45,6 +45,9 @@ $(document).ready(function () {
       emptyTable: "No se encontron registros en el rango de fecha seleccionado"
     },
     scrollX: true,
+    fnCreatedRow: function(rowEl, data) {
+      $(rowEl).attr('id', data['id_Bitacora']);
+    },
     columns: [
       { data: "item" },
       { data: "fecha.date",

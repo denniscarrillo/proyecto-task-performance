@@ -153,7 +153,7 @@ if (isset($_SESSION['usuario'])) {
         <table class="display nowrap table" id="table-Parametro" style="width:100%">
           <thead>
             <tr>
-              <th scope="col"> ID </th>
+              <th scope="col"> No. </th>
               <th scope="col"> PARÁMETRO </th>
               <th scope="col"> VALOR </th>
               <th scope="col"> DESCRIPCIÓN </th>
