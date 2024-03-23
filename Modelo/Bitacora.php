@@ -12,7 +12,7 @@
             $conn = new Conexion();
             $consulta = $conn->abrirConexionDB();
             $ejecutarSQL = "INSERT INTO tbl_ms_bitacora (fecha, id_Usuario, id_Objeto, accion, descripcion) 
-            VALUES('$datosEvento->fecha','$datosEvento->idUsuario','$datosEvento->idObjeto','$datosEvento->accion','$datosEvento->descripcion')";
+            VALUES(GETDATE(),'$datosEvento->idUsuario','$datosEvento->idObjeto','$datosEvento->accion','$datosEvento->descripcion')";
             $ejecutarSQL = sqlsrv_query($consulta, $ejecutarSQL);
             sqlsrv_close($consulta); #Cerramos la conexión.
         }
@@ -50,33 +50,42 @@
             ];
             return $acciones;
         }
-        public static function obtenerBitacorasUsuario(){
+        public static function obtenerBitacorasUsuario($fechaDesde, $fechaHasta){
+            $bitacoras = array();
             $conn = new Conexion();
             $consulta = $conn->abrirConexionDB();
-            $query= "SELECT B.id_Bitacora, B.fecha, u.usuario, o.objeto, B.accion, B.descripcion FROM tbl_ms_bitacora AS B
-            INNER JOIN tbl_ms_Usuario AS u ON u.id_Usuario = B.id_Usuario
-            INNER JOIN tbl_ms_objetos AS o ON o.id_Objeto = B.id_Objeto;";
+            $query= "SELECT ROW_NUMBER() OVER(ORDER BY B.id_Bitacora ASC) AS Num, B.id_Bitacora, B.fecha, u.usuario, o.objeto, B.accion, B.descripcion FROM tbl_ms_bitacora AS B
+                INNER JOIN tbl_ms_Usuario AS u ON u.id_Usuario = B.id_Usuario
+                INNER JOIN tbl_ms_objetos AS o ON o.id_Objeto = B.id_Objeto
+                WHERE fecha BETWEEN '$fechaDesde' AND '$fechaHasta';";
             $obtenerBitacoras = sqlsrv_query($consulta, $query);
-            while($fila = sqlsrv_fetch_array($obtenerBitacoras, SQLSRV_FETCH_ASSOC)){
-                $bitacoras [] = [
-                    'id_Bitacora' => $fila["id_Bitacora"],
-                    'fecha' => $fila["fecha"],
-                    'Usuario' => $fila["usuario"],
-                    'Objeto' => $fila["objeto"],
-                    'accion' => $fila["accion"],
-                    'descripcion' => $fila["descripcion"],
-                ];
+            if(sqlsrv_errors() === null) { //Validamos is ocurre algun error a nivel de DB entonces lo manejamos y evitamos hacer el fetch
+                while($fila = sqlsrv_fetch_array($obtenerBitacoras, SQLSRV_FETCH_ASSOC)){
+                    $bitacoras [] = [
+                        'item' => $fila["Num"],
+                        'id_Bitacora' => $fila["id_Bitacora"],
+                        'fecha' => $fila["fecha"],
+                        'Usuario' => $fila["usuario"],
+                        'Objeto' => $fila["objeto"],
+                        'accion' => $fila["accion"],
+                        'descripcion' => $fila["descripcion"],
+                    ];
+                }
+                sqlsrv_close($consulta); #Cerramos la conexión.
             }
-            sqlsrv_close($consulta); #Cerramos la conexión.
-            return $bitacoras;
+            return $bitacoras;     
         }
         public static function depurarBitacora($fechaDesde, $fechaHasta){
-            $conn = new Conexion();
-            $conexion = $conn->abrirConexionDB();
-            $query = "EXEC pa_depurarBitacora '$fechaDesde','$fechaHasta';";
-            $resultado = sqlsrv_query($conexion, $query);
-            // sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
-            sqlsrv_close($conexion);
+            try {
+                $conn = new Conexion();
+                $conexion = $conn->abrirConexionDB();
+                $query = "DELETE FROM tbl_MS_Bitacora WHERE fecha BETWEEN '$fechaDesde' AND '$fechaHasta';";
+                sqlsrv_query($conexion, $query);
+                sqlsrv_close($conexion);
+                return true;
+            } catch (Exception $error) {
+                return false;
+            }
         }
 
         public static function obtenerBitacoraPdf($buscar){
