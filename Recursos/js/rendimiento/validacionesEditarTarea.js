@@ -66,9 +66,9 @@ $(document).ready(function () {
   if(parseInt(value) < 1 || value === '') {
     $(this).val(1)
   }
-})
-
+  });
 });
+
 let optionExistente = document.getElementById("cliente-existente");
 optionExistente.addEventListener("change", function () {
   $tipoCliente = $tipoCliente = $radioButton[1].checked

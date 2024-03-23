@@ -247,8 +247,12 @@ p {
 }
 .select-articulo,
 .select-cliente,
-.select-vendedor {
+.select-vendedor{
   color: #ee9866;
+}
+.vendedor-selected td {
+  background-color: #464545;
+  color: white;
 }
 #btn_agregar {
   display: block;

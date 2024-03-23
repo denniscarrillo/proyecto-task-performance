@@ -292,7 +292,6 @@ let guardarTarea = ($btnGuardar, $tarea, $actualizarTarea, $elementoPadre, $elem
 $(document).on('click', '.btn-vendedor', function () {
   $idTarea = this.getAttribute('id'); //Obtenemos el id de la tara que se le van a agregar los vendedores
   obtenerVendedores($idTarea);
-  console.log('se clickeo')
 });
 
 let obtenerVendedores = function () {
@@ -301,11 +300,11 @@ let obtenerVendedores = function () {
   }
   if (document.getElementById('table-Vendedores_wrapper') == null) {
     tableVendedor = $('#table-Vendedores').DataTable({
-      "ajax": {
-        "url": "../../../Vista/rendimiento/obtenerVendedores.php",
-        "type": "POST",
-        "data": {
-          "idTarea": $idTarea 
+      ajax: {
+        url: "../../../Vista/rendimiento/obtenerVendedores.php",
+        type: "post",
+        data: {
+          idTarea: $idTarea 
         },
         dataSrc: function (data) {
           if(data.length < 1) {
@@ -322,37 +321,38 @@ let obtenerVendedores = function () {
           }
         } 
       },
-      "language": {
+      fnCreatedRow: function(rowEl) {
+        $(rowEl).attr('class', 'addVendedor')
+      },
+      language: {
         "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
       },
-      "columns": [
-        { "data": 'id' },
-        { "data": 'usuario' },
-        { "data": 'nombre' },
+      columns: [
+        { data: 'id' },
+        { data: 'usuario' },
+        { data: 'nombre' },
         {
-          "defaultContent":
+          defaultContent:
             '<div><button class="btns btn btn_select-Vendedores"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>'
         }
       ]
     });
   }
 }
-$(document).on('click', '.btn_select-Vendedores', function () {
-  selectVendedores(this);
+$(document).on('click', '.addVendedor', function (e) {
+  $(this).find("button")[0].classList.toggle("select-vendedor");
+  e.currentTarget.classList.toggle("vendedor-selected");
 });
+
 $(document).on('click', '#btn_agregarVendedores', function () {
   //Tiendiendo los vendedores y el idTarea enviamos los datos al servidor
   agregarVendedores($idTarea);
 });
-let selectVendedores = function ($elementoHtml) {
-  $elementoHtml.classList.toggle('select-vendedor');
-}
+
 //Guardamos los vendedores que se desean agregar a una tarea
 let agregarVendedores = function ($id_Tarea) {
   let $Vendedores = [];
   let vendedoresSeleccionados = document.querySelectorAll('.select-vendedor');
-  console.log(vendedoresSeleccionados);
-  console.log(vendedoresSeleccionados.length);
   if(vendedoresSeleccionados.length > 0){
     vendedoresSeleccionados.forEach(function (vendedor) {
       if (vendedor.classList.contains('select-vendedor')) {
@@ -376,7 +376,7 @@ let agregarVendedores = function ($id_Tarea) {
           $('#modalVendedores').modal('hide');
           Toast.fire({
             icon: 'success',
-            title: 'Los vendedores han sido agregados en la tarea #'+$id_Tarea,
+            title: 'Vendedor(es) agregado(s) en la tarea #'+$id_Tarea,
           });
           tableVendedor.destroy();
       }

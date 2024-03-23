@@ -202,6 +202,9 @@ $("#btn-articulos").click(() => {
       language: {
         url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
       },
+      fnCreatedRow: function(rowEl) {
+        $(rowEl).attr('class', 'addProduct')
+      },
       lengthMenu: [
         [2, 5, 10, 20], //Define la cantidad de rows a mostrar en el DataTable
         [2, 5, 10, 20], //Es lo que se muestra en el menu desplegable del DataTable
@@ -219,7 +222,7 @@ $("#btn-articulos").click(() => {
     });
   }
 });
-$(document).on("click", "tbody tr", function (e) {
+$(document).on("click", ".addProduct", function (e) {
   $(this).find("button")[0].classList.toggle("select_articulo");
   e.currentTarget.classList.toggle("ArtSelec");
 });
