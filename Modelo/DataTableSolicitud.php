@@ -19,7 +19,7 @@ class DataTableSolicitud
             $SolicitudesUsuario = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $query = "SELECT id_Solicitud,
+            $query = "SELECT ROW_NUMBER() OVER(ORDER BY id_Solicitud ASC) AS Num, id_Solicitud,
             cc.nombre_Cliente AS NombreCliente,
             t.servicio_Tecnico,
             telefono_cliente,
@@ -34,6 +34,7 @@ ORDER BY id_Solicitud;";
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
             while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
                 $SolicitudesUsuario[] = [
+                    'item' => $fila['Num'],
                     'id_Solicitud' => $fila['id_Solicitud'],
                     'Nombre' => $fila['NombreCliente'],
                     'servicio_Tecnico' => $fila['servicio_Tecnico'],

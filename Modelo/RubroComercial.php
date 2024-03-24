@@ -12,11 +12,12 @@ public static function obtenerTodosLosRubrosComerciales(){
     try{
         $conn = new Conexion();
         $abrirConexion = $conn->abrirConexionDB();
-        $query = "SELECT id_rubro_Comercial, rubro_Comercial, descripcion FROM tbl_rubro_Comercial;";
+        $query = "SELECT ROW_NUMBER() OVER(ORDER BY id_rubro_Comercial ASC) AS Num, id_rubro_Comercial, rubro_Comercial, descripcion FROM tbl_rubro_Comercial;";
         $obtenerRazonSocial = sqlsrv_query($abrirConexion, $query);
         //Recorremos el resultado de tareas y almacenamos en el arreglo.
         while ($fila = sqlsrv_fetch_array( $obtenerRazonSocial, SQLSRV_FETCH_ASSOC)) {
             $rubroComercial[] = [
+                'item' => $fila["Num"],
                 'id_rubroComercial' => $fila["id_rubro_Comercial"],
                 'rubro_Comercial' => $fila["rubro_Comercial"],
                 'descripcion' => $fila["descripcion"]

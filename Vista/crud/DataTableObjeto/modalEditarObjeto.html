@@ -2,15 +2,21 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="nuevoModalLabel">Crear Nuevo Objeto</h1>
+                <h1 class="modal-title fs-5" id="nuevoModalLabel">Editar Objeto</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" id ="btn-x" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form action="" method="post" id="formEditarObjeto">
                     <div class="grupo-form">
                         <div class="mb-3">
-                            <label for="objetoL" class="form-label">Id Objeto:</label>
+                            <label for="objetoL" class="form-label">No. Objeto:</label>
                             <input type="text" name="A_objeto" id="A_objeto"  class="form-control" disabled>
+                            <span id="objetoid" hidden></span>
+                            <p class="mensaje"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="objetoL" class="form-label">Objeto:</label>
+                            <input type="text" name="A_obj" id="A_obj"  class="form-control" disabled>
                             <p class="mensaje"></p>
                         </div>
                         <div class="mb-3">

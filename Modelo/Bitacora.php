@@ -32,27 +32,34 @@
         }
         public static function acciones_Evento(){
             $acciones = [
-                'Insert' => 'Creacion',
-                'Update' => 'Actualizacion',
-                'Delete' => 'Eliminacion',
-                'Login'  => 'Iniciar Sesion',
-                'BloqueoPreguntas' => 'recup. contraseña',
-                'Logout'  => 'Cerrar Session',
-                'income'  => 'Ingreso',
-                'fallido' => 'Ingreso fallido',
-                'Exit' => 'Salio'
+                'Insert' => 'Crear',
+                'Update' => 'Actualizar',
+                'Delete' => 'Eliminar',
+                'Report' => 'Generar reporte',
+                'tryDelete' => 'intentar eliminar',
+                'Login'  => 'Iniciar Sesión',
+                'BloqueoPreguntas' => 'Recup. contraseña',
+                'Logout'  => 'Cerrar sesión',
+                'income'  => 'Ingresar',
+                'fallido' => 'Ingresar sin permiso',
+                'Exit' => 'Salir',
+                'filterQuery' => 'Consultar por filtro',
+                'backup' => 'Generar backup',
+                'restorer' => 'Restaurar backup',
+                'debugger' => 'Depurar bitácora'
             ];
             return $acciones;
         }
         public static function obtenerBitacorasUsuario(){
             $conn = new Conexion();
             $consulta = $conn->abrirConexionDB();
-            $query= "SELECT B.id_Bitacora, B.fecha, u.usuario, o.objeto, B.accion, B.descripcion FROM tbl_ms_bitacora AS B
+            $query= "SELECT ROW_NUMBER() OVER(ORDER BY B.id_Bitacora ASC) AS Num, B.id_Bitacora, B.fecha, u.usuario, o.objeto, B.accion, B.descripcion FROM tbl_ms_bitacora AS B
             INNER JOIN tbl_ms_Usuario AS u ON u.id_Usuario = B.id_Usuario
             INNER JOIN tbl_ms_objetos AS o ON o.id_Objeto = B.id_Objeto;";
             $obtenerBitacoras = sqlsrv_query($consulta, $query);
             while($fila = sqlsrv_fetch_array($obtenerBitacoras, SQLSRV_FETCH_ASSOC)){
                 $bitacoras [] = [
+                    'item' => $fila["Num"],
                     'id_Bitacora' => $fila["id_Bitacora"],
                     'fecha' => $fila["fecha"],
                     'Usuario' => $fila["usuario"],

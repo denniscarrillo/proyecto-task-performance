@@ -6,6 +6,10 @@ class DataTableObjeto
     public $objeto;
     public $descripcion;
     public $tipo_Objeto;
+    public $creadoPor;
+    public $fechaCreacion;
+    public $modificadoPor;
+    public $fechaModificacion;
     
     // Obtener todas las tareas que le pertenecen a un usuario.
     public static function obtenerObjetos()
@@ -89,9 +93,10 @@ class DataTableObjeto
         $consulta = $conn->abrirConexionDB();
         $objeto = $nuevoObjeto->objeto;
         $descripcion = $nuevoObjeto->descripcion;
-        $CreadoPor = $nuevoObjeto->CreadoPor;
-        $query = "INSERT INTO tbl_MS_Objetos (objeto, descripcion, tipo_Objeto, Creado_Por, Fecha_Creacion) 
-        VALUES ('$objeto', '$descripcion', 'PANTALLA', '$CreadoPor', GETDATE())";
+        $creadoPor = $nuevoObjeto->creadoPor;
+        $modificadoPor = $nuevoObjeto->modificadoPor;
+        $query = "INSERT INTO tbl_MS_Objetos (objeto, descripcion, tipo_Objeto, Creado_Por, Fecha_Creacion, Modificado_Por, Fecha_Modificacion) 
+        VALUES ('$objeto', '$descripcion', 'PANTALLA', '$creadoPor', GETDATE(), '$modificadoPor', GETDATE())";
         $insertarObjeto= sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $insertarObjeto;
@@ -101,7 +106,7 @@ class DataTableObjeto
         try {
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $update = "UPDATE tbl_MS_Objetos SET descripcion='$editarObjeto->descripcion',Modificado_Por='$editarObjeto->Modificado_Por', Fecha_Modificacion = GETDATE() 
+            $update = "UPDATE tbl_MS_Objetos SET descripcion='$editarObjeto->descripcion',Modificado_Por='$editarObjeto->modificadoPor', Fecha_Modificacion = GETDATE() 
             WHERE id_Objeto='$editarObjeto->id_Objeto'";
             sqlsrv_query($abrirConexion, $update);
         } catch (Exception $e) {
@@ -110,12 +115,12 @@ class DataTableObjeto
         sqlsrv_close($abrirConexion); //Cerrar conexion
     }
 
-    public static function eliminarObjeto($id_Objeto){
+    public static function eliminarObjeto($id_Objeto, $objeto){
         try {
             $conn = new Conexion();
             $conexion = $conn->abrirConexionDB();
             $query = "DELETE FROM tbl_MS_Objetos WHERE id_Objeto = '$id_Objeto' 
-                AND objeto NOT IN('LOGIN.PHP','CONFIGRESPUESTAS.PHP', 'V_NUEVACONTRASENIA.PHP', 'PREGUNTASRESPONDER.PHP', 'INDEX.PHP');";
+                AND '$objeto' NOT IN('LOGIN.PHP','CONFIGRESPUESTAS.PHP', 'V_NUEVACONTRASENIA.PHP', 'PREGUNTASRESPONDER.PHP', 'INDEX.PHP');";
             $estadoEliminado = sqlsrv_query($conexion, $query);
             if ($estadoEliminado === false) {
                 return false;

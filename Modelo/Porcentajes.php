@@ -16,13 +16,14 @@ class Porcentajes {
     public static function obtenerPorcentajes(){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $query = "SELECT id_Porcentaje,valor_Porcentaje, descripcion, estado_Porcentaje
+        $query = "SELECT ROW_NUMBER() OVER(ORDER BY id_Porcentaje ASC) AS Num, id_Porcentaje,valor_Porcentaje, descripcion, estado_Porcentaje
         FROM tbl_Porcentaje;";
         $listaPorcentajes = sqlsrv_query($consulta, $query);
         $Porcent = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
         while($fila = sqlsrv_fetch_array($listaPorcentajes, SQLSRV_FETCH_ASSOC)){
             $Porcent [] = [
+                'item' => $fila["Num"],
                 'idPorcentaje' => $fila["id_Porcentaje"],
                 'valorPorcentaje' => $fila["valor_Porcentaje"],
                 'descripcionPorcentaje'=> $fila["descripcion"],

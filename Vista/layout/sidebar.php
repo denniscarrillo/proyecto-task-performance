@@ -7,7 +7,7 @@
       </a>
     </span>
   </div>
-  <div class="flex-log">
+  <div class="flex-log system_name">
     <a href="<?php echo $urlIndex; ?>" style="text-decoration: none;">
       <!-- <span class="logo_name">Task Performance</span> -->
       <div style="display: flex; justify-content: center;">
@@ -20,10 +20,6 @@
       </div>
     </a>
   </div>
-  <span class="flex-log">
-    <i class="bx bx-lock-alt" id="lock-icon" title="Unlock Sidebar"></i>
-    <i class="bx bx-x" id="sidebar-close"></i>
-  </span>
   <!-- Contenedor principal del menu sidebar -->
   <div class="menu__container">
     <!-- Lista de menus del sistema -->
