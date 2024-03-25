@@ -231,9 +231,10 @@ let limpiarFormEdit = () => {
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
     carteraCliente = $(this).closest("tr").attr('id'),
+    nombreCliente = fila.find("td:eq(1)").text(),
     rtn = fila.find("td:eq(2)").text();
   Swal.fire({
-    title: "¿Estas seguro de eliminar a " + carteraCliente + "?",
+    title: "¿Estas seguro de eliminar a " + nombreCliente + "?",
     text: "No podrá revertir esto",
     icon: "warning",
     showCancelButton: true,

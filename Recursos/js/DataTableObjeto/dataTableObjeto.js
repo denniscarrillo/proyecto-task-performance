@@ -19,8 +19,11 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
+    fnCreatedRow: function(rowEl, data) {
+      $(rowEl).attr('id', data['id_Objeto']);
+    },
     columns: [
-      { data: "id_Objeto" },
+      { data: "item" },
       { data: "objeto" },
       { data: "descripcion" },
       { data: "tipo_Objeto" },
@@ -85,10 +88,14 @@ $("#form-Nuevo-Objeto").submit(function (e) {
 
 $(document).on("click", "#btn_editar", function () {
   let fila = $(this).closest("tr"),
-    id_Objeto = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
+    itemObjeto= $(this).closest("tr").find("td:eq(0)").text(),
+    id_Objeto = $(this).closest("tr").attr("id"), //capturo el ID
     descripcion = fila.find("td:eq(2)").text();
+    console.log(id_Objeto)
 
-  $("#A_objeto").val(id_Objeto), $("#A_descripcion").val(descripcion);
+  let inputId = document.getElementById('objetoid');
+   inputId.setAttribute("class", id_Objeto);
+  $("#A_objeto").val(itemObjeto), $("#A_descripcion").val(descripcion);
 
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");
@@ -98,8 +105,9 @@ $(document).on("click", "#btn_editar", function () {
 $("#formEditarObjeto").submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
   //Obtener datos del nuevo Cliente
-  let id_Objeto = $("#A_objeto").val(),
+  let inputId = document.getElementById('objetoid'),
     descripcion = $("#A_descripcion").val();
+  let objetoid = inputId.getAttribute("class");
   console.log(estadoValido);
   if (estadoValido) {
     $.ajax({
@@ -107,7 +115,7 @@ $("#formEditarObjeto").submit(function (e) {
       type: "POST",
       datatype: "JSON",
       data: {
-        id_Objeto: id_Objeto,
+        id_Objeto: objetoid,
         descripcion: descripcion,
       },
       success: function (res) {
@@ -123,8 +131,9 @@ $("#formEditarObjeto").submit(function (e) {
 
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this);
-  let id_Objeto = $(this).closest("tr").find("td:eq(0)").text();
+  let id_Objeto = $(this).closest("tr").attr('id');
   let objeto = $(this).closest("tr").find("td:eq(1)").text();
+  console.log(id_Objeto)
   Swal.fire({
     title: "Estas seguro de eliminar el artículo " + objeto + "?",
     text: "No podras revertir esto!",

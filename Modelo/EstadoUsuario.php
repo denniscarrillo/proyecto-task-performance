@@ -11,11 +11,12 @@ class EstadoUsuario{
     public static function obtenerEstadoUsuario(){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query = "SELECT id_Estado_Usuario, descripcion, Creado_Por, Fecha_Creacion FROM tbl_Estado_Usuario;";
+        $query = "SELECT ROW_NUMBER() OVER(ORDER BY id_Estado_Usuario ASC) AS Num,id_Estado_Usuario,descripcion,Creado_Por,Fecha_Creacion FROM tbl_Estado_Usuario";
         $estadoUsuario = sqlsrv_query($conexion, $query);
         $estados = array();
         while ($fila = sqlsrv_fetch_array($estadoUsuario, SQLSRV_FETCH_ASSOC)) {
             $estados [] = [
+                'item' => $fila['Num'],
                 'idEstado' => $fila['id_Estado_Usuario'],
                 'estado' => $fila['descripcion'],
                 'CreadoPor' => $fila['Creado_Por'],
