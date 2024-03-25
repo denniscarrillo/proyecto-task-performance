@@ -218,7 +218,7 @@ if (isset($_SESSION['usuario'])) {
           <table class="display nowrap table" id="table-Metricas" style="width:100%">
             <thead>
               <tr>
-                <th scope="col"> ID </th>
+                <th scope="col"> No. </th>
                 <th scope="col"> MÉTRICA </th>
                 <th scope="col"> META </th>
                 <th scope="col"> ACCIONES </th>

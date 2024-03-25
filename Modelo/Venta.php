@@ -11,13 +11,14 @@ class Venta {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         
-        $query = "SELECT vt.num_Factura, cc.nombre_Cliente, vt.rtn_Cliente, vt.total_Venta, vt.Creado_Por, vt.Fecha_Creacion FROM tbl_FacturasVenta vt
+        $query = "SELECT  ROW_NUMBER() OVER(ORDER BY vt.num_Factura ASC) AS Num, vt.num_Factura, cc.nombre_Cliente, vt.rtn_Cliente, vt.total_Venta, vt.Creado_Por, vt.Fecha_Creacion FROM tbl_FacturasVenta vt
         INNER JOIN tbl_CarteraCliente cc ON vt.rtn_Cliente = cc.rtn_Cliente;";
         $listaVentas = sqlsrv_query($consulta, $query);
         $ventas = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
         while($fila = sqlsrv_fetch_array($listaVentas, SQLSRV_FETCH_ASSOC)){
             $ventas [] = [
+                'item' => $fila["Num"],
                 'numFactura' => $fila["num_Factura"],
                 'nombreCliente'=> $fila["nombre_Cliente"],
                 'rtnCliente' => $fila["rtn_Cliente"],    

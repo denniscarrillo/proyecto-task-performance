@@ -35,6 +35,9 @@ body {
   display: flex;
   justify-content: center;
 }
+.system_name {
+  margin-bottom: 2rem;
+}
 .logo_name {
   font-size: 22px;
   color: #c8bfbd;
@@ -88,6 +91,9 @@ body {
   max-height: 78vh;
   overflow-y: auto;
   overflow-x: hidden;
+  background-color: #474545;
+  border-radius: 0.5rem;
+  margin: 0.4rem;
 }
 .title__module {
   color: #e25f41ec;
@@ -100,6 +106,7 @@ body {
   list-style: none;
   height: inherit;
   min-width: 100%;
+  margin-bottom: 0;
 }
 /* Ocultar scroll de navegacion */
 .menu__container::-webkit-scrollbar {
