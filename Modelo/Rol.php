@@ -35,9 +35,8 @@ class Rol {
             $rol=$nuevoRol->rol;
             $descripcion=$nuevoRol->descripcion;
             $creadoPor=$nuevoRol->creadoPor;
-            date_default_timezone_set('America/Tegucigalpa');
-            $fechaCreacion = date("Y-m-d");
-            $insert = "INSERT INTO tbl_ms_roles (rol, descripcion, Creado_Por, Fecha_Creacion) VALUES ('$rol','$descripcion', '$creadoPor', '$fechaCreacion');";
+            $modificadoPor=$nuevoRol->ModificadoPor;
+            $insert = "INSERT INTO tbl_ms_roles (rol, descripcion, Creado_Por, Fecha_Creacion, Modificado_Por, Fecha_Modificacion) VALUES ('$rol','$descripcion', '$creadoPor', GETDATE(), '$modificadoPor', GETDATE())";
             $ejecutar_insert = sqlsrv_query($abrirConexion, $insert);
             $query = "SELECT SCOPE_IDENTITY() AS id_Rol";
             $resultado = sqlsrv_query($abrirConexion, $query);
@@ -57,9 +56,7 @@ class Rol {
             $id=$nuevoRol->id_Rol;
             $descripcion=$nuevoRol->descripcion;
             $modificadoPor=$nuevoRol->ModificadoPor;
-            date_default_timezone_set('America/Tegucigalpa'); 
-            $fechaModificado = date("Y-m-d h:i:s");
-            $update = "UPDATE tbl_ms_roles SET descripcion='$descripcion', Modificado_Por='$modificadoPor', Fecha_Modificacion='$fechaModificado' WHERE id_Rol='$id' ";
+            $update = "UPDATE tbl_ms_roles SET descripcion='$descripcion', Modificado_Por='$modificadoPor', GETDATE() WHERE id_Rol='$id' ";
             sqlsrv_query($abrirConexion, $update);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
@@ -124,5 +121,5 @@ class Rol {
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $roles;
     }
-
+    
 }

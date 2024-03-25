@@ -12,7 +12,7 @@
             $conn = new Conexion();
             $consulta = $conn->abrirConexionDB();
             $ejecutarSQL = "INSERT INTO tbl_ms_bitacora (fecha, id_Usuario, id_Objeto, accion, descripcion) 
-            VALUES('$datosEvento->fecha','$datosEvento->idUsuario','$datosEvento->idObjeto','$datosEvento->accion','$datosEvento->descripcion')";
+            VALUES(GETDATE(),'$datosEvento->idUsuario','$datosEvento->idObjeto','$datosEvento->accion','$datosEvento->descripcion')";
             $ejecutarSQL = sqlsrv_query($consulta, $ejecutarSQL);
             sqlsrv_close($consulta); #Cerramos la conexión.
         }
@@ -36,7 +36,7 @@
                 'Update' => 'Actualizar',
                 'Delete' => 'Eliminar',
                 'Report' => 'Generar reporte',
-                'tryDelete' => 'intentar eliminar',
+                'tryDelete' => 'Intentar eliminar',
                 'Login'  => 'Iniciar Sesión',
                 'BloqueoPreguntas' => 'Recup. contraseña',
                 'Logout'  => 'Cerrar sesión',

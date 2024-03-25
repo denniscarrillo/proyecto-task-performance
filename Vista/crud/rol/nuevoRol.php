@@ -20,6 +20,7 @@
         $nuevoRol->rol = $_POST['rolUsuario'];
         $nuevoRol->descripcion = $_POST['descripcionRol'];
         $nuevoRol->creadoPor = $user;
+        $nuevoRol->ModificadoPor = $user;
         //Se insertan los permisos del nuevo rol sobre todos los objetos del sistema
         $idRol = ControladorRol::ingresarNuevoRol($nuevoRol);
         $idObjetos = ControladorDataTableObjeto::ObtenerIdObjetos();
@@ -27,13 +28,10 @@
          /* ========================= Evento Creacion rol. ==================================*/
        $newBitacora = new Bitacora();
        $accion = ControladorBitacora::accion_Evento();
-       date_default_timezone_set('America/Tegucigalpa');
-       $newBitacora->fecha = date("Y-m-d h:i:s"); 
-       $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionRol.php');
+       $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('GESTIONROL.PHP');
        $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($user);
        $newBitacora->accion = $accion['Insert'];
        $newBitacora->descripcion = 'El usuario '.$user.' creó el nuevo rol '.$_POST['rolUsuario'];
        ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
        /* =======================================================================================*/
     }
-?>
