@@ -104,4 +104,5 @@ class EstadoUsuario{
         sqlsrv_close($conexion);
         return $estados;
     }
+    
 }

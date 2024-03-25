@@ -18,7 +18,7 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
-    fnCreatedRow: function( rowEl, data) {
+    fnCreatedRow: function(rowEl, data) {
       $(rowEl).attr('id', data['idEstado']);
     },
     columns: [
@@ -100,8 +100,8 @@ $("#formEditEstadoU").submit(function (e) {
   //Obtener datos del nuevo Cliente
   let inputId = document.getElementById('idEstado'),
     descripcion = $("#E_descripcion").val();
-  
   let idEstado = inputId.getAttribute("class");
+  
   if (estadoValido) {
     $.ajax({
       url: "../../../Vista/crud/estadoUsuario/editarEstadoUsuario.php",
