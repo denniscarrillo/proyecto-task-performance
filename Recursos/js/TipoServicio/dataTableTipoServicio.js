@@ -19,11 +19,8 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
-    fnCreatedRow: function(rowEl, data) {
-      $(rowEl).attr('id', data['id_TipoServicio']);
-    },
     columns: [
-      { data: "item" },
+      { data: "id_TipoServicio" },
       { data: "servicio_Tecnico" },
       {
         defaultContent:
@@ -78,14 +75,13 @@ $("#form-TipoServicio").submit(function (e) {
 //Editar Tipo de Servicio
 $(document).on("click", "#btn_editar", function () {
   let fila = $(this).closest("tr"),
-    id_TipoServicio = $(this).closest("tr").attr('id'), //capturo el ID
+    id_TipoServicio = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
     servicio_Tecnico = fila.find("td:eq(1)").text();
   $("#E_idTipoServicio").val(id_TipoServicio);
   $("#E_servicio_Tecnico").val(servicio_Tecnico);
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");
   $("#modalEditarTipoServicio").modal("show");
-  console.log(id_TipoServicio)
 });
 
 $("#form-Edit-TipoServicio").submit(function (e) {
@@ -158,7 +154,7 @@ let limpiarFormEdit = () => {
 //Eliminar usuario
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this);
-  let idTipoServico = $(this).closest("tr").attr('id');
+  let idTipoServico = $(this).closest("tr").find("td:eq(0)").text();
   let Servicio = $(this).closest("tr").find("td:eq(1)").text();
   Swal.fire({
     title: "Estas seguro de eliminar el servicio " + Servicio + "?",

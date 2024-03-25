@@ -18,11 +18,8 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
-    fnCreatedRow: function(rowEl, data) {
-      $(rowEl).attr('id', data['idPorcentaje']);
-    },
     columns: [
-      { data: "item" },
+      { data: "idPorcentaje" },
       {
         data: "valorPorcentaje",
         render: function (data, type) {
@@ -123,11 +120,10 @@ document
 //Editar Porcentaje
 $(document).on("click", "#btn_editar", function () {
   let fila = $(this).closest("tr"),
-    idPorcentaje = $(this).closest("tr").attr('id'), //capturo el ID
+    idPorcentaje = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
     valorPorcentaje = fila.find("td:eq(1)").text(),
     descripcionPorcentaje = fila.find("td:eq(2)").text(),
     estadoPorcentaje = fila.find("td:eq(3)").text();
-    console.log(idPorcentaje)
   $("#E_idPorcentaje").val(idPorcentaje);
   $("#E_valorPorcentaje").val(valorPorcentaje);
   $("#E_descripcionPorcentaje").val(descripcionPorcentaje);
@@ -208,7 +204,7 @@ let limpiarFormEdit = () => {
 //Eliminar porcentajes
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
-    idPorcentaje = $(this).closest("tr").attr('id'),
+    idPorcentaje = $(this).closest("tr").find("td:eq(0)").text(),
     porcentaje = fila.find("td:eq(1)").text(),
     estado = "INACTIVO";
 

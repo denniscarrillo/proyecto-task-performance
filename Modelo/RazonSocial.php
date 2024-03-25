@@ -12,12 +12,11 @@ public static function obtenerTodasLasRazonSocial(){
     try{
         $conn = new Conexion();
         $abrirConexion = $conn->abrirConexionDB();
-        $query = "SELECT ROW_NUMBER() OVER(ORDER BY id_razon_Social ASC) AS Num, id_razon_Social, razon_Social, descripcion FROM tbl_razon_Social;";
+        $query = "SELECT id_razon_Social, razon_Social, descripcion FROM tbl_razon_Social;";
         $obtenerRazonSocial = sqlsrv_query($abrirConexion, $query);
         //Recorremos el resultado de tareas y almacenamos en el arreglo.
         while ($fila = sqlsrv_fetch_array( $obtenerRazonSocial, SQLSRV_FETCH_ASSOC)) {
             $razonSocial[] = [
-                'item' => $fila["Num"],
                 'id_razonSocial' => $fila["id_razon_Social"],
                 'razon_Social' => $fila["razon_Social"],
                 'descripcion' => $fila["descripcion"]

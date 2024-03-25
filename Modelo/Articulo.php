@@ -20,13 +20,12 @@ class Articulo
             $articulo = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $query = "SELECT ROW_NUMBER() OVER(ORDER BY CODARTICULO ASC) AS Num, CODARTICULO, ARTICULO, DETALLE, MARCA, Creado_Por, Fecha_Creacion FROM tbl_ARTICULOS;";
+            $query = "SELECT CODARTICULO, ARTICULO, DETALLE, MARCA, Creado_Por, Fecha_Creacion FROM tbl_ARTICULOS;";
             $resultado = sqlsrv_query($abrirConexion, $query);
             $articulo = array();
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
             while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
                 $articulo[] = [
-                    'item' => $fila['Num'],
                     'codigo' => $fila['CODARTICULO'],
                     'articulo' => $fila['ARTICULO'],
                     'detalle' => $fila['DETALLE'],

@@ -18,11 +18,8 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
-    fnCreatedRow: function(rowEl, data) {
-      $(rowEl).attr('id', data['id_EstadoAvance']);
-    },
     columns: [
-      { data: "item" },
+      { data: "id_EstadoAvance" },
       { data: "descripcion" },
       { data: "meta" },
       {
@@ -55,7 +52,7 @@ $(document).on("click", "#btn_nuevoRegistro", function () {
 
 $(document).on("click", "#btn_editar", function () {
   let fila = $(this).closest("tr"),
-    idMetrica = $(this).closest("tr").attr('id'), //capturo el ID
+    idMetrica = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
     metrica = fila.find("td:eq(1)").text(),
     meta = fila.find("td:eq(2)").text();
   $("#E_idMetrica").val(idMetrica);
@@ -111,7 +108,7 @@ let limpiarFormEdit = () => {
 //Eliminar Metrica
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
-    id_Metrica= $(this).closest("tr").attr('id'), //capturo el ID
+    id_Metrica= $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
     metrica = $(this).closest("tr").find("td:eq(1)").text();
 
   Swal.fire({

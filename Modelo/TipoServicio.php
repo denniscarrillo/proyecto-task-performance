@@ -15,12 +15,11 @@ class TipoServicio {
         try{
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB();
-            $query = "SELECT ROW_NUMBER() OVER(ORDER BY id_TipoServicio ASC) AS Num, id_TipoServicio, servicio_Tecnico FROM tbl_TipoServicio;";
+            $query = "SELECT id_TipoServicio, servicio_Tecnico FROM tbl_TipoServicio;";
             $obtenerTipoServicio = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
             while ($fila = sqlsrv_fetch_array( $obtenerTipoServicio, SQLSRV_FETCH_ASSOC)) {
                 $tipoServicio[] = [
-                    'item' => $fila["Num"],
                     'id_TipoServicio' => $fila["id_TipoServicio"],
                     'servicio_Tecnico' => $fila["servicio_Tecnico"]
                 ];

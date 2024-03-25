@@ -156,7 +156,7 @@ if (isset($_SESSION['usuario'])) {
           <table class="display nowrap table" id="table-Porcentajes" style="width:100%">
             <thead>
               <tr>
-                <th scope="col"> Nº PORCENTAJE</th>
+                <th scope="col"> ID PORCENTAJE</th>
                 <th scope="col"> VALOR DE PORCENTAJE </th>
                 <th scope="col"> DESCRIPCIÓN </th>
                 <th scope="col"> ESTADO DE PORCENTAJE </th>

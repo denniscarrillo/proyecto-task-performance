@@ -154,7 +154,7 @@ if (isset($_SESSION['usuario'])) {
           <table class="display nowrap table" id="table-Cotizacion" style="width:100%">
             <thead>
               <tr>
-                <th scope="col"> No. </th>
+                <th scope="col"> N° </th>
                 <th scope="col"> CREADO POR </th>
                 <th scope="col"> CLIENTE </th>
                 <th scope="col"> SUB TOTAL </th>

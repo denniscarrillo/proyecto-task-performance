@@ -19,11 +19,8 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
-    fnCreatedRow: function(rowEl, data) {
-      $(rowEl).attr('id', data['id_razonSocial']);
-    },
     columns: [
-      { data: "item" },
+      { data: "id_razonSocial" },
       { data: "razon_Social" },
       { data: "descripcion" },
       {
@@ -80,14 +77,10 @@ $("#form-razonSocial").submit(function (e) {
 // Editar Razon Social
 $(document).on("click", "#btn_editar", function () {
   let fila = $(this).closest("tr"),
-    itemRazon = $(this).closest("tr").find("td:eq(0)").text(),
-    idRazonSocial = $(this).closest("tr").attr('id'), //capturo el ID
+    idRazonSocial = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
     razonSocial = fila.find("td:eq(1)").text(),
     descripcion = fila.find("td:eq(2)").text();
-    console.log(idRazonSocial)
-  let inputId = document.getElementById('razonid');
-  inputId.setAttribute("class", idRazonSocial);
-  $("#E_idRazonSocial").val(itemRazon);
+  $("#E_idRazonSocial").val(idRazonSocial);
   $("#E_razonSocial").val(razonSocial);
   $("#E_descripcion").val(descripcion);
   $(".modal-header").css("background-color", "#007bff");
@@ -99,17 +92,16 @@ $(document).on("click", "#btn_editar", function () {
 $("#form-Edit_razonSocial").submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
   //Obtener datos del nuevo Cliente
-  let inputId = document.getElementById('razonid'),
+  let idRazonSocial = $("#E_idRazonSocial").val(),
     razonSocial = $("#E_razonSocial").val(),
     descripcion = $("#E_descripcion").val();
-  let razonid = inputId.getAttribute("class");
   if (valido) {
     $.ajax({
       url: "../../../Vista/crud/razonSocial/editarRazonSocial.php",
       type: "POST",
       datatype: "JSON",
       data: {
-        id_RazonSocial: razonid,
+        id_RazonSocial: idRazonSocial,
         razonSocial: razonSocial,
         descripcion: descripcion,
       },
@@ -121,19 +113,18 @@ $("#form-Edit_razonSocial").submit(function (e) {
           "success"
         );
         tablaRazonSocial.ajax.reload(null, false);
+        limpiarFormEdit();
       },
     });
     $("#modalEditarRazonSocial").modal("hide");
-    limpiarFormEdit();
   }
 });
 //Eliminar pregunta
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
-    idRazonSocial = $(this).closest("tr").attr('id'),
+    idRazonSocial = $(this).closest("tr").find("td:eq(0)").text(),
     razonSocial = fila.find("td:eq(1)").text(),
     descripcion = fila.find("td:eq(2)").text();
-    console.log(idRazonSocial)
 
   Swal.fire({
     title: "Estas seguro de eliminar la razonSocial " + razonSocial + "?",

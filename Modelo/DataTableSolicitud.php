@@ -18,23 +18,22 @@ class DataTableSolicitud
             $SolicitudesUsuario = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $query = "SELECT ROW_NUMBER() OVER(ORDER BY id_Solicitud ASC) AS Num, id_Solicitud,
-            cc.nombre_Cliente AS NombreCliente,
-            t.servicio_Tecnico,
-            telefono_cliente,
-            EstadoAvance,
-            s.Fecha_Creacion
-                FROM [tbl_Solicitud] AS s
-                INNER JOIN tbl_TipoServicio AS t ON t.id_TipoServicio = s.id_TipoServicio
-                LEFT JOIN tbl_CarteraCliente AS cc ON cc.rtn_Cliente = s.rtn_clienteCartera 
-                WHERE s.cod_Cliente IS NULL OR s.cod_Cliente = 'NULL' OR s.cod_Cliente = '' 
-                ORDER BY id_Solicitud;";
+            $query = "SELECT id_Solicitud,
+                        cc.nombre_Cliente AS NombreCliente,
+                        t.servicio_Tecnico,
+                        telefono_cliente,
+                        EstadoAvance,
+                        s.Fecha_Creacion
+                    FROM [tbl_Solicitud] AS s
+                    INNER JOIN tbl_TipoServicio AS t ON t.id_TipoServicio = s.id_TipoServicio
+                    LEFT JOIN tbl_CarteraCliente AS cc ON cc.rtn_Cliente = s.rtn_clienteCartera 
+                    WHERE s.cod_Cliente IS NULL OR s.cod_Cliente = 'NULL' OR s.cod_Cliente = '' 
+                    ORDER BY id_Solicitud;";
 
            $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
             while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
                 $SolicitudesUsuario[] = [
-                    'item' => $fila['Num'],
                     'id_Solicitud' => $fila['id_Solicitud'],
                     'Nombre' => $fila['NombreCliente'],
                     'servicio_Tecnico' => $fila['servicio_Tecnico'],

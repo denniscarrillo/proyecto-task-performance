@@ -13,13 +13,12 @@ class Metricas{
             $metricas = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $query = "SELECT ROW_NUMBER() OVER(ORDER BY e.id_EstadoAvance ASC) AS Num, e.id_EstadoAvance,e.descripcion,m.meta FROM tbl_metrica as m
+            $query = "SELECT e.id_EstadoAvance,e.descripcion,m.meta FROM tbl_metrica as m
             inner join tbl_estadoavance AS e ON m.id_EstadoAvance = e.id_EstadoAvance;";
             $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
             while ($fila = sqlsrv_fetch_array( $resultado, SQLSRV_FETCH_ASSOC)) {
                 $metricas[] = [
-                    'item' => $fila['Num'],
                     'id_EstadoAvance' => $fila['id_EstadoAvance'],
                     'descripcion' => $fila['descripcion'],
                     'meta' => $fila['meta'],

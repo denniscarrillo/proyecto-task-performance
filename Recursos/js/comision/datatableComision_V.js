@@ -10,11 +10,8 @@ $(document).ready(function () {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
-    fnCreatedRow: function(rowEl, data) {
-      $(rowEl).attr('id', data['idComisionVendedor']);
-    },
     columns: [
-      { data: "item" },
+      { data: "idComisionVendedor" },
       { data: "idComision" },
       { data: "idVendedor" },
       { data: "usuario" },

@@ -18,11 +18,8 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
-    fnCreatedRow: function(rowEl, data) {
-      $(rowEl).attr('id', data['id_Pregunta']);
-    },
     columns: [
-      { data: "item" },
+      { data: "id_Pregunta" },
       { data: "pregunta" },
       { data: "estadoPregunta" },
       {
@@ -110,12 +107,9 @@ $pregunta.addEventListener("focusout", function () {
 // Editar Pregunta
 $(document).on("click", "#btn_editar", function () {
   let fila = $(this).closest("tr"),
-    idPregunta = $(this).closest("tr").attr('id'), //capturo el ID
+    idPregunta = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
     pregunta = fila.find("td:eq(1)").text(),
     estado = fila.find("td:eq(2)").text();
-
-    let inputId = document.getElementById('preguntaid');
-    inputId.setAttribute("class", idPregunta);
   $("#idPregunta_E").val(idPregunta);
   $("#pregunta_E").val(pregunta);
   $("#E_estado").val(estado);
@@ -128,17 +122,16 @@ $(document).on("click", "#btn_editar", function () {
 $("#form-Pregunta-Editar").submit(function (e) {
   e.preventDefault();
   //obtener datos al editar la pregunta
-  let inputId = document.getElementById('preguntaid'),
-    pregunta = $("#pregunta_E").val(),    
+  let pregunta = $("#pregunta_E").val(),
+    idPregunta = $("#idPregunta_E").val(),
     estado = $("#E_estado").val();
-    let preguntaid = inputId.getAttribute("class");
   if (valido) {
     $.ajax({
       url: "../../../Vista/crud/pregunta/editarPreguntas.php",
       type: "POST",
       datatype: "JSON",
       data: {
-        idPregunta: preguntaid,
+        idPregunta: idPregunta,
         pregunta: pregunta,
         estado: estado,
       },
@@ -158,7 +151,7 @@ $("#form-Pregunta-Editar").submit(function (e) {
 //Eliminar pregunta
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
-    idPregunta = $(this).closest("tr").attr('id'),
+    idPregunta = $(this).closest("tr").find("td:eq(0)").text(),
     pregunta = fila.find("td:eq(1)").text();
   Swal.fire({
     title: "Estás seguro de eliminar la pregunta " + pregunta + "?",

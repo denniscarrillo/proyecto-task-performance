@@ -16,13 +16,12 @@ class CarteraClientes{
     public static function obtenerCarteraClientes(){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB();
-        $obtenerCarteraCliente = "SELECT ROW_NUMBER() OVER(ORDER BY id_CarteraCliente ASC) AS Num, id_CarteraCliente, nombre_Cliente, rtn_Cliente, telefono, correo, direccion, estadoContacto
+        $obtenerCarteraCliente = "SELECT id_CarteraCliente, nombre_Cliente, rtn_Cliente, telefono, correo, direccion, estadoContacto
         FROM tbl_CarteraCliente;";
         $resultado = sqlsrv_query($consulta, $obtenerCarteraCliente);
         $carteraCliente = array();
         while($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)){
             $carteraCliente [] = [
-                'item' => $fila["Num"],
                 'idcarteraCliente' => $fila["id_CarteraCliente"],
                 'nombre' => $fila["nombre_Cliente"],
                 'rtn' => $fila["rtn_Cliente"],

@@ -20,11 +20,8 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
-    fnCreatedRow: function(rowEl, data) {
-      $(rowEl).attr('id', data['id_Solicitud']);
-    },
     columns: [
-      { data: "item" },
+      { data: "id_Solicitud" },
       { data: "Nombre" },
       { data: "servicio_Tecnico" },
       { data: "telefono" },
@@ -61,10 +58,9 @@ let obtenerPermisos = function ($idObjeto, callback) {
 $(document).on("click", "#btn_ver", async function () {
   // Obtener la fila más cercana al botón
   let fila = $(this).closest("tr");
-  let verSolicitud= $(this).closest("tr").find("td:eq(0)").text();
-  let idSolicitud = $(this).closest("tr").attr("id");
+  let idSolicitud = fila.find("td:eq(0)").text();
   let SolicitudXid = await obtenerSolicitudesVerPorId(idSolicitud);
-  console.log(idSolicitud)
+
   const idSolicitudLabel = document.getElementById("V_IdSolicitud");
   idSolicitudLabel.innerText = SolicitudXid.idSolicitud;
   const idFacturaLabel = document.getElementById("V_IdFactura");
@@ -232,8 +228,7 @@ $(document).on("click", "#btn_editar", async function () {
   // Obtener la fila más cercana al botón
   let fila = $(this).closest("tr");
   // Capturar el ID de la solicitud
-  let itemSolicitud = $(this).closest("tr").find("td:eq(0)").text();
-  let idSolicitud = $(this).closest("tr").attr("id");
+  let idSolicitud = fila.find("td:eq(0)").text();
   let Solicitudes = await obtenerSolicitudesPorId(idSolicitud);
 
   if (Solicitudes.EstadoSolicitud === "CANCELADO") {
@@ -247,9 +242,7 @@ $(document).on("click", "#btn_editar", async function () {
     return; // Detiene la ejecución si la solicitud está cancelada
   }
   //LLenar Campos de modal Editar Solicitud
-  let inputId = document.getElementById('solicitudid');
-  inputId.setAttribute("class", idSolicitud);
-  $("#E_IdSolicitud").val(itemSolicitud);
+  $("#E_IdSolicitud").val(idSolicitud);
   const idSolicitudLabel = document.getElementById("E_IdSolicitud");
   idSolicitudLabel.value = Solicitudes.idSolicitud;
   document.getElementById("id_solicitud").value = Solicitudes.idSolicitud;
@@ -266,7 +259,6 @@ $(document).on("click", "#btn_editar", async function () {
   CreadoPorLabel.innerText = Solicitudes.CreadoPor;
   const FechaCreacionLabel = document.getElementById("E_FechaCreacion");
   FechaCreacionLabel.innerText = Solicitudes.FechaCreacion.date.slice(0, 10);
-  console.log(idSolicitud)
   // Estilizar el modal
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");
@@ -275,14 +267,14 @@ $(document).on("click", "#btn_editar", async function () {
 });
 
 //obtener datos para el modal editar
-let obtenerSolicitudesPorId = async (solicitudid) => {
+let obtenerSolicitudesPorId = async (idSolicitud) => {
   try {
     let datosSolicitud = await $.ajax({
       url: "../../../Vista/crud/DataTableSolicitud/obtenerSolicitudesVerId.php",
       type: "GET",
       dataType: "JSON",
       data: {
-        IdSolicitud: solicitudid,
+        IdSolicitud: idSolicitud,
       },
     });
     return datosSolicitud; //Retornamos la data recibida por ajax
@@ -330,7 +322,7 @@ $(document).on("click", "#btn_eliminar", async function () {
   // Obtener la fila más cercana al botón
   let fila = $(this).closest("tr");
   // Capturar el ID de la solicitud
-  let idSolicitud = $(this).closest("tr").attr("id");
+  let idSolicitud = fila.find("td:eq(0)").text();
   let motivo = fila.find("td:eq(null)").text();
   let SolicitudesC = await obtenerSolicitudesPorId(idSolicitud);
   if (SolicitudesC.EstadoSolicitud === "CANCELADO") {

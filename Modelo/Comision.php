@@ -18,7 +18,7 @@ class Comision
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         $listaComision =
-            $query = "SELECT ROW_NUMBER() OVER(ORDER BY co.id_Comision ASC) AS Num, co.id_Comision, co.id_Venta, v.total_Venta, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, 
+            $query = "SELECT co.id_Comision, co.id_Venta, v.total_Venta, po.valor_Porcentaje, co.comision_TotalVenta, co.estadoComision, 
             co.estado_Liquidacion, co.fecha_Liquidacion, co.Fecha_Creacion
             FROM tbl_Comision AS co
             INNER JOIN tbl_FacturasVenta AS v ON co.id_Venta = v.num_Factura
@@ -28,7 +28,6 @@ class Comision
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
         while ($fila = sqlsrv_fetch_array($listaComision, SQLSRV_FETCH_ASSOC)) {
             $Comision[] = [
-                'item' => $fila["Num"],
                 'idComision' => $fila["id_Comision"],
                 'factura' => $fila["id_Venta"],
                 'totalVenta' => $fila["total_Venta"],
@@ -169,16 +168,15 @@ class Comision
     {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $query = "SELECT ROW_NUMBER() OVER(ORDER BY vt.id_Comision_Por_Vendedor ASC) AS Num, vt.id_Comision_Por_Vendedor, vt.id_Comision, vt.id_usuario_vendedor, u.usuario, vt.total_Comision, vt.estadoComisionVendedor, 
-                vt.estado_Liquidacion, vt.fecha_Liquidacion, vt.Fecha_Creacion
-                FROM tbl_ms_usuario AS u
-                INNER JOIN tbl_comision_por_vendedor AS vt ON u.id_Usuario = vt.id_usuario_vendedor;";
+        $query = "SELECT vt.id_Comision_Por_Vendedor, vt.id_Comision, vt.id_usuario_vendedor, u.usuario, vt.total_Comision, vt.estadoComisionVendedor, 
+            vt.estado_Liquidacion, vt.fecha_Liquidacion, vt.Fecha_Creacion
+            FROM tbl_ms_usuario AS u
+            INNER JOIN tbl_comision_por_vendedor AS vt ON u.id_Usuario = vt.id_usuario_vendedor;";
         $listaComision = sqlsrv_query($consulta, $query);
         $ComisionVendedor = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
         while ($fila = sqlsrv_fetch_array($listaComision, SQLSRV_FETCH_ASSOC)) {
             $ComisionVendedor[] = [
-                'item' => $fila["Num"],
                 'idComisionVendedor' => $fila["id_Comision_Por_Vendedor"],
                 'idComision' => $fila["id_Comision"],
                 'idVendedor' => $fila["id_usuario_vendedor"],

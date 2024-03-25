@@ -17,11 +17,8 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
-    fnCreatedRow: function(rowEl, data) {
-      $(rowEl).attr('id', data['id']);
-    },
     columns: [
-      { data: "item" },
+      { data: "id" },
       { data: "parametro" },
       { data: "valorParametro" },
       { data: "descripcionParametro" },
@@ -51,7 +48,7 @@ let obtenerPermisos = function ($idObjeto, callback) {
 }
 $(document).on("click", "#btn_editar", function(){		        
   let fila = $(this).closest("tr"),	        
-  idParametro = $(this).closest('tr').attr('id'), //capturo el ID		            
+  idParametro = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		            
   parametro = fila.find('td:eq(1)').text(),
   valor = fila.find('td:eq(2)').text(),
   descripcion = fila.find('td:eq(3)').text();
@@ -126,7 +123,7 @@ let limpiarFormEdit = () => {
 //Eliminar parametro
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this);
-  let parametro = $(this).closest("tr").attr('id');
+  let parametro = $(this).closest("tr").find("td:eq(1)").text();
   Swal.fire({
     title: "Estas seguro de eliminar el parametro " + parametro + "?",
     text: "No podras revertir esto!",

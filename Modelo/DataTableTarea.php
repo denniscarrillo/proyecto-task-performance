@@ -14,7 +14,7 @@ class DataTableTarea
         $select = '';
         $tareas = array();
         if($usuario == 'SUPERADMIN'){
-            $select = "SELECT ROW_NUMBER() OVER(ORDER BY ta.id_Tarea ASC) AS Num, ta.id_Tarea, ea.descripcion AS estado, cc.rtn_Cliente, cc.nombre_Cliente, ta.titulo, us.nombre_Usuario AS Creado_Por, ta.estado_Finalizacion, ta.fecha_Finalizacion, DATEDIFF(day, ta.Fecha_Creacion, GETDATE()) AS dias_Transcurridos 
+            $select = "SELECT ta.id_Tarea, ea.descripcion AS estado, cc.rtn_Cliente, cc.nombre_Cliente, ta.titulo, us.nombre_Usuario AS Creado_Por, ta.estado_Finalizacion, ta.fecha_Finalizacion, DATEDIFF(day, ta.Fecha_Creacion, GETDATE()) AS dias_Transcurridos 
             FROM tbl_Tarea ta
             INNER JOIN tbl_EstadoAvance ea ON ta.id_EstadoAvance = ea.id_EstadoAvance
             INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente
@@ -23,7 +23,6 @@ class DataTableTarea
             if(sqlsrv_has_rows($ejecutar)){
                 while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
                     $tareas[] = [
-                        'item' => $fila['Num'],
                         'id' => $fila['id_Tarea'],
                         'estadoAvance' => $fila['estado'],
                         'rtnCliente' =>$fila['rtn_Cliente'],

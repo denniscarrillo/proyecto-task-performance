@@ -18,11 +18,8 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
-    fnCreatedRow: function(rowEl, data) {
-      $(rowEl).attr('id', data['id_Rol']);
-    },
     columns: [
-      { data: "item" },
+      { data: "id_Rol" },
       { data: "rol" },
       { data: "descripcion" },
       {
@@ -108,10 +105,9 @@ $rol.addEventListener('focusout', function () {
 //Editar un rol
 $(document).on("click", "#btn_editar", function () {
   let fila = $(this).closest("tr"),
-    id_Rol = $(this).closest("tr").attr('id'), //capturo el ID
+    id_Rol = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
     rol = fila.find("td:eq(1)").text(),
     descripcion = fila.find("td:eq(2)").text();
-    console.log(id_Rol)
   if (rol == "Super Administrador") {
     Swal.fire(
       "Sin acceso!",
@@ -196,7 +192,7 @@ let limpiarFormEdit = () => {
 //Eliminar Rol
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
-    idRol = $(this).closest("tr").attr('id'),
+    idRol = fila.find("td:eq(0)").text(),
     rol = fila.find("td:eq(1)").text();
   if (rol == "SUPER ADMINISTRADOR" || rol == "PREDETERMINADO") {
     Swal.fire(

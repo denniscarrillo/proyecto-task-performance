@@ -15,11 +15,8 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
-    fnCreatedRow: function(rowEl, data) {
-      $(rowEl).attr('id', data['id']);
-    },
     columns: [
-      { data: "item" },
+      { data: "id" },
       { data: "creadoPor" },
       { data: "cliente" },
       { data: "subDescuento" },
