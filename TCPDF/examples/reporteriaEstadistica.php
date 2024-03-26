@@ -2,10 +2,11 @@
 // Include the main TCPDF library (search for installation path).
 require_once('../tcpdf.php');
 require_once("../../db/Conexion.php");
-require_once("../../Modelo/Metricas.php");
-require_once("../../Controlador/ControladorMetricas.php");
+
 require_once("../../Modelo/Parametro.php");
 require_once("../../Controlador/ControladorParametro.php");
+require_once("../../Modelo/Metricas.php");
+require_once("../../Controlador/ControladorMetricas.php");
 ob_start();
 
 //cargar el encabezado
@@ -14,7 +15,6 @@ foreach($datosParametro  as $datos){
     $nombreP = $datos['NombreEmpresa'];
     $correoP = $datos['Correo'];
     $direccionP = $datos['direccion'];
-    // $sitioWebP = str_replace("http://", "", $datos['sitioWed']);
     $telefonoP = $datos['Telefono'];
     $telefono2P = $datos['Telefono2'];
 }
@@ -27,11 +27,10 @@ $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8',
 // set document information
 $pdf->setCreator(PDF_CREATOR);
 $pdf->setAuthor('Nicola Asuni');
-$pdf->setTitle('ReporteMetricas');
+$pdf->setTitle('ReporteEstadisticas');
 $pdf->setSubject('TCPDF Tutorial');
 $pdf->setKeywords('TCPDF, PDF, example, test, guide');
-//vertical 64
-//horizontal 152
+
 $width = 64; // Define el ancho que desea para su cadena de encabezado
 
 $PDF_HEADER_TITLE =  $nombreP;
@@ -54,8 +53,7 @@ $pdf->setHeaderMargin(PDF_MARGIN_HEADER);
 $pdf->setFooterMargin(PDF_MARGIN_FOOTER);
 
 // set auto page breaks
-//$pdf->setAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-$pdf->setAutoPageBreak(TRUE, 13);
+$pdf->setAutoPageBreak(TRUE, 10);
 
 // set image scale factor
 $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
@@ -68,37 +66,37 @@ if (@file_exists(dirname(__FILE__).'/lang/spa.php')) {
 
 
 // set font
-$pdf->setFont('Helvetica', '', 11);
+$pdf->setFont('Helvetica', '', 9);
 
 // add a page
 $pdf->AddPage();
 // create some HTML content
 $html = '
-<P style="text-align: center; font-size: 18px;"><b>Reporte de Metricas</b></P>
+<P style="text-align: center; font-size: 18px;"><b>Reporte de Estadísticas</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 70px;">N°</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 420px;">MÉTRICA</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 185px;">TAREA</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 150px;">META</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 150px;">ALCANCE</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 150px;">PORCENTAJE</td>
 </tr>
 ';
-$Metricas = ControladorMetricas::obtenerLasMetricasPDF(trim($_GET['buscar']));
-foreach($Metricas as $metrica){
-    // $idMetrica = $metrica['idMetrica'];
-    $descripcion = $metrica['descripcion'];
-    $meta = $metrica['meta'];
-    $Cont++;
-   
+$Estadisticas = ControladorMetricas::obtenerEstadisticasPDF($_GET['idVendedor'], $_GET['fechaDesdef'], $_GET['fechaHastaf']);
+  foreach($Estadisticas as $Estadistica){
+    $Descripcion = $Estadistica['Descripcion'];
+    $Meta = $Estadistica['Meta'];
+    $Alcance = $Estadistica['Alcance'];
+    $Porcentaje = $Estadistica['Porcentaje'];
     $html .= '
     <tr>
-    <td style="text-align: center">'.$Cont.'</td>
-    <td >'.$descripcion.'</td>
-    <td style="text-align: center">'.$meta.'</td>
+    <td style="text-align: center">'.$Descripcion.'</td>
+    <td style="text-align: center">'.$Meta.'</td>
+    <td style="text-align: center">'.$Alcance.'</td>
+    <td style="text-align: center">'.$Porcentaje.'</td>
     </tr>
-    ';
-    
-
+   ';
 }
+
 
 $html.='
 </table>
@@ -108,4 +106,4 @@ $html.='
 $pdf->writeHTML($html, true, false, true, false);
 //Close and output PDF document
 ob_end_clean();
-$pdf->Output('ReporteMetricas.pdf', 'I');
+$pdf->Output('Reporte Estadisticas.pdf', 'I');
