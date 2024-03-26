@@ -84,9 +84,12 @@ class Venta {
     public static function obtenerVentasPorFechas($fechaDesde, $fechaHasta){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $select = "SELECT vt.num_Factura, cc.nombre_Cliente, vt.rtn_Cliente, vt.total_Venta, vt.Creado_Por, vt.Fecha_Creacion FROM tbl_FacturasVenta vt
+        $select = "SELECT vt.num_Factura, cc.nombre_Cliente, vt.rtn_Cliente, a.evidencia, t.estado_Finalizacion, vt.total_Venta, vt.Creado_Por, vt.Fecha_Creacion FROM tbl_FacturasVenta vt
         INNER JOIN tbl_CarteraCliente cc ON vt.rtn_Cliente = cc.rtn_Cliente
-                    WHERE vt.Fecha_Creacion BETWEEN '$fechaDesde 00:00:00:00' AND '$fechaHasta 23:59:59:59';";
+        INNER JOIN tbl_AdjuntoEvidencia a ON vt.num_Factura = a.id_Tarea
+        INNER JOIN tbl_Tarea t ON vt.num_Factura = t.id_Tarea
+                    WHERE vt.Fecha_Creacion BETWEEN '$fechaDesde 00:00:00:00' AND '$fechaHasta 23:59:59:59'
+                    AND t.id_EstadoAvance = 4;";
         $query = $select;
         $listaVentas = sqlsrv_query($conexion, $query);
         $ventas = array();
