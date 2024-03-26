@@ -255,14 +255,14 @@ $(document).on("click", "#btn_eliminar", function () {
           if (!JSON.parse(data).estado) {
             Swal.fire(
               "Lo sentimos",
-              "<strong>" + carteraCliente + "</strong> no se puede eliminar",
+              "<strong>" + nombreCliente + "</strong> no se puede eliminar",
               "error"
             );
             return;
           }
           Swal.fire(
             "Eliminado",
-            "<strong>" + carteraCliente + "</strong> ha sido eliminado",
+            "<strong>" + nombreCliente + "</strong> ha sido eliminado",
             "success"
           );
           tablaCarteraClientes.ajax.reload(null, false);
