@@ -27,6 +27,7 @@
     width: 100%;
     justify-content: center;
     gap: 1rem;
+    margin-top: 3rem;
 }
 .table-conteiner{
     width: 95%;
@@ -52,18 +53,18 @@ h1{
     background-color: #ee9827 !important;
     border-color: greenyellow;
 }
-.btn-primary:hover{
+/* .btn-primary:hover{
     background-color: #4d4b4a !important;
-}
+} */
 .btns{
     margin-right: 0.6rem;
     padding: 0.3rem;
     font-size: 1.4rem;
     color: aliceblue;
 }
-.btn-primary{
+/* .btn-primary{
     background-color: #ee9827 !important;
-}
+} */
 #btn_editar{
     background-color: rgb(86, 174, 86) !important;
 }
@@ -107,4 +108,111 @@ h1{
 }
 #btn_pdf_id{
     background-color: #f5971d;
+}
+.container-nuevo-precio {
+    display: flex;
+    column-gap: 0.4rem;
+}
+.btn-nuevo-precio, #btn-editar-estado-precios {
+    padding: 0.3rem 0.7rem;
+    border: none;
+    border-radius: 0.4rem;
+    background-color: #4d4b4aa4;
+    color: white;
+    width: 12rem;
+    box-shadow: 0 0 0 .1rem #5c5b5b74;
+    transition: all ease 0.5s;
+}
+#btn-editar-estado-precios {
+    width: fit-content;
+    margin: 0.4rem;
+}
+.btn-nuevo-precio:hover, #btn-editar-estado-precios:hover{
+    background-color: #ee9827;
+    box-shadow: 0 0 0 .2rem #eeab54d0;
+}
+#container-edit-estado-productos {
+    margin-top: 1px;
+}
+#container-input-precio {
+    margin-bottom: 0 !important;
+}
+#container-input-nuevo-precio {
+    display: flex;
+    column-gap: 0.4rem;
+    justify-content: center;
+    align-items: center;
+}
+.fa-circle-xmark, .fa-circle-check {
+    font-size: 1.5rem;
+}
+
+.btn-cerrar-nuevo-precio {
+    display: flex;
+    align-items: center;
+    padding: 0.3rem 0.3rem;
+    border: none;
+    border-radius: 0.4rem;
+    background-color: red;
+    color: white;
+    width: fit-content;
+    transition: all ease 0.5s;
+}
+.btn-cerrar-nuevo-precio:hover {
+    background-color: #ff0000cc;
+    box-shadow: 0 0 0 .2rem #eeab54d0;
+}
+
+.btn-agregar-nuevo-precio {
+    display: flex;
+    align-items: center;
+    padding: 0.3rem 0.3rem;
+    border: none;
+    border-radius: 0.4rem;
+    background-color: #1fa51f;
+    color: white;
+    width: fit-content;
+    transition: all ease 0.5s;
+}
+.container-precios.edit {
+    padding: 0.3rem 0;
+    background-color: #dbd2c0;
+    border-radius: 0.4rem;
+}
+#list-edit-precios{
+    height: 2rem !important;
+    padding: 0.5rem 0.1rem;
+    padding-left: 0.5rem;
+    font-size: 0.8rem !important;
+}
+.btn-update-estado-precio, .btn-update-estado-precio-inactivar {
+    display: flex;
+    align-items: center;
+    column-gap: 0.2rem;
+    padding: 0.2rem 0.3rem;
+    border: none;
+    border-radius: 0.4rem;
+    color: white;
+    width: fit-content;
+    transition: all ease 0.5s;
+}
+.btn-update-estado-precio {
+    background-color: #1fa51f;
+}
+.btn-update-estado-precio-inactivar {
+    background-color: #ff0000;
+}
+.btn-update-estado-precio:hover{
+    background-color: #70f570;
+    box-shadow: 0 0 0 .1rem #1fa51f;
+    color: #3d3c3c;
+}
+.btn-update-estado-precio-inactivar:hover{
+    background-color: #ff5454;
+    box-shadow: 0 0 0 .1rem #ff0000;
+    color: #3d3c3c;
+}
+.container-buttons {
+    display: flex;
+    align-items: center;
 }
