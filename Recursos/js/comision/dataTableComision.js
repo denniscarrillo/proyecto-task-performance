@@ -298,14 +298,14 @@ $(document).on("click", "#btn_pdf_id",  function (){
                 tablaComision.row(fila.parents('tr')).remove().draw();
                 Swal.fire(
                   'Eliminada!',
-                  'La Comision ha sido eliminada.',
+                  'La Comisión ha sido eliminada.',
                   'success'
                 ) 
                 tablaComision.ajax.reload(null, false); 
               } else {
                 Swal.fire(
                   'Lo sentimos!',
-                  'La Comision no puede ser eliminado, en su lugar ha sido anulada.',
+                  'La Comisión no puede ser eliminada, en su lugar ha sido anulada.',
                   'error'
                 );
                 tablaComision.ajax.reload(null, false);

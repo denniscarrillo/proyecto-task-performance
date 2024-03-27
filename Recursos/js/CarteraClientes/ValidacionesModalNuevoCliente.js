@@ -41,6 +41,7 @@ inputNuevoCliente.nombre.addEventListener("keyup", ()=>{
 })
 inputNuevoCliente.rtn.addEventListener("keyup", ()=>{
     validarInputRTN();
+    
     funciones.limitarCantidadCaracteres("rtn", 20);
 })
 inputNuevoCliente.telefono.addEventListener("keyup", ()=>{

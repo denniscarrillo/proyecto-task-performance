@@ -79,8 +79,8 @@ $(document).ready(async function () {
       }
       if ($idTarea != null) {
         Swal.fire({
-          title: "Estas seguro de finalizar la tarea # " + $idTarea + "?",
-          text: "No podras revertir esto!",
+          title: "Estás seguro de finalizar la tarea # " + $idTarea + "?",
+          text: "No podrás revertir esto!",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
@@ -884,8 +884,8 @@ let validarEvidencia = ($evidencia, $elemento) => {
 document.getElementById("btn-finalizar-tarea").addEventListener("click", () => {
   if ($idTarea != null) {
     Swal.fire({
-      title: "Estas seguro de finalizar la tarea # " + $idTarea + "?",
-      text: "No podras revertir esto!",
+      title: "Estás seguro de finalizar la tarea # " + $idTarea + "?",
+      text: "No podrás revertir esto!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",

@@ -76,6 +76,32 @@ $("#form_rubroComercial").submit(function (e) {
   }
 });
 
+let $rubroComercial = document.getElementById('rubroComercial');
+$rubroComercial.addEventListener('focusout', function () {
+  let $mensaje = document.querySelector('.mensaje-rubrocomercial');
+  $mensaje.innerText = '';
+  $mensaje.classList.remove('mensaje-existe-razonsocial');
+  if($rubroComercial.value.trim() != ''){
+    $.ajax({
+      url: "../../../Vista/crud/rubroComercial/rubroComercialExistente.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {
+        rubroComercial: $rubroComercial.value
+      },
+      success: function (estado){
+        let $objExiste = JSON.parse(estado);
+        if ($objExiste){
+          $mensaje.innerText = 'Rubro Comercial existente';
+          $mensaje.classList.add('mensaje-existe-razonsocial');
+        } else {
+          $mensaje.innerText = '';
+          $mensaje.classList.remove('mensaje-existe-razonsocial');
+        }
+      }
+    }); //Fin AJAX   
+  }
+});
 // Editar Rubro Comercial
 $(document).on("click", "#btn_editar", function () {
   let fila = $(this).closest("tr"),
@@ -123,7 +149,7 @@ $("#formEdit_rubroComercial").submit(function (e) {
    // limpiarFormEdit();
   }
 });
-//Eliminar pregunta
+//Eliminar Rubro Comercial
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
     idRubroComercial = $(this).closest("tr").find("td:eq(0)").text(),

@@ -125,7 +125,7 @@ $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this);
   let parametro = $(this).closest("tr").find("td:eq(1)").text();
   Swal.fire({
-    title: "Estas seguro de eliminar el parametro " + parametro + "?",
+    title: "Estas seguro de eliminar el parámetro " + parametro + "?",
     text: "No podras revertir esto!",
     icon: "warning",
     showCancelButton: true,
@@ -146,7 +146,7 @@ $(document).on("click", "#btn_eliminar", function () {
             tablaParametro.row(fila.parents("tr")).remove().draw();
             Swal.fire(
               "Eliminado!",
-              "El parametro ha sido eliminada.",
+              "El parámetro ha sido eliminada.",
               "success"
             );
             tablaParametro.ajax.reload(null, false);

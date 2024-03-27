@@ -67,7 +67,7 @@ let actualizarPermisos = function (elementoFila) {
           //Mostramos el toast
           Toast.fire({
             icon: "success",
-            title: "Actualizado correctamente",
+            title: "Se ha actualizado correctamente",
           });
         },
       });

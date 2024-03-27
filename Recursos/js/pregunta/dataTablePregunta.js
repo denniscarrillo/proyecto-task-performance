@@ -175,7 +175,7 @@ $(document).on("click", "#btn_eliminar", function () {
           if (JSON.parse(data).estadoEliminado) {
             Swal.fire(
               "Eliminado!",
-              "La pregunta ha sido eliminado.",
+              "La pregunta ha sido eliminada.",
               "success"
             );
           } else {

@@ -61,7 +61,7 @@ $("#form-TipoServicio").submit(function (e) {
         //Mostrar mensaje de exito
         Swal.fire(
           "Registrado!",
-          "Se ha registrado un nuevo servicio tecnico!",
+          "Se ha registrado un nuevo servicio técnico!",
           "success"
         );
         tablaTipoServicio.ajax.reload(null, false);

@@ -20,22 +20,25 @@ let inputsNuvoRubroC = {
     descripcion: document.getElementById('descripcion')
 }
 
-let btnGuardar = document.getElementById('btnsubmit');
 
-
-btnGuardar.addEventListener('click', async () => {
-  
-    await ValidarInputRubroC();
+$(document).ready(function (){
+    //Evento clic para hacer todas las validaciones
+  document.getElementById("btnsubmit").addEventListener("click", () => {
+    ValidarInputRubroC();
     ValidarInputDescrip();
    
     console.log(document.querySelectorAll(".mensaje_error").length)
-    if (document.querySelectorAll(".mensaje_error").length == 0) {
+    console.log(document.querySelectorAll(".mensaje-existe-razonsocial").length)
+    if (
+        document.querySelectorAll(".mensaje_error").length == 0 &&
+      document.querySelectorAll(".mensaje-existe-razonsocial").length == 0
+    ){
         estadoValidado = true;
     }else{
         estadoValidado = false;   
     }
-    
-});
+  });
+})
 
 inputsNuvoRubroC.rubroC.addEventListener('keyup', async()=>{
   

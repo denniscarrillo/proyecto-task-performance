@@ -120,8 +120,8 @@ $(document).on("click", "#btn_eliminar", function () {
     );
   } else {
     Swal.fire({
-      title: "Estas seguro de eliminar a " + usuario + "?",
-      text: "No podras revertir esto!",
+      title: "Estás seguro de eliminar a " + usuario + "?",
+      text: "No podrás revertir esto!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",

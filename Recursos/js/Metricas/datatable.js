@@ -79,7 +79,7 @@ $("#form-Edit-Metrica").submit(function (e) {
       },
       success: function () {
         //Mostrar mensaje de exito
-        Swal.fire("Actualizado!", "La metrica ha sido modificada!", "success");
+        Swal.fire("Actualizado!", "La métrica ha sido modificada!", "success");
         tablaMetricas.ajax.reload(null, false);
       },
     });
@@ -112,7 +112,7 @@ $(document).on("click", "#btn_eliminar", function () {
     metrica = $(this).closest("tr").find("td:eq(1)").text();
 
   Swal.fire({
-    title: "Estas seguro de eliminar la metrica  " + metrica + "?",
+    title: "Estas seguro de eliminar la métrica  " + metrica + "?",
     text: "No podras revertir esto!",
     icon: "warning",
     showCancelButton: true,

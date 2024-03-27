@@ -66,7 +66,7 @@ $("#form-estado").submit(function (e) {
         //Mostrar mensaje de exito
         Swal.fire(
           "Registrado!",
-          "El estado usuario ha sido registrado.",
+          "El estado del usuario ha sido registrado.",
           "success"
         );
         tablaEstadoUsuario.ajax.reload(null, false);
@@ -106,7 +106,7 @@ $("#formEditEstadoU").submit(function (e) {
         //Mostrar mensaje de exito
         Swal.fire(
           "Actualizado!",
-          "La estado Usuario ha sido modificado!",
+          "El estado del usuario ha sido modificado!",
           "success"
         );
         tablaEstadoUsuario.ajax.reload(null, false);
@@ -143,13 +143,13 @@ $(document).on("click", "#btn_eliminar", function () {
           if (JSON.parse(data).estadoEliminado) {
             Swal.fire(
               "Eliminado!",
-              "El estado usuario ha sido eliminado",
+              "El estado del usuario ha sido eliminado",
               "success"
             );
           } else {
             Swal.fire(
               "Lo sentimos!",
-              "El estado usuario no puede ser eliminado",
+              "El estado del usuario no puede ser eliminado",
               "error"
             );
             return;

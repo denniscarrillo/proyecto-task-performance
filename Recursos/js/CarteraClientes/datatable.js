@@ -66,7 +66,7 @@ $("#form-carteraCliente").submit(function (e) {
         //Mostrar mensaje de exito
         Swal.fire(
           "Registrado!",
-          "Se le ha enviado un correo al usuario!",
+          "Se ha registrado un Nuevo Cliente!",
           "success"
         );
         tablaCarteraClientes.ajax.reload(null, false);

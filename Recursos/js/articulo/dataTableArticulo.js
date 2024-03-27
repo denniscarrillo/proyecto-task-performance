@@ -129,7 +129,7 @@ $("#form_EditarArticulo").submit(function (e) {
       success: function (res) {
         console.log(res);
         //Mostrar mensaje de exito
-        Swal.fire("Actualizado!", "El Articulo ha sido modificado!", "success");
+        Swal.fire("Actualizado!", "El Artículo ha sido modificado!", "success");
         tablaArticulo.ajax.reload(null, false);
       },
     });

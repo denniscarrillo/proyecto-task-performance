@@ -122,8 +122,8 @@ $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
     factura = $(this).closest("tr").find("td:eq(0)").text(); //capturo el ID
   Swal.fire({
-    title: "Estas seguro de eliminar la venta #" + factura + "?",
-    text: "No podras revertir esto!",
+    title: "Estás seguro de eliminar la venta #" + factura + "?",
+    text: "No podrás revertir esto!",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",

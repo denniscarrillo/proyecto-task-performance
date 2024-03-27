@@ -2,6 +2,7 @@ import * as funciones from '../funcionesValidaciones.js';
 export let estadoValido= false;
 
 
+
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ\s,])/,//Lentras, acentos y Ñ //Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
@@ -16,6 +17,8 @@ let inputseditarRubroComercial = {
    
     descripcionRubroComercial: document.getElementById('E_descripcion')
     
+    
+
 }
 
 inputseditarRubroComercial.descripcionRubroComercial.addEventListener('keyup', ()=>{
@@ -25,12 +28,12 @@ inputseditarRubroComercial.descripcionRubroComercial.addEventListener('keyup', (
 let btnGuardar = document.getElementById('btnsubmiteditar');
 
 btnGuardar.addEventListener('click', () => {
-    console.log(document.querySelectorAll(".mensaje_error").length);
+  
     validarInputDescripcionRubroComercial();
     if (document.querySelectorAll(".mensaje_error").length == 0) {
         estadoValido = true;
     }else{
-          estadoValido = false;
+        estadoValido = false;   
     }
     
 });

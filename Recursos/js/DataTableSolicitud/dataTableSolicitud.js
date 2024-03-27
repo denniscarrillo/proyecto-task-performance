@@ -325,7 +325,7 @@ $(document).on("click", "#btn_eliminar", async function () {
   let idSolicitud = fila.find("td:eq(0)").text();
   let motivo = fila.find("td:eq(null)").text();
   let SolicitudesC = await obtenerSolicitudesPorId(idSolicitud);
-  if (SolicitudesC.EstadoSolicitud === "CANCELADO") {
+  if (SolicitudesC.EstadoSolicitud === "Cancelada") {
     // Aquí puedes mostrar un mensaje o tomar alguna acción específica
     Swal.fire({
       icon: "error",
@@ -335,7 +335,7 @@ $(document).on("click", "#btn_eliminar", async function () {
     return; // Detiene la ejecución si la solicitud está cancelada
   }
   // Establecer el estado de la solicitud
-  let EstadoSolicitud = "CANCELADO";
+  let EstadoSolicitud = "Cancelada";
   // Obtener el motivo de cancelación
   //let EstadoAvance = 'CANCELADO';
   // Establecer valores en los campos del modal
@@ -362,7 +362,7 @@ $("#form-Solicitud").submit(function (e) {
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Sí, Cancelarlo!",
+    confirmButtonText: "Sí, Cancelar solicitud!",
   }).then((result) => {
     // El código dentro de esta función se ejecutará después de que el usuario responda al diálogo de confirmación
     if (result.isConfirmed) {
@@ -373,7 +373,7 @@ $("#form-Solicitud").submit(function (e) {
         dataType: "JSON",
         data: {
           idSolicitud: idSolicitud,
-          EstadoAvance: "CANCELADO",
+          EstadoAvance: "Cancelada",
           EstadoSolicitud: EstadoSolicitud,
           MotivoCancelacion: MotivoCancelacion,
         },
