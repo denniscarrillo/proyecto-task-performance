@@ -26,7 +26,7 @@ if (isset($_SESSION['usuario'])) {
     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionBitacora.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['fallido'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a bitácora del sistema';
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso al mantenimiento bitácora del sistema';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     /* ===============================================================================================================*/
     header('location: ../../v_errorSinPermiso.php');
@@ -40,7 +40,7 @@ if (isset($_SESSION['usuario'])) {
       $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
       $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
       $newBitacora->accion = $accion['Exit'];
-      $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de ' . $_SESSION['descripcionObjeto'];
+      $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió del ' . $_SESSION['descripcionObjeto'];
       ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
       /* =======================================================================================*/
     }
@@ -51,10 +51,10 @@ if (isset($_SESSION['usuario'])) {
     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionBitacora.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['income'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a bitácora del sistema';
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó al mantenimiento bitácora del sistema';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     $_SESSION['objetoAnterior'] = 'gestionBitacora.php';
-    $_SESSION['descripcionObjeto'] = 'bitácora del sistema';
+    $_SESSION['descripcionObjeto'] = 'mantenimiento bitácora del sistema';
     /* =======================================================================================*/
   }
 } else {

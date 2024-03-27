@@ -37,7 +37,24 @@ $(document).ready(function () {
       },
     }); //Fin AJAX
   };
+  let filtro = document.querySelector('input[type=search]');
 });
+
+$(document).on("focusout", "input[type=search]", function (e) {
+  let filtro = $(this).val();
+  capturarFiltroDataTable(filtro);
+});
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim()){
+    $.ajax({
+      url: "../../../Vista/crud/bitacora/registrarBitacoraFiltroBitacora.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
 
 $(document).on("click", "#btn_depurar", function () {
   let $fechaDesde = document.getElementById("fecha-desde").value;

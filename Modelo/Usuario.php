@@ -61,13 +61,13 @@ class Usuario {
         $correo = $nuevoUsuario->correo;
         $cantIntentos = $nuevoUsuario->intentosFallidos;
         $creadoPor = $nuevoUsuario->creadoPor;
-        $fechaCreacion = $nuevoUsuario->fechaCreacion;
+        $modificadoPor = $nuevoUsuario->modificadoPor;
         $cantPreguntasContestadas = $nuevoUsuario->preguntasContestadas;
         $fechaV = $nuevoUsuario->fechaV;
         $query = "INSERT INTO tbl_MS_Usuario (usuario, nombre_Usuario, id_Estado_Usuario, contrasenia, correo_Electronico, intentos_fallidos, id_Rol, 
-        preguntas_Contestadas, int_respuestasFallidas, fecha_Vencimiento, Creado_Por, Fecha_Creacion) 
+        preguntas_Contestadas, int_respuestasFallidas, fecha_Vencimiento, Creado_Por, Fecha_Creacion, Modificado_Por, Fecha_Modificacion) 
         VALUES ('$usuario','$nombre', '$idEstado', '$contrasenia', '$correo', '$cantIntentos', '$idRol', 
-        '$cantPreguntasContestadas', '$intentosRespuestas', '$fechaV', '$creadoPor', '$fechaCreacion');";
+        '$cantPreguntasContestadas', '$intentosRespuestas', '$fechaV', '$creadoPor', GETDATE(), '$modificadoPor', GETDATE());";
         $nuevoUsuario = sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $nuevoUsuario;
@@ -525,6 +525,14 @@ class Usuario {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
         $query = "UPDATE tbl_MS_Usuario  SET id_Estado_Usuario= 2 WHERE usuario = '$usuario';";
+        sqlsrv_query($consulta, $query);
+        sqlsrv_close($consulta); #Cerrar la conexión.
+    }
+
+    public static function inactivarUsuario($usuario){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Conexión a la DB.
+        $query = "UPDATE tbl_MS_Usuario  SET id_Estado_Usuario= 3 WHERE usuario = '$usuario';";
         sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerrar la conexión.
     }

@@ -54,8 +54,8 @@ if (window.innerWidth < 800) {
 }
 
 // Adding event listeners to buttons and sidebar for the corresponding actions
-sidebarLockBtn.addEventListener("click", toggleLock);
+// sidebarLockBtn.addEventListener("click", toggleLock);
 sidebar.addEventListener("mouseleave", hideSidebar);
 sidebar.addEventListener("mouseenter", showSidebar);
 // sidebarOpenBtn.addEventListener("click", toggleSidebar);
-sidebarCloseBtn.addEventListener("click", toggleSidebar);
+// sidebarCloseBtn.addEventListener("click", toggleSidebar);

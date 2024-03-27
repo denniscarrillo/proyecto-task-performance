@@ -120,7 +120,8 @@ class DataTableObjeto
             $conn = new Conexion();
             $conexion = $conn->abrirConexionDB();
             $query = "DELETE FROM tbl_MS_Objetos WHERE id_Objeto = '$id_Objeto' 
-                AND '$objeto' NOT IN('LOGIN.PHP','CONFIGRESPUESTAS.PHP', 'V_NUEVACONTRASENIA.PHP', 'PREGUNTASRESPONDER.PHP', 'INDEX.PHP');";
+                AND '$objeto' NOT IN('LOGIN.PHP','CONFIGRESPUESTAS.PHP', 'V_NUEVACONTRASENIA.PHP', 'PREGUNTASRESPONDER.PHP', 'INDEX.PHP',
+                 'GESTIONPERFILUSUARIO.PHP', 'EDITARPERFILUSUARIO.PHP', 'GESTIONPERFILCONTRASENIA.PHP');";
             $estadoEliminado = sqlsrv_query($conexion, $query);
             if ($estadoEliminado === false) {
                 return false;

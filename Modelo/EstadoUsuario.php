@@ -29,8 +29,8 @@ class EstadoUsuario{
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
         $estadoInsert = false;
-        $query = "INSERT INTO tbl_Estado_Usuario (descripcion, Creado_Por, Fecha_Creacion) 
-        VALUES  ('$estado', '$usuario', GETDATE());";
+        $query = "INSERT INTO tbl_Estado_Usuario (descripcion, Creado_Por, Fecha_Creacion, Modificado_Por, Fecha_Modificacion) 
+        VALUES  ('$estado', '$usuario', GETDATE(), '$usuario', GETDATE());";
         if(sqlsrv_rows_affected(sqlsrv_query($conexion, $query)) > 0){
             $estadoInsert = true;
         }

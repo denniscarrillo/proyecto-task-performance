@@ -27,7 +27,7 @@ if (isset($_SESSION['usuario'])) {
     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionVenta.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['fallido'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a vista de ventas';
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a mantenimiento ventas';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     /* ===============================================================================================================*/
     header('location: ../../v_errorSinPermiso.php');
@@ -52,10 +52,10 @@ if (isset($_SESSION['usuario'])) {
     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionVenta.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['income'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a vista de ventas';
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a mantenimiento ventas';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     $_SESSION['objetoAnterior'] = 'gestionVenta.php';
-    $_SESSION['descripcionObjeto'] = 'vista de ventas';
+    $_SESSION['descripcionObjeto'] = 'mantenimiento ventas';
     /* =======================================================================================*/
   }
 } else {
@@ -138,7 +138,7 @@ if (isset($_SESSION['usuario'])) {
           </div>
           <div class="titulo">
             <H2 class="title-dashboard-task"
-              id="<?php echo ControladorBitacora::obtenerIdObjeto('GESTIONVENTA.PHP');?>">Ventas</H2>
+              id="<?php echo ControladorBitacora::obtenerIdObjeto('GESTIONVENTA.PHP');?>">GESTIÓN VENTAS</H2>
           </div>
         </div>
         <div class="table-conteiner">
