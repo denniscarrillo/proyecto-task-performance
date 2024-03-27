@@ -129,7 +129,7 @@ if (isset($_SESSION['usuario'])) {
               class="fa-solid fa-kitchen-set icon-size"></i>
             <p>Artículos</p>
           </a>
-          <a class="card-link" href="crud/cliente/gestionCliente.php"><i class="fa-solid fa-user-group icon-size"></i>
+          <a class="card-link" href="crud/carteraCliente/gestionCarteraClientes.php"><i class="fa-solid fa-user-group icon-size"></i>
             <p>Clientes</p>
           </a>
         </div>
