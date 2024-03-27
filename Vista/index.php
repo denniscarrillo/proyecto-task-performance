@@ -13,8 +13,6 @@ if (isset($_SESSION['usuario'])) {
   if (isset($_SESSION['objetoAnterior'])) {
     /* =============================== Evento salio del objeto. ============================*/
     $accion = ControladorBitacora::accion_Evento();
-    date_default_timezone_set('America/Tegucigalpa');
-    $newBitacora->fecha = date("Y-m-d h:i:s");
     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['Exit'];
@@ -24,8 +22,6 @@ if (isset($_SESSION['usuario'])) {
   }
   /* ========================= Capturar evento inicio sesión. =============================*/
   $accion = ControladorBitacora::accion_Evento();
-  date_default_timezone_set('America/Tegucigalpa');
-  $newBitacora->fecha = date("Y-m-d h:i:s");
   $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('index.php');
   $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
   $newBitacora->accion = $accion['income'];
