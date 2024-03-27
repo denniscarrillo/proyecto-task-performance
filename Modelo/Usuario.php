@@ -671,7 +671,7 @@ class Usuario {
         $query = "SELECT id_Objeto, permiso_Consultar FROM tbl_MS_Permisos WHERE id_Rol = '$idRolUser' and id_Objeto = '$id_Objeto';";
         $resultado = sqlsrv_query($conexion, $query);
        $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
-       if(isset($fila['permiso_Consultar']) && $fila['permiso_Consultar'] == 'Y'){
+       if(isset($fila['permiso_Consultar']) && $fila['permiso_Consultar'] == 'S'){
             $permitido = true;
         }
         sqlsrv_close($conexion); #Cerramos la conexión.

@@ -158,7 +158,6 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
   <!-- Scripts propios -->
-
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
