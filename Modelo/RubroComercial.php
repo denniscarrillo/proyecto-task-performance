@@ -8,12 +8,14 @@ public $FechaCreacion;
 
 
 public static function obtenerTodosLosRubrosComerciales(){
-    $rubroComercial = array();
+    $rubroComercial = null;
     try{
+        $rubroComercial= array();
         $conn = new Conexion();
         $abrirConexion = $conn->abrirConexionDB();
         $query = "SELECT id_rubro_Comercial, rubro_Comercial, descripcion FROM tbl_rubro_Comercial;";
         $obtenerRazonSocial = sqlsrv_query($abrirConexion, $query);
+        $rubroComercial = array();
         //Recorremos el resultado de tareas y almacenamos en el arreglo.
         while ($fila = sqlsrv_fetch_array( $obtenerRazonSocial, SQLSRV_FETCH_ASSOC)) {
             $rubroComercial[] = [
@@ -66,16 +68,16 @@ public static function eliminarRubroComercial($idRubroComercial){
     try{
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $estadoEliminado = false;
         $query = "DELETE FROM tbl_rubro_Comercial WHERE id_rubro_Comercial = '$idRubroComercial';";
-        if(sqlsrv_rows_affected(sqlsrv_query($conexion, $query)) > 0){
-            $estadoEliminado = true;
+        $estadoEliminado = sqlsrv_query($conexion, $query);
+            if(!$estadoEliminado) {
+                return false;
+            }
+            sqlsrv_close($conexion); //Cerrar conexion
+            return true;
+        }catch (Exception $e) {
+            $estadoEliminado = 'Error SQL:' . $e;
         }
-    } catch (Exception $e) {
-        echo 'Error SQL:' . $e;
-    }
-    sqlsrv_close($conexion); //Cerrar conexion
-    return $estadoEliminado;
 }
 public static function RubroComercialExistente($rubroComercial){
     $existeRubroComercial = false;

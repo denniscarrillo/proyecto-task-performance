@@ -55,7 +55,7 @@ $("#form_Articulo").submit(function (e) {
   let Articulo = $("#Articulo").val();
   let Detalle = $("#Detalle").val();
   let Marca = $("#Marca").val();
-
+console.log(estadoValidado);
   if (estadoValidado) {
     $.ajax({
       url: "../../../Vista/crud/articulo/nuevoArticulo.php",
@@ -113,8 +113,9 @@ $("#form_EditarArticulo").submit(function (e) {
     Articulo = $("#A_Articulo").val(),
     Detalle = $("#A_Detalle").val(),
     Marca = $("#A_Marca").val();
-
+    console.log(estadoValido);
   if (estadoValido) {
+    
     $.ajax({
       url: "../../../Vista/crud/articulo/editarArticulo.php",
       type: "POST",
@@ -154,7 +155,7 @@ $(document).on("click", "#btn_eliminar", function () {
         url: "../../../Vista/crud/articulo/eliminarArticulo.php",
         type: "POST",
         datatype: "json",
-        data: { codArticulo: codArticulo },
+        data: { codArticulo: codArticulo},
         success: function (data) {
           if (JSON.parse(data).estadoEliminado) {
             Swal.fire("Eliminado!", "El artículo ha sido eliminado", "success");

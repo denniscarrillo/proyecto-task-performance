@@ -187,7 +187,7 @@ let limpiarForm = () => {
   let razonSocial = document.getElementById("razonSocial"),
     descripcion = document.getElementById("descripcion");
   //Vaciar campos cliente
-  razonSocial.value = "";
+  razonSocial.value = "",
   descripcion.value = "";
 };
 
