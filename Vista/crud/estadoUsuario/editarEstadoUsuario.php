@@ -18,15 +18,12 @@
         $editarEstado->modificadoPor = $_SESSION['usuario'];
         ControladorEstadoUsuario::editarEstadoU($editarEstado);
         /* ========================= Evento Editar Usuario. ======================*/
-        // $newBitacora = new Bitacora();
-        // $accion = ControladorBitacora::accion_Evento();
-        // date_default_timezone_set('America/Tegucigalpa');
-        // $newBitacora->fecha = date("Y-m-d h:i:s"); 
-        // $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionMetricas.php');
-        // $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-        // $newBitacora->accion = $accion['Update'];
-        // $metrica = ControladorMetricas::obtenerNombreMetrica($_POST['idMetrica']);
-        // $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' modificó la métrica '.$metrica.' a '.$_POST['meta'];
-        // ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+        $newBitacora = new Bitacora();
+        $accion = ControladorBitacora::accion_Evento();
+        $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('GESTIONESTADOUSUARIO.PHP');
+        $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+        $newBitacora->accion = $accion['Update'];
+        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' actualizó la descripción del estado usuario #'.$_POST['idEstadoU'].' '.$_POST['descripcion'];
+        ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
         /* =======================================================================================*/
     }

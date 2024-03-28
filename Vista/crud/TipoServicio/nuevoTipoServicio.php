@@ -13,18 +13,16 @@
         $user = $_SESSION['usuario'];
         $nuevoTipoServicio = new TipoServicio();
         $nuevoTipoServicio->servicio_Tecnico = $_POST['servicio_Tecnico'];
-        $nuevoTipoServicio->creadoPor = $user;
+        $nuevoTipoServicio->CreadoPor = $user;
+        $nuevoTipoServicio->ModificadoPor = $user;
         ControladorTipoServicio::ingresarNuevoTipoServicio($nuevoTipoServicio);
          /* ========================= Evento Creacion tipo servicio. ==================================*/
        $newBitacora = new Bitacora();
        $accion = ControladorBitacora::accion_Evento();
-       date_default_timezone_set('America/Tegucigalpa');
-       $newBitacora->fecha = date("Y-m-d h:i:s"); 
        $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionTipoServicio.php');
        $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($user);
        $newBitacora->accion = $accion['Insert'];
-       $newBitacora->descripcion = 'El usuario '.$user.' creó el nuevo tipo servicio '.$_POST['servicio_Tecnico'];
+       $newBitacora->descripcion = 'El usuario '.$user.' creó el tipo servicio '.$_POST['servicio_Tecnico'];
        ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
        /* =======================================================================================*/
     }
-?>

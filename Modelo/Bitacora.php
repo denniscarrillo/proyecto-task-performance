@@ -36,7 +36,7 @@
                 'Update' => 'Actualizar',
                 'Delete' => 'Eliminar',
                 'Report' => 'Generar reporte',
-                'tryDelete' => 'intentar eliminar',
+                'tryDelete' => 'Intentar eliminar',
                 'Login'  => 'Iniciar Sesión',
                 'BloqueoPreguntas' => 'Recup. contraseña',
                 'Logout'  => 'Cerrar sesión',

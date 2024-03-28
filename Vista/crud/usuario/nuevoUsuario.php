@@ -20,23 +20,19 @@
         $nuevoUsuario->idRol = $_POST['idRol'];
         $nuevoUsuario->idEstado = 1;
         $nuevoUsuario->preguntasContestadas = 0;
-        date_default_timezone_set('America/Tegucigalpa');
-        $nuevoUsuario->fechaCreacion = date("Y-m-d h:i:s");
         $nuevoUsuario->creadoPor = $user;
-        $nuevoUsuario->fechaV = $_POST['fechaV'];        
+        $nuevoUsuario->fechaV = $_POST['fechaV'];
+        $nuevoUsuario->modificadoPor = $user;  
         ControladorUsuario::registroUsuario($nuevoUsuario);
         ControladorUsuario::respaldarContrasenia($user, $_POST['usuario'], $nuevoUsuario->contrasenia, 2);
         enviarCorreoNuevoUsuario($nuevoUsuario->correo, $nuevoUsuario->usuario, $_POST['contrasenia']);
         /* ========================= Evento Creacion nuevo Usuario. ======================*/
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();
-        date_default_timezone_set('America/Tegucigalpa');
-        $newBitacora->fecha = date("Y-m-d h:i:s"); 
         $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionUsuario.php');
         $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($user);
         $newBitacora->accion = $accion['Insert'];
-        $newBitacora->descripcion = 'El usuario '.$user.' creó usuario '.$_POST['usuario'];
+        $newBitacora->descripcion = 'El usuario '.$user.' creó al usuario '.$_POST['usuario'];
         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
         /* =======================================================================================*/
     }
-?>

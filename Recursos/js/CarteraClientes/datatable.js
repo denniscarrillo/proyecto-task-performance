@@ -42,7 +42,24 @@ let procesarPermisoActualizar = (data) => {
       },
     ],
   });
+  let filtro = document.querySelector('input[type=search]');
 };
+
+$(document).on("focusout", "input[type=search]", function (e) {
+  let filtro = $(this).val();
+  capturarFiltroDataTable(filtro);
+});
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim()){
+    $.ajax({
+      url: "../../../Vista/crud/carteraCliente/registrarBitacoraFiltroCarteraCliente.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
 
 //Crear nuevo usuario
 $("#form-carteraCliente").submit(function (e) {
@@ -69,7 +86,7 @@ $("#form-carteraCliente").submit(function (e) {
         //Mostrar mensaje de exito
         Swal.fire(
           "Registrado!",
-          "Se le ha enviado un correo al usuario!",
+          "El cliente ha sido registrado.",
           "success"
         );
         tablaCarteraClientes.ajax.reload(null, false);
@@ -250,6 +267,7 @@ $(document).on("click", "#btn_eliminar", function () {
         data: {
           rtn: rtn,
           carteraCliente: carteraCliente,
+          nombreCliente: nombreCliente,
         },
         success: function (data) {
           if (!JSON.parse(data).estado) {

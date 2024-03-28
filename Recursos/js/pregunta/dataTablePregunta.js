@@ -43,6 +43,18 @@ $(document).on("focusout", "input[type=search]", function (e) {
   let filtro = $(this).val();
   capturarFiltroDataTable(filtro);
 });
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim()){
+    $.ajax({
+      url: "../../../Vista/crud/pregunta/registrarBitacoraFiltroPregunta.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
+
 
 //Peticion  AJAX que trae los permisos
 let obtenerPermisos = function ($idObjeto, callback) {
@@ -250,13 +262,4 @@ $(document).on("click", "#btn_Pdf", function () {
     "_blank"
   );
 });
-const capturarFiltroDataTable = function(filtro){
-  $.ajax({
-    url: "../../../Vista/crud/pregunta/registrarBitacoraFiltro.php",
-    type: "POST",
-    data: {
-      filtro: filtro
-    }
-  })
-}
 

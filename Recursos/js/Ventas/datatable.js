@@ -43,7 +43,24 @@ let procesarPermisoActualizar = (data) => {
       },
     ],
   });
+  let filtro = document.querySelector('input[type=search]');
 };
+
+$(document).on("focusout", "input[type=search]", function (e) {
+  let filtro = $(this).val();
+  capturarFiltroDataTable(filtro);
+});
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim()){
+    $.ajax({
+      url: "../../../Vista/crud/estadoUsuario/registrarBitacoraFiltroEstadoUsuario.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
 
 //Peticion  AJAX que trae los permisos
 let obtenerPermisos = function ($idObjeto, callback) {
@@ -120,7 +137,9 @@ $(document).on("click", "#btn_editar", function () {
 
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
-    factura = $(this).closest("tr").find("td:eq(0)").text(); //capturo el ID
+    factura = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
+    cliente = $(this).closest("tr").find("td:eq(1)").text(),
+    rtn = $(this).closest("tr").find("td:eq(2)").text();
   Swal.fire({
     title: "Estas seguro de eliminar la venta #" + factura + "?",
     text: "No podras revertir esto!",
@@ -135,7 +154,11 @@ $(document).on("click", "#btn_eliminar", function () {
         url: "../../../Vista/crud/Venta/eliminarVenta.php",
         type: "POST",
         datatype: "json",
-        data: { numFactura: factura },
+        data: { 
+          numFactura: factura,
+          nombreCliente: cliente,
+          rtnCliente: rtn,
+        },
         success: function (data) {
           if (JSON.parse(data).estadoEliminado) {
             Swal.fire("Eliminado!", "La venta ha sido eliminada", "success");
