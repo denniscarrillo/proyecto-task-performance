@@ -137,7 +137,7 @@ $(document).on("click", "#btn_editar", function () {
 
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
-    factura = $(this).closest("tr").find("td:eq(0)").text();, //capturo el ID
+    factura = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
     cliente = $(this).closest("tr").find("td:eq(1)").text(),
     rtn = $(this).closest("tr").find("td:eq(2)").text();
   Swal.fire({
