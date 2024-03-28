@@ -18,7 +18,7 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
-    fnCreatedRow: function( rowEl, data) {
+    fnCreatedRow: function(rowEl, data) {
       $(rowEl).attr('id', data['idEstado']);
     },
     columns: [
@@ -42,7 +42,24 @@ let procesarPermisoActualizar = (data) => {
       },
     ],
   });
+  let filtro = document.querySelector('input[type=search]');
 };
+$(document).on("focusout", "input[type=search]", function (e) {
+  let filtro = $(this).val();
+  capturarFiltroDataTable(filtro);
+});
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim()){
+    $.ajax({
+      url: "../../../Vista/crud/estadoUsuario/registrarBitacoraFiltroEstadoUsuario.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
+
 //Peticion  AJAX que trae los permisos
 let obtenerPermisos = function ($idObjeto, callback) {
   $.ajax({
@@ -88,11 +105,20 @@ $(document).on("click", "#btn_editar", function () {
     
   let inputId = document.getElementById('idEstado');
   inputId.setAttribute("class", idEstadoU);
-  $("#E_idEstadoU").val(itemEstado);
-  $("#E_descripcion").val(descripcion);
-  $(".modal-header").css("background-color", "#007bff");
-  $(".modal-header").css("color", "white");
-  $("#modalEditarEstadoU").modal("show");
+    const estado = ['NUEVO', 'ACTIVO', 'INACTIVO', 'BLOQUEADO'];
+  if(estado.includes(descripcion)){
+    Swal.fire(
+      "No permitido!",
+      "El estado no puede ser editado",
+      "error"
+    );
+  }else {
+    $("#E_idEstadoU").val(itemEstado);
+    $("#E_descripcion").val(descripcion);
+    $(".modal-header").css("background-color", "#007bff");
+    $(".modal-header").css("color", "white");
+    $("#modalEditarEstadoU").modal("show");
+  }
 });
 
 $("#formEditEstadoU").submit(function (e) {
@@ -100,8 +126,8 @@ $("#formEditEstadoU").submit(function (e) {
   //Obtener datos del nuevo Cliente
   let inputId = document.getElementById('idEstado'),
     descripcion = $("#E_descripcion").val();
-  
   let idEstado = inputId.getAttribute("class");
+  
   if (estadoValido) {
     $.ajax({
       url: "../../../Vista/crud/estadoUsuario/editarEstadoUsuario.php",
@@ -130,7 +156,6 @@ $("#formEditEstadoU").submit(function (e) {
 $(document).on("click", "#btn_eliminar", function () {
   let idEstadoU = $(this).closest("tr").attr("id"), //Capturar el id,
     descripcion = $(this).closest("tr").find("td:eq(1)").text();
-    console.log(idEstadoU);
   Swal.fire({
     title: "Estas seguro de eliminar el estado " + descripcion + "?",
     text: "No podras revertir esto!",
@@ -147,6 +172,7 @@ $(document).on("click", "#btn_eliminar", function () {
         datatype: "json",
         data: {
           idEstadoU: idEstadoU,
+          estado: descripcion
         },
         success: function (data) {
           if (JSON.parse(data).estadoEliminado) {

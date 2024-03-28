@@ -9,8 +9,9 @@
     session_start();
     if(isset($_SESSION['usuario'])){
         $user = $_SESSION['usuario'];
-        if(isset($_POST['fechaDesde']) && isset($_POST['$fechaHasta'])){
-            ControladorBitacora::depurarBitacoraSistema($_POST['fechaDesde'], $_POST['$fechaHasta']);
+        if(isset($_POST['fechaDesde']) && isset($_POST['fechaHasta'])){
+            $estado = ControladorBitacora::depurarBitacoraSistema($_POST['fechaDesde'], $_POST['fechaHasta']);
+            print json_encode($estado);
         }
         /* ========================= Evento Creacion pregunta. ==================================*/
     //    $newBitacora = new Bitacora();

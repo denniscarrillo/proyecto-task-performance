@@ -14,12 +14,11 @@
         $insertarPregunta->pregunta = ($_POST['pregunta']);
         $insertarPregunta->estadoPregunta = "ACTIVA";
         $insertarPregunta->CreadoPor = $user;
+        $insertarPregunta->ModificadoPor = $user;
         ControladorPregunta::agregarPregunta($insertarPregunta);
         /* ========================= Evento Creacion pregunta. ==================================*/
        $newBitacora = new Bitacora();
        $accion = ControladorBitacora::accion_Evento();
-       date_default_timezone_set('America/Tegucigalpa');
-       $newBitacora->fecha = date("Y-m-d h:i:s"); 
        $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionPregunta.php');
        $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($user);
        $newBitacora->accion = $accion['Insert'];
@@ -27,8 +26,6 @@
        ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
        /* =======================================================================================*/
     }
-
-?>
 
 
 

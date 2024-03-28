@@ -180,7 +180,7 @@ let obtenerTareas = ($elemento, $contador, tipoTarea) => {
               <div class="conteiner-icons-task">
               <p style="margin-right: 3rem; font-size: 14px;"> Hace ${tarea.diasAntiguedad} días</p>
               <div>
-                <a href="#" class="btn-vendedor btn-vendedores" data-bs-toggle="modal" data-bs-target="#modalVendedores" id="${tarea.id}"><i class="fa-solid-btn fa-solid fa-user-plus"></i></a>
+                <a href="#" class="btn-vendedor btn-vendedores" data-bs-target="#modalVendedores" id="${tarea.id}"><i class="fa-solid-btn fa-solid fa-user-plus"></i></a>
               </div>
               <div>
                 <a href="../../../Vista/rendimiento/v_editarTarea.php?idTarea=${tarea.id}" class="btn-editar"><i class="fa-solid-btn fa-solid fa-pen-to-square"></i></a>
@@ -207,7 +207,7 @@ let crearNuevaTarea = ($contenedor, $idConteinerForm, $idForm, $placeholder, $ta
     newFormulario.innerHTML = `
       <form action="" method="" id="${$idForm}" class="new-form">
         <div class="data-container">
-        <textarea id="title-task" class="input-title" placeholder="${$placeholder}"></textarea>
+        <textarea id="titulo-tarea" class="input-title" placeholder="${$placeholder}"></textarea>
         <p class="mensaje"></p>
         </div>
         <div class="btns">
@@ -230,22 +230,23 @@ let cerrarFormTarea = ($elementoPadre, $elementoCerrar) => {
   $elementoPadre.removeChild($elementoCerrar);
 }
 let guardarTarea = ($btnGuardar, $tarea, $actualizarTarea, $elementoPadre, $elementoCerrar) => {
-  document.getElementById('title-task').addEventListener('keyup', () =>{
-    let titulo =  document.getElementById('title-task').value.toUpperCase();
-    document.getElementById('title-task').value =  titulo;
+  let $titulo =  document.getElementById('titulo-tarea');
+  $titulo.addEventListener('input', () => {
+    funciones.convertirAMayusculasVisualmente($titulo)
+    validarInputTitulo($titulo);
   })
   funciones.limitarCantidadCaracteres('title-task', 50);
   //Agregamos el evento click al boton de guardar tarea
   $btnGuardar.addEventListener('click', function (e) {
     e.preventDefault();
     //Validaciones textArea
-    validarInputTitulo(document.getElementById('title-task'));
+    validarInputTitulo($titulo);
     //Si cumple las validaciones dejara crear la tarea
     if(document.querySelectorAll('.mensaje_error').length == 0){
-      let titulo = document.getElementById('title-task').value;
+      let titulo = document.getElementById('titulo-tarea').value;
       let tarea = null;
-      if (document.getElementById('title-task').value.trim() == '' || document.getElementById('title-task').value.trim() == null) {
-        document.getElementById('title-task').setAttribute('placeholder', 'Debe poner un titulo!');
+      if (document.getElementById('titulo-tarea').value.trim() === '' || document.getElementById('titulo-tarea').value.trim() == null) {
+        document.getElementById('titulo-tarea').setAttribute('placeholder', 'Debe poner un titulo!');
       } else {
         if ($btnGuardar.getAttribute('id') == $tarea) {
           const str = $btnGuardar.getAttribute('id').split('-');
@@ -253,7 +254,7 @@ let guardarTarea = ($btnGuardar, $tarea, $actualizarTarea, $elementoPadre, $elem
         }
         let objTarea = {
           tipoTarea: tarea,
-          titulo: titulo,
+          titulo: titulo.toUpperCase()
         }
         $.ajax({
           url: "../../../Vista/rendimiento/nuevaTarea.php",
@@ -294,51 +295,67 @@ let guardarTarea = ($btnGuardar, $tarea, $actualizarTarea, $elementoPadre, $elem
 $(document).on('click', '.btn-vendedor', function () {
   $idTarea = this.getAttribute('id'); //Obtenemos el id de la tara que se le van a agregar los vendedores
   obtenerVendedores($idTarea);
-  console.log($idTarea);
 });
+
 let obtenerVendedores = function () {
-  console.log($idTarea);
+  if(document.getElementById('table-Vendedores_wrapper') !== null) {
+    tableVendedor.destroy();
+  }
   if (document.getElementById('table-Vendedores_wrapper') == null) {
     tableVendedor = $('#table-Vendedores').DataTable({
-      "ajax": {
-        "url": "../../../Vista/rendimiento/obtenerVendedores.php",
-        "type": "POST",
-        "data": {
-          "idTarea": $idTarea 
+      ajax: {
+        url: "../../../Vista/rendimiento/obtenerVendedores.php",
+        type: "post",
+        data: {
+          idTarea: $idTarea 
         },
-        "dataSrc": "",
+        dataSrc: function (data) {
+          if(data.length < 1) {
+            Toast.fire({
+              icon: 'error',
+              title: 'Vendedores no disponibles',
+              timer: 2000,
+              timerProgressBar: true,
+            });
+            return data.length
+          } else {
+            $('#modalVendedores').modal('show');
+            return data
+          }
+        } 
       },
-      "language": {
+      fnCreatedRow: function(rowEl) {
+        $(rowEl).attr('class', 'addVendedor')
+      },
+      language: {
         "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
       },
-      "columns": [
-        { "data": 'id' },
-        { "data": 'usuario' },
-        { "data": 'nombre' },
+      columns: [
+        { data: 'id' },
+        { data: 'usuario' },
+        { data: 'nombre' },
         {
-          "defaultContent":
+          defaultContent:
             '<div><button class="btns btn btn_select-Vendedores"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>'
         }
       ]
     });
   }
 }
-$(document).on('click', '.btn_select-Vendedores', function () {
-  selectVendedores(this);
+$(document).on('click', '.addVendedor', function (e) {
+  $(this).find("button")[0].classList.toggle("select-vendedor");
+  e.currentTarget.classList.toggle("vendedor-selected");
 });
+
 $(document).on('click', '#btn_agregarVendedores', function () {
   //Tiendiendo los vendedores y el idTarea enviamos los datos al servidor
   agregarVendedores($idTarea);
 });
-let selectVendedores = function ($elementoHtml) {
-  $elementoHtml.classList.toggle('select-vendedor');
-}
+
 //Guardamos los vendedores que se desean agregar a una tarea
 let agregarVendedores = function ($id_Tarea) {
   let $Vendedores = [];
   let vendedoresSeleccionados = document.querySelectorAll('.select-vendedor');
-  console.log(vendedoresSeleccionados);
-  console.log(vendedoresSeleccionados.length);
   if(vendedoresSeleccionados.length > 0){
     vendedoresSeleccionados.forEach(function (vendedor) {
       if (vendedor.classList.contains('select-vendedor')) {
@@ -362,7 +379,7 @@ let agregarVendedores = function ($id_Tarea) {
           $('#modalVendedores').modal('hide');
           Toast.fire({
             icon: 'success',
-            title: 'Los vendedores han sido agregados en la tarea #'+$id_Tarea,
+            title: 'Vendedor(es) agregado(s) en la tarea #'+$id_Tarea,
           });
           tableVendedor.destroy();
       }

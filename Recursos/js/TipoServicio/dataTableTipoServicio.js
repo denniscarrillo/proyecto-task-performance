@@ -36,7 +36,25 @@ let procesarPermisoActualizar = (data) => {
       },
     ],
   });
+  let filtro = document.querySelector('input[type=search]');
 };
+
+$(document).on("focusout", "input[type=search]", function (e) {
+  let filtro = $(this).val();
+  capturarFiltroDataTable(filtro);
+});
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim()){
+    $.ajax({
+      url: "../../../Vista/crud/estadoUsuario/registrarBitacoraFiltroEstadoUsuario.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
+
 //Peticion  AJAX que trae los permisos
 let obtenerPermisos = function ($idObjeto, callback) {
   $.ajax({
@@ -176,6 +194,7 @@ $(document).on("click", "#btn_eliminar", function () {
         datatype: "json",
         data: {
           idTipoServico: idTipoServico,
+          servicio: Servicio,
         },
         success: function (data) {
           console.log(JSON.parse(data).estadoEliminado);

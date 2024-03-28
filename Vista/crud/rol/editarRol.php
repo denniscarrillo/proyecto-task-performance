@@ -17,12 +17,10 @@
         /* ========================= Evento Editar rol. ====================================*/
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();
-        date_default_timezone_set('America/Tegucigalpa');
-        $newBitacora->fecha = date("Y-m-d h:i:s"); 
         $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionRol.php');
         $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
         $newBitacora->accion = $accion['Update'];
-        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' modificó el rol '.$_POST['rol'];
+        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' actualizó la descripción del rol #'.$_POST['idRol'].' '.$_POST['rol'];
         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
         /* =======================================================================================*/
     }

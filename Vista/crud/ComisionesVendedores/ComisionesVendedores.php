@@ -163,9 +163,9 @@ if (isset($_SESSION['usuario'])) {
             <table class="display nowrap table" id="table-ComisionVendedor" style="width:100%">
               <thead>
                 <tr>
-                  <th scope="col">NO. COMISIÓN VENDEDOR</th>
-                  <th scope="col">NO. COMISIÓN</th>
-                  <th scope="col">NO. VENDEDOR</th>
+                  <th scope="col">No. COMISIÓN VENDEDOR</th>
+                  <th scope="col">No. COMISIÓN</th>
+                  <th scope="col">No. VENDEDOR</th>
                   <th scope="col">VENDEDOR</th>
                   <th scope="col">COMISIÓN TOTAL</th>
                   <th scope="col">ESTADO </th>

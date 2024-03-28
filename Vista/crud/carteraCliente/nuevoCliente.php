@@ -19,17 +19,15 @@
         $nuevoCliente->direccion = $_POST['direccion'];
         $nuevoCliente->estadoContacto = 'EN PROCESO';
         $nuevoCliente->CreadoPor = $user;
+        $nuevoCliente->$modificadoPor = $user;
         ControladorCarteraClientes::registroCliente($nuevoCliente);
        /* ========================= Evento Creacion cartera cliente. =============================*/
        $newBitacora = new Bitacora();
        $accion = ControladorBitacora::accion_Evento();
-       date_default_timezone_set('America/Tegucigalpa');
-       $newBitacora->fecha = date("Y-m-d h:i:s"); 
        $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionCarteraClientes.php');
        $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($user);
        $newBitacora->accion = $accion['Insert'];
-       $newBitacora->descripcion = 'El usuario '.$user.' creó al nuevo cliente '.$_POST['nombre'];
+       $newBitacora->descripcion = 'El usuario '.$user.' creó al cliente '.$_POST['nombre'].'con RTN'.$_POST['rtn'];
        ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
        /* =======================================================================================*/
     }
-?>

@@ -120,7 +120,7 @@ if (isset($_SESSION['usuario'])) {
         $urlParametros = '../parametro/gestionParametro.php';
         $urlPermisos = '../permiso/gestionPermisos.php';
         $urlRoles = '../rol/gestionRol.php';
-        $urlServiciosTecnicos = './gestionTipoServicio.php';
+        $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
         $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
         $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
         $urlPerfilUsuario = '../PerfilUsuario/gestionPerfilUsuario.php';

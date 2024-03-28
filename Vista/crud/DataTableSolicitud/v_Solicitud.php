@@ -145,7 +145,7 @@ if (isset($_SESSION['usuario'])) {
         </div>
 
         <div class="form-conteiner">
-          <div class="form-element">
+          <!-- <div class="form-element">
             <label class="titulo-radios">Tipo de Cliente: </label>
             <div class="radio-conteiner-s">
             <div class="radio-conteiner-existente">
@@ -157,13 +157,13 @@ if (isset($_SESSION['usuario'])) {
                 <label for="clientenuevo" id="radioCliente" class="radio-label-solicitud">Nuevo</label>
               </div>
             </div>
-          </div>
+          </div> -->
           <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post" id="form-solicitud">
 
             <div class="group-form">
               <div class="form-element input-conteiner" id="containerFacturacliente">
                 <label for="id-factura" class="form-label">N° Factura:</label>
-                <input type="text" id="idfactura" name="numeroFactura" class="form-control"  placeholder="N° Factura" readonly>
+                <input type="text" id="idfactura" name="numeroFactura" class="form-control"  placeholder="N° Factura" disabled>
                 <p class="mensaje"></p>
               </div>
               <div class="form-element input-conteiner" id="containerrtncliente">
@@ -178,7 +178,7 @@ if (isset($_SESSION['usuario'])) {
               </div>
               <div class="form-element input-conteiner">
                 <label for="telefono" class="form-label">Teléfono:</label>
-                <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Teléfono" disabled>
+                <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Teléfono" >
                 <p class="mensaje"></p>
               </div>
               <div class="form-element input-conteiner" id="containerCorreocliente">
@@ -206,12 +206,12 @@ if (isset($_SESSION['usuario'])) {
 
               <div class="form-element input-conteiner">
                 <label for="direccion" class="form-label">Ubicación instalación:</label>
-                <input type="text" id="direccion" name="ubicacionInstalacion" class="form-control" placeholder="Ubicación instalación" disabled>
+                <input type="text" id="direccion" name="ubicacionInstalacion" class="form-control" placeholder="Ubicación instalación" >
                 <p class="mensaje"></p>
               </div>
               <div class="form-element input-conteiner">
                 <label for="descripcion" class="form-label">Descripción De Servicios:</label>
-                <textarea type="text" id="descripcion" name="descripcion" class="form-control" placeholder="Descripción" disabled></textarea>
+                <textarea type="text" id="descripcion" name="descripcion" class="form-control" placeholder="Descripción" ></textarea>
                 <p class="mensaje"></p>
               </div>
             </div>

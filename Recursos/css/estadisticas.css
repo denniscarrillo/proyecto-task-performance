@@ -47,6 +47,7 @@ legend {
   display: block;
   min-width: 8rem;
   width: 10%;
+  background-color:rgb(153, 37, 5) !important;
 }
 .filtro-PorVendedor {
   min-height: 100%;

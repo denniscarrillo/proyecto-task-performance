@@ -114,7 +114,7 @@ require_once('../../Controlador/ControladorParametro.php');
                 <p class="circle-count" id="circle-count-cotizaciones"></p>
               </div>
               <button type="button" class="btn_nuevaTarea btn btn-primary btn_nuevoRegistro hidden"
-                id="btn-NuevaCotizacion">+ Nueva Cotizacion</button>
+                id="btn-NuevaCotizacion">+ Nueva cotización</button>
               <div class="container_tarea dragged-conteiner" id="conteiner-cotizacion">
                 <!-- Aqui van las tareas leads -->
               </div>
@@ -127,7 +127,7 @@ require_once('../../Controlador/ControladorParametro.php');
                 <p class="circle-count" id="circle-count-ventas"></p>
               </div>
               <button type="button" class="btn_nuevaTarea btn btn-primary btn_nuevoRegistro hidden"
-                id="btn-NuevaVenta">+ Nueva Venta</button>
+                id="btn-NuevaVenta">+ Nueva venta</button>
               <div class="container_tarea dragged-conteiner" id="conteiner-venta">
                 <!-- Aqui van las tareas tipo ventas -->
               </div>

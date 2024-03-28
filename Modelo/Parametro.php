@@ -5,6 +5,7 @@ class Parametro
     public $idParametro;
     public $parametro;
     public $valor;
+    public $descripcion;
     public $idUsuario;
     public $creadoPor;
     public $FechaCreacion;
@@ -50,9 +51,7 @@ class Parametro
             $descripcion = $nuevoParametro->descripcion;
             $usuario = $nuevoParametro->idUsuario;
             $ModificadoPor = $nuevoParametro->ModificadoPor;
-            date_default_timezone_set('America/Tegucigalpa');
-            $fechaModificacion = date("Y-m-d");
-            $query = "UPDATE tbl_ms_parametro SET parametro='$parametro', valor='$valor', descripcion = '$descripcion', id_Usuario='$usuario', Modificado_Por='$ModificadoPor', Fecha_Modificacion='$fechaModificacion'  WHERE id_Parametro='$id' ";
+            $query = "UPDATE tbl_ms_parametro SET parametro='$parametro', valor='$valor', descripcion = '$descripcion', id_Usuario='$usuario', Modificado_Por='$ModificadoPor', GETDATE()  WHERE id_Parametro='$id' ";
             $nuevoParametro = sqlsrv_query($abrirConexion, $query);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;
