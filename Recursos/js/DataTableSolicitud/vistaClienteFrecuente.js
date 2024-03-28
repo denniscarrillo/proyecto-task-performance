@@ -1,150 +1,9 @@
 import {estadoValidado as valido } from './validacionesNuevaSolicitud.js';
 
 
-$(document).on('click', '#clienteExistente', function () {
-  obtenerClientes();
-  obtenerCarteraCliente();
- // $("#modalClienteFrecuente").modal("show");
 
- let correoCliente = document.getElementById('containerCorreocliente');
- correoCliente .setAttribute('hidden', 'false');
-
- let Factura  = document.getElementById('containerFacturacliente');
- Factura .removeAttribute('hidden');
- containerFacturacliente.style.display = 'block';
-
-});
-
-$(document).on('click', '#clientenuevo', function () {
-
-  let correoCliente = document.getElementById('containerCorreocliente');
-  correoCliente.removeAttribute('hidden');
-  containerCorreocliente.style.display = 'block';
- 
-  let Factura = document.getElementById('containerFacturacliente');
-  Factura.setAttribute('hidden', 'false');
-});
-
-
-let obtenerClientes = function () {
-  if (document.getElementById('table-ClienteFrecuente_wrapper') == null) {
-    $('#table-ClienteFrecuente').DataTable({
-      "ajax": {
-        "url": "../../../Vista/crud/DataTableSolicitud/obtenerClientesFrecuentes.php",
-        "dataSrc": ""
-      },
-      "language": {
-        "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
-      },
-      "columns": [
-        { "data": "codCliente" },
-        { "data": 'nombre' },
-        { "data": 'rtn' },
-        { "data": 'telefono' },
-        { "data": 'direccion' },
-        {
-          "defaultContent":
-            '<div><button class="btns btn" id="btn_selectcliente"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>'
-        }
-      ]
-    });
-  }
-}
-
-$(document).on("click", "#btn_selectcliente", function () {
-  let fila = $(this).closest("tr");
-  let codCliente = fila.find("td:eq(0)").text();
-  let nombreCliente = fila.find("td:eq(1)").text();
-  let rtnCliente = fila.find("td:eq(2)").text();
-  let telefonoCliente = fila.find("td:eq(3)").text();
-  let direccionCliente = fila.find("td:eq(4)").text();
-
-  let nombre = document.getElementById("nombre");
-  let rtn = document.querySelector('[name="rtnCliente"]');
-  rtn.id = "rtnClienteV";
-  let telefono = document.getElementById("telefono");
-  let codigoC = document.querySelector('[name="codC"]');
-  let direccion = document.getElementById("direccion");
-  //Setear datos del cliente
-  nombre.value = nombreCliente;
-  rtn.value = rtnCliente;
-  codigoC.id = codCliente;
-  telefono.value = telefonoCliente;
-  direccion.value = direccionCliente;
-  //Deshabilitar elementos
-  //nombre.setAttribute('disabled', 'true');
-  //telefono.setAttribute('disabled', 'true');
-  //direccion.setAttribute('disabled', 'true');
-  $("#modalClienteFrecuente").modal("hide");
-});
-
-
-
-let rtnCliente = document.getElementById('clienteExistente');
-//let rtnCliente = document.getElementById('rtnCliente');
-rtnCliente.addEventListener('change', function () {
-
-  limpiarForm();
-  let $containerRTN = document.getElementById('containerrtncliente');
-  if (document.getElementById('btnclientes') == null) {
-    let $btnBuscar = document.createElement('div')
-    $btnBuscar.classList.add('btnbuscarcliente');
-    
-    $btnBuscar.innerHTML = `
-    <button type="button" class="btn btn-primary" id="btnclientes" data-bs-toggle="modal" data-bs-target="#modalCarteraCliente">
-      Buscar <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
-    </button>
-    `;
-    $containerRTN.appendChild($btnBuscar);
-  }
-  
-});
-//Cuando el cliente es nuevo se oculta el buscador de existir.
-document.getElementById('clientenuevo').addEventListener('change', function () {
-  let $containerRTN = document.getElementById('containerrtncliente');
-  let $btnBuscarCliente = document.querySelector('.btnbuscarcliente');
-  if ($btnBuscarCliente) {
-    $containerRTN.removeChild($btnBuscarCliente);
-   limpiarForm();
-  }
-  
-});
-
-
-
-/* ============= EVENTOS DE TIPO DE CLIENTE Y BOTON PARA BUSCAR EL CLIENTE, EN CASO SEA EXISTENTE ================== */
-// Si el tipo de cliente es existen se crea y muestra un boton para buscar el cliente
-
-//Cuando el cliente es nuevo se oculta el buscador de existir.
-
-
-
-let limpiarForm = () => {
-  let   rtn = document.getElementById('rtnCliente'),
-    telefono = document.getElementById('telefono'),
-    direccion = document.getElementById('direccion'),
-    descripcion = document.getElementById("descripcion"),
-   nombre = document.getElementById('nombre'),
-   correoCliente = document.getElementById('correoCliente');
-  //Vaciar campos cliente
-    rtn.value = '';
-    telefono.value = ''
-    direccion.value = '';
-    descripcion.value = '';
-    nombre.value = '';
-    correoCliente.value = ''; 
-
-    correoCliente.removeAttribute('disabled');
-    descripcion.removeAttribute('disabled');
-    rtn.removeAttribute('disabled');
-    telefono.removeAttribute('disabled');
-    direccion.removeAttribute('disabled');
-}
-
-
-let FacturaSolicitud = document.getElementById('clienteExistente');
-FacturaSolicitud.addEventListener('change', function () {
-  limpiarForm();
+// Llama a la función cuando se carga la página de buscar FACTURA
+window.addEventListener('load', function() {
   let $containerFact = document.getElementById('containerFacturacliente');
   if (document.getElementById('btnfactura') == null) {
     let $btnBuscar = document.createElement('div')
@@ -157,24 +16,40 @@ FacturaSolicitud.addEventListener('change', function () {
     $containerFact.appendChild($btnBuscar);
   }
   
- 
+  let $containerRTN = document.getElementById('containerrtncliente');
+  if (document.getElementById('btnclientes') == null) {
+    let $btnBuscar = document.createElement('div')
+    $btnBuscar.classList.add('btnbuscarcliente');
+    
+    $btnBuscar.innerHTML = `
+    <button type="button" class="btn btn-primary" id="btnclientes" data-bs-toggle="modal" data-bs-target="#modalCarteraCliente">
+      Buscar <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
+    </button>
+    `;
+    $containerRTN.appendChild($btnBuscar);
+  }
+
+  obtenerTipoServicio('#tiposervicio');
+  let fechaC = new Date().toISOString().slice(0, 10);
+    $("#fechasolicitud").val(fechaC); 
+  obtenerAdminCorreo('#correo');
+
+
 });
 
-document.getElementById('clientenuevo').addEventListener('change', function () {
-  let $containerRTN = document.getElementById('containerFacturacliente');
-  let $btnBuscarCliente = document.querySelector('.btnbuscarFactura');
-  if ($btnBuscarCliente) {
-    $containerRTN.removeChild($btnBuscarCliente);
-    limpiarForm();
-  }
- 
-});
+
 
 $(document).on('click', '#btnfactura', function () {
   obtenerFactura();  // Lógica para obtener la factura si es necesario
   //$('#modalArticulosSolicitud').modal('show');
   $('#modalFacturaSolicitud').modal('show');  
 });
+
+$(document).on('click', '#btnclientes', function () {
+  obtenerCarteraCliente(); 
+});
+
+
 
 let obtenerFactura = function () {
   if (document.getElementById('table-FacturaSolicitud_wrapper') == null) {
@@ -210,34 +85,6 @@ $(document).on("click", "#btn_selectfactura", function () {
  limpiarForm();
 });
 
-//Activar los campos al tocar los radio existente o nuevo
-  // Agregar un controlador de eventos 'click' al elemento de radio
-  clienteExistente.addEventListener("click", function() {
-    obtenerTipoServicio('#tiposervicio');
-    telefono.disabled = false;
-    direccion.disabled = false;
-    descripcion.disabled = false;
-    rtnCliente.disabled = false;
-     nombre.disabled=false;
-    let fechaC = new Date().toISOString().slice(0, 10);
-    $("#fechasolicitud").val(fechaC); 
-    obtenerAdminCorreo('#correo');
-  });
-  clientenuevo.addEventListener("click", function() {
-    obtenerTipoServicio('#tiposervicio');
-    nombre.disabled = false;
-    telefono.disabled = false;
-    direccion.disabled = false;
-    descripcion.disabled = false;
-    rtnCliente.disabled = false;
-    nombre.disabled=false;
-    let fechaC = new Date().toISOString().slice(0, 10);
-    let codigoC = document.querySelector('[name="codC"]');
-    codigoC.id= "";
-    $("#fechasolicitud").val(fechaC);
-    obtenerAdminCorreo('#correo');
-  });
- 
   
   let obtenerTipoServicio = function (idElemento, tipoServicio_id) {
     $.ajax({
@@ -263,13 +110,11 @@ $(document).on("click", "#btn_selectfactura", function () {
           let correo = data[0]['CorreoServicio'];
           // console.log('Correo obtenido:', correo);
           $(idElemento).val(correo);   
-          //console.log(correo);
+          console.log(correo);
         }        
     });
   }
-
-
-  //const table = new DataTable('#table-ArticuloSolicitud');
+ 
 
 ////////////////MODAL DE ARTICULO  
   $('#btnarticulos').click(() => {
@@ -299,13 +144,8 @@ $(document).on("click", "#btn_selectfactura", function () {
   $(document).on("click", 'tbody tr', function (e) {
     $(this).find("button")[0].classList.toggle('select_articulo')
     e.currentTarget.classList.toggle('ArtSelec');
-    // $("tr.dummy button").currentTarget.classList.toggle("select_articulo")    
-    // selectArticulo(this);
   });
 
-  // let selectArticulo = function ($selector) {
-  //   $selector.classList.toggle('select_articulo');
-  // };
 
   $('#btn_agregar').click(function () {
     agregarArticulos();
@@ -406,7 +246,7 @@ function validarCantidades() {
 ///////////GUARDAR NUEVA SOLICITUD
 $('#form-solicitud').submit(function (e) {
   e.preventDefault(); 
-  //para reporte
+  
   let nombre = document.getElementById("nombre");
   let idFactura = $('#idfactura').val();
   let correo = $('#correo').val();
@@ -414,10 +254,7 @@ $('#form-solicitud').submit(function (e) {
   let tiposervicio = document.getElementById('tiposervicio').value;
   let ubicacion = $('#direccion').val();
   let descripcion = $('#descripcion').val();
-  let rtncliente = $('#rtnClienteV').val();
   let rtnclienteC = $('#rtnCliente').val();
-  let codigoClieteF = document.querySelector('[name="codC"]');
-  let codigo = codigoClieteF.getAttribute('id');
 
 
 let $idProductos = document.querySelectorAll('.idproducto');
@@ -441,7 +278,6 @@ $idProductos.forEach(id => {
           datatype: "JSON",
           data: {
               idFactura: idFactura,
-              RTNcliente: rtncliente,
               RTNclienteC: rtnclienteC,
               telefono: telefono,
               correo: correo,
@@ -449,8 +285,7 @@ $idProductos.forEach(id => {
               ubicacion: ubicacion,
               descripcion: descripcion,
               nombre: nombre.value,
-              "productos": JSON.stringify(productos),
-              codigo: codigo
+              "productos": JSON.stringify(productos)
           },
           success: function () {
            
@@ -479,39 +314,6 @@ function redirigirADataTable() {
       window.location.href = "../../../Vista/crud/DataTableSolicitud/gestionDataTableSolicitud.php";
   }, 3000); // Redirige después de 3 segundos (ajusta el tiempo según tus necesidades)
 }
-
-
-
-
-$('#form-solicitud').submit(function (e) {
-  e.preventDefault(); // Evita el comportamiento normal del submit, es decir, la recarga total de la página
-  // Verifica si el radio "Nuevo Cliente" está seleccionado
-  if ($('#clientenuevo').is(':checked')) {
-    let nombreN = $('#nombre').val();
-    let rtnN = $('#rtnCliente').val();
-    let telefonoN = $('#telefono').val();
-    let correoN = $('#correoCliente').val();
-    let direccionN = $('#direccion').val();
-    if (valido) {
-      $.ajax({
-        url: "../../../Vista/crud/carteraCliente/nuevoCliente.php",
-        type: "POST",
-        datatype: "JSON",
-        data: {
-          nombre: nombreN,
-          rtn: rtnN,
-          telefono: telefonoN,
-          correo: correoN,
-          direccion: direccionN
-        },
-        success: function () {
-  
-        }
-      });
-
-    }
-  }
-});
 
 
 let obtenerCarteraCliente = function () {
@@ -556,7 +358,6 @@ $(document).on("click", "#btn_selectcarteraCliente", function () {
   rtn.value = rtnCartera;
   telefono.value =telefonoCartera;
   direccion.value =  direccionCartera;
-  // $("#E_estadoContacto").val(estadoContacto);
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");	
   $('#modalCarteraCliente').modal('hide');

@@ -35,4 +35,8 @@
         public static function obtenerEstadisticasPorVed($idUsuario, $FechaInicial, $FechaFinal){
             return Metricas::obtenerEstadisticasPorVed($idUsuario, $FechaInicial, $FechaFinal);
         }
+
+        public static function obtenerEstadisticasPDF($idUsuario, $FechaInicial, $FechaFinal){
+            return Metricas::obtenerEstadisticasPDF($idUsuario, $FechaInicial, $FechaFinal);
+        }
     }

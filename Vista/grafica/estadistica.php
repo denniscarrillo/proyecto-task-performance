@@ -115,7 +115,7 @@
         </div>
         <div class="table-conteiner">
           <div>
-            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
+          <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
               PDF</button>
           </div>
           <table class="display nowrap table" id="table-Estadistica" style="width:100%">
