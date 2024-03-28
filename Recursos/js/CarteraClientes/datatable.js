@@ -249,7 +249,6 @@ $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
     carteraCliente = $(this).closest("tr").attr('id'),
     nombreCliente = fila.find("td:eq(1)").text(),
-    nombre = fila.find("td:eq(1)").text(),
     rtn = fila.find("td:eq(2)").text();
   Swal.fire({
     title: "¿Estas seguro de eliminar a " + nombreCliente + "?",
@@ -268,7 +267,7 @@ $(document).on("click", "#btn_eliminar", function () {
         data: {
           rtn: rtn,
           carteraCliente: carteraCliente,
-          nombreCliente: nombre,
+          nombreCliente: nombreCliente,
         },
         success: function (data) {
           if (!JSON.parse(data).estado) {

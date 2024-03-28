@@ -156,7 +156,6 @@ $("#formEditEstadoU").submit(function (e) {
 $(document).on("click", "#btn_eliminar", function () {
   let idEstadoU = $(this).closest("tr").attr("id"), //Capturar el id,
     descripcion = $(this).closest("tr").find("td:eq(1)").text();
-    console.log(idEstadoU);
   Swal.fire({
     title: "Estas seguro de eliminar el estado " + descripcion + "?",
     text: "No podras revertir esto!",

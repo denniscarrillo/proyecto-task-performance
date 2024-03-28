@@ -111,7 +111,7 @@ class DataTableObjeto
         sqlsrv_close($abrirConexion); //Cerrar conexion
     }
 
-    public static function eliminarObjeto($id_Objeto){
+    public static function eliminarObjeto($id_Objeto, $objeto){
         try {
             $conn = new Conexion();
             $conexion = $conn->abrirConexionDB();
