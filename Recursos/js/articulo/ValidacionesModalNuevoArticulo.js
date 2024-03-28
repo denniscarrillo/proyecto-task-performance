@@ -32,6 +32,21 @@ btnGuardar.addEventListener('click', () => {
     }
 });
 
+inputsNuevoArticulo.Articulo.addEventListener("keyup", ()=>{
+    validarInputArticulo();
+    funciones.limitarCantidadCaracteres("Articulo", 50);
+})
+
+inputsNuevoArticulo.Detalle.addEventListener("keyup", ()=>{
+    validarInputDetalle();
+    funciones.limitarCantidadCaracteres("Detalle", 100);
+})
+
+inputsNuevoArticulo.Marca.addEventListener("keyup", ()=>{
+    validarInputMarca();
+    funciones.limitarCantidadCaracteres("Marca", 50);
+})
+
 
 let validarInputArticulo = function () {
     let ArticuloMayus = inputsNuevoArticulo.Articulo.value.toUpperCase();

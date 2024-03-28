@@ -113,6 +113,7 @@ $('#btn-NuevaLLamada').click(function () {
   //Añadimos el evento que ejecuta funcion cancelar el ingreso de la nueva tarea
 });
 $('#btn-NuevoLead').click(function () {
+  funciones.limitarCantidadCaracteres('btn-submit-llamada', 50);
   crearNuevaTarea($columnaLeads, 'conteiner-form-lead', 'form-nuevoLead', 'Titulo del lead', 'lead');
   //Añadimos el evento que ejecuta funcion cancelar el ingreso de la nueva tarea
   let $btnCancelar = document.getElementById('btn-cancelar-lead');
@@ -123,6 +124,7 @@ $('#btn-NuevoLead').click(function () {
   guardarTarea($btnGuardar, 'btn-submit-lead', 2, $columnaLeads, $elementoEliminar);
 });
 $('#btn-NuevaCotizacion').click(function () {
+  funciones.limitarCantidadCaracteres('btn-submit-lead', 50);
   crearNuevaTarea($columnaCotizaciones, 'conteiner-form-cotizacion', 'form-nuevaCotizacion', 'Titulo de la Cotizacion', 'cotizacion');
   //Añadimos el evento que ejecuta funcion cancelar el ingreso de la nueva tarea
   let $btnCancelar = document.getElementById('btn-cancelar-cotizacion');
@@ -133,6 +135,7 @@ $('#btn-NuevaCotizacion').click(function () {
   guardarTarea($btnGuardar, 'btn-submit-cotizacion', 3, $columnaCotizaciones, $elementoEliminar);
 });
 $('#btn-NuevaVenta').click(function () {
+  funciones.limitarCantidadCaracteres('btn-submit-cotizacion', 50);
   crearNuevaTarea($columnaVentas, 'conteiner-form-venta', 'form-nuevoVenta', 'Titulo de la Venta', 'venta');
   //Añadimos el evento que ejecuta funcion cancelar el ingreso de la nueva tarea
   let $btnCancelar = document.getElementById('btn-cancelar-venta');
@@ -231,7 +234,7 @@ let guardarTarea = ($btnGuardar, $tarea, $actualizarTarea, $elementoPadre, $elem
     let titulo =  document.getElementById('title-task').value.toUpperCase();
     document.getElementById('title-task').value =  titulo;
   })
-  funciones.limitarCantidadCaracteres('title-task', 45);
+  funciones.limitarCantidadCaracteres('title-task', 50);
   //Agregamos el evento click al boton de guardar tarea
   $btnGuardar.addEventListener('click', function (e) {
     e.preventDefault();

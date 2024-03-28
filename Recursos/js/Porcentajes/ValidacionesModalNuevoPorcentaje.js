@@ -114,28 +114,28 @@ let obtenerPorcentajeExiste = ($valorPorcentaje) => {
 $valor.addEventListener('keyup', ()=>{
     estadoSoloNumeros.estadoNumerosValorPorcentaje = funciones.validarSoloNumeros($valor, validaciones.soloNumeros);
     $("#valorPorcentaje").inputlimiter({
-        limit: 14
+        limit: 10
     });
 });
 
 $valor.addEventListener('keyup', ()=>{
     estadoMayorCero.estadoMayorCeroMeta = funciones.MayorACero($valor);
     $("#valorPorcentaje").inputlimiter({
-        limit: 14
+        limit: 10
     });
 });
 
 $valor.addEventListener('focusout', ()=>{
     estadoMayorCero.estadoMayorCeroMeta = funciones.MayorACero($valor);
     $("#valorPorcentaje").inputlimiter({
-        limit: 14
+        limit: 10
     });
 });
 
 $descripcion.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasDescripcionPorcentaje = funciones.validarSoloLetras($descripcion, validaciones.soloLetras);
     $("#descripcionPorcentaje").inputlimiter({
-        limit: 50
+        limit: 150
     });
     let descripcionMayus = $descripcion.value.toUpperCase();
      $descripcion.value = descripcionMayus; 

@@ -62,7 +62,7 @@ $form.addEventListener('submit', e => {
 });
 $name.addEventListener('keyup', ()=>{
     estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
-   funciones.limitarCantidadCaracteres("E_nombre", 50);
+   funciones.limitarCantidadCaracteres("E_nombre", 100);
 });
 $name.addEventListener('focusout', ()=>{
     if(estadoMasdeUnEspacio.estadoMasEspacioNombre){
@@ -78,6 +78,7 @@ $estado.addEventListener('focusout', ()=>{
 });
 $correo.addEventListener('keyup', ()=>{
     estadoCorreo = funciones.validarCorreo($correo, validaciones.correo);
+    funciones.limitarCantidadCaracteres("E_correo", 50);
 });
 $rol.addEventListener('change', ()=>{
     estadoSelect.estadoSelectRol = funciones.validarCampoVacio($rol);

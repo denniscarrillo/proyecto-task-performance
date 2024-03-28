@@ -37,7 +37,7 @@ $(document).ready(function (){
 })
 inputNuevoCliente.nombre.addEventListener("keyup", ()=>{
     validarInputNombre();
-    funciones.limitarCantidadCaracteres("nombre", 40);
+    funciones.limitarCantidadCaracteres("nombre", 50);
 })
 inputNuevoCliente.rtn.addEventListener("keyup", ()=>{
     validarInputRTN();
@@ -49,11 +49,11 @@ inputNuevoCliente.telefono.addEventListener("keyup", ()=>{
 })
 inputNuevoCliente.correo.addEventListener("keyup", ()=>{
     validarInputCorreo();
-    funciones.limitarCantidadCaracteres("correo", 30);
+    funciones.limitarCantidadCaracteres("correo", 50);
 })
 inputNuevoCliente.direccion.addEventListener("keyup", ()=>{
     validarInputDireccion();
-    funciones.limitarCantidadCaracteres("direccion", 45);
+    funciones.limitarCantidadCaracteres("direccion", 100);
 })
 let validarInputNombre = () =>{
     inputNuevoCliente.nombre.value = inputNuevoCliente.nombre.value.toUpperCase();

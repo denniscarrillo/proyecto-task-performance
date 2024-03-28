@@ -206,6 +206,7 @@ $name.addEventListener('keyup', () => {
 
  $correoCliente.addEventListener('keyup', ()=>{
     estadoCorreo = funciones.validarCorreo($correoCliente, validaciones.correo);
+    funciones.limitarCantidadCaracteres("correoCliente", 45);
 });
 
  

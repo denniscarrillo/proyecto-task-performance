@@ -168,7 +168,7 @@ if (isset($_SESSION['usuario'])) {
               </div>
               <div class="form-element input-conteiner" id="containerrtncliente">
                 <label for="rtn-cliente" class="form-label" id="" name="codC"  >RTN:</label>
-                <input type="text" id="rtnCliente" name="rtnCliente" class="form-control" placeholder="RTN" >
+                <input type="text" id="rtnCliente" name="rtnCliente" class="form-control" placeholder="RTN" maxlength="20">
                 <p class="mensaje"></p>
               </div>
               <div class="form-element input-conteiner">

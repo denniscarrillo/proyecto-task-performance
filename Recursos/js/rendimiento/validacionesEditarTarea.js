@@ -77,7 +77,7 @@ optionNuevo.addEventListener("change", function () {
 //VALIDACIONES EN LOS DISTINTOS EVENTOS MIENTRAS EDITA =====================================================
 inputsEditarTarea.titulo.addEventListener("keyup", () => {
   validarInputTitulo();
-  funciones.limitarCantidadCaracteres("input-titulo-tarea", 45);
+  funciones.limitarCantidadCaracteres("input-titulo-tarea", 50);
 });
 inputsEditarTarea.rtn.addEventListener("keyup", () => {
   validarInputRTN($tipoCliente);

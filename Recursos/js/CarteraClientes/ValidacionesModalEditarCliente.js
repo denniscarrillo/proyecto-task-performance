@@ -35,11 +35,11 @@ inputEditarCliente.telefono.addEventListener("keyup", ()=>{
 })
 inputEditarCliente.correo.addEventListener("keyup", ()=>{
     validarInputEditarCorreo();
-    funciones.limitarCantidadCaracteres("E_Correo", 30);
+    funciones.limitarCantidadCaracteres("E_Correo", 50);
 })
 inputEditarCliente.direccion.addEventListener("keyup", ()=>{
     validarInputEditarDireccion();
-    funciones.limitarCantidadCaracteres("E_Direccion", 45);
+    funciones.limitarCantidadCaracteres("E_Direccion", 100);
 })
 let validarInputEditarTelefono = () =>{
   let estadoValidacion = {

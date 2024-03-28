@@ -37,7 +37,7 @@ inputsNuevaVentas.rtn.addEventListener("keyup", ()=>{
 });
 inputsNuevaVentas.totalVenta.addEventListener("keyup", ()=>{
   validarInputTotalVenta();
-  funciones.limitarCantidadCaracteres("totalVenta", 30)
+  funciones.limitarCantidadCaracteres("totalVenta", 10)
 });
 let validarInputRTN = () => {
   let estadoValidaciones = {
