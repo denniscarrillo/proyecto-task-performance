@@ -11,14 +11,13 @@ class Venta {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
         
-        $query = "SELECT  ROW_NUMBER() OVER(ORDER BY vt.num_Factura ASC) AS Num, vt.num_Factura, cc.nombre_Cliente, vt.rtn_Cliente, vt.total_Venta, vt.Creado_Por, vt.Fecha_Creacion FROM tbl_FacturasVenta vt
+        $query = "SELECT vt.num_Factura, cc.nombre_Cliente, vt.rtn_Cliente, vt.total_Venta, vt.Creado_Por, vt.Fecha_Creacion FROM tbl_FacturasVenta vt
         INNER JOIN tbl_CarteraCliente cc ON vt.rtn_Cliente = cc.rtn_Cliente;";
         $listaVentas = sqlsrv_query($consulta, $query);
         $ventas = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
         while($fila = sqlsrv_fetch_array($listaVentas, SQLSRV_FETCH_ASSOC)){
             $ventas [] = [
-                'item' => $fila["Num"],
                 'numFactura' => $fila["num_Factura"],
                 'nombreCliente'=> $fila["nombre_Cliente"],
                 'rtnCliente' => $fila["rtn_Cliente"],    
@@ -84,9 +83,12 @@ class Venta {
     public static function obtenerVentasPorFechas($fechaDesde, $fechaHasta){
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $select = "SELECT vt.num_Factura, cc.nombre_Cliente, vt.rtn_Cliente, vt.total_Venta, vt.Creado_Por, vt.Fecha_Creacion FROM tbl_FacturasVenta vt
+        $select = "SELECT vt.num_Factura, cc.nombre_Cliente, vt.rtn_Cliente, a.evidencia, t.estado_Finalizacion, vt.total_Venta, vt.Creado_Por, vt.Fecha_Creacion FROM tbl_FacturasVenta vt
         INNER JOIN tbl_CarteraCliente cc ON vt.rtn_Cliente = cc.rtn_Cliente
-                    WHERE vt.Fecha_Creacion BETWEEN '$fechaDesde 00:00:00:00' AND '$fechaHasta 23:59:59:59';";
+        INNER JOIN tbl_AdjuntoEvidencia a ON vt.num_Factura = a.id_Tarea
+        INNER JOIN tbl_Tarea t ON vt.num_Factura = t.id_Tarea
+                    WHERE vt.Fecha_Creacion BETWEEN '$fechaDesde 00:00:00:00' AND '$fechaHasta 23:59:59:59'
+                    AND t.id_EstadoAvance = 4;";
         $query = $select;
         $listaVentas = sqlsrv_query($conexion, $query);
         $ventas = array();

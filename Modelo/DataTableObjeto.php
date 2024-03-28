@@ -6,10 +6,6 @@ class DataTableObjeto
     public $objeto;
     public $descripcion;
     public $tipo_Objeto;
-    public $creadoPor;
-    public $fechaCreacion;
-    public $modificadoPor;
-    public $fechaModificacion;
     
     // Obtener todas las tareas que le pertenecen a un usuario.
     public static function obtenerObjetos()
@@ -19,11 +15,12 @@ class DataTableObjeto
             $objetoUsuario = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $query = " SELECT id_Objeto,objeto,descripcion,tipo_Objeto FROM tbl_MS_Objetos";
+            $query = " SELECT ROW_NUMBER() OVER(ORDER BY id_Objeto ASC) AS Num, id_Objeto,objeto,descripcion,tipo_Objeto FROM tbl_MS_Objetos";
            $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
             while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
                 $ObjetoUsuario[] = [
+                    'item' => $fila['Num'],
                     'id_Objeto' => $fila['id_Objeto'],
                     'objeto' => $fila['objeto'],
                     'descripcion' => $fila['descripcion'],
@@ -93,10 +90,9 @@ class DataTableObjeto
         $consulta = $conn->abrirConexionDB();
         $objeto = $nuevoObjeto->objeto;
         $descripcion = $nuevoObjeto->descripcion;
-        $creadoPor = $nuevoObjeto->creadoPor;
-        $modificadoPor = $nuevoObjeto->modificadoPor;
-        $query = "INSERT INTO tbl_MS_Objetos (objeto, descripcion, tipo_Objeto, Creado_Por, Fecha_Creacion, Modificado_Por, Fecha_Modificacion) 
-        VALUES ('$objeto', '$descripcion', 'PANTALLA', '$creadoPor', GETDATE(), '$modificadoPor', GETDATE())";
+        $CreadoPor = $nuevoObjeto->CreadoPor;
+        $query = "INSERT INTO tbl_MS_Objetos (objeto, descripcion, tipo_Objeto, Creado_Por, Fecha_Creacion) 
+        VALUES ('$objeto', '$descripcion', 'PANTALLA', '$CreadoPor', GETDATE())";
         $insertarObjeto= sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $insertarObjeto;
@@ -106,7 +102,7 @@ class DataTableObjeto
         try {
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $update = "UPDATE tbl_MS_Objetos SET descripcion='$editarObjeto->descripcion',Modificado_Por='$editarObjeto->modificadoPor', Fecha_Modificacion = GETDATE() 
+            $update = "UPDATE tbl_MS_Objetos SET descripcion='$editarObjeto->descripcion',Modificado_Por='$editarObjeto->Modificado_Por', Fecha_Modificacion = GETDATE() 
             WHERE id_Objeto='$editarObjeto->id_Objeto'";
             sqlsrv_query($abrirConexion, $update);
         } catch (Exception $e) {
@@ -115,7 +111,7 @@ class DataTableObjeto
         sqlsrv_close($abrirConexion); //Cerrar conexion
     }
 
-    public static function eliminarObjeto($id_Objeto, $objeto){
+    public static function eliminarObjeto($id_Objeto){
         try {
             $conn = new Conexion();
             $conexion = $conn->abrirConexionDB();

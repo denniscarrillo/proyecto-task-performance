@@ -287,7 +287,7 @@ export const validarMasdeUnEspacio = (elemento) => {
     let regex = /\s\s/g; //Expresión literal para saber si existen mas de un espacio en la cadena
     if (regex.test(input.trim())){ //Evaluamos expresion vs la cadena
         //Si existen especios mostramos mensaje de error
-        mensaje.innerText = '*No se permite más de un espacio entre palabras';
+        mensaje.innerText = 'No se permite más de un espacio entre palabras';
         elemento.classList.add('mensaje_error');
         estado = false;
     } else {
@@ -347,6 +347,10 @@ export const soloLetrasSinEspacios = (elemento) => {
 
 export const soloLetrasConEspacios = (elemento) => {
     elemento.setAttribute('onkeypress', 'return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))')
+}
+
+export const permitirSoloNumeros = (event) => {
+    return (event.charCode >= 48 && event.charCode <= 57)
 }
 
 

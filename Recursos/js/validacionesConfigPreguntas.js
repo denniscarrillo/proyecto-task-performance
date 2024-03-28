@@ -13,6 +13,7 @@ let $numPreguntaContestada = document.querySelector(".info-content");
 
 //Cuando se quiera enviar el formulario de login, primero se validaran si los inputs no estan vacios
 $form.addEventListener("submit", (e) => {
+  funciones.transformarAMayusculas($respuesta)
   if (
     estadoValidaciones.campoVacioPregunta == false ||
     estadoValidaciones.campoVacioRespuesta == false
@@ -38,17 +39,17 @@ $pregunta.addEventListener("focusout", () => {
   estadoValidaciones.campoVacioPregunta =
     funciones.validarCampoVacio($pregunta);
 });
-$respuesta.addEventListener("focusout", () => {
-  $respuesta.value = $respuesta.value.toUpperCase();
+$respuesta.addEventListener("input", () => {
+  funciones.limitarCantidadCaracteres("respuesta", 100);
+  funciones.transformarAMayusculas($respuesta);
+  funciones.convertirAMayusculasVisualmente($respuesta);
+  
   estadoValidaciones.campoVacioRespuesta =
     funciones.validarCampoVacio($respuesta);
   if (estadoValidaciones.campoVacioRespuesta) {
     estadoValidaciones.MasdeUnEspacioEntrePalabras =
       funciones.validarMasdeUnEspacio($respuesta);
   }
-});
-$respuesta.addEventListener("keyup", () => {
-  funciones.limitarCantidadCaracteres("respuesta", 100);
 });
 
 let preguntaGuardada = (elemento) => {

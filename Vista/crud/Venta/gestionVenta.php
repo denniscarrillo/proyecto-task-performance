@@ -151,7 +151,7 @@ if (isset($_SESSION['usuario'])) {
           <table class="display nowrap table" id="table-Ventas" style="width:100%">
             <thead>
               <tr>
-                <th scope="col"> N° FACTURA </th>
+                <th scope="col"> No. FACTURA </th>
                 <th scope="col"> NOMBRE CLIENTE </th>
                 <th scope="col"> RTN/DNI</th>
                 <th scope="col"> TOTAL VENTA </th>

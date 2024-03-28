@@ -17,11 +17,8 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
-    fnCreatedRow: function(rowEl, data) {
-      $(rowEl).attr('id', data['numFactura']);
-    },
     columns: [
-      { data: "item" },
+      { data: "numFactura" },
       { data: "nombreCliente" },
       { data: "rtnCliente" },
       {
@@ -140,7 +137,7 @@ $(document).on("click", "#btn_editar", function () {
 
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
-    factura = $(this).closest("tr").attr('id'), //capturo el ID
+    factura = $(this).closest("tr").find("td:eq(0)").text();, //capturo el ID
     cliente = $(this).closest("tr").find("td:eq(1)").text(),
     rtn = $(this).closest("tr").find("td:eq(2)").text();
   Swal.fire({
