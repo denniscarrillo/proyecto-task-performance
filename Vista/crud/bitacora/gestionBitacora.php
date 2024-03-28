@@ -146,7 +146,7 @@ if (isset($_SESSION['usuario'])) {
           <table class="display nowrap table" id="table-Bitacora" style="width:100%">
             <thead>
               <tr>
-                <th scope="col"> N° </th>
+                <th scope="col"> No. </th>
                 <th scope="col"> FECHA </th>
                 <th scope="col"> USUARIO </th>
                 <th scope="col"> OBJETO </th>

@@ -5,6 +5,7 @@ class Parametro
     public $idParametro;
     public $parametro;
     public $valor;
+    public $descripcion;
     public $idUsuario;
     public $creadoPor;
     public $FechaCreacion;
