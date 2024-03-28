@@ -21,8 +21,6 @@ if (isset($_SESSION['usuario'])) {
   if (!$permisoConsulta) {
     /* ====================== Evento intento de ingreso sin permiso a bitácora del sistem. ==========================*/
     $accion = ControladorBitacora::accion_Evento();
-    date_default_timezone_set('America/Tegucigalpa');
-    $newBitacora->fecha = date("Y-m-d h:i:s");
     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionBitacora.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['fallido'];
@@ -35,8 +33,6 @@ if (isset($_SESSION['usuario'])) {
     if (isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])) {
       /* ====================== Evento salir. ================================================*/
       $accion = ControladorBitacora::accion_Evento();
-      date_default_timezone_set('America/Tegucigalpa');
-      $newBitacora->fecha = date("Y-m-d h:i:s");
       $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
       $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
       $newBitacora->accion = $accion['Exit'];
@@ -46,8 +42,6 @@ if (isset($_SESSION['usuario'])) {
     }
     /* ====================== Evento ingreso a bitácora del sistema. =====================*/
     $accion = ControladorBitacora::accion_Evento();
-    date_default_timezone_set('America/Tegucigalpa');
-    $newBitacora->fecha = date("Y-m-d h:i:s");
     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionBitacora.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['income'];
@@ -139,7 +133,7 @@ if (isset($_SESSION['usuario'])) {
           </div>
           <div class="titulo">
             <H1 class="title-dashboard-task"
-              id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionBitacora.php'); ?>">Bitacora</H1>
+              id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionBitacora.php'); ?>">Bitácora del sistema</H1>
           </div>
         </div>
         <div class="table-conteiner">
@@ -154,18 +148,21 @@ if (isset($_SESSION['usuario'])) {
                 <th scope="col"> DESCRIPCIÓN </th>
               </tr>
             </thead>
-            <label>Seleccionar Rango:</label>
+            <label class="text-selecionar-rango">Filtrar registros por fecha:</label>
             <div class="text-left mb-2 div-header">
-              <div>
-                <label>Desde:</label>
-                <input type="datetime-local" id="fecha-desde">
-                <label>Hasta:</label>
-                <input type="datetime-local" id="fecha-hasta">
+              <div class="date-container">
+                <div>
+                  <label class="text-desde-hasta">Desde:</label>
+                  <input type="datetime-local" id="fecha-desde" onkeydown="return false">
+                </div>
+                <div>
+                  <label class="text-desde-hasta">Hasta:</label>
+                  <input type="datetime-local" id="fecha-hasta" onkeydown="return false">
+                </div>
               </div>
               <a target="_blank" class="btn btn-success" id="btn_depurar"> <i class="fa-solid fa-trash"></i> Depurar
                 Bitácora</a>
-              <!-- <a href="../../../TCPDF/examples/reporteriaBitacora.php" target="_blank" class="btn btn-success hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"> </i> Generar PDF</a> -->
-              <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
+              <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fa-solid fa-file-pdf"></i> Generar
                 PDF</button>
             </div>
             <tbody class="table-group-divider">
@@ -188,6 +185,8 @@ if (isset($_SESSION['usuario'])) {
     <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
     <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
     <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
+
+    
 </body>
 
 </html>
