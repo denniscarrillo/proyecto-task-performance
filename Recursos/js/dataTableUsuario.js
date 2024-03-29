@@ -96,8 +96,8 @@ $("#form-usuario").submit(async function (e) {
         //Mostrar mensaje de exito
         console.log(res);
         Swal.fire(
-          "Registrado!",
-          "Se le ha enviado un correo al usuario!",
+          "¡Registrado!",
+          "Se le ha enviado un correo al usuario",
           "success"
         );
         tablaUsuarios.ajax.reload(null, false);
@@ -114,19 +114,20 @@ $(document).on("click", "#btn_eliminar", function () {
   let usuario = $(this).closest("tr").find("td:eq(1)").text();
   if (usuario == "SUPERADMIN") {
     Swal.fire(
-      "Sin acceso!",
+      "¡Sin acceso!",
       "Super Administrador no puede ser eliminado",
       "error"
     );
   } else {
     Swal.fire({
-      title: "Estás seguro de eliminar a " + usuario + "?",
-      text: "No podrás revertir esto!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Si, borralo!",
+      title: "¿Estás seguro de eliminar a " + usuario + "?",
+      text: "¡No podrás revertir esto!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "¡Sí, bórralo!",
+    cancelButtonText: "Cancelar"
     }).then((result) => {
       if (result.isConfirmed) {
         $.ajax({
@@ -139,14 +140,14 @@ $(document).on("click", "#btn_eliminar", function () {
             if (estadoEliminado == "eliminado") {
               tablaUsuarios.row(fila.parents("tr")).remove().draw();
               Swal.fire(
-                "Eliminado!",
+                "¡Eliminado!",
                 "El usuario ha sido eliminado.",
                 "success"
               );
               tablaUsuarios.ajax.reload(null, false);
             } else {
               Swal.fire(
-                "Lo sentimos!",
+                "¡Lo sentimos!",
                 "El usuario no puede ser eliminado",
                 "error"
               );
@@ -165,7 +166,7 @@ $(document).on("click", "#btn_editar", async function () {
   let ROL = $(this).closest("tr").find("td:eq(5)").text();
   if (ROL == "Super Administrador") {
     Swal.fire(
-      "Sin acceso!",
+      "¡Sin acceso!",
       "Super Administrador no puede ser editado",
       "error"
     );

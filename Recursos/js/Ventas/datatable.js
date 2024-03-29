@@ -122,13 +122,14 @@ $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
     factura = $(this).closest("tr").find("td:eq(0)").text(); //capturo el ID
   Swal.fire({
-    title: "Estás seguro de eliminar la venta #" + factura + "?",
-    text: "No podrás revertir esto!",
+    title: "¿Estás seguro de eliminar la venta #" + factura + "?",
+    text: "¡No podrás revertir esto!",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Si, borralo!",
+    confirmButtonText: "¡Sí, bórralo!",
+    cancelButtonText: "Cancelar"
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
@@ -138,10 +139,10 @@ $(document).on("click", "#btn_eliminar", function () {
         data: { numFactura: factura },
         success: function (data) {
           if (JSON.parse(data).estadoEliminado) {
-            Swal.fire("Eliminado!", "La venta ha sido eliminada", "success");
+            Swal.fire("¡Eliminado!", "La venta ha sido eliminada", "success");
           } else {
             Swal.fire(
-              "Lo sentimos!",
+              "¡Lo sentimos!",
               "La venta no puede ser eliminada",
               "error"
             );

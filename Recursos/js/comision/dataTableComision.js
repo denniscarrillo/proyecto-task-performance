@@ -150,7 +150,7 @@ $("#form-Edit-Comision").submit(function (e) {
     success: function (data) {
       console.log(data);
       Swal.fire(
-        'Actualizado!',
+        '¡Actualizado!',
         'La comisión ha sido modificado!',
         'success',
       )
@@ -277,13 +277,14 @@ $(document).on("click", "#btn_pdf_id",  function (){
   let fila = $(this);        
     let idComision = $(this).closest('tr').find('td:eq(0)').text();
       Swal.fire({
-        title: 'Estas seguro de eliminar la comision N° '+idComision+'?',
-        text: "No podras revertir esto!",
-        icon: 'warning',
+        title: '¿Estás seguro de eliminar la comisión N° '+idComision+'?',
+        text: "¡No podrás revertir esto!",
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si, borrala!'
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "¡Sí, bórralo!",
+        cancelButtonText: "Cancelar"    
       }).then((result) => {
         if (result.isConfirmed) {      
           $.ajax({
@@ -297,14 +298,14 @@ $(document).on("click", "#btn_pdf_id",  function (){
               if(estadoEliminado == 'eliminado'){
                 tablaComision.row(fila.parents('tr')).remove().draw();
                 Swal.fire(
-                  'Eliminada!',
+                  '¡Eliminada!',
                   'La Comisión ha sido eliminada.',
                   'success'
                 ) 
                 tablaComision.ajax.reload(null, false); 
               } else {
                 Swal.fire(
-                  'Lo sentimos!',
+                  '¡Lo sentimos!',
                   'La Comisión no puede ser eliminada, en su lugar ha sido anulada.',
                   'error'
                 );
@@ -390,10 +391,10 @@ $('#table-comisiones_ALiquidar').on('click', '#btn_liquidar', function () {
     url: "../../../Vista/comisiones/LiquidandoComisiones.php",  // Reemplaza con la ruta correcta
     data: { idComision: idComision },
     success: function(response) {
-      console.log("Comisión liquidada con éxito");
+      console.log("¡Comisión liquidada con éxito!");
       Swal.fire(
         'Liquidada!',
-        'La comisión ha sido liquidada!',
+        'La comisión ha sido liquidada',
         'success',
       )
       tablaComision.ajax.reload(null, false);

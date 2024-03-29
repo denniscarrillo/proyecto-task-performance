@@ -217,7 +217,7 @@ $(document).on("click", "#btn_enviar", function () {
       });
       Toast.fire({
         icon: "success",
-        title: "Correo enviado!",
+        title: "¡Correo enviado!",
       });
     },
   });
@@ -236,7 +236,7 @@ $(document).on("click", "#btn_editar", async function () {
     Swal.fire({
       icon: "error",
       title: "Oops...",
-      text: "No se puede editar una solicitud cancelada!",
+      text: "¡No se puede editar una solicitud cancelada!",
     });
     //alert('No se puede editar una solicitud cancelada');
     return; // Detiene la ejecución si la solicitud está cancelada
@@ -307,8 +307,8 @@ $("#form-Edit-Solicitud").submit(function (e) {
       success: function () {
         //Mostrar mensaje de exito
         Swal.fire(
-          "Actualizado!",
-          "La solicitud ha sido modificado!",
+          "¡Actualizada!",
+          "La solicitud ha sido modificada",
           "success"
         );
         tablaDataTableSolicitud.ajax.reload(null, false);
@@ -329,7 +329,7 @@ $(document).on("click", "#btn_eliminar", async function () {
     // Aquí puedes mostrar un mensaje o tomar alguna acción específica
     Swal.fire({
       icon: "error",
-      title: "La solicitud ya fue cancelada!",
+      title: "¡La solicitud ya fue cancelada!",
     });
     //alert('No se puede editar una solicitud cancelada');
     return; // Detiene la ejecución si la solicitud está cancelada
@@ -357,7 +357,7 @@ $("#form-Solicitud").submit(function (e) {
     MotivoCancelacion = $("#C_MotivoCancelacion").val();
 
   Swal.fire({
-    title: "Estás seguro de cancelar la Solicitud?",
+    title: "¿Estás seguro de cancelar la Solicitud?",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",

@@ -142,13 +142,14 @@ $(document).on("click", "#btn_eliminar", function () {
   let codArticulo = $(this).closest("tr").find("td:eq(0)").text();
   let nombreArticulo = $(this).closest("tr").find("td:eq(1)").text();
   Swal.fire({
-    title: "Estas seguro de eliminar el artículo " + nombreArticulo + "?",
-    text: "No podras revertir esto!",
+    title: "¿Estás seguro de eliminar el artículo" + nombreArticulo + "?",
+    text: "¡No podrás revertir esto!",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
     confirmButtonText: "Si, borralo!",
+    cancelButtonText: "Cancelar"
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
@@ -161,7 +162,7 @@ $(document).on("click", "#btn_eliminar", function () {
             Swal.fire("Eliminado!", "El artículo ha sido eliminado", "success");
           } else {
             Swal.fire(
-              "Lo sentimos!",
+              "¡Lo sentimos!",
               "El artículo no puede ser eliminado",
               "error"
             );

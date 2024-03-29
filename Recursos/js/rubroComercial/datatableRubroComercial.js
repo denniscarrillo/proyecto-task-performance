@@ -64,7 +64,7 @@ $("#form_rubroComercial").submit(function (e) {
       success: function () {
         //Mostrar mensaje de exito
         Swal.fire(
-          "Registrado!",
+          "¡Registrado!",
           "El Rubro Comercial ha sido registrado.",
           "success"
         );
@@ -137,7 +137,7 @@ $("#formEdit_rubroComercial").submit(function (e) {
       success: function (data) {
         console.log(data);//Mostrar mensaje de exito
         Swal.fire(
-          "Actualizado!",
+          "¡Actualizado!",
           "El Rubro Comercial ha sido modificado!",
           "success"
         );
@@ -157,13 +157,14 @@ $(document).on("click", "#btn_eliminar", function () {
   
   Swal.fire({
     title:
-      "Estas seguro de eliminar el rubro comercial " + rubroComercial + "?",
-    text: "No podras revertir esto!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Si, Borralo!",
+      "¿Estás seguro de eliminar el rubro comercial " + rubroComercial + "?",
+      text: "¡No podrás revertir esto!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "¡Sí, bórralo!",
+      cancelButtonText: "Cancelar"
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({

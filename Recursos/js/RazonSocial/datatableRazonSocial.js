@@ -62,7 +62,7 @@ $("#form-razonSocial").submit(function (e) {
       success: function () {
         //Mostrar mensaje de exito
         Swal.fire(
-          "Registrado!",
+          "¡Registrado!",
           "La razón Social ha sido registrada.",
           "success"
         );
@@ -135,7 +135,7 @@ $("#form-Edit_razonSocial").submit(function (e) {
       success: function () {
         //Mostrar mensaje de exito
         Swal.fire(
-          "Actualizado!",
+          "¡Actualizado!",
           "La razón social ha sido modificado!",
           "success"
         );
@@ -154,13 +154,14 @@ $(document).on("click", "#btn_eliminar", function () {
     descripcion = fila.find("td:eq(2)").text();
 
   Swal.fire({
-    title: "Estas seguro de eliminar la razonSocial " + razonSocial + "?",
-    text: "No podras revertir esto!",
+    title: "¿Estás seguro de eliminar la razonSocial " + razonSocial + "?",
+    text: "¡No podrás revertir esto!",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Si, Borralo!",
+    confirmButtonText: "¡Sí, bórralo!",
+    cancelButtonText: "Cancelar"
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({

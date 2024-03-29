@@ -26,8 +26,8 @@ let actualizarPermisos = function (elementoFila) {
   let reporte =
     $fila.find("td:eq(6)").find("input")[0].checked == true ? "Y" : "N";
   Swal.fire({
-    title: "¿Esta seguro?",
-    text: "Se actualizaran los permisos",
+    title: "¿Está seguro?",
+    text: "¡Se actualizarán los permisos!",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#ee9827",
@@ -67,7 +67,7 @@ let actualizarPermisos = function (elementoFila) {
           //Mostramos el toast
           Toast.fire({
             icon: "success",
-            title: "Se ha actualizado correctamente",
+            title: "¡Se ha actualizado correctamente!",
           });
         },
       });

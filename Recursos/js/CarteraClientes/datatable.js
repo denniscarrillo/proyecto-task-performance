@@ -65,8 +65,8 @@ $("#form-carteraCliente").submit(function (e) {
       success: function () {
         //Mostrar mensaje de exito
         Swal.fire(
-          "Registrado!",
-          "Se ha registrado un Nuevo Cliente!",
+          "¡Registrado!",
+          "Se ha registrado un Nuevo Cliente",
           "success"
         );
         tablaCarteraClientes.ajax.reload(null, false);
@@ -169,7 +169,7 @@ $("#form-editar-carteraCliente").submit(function (e) {
       success: function (res) {
         // console.log(res);
         //Mostrar mensaje de exito
-        Swal.fire("Actualizado!", "El cliente ha sido modificado!", "success");
+        Swal.fire("¡Actualizado!", "El cliente ha sido modificado", "success");
         tablaCarteraClientes.ajax.reload(null, false);
       },
     });
@@ -230,13 +230,14 @@ $(document).on("click", "#btn_eliminar", function () {
     carteraCliente = fila.find("td:eq(1)").text(),
     rtn = fila.find("td:eq(2)").text();
   Swal.fire({
-    title: "¿Estas seguro de eliminar a " + carteraCliente + "?",
-    text: "No podrá revertir esto",
+    title: "¿Estás seguro de eliminar a " + carteraCliente + "?",
+    text: "¡No podrás revertir esto!",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Si, Borralo!",
+    confirmButtonText: "¡Sí, bórralo!",
+    cancelButtonText: "Cancelar"
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
@@ -250,14 +251,14 @@ $(document).on("click", "#btn_eliminar", function () {
         success: function (data) {
           if (!JSON.parse(data).estado) {
             Swal.fire(
-              "Lo sentimos",
+              "¡Lo sentimos!",
               "<strong>" + carteraCliente + "</strong> no se puede eliminar",
               "error"
             );
             return;
           }
           Swal.fire(
-            "Eliminado",
+            "¡Eliminado!",
             "<strong>" + carteraCliente + "</strong> ha sido eliminado",
             "success"
           );
