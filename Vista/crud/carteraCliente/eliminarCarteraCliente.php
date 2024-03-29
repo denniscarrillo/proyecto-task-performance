@@ -14,12 +14,16 @@
       /* ========================= Evento Editar cartera cliente. ======================*/
       $newBitacora = new Bitacora();
       $accion = ControladorBitacora::accion_Evento();
-      date_default_timezone_set('America/Tegucigalpa');
-      $newBitacora->fecha = date("Y-m-d h:i:s"); 
       $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionCarteraClientes.php');
       $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-      $newBitacora->accion = $accion['Update'];
-      $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' modificó al cliente '.$_POST['carteraCliente'];
-      ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+      if($eliminado){
+        $eliminar = " eliminó ";
+        $newBitacora->accion = $accion['Delete'];
+    }else{
+        $eliminar = " intentó eliminar ";
+        $newBitacora->accion = $accion['tryDelete'];
+    }
+    $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].$eliminar.' al cliente '.$_POST['nombreCliente'].' con RTN '.$_POST['rtn'];
+    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
       /* =======================================================================================*/
     }

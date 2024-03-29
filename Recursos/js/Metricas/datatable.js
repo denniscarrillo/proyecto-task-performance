@@ -36,7 +36,24 @@ let procesarPermisoActualizar = (data) => {
       },
     ],
   });
+  let filtro = document.querySelector('input[type=search]');
 };
+
+$(document).on("focusout", "input[type=search]", function (e) {
+  let filtro = $(this).val();
+  capturarFiltroDataTable(filtro);
+});
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim()){
+    $.ajax({
+      url: "../../../Vista/crud/Metricas/registrarBitacoraFiltroMetricas.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
 
 //Peticion  AJAX que trae los permisos
 let obtenerPermisos = function ($idObjeto, callback) {
@@ -113,7 +130,6 @@ $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
     id_Metrica= $(this).closest("tr").attr('id'), //capturo el ID
     metrica = $(this).closest("tr").find("td:eq(1)").text();
-
   Swal.fire({
     title: "Estas seguro de eliminar la metrica  " + metrica + "?",
     text: "No podras revertir esto!",
@@ -128,7 +144,10 @@ $(document).on("click", "#btn_eliminar", function () {
         url: "../../../Vista/crud/Metricas/eliminarMetricas.php",
         type: "POST",
         datatype: "json",
-        data: { id_Metrica: id_Metrica},
+        data: { 
+          id_Metrica: id_Metrica,
+          metrica: metrica,
+        },
         success: function (data) {
           if (JSON.parse(data).estadoEliminado) {
             Swal.fire("Eliminado!", "La métrica ha sido eliminado", "success");

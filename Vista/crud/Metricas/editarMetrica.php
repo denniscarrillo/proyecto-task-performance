@@ -18,13 +18,11 @@
         /* ========================= Evento Editar Usuario. ======================*/
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();
-        date_default_timezone_set('America/Tegucigalpa');
-        $newBitacora->fecha = date("Y-m-d h:i:s"); 
         $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionMetricas.php');
         $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
         $newBitacora->accion = $accion['Update'];
         $metrica = ControladorMetricas::obtenerNombreMetrica($_POST['idMetrica']);
-        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' modificó la métrica '.$metrica.' a '.$_POST['meta'];
+        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' actualizó la métrica #'.$_POST['idMetrica'].' '.$metrica.' la meta a '.$_POST['meta'];
         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
         /* =======================================================================================*/
     }

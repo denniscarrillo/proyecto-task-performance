@@ -37,11 +37,10 @@ class TipoServicio {
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             $servicio_Tecnico=$nuevoTipoServicio->servicio_Tecnico;
-            $CreadoPor=$nuevoTipoServicio->creadoPor;
-            date_default_timezone_set('America/Tegucigalpa');
-            $FechaCreacion = date("Y-m-d");
-            $insert = "INSERT INTO tbl_TipoServicio (servicio_Tecnico,  Creado_Por, Fecha_Creacion) 
-                        VALUES ('$servicio_Tecnico', '$CreadoPor', '$FechaCreacion');";
+            $CreadoPor=$nuevoTipoServicio->CreadoPor;
+            $ModificadoPor=$nuevoTipoServicio->ModificadoPor;
+            $insert = "INSERT INTO tbl_TipoServicio (servicio_Tecnico,  Creado_Por, Fecha_Creacion, Modificado_Por, Fecha_Modificacion) 
+                        VALUES ('$servicio_Tecnico', '$CreadoPor', GETDATE(), '$ModificadoPor', GETDATE());";
             $ejecutar_insert = sqlsrv_query($abrirConexion, $insert);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;

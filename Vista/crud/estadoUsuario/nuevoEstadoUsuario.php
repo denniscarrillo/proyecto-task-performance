@@ -12,4 +12,13 @@
     if(isset($_SESSION['usuario'])){
         $user = $_SESSION['usuario'];
         $estado = ControladorEstadoUsuario::InsertarNuevoEstado($_POST['estado'], $user);
+        /* ========================= Evento Creacion pregunta. ==================================*/
+       $newBitacora = new Bitacora();
+       $accion = ControladorBitacora::accion_Evento();
+       $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('GESTIONESTADOUSUARIO.PHP');
+       $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($user);
+       $newBitacora->accion = $accion['Insert'];
+       $newBitacora->descripcion = 'El usuario '.$user.' creó el estado usuario '.$_POST['estado'];
+       ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+       /* =======================================================================================*/
     }
