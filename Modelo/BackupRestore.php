@@ -1,25 +1,32 @@
 <?php
 class BackupRestore{
     public static function generarBackup($url){
-        try{
-            $conn = new Conexion();
-            $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB
-            $query = "exec bk_generarBackup '$url';";
-            sqlsrv_query($conexion, $query);
-            // if (sqlsrv_errors() == null) {
-            //     return sqlsrv_errors();
-            // }
-            return sqlsrv_errors();
-            sqlsrv_close($conexion); //Cerrar conexion
-        }catch (Exception $e) {
-            echo 'Error SQL:' . $e;
+        // Definir los parámetros para la ejecución del respaldo
+        $BaseDeDatos = 'RENDIMIENTO_TAREAS';
+        $usuario = 'TANIAC';
+        $password = 'password';
+        $rutaArchivoBackup = $url;
+        // Construir el comando de respaldo
+        $comando = "sqlcmd -S DESKTOP-REQKDIP\SQLEXPRESS -U $usuario -P $password -Q \"BACKUP DATABASE $BaseDeDatos TO DISK='$rutaArchivoBackup' WITH FORMAT\"";
+        // Ejecutar el comando de respaldo
+        $resultado = shell_exec($comando);
+        // Verificar si el respaldo fue exitoso
+        if ($resultado !== null) {
+            return true;
+        } else {
+            return false;
         }
+
     }
-    public static function insertarHistorialBackup($url, $creadoPor){
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB
-        $query = "INSERT INTO tbl_historialBackup VALUES ('$url','$creadoPor', GETDATE());";
-        sqlsrv_query($conexion, $query);
-        sqlsrv_close($conexion); #Cerramos la conexión.
+
+
+    // public static function insertarHistorialBackup($url, $creadoPor){
+        //     $conn = new Conexion();
+        //     $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB
+        //     $query = "INSERT INTO tbl_historialBackup VALUES ('$url','$creadoPor', GETDATE());";
+        //     sqlsrv_query($conexion, $query);
+        //     sqlsrv_close($conexion); #Cerramos la conexión.
+        // }
     }
-}
+    
+                // $query = "BACKUP DATABASE RENDIMIENTO_TAREAS TO DISK = 'C:\BACKUPS\RespaldoRENDIMIENTO_TAREA.bak'";

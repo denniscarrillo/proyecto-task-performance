@@ -17,7 +17,6 @@ if(isset($_SESSION['usuario'])){
     // ControladorBackupRestore::insertarHistorialBackup($urlRutaArchivoServidor, $_SESSION['usuario']);
 
     var_dump($estadoBackup);
-    // print json_encode($estadoBackup);
 }
 
 
