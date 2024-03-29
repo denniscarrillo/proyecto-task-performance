@@ -23,8 +23,6 @@ if (isset($_SESSION['usuario'])) {
   if (!$permisoConsulta) {
     /* ==================== Evento intento de ingreso sin permiso a mantenimiento cartera clientes. =================*/
     $accion = ControladorBitacora::accion_Evento();
-    date_default_timezone_set('America/Tegucigalpa');
-    $newBitacora->fecha = date("Y-m-d h:i:s");
     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionCarteraClientes.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['fallido'];
@@ -37,8 +35,6 @@ if (isset($_SESSION['usuario'])) {
     if (isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])) {
       /* ====================== Evento salir. ================================================*/
       $accion = ControladorBitacora::accion_Evento();
-      date_default_timezone_set('America/Tegucigalpa');
-      $newBitacora->fecha = date("Y-m-d h:i:s");
       $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
       $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
       $newBitacora->accion = $accion['Exit'];
@@ -48,8 +44,6 @@ if (isset($_SESSION['usuario'])) {
     }
     /* ============== Evento ingreso a mantenimiento cartera clientes. =======================*/
     $accion = ControladorBitacora::accion_Evento();
-    date_default_timezone_set('America/Tegucigalpa');
-    $newBitacora->fecha = date("Y-m-d h:i:s");
     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionCarteraClientes.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['income'];
@@ -157,7 +151,7 @@ if (isset($_SESSION['usuario'])) {
           <table class="display nowrap table" id="table-CarteraClientes" style="width:100%">
             <thead>
               <tr>
-                <th scope="col"> ID </th>
+                <th scope="col"> No. </th>
                 <th scope="col"> NOMBRE </th>
                 <th scope="col"> RTN </th>
                 <th scope="col"> TELEFONO </th>

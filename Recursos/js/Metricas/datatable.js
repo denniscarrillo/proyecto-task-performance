@@ -18,8 +18,11 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
+    fnCreatedRow: function(rowEl, data) {
+      $(rowEl).attr('id', data['id_EstadoAvance']);
+    },
     columns: [
-      { data: "id_EstadoAvance" },
+      { data: "item" },
       { data: "descripcion" },
       { data: "meta" },
       {
@@ -33,7 +36,24 @@ let procesarPermisoActualizar = (data) => {
       },
     ],
   });
+  let filtro = document.querySelector('input[type=search]');
 };
+
+$(document).on("focusout", "input[type=search]", function (e) {
+  let filtro = $(this).val();
+  capturarFiltroDataTable(filtro);
+});
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim()){
+    $.ajax({
+      url: "../../../Vista/crud/Metricas/registrarBitacoraFiltroMetricas.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
 
 //Peticion  AJAX que trae los permisos
 let obtenerPermisos = function ($idObjeto, callback) {
@@ -52,7 +72,7 @@ $(document).on("click", "#btn_nuevoRegistro", function () {
 
 $(document).on("click", "#btn_editar", function () {
   let fila = $(this).closest("tr"),
-    idMetrica = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
+    idMetrica = $(this).closest("tr").attr('id'), //capturo el ID
     metrica = fila.find("td:eq(1)").text(),
     meta = fila.find("td:eq(2)").text();
   $("#E_idMetrica").val(idMetrica);
@@ -108,9 +128,8 @@ let limpiarFormEdit = () => {
 //Eliminar Metrica
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
-    id_Metrica= $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
+    id_Metrica= $(this).closest("tr").attr('id'), //capturo el ID
     metrica = $(this).closest("tr").find("td:eq(1)").text();
-
   Swal.fire({
     title: "¿Estás seguro de eliminar la métrica  " + metrica + "?",
     text: "¡No podrás revertir esto!",
@@ -126,7 +145,10 @@ $(document).on("click", "#btn_eliminar", function () {
         url: "../../../Vista/crud/Metricas/eliminarMetricas.php",
         type: "POST",
         datatype: "json",
-        data: { id_Metrica: id_Metrica},
+        data: { 
+          id_Metrica: id_Metrica,
+          metrica: metrica,
+        },
         success: function (data) {
           if (JSON.parse(data).estadoEliminado) {
             Swal.fire("Eliminado!", "La métrica ha sido eliminado", "success");

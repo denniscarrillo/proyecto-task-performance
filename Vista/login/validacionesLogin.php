@@ -16,6 +16,7 @@ if (isset($_SESSION['registro'])) { //Cuando venimos de registro capturamos el v
     session_unset();
     session_destroy();
 }
+if (isset($_SESSION['usuario'])) {session_unset(); session_destroy();}
 $mensaje = null;
 $usuario = false;
 $nuevoEstado = false;

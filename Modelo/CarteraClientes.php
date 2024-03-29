@@ -16,12 +16,13 @@ class CarteraClientes{
     public static function obtenerCarteraClientes(){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB();
-        $obtenerCarteraCliente = "SELECT id_CarteraCliente, nombre_Cliente, rtn_Cliente, telefono, correo, direccion, estadoContacto
+        $obtenerCarteraCliente = "SELECT ROW_NUMBER() OVER(ORDER BY id_CarteraCliente ASC) AS Num, id_CarteraCliente, nombre_Cliente, rtn_Cliente, telefono, correo, direccion, estadoContacto
         FROM tbl_CarteraCliente;";
         $resultado = sqlsrv_query($consulta, $obtenerCarteraCliente);
         $carteraCliente = array();
         while($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)){
             $carteraCliente [] = [
+                'item' => $fila["Num"],
                 'idcarteraCliente' => $fila["id_CarteraCliente"],
                 'nombre' => $fila["nombre_Cliente"],
                 'rtn' => $fila["rtn_Cliente"],
@@ -45,11 +46,11 @@ class CarteraClientes{
     $direccion = $nuevoCliente->direccion;
     $estadoContacto = $nuevoCliente->estadoContacto;
     $CreadoPor = $nuevoCliente->CreadoPor;
+    $modificadoPor = $nuevoCliente->modificadoPor;
     date_default_timezone_set('America/Tegucigalpa');
     $fechaCreacion = date("Y-m-d");
-    $query = "INSERT INTO tbl_CarteraCliente(nombre_Cliente,rtn_Cliente,telefono,
-                                            correo,direccion,estadoContacto,Creado_Por,Fecha_Creacion )
-                   VALUES ('$nombre', '$rtn', '$telefono', '$correo','$direccion','$estadoContacto','$CreadoPor','$fechaCreacion');";
+    $query = "INSERT INTO tbl_CarteraCliente(nombre_Cliente,rtn_Cliente,telefono,correo,direccion,estadoContacto,Creado_Por,Fecha_Creacion, Modificado_Por,Fecha_Modificacion)
+                   VALUES ('$nombre', '$rtn', '$telefono', '$correo','$direccion','$estadoContacto','$CreadoPor', GETDATE(),'$modificadoPor', GETDATE());";
     $nuevoCliente = sqlsrv_query($consulta, $query);
     sqlsrv_close($consulta); #Cerramos la conexión.
     return $nuevoCliente;

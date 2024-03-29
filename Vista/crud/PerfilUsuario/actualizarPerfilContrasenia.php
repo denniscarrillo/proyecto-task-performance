@@ -43,6 +43,17 @@
                     ControladorUsuario::respaldarContrasenia($user, "", $encriptPassword, 3); 
                     ControladorUsuario::eliminarUltimaContrasena($_SESSION['usuario']);
                     $mensaje = 'Contraseña Actualizada'; 
+                    /* ========================= Evento Cambiar Contraseña. ======================*/
+                      $newBitacora = new Bitacora();
+                      $accion = ControladorBitacora::accion_Evento();
+                      date_default_timezone_set('America/Tegucigalpa');
+                      $newBitacora->fecha = date("Y-m-d h:i:s"); 
+                      $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('v_nuevaContrasenia.php');
+                      $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+                      $newBitacora->accion = $accion['Insert'];
+                      $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' cambio su contraseña';
+                      ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+                    /* =======================================================================================*/
                    }                 
             } else {
               $mensaje = 'Deben coincidir ambas contraseñas!';
@@ -50,21 +61,6 @@
           }else{
             $mensaje = 'Su contraseña actual es incorrecta';
           }
-          
-          /* ========================= Evento Cambiar Contraseña. ======================*/
-          $newBitacora = new Bitacora();
-          $accion = ControladorBitacora::accion_Evento();
-          date_default_timezone_set('America/Tegucigalpa');
-          $newBitacora->fecha = date("Y-m-d h:i:s"); 
-          $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('v_nuevaContrasenia.php');
-          $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-          $newBitacora->accion = $accion['Insert'];
-          $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' cambio su contraseña';
-          ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-          /* =======================================================================================*/
       }
     }
-  }
-?>
-
-     
+  } 

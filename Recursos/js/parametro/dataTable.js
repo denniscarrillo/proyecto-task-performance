@@ -17,8 +17,11 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
+    fnCreatedRow: function(rowEl, data) {
+      $(rowEl).attr('id', data['id']);
+    },
     columns: [
-      { data: "id" },
+      { data: "item" },
       { data: "parametro" },
       { data: "valorParametro" },
       { data: "descripcionParametro" },
@@ -35,7 +38,24 @@ let procesarPermisoActualizar = (data) => {
       },
     ],
   });
+  let filtro = document.querySelector('input[type=search]');
 };
+
+$(document).on("focusout", "input[type=search]", function (e) {
+  let filtro = $(this).val();
+  capturarFiltroDataTable(filtro);
+});
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim()){
+    $.ajax({
+      url: "../../../Vista/crud/parametro/registrarBitacoraFiltroParametro.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
 //Peticion  AJAX que trae los permisos
 let obtenerPermisos = function ($idObjeto, callback) {
   $.ajax({
@@ -48,7 +68,7 @@ let obtenerPermisos = function ($idObjeto, callback) {
 }
 $(document).on("click", "#btn_editar", function(){		        
   let fila = $(this).closest("tr"),	        
-  idParametro = $(this).closest('tr').find('td:eq(0)').text(), //capturo el ID		            
+  idParametro = $(this).closest('tr').attr('id'), //capturo el ID		            
   parametro = fila.find('td:eq(1)').text(),
   valor = fila.find('td:eq(2)').text(),
   descripcion = fila.find('td:eq(3)').text();
@@ -123,7 +143,7 @@ let limpiarFormEdit = () => {
 //Eliminar parametro
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this);
-  let parametro = $(this).closest("tr").find("td:eq(1)").text();
+  let parametro = $(this).closest("tr").attr('id');
   Swal.fire({
     title: "¿Estás seguro de eliminar el parámetro " + parametro + "?",
     text: "¡No podrás revertir esto!",

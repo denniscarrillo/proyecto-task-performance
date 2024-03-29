@@ -66,14 +66,14 @@ class Permiso
         sqlsrv_close($abrirConexion); //Cerrar conexion
         return $objetos;
     }
-    public static function registroPermiso($idRol, $idObjetos, $creadoPor) {
+    public static function registroPermiso($idRol, $idObjetos, $user) {
         try {
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             foreach($idObjetos as $idObjeto){
                 $id = $idObjeto['id_Objeto'];
                 $query = "INSERT INTO tbl_ms_permisos (id_Rol, id_Objeto, permiso_Consultar, permiso_Insercion, permiso_Actualizacion, 
-                permiso_Eliminacion, permiso_Reporte, Creado_Por, Fecha_Creacion) VALUES ('$idRol', '$id', 'N', 'N', 'N', 'N', 'N', '$creadoPor', GETDATE());";
+                permiso_Eliminacion, permiso_Reporte, Creado_Por, Fecha_Creacion, Modificado_Por, Fecha_Modificacion) VALUES ('$idRol', '$id', 'N', 'N', 'N', 'N', 'N', '$user', GETDATE(), '$user', GETDATE());";
                 sqlsrv_query($abrirConexion, $query);
             }
         } catch (Exception $e) {

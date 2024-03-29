@@ -19,8 +19,6 @@
         /* ========================= Evento Editar pregunta. ====================================*/
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();
-        date_default_timezone_set('America/Tegucigalpa');
-        $newBitacora->fecha = date("Y-m-d h:i:s"); 
         $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionPregunta.php');
         $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
         $newBitacora->accion = $accion['Update'];

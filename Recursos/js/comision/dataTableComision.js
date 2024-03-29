@@ -23,8 +23,12 @@ let procesarPermisoActualizar = data => {
     "language": {
       "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
     },
+    scrollX: true,
+    fnCreatedRow: function(rowEl, data) {
+      $(rowEl).attr('id', data['idComision']);
+    },
     "columns": [
-      { "data": "idComision" },
+      { "data": "item" },
       { "data": "factura" },
       { "data": "totalVenta", "render": $.fn.dataTable.render.number(',', '.', 2, ' Lps. ') },
       {
@@ -102,7 +106,8 @@ let obtenerPermisos = function ($idObjeto, callback) {
 //Editar Comision
 $(document).on("click", "#btn_editar", function(){
   let fila = $(this).closest("tr"),
-    idComision = fila.find('td:eq(0)').text(),
+    itemComision = $(this).closest("tr").find("td:eq(0)").text(),
+    idComision = $(this).closest("tr").attr("id"),
     idVenta = fila.find("td:eq(1)").text(),
     monto = fila.find("td:eq(2)").text(),
     porcentaje = fila.find("td:eq(3)").text(),
@@ -115,7 +120,9 @@ $(document).on("click", "#btn_editar", function(){
     fechaLiquidacion = fila.find("td:eq(8)").text();
     // fechaCobro = fila.find("td:eq(11)").text(); // Agregar punto y coma aquí
 
-  $("#idComision_E").val(idComision);
+  let inputId = document.getElementById('comisionid');
+  inputId.setAttribute("class", idComision);
+  $("#idComision_E").val(itemComision);
   $("#idVenta_E").val(idVenta);
   $("#monto_E").val(monto);
   $("#porcentaje-comision_E").val(porcentaje);
@@ -144,7 +151,7 @@ $("#form-Edit-Comision").submit(function (e) {
     type: "POST",
     datatype: "JSON",
     data: {
-      idComision: idComision,
+      idComision: comisionid,
       estadoLiquidacion: estadoLiquidacion,
     },
     success: function (data) {
@@ -166,7 +173,8 @@ document.getElementById("btnCerrar").addEventListener("click", function () {
 
 $(document).on("click", "#btn_ver", async function (){
   let fila = $(this).closest("tr");
-  let idComision = fila.find('td:eq(0)').text();
+  let verComision= $(this).closest("tr").find("td:eq(0)").text();
+  let idComision = $(this).closest("tr").attr("id");
   let idComisionVer = JSON.parse(await obtenerComisionId(idComision));
   console.log(idComisionVer);
 
@@ -275,7 +283,7 @@ $(document).on("click", "#btn_pdf_id",  function (){
  //Eliminar Comision
  $(document).on("click", "#btn_eliminar", function() {
   let fila = $(this);        
-    let idComision = $(this).closest('tr').find('td:eq(0)').text();
+    let idComision = $(this).closest("tr").attr("id");
       Swal.fire({
         title: '¿Estás seguro de eliminar la comisión N° '+idComision+'?',
         text: "¡No podrás revertir esto!",

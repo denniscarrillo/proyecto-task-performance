@@ -104,17 +104,17 @@ require_once('../../Controlador/ControladorParametro.php');
             <table class="display nowrap table" id="table-Comision" style="width:100%">
               <thead>
                 <tr>
-                  <th scope="col"> ID COMISION </th>
-                  <th scope="col"> N° FACTURA </th>
+                  <th scope="col"> No. COMISION </th>
+                  <th scope="col"> No. FACTURA </th>
                   <th scope="col"> TOTAL VENTA </th>
                   <th scope="col"> PORCENTAJE </th>
-                  <th scope="col"> COMISION TOTAL </th>
-                  <th scope="col"> ESTADO COMISION </th>
-                  <th scope="col"> ESTADO LIQUIDACION </th>
+                  <th scope="col"> COMISIÓN TOTAL </th>
+                  <th scope="col"> ESTADO COMISIÓN </th>
+                  <th scope="col"> ESTADO LIQUIDACIÓN </th>
                   <!-- <th scope="col"> ESTADO COBRO </th>
                   <th scope="col"> METODO PAGO </th> -->
-                  <th scope="col"> FECHA CREACION </th>
-                  <th scope="col"> FECHA LIQUIDACION</th>
+                  <th scope="col"> FECHA CREACIÓN </th>
+                  <th scope="col"> FECHA LIQUIDACIÓN</th>
                   <!-- <th scope="col"> FECHA COBRO VENTA </th> -->
                   <th scope="col"> ACCIONES </th>
                 </tr>

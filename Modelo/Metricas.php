@@ -13,12 +13,13 @@ class Metricas{
             $metricas = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $query = "SELECT e.id_EstadoAvance,e.descripcion,m.meta FROM tbl_metrica as m
+            $query = "SELECT ROW_NUMBER() OVER(ORDER BY e.id_EstadoAvance ASC) AS Num, e.id_EstadoAvance,e.descripcion,m.meta FROM tbl_metrica as m
             inner join tbl_estadoavance AS e ON m.id_EstadoAvance = e.id_EstadoAvance;";
             $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
             while ($fila = sqlsrv_fetch_array( $resultado, SQLSRV_FETCH_ASSOC)) {
                 $metricas[] = [
+                    'item' => $fila['Num'],
                     'id_EstadoAvance' => $fila['id_EstadoAvance'],
                     'descripcion' => $fila['descripcion'],
                     'meta' => $fila['meta'],
@@ -129,7 +130,7 @@ class Metricas{
    INNER JOIN tbl_EstadoAvance AS E ON M.id_EstadoAvance = E.id_EstadoAvance
    INNER JOIN tbl_Tarea AS T ON T.id_EstadoAvance = E.id_EstadoAvance 
    WHERE T.estado_Finalizacion = 'FINALIZADA'
-   GROUP BY E.descripcion, M.meta;";
+   GROUP BY E.descripcion, M.meta ORDER BY E.descripcion;";
 
         $resultado = sqlsrv_query($consulta, $query);
         $estadisticas = array();
@@ -158,7 +159,7 @@ class Metricas{
                       INNER JOIN tbl_EstadoAvance AS E ON M.id_EstadoAvance = E.id_EstadoAvance
                         INNER JOIN tbl_Tarea AS T ON T.id_EstadoAvance = E.id_EstadoAvance
                         WHERE T.fecha_Finalizacion BETWEEN '$FechaInicial' AND '$FechaFinal'
-                        GROUP BY E.descripcion, M.meta;";
+                        GROUP BY E.descripcion, M.meta ORDER BY E.descripcion;";
             $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
             while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
@@ -195,7 +196,7 @@ class Metricas{
                         INNER JOIN tbl_vendedores_tarea AS VT ON VT.id_Tarea = T.id_Tarea
                         INNER JOIN tbl_MS_Usuario AS U ON u.id_Usuario = VT.id_usuario_vendedor
                         WHERE T.fecha_Finalizacion BETWEEN '$FechaInicial' AND '$FechaFinal' AND id_Usuario = '$idUsuario'
-                        GROUP BY E.descripcion, M.meta;";
+                        GROUP BY E.descripcion, M.meta ORDER BY E.descripcion;";
             $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
             while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
@@ -218,8 +219,62 @@ class Metricas{
     }
 
 
+     
+    public static function obtenerEstadisticasPDF($idUsuario, $FechaInicial, $FechaFinal){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB();
     
-
+        // Consulta SQL utilizando consultas preparadas para evitar inyección SQL
+        $query = "SELECT 
+            E.descripcion, 
+            M.meta, 
+            COUNT(*) AS Alcance,
+            CONCAT(CAST(COUNT(*) * 100.0 / M.meta AS DECIMAL(10,0)), '%') AS Porcentaje
+        FROM 
+            tbl_Metrica AS M
+            INNER JOIN tbl_EstadoAvance AS E ON M.id_EstadoAvance = E.id_EstadoAvance
+            INNER JOIN tbl_Tarea AS T ON T.id_EstadoAvance = E.id_EstadoAvance
+            INNER JOIN tbl_vendedores_tarea AS VT ON VT.id_Tarea = T.id_Tarea
+            INNER JOIN tbl_MS_Usuario AS U ON U.id_Usuario = VT.id_usuario_vendedor
+        WHERE 
+            (T.fecha_Finalizacion BETWEEN ? AND ? OR ? = '' OR ? = '')
+            AND (id_Usuario = ? OR ? = '')
+        GROUP BY 
+            E.descripcion, M.meta 
+        ORDER BY 
+            E.descripcion;";
+    
+        // Parámetros para la consulta preparada
+        $params = array($FechaInicial, $FechaFinal, $FechaInicial, $FechaFinal, $idUsuario, $idUsuario);
+    
+        // Ejecutar la consulta preparada
+        $resultado = sqlsrv_query($consulta, $query, $params);
+    
+        // Manejo de errores en la ejecución de la consulta
+        if ($resultado === false) {
+            // Si hay un error en la consulta, imprime el error
+            echo "Error al ejecutar la consulta: " . print_r(sqlsrv_errors(), true);
+            return false;
+        }
+    
+        // Procesar los resultados de la consulta
+        $estadisticas = array();
+        while($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)){
+            $estadisticas [] = [
+                'Descripcion' => $fila['descripcion'],
+                'Meta' => $fila['meta'],
+                'Alcance' => $fila['Alcance'],
+                'Porcentaje' => $fila['Porcentaje']
+            ];
+        }
+    
+        // Cerrar la conexión a la base de datos
+        sqlsrv_close($consulta);
+    
+        // Devolver las estadísticas obtenidas
+        return $estadisticas;
+    }
+    
     
 
 }#Fin de la clase

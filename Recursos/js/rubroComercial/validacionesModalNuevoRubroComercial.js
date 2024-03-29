@@ -1,9 +1,6 @@
 import * as funciones from '../funcionesValidaciones.js';
 export let estadoValidado = false;
 //Objeto con expresiones regulares para los inptus
-
-
-
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ\s,])/,//Lentras, acentos y Ñ //Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
@@ -13,20 +10,15 @@ const validaciones = {
     letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
     direccion: /^[a-zA-Z0-9 #.,-]+$/,
 };
-
-
 let inputsNuvoRubroC = {
     rubroC: document.getElementById('rubroComercial'),
     descripcion: document.getElementById('descripcion')
 }
-
-
 $(document).ready(function (){
     //Evento clic para hacer todas las validaciones
   document.getElementById("btnsubmit").addEventListener("click", () => {
     ValidarInputRubroC();
     ValidarInputDescrip();
-   
     console.log(document.querySelectorAll(".mensaje_error").length)
     console.log(document.querySelectorAll(".mensaje-existe-razonsocial").length)
     if (
@@ -73,9 +65,6 @@ let ValidarInputRubroC =  function ()  {
    /*  if(estadoValidaciones.estadoNoCaracteresSeguidos){
        // await obtenerRubroComercialExiste($('#rubroComercial').val());
     } */
-
-    0
-    
 }
 
 let ValidarInputDescrip = function () {
@@ -87,9 +76,7 @@ let ValidarInputDescrip = function () {
         estadoSoloLetras: false,
         estadoNoMasdeUnEspacios: false,
         estadoNoCaracteresSeguidos: false
-      
     }
-
     descripcionValidaciones.estadoCampoVacio = funciones.validarCampoVacio(inputsNuvoRubroC.descripcion);
     if(descripcionValidaciones.estadoCampoVacio) {
         descripcionValidaciones.estadoSoloLetras = funciones.validarSoloLetras(inputsNuvoRubroC.descripcion, validaciones.soloLetras);
@@ -99,10 +86,8 @@ let ValidarInputDescrip = function () {
     }
     if(descripcionValidaciones.estadoNoMasdeUnEspacios) {
         descripcionValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter(inputsNuvoRubroC.descripcion, 
-            validaciones.caracterMas3veces);
+        validaciones.caracterMas3veces);
     }
-    
- 
 }
 
 

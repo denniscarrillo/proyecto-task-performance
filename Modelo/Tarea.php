@@ -733,15 +733,16 @@ class Tarea
         $select = '';
         $cotizaciones = array();
         if($usuario == 'SUPERADMIN'){
-            $select = "SELECT ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
-                FROM tbl_CotizacionTarea ct
-                INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
-                INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente
-                INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario;";
+            $select = "SELECT ROW_NUMBER() OVER(ORDER BY ct.id_Cotizacion ASC) AS Num, ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
+            FROM tbl_CotizacionTarea ct
+            INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
+            INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente
+            INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario;";
                 $ejecutar = sqlsrv_query($conexion, $select);
                 if(sqlsrv_has_rows($ejecutar)){
                     while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
                         $cotizaciones[] = [
+                            'item' => $fila['Num'],
                             'id' => $fila['id_Cotizacion'],
                             'creadoPor' => $fila['nombre_Usuario'],
                             'cliente' =>$fila['nombre_Cliente'],

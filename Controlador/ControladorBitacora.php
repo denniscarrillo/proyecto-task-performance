@@ -9,11 +9,11 @@
         public static function accion_Evento(){
             return Bitacora::acciones_Evento();
          }
-        public static function bitacorasUsuario(){
-            return Bitacora::obtenerBitacorasUsuario();
+        public static function bitacorasUsuario($fechaDesde, $fechaHasta){
+            return Bitacora::obtenerBitacorasUsuario($fechaDesde, $fechaHasta);
         }
         public static function depurarBitacoraSistema($fechaDesde, $fechaHasta){
-            Bitacora::depurarBitacora($fechaDesde, $fechaHasta);
+            return Bitacora::depurarBitacora($fechaDesde, $fechaHasta);
         }
         public static function getBitacoraPdf($buscar){
             return Bitacora::obtenerBitacoraPdf($buscar);

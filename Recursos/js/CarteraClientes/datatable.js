@@ -20,8 +20,11 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
+    fnCreatedRow: function(rowEl, data) {
+      $(rowEl).attr('id', data['idcarteraCliente']);
+    },
     columns: [
-      { data: "idcarteraCliente" },
+      { data: "item" },
       { data: "nombre" },
       { data: "rtn" },
       { data: "telefono" },
@@ -39,7 +42,24 @@ let procesarPermisoActualizar = (data) => {
       },
     ],
   });
+  let filtro = document.querySelector('input[type=search]');
 };
+
+$(document).on("focusout", "input[type=search]", function (e) {
+  let filtro = $(this).val();
+  capturarFiltroDataTable(filtro);
+});
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim()){
+    $.ajax({
+      url: "../../../Vista/crud/carteraCliente/registrarBitacoraFiltroCarteraCliente.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
 
 //Crear nuevo usuario
 $("#form-carteraCliente").submit(function (e) {
@@ -122,7 +142,7 @@ let setEstado = function ($estado) {
 //Editar Cliente
 $(document).on("click", "#btn_editar", function () {
   let fila = $(this).closest("tr"),
-    idcarteraCliente = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
+    idcarteraCliente = $(this).closest("tr").attr('id'), //capturo el ID
     nombre = fila.find("td:eq(1)").text(),
     rtn = fila.find("td:eq(2)").text(),
     telefono = fila.find("td:eq(3)").text(),
@@ -227,10 +247,11 @@ let limpiarFormEdit = () => {
 //Eliminar un cliente
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
-    carteraCliente = fila.find("td:eq(1)").text(),
+    carteraCliente = $(this).closest("tr").attr('id'),
+    nombreCliente = fila.find("td:eq(1)").text(),
     rtn = fila.find("td:eq(2)").text();
   Swal.fire({
-    title: "¿Estás seguro de eliminar a " + carteraCliente + "?",
+    title: "¿Estás seguro de eliminar a " + nombreCliente + "?",
     text: "¡No podrás revertir esto!",
     icon: "warning",
     showCancelButton: true,
@@ -247,18 +268,19 @@ $(document).on("click", "#btn_eliminar", function () {
         data: {
           rtn: rtn,
           carteraCliente: carteraCliente,
+          nombreCliente: nombreCliente,
         },
         success: function (data) {
           if (!JSON.parse(data).estado) {
             Swal.fire(
-              "¡Lo sentimos!",
+              "Lo sentimos",
               "<strong>" + carteraCliente + "</strong> no se puede eliminar",
               "error"
             );
             return;
           }
           Swal.fire(
-            "¡Eliminado!",
+            "Eliminado",
             "<strong>" + carteraCliente + "</strong> ha sido eliminado",
             "success"
           );
