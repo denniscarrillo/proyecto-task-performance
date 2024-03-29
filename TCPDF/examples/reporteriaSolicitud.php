@@ -85,7 +85,8 @@ $html = '
 
 $Solicitudes = ControladorDataTableSolicitud::obtenerSolicitudPDF(trim($_GET['buscar']));
 foreach($Solicitudes as $solicitud){
-    $idSolicitud = $solicitud['id_Solicitud'];
+    
+    $Cont++ ;
     $nombre = $solicitud['Nombre'];
     $servicioTecnico = $solicitud['servicio_Tecnico'];
     $telefono = $solicitud['telefono'];
@@ -94,7 +95,7 @@ foreach($Solicitudes as $solicitud){
     $fechaFormateada = $FechaSolicitud->format('Y/m/d');
     $html .= '
     <tr>
-    <td style="text-align: center">'.$idSolicitud.'</td>
+    <td style="text-align: center">'.$Cont.'</td>
     <td>'.$nombre.'</td>
     <td >'.$servicioTecnico.'</td>
     <td>'.$telefono.'</td>
