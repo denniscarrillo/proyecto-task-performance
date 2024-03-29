@@ -1,0 +1,56 @@
+.container-backup-restore {
+    display: flex;
+    column-gap: 1rem;
+    margin-top: 4rem;
+    justify-content: space-around;
+    /* background-color: blueviolet; */
+    padding: 1rem;
+}
+.container-backup, .container-restore{
+    background-color: #6e6b6a;
+    color: whitesmoke;
+    height: 20rem;
+    width: 50rem;
+    padding: 1rem;
+    border-radius: 0.4rem;
+}
+.button-container {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+.btn-backup {
+    background-color: #0dc453;
+}
+.btn-backup:hover {
+    background-color: #1ace5f;
+    box-shadow: whitesmoke 0px 2px 8px 0px;
+}
+.btn-backup:active {
+    background-color: #0dc453 !important;
+}
+.btn-restore:hover {
+    box-shadow: whitesmoke 0px 2px 8px 0px;
+}
+.container-backup-restore h2 {
+    text-align: center;
+    /* background-color: #313133; */
+    color: #ffc90e;
+    border-radius: 0.2rem;
+}
+.containter-text-dbName {
+    padding: 0.5rem;
+    background-color: #ffc90e;
+    color: #413f3f;
+    border-radius: 0.2rem;
+}
+.db-name {
+    background-color: aliceblue;
+    border-radius: 0.2rem;
+    padding: 0.4rem;
+    font-weight: 500;
+}
+.db-name-label {
+    font-weight: 600;
+}
