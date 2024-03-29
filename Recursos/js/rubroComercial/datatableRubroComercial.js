@@ -1,6 +1,5 @@
 import { estadoValidado } from "./validacionesModalNuevoRubroComercial.js";
 import { estadoValido  } from "./validacionesModalEditarRubroComercial.js";
-
 let tablaRubroComercial = "";
 $(document).ready(function () {
   let $idObjetoSistema = document.querySelector(".title-dashboard-task").id;
@@ -20,8 +19,11 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
+    fnCreatedRow: function(rowEl, data) {
+      $(rowEl).attr('id', data['id_rubroComercial']);
+    },
     columns: [
-      { data: "id_rubroComercial" },
+      { data: "item" },
       { data: "rubro_Comercial" },
       { data: "descripcion" },
       {
@@ -105,10 +107,14 @@ $rubroComercial.addEventListener('focusout', function () {
 // Editar Rubro Comercial
 $(document).on("click", "#btn_editar", function () {
   let fila = $(this).closest("tr"),
-    idRubroComercial = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
+    itemRubro= $(this).closest("tr").find("td:eq(0)").text(),
+    idRubroComercial = $(this).closest("tr").attr("id"), //capturo el ID
     rubroComercial = fila.find("td:eq(1)").text(),
     descripcion = fila.find("td:eq(2)").text();
-  $("#E_idRubroComercial").val(idRubroComercial);
+
+  let inputId = document.getElementById('rubroid');
+  inputId.setAttribute("class", idRubroComercial);
+  $("#E_idRubroComercial").val(itemRubro);
   $("#E_rubroComercial").val(rubroComercial);
   $("#E_descripcion").val(descripcion);
   $(".modal-header").css("background-color", "#007bff");
@@ -120,17 +126,17 @@ $(document).on("click", "#btn_editar", function () {
 $("#formEdit_rubroComercial").submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
   //Obtener datos del nuevo Cliente
-  let idRubroComercial = $("#E_idRubroComercial").val(),
+  let inputId = document.getElementById('rubroid'),
     rubroComercial = $("#E_rubroComercial").val(),
     descripcion = $("#E_descripcion").val();
-    console.log(estadoValido);
+    let razonid = inputId.getAttribute("class");
   if (estadoValido) {
     $.ajax({
       url: "../../../Vista/crud/rubroComercial/editarRubroComercial.php",
       type: "POST",
       datatype: "JSON",
       data: {
-        id_RubroComercial: idRubroComercial,
+        id_RubroComercial: razonid,
         rubroComercial: rubroComercial,
         descripcion: descripcion,
       },
@@ -143,18 +149,21 @@ $("#formEdit_rubroComercial").submit(function (e) {
         );
         tablaRubroComercial.ajax.reload(null, false);
 
+
       },
     });
     $("#modalEditarRubroComercial").modal("hide");
+   // limpiarFormEdit();
    // limpiarFormEdit();
   }
 });
 //Eliminar Rubro Comercial
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
-    idRubroComercial = $(this).closest("tr").find("td:eq(0)").text(),
-    rubroComercial = fila.find("td:eq(1)").text();
-  
+    idRubroComercial = $(this).closest("tr").attr("id"),
+    rubroComercial = fila.find("td:eq(1)").text(),
+    descripcion = fila.find("td:eq(2)").text();
+
   Swal.fire({
     title:
       "Estas seguro de eliminar el rubro comercial " + rubroComercial + "?",
@@ -192,6 +201,9 @@ $(document).on("click", "#btn_eliminar", function () {
 });
 
 //Limpiar modal de crear
+// document.getElementById("btn-cerrar-Editar").addEventListener("click", () => {
+//   limpiarForm();
+// });
 document.getElementById("btncerrar").addEventListener("click", () => {
   limpiarForm();
 });

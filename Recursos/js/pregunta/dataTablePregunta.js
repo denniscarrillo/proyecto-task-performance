@@ -18,8 +18,11 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
+    fnCreatedRow: function(rowEl, data) {
+      $(rowEl).attr('id', data['id_Pregunta']);
+    },
     columns: [
-      { data: "id_Pregunta" },
+      { data: "item" },
       { data: "pregunta" },
       { data: "estadoPregunta" },
       {
@@ -40,6 +43,18 @@ $(document).on("focusout", "input[type=search]", function (e) {
   let filtro = $(this).val();
   capturarFiltroDataTable(filtro);
 });
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim()){
+    $.ajax({
+      url: "../../../Vista/crud/pregunta/registrarBitacoraFiltroPregunta.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
+
 
 //Peticion  AJAX que trae los permisos
 let obtenerPermisos = function ($idObjeto, callback) {
@@ -107,9 +122,12 @@ $pregunta.addEventListener("focusout", function () {
 // Editar Pregunta
 $(document).on("click", "#btn_editar", function () {
   let fila = $(this).closest("tr"),
-    idPregunta = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
+    idPregunta = $(this).closest("tr").attr('id'), //capturo el ID
     pregunta = fila.find("td:eq(1)").text(),
     estado = fila.find("td:eq(2)").text();
+
+    let inputId = document.getElementById('preguntaid');
+    inputId.setAttribute("class", idPregunta);
   $("#idPregunta_E").val(idPregunta);
   $("#pregunta_E").val(pregunta);
   $("#E_estado").val(estado);
@@ -122,16 +140,17 @@ $(document).on("click", "#btn_editar", function () {
 $("#form-Pregunta-Editar").submit(function (e) {
   e.preventDefault();
   //obtener datos al editar la pregunta
-  let pregunta = $("#pregunta_E").val(),
-    idPregunta = $("#idPregunta_E").val(),
+  let inputId = document.getElementById('preguntaid'),
+    pregunta = $("#pregunta_E").val(),    
     estado = $("#E_estado").val();
+    let preguntaid = inputId.getAttribute("class");
   if (valido) {
     $.ajax({
       url: "../../../Vista/crud/pregunta/editarPreguntas.php",
       type: "POST",
       datatype: "JSON",
       data: {
-        idPregunta: idPregunta,
+        idPregunta: preguntaid,
         pregunta: pregunta,
         estado: estado,
       },
@@ -151,7 +170,7 @@ $("#form-Pregunta-Editar").submit(function (e) {
 //Eliminar pregunta
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
-    idPregunta = $(this).closest("tr").find("td:eq(0)").text(),
+    idPregunta = $(this).closest("tr").attr('id'),
     pregunta = fila.find("td:eq(1)").text();
   Swal.fire({
     title: "Estás seguro de eliminar la pregunta " + pregunta + "?",
@@ -243,13 +262,4 @@ $(document).on("click", "#btn_Pdf", function () {
     "_blank"
   );
 });
-const capturarFiltroDataTable = function(filtro){
-  $.ajax({
-    url: "../../../Vista/crud/pregunta/registrarBitacoraFiltro.php",
-    type: "POST",
-    data: {
-      filtro: filtro
-    }
-  })
-}
 

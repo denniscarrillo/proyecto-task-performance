@@ -8,23 +8,39 @@ $(document).ready(function () {
     scrollX: true,
   });
   let btn_confirms = document.querySelectorAll(".btn_confirm");
+  let filtro = document.querySelector('input[type=search]');
   validarPermisos(btn_confirms);
 });
+$(document).on("focusout", "input[type=search]", function (e) {
+  let filtro = $(this).val();
+  capturarFiltroDataTable(filtro);
+});
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim() !== ' '){
+    $.ajax({
+      url: "../../../Vista/crud/permiso/registrarBitacoraFiltroPermiso.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
 
 let actualizarPermisos = function (elementoFila) {
   let $fila = elementoFila.closest("tr");
   let rol = $fila.find("td:eq(0)").text();
   let objeto = $fila.find("td:eq(1)").text();
   let consultar =
-    $fila.find("td:eq(2)").find("input")[0].checked == true ? "Y" : "N";
+    $fila.find("td:eq(2)").find("input")[0].checked == true ? "S" : "N";
   let insertar =
-    $fila.find("td:eq(3)").find("input")[0].checked == true ? "Y" : "N";
+    $fila.find("td:eq(3)").find("input")[0].checked == true ? "S" : "N";
   let actualizar =
-    $fila.find("td:eq(4)").find("input")[0].checked == true ? "Y" : "N";
+    $fila.find("td:eq(4)").find("input")[0].checked == true ? "S" : "N";
   let eliminar =
-    $fila.find("td:eq(5)").find("input")[0].checked == true ? "Y" : "N";
+    $fila.find("td:eq(5)").find("input")[0].checked == true ? "S" : "N";
   let reporte =
-    $fila.find("td:eq(6)").find("input")[0].checked == true ? "Y" : "N";
+    $fila.find("td:eq(6)").find("input")[0].checked == true ? "S" : "N";
   Swal.fire({
     title: "¿Esta seguro?",
     text: "Se actualizaran los permisos",
@@ -98,7 +114,7 @@ let validarPermisos = async function (btn_confirms) {
     permisoActualizar = await obtenerPermisos();
   }
   btn_confirms.forEach((btn_confirm) => {
-    if (permisoActualizar == "Y" || user == "SUPERADMIN") {
+    if (permisoActualizar == "S" || user == "SUPERADMIN") {
       btn_confirm.addEventListener("click", function () {
         actualizarPermisos($(this));
       });

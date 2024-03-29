@@ -18,8 +18,11 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
+    fnCreatedRow: function(rowEl, data) {
+      $(rowEl).attr('id', data['id_Rol']);
+    },
     columns: [
-      { data: "id_Rol" },
+      { data: "item" },
       { data: "rol" },
       { data: "descripcion" },
       {
@@ -33,7 +36,24 @@ let procesarPermisoActualizar = (data) => {
       },
     ],
   });
+  let filtro = document.querySelector('input[type=search]');
 };
+$(document).on("focusout", "input[type=search]", function (e) {
+  let filtro = $(this).val();
+  capturarFiltroDataTable(filtro);
+});
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim()){
+    $.ajax({
+      url: "../../../Vista/crud/rol/registrarBitacoraFiltroRol.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
+
 //Peticion  AJAX que trae los permisos
 let obtenerPermisos = function ($idObjeto, callback) {
   $.ajax({
@@ -105,9 +125,10 @@ $rol.addEventListener('focusout', function () {
 //Editar un rol
 $(document).on("click", "#btn_editar", function () {
   let fila = $(this).closest("tr"),
-    id_Rol = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
+    id_Rol = $(this).closest("tr").attr('id'), //capturo el ID
     rol = fila.find("td:eq(1)").text(),
     descripcion = fila.find("td:eq(2)").text();
+    console.log(id_Rol)
   if (rol == "Super Administrador") {
     Swal.fire(
       "Sin acceso!",
@@ -192,7 +213,7 @@ let limpiarFormEdit = () => {
 //Eliminar Rol
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
-    idRol = fila.find("td:eq(0)").text(),
+    idRol = $(this).closest("tr").attr('id'),
     rol = fila.find("td:eq(1)").text();
   if (rol == "SUPER ADMINISTRADOR" || rol == "PREDETERMINADO") {
     Swal.fire(

@@ -13,7 +13,7 @@ session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
-  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionObjeto.php');
+  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('GESTIONOBJETO.PHP');
   //Se valida el usuario, si es SUPERADMIN por defecto tiene permiso caso contrario se valida el permiso vrs base de datos
   (!($_SESSION['usuario'] == 'SUPERADMIN'))
     ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual)
@@ -25,7 +25,7 @@ if (isset($_SESSION['usuario'])) {
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
     $newBitacora->fecha = date("Y-m-d h:i:s");
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionObjeto.php');
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('GESTIONOBJETO.PHP');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['fallido'];
     $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso al mantenimiento de objetos';
@@ -50,12 +50,12 @@ if (isset($_SESSION['usuario'])) {
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
     $newBitacora->fecha = date("Y-m-d h:i:s");
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionObjeto.php');
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('GESTIONOBJETO.PHP');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['income'];
     $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó al mantenimiento de objetos';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-    $_SESSION['objetoAnterior'] = 'gestionObjeto.php';
+    $_SESSION['objetoAnterior'] = 'GESTIONOBJETO.PHP';
     $_SESSION['descripcionObjeto'] = 'mantenimiento de objetos';
     /* =======================================================================================*/
   }
@@ -91,7 +91,7 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
-  <title> Estado De Objetos</title>
+  <title>Objeto</title>
 </head>
 
 <body style="overflow: hidden;">
@@ -144,7 +144,7 @@ if (isset($_SESSION['usuario'])) {
           </div>
           <div class="titulo">
             <H2 class="title-dashboard-task"
-              id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionObjeto.php'); ?>"> Objetos</H2>
+              id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionObjeto.php'); ?>"> GESTIÓN DE OBJETOS</H2>
           </div>
         </div>
         <div class="table-conteiner">
@@ -158,7 +158,7 @@ if (isset($_SESSION['usuario'])) {
           <table class="display nowrap table" id="table-Objeto" style="width:100%">
             <thead>
               <tr>
-                <th scope="col"> ID </th>
+                <th scope="col"> No. </th>
                 <th scope="col"> OBJETO</th>
                 <th scope="col"> DESCRIPCIÓN</th>
                 <th scope="col"> TIPO OBJETO</th>

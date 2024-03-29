@@ -106,7 +106,7 @@ function enviarCorreoSolicitud($nuevaSolicitud, $productosSolicitud, $idSolicitu
         </tr>
         <tr>
             <td style="background-color: #c9c9c9;"><b>RTN CLIENTE:</b></td>
-            <td>'.$rtnCliente.''.$rtnClienteCartera.'</td>
+            <td>'.$rtnClienteCartera.'</td>
             
         </tr>  
         

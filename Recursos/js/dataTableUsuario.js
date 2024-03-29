@@ -37,7 +37,25 @@ let procesarPermisoActualizar = (data) => {
       },
     ],
   });
+  let filtro = document.querySelector('input[type=search]');
 };
+
+$(document).on("focusout", "input[type=search]", function (e) {
+  let filtro = $(this).val();
+  capturarFiltroDataTable(filtro);
+});
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim()){
+    $.ajax({
+      url: "../../../Vista/crud/usuario/registrarBitacoraFiltroUsuario.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
+
 //Peticion  AJAX que trae los permisos
 let obtenerPermisos = function ($idObjeto, callback) {
   $.ajax({
@@ -111,6 +129,7 @@ $("#form-usuario").submit(async function (e) {
 //Eliminar usuario
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this);
+  let idUsuario = $(this).closest("tr").find("td:eq(0)").text();
   let usuario = $(this).closest("tr").find("td:eq(1)").text();
   if (usuario == "SUPERADMIN") {
     Swal.fire(
@@ -133,7 +152,10 @@ $(document).on("click", "#btn_eliminar", function () {
           url: "../../../Vista/crud/usuario/eliminarUsuario.php",
           type: "POST",
           datatype: "json",
-          data: { usuario: usuario },
+          data: { 
+            usuario: usuario,
+            idUsuario: idUsuario,
+          },
           success: function (data) {
             let estadoEliminado = data[0].estadoEliminado;
             if (estadoEliminado == "eliminado") {
@@ -147,7 +169,7 @@ $(document).on("click", "#btn_eliminar", function () {
             } else {
               Swal.fire(
                 "Lo sentimos!",
-                "El usuario no puede ser eliminado",
+                "El usuario no puede ser eliminado se ha inactivado su estado",
                 "error"
               );
               tablaUsuarios.ajax.reload(null, false);

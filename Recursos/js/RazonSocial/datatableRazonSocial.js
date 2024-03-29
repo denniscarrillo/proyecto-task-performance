@@ -19,8 +19,11 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
+    fnCreatedRow: function(rowEl, data) {
+      $(rowEl).attr('id', data['id_razonSocial']);
+    },
     columns: [
-      { data: "id_razonSocial" },
+      { data: "item" },
       { data: "razon_Social" },
       { data: "descripcion" },
       {
@@ -104,10 +107,14 @@ $RazonSocial.addEventListener('focusout', function () {
 // Editar Razon Social
 $(document).on("click", "#btn_editar", function () {
   let fila = $(this).closest("tr"),
-    idRazonSocial = $(this).closest("tr").find("td:eq(0)").text(), //capturo el ID
+    itemRazon = $(this).closest("tr").find("td:eq(0)").text(),
+    idRazonSocial = $(this).closest("tr").attr('id'), //capturo el ID
     razonSocial = fila.find("td:eq(1)").text(),
     descripcion = fila.find("td:eq(2)").text();
-  $("#E_idRazonSocial").val(idRazonSocial);
+    console.log(idRazonSocial)
+  let inputId = document.getElementById('razonid');
+  inputId.setAttribute("class", idRazonSocial);
+  $("#E_idRazonSocial").val(itemRazon);
   $("#E_razonSocial").val(razonSocial);
   $("#E_descripcion").val(descripcion);
   $(".modal-header").css("background-color", "#007bff");
@@ -119,16 +126,17 @@ $(document).on("click", "#btn_editar", function () {
 $("#form-Edit_razonSocial").submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
   //Obtener datos del nuevo razonsocial
-  let idRazonSocial = $("#E_idRazonSocial").val(),
+  let inputId = document.getElementById('razonid'),
     razonSocial = $("#E_razonSocial").val(),
     descripcion = $("#E_descripcion").val();
+  let razonid = inputId.getAttribute("class");
   if (estadoValido) {
     $.ajax({
       url: "../../../Vista/crud/razonSocial/editarRazonSocial.php",
       type: "POST",
       datatype: "JSON",
       data: {
-        id_RazonSocial: idRazonSocial,
+        id_RazonSocial: razonid,
         razonSocial: razonSocial,
         descripcion: descripcion,
       },
@@ -144,14 +152,16 @@ $("#form-Edit_razonSocial").submit(function (e) {
       },
     });
     $("#modalEditarRazonSocial").modal("hide");
+    limpiarFormEdit();
   }
 });
 //Eliminar Rubro Comercial
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
-    idRazonSocial = $(this).closest("tr").find("td:eq(0)").text(),
+    idRazonSocial = $(this).closest("tr").attr('id'),
     razonSocial = fila.find("td:eq(1)").text(),
     descripcion = fila.find("td:eq(2)").text();
+    console.log(idRazonSocial)
 
   Swal.fire({
     title: "Estas seguro de eliminar la razonSocial " + razonSocial + "?",

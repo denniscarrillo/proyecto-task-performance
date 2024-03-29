@@ -120,7 +120,7 @@ if (isset($_SESSION['usuario'])) {
         $urlParametros = '../parametro/gestionParametro.php';
         $urlPermisos = '../permiso/gestionPermisos.php';
         $urlRoles = '../rol/gestionRol.php';
-        $urlServiciosTecnicos = './gestionTipoServicio.php';
+        $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
         $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
         $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
         $urlPerfilUsuario = '../PerfilUsuario/gestionPerfilUsuario.php';
@@ -153,7 +153,7 @@ if (isset($_SESSION['usuario'])) {
           <table class="display nowrap table" id="table_RubroComercial" style="width:100%">
             <thead>
               <tr>
-                <th scope="col"> ID </th>
+                <th scope="col"> No. </th>
                 <th scope="col"> RUBRO COMERCIAL </th>
                 <th scope="col"> DESCRIPCIÓN </th>
                 <th scope="col"> ACCIONES </th>
