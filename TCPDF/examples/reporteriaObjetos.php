@@ -74,7 +74,7 @@ if(isset($_SESSION['usuario'])){
     <td style="background-color: #e54037;color: white; text-align: center; width: 95px;">TIPO</td>
     </tr>
     ';
-    $objetos = ControladorDataTableObjeto:: obtenerObjetosPdf($_GET['buscar']);
+    $objetos = ControladorDataTableObjeto:: obtenerObjetosPdf(trim($_GET['buscar']));
     if($_GET['buscar'] != ''){
       /* ========================= Evento generar reporte por filtro =============================*/
         $newBitacora = new Bitacora();

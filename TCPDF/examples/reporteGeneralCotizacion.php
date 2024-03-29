@@ -88,7 +88,7 @@ $html = '
 ';
 session_start();
 if(isset($_SESSION['usuario'])){
-    $Cotizaciones = ControladorTarea::obtenerCotizacionesUsuarioPDF($_SESSION['usuario'], $_GET['buscar']);
+    $Cotizaciones = ControladorTarea::obtenerCotizacionesUsuarioPDF($_SESSION['usuario'], trim($_GET['buscar']));
 }
 foreach($Cotizaciones as $datos){
     $id = $datos['id'];

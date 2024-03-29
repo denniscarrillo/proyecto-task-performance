@@ -84,7 +84,7 @@ $html = '
 <td style="background-color: #e54037;color: white; text-align: center; width: 100px;">CREADO POR</td>
 </tr>
 ';
-$articulos = ControladorArticulo:: obtenerArticuloPdf($_GET['buscar']);
+$articulos = ControladorArticulo:: obtenerArticuloPdf(trim($_GET['buscar']));
 foreach($articulos as $articulo){
     $IdArticulo = $articulo['codigo'];
     $nombreArticulo = $articulo['articulo'];

@@ -80,7 +80,7 @@ $html = '
 <td style="background-color: #e54037;color: white; text-align: center; width: 360px;">DESCRIPCIÓN</td>
 </tr>
 ';
-$RubroComerciales = ControladorRubroComercial::obtenerRubroComercialPDF($_GET['buscar']);
+$RubroComerciales = ControladorRubroComercial::obtenerRubroComercialPDF(trim($_GET['buscar']));
 $contador = 0;
 foreach($RubroComerciales  as $rubroComercial){
     $RubroComercial = $rubroComercial['rubro_Comercial'];

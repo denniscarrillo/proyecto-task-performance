@@ -86,7 +86,7 @@ if(isset($_SESSION['usuario'])){
     <td style="background-color: #e54037;color: white; text-align: center; width: 100px;">ESTADO</td>
     </tr>
     ';
-    $preguntas = ControladorPregunta::obtenerPreguntasUsuarioPDF($_GET['buscar']);
+    $preguntas = ControladorPregunta::obtenerPreguntasUsuarioPDF(trim($_GET['buscar']));
     foreach($preguntas as $pregunta){
         $IdPregunta = $pregunta['id_Pregunta'];
         $preguntaP = $pregunta['pregunta'];

@@ -83,7 +83,7 @@ $html = '
 </tr>
 ';
 
-$parametros = ControladorParametro::obtenerLosParametrosPDF($_GET['buscar']);
+$parametros = ControladorParametro::obtenerLosParametrosPDF(trim($_GET['buscar']));
 foreach($parametros as $parametro){
     $IdParametro = $parametro['id'];
     $NomParametro = $parametro['parametro'];

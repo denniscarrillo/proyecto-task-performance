@@ -83,7 +83,7 @@ $html = '
 </tr>
 ';
 
-$EstadoUsuario = ControladorEstadoUsuario::obtenerLosEstadoUsuarioPDF($_GET['buscar']);
+$EstadoUsuario = ControladorEstadoUsuario::obtenerLosEstadoUsuarioPDF(trim($_GET['buscar']));
 foreach($EstadoUsuario as $estados){
     $idEstado = $estados['idEstado'];
     $estadoU = $estados['estado'];

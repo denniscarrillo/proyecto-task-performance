@@ -84,7 +84,7 @@ $html = '
 
 </tr>
 ';
-$Ventas = ControladorVenta::obtenerlasventasPDF($_GET['buscar']);
+$Ventas = ControladorVenta::obtenerlasventasPDF(trim($_GET['buscar']));
 foreach($Ventas as $Venta){
     $numFactura = $Venta['numFactura'];
     $nombre = $Venta['nombreCliente'];

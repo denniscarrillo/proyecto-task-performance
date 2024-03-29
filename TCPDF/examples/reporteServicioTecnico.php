@@ -79,7 +79,7 @@ $html = '
 <td style="background-color: #e54037;color: white; text-align: center; width: 560px;">SERVICIO TÉCNICO</td>
 </tr>
 ';
-$ServicioTecnico = ControladorTipoServicio::obtenerTipoServicioPDF($_GET['buscar']);
+$ServicioTecnico = ControladorTipoServicio::obtenerTipoServicioPDF(trim($_GET['buscar']));
 foreach($ServicioTecnico as $Servicio){
     // $id = $Servicio['id_TipoServicio'];
     $servicio_Tecnico = $Servicio['servicio_Tecnico'];

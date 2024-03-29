@@ -86,7 +86,7 @@ $html = '
 <td style="background-color: #e54037;color: white; text-align: center; width: 125px;">FECHA LIQUIDAR </td>
 </tr>
 ';
-$Comisiones = ControladorComision::getComisionesPdf($_GET['buscar']);
+$Comisiones = ControladorComision::getComisionesPdf(trim($_GET['buscar']));
 foreach($Comisiones as $Comision){
     $idFactura = $Comision['factura'];
     // Formatear $totalVenta como "Lps 2,500.99"
