@@ -187,4 +187,7 @@
         public static function obtenerRolUser($usuario){
             return Usuario::obtenerRolUser($usuario);
         }
+        public static function inactivarUsuario($usuario){
+            Usuario::inactivarUsuario($usuario);
+        }
     }

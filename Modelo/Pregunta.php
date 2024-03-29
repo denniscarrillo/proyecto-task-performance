@@ -38,9 +38,8 @@ class Pregunta
         $pregunta = $insertarPregunta->pregunta;
         $estado = $insertarPregunta->estadoPregunta;
         $CreadoPor = $insertarPregunta->CreadoPor;
-        date_default_timezone_set('America/Tegucigalpa');
-        $FechaCreacion = date("Y-m-d");
-        $query = "INSERT INTO tbl_ms_preguntas (pregunta, estado, Creado_Por, Fecha_Creacion) VALUES ('$pregunta', '$estado', '$CreadoPor', '$FechaCreacion')";
+        $ModificadorPor = $insertarPregunta->ModificadoPor;
+        $query = "INSERT INTO tbl_ms_preguntas (pregunta, estado, Creado_Por, Fecha_Creacion, Modificado_Por, Fecha_Modificacion) VALUES ('$pregunta', '$estado', '$CreadoPor', GETDATE(), '$ModificadorPor', GETDATE())";
         $insertarPregunta = sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $insertarPregunta;
@@ -54,9 +53,7 @@ class Pregunta
         $pregunta = $insertarPregunta->pregunta;
         $estado = $insertarPregunta->estado;
         $ModificadoPor = $insertarPregunta->ModificadoPor;
-        date_default_timezone_set('America/Tegucigalpa');
-        $FechaModificacion = date("Y-m-d");
-        $query = "UPDATE tbl_ms_preguntas SET pregunta = '$pregunta', estado = '$estado', Modificado_Por = '$ModificadoPor', Fecha_Modificacion = '$FechaModificacion'
+        $query = "UPDATE tbl_ms_preguntas SET pregunta = '$pregunta', estado = '$estado', Modificado_Por = '$ModificadoPor', Fecha_Modificacion = GETDATE()
          WHERE id_Pregunta = '$idPregunta'";
         $insertarPregunta = sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerramos la conexión.

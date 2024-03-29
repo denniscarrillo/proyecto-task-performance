@@ -207,3 +207,10 @@ form {
     /* margin-left: 0.7rem; */
     color: #222323;
 }
+.fa-paper-plane {
+    position: absolute;
+    left: 10px;
+    bottom: 8px;
+    font-size: 1.5rem;
+    color: #da251c;
+}

@@ -7,8 +7,8 @@ class ControladorPermiso {
     public static function obtenerObjetosPermiso(){
         return Permiso::obtenerObjetos();
     }
-    public static function registroNuevoPermiso($idRol, $idObjetos, $creadoPor){
-        Permiso::registroPermiso($idRol, $idObjetos, $creadoPor);
+    public static function registroNuevoPermiso($idRol, $idObjetos, $user){
+        Permiso::registroPermiso($idRol, $idObjetos, $user);
     }
     public static function obtenerIdRolObjeto($rol, $objeto){
         return Permiso::obtenerIdRolObjeto($rol, $objeto);

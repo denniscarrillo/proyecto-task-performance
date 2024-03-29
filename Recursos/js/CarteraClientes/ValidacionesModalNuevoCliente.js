@@ -8,7 +8,7 @@ const validaciones = {
     caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
     caracterMas5veces: /^(?=.*(...)\1)/,
     letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
-    direccion: /^[a-zA-Z0-9 #.,-]+$/,
+    direccion: /^[a-zA-Z0-9 #.,áéíóúÁÉÍÓÚñÑ]+$/,
   };
 let inputNuevoCliente = {
     nombre: document.getElementById('nombre'),

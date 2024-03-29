@@ -42,7 +42,24 @@ let procesarPermisoActualizar = (data) => {
       },
     ],
   });
+  let filtro = document.querySelector('input[type=search]');
 };
+
+$(document).on("focusout", "input[type=search]", function (e) {
+  let filtro = $(this).val();
+  capturarFiltroDataTable(filtro);
+});
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim()){
+    $.ajax({
+      url: "../../../Vista/crud/carteraCliente/registrarBitacoraFiltroCarteraCliente.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
 
 //Crear nuevo usuario
 $("#form-carteraCliente").submit(function (e) {
@@ -69,7 +86,7 @@ $("#form-carteraCliente").submit(function (e) {
         //Mostrar mensaje de exito
         Swal.fire(
           "Registrado!",
-          "Se le ha enviado un correo al usuario!",
+          "El cliente ha sido registrado.",
           "success"
         );
         tablaCarteraClientes.ajax.reload(null, false);
@@ -231,9 +248,10 @@ let limpiarFormEdit = () => {
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
     carteraCliente = $(this).closest("tr").attr('id'),
+    nombreCliente = fila.find("td:eq(1)").text(),
     rtn = fila.find("td:eq(2)").text();
   Swal.fire({
-    title: "¿Estas seguro de eliminar a " + carteraCliente + "?",
+    title: "¿Estas seguro de eliminar a " + nombreCliente + "?",
     text: "No podrá revertir esto",
     icon: "warning",
     showCancelButton: true,
@@ -249,19 +267,20 @@ $(document).on("click", "#btn_eliminar", function () {
         data: {
           rtn: rtn,
           carteraCliente: carteraCliente,
+          nombreCliente: nombreCliente,
         },
         success: function (data) {
           if (!JSON.parse(data).estado) {
             Swal.fire(
               "Lo sentimos",
-              "<strong>" + carteraCliente + "</strong> no se puede eliminar",
+              "<strong>" + nombreCliente + "</strong> no se puede eliminar",
               "error"
             );
             return;
           }
           Swal.fire(
             "Eliminado",
-            "<strong>" + carteraCliente + "</strong> ha sido eliminado",
+            "<strong>" + nombreCliente + "</strong> ha sido eliminado",
             "success"
           );
           tablaCarteraClientes.ajax.reload(null, false);

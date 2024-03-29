@@ -19,13 +19,10 @@
          /* ========================= Evento Creacion Venta. ==================================*/
        $newBitacora = new Bitacora();
        $accion = ControladorBitacora::accion_Evento();
-       date_default_timezone_set('America/Tegucigalpa');
-       $newBitacora->fecha = date("Y-m-d h:i:s"); 
        $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionVenta.php');
        $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($user);
        $newBitacora->accion = $accion['Insert'];
-       $newBitacora->descripcion = 'El usuario '.$user.' creó una nueva venta para el RTN'.$_POST['rtn'];
+       $newBitacora->descripcion = 'El usuario '.$user.' creó la venta para el RTN '.$_POST['rtn'].' con un total de '.$_POST['venta'].' lempiras';
        ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
        /* =======================================================================================*/
     }
-?>
