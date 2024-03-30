@@ -130,6 +130,7 @@ if (isset($_SESSION['usuario'])) {
         $urlPerfilContraseniaUsuarios = '../PerfilUsuario/gestionPerfilContrasenia.php';
         $urlEditarCamposPerfil = '../PerfilUsuario/EditarCamposPerfilUsuario.php';
         $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
+        $urlRestoreBackup = '../backupAndRestore/gestionBackupRestore.php';
         require_once '../../layout/sidebar.php';
         ?>
       </div>
