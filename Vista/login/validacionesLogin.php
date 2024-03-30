@@ -3,10 +3,13 @@ session_start();
 require_once("../../db/Conexion.php");
 require_once("../../Modelo/Usuario.php");
 require_once("../../Modelo/Bitacora.php");
+require_once("../../Modelo/BackupRestore.php");
 require_once("../../Controlador/ControladorUsuario.php");
 require_once("../../Controlador/ControladorBitacora.php");
+require_once("../../Controlador/ControladorBackupRestore.php");
 
 $registro = 0;
+$estadoRestore = 0;
 if (isset($_SESSION['registro'])) { //Cuando venimos de registro capturamos el valor para saberlo
     $registro = $_SESSION['registro'];
     /*
@@ -16,6 +19,33 @@ if (isset($_SESSION['registro'])) { //Cuando venimos de registro capturamos el v
     session_unset();
     session_destroy();
 }
+
+if (isset($_SESSION['estadoRestore'])) { //Cuando venimos de restore capturamos el valor para saberlo
+    $urlRestore = $_SESSION['urlArchivoRestore'];
+    $nombreArchivoBackup = $_SESSION['nombreArchivoBackup'];
+    $usuario = $_SESSION['usuario'];
+    /*
+        Ahora eliminamos esa variable global para que el Toast que se muestra con javascript 
+        no se vuelva a mostrar cuando la pagina se refresque por cualquier motivo
+    */
+    session_unset();
+    session_destroy();
+
+    $estadoRestore = ControladorBackupRestore::generarRestore($urlRestore);
+    if($estadoRestore) {
+        $estadoRestore = 1;  //Cuando hemos restaurado correctamente capturamos el valor para saberlo y mostrar un Toast
+        /* ======================================= Evento generar Restore. ======================*/
+        $newBitacora = new Bitacora();
+        $accion = ControladorBitacora::accion_Evento();
+        $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('GESTIONBACKUPRESTORE.PHP');
+        $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($usuario);
+        $newBitacora->accion = $accion['restorer'];
+        $newBitacora->descripcion = 'El usuario '.$usuario.' restauró el backup "'.$nombreArchivoBackup.'"';
+        ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+        /* =======================================================================================*/
+    }
+}
+
 if (isset($_SESSION['usuario'])) {session_unset(); session_destroy();}
 $mensaje = null;
 $usuario = false;

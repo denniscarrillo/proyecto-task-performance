@@ -127,6 +127,7 @@ if (isset($_SESSION['usuario'])) {
         $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
         $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
         $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
+        $urlRestoreBackup = '../backupAndRestore/gestionBackupRestore.php';
         require_once '../../layout/sidebar.php';
         ?>
       </div>
@@ -163,17 +164,17 @@ if (isset($_SESSION['usuario'])) {
             <table class="display nowrap table" id="table-ComisionVendedor" style="width:100%">
               <thead>
                 <tr>
-                  <th scope="col">NO. COMISION VENDEDOR</th>
-                  <th scope="col">NO. COMISION</th>
-                  <th scope="col">NO. VENDEDOR</th>
+                  <th scope="col">No. COMISIÓN VENDEDOR</th>
+                  <th scope="col">No. COMISIÓN</th>
+                  <th scope="col">No. VENDEDOR</th>
                   <th scope="col">VENDEDOR</th>
-                  <th scope="col">COMISION TOTAL</th>
+                  <th scope="col">COMISIÓN TOTAL</th>
                   <th scope="col">ESTADO </th>
-                  <th scope="col">LIQUIDACION</th>
+                  <th scope="col">LIQUIDACIÓN</th>
                   <!-- <th scope="col">ESTADO COBRO VENTA</th>
                   <th scope="col">METODO PAGO</th> -->
-                  <th scope="col">FECHA CREACION</th>
-                  <th scope="col">FECHA LIQUIDACION</th>
+                  <th scope="col">FECHA CREACIÓN</th>
+                  <th scope="col">FECHA LIQUIDACIÓN</th>
                   <!-- <th scope="col">FECHA COBRO</th> -->
                 </tr>
               </thead>

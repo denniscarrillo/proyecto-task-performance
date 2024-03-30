@@ -1,14 +1,20 @@
 let user = document.getElementById('username').textContent;
 let $objTarea = document.querySelector('.title-dashboard-task').getAttribute('name');
+let $objBacRestore = document.querySelector('.title-dashboard-task').getAttribute('name');
 $(document).ready(function () {
+    console.log(user)
     let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
     //Invocamos a la funcion que trae y valida el permiso Insertar
     if(user != 'SUPERADMIN'){
         obtenerPermisos($idObjetoSistema, manejarPermisoInsertar);
         return;
     }
-    if((user == 'SUPERADMIN' && $objTarea != 'v_tarea.php')){
+    if((user == 'SUPERADMIN' && $objTarea != 'v_tarea.php' && $objBacRestore != 'GESTIONBACKUPRESTORE.PHP')){
         document.getElementById('btn_Pdf').classList.remove('hidden');
+    }
+    if((user == 'SUPERADMIN' && $objBacRestore == 'GESTIONBACKUPRESTORE.PHP')){
+        document.getElementById('btn-backup').classList.remove('hidden');
+        document.getElementById('btn-restore').classList.remove('hidden');
     }
     let $btnsNuevaTarea = document.querySelectorAll('.btn_nuevoRegistro');
     $btnsNuevaTarea.forEach($btnNuevaTarea => {
@@ -27,8 +33,12 @@ let manejarPermisoInsertar = (permisos) => {
         }else{
             (document.getElementById('btn_nuevoRegistro') != null) ?  document.getElementById('btn_nuevoRegistro').classList.remove('hidden') : '';
         }
+        if($objBacRestore == 'GESTIONBACKUPRESTORE.PHP'){
+            document.getElementById('btn-backup').classList.remove('hidden');
+            document.getElementById('btn-restore').classList.remove('hidden');
+        }
     }
-    if((objPermisos.Reporte == 'Y' && $objTarea != 'v_tarea.php')){
+    if((objPermisos.Reporte == 'Y' && $objTarea != 'v_tarea.php' && $objBacRestore != 'GESTIONBACKUPRESTORE.PHP')){
         document.getElementById('btn_Pdf').classList.remove('hidden');
     }
 }

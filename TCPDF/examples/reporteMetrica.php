@@ -82,7 +82,7 @@ $html = '
 <td style="background-color: #e54037;color: white; text-align: center; width: 150px;">META</td>
 </tr>
 ';
-$Metricas = ControladorMetricas::obtenerLasMetricasPDF($_GET['buscar']);
+$Metricas = ControladorMetricas::obtenerLasMetricasPDF(trim($_GET['buscar']));
 foreach($Metricas as $metrica){
     // $idMetrica = $metrica['idMetrica'];
     $descripcion = $metrica['descripcion'];

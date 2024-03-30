@@ -70,7 +70,9 @@
         $urlPerfilContraseniaUsuarios = '../crud/PerfilUsuario/gestionPerfilContrasenia.php';
         $urlImg = '../../Recursos/' . ControladorParametro::obtenerUrlLogo();
         $urlRazonSocial = '../crud/razonSocial/gestionRazonSocial.php';
-        $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
+        $urlRubroComercial = '../crud/rubroComercial/gestionRubroComercial.php';
+        $urlArticulos = '../crud/gestionArticulo.php';
+        $urlRestoreBackup = '../crud/backupAndRestore/gestionBackupRestore.php';
         require_once '../layout/sidebar.php';
         ?>
       </div>
@@ -115,7 +117,7 @@
         </div>
         <div class="table-conteiner">
           <div>
-            <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
+          <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
               PDF</button>
           </div>
           <table class="display nowrap table" id="table-Estadistica" style="width:100%">

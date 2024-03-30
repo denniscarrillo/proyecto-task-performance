@@ -247,6 +247,18 @@
             </li>
           </ul>
         </div>
+        <!-- Solicitud -->
+        <li class="dropdown-menu__content__list">
+          <a href="<?php echo $urlRestoreBackup; ?>" class="dropdown__link">
+            <span class="check__conteiner dropdown__link__span"
+              id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionBackupRestore.php'); ?>">
+              <div class="icon-menu-principal__conteiner">
+                <i class="icon-menu-principal fa-solid fa-window-restore icon-size"></i>
+              </div>
+              <p class="list__menu__principal-text">Backup & Restore</p>
+            </span>
+          </a>
+        </li>
       </li>
     </ul>
   </div>

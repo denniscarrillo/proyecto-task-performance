@@ -126,6 +126,7 @@ if (isset($_SESSION['usuario'])) {
         $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
         $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
         $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
+        $urlRestoreBackup = '../backupAndRestore/gestionBackupRestore.php';
         require_once '../../layout/sidebar.php';
         ?>
       </div>
@@ -155,7 +156,7 @@ if (isset($_SESSION['usuario'])) {
           <table class="display nowrap table" id="table-EstadoUsuarios" style="width:100%">
             <thead>
               <tr>
-                <th scope="col"> ID </th>
+                <th scope="col"> No. </th>
                 <th scope="col"> ESTADO </th>
                 <th scope="col"> CREADO POR </th>
                 <th scope="col"> FECHA CREACIÓN </th>
