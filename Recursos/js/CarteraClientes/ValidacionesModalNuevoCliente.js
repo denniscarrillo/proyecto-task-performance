@@ -4,12 +4,13 @@ export let estadoValidado = false;
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-Z\/ .ÑñáéíóúÁÉÍÓÚs])+$/, //Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
-    soloNumeros: /^[0-9 ]*$/,
+    soloNumeros: /^[0-9 -]*$/,
     caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
     caracterMas5veces: /^(?=.*(...)\1)/,
     letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
     direccion: /^[a-zA-Z0-9 #.,áéíóúÁÉÍÓÚñÑ]+$/,
   };
+
 let inputNuevoCliente = {
     nombre: document.getElementById('nombre'),
     rtn: document.getElementById('rtn'),
@@ -39,10 +40,13 @@ inputNuevoCliente.nombre.addEventListener("keyup", ()=>{
     validarInputNombre();
     funciones.limitarCantidadCaracteres("nombre", 50);
 })
-inputNuevoCliente.rtn.addEventListener("keyup", ()=>{
-    validarInputRTN();
-    funciones.limitarCantidadCaracteres("rtn", 20);
-})
+inputNuevoCliente.rtn.addEventListener('input', (event) => {
+  if (!funciones.RTN_guion(event)) {
+      event.preventDefault();
+  }
+  validarInputRTN();
+  funciones.limitarCantidadCaracteres("rtn", 20);
+});
 inputNuevoCliente.telefono.addEventListener("keyup", ()=>{
     validarInputTelefono();
     funciones.limitarCantidadCaracteres("telefono", 20);
