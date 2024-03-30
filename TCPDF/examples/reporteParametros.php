@@ -89,24 +89,24 @@ if(isset($_SESSION['usuario'])){
     </tr>
     ';
 
-    $parametros = ControladorParametro::obtenerLosParametrosPDF($_GET['buscar']);
-    foreach($parametros as $parametro){
-        $IdParametro = $parametro['id'];
-        $NomParametro = $parametro['parametro'];
-        $valor = $parametro['valorParametro'];
-        $descripcion = $parametro['descripcionParametro'];
-        $usuario = $parametro['usuario'];
-        $Cont++;
-        $html .= '
-        <tr>
-        <td style="text-align: center">'.$Cont.'</td>
-        <td >'.$NomParametro.'</td>
-        <td >'.$valor.'</td>
-        <td >'.$descripcion.'</td>
-        <td style="text-align: center">'.$usuario.'</td>
-        </tr>
-        ';
-        
+$parametros = ControladorParametro::obtenerLosParametrosPDF(trim($_GET['buscar']));
+foreach($parametros as $parametro){
+    $IdParametro = $parametro['id'];
+    $NomParametro = $parametro['parametro'];
+    $valor = $parametro['valorParametro'];
+    $descripcion = $parametro['descripcionParametro'];
+    $usuario = $parametro['usuario'];
+    $Cont++;
+    $html .= '
+    <tr>
+    <td style="text-align: center">'.$Cont.'</td>
+    <td >'.$NomParametro.'</td>
+    <td >'.$valor.'</td>
+    <td >'.$descripcion.'</td>
+	<td style="text-align: center">'.$usuario.'</td>
+    </tr>
+    ';
+    
 
     }
 
