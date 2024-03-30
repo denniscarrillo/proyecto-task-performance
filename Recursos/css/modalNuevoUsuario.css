@@ -19,7 +19,7 @@
 .modal-content{
     min-height: 25rem;
 }
-.mensaje-existe-cliente, .mensaje-existe-pregunta{
+.mensaje-existe-cliente, .mensaje-existe-pregunta,.mensaje-existe-razonsocial{
     display: inline-block;
     background-color: #f2a694;
     color: rgb(209, 18, 18);

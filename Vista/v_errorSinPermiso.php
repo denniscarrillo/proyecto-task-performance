@@ -1,5 +1,5 @@
 <?php
-    header("refresh:1;url=./index.php");
+    header("refresh:4;url=./index.php");
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +34,7 @@
     </style>
     <div class="message-conteiner">
         <p class="titulo"> Lo sentimos!</p>
-        <p class="sub-titulo"> No tienes permiso sobre esta seccion del sistema</p>
+        <p class="sub-titulo"> No tienes permiso para acceder a está sección del sistema. Por favor, contacta al administrador para obtener ayuda.</p>
     </div>
 </body>
 </html>

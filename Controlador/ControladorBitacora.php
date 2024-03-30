@@ -15,7 +15,7 @@
         public static function depurarBitacoraSistema($fechaDesde, $fechaHasta){
             return Bitacora::depurarBitacora($fechaDesde, $fechaHasta);
         }
-        public static function getBitacoraPdf($buscar){
-            return Bitacora::obtenerBitacoraPdf($buscar);
+        public static function getBitacoraPdf($buscar, $fechaDesde, $fechaHasta){
+            return Bitacora::obtenerBitacoraPdf($buscar, $fechaDesde, $fechaHasta);
         }
     }

@@ -23,6 +23,4 @@ class ControladorDataTableObjeto {
     public static function eliminarObjeto($id_Objeto, $objeto){
         return  DataTableObjeto::eliminarObjeto($id_Objeto, $objeto);
     }
-
-
 }

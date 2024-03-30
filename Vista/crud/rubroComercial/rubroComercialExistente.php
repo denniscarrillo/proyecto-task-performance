@@ -3,16 +3,10 @@ require_once ("../../../db/Conexion.php");
 require_once ("../../../Modelo/RubroComercial.php");
 require_once("../../../Controlador/ControladorRubroComercial.php");
 
-$data = array(
-    'estado' => 'false'
-);
 
-if(ControladorRubroComercial::RubroComercialExiste($_POST['rubroComercial']))
-{
-    $data = array(
-        'estado' => 'true'
-    );
+session_start(); //Reanudamos sesion
+if(isset($_SESSION['usuario'])){ //Validamos si existe una session y el usuario
+    $existe = array();
+    $estadoClienteC = ControladorRubroComercial::RubroComercialExiste($_POST['rubroComercial']);
+    print json_encode($estadoClienteC, JSON_UNESCAPED_UNICODE);
 }
-
-
-print json_encode($data, JSON_UNESCAPED_UNICODE);
