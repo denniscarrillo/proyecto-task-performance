@@ -9,6 +9,7 @@ require_once("../../Controlador/ControladorBitacora.php");
 require_once("../../Controlador/ControladorBackupRestore.php");
 
 $registro = 0;
+$estadoRestore = 0;
 if (isset($_SESSION['registro'])) { //Cuando venimos de registro capturamos el valor para saberlo
     $registro = $_SESSION['registro'];
     /*
@@ -33,6 +34,7 @@ if (isset($_SESSION['estadoRestore'])) { //Cuando venimos de registro capturamos
     $estadoRestore = ControladorBackupRestore::generarRestore($urlRestore);
 
     if($estadoRestore) {
+        $estadoRestore = 1;  //Cuando hemos restaurado correctamente capturamos el valor para saberlo y mostrar un Toast
         /* ======================================= Evento generar Restore. ======================*/
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();
