@@ -20,8 +20,6 @@ if (isset($_SESSION['usuario'])) {
   if (!$permisoConsulta) {
     /* ==================== Evento intento de ingreso sin permiso a mantenimiento usuario. ==========================*/
     $accion = ControladorBitacora::accion_Evento();
-    date_default_timezone_set('America/Tegucigalpa');
-    $newBitacora->fecha = date("Y-m-d h:i:s");
     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['fallido'];
@@ -34,8 +32,6 @@ if (isset($_SESSION['usuario'])) {
     if (isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])) {
       /* ====================== Evento salir. ================================================*/
       $accion = ControladorBitacora::accion_Evento();
-      date_default_timezone_set('America/Tegucigalpa');
-      $newBitacora->fecha = date("Y-m-d h:i:s");
       $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
       $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
       $newBitacora->accion = $accion['Exit'];
@@ -45,8 +41,6 @@ if (isset($_SESSION['usuario'])) {
     }
     /* ====================== Evento ingreso a mantenimiento usuario. ========================*/
     $accion = ControladorBitacora::accion_Evento();
-    date_default_timezone_set('America/Tegucigalpa');
-    $newBitacora->fecha = date("Y-m-d h:i:s");
     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['income'];

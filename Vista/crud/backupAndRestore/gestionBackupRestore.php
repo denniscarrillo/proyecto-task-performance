@@ -23,8 +23,6 @@ if (isset($_SESSION['usuario'])) {
   if(!$permisoConsulta){
     /* ====================== Evento intento de ingreso sin permiso a vista de artículos. ===========================*/
     $accion = ControladorBitacora::accion_Evento();
-    date_default_timezone_set('America/Tegucigalpa');
-    $newBitacora->fecha = date("Y-m-d h:i:s");
     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionArticulo.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['fallido'];
@@ -37,8 +35,6 @@ if (isset($_SESSION['usuario'])) {
     if(isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])){
       /* ====================== Evento salir. ================================================*/
       $accion = ControladorBitacora::accion_Evento();
-      date_default_timezone_set('America/Tegucigalpa');
-      $newBitacora->fecha = date("Y-m-d h:i:s");
       $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
       $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
       $newBitacora->accion = $accion['Exit'];
@@ -48,8 +44,6 @@ if (isset($_SESSION['usuario'])) {
     }
     /* ====================== Evento ingreso avista de artículos. ===========================*/
     $accion = ControladorBitacora::accion_Evento();
-    date_default_timezone_set('America/Tegucigalpa');
-    $newBitacora->fecha = date("Y-m-d h:i:s");
     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionArticulo.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['income'];
@@ -157,11 +151,10 @@ if (isset($_SESSION['usuario'])) {
           </div>
           <div class="container-restore">
             <h2>Restaurar base de datos</h2>
-            <form action="">
-                <select name="" id="" class="form-control">
+            <form action="./generarRestore.php" method="post" id="form-historial-backups">
+                <select name="historial-backups" id="historial-backups" class="form-control">
                   <option value="">Seleccionar punto de restauración...</option>
                 </select>
-
                 <div class="button-container">
                   <button type="button" id="btn-restore" class="btn-restore btn btn-primary">Restaurar</button>
                 </div>
@@ -177,9 +170,6 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/backupAndRestore/Backup.js"></script>
-
-<!-- scripts propios -->
-  <!-- <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script> -->
 </body>
 
 </html>
