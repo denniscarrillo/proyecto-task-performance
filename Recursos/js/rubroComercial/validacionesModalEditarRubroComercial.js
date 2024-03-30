@@ -25,7 +25,7 @@ inputseditarRubroComercial.descripcionRubroComercial.addEventListener('keyup', (
     funciones.limitarCantidadCaracteres('E_descripcion', 300);
 });
 
-let btnGuardar = document.getElementById('btn-submit');
+let btnGuardar = document.getElementById('btnsubmiteditar');
 
 btnGuardar.addEventListener('click', () => {
   

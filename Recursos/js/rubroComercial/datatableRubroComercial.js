@@ -10,7 +10,7 @@ $(document).ready(function () {
 let procesarPermisoActualizar = (data) => {
   let permisos = JSON.parse(data);
   // console.log(permisos);
-  tablaRubroComercial = $("#table-RubroComercial").DataTable({
+  tablaRubroComercial = $("#table_RubroComercial").DataTable({
     ajax: {
       url: "../../../Vista/crud/rubroComercial/obtenerRubroComercial.php",
       dataSrc: "",
@@ -49,9 +49,9 @@ let procesarPermisoActualizar = (data) => {
   });
 }; */
 // Crear nueva Rubro Comercial
-$("#form-rubroComercial").submit(function (e) {
+$("#form_rubroComercial").submit(function (e) {
   e.preventDefault();
-  let rubroComercial = $("#rubroComercial").val();
+  let rubro_Comercial = $("#rubroComercial").val();
   let descripcion = $("#descripcion").val();
   console.log(estadoValidado);
   if (estadoValidado) {
@@ -60,13 +60,13 @@ $("#form-rubroComercial").submit(function (e) {
       type: "POST",
       datatype: "JSON",
       data: {
-        rubroComercial: rubroComercial,
+        rubroComercial: rubro_Comercial,
         descripcion: descripcion,
       },
       success: function () {
         //Mostrar mensaje de exito
         Swal.fire(
-          "Registrado!",
+          "¡Registrado!",
           "El Rubro Comercial ha sido registrado.",
           "success"
         );
@@ -78,6 +78,32 @@ $("#form-rubroComercial").submit(function (e) {
   }
 });
 
+let $rubroComercial = document.getElementById('rubroComercial');
+$rubroComercial.addEventListener('focusout', function () {
+  let $mensaje = document.querySelector('.mensaje-rubrocomercial');
+  $mensaje.innerText = '';
+  $mensaje.classList.remove('mensaje-existe-razonsocial');
+  if($rubroComercial.value.trim() != ''){
+    $.ajax({
+      url: "../../../Vista/crud/rubroComercial/rubroComercialExistente.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {
+        rubroComercial: $rubroComercial.value
+      },
+      success: function (estado){
+        let $objExiste = JSON.parse(estado);
+        if ($objExiste){
+          $mensaje.innerText = 'Rubro Comercial existente';
+          $mensaje.classList.add('mensaje-existe-razonsocial');
+        } else {
+          $mensaje.innerText = '';
+          $mensaje.classList.remove('mensaje-existe-razonsocial');
+        }
+      }
+    }); //Fin AJAX   
+  }
+});
 // Editar Rubro Comercial
 $(document).on("click", "#btn_editar", function () {
   let fila = $(this).closest("tr"),
@@ -94,11 +120,10 @@ $(document).on("click", "#btn_editar", function () {
   $(".modal-header").css("background-color", "#007bff");
   $(".modal-header").css("color", "white");
   $("#modalEditarRubroComercial").modal("show");
-  console.log(idRubroComercial)
 });
 
 // Evento Submit que edita el Rubro Comercial
-$("#form-Edit_rubroComercial").submit(function (e) {
+$("#formEdit_rubroComercial").submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
   //Obtener datos del nuevo Cliente
   let inputId = document.getElementById('rubroid'),
@@ -111,26 +136,28 @@ $("#form-Edit_rubroComercial").submit(function (e) {
       type: "POST",
       datatype: "JSON",
       data: {
-        id_RubroComercial: rubroid,
+        id_RubroComercial: razonid,
         rubroComercial: rubroComercial,
         descripcion: descripcion,
       },
-      success: function () {
-        //Mostrar mensaje de exito
+      success: function (data) {
+        console.log(data);//Mostrar mensaje de exito
         Swal.fire(
-          "Actualizado!",
+          "¡Actualizado!",
           "El Rubro Comercial ha sido modificado!",
           "success"
         );
         tablaRubroComercial.ajax.reload(null, false);
 
+
       },
     });
     $("#modalEditarRubroComercial").modal("hide");
    // limpiarFormEdit();
+   // limpiarFormEdit();
   }
 });
-//Eliminar pregunta
+//Eliminar Rubro Comercial
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
     idRubroComercial = $(this).closest("tr").attr("id"),
@@ -139,41 +166,35 @@ $(document).on("click", "#btn_eliminar", function () {
 
   Swal.fire({
     title:
-      "Estas seguro de eliminar el rubro comercial " + rubroComercial + "?",
-    text: "No podras revertir esto!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Si, Borralo!",
+      "¿Estás seguro de eliminar el rubro comercial " + rubroComercial + "?",
+      text: "¡No podrás revertir esto!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "¡Sí, bórralo!",
+      cancelButtonText: "Cancelar"
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
         url: "../../../Vista/crud/rubroComercial/eliminarRubroComercial.php",
         type: "POST",
         datatype: "JSON",
-        data: {
-          id_RubroComercial: idRubroComercial,
-          rubroComercial: rubroComercial,
-          descripcion: descripcion,
-        },
+        data: {id_RubroComercial: idRubroComercial},
         success: function (data) {
-          if (JSON.parse(data) == "true") {
-            tablaRubroComercial.row(fila.parents("tr")).remove().draw();
+          if (JSON.parse(data).estadoEliminado) {
             Swal.fire(
-              "Rubro Eliminado!",
-              "El Rubro Comercial ha sido Eliminado!.",
-              "success"
+              "Rubro Eliminado!","El Rubro Comercial ha sido Eliminado!.","success"
             );
-            tablaRubroComercial.ajax.reload(null, false);
           } else {
             Swal.fire(
-              "Eliminado!",
-              "El rubro comercial ha sido Eliminado!.",
-              "success"
+              "Lo sentimos!",
+              "El Rubro Comercial no puede ser eliminado",
+              "error"
             );
-            tablaRubroComercial.ajax.reload(null, false);
+           return;
           }
+          tablaRubroComercial.ajax.reload(null, false);
         },
       });
     } //Fin del AJAX
@@ -181,10 +202,13 @@ $(document).on("click", "#btn_eliminar", function () {
 });
 
 //Limpiar modal de crear
-document.getElementById("btn-cerrar-Editar").addEventListener("click", () => {
+// document.getElementById("btn-cerrar-Editar").addEventListener("click", () => {
+//   limpiarForm();
+// });
+document.getElementById("btncerrar").addEventListener("click", () => {
   limpiarForm();
 });
-document.getElementById("btn-x").addEventListener("click", () => {
+document.getElementById("btnx").addEventListener("click", () => {
   limpiarForm();
 });
 let limpiarForm = () => {
@@ -223,9 +247,7 @@ let limpiarFormEdit = () => {
 
 //Generar reporte PDF
 $(document).on("click", "#btn_Pdf", function () {
-  let buscar = $(
-    "#table-RubroComercial_filter > label > input[type=search]"
-  ).val();
+  let buscar = $("#table_RubroComercial_filter > label > input[type=search]").val();
   window.open(
     "../../../TCPDF/examples/reporteRubroComercial.php?buscar=" + buscar,
     "_blank"

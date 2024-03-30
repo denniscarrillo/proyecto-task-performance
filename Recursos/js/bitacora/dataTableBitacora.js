@@ -77,7 +77,24 @@ $(document).ready(function () {
       },
     }); //Fin AJAX
   };
+  let filtro = document.querySelector('input[type=search]');
 });
+
+$(document).on("focusout", "input[type=search]", function (e) {
+  let filtro = $(this).val();
+  capturarFiltroDataTable(filtro);
+});
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim()){
+    $.ajax({
+      url: "../../../Vista/crud/bitacora/registrarBitacoraFiltroBitacora.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
 
 $(document).on("click", "#btn_depurar", function () {
   Swal.fire({
@@ -123,8 +140,12 @@ $(document).on("click", "#btn_depurar", function () {
 
 $(document).on("click", "#btn_Pdf", function () {
   let buscar = $("#table-Bitacora_filter > label > input[type=search]").val();
+  let fechaDesde= $("#fecha-desde").val();
+  let fechaHasta = $("#fecha-hasta").val();
   window.open(
-    "../../../TCPDF/examples/reporteriaBitacora.php?buscar=" + buscar,
+    "../../../TCPDF/examples/reporteriaBitacora.php?buscar=" + buscar + 
+    "&fechaDesde=" + fechaDesde +
+    "&fechaHasta=" + fechaHasta,
     "_blank"
   );
 });

@@ -20,8 +20,6 @@ if (isset($_SESSION['usuario'])){
   if(!$permisoConsulta){
     /* ==================== Evento intento de ingreso sin permiso a mantenimiento permiso. ==========================*/
     $accion = ControladorBitacora::accion_Evento();
-    date_default_timezone_set('America/Tegucigalpa');
-    $newBitacora->fecha = date("Y-m-d h:i:s");
     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionPermisos.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['fallido'];
@@ -34,8 +32,6 @@ if (isset($_SESSION['usuario'])){
     if(isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])){
       /* ==================== Evento salir. ================================================*/
       $accion = ControladorBitacora::accion_Evento();
-      date_default_timezone_set('America/Tegucigalpa');
-      $newBitacora->fecha = date("Y-m-d h:i:s");
       $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
       $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
       $newBitacora->accion = $accion['Exit'];
@@ -45,8 +41,6 @@ if (isset($_SESSION['usuario'])){
     }
     /* ====================== Evento ingreso a mantenimiento permiso. ========================*/
     $accion = ControladorBitacora::accion_Evento();
-    date_default_timezone_set('America/Tegucigalpa');
-    $newBitacora->fecha = date("Y-m-d h:i:s");
     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionPermisos.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['income'];
@@ -70,11 +64,11 @@ function imprimirPermisos($permisos, $idObjetoActual){
     //Se recorre el array de permisos que llega desde la base de datos
   foreach($permisos as $permiso){
     //Esto se hace para reflejar los permisos en los checkbox segun la base de datos
-    $permisoConsultar = ($permiso['consultar'] == 'Y') ? "checked" : "";
-    $permisoInsertar = ($permiso['insertar'] == 'Y') ? "checked" : "";
-    $permisoActualizar = ($permiso['actualizar'] == 'Y') ? "checked" : "";
-    $permisoEliminar = ($permiso['eliminar'] == 'Y') ? "checked" : "";
-    $permisoReporte = ($permiso['reporte'] == 'Y') ? "checked" : "";
+    $permisoConsultar = ($permiso['consultar'] == 'S') ? "checked" : "";
+    $permisoInsertar = ($permiso['insertar'] == 'S') ? "checked" : "";
+    $permisoActualizar = ($permiso['actualizar'] == 'S') ? "checked" : "";
+    $permisoEliminar = ($permiso['eliminar'] == 'S') ? "checked" : "";
+    $permisoReporte = ($permiso['reporte'] == 'S') ? "checked" : "";
 
     //Se imprimen los permisos con su validaciones ya hechas
     echo '<tr class="tr-permisos">'.

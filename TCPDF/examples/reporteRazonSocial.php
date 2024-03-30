@@ -80,7 +80,7 @@ $html = '
 <td style="background-color: #e54037;color: white; text-align: center; width: 360px;">DESCRIPCIÓN</td>
 </tr>
 ';
-$RazonSocial = ControladorRazonSocial::obtenerRazonSocialPDF($_GET['buscar']);
+$RazonSocial = ControladorRazonSocial::obtenerRazonSocialPDF(trim($_GET['buscar']));
 $contador = 0;
 foreach($RazonSocial  as $razonSocial){
     $RazonSocial = $razonSocial['razon_Social'];

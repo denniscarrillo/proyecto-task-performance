@@ -24,7 +24,7 @@ $(document).ready(function () {
 let manejarPermisoInsertar = (permisos) => {
     let objPermisos = JSON.parse(permisos);
     //Valida los permisos de Insertar
-    if((objPermisos.Insertar == 'Y')){
+    if((objPermisos.Insertar == 'S')){
         if($objTarea == 'v_tarea.php'){ //Para cuando sea la vista de kanban tareas
             let $btnsNuevaTarea = document.querySelectorAll('.btn_nuevoRegistro');
             $btnsNuevaTarea.forEach($btnNuevaTarea => {
@@ -38,7 +38,7 @@ let manejarPermisoInsertar = (permisos) => {
             document.getElementById('btn-restore').classList.remove('hidden');
         }
     }
-    if((objPermisos.Reporte == 'Y' && $objTarea != 'v_tarea.php' && $objBacRestore != 'GESTIONBACKUPRESTORE.PHP')){
+    if((objPermisos.Reporte == 'S' && $objTarea != 'v_tarea.php' && $objBacRestore != 'GESTIONBACKUPRESTORE.PHP')){
         document.getElementById('btn_Pdf').classList.remove('hidden');
     }
 }

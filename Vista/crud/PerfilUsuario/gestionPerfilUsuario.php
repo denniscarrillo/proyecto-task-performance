@@ -22,8 +22,6 @@ if (isset($_SESSION['usuario'])) {
   if (isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])) {
     /* ====================== Evento salir. ================================================*/
     $accion = ControladorBitacora::accion_Evento();
-    date_default_timezone_set('America/Tegucigalpa');
-    $newBitacora->fecha = date("Y-m-d h:i:s");
     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['Exit'];
@@ -35,13 +33,13 @@ if (isset($_SESSION['usuario'])) {
   $accion = ControladorBitacora::accion_Evento();
   date_default_timezone_set('America/Tegucigalpa');
   $newBitacora->fecha = date("Y-m-d h:i:s");
-  $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
+  $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('GESTIONPERFILUSUARIO.PHP');
   $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
   $newBitacora->accion = $accion['income'];
-  $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a mantenimiento usuario';
+  $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a su perfil de usuario';
   ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-  $_SESSION['objetoAnterior'] = 'gestionUsuario.php';
-  $_SESSION['descripcionObjeto'] = 'mantenimiento usuario';
+  $_SESSION['objetoAnterior'] = 'GESTIONPERFILUSUARIO.PHP';
+  $_SESSION['descripcionObjeto'] = 'su perfil de usuario';
   /* =======================================================================================*/
 }
 ?>
@@ -68,7 +66,7 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
-  <title> Actualizar Perfil</title>
+  <title>Perfil de usuario</title>
 </head>
 
 <body style="overflow: hidden;">
@@ -204,8 +202,8 @@ if (isset($_SESSION['usuario'])) {
   require_once('modalConfirmarContrasenia.html');
   ?>
 
-  <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+  <script src="../../../Recursos/js/librerias/Kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
+  <script src="../../../Recursos/js/librerias/sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
   <!-- Scripts propios -->

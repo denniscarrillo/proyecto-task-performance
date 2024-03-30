@@ -120,7 +120,7 @@ if (isset($_SESSION['usuario'])) {
         $urlParametros = '../parametro/gestionParametro.php';
         $urlPermisos = '../permiso/gestionPermisos.php';
         $urlRoles = '../rol/gestionRol.php';
-        $urlServiciosTecnicos = './gestionTipoServicio.php';
+        $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
         $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
         $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
         $urlPerfilUsuario = '../PerfilUsuario/gestionPerfilUsuario.php';
@@ -151,7 +151,7 @@ if (isset($_SESSION['usuario'])) {
             <button class="btn_Pdf btn btn-primary hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
               PDF</button>
           </div>
-          <table class="display nowrap table" id="table-RubroComercial" style="width:100%">
+          <table class="display nowrap table" id="table_RubroComercial" style="width:100%">
             <thead>
               <tr>
                 <th scope="col"> No. </th>
@@ -184,5 +184,4 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
 </body>
-
 </html>

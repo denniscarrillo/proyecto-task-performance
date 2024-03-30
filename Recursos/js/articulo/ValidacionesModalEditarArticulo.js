@@ -34,6 +34,7 @@ btnGuardar.addEventListener('click', () => {
     validarInputArticulo();
     validarInputDetalle();
     validarInputMarca();
+    
     if (document.querySelectorAll(".mensaje_error").length == 0) {
         estadoValido = true;
     }else{
