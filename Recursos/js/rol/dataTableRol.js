@@ -83,8 +83,8 @@ $("#form-Rol").submit(function (e) {
       success: function () {
         //Mostrar mensaje de exito
         Swal.fire(
-          "Registrado!",
-          "Se ha registrado un nuevo Rol de Usuario!",
+          "¡Registrado!",
+          "Se ha registrado un nuevo Rol de Usuario",
           "success"
         );
         tablaRol.ajax.reload(null, false);
@@ -131,7 +131,7 @@ $(document).on("click", "#btn_editar", function () {
     console.log(id_Rol)
   if (rol == "Super Administrador") {
     Swal.fire(
-      "Sin acceso!",
+      "¡Sin acceso!",
       "Super Administrador no puede ser editado",
       "error"
     );
@@ -161,7 +161,7 @@ $("#form-Edit-Rol").submit(function (e) {
       },
       success: function () {
         //Mostrar mensaje de exito
-        Swal.fire("Actualizado!", "El Rol ha sido modificado!", "success");
+        Swal.fire("¡Actualizado!", "El Rol ha sido modificado!", "success");
         tablaRol.ajax.reload(null, false);
       },
     });
@@ -223,13 +223,14 @@ $(document).on("click", "#btn_eliminar", function () {
     );
   } else {
     Swal.fire({
-      title: "Estás seguro de eliminar el Rol de " + rol + "?",
-      text: "No podrás revertir esto!",
+      title: "¿Estás seguro de eliminar el Rol de " + rol + "?",
+      text: "¡No podrás revertir esto!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Si, borralo!",
+      confirmButtonText: "¡Sí, bórralo!",
+      cancelButtonText: "Cancelar"
     }).then((result) => {
       if (result.isConfirmed) {
         $.ajax({

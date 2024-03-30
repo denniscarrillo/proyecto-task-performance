@@ -204,8 +204,8 @@ $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this);
   let solicitud = $(this).closest("tr").find("td:eq(2)").text();
   Swal.fire({
-    title: "Estas seguro de eliminar a " + solicitud + "?",
-    text: "No podras revertir esto!",
+    title: "Estás seguro de eliminar a " + solicitud + "?",
+    text: "No podrás revertir esto!",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",

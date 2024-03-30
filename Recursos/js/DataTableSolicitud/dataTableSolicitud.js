@@ -221,7 +221,7 @@ $(document).on("click", "#btn_enviar", function () {
       });
       Toast.fire({
         icon: "success",
-        title: "Correo enviado!",
+        title: "¡Correo enviado!",
       });
     },
   });
@@ -241,7 +241,7 @@ $(document).on("click", "#btn_editar", async function () {
     Swal.fire({
       icon: "error",
       title: "Oops...",
-      text: "No se puede editar una solicitud cancelada!",
+      text: "¡No se puede editar una solicitud cancelada!",
     });
     //alert('No se puede editar una solicitud cancelada');
     return; // Detiene la ejecución si la solicitud está cancelada
@@ -315,8 +315,8 @@ $("#form-Edit-Solicitud").submit(function (e) {
       success: function () {
         //Mostrar mensaje de exito
         Swal.fire(
-          "Actualizado!",
-          "La solicitud ha sido modificado!",
+          "¡Actualizada!",
+          "La solicitud ha sido modificada",
           "success"
         );
         tablaDataTableSolicitud.ajax.reload(null, false);
@@ -333,17 +333,17 @@ $(document).on("click", "#btn_eliminar", async function () {
   let idSolicitud = $(this).closest("tr").attr("id");
   let motivo = fila.find("td:eq(null)").text();
   let SolicitudesC = await obtenerSolicitudesPorId(idSolicitud);
-  if (SolicitudesC.EstadoSolicitud === "CANCELADO") {
+  if (SolicitudesC.EstadoSolicitud === "Cancelada") {
     // Aquí puedes mostrar un mensaje o tomar alguna acción específica
     Swal.fire({
       icon: "error",
-      title: "La solicitud ya fue cancelada!",
+      title: "¡La solicitud ya fue cancelada!",
     });
     //alert('No se puede editar una solicitud cancelada');
     return; // Detiene la ejecución si la solicitud está cancelada
   }
   // Establecer el estado de la solicitud
-  let EstadoSolicitud = "CANCELADO";
+  let EstadoSolicitud = "Cancelada";
   // Obtener el motivo de cancelación
   //let EstadoAvance = 'CANCELADO';
   // Establecer valores en los campos del modal
@@ -365,12 +365,12 @@ $("#form-Solicitud").submit(function (e) {
     MotivoCancelacion = $("#C_MotivoCancelacion").val();
 
   Swal.fire({
-    title: "Estás seguro de cancelar la Solicitud?",
+    title: "¿Estás seguro de cancelar la Solicitud?",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Sí, Cancelarlo!",
+    confirmButtonText: "Sí, Cancelar solicitud!",
   }).then((result) => {
     // El código dentro de esta función se ejecutará después de que el usuario responda al diálogo de confirmación
     if (result.isConfirmed) {
@@ -381,7 +381,7 @@ $("#form-Solicitud").submit(function (e) {
         dataType: "JSON",
         data: {
           idSolicitud: idSolicitud,
-          EstadoAvance: "CANCELADO",
+          EstadoAvance: "Cancelada",
           EstadoSolicitud: EstadoSolicitud,
           MotivoCancelacion: MotivoCancelacion,
         },

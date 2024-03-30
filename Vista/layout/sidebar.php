@@ -20,6 +20,22 @@
       </div>
     </a>
   </div>
+  <div class="menu__container">    
+    <ul class="dropdown-menu__content">    
+      <li class="dropdown-menu__content__list">
+        <a href="<?php echo $urlIndex; ?>" class="dropdown__link">
+            <span class="check__conteiner dropdown__link__span"
+              id="<?php echo ControladorBitacora::obtenerIdObjeto('INDEX.PHP'); ?>">
+              <div class="icon-menu-principal__conteiner">
+                <i class="icon-menu-principal fas fa-home icon-size"></i>
+              </div>
+              <p class="list__menu__principal-text">INICIO</p>
+            </span>
+          </a>
+
+      </li>
+    </ul>
+  </div>      
   <!-- Contenedor principal del menu sidebar -->
   <div class="menu__container">
     <!-- Lista de menus del sistema -->

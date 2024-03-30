@@ -33,3 +33,44 @@ body{
     margin: 0 auto; /* Centra horizontalmente */
     text-align: center; /* Centra verticalmente */
  }
+ #form-ConfirmarContraseniaPerfil{
+  
+    box-shadow: 0px 10px 15px 2px #a5a4a3b6 ;
+    display: flex;
+    padding: 2rem;
+    padding-bottom: 4rem;
+    position: relative;
+
+}
+.table-conteiner {
+    margin: 2rem;
+   
+    padding: 0.6rem;
+    min-height: 6rem;
+    /* overflow-y: scroll; */
+}
+.table{
+    min-width: 50rem;
+}
+
+.grupoform {
+    width:25rem;
+   margin-right:0%;
+    
+ }
+
+.grupoform1 {
+    width:rem;
+    margin-right:0%;
+    
+ }
+.grupoform1{
+    width: 25rem;
+    left: rem;
+
+ }
+ 
+ .mb-3 {
+    margin: 0.5rem;
+   
+}

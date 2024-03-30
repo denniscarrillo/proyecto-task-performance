@@ -235,7 +235,7 @@ let guardarNuevaComision = function () {
     success: function () {
       Swal.fire(
         'Registrado!',
-        'Se ha registrado la comision!',
+        'Se ha registrado la comisión!',
         'success',
       ).then((result) => {
         // Redirigir solo si se hizo clic en "Aceptar" en el mensaje de Swal

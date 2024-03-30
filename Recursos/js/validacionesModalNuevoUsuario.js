@@ -267,7 +267,7 @@ $form.addEventListener('submit', async e => {
                 let $objCorreo = JSON.parse(correo);
                 if ($objCorreo.estado == 'true') {
                     document.getElementById('correo').classList.add('mensaje_error');
-                    document.getElementById('correo').parentElement.querySelector('p').innerText = '*Correo ya existente, agregue otro';
+                    document.getElementById('correo').parentElement.querySelector('p').innerText = '*El correo proporcionado ya está en uso. Por favor, ingrese otro.';
                     estadoExisteCorreo = false; // El correo existe, set to false
                 } else {
                     document.getElementById('correo').classList.remove('mensaje_error');

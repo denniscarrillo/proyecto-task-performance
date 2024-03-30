@@ -86,7 +86,7 @@ $html = '
 <td style="background-color: #e54037;color: white; text-align: center; width: 110px;">FECHA LIQUIDAR </td>
 </tr>
 ';
-$ComisionVendedor = ControladorComision::getComisionesVendedorPdf($_GET['buscar']);
+$ComisionVendedor = ControladorComision::getComisionesVendedorPdf(trim($_GET['buscar']));
 foreach($ComisionVendedor as $ComisionV){
     // $IdComisionV = $ComisionV['idComisionVendedor'];
     $IdComision = $ComisionV['idComision'];

@@ -177,7 +177,7 @@ ORDER BY id_Solicitud;";
         $Cant = $nuevoProductoS->Cant;        
         $query = "INSERT INTO tbl_ProductosSolicitud(id_Solicitud, Cod_Articulo, Cant) 
         VALUES ('$idSolicitud',' $CodArticulo', ' $Cant');";
-        $nuevoProductoS = sqlsrv_query($consulta, $query);
+        // $nuevoProductoS = sqlsrv_query($consulta, $query);
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $nuevoProductoS;
     }
@@ -213,20 +213,7 @@ ORDER BY id_Solicitud;";
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();   
          $params = array($rtn);
-        // $stmt = sqlsrv_query($conexion, $query, $params);
-        // if ($stmt === false) {
-        //     die(print_r(sqlsrv_errors(), true));
-        // }
-        // $existe = false;
-        // $mensaje = '';
-        // if (sqlsrv_fetch($stmt) === true) {
-        //     $cantidadCIF = sqlsrv_get_field($stmt, 0);
-        //     if ($cantidadCIF > 0) {
-        //         $existe = true;
-        //         $mensaje = 'RTN ya existe en View Clientes';
-        //     }
-        // }
-        // sqlsrv_free_stmt($stmt); 
+
         $existe = false;
         $mensaje = '';
         $query = "SELECT COUNT(rtn_Cliente) AS Cantidad_de_RTN FROM tbl_CarteraCliente WHERE rtn_Cliente = '$rtn'";
@@ -259,20 +246,18 @@ ORDER BY id_Solicitud;";
             $SolicitudesUsuario = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $query = "SELECT id_Solicitud,
-            cc.nombre_Cliente AS NombreCliente,
-           t.servicio_Tecnico,
-           telefono_cliente,
-           EstadoAvance,
-           s.Fecha_Creacion
-       FROM [tbl_Solicitud] AS s
-       INNER JOIN tbl_TipoServicio AS t ON t.id_TipoServicio = s.id_TipoServicio
-       LEFT JOIN tbl_CarteraCliente AS cc ON cc.rtn_Cliente = s.rtn_clienteCartera 
-       WHERE s.cod_Cliente IS NULL OR s.cod_Cliente = 'NULL' OR s.cod_Cliente = '' 
-       and CONCAT( id_Solicitud,  cc.nombre_Cliente, t.servicio_Tecnico, 
+            $query = "SELECT cc.nombre_Cliente AS NombreCliente,
+            t.servicio_Tecnico,
+            telefono_cliente,
+            EstadoAvance,
+            s.Fecha_Creacion
+        FROM [tbl_Solicitud] AS s
+        INNER JOIN tbl_TipoServicio AS t ON t.id_TipoServicio = s.id_TipoServicio
+        LEFT JOIN tbl_CarteraCliente AS cc ON cc.rtn_Cliente = s.rtn_clienteCartera 
+WHERE CONCAT( id_Solicitud,  cc.nombre_Cliente, t.servicio_Tecnico, 
                telefono_cliente, EstadoAvance, s.Fecha_Creacion) 
                LIKE '%' + '$buscar' + '%' 
-       ORDER BY id_Solicitud;";
+ORDER BY id_Solicitud;";
 
            $resultado = sqlsrv_query($abrirConexion, $query);
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
