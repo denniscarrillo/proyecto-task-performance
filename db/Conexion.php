@@ -15,8 +15,8 @@ class Conexion {
     public function __construct() {
         // Configurar las propiedades de la clase con las variables de entorno
         $this->serverName = $_ENV['DB_HOST'];
-        $this->characterSet = $_ENV['CHARACTER_SET'];
         $this->dbName = $_ENV['DB_NAME'];
+        $this->characterSet = $_ENV['CHARACTER_SET'];
         $this->conexionInfo = array("Database" => $this->dbName, "CharacterSet" => $this->characterSet);
     }
 

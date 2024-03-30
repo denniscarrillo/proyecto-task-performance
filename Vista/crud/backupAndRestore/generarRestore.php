@@ -16,10 +16,10 @@ if(isset($_SESSION['usuario'])){
     $estadoRestore = null;
     $rutaArchivoServidor = dirname(__FILE__).'\backups\RENDIMIENTO_TAREAS_'.$fechaBackup.'.bak';
     $urlRutaArchivoServidor = '\backups\RENDIMIENTO_TAREAS_'.$fechaBackup.'.bak';
-    // ControladorBackupRestore::insertarHistorialBackup($urlRutaArchivoServidor, $_SESSION['usuario']);
     $estadoBackup = ControladorBackupRestore::generarBackup($rutaArchivoServidor);
-
+    
     if ($estadoBackup) {
+        ControladorBackupRestore::insertarHistorialBackup($urlRutaArchivoServidor, $_SESSION['usuario']);
         /* ======================================= Evento generar Backup. ======================*/
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();

@@ -170,7 +170,7 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/librerias/Sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
-  <script src="../../../Recursos/js/backupAndRestore/Backup.js"></script>
+  <script src="../../../Recursos/js/backupAndRestore/backup.js"></script>
   <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
 </body>
 </html>

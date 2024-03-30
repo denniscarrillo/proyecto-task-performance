@@ -9,6 +9,7 @@ require_once("../../Controlador/ControladorBitacora.php");
 require_once("../../Controlador/ControladorBackupRestore.php");
 
 $registro = 0;
+$estadoRestore = 0;
 if (isset($_SESSION['registro'])) { //Cuando venimos de registro capturamos el valor para saberlo
     $registro = $_SESSION['registro'];
     /*
@@ -19,7 +20,7 @@ if (isset($_SESSION['registro'])) { //Cuando venimos de registro capturamos el v
     session_destroy();
 }
 
-if (isset($_SESSION['estadoRestore'])) { //Cuando venimos de registro capturamos el valor para saberlo
+if (isset($_SESSION['estadoRestore'])) { //Cuando venimos de restore capturamos el valor para saberlo
     $urlRestore = $_SESSION['urlArchivoRestore'];
     $nombreArchivoBackup = $_SESSION['nombreArchivoBackup'];
     $usuario = $_SESSION['usuario'];
@@ -31,37 +32,17 @@ if (isset($_SESSION['estadoRestore'])) { //Cuando venimos de registro capturamos
     session_destroy();
 
     $estadoRestore = ControladorBackupRestore::generarRestore($urlRestore);
-
     if($estadoRestore) {
+        $estadoRestore = 1;  //Cuando hemos restaurado correctamente capturamos el valor para saberlo y mostrar un Toast
         /* ======================================= Evento generar Restore. ======================*/
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();
-        $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('GESTIONBACKUPRESTORE.PHP');
+        $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('GESTIONBACKUPRESTORE.PHP');
         $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($usuario);
         $newBitacora->accion = $accion['restorer'];
         $newBitacora->descripcion = 'El usuario '.$usuario.' restauró el backup "'.$nombreArchivoBackup.'"';
         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-        
         /* =======================================================================================*/
-        echo `
-            <script>
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top',
-                    showConfirmButton: false,
-                    timer: 5000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                });
-
-                Toast.fire({
-                    icon: "success",
-                    title: "Restauración exitosa",
-                });
-            </script>` ;
     }
 }
 
