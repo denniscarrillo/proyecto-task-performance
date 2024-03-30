@@ -85,8 +85,8 @@ $("#form-estado").submit(function (e) {
       success: function () {
         //Mostrar mensaje de exito
         Swal.fire(
-          "Registrado!",
-          "El estado usuario ha sido registrado.",
+          "¡Registrado!",
+          "El estado del usuario ha sido registrado.",
           "success"
         );
         tablaEstadoUsuario.ajax.reload(null, false);
@@ -140,8 +140,8 @@ $("#formEditEstadoU").submit(function (e) {
       success: function () {
         //Mostrar mensaje de exito
         Swal.fire(
-          "Actualizado!",
-          "La estado Usuario ha sido modificado!",
+          "¡Actualizado!",
+          "El estado del usuario ha sido modificado",
           "success"
         );
         tablaEstadoUsuario.ajax.reload(null, false);
@@ -157,13 +157,14 @@ $(document).on("click", "#btn_eliminar", function () {
   let idEstadoU = $(this).closest("tr").attr("id"), //Capturar el id,
     descripcion = $(this).closest("tr").find("td:eq(1)").text();
   Swal.fire({
-    title: "Estas seguro de eliminar el estado " + descripcion + "?",
-    text: "No podras revertir esto!",
+    title: "¿Estás seguro de eliminar el estado " + descripcion + "?",
+    text: "¡No podrás revertir esto!",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Si, borralo!",
+    confirmButtonText: "¡Sí, bórralo!",
+    cancelButtonText: "Cancelar"
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
@@ -177,14 +178,14 @@ $(document).on("click", "#btn_eliminar", function () {
         success: function (data) {
           if (JSON.parse(data).estadoEliminado) {
             Swal.fire(
-              "Eliminado!",
-              "El estado usuario ha sido eliminado",
+             "¡Eliminado!",
+              "El estado del usuario ha sido eliminado.",
               "success"
             );
           } else {
             Swal.fire(
-              "Lo sentimos!",
-              "El estado usuario no puede ser eliminado",
+              "¡Lo sentimos!",
+              "El estado del usuario no puede ser eliminado",
               "error"
             );
             return;

@@ -6,31 +6,33 @@
                 <button type="button" class="btn-close" id ="btn-x" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" method="post" id="form-Edit_rubroComercial">
+                <form action="" method="post" id="formEdit_rubroComercial">
                     <div class="grupo-form">
                         <div class="grupo-form">
                             <div class="mb-3">
                                 <label for="idRubroComercial" class="form-label">No. Rubro Comercial:</label>
                                 <input type="text" name="E_idRubroComercial" id="E_idRubroComercial" class="form-control" disabled>
                                 <span id="rubroid" hidden></span>
-                                <p class="mensaje"></p>
+                                <p class="mensaje" id="mensaje"></p>
                             </div>
                         <div class="mb-3">
                             <label for="rubroComercial" class="form-label">Rubro Comercial:</label>
                             <input type="text" name="rubroComercial" id="E_rubroComercial" class="form-control" disabled>
-                            <p class="mensaje"></p>
+                            <p class="mensaje" id="mensaje"></p>
                         </div>
                         <div class="mb-3">
                             <label for="descripcion" class="form-label">Descripción del Rubro Comercial:</label>
                             <input type="text" name="descripcion" id="E_descripcion" class="form-control" >
-                            <p class="mensaje"></p>
+                            <p class="mensaje" id="mensaje"></p>
                         </div>
-                    </div>
                     <div class="btn-guardar">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn-cerrar-Editar">Cerrar</button>
-                        <button type="submit" class="btn btn-primary" id="btn-submit"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn-cerrarEditar">Cerrar</button>
+                        <button type="submit" class="btn btn-primary" id="btnsubmiteditar"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
                     </div>
                 </form>
+                <div>
+                    
+                </div>
             </div>
         </div>
     </div>

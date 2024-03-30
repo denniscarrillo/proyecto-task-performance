@@ -10,7 +10,7 @@
     // $user = '';
     session_start(); //Reanudamos session
     if(isset($_SESSION['usuario'])){
-        $user = $_SESSION['usuario'];
+       $user = $_SESSION['usuario'];
        $editarRubroComercial = new rubroComercial();
        $editarRubroComercial->id_RubroComercial = $_POST['id_RubroComercial'];
        $editarRubroComercial->rubro_Comercial = $_POST['rubroComercial'];

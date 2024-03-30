@@ -69,14 +69,15 @@ public static function eliminarRazonSocial($idRazonSocial){
         $conexion = $conn->abrirConexionDB();
         $estadoEliminado = false; 
         $query = "DELETE FROM tbl_razon_Social WHERE id_razon_Social = '$idRazonSocial';";
-        if(sqlsrv_rows_affected(sqlsrv_query($conexion, $query)) > 0){
-            $estadoEliminado = true;
+        $estadoEliminado = sqlsrv_query($conexion, $query);
+        if(!$estadoEliminado) {
+            return false;
         }
-    } catch (Exception $e) {
-        echo 'Error SQL:' . $e;
+        sqlsrv_close($conexion); //Cerrar conexion
+        return true;
+    }catch (Exception $e) {
+        $estadoEliminado = 'Error SQL:' . $e;
     }
-    sqlsrv_close($conexion); //Cerrar conexion
-    return $estadoEliminado;
 }
 public static function RazonSocialExistente($razonSocial){
     $existeRazonSocial = false;

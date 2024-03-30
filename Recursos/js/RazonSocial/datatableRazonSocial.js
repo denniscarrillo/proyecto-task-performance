@@ -1,5 +1,5 @@
-import { estadoValidado as validado } from "./validacionesModalNuevaRazonSocial.js";
-import { estadoValidado as valido } from "./validacionesModalEditarRazonSocial.js";
+import { estadoValidado} from "./validacionesModalNuevaRazonSocial.js";
+import {  estadoValido } from "./validacionesModalEditarRazonSocial.js";
 let tablaRazonSocial = "";
 $(document).ready(function () {
   let $idObjetoSistema = document.querySelector(".title-dashboard-task").id;
@@ -39,7 +39,7 @@ let procesarPermisoActualizar = (data) => {
   });
 };
 //Peticion  AJAX que trae los permisos
-let obtenerPermisos = function ($idObjeto, callback) {
+/* let obtenerPermisos = function ($idObjeto, callback) {
   $.ajax({
     url: "../../../Vista/crud/permiso/obtenerPermisos.php",
     type: "POST",
@@ -47,13 +47,13 @@ let obtenerPermisos = function ($idObjeto, callback) {
     data: { idObjeto: $idObjeto },
     success: callback,
   });
-};
+}; */
 // Crear nueva Razon Social
 $("#form-razonSocial").submit(function (e) {
   e.preventDefault();
   let razonSocial = $("#razonSocial").val();
   let descripcion = $("#descripcion").val();
-  if (validado) {
+  if (estadoValidado) {
     $.ajax({
       url: "../../../Vista/crud/razonSocial/nuevaRazonSocial.php",
       type: "POST",
@@ -65,8 +65,8 @@ $("#form-razonSocial").submit(function (e) {
       success: function () {
         //Mostrar mensaje de exito
         Swal.fire(
-          "Registrado!",
-          "La razon Social ha sido registrada.",
+          "¡Registrado!",
+          "La razón Social ha sido registrada.",
           "success"
         );
         tablaRazonSocial.ajax.reload(null, false);
@@ -74,6 +74,33 @@ $("#form-razonSocial").submit(function (e) {
     });
     $("#modalNuevaRazonSocial").modal("hide");
     limpiarForm();
+  }
+});
+
+let $RazonSocial = document.getElementById('razonSocial');
+$RazonSocial.addEventListener('focusout', function () {
+  let $mensaje = document.querySelector('.mensaje-razonsocial');
+  $mensaje.innerText = '';
+  $mensaje.classList.remove('mensaje-existe-razonsocial');
+  if($RazonSocial.value.trim() != ''){
+    $.ajax({
+      url: "../../../Vista/crud/razonSocial/razonSocialExistente.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {
+        razonSocial: $RazonSocial.value
+      },
+      success: function (estado){
+        let $objExiste = JSON.parse(estado);
+        if ($objExiste){
+          $mensaje.innerText = 'Razón Social existente';
+          $mensaje.classList.add('mensaje-existe-razonsocial');
+        } else {
+          $mensaje.innerText = '';
+          $mensaje.classList.remove('mensaje-existe-razonsocial');
+        }
+      }
+    }); //Fin AJAX   
   }
 });
 
@@ -98,12 +125,12 @@ $(document).on("click", "#btn_editar", function () {
 // Evento Submit que edita la Razon Social
 $("#form-Edit_razonSocial").submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
-  //Obtener datos del nuevo Cliente
+  //Obtener datos del nuevo razonsocial
   let inputId = document.getElementById('razonid'),
     razonSocial = $("#E_razonSocial").val(),
     descripcion = $("#E_descripcion").val();
   let razonid = inputId.getAttribute("class");
-  if (valido) {
+  if (estadoValido) {
     $.ajax({
       url: "../../../Vista/crud/razonSocial/editarRazonSocial.php",
       type: "POST",
@@ -116,18 +143,19 @@ $("#form-Edit_razonSocial").submit(function (e) {
       success: function () {
         //Mostrar mensaje de exito
         Swal.fire(
-          "Actualizado!",
+          "¡Actualizado!",
           "La razón social ha sido modificado!",
           "success"
         );
         tablaRazonSocial.ajax.reload(null, false);
+       /*  limpiarFormEdit(); */
       },
     });
     $("#modalEditarRazonSocial").modal("hide");
     limpiarFormEdit();
   }
 });
-//Eliminar pregunta
+//Eliminar Rubro Comercial
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
     idRazonSocial = $(this).closest("tr").attr('id'),
@@ -136,13 +164,14 @@ $(document).on("click", "#btn_eliminar", function () {
     console.log(idRazonSocial)
 
   Swal.fire({
-    title: "Estas seguro de eliminar la razonSocial " + razonSocial + "?",
-    text: "No podras revertir esto!",
+    title: "¿Estás seguro de eliminar la razonSocial " + razonSocial + "?",
+    text: "¡No podrás revertir esto!",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Si, Borralo!",
+    confirmButtonText: "¡Sí, bórralo!",
+    cancelButtonText: "Cancelar"
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
@@ -150,32 +179,29 @@ $(document).on("click", "#btn_eliminar", function () {
         type: "POST",
         datatype: "JSON",
         data: {
-          id_RazonSocial: idRazonSocial,
-          razonSocial: razonSocial,
-          descripcion: descripcion,
+          id_RazonSocial: idRazonSocial
         },
         success: function (data) {
-          if (JSON.parse(data) == "true") {
-            tablaRazonSocial.row(fila.parents("tr")).remove().draw();
+          if (JSON.parse(data).estadoEliminado) {
             Swal.fire(
-              "Lo sentimos!",
-              "La razón Social no puede ser eliminada.",
-              "error"
+              "Razón Social Eliminada!","La Razón Social ha sido Eliminada!.","success"
             );
-            tablaRazonSocial.ajax.reload(null, false);
           } else {
             Swal.fire(
-              "Eliminada!",
-              "La razón Social ha sido Eliminada!.",
-              "success"
+              "Lo sentimos!",
+              "La Razón Social no puede ser eliminada",
+              "error"
             );
-            tablaRazonSocial.ajax.reload(null, false);
+           return;
           }
+            tablaRazonSocial.ajax.reload(null, false);
         },
       });
     } //Fin del AJAX
   });
 });
+
+
 
 //Limpiar modal de crear
 document.getElementById("btn-cerrar").addEventListener("click", () => {
@@ -195,13 +221,13 @@ let limpiarForm = () => {
   });
   let razonSocial = document.getElementById("razonSocial"),
     descripcion = document.getElementById("descripcion");
-  //Vaciar campos cliente
+  //Vaciar campos razonsocial
   razonSocial.value = "";
   descripcion.value = "";
 };
 
 //Limpiar modal de editar
-document.getElementById("btn-cerrar-Editar").addEventListener("click", () => {
+/* document.getElementById("btn-cerrar-Editar").addEventListener("click", () => {
   limpiarFormEdit();
 });
 document.getElementById("btn-x").addEventListener("click", () => {
@@ -216,7 +242,7 @@ let limpiarFormEdit = () => {
   $mensajes.forEach(($mensaje) => {
     $mensaje.innerText = "";
   });
-};
+}; */
 
 //Generar reporte PDF
 $(document).on("click", "#btn_Pdf", function () {
