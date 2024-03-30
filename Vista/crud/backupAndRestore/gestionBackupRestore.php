@@ -1,19 +1,19 @@
 <?php
 require_once("../../../db/Conexion.php");
-require_once("../../../Modelo/Articulo.php");
-require_once("../../../Controlador/ControladorArticulo.php");
 require_once('../../../Modelo/Usuario.php');
-require_once('../../../Controlador/ControladorUsuario.php');
 require_once("../../../Modelo/Bitacora.php");
-require_once("../../../Controlador/ControladorBitacora.php");
 require_once('../../../Modelo/Parametro.php');
+require_once('../../../Modelo/BackupRestore.php');
+require_once('../../../Controlador/ControladorUsuario.php');
+require_once("../../../Controlador/ControladorBitacora.php");
 require_once('../../../Controlador/ControladorParametro.php');
+require_once('../../../Controlador/ControladorBackupRestore.php');
 
 session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
-  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionArticulo.php');
+  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('GESTIONBACKUPRESTORE.PHP');
   //Se valida el usuario, si es SUPERADMIN por defecto tiene permiso caso contrario se valida el permiso vrs base de datos
   (!($_SESSION['usuario'] == 'SUPERADMIN')) 
   ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
@@ -21,12 +21,12 @@ if (isset($_SESSION['usuario'])) {
     $permisoConsulta = true;
   ;
   if(!$permisoConsulta){
-    /* ====================== Evento intento de ingreso sin permiso a vista de artículos. ===========================*/
+    /* ====================== Evento intento de ingreso sin permiso a vista de backup y restore. ======================*/
     $accion = ControladorBitacora::accion_Evento();
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionArticulo.php');
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('GESTIONBACKUPRESTORE.PHP');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['fallido'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a vista de artículos';
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a la vista de backup y restore de base de datos';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     /* ===============================================================================================================*/
     header('location: ../../v_errorSinPermiso.php');
@@ -38,19 +38,19 @@ if (isset($_SESSION['usuario'])) {
       $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
       $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
       $newBitacora->accion = $accion['Exit'];
-      $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de '.$_SESSION['descripcionObjeto'];
+      $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de la '.$_SESSION['descripcionObjeto'];
       ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     /* =======================================================================================*/
     }
-    /* ====================== Evento ingreso avista de artículos. ===========================*/
+    /* ==================================== Evento ingreso . =================================*/
     $accion = ControladorBitacora::accion_Evento();
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionArticulo.php');
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('GESTIONBACKUPRESTORE.PHP');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['income'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a vista de artículos';
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a la vista de backup y restore de base de datos';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-    $_SESSION['objetoAnterior'] = 'gestionArticulo.php';
-    $_SESSION['descripcionObjeto'] = 'vista de artículos';
+    $_SESSION['objetoAnterior'] = 'GESTIONBACKUPRESTORE.PHP';
+    $_SESSION['descripcionObjeto'] = 'vista de backup y restore de base de datos';
     /* =======================================================================================*/
   }
 } else {
@@ -136,7 +136,7 @@ if (isset($_SESSION['usuario'])) {
         </div>
         <div class="titulo">
           <H2 class="title-dashboard-task"
-            id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionArticulo.php');?>">Backup y Restore de la base de datos del sistema</H2>
+            id="<?php echo ControladorBitacora::obtenerIdObjeto('GESTIONBACKUPRESTORE.PHP');?>" name='GESTIONBACKUPRESTORE.PHP'>Backup y Restore de la base de datos del sistema</H2>
         </div>
       </div>
       <div class="container-backup-restore">
@@ -146,7 +146,7 @@ if (isset($_SESSION['usuario'])) {
                 <span class="db-name-label">Base de datos: <span class="db-name">RENDIMIENTO_TAREAS</span></span>
               </div>
               <div class="button-container">
-                  <button type="button" id="btn-backup" class="btn-backup btn btn-primary">Respaldar</button>
+                  <button type="button" id="btn-backup" class="btn-backup btn btn-primary btn-backRestore hidden">Respaldar</button>
               </div>
           </div>
           <div class="container-restore">
@@ -156,7 +156,7 @@ if (isset($_SESSION['usuario'])) {
                   <option value="">Seleccionar punto de restauración...</option>
                 </select>
                 <div class="button-container">
-                  <button type="button" id="btn-restore" class="btn-restore btn btn-primary">Restaurar</button>
+                  <button type="button" id="btn-restore" class="btn-restore btn btn-primary btn-backRestore hidden">Restaurar</button>
                 </div>
             </form>
           </div>
@@ -170,6 +170,6 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/backupAndRestore/Backup.js"></script>
+  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
 </body>
-
 </html>

@@ -3,7 +3,7 @@ class BackupRestore{
     public static function generarBackup($url){
         // Definir los parámetros para la ejecución del respaldo
         $BaseDeDatos = 'RENDIMIENTO_TAREAS';
-        $instancia = 'PC-CARRILLO\SQLEXPRESS';
+        $instancia = 'DANIELA\ESTEFANI';
 
         // Construir el comando de respaldo con autenticación de Windows
         $comandoBackup = "sqlcmd -S $instancia -E -Q \"BACKUP DATABASE $BaseDeDatos TO DISK='$url' WITH FORMAT\"";
