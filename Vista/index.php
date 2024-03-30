@@ -1,4 +1,5 @@
 <?php
+session_start(); //Reanudamos la sesion
 require_once("../db/Conexion.php");
 require_once("../Modelo/Usuario.php");
 require_once("../Modelo/Bitacora.php");
@@ -7,7 +8,6 @@ require_once("../Controlador/ControladorBitacora.php");
 require_once('../Modelo/Parametro.php');
 require_once('../Controlador/ControladorParametro.php');
 
-session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   if (isset($_SESSION['objetoAnterior'])) {
@@ -103,6 +103,7 @@ if (isset($_SESSION['usuario'])) {
       $urlImg = '/Recursos/' . ControladorParametro::obtenerUrlLogo();
       $urlRazonSocial = './crud/RazonSocial/gestionRazonSocial.php';
       $urlRubroComercial = './crud/RubroComercial/gestionRubroComercial.php';
+      $urlRestoreBackup = './crud/backupAndRestore/gestionBackupRestore.php';
       require_once 'layout/sidebar.php';
       ?>
     </div>
@@ -153,8 +154,6 @@ if (isset($_SESSION['usuario'])) {
     integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
   </script>
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-  <!-- <script src="../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
-  <script src="../Recursos/js/validacionesSidebar.js"></script> -->
   <script src="../Recursos/components/js/loader.js" type="module"></script>
   <script src="../Recursos/js/index.js"></script>
 </body>

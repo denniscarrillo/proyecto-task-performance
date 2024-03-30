@@ -1,12 +1,29 @@
 <?php
- class Conexion {
-     private $ServerName = "DANIELA\ESTEFANI";
-     private $ConexionInfo = array("Database"=>"RENDIMIENTO_TAREAS", "CharacterSet"=>"UTF-8");
-     
-     #Abrir conexión al servidor de MySQL
+require_once __DIR__. '../../vendor/autoload.php';
+use Dotenv\Dotenv;
+// Cargar las variables de entorno desde el archivo .env
+$dotenv = Dotenv::createImmutable( __DIR__.'../../');
+$dotenv->load();
+
+class Conexion {
+    private $serverName;
+    private $dbName;
+    private $conexionInfo;
+    private $characterSet;
+
+    // Constructor de la clase
+    public function __construct() {
+        // Configurar las propiedades de la clase con las variables de entorno
+        $this->serverName = $_ENV['DB_HOST'];
+        $this->dbName = $_ENV['DB_NAME'];
+        $this->characterSet = $_ENV['CHARACTER_SET'];
+        $this->conexionInfo = array("Database" => $this->dbName, "CharacterSet" => $this->characterSet);
+    }
+
+    // Método para abrir la conexión a la base de datos
     public function abrirConexionDB(){
         try{
-            $conn = sqlsrv_connect($this->ServerName, $this->ConexionInfo);
+            $conn = sqlsrv_connect($this->serverName, $this->conexionInfo);
             if($conn == false){
                 die(print_r(sqlsrv_errors(), true));
             }
