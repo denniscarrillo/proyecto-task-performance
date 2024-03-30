@@ -88,9 +88,18 @@ if(isset($_SESSION['usuario'])){
     </tr>
     ';
 
-$bitacoras = ControladorBitacora::getBitacoraPdf(trim($_GET['buscar']));
+
+    $fechaDesde = str_replace('T', ' ', $_GET['fechaDesde']);
+    $fechaHasta = str_replace('T', ' ', $_GET['fechaHasta']);
+    
+    $bitacoras = ControladorBitacora::getBitacoraPdf(trim($_GET['buscar']), $fechaDesde, $fechaHasta);
+    
+    
+
+
 foreach($bitacoras as $bitacora){
-    // $IdBitacora = $bitacora['id_Bitacora'];
+    $Num= $bitacora['Num'];
+    $IdBitacora = $bitacora['id_Bitacora'];
     $fecha = $bitacora['fecha'];
     $timestamp = $fecha->getTimestamp();
     $fechaYHora = date('Y-m-d H:i:s', $timestamp);
