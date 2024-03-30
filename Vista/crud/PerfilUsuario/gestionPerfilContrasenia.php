@@ -10,6 +10,7 @@ require_once('../../../Controlador/ControladorParametro.php');
 require_once("actualizarPerfilContrasenia.php");
 
 if (isset($_SESSION['usuario'])) {
+
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
@@ -17,6 +18,8 @@ if (isset($_SESSION['usuario'])) {
   if (isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])) {
     /* ====================== Evento salir. ================================================*/
     $accion = ControladorBitacora::accion_Evento();
+    date_default_timezone_set('America/Tegucigalpa');
+    $newBitacora->fecha = date("Y-m-d h:i:s");
     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['Exit'];
@@ -26,13 +29,15 @@ if (isset($_SESSION['usuario'])) {
   }
   /* ====================== Evento ingreso a mantenimiento usuario. ========================*/
   $accion = ControladorBitacora::accion_Evento();
-  $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('GESTIONPERFILCONTRASENIA.PHP');
+  date_default_timezone_set('America/Tegucigalpa');
+  $newBitacora->fecha = date("Y-m-d h:i:s");
+  $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
   $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
   $newBitacora->accion = $accion['income'];
-  $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a configurar su nueva contraseña';
+  $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a mantenimiento usuario';
   ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-  $_SESSION['objetoAnterior'] = 'GESTIONPERFILCONTRASENIA.PHP';
-  $_SESSION['descripcionObjeto'] = 'configurar su nueva contraseña';
+  $_SESSION['objetoAnterior'] = 'gestionUsuario.php';
+  $_SESSION['descripcionObjeto'] = 'mantenimiento usuario';
   /* =======================================================================================*/
 }
 ?>
@@ -118,17 +123,17 @@ if (isset($_SESSION['usuario'])) {
           <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" id="formContrasenia">
             <div class="grupo-form">
               <div class="mb-3">
-                <input type="password" class="form-control" name="password" id="password" maxlength="15"
+                <input type="password" class="form-control" name="password" id="password" maxlength="25"
                   placeholder="Contraseña Actual">
                 <p class="mensaje"></p>
               </div>
               <div class="mb-3">
-                <input type="password" class="form-control" id="newPassword" maxlength="15" name="newPassword"
+                <input type="password" class="form-control" id="newPassword" maxlength="25" name="newPassword"
                   placeholder="Nueva Contraseña">
                 <p class="mensaje"></p>
               </div>
               <div class="mb-3">
-                <input type="password" class="form-control" id="confirmPassword" maxlength="15" name="confirmPassword"
+                <input type="password" class="form-control" id="confirmPassword" maxlength="25" name="confirmPassword" 
                   placeholder="Confirmar Contraseña">
                 <p class="mensaje"></p>
               </div>
@@ -158,6 +163,7 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
   <!-- Scripts propios -->
+
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
