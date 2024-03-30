@@ -134,31 +134,29 @@ class Pregunta
     //       sqlsrv_close($conexion);
     //   }
     public static function actualizarRespuesta($Usuario, $respuestas)
-    {
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB();
+{
+    $conn = new Conexion();
+    $conexion = $conn->abrirConexionDB();
 
-        // Recorrer la matriz de respuestas y actualizar cada respuesta
-        foreach ($respuestas as $indice => $nuevaRespuesta) {
-            $idPregunta = $Usuario[$indice]['idPregunta']; // Supongo que tienes un índice para relacionar las respuestas con las preguntas
+    // Recorrer la matriz de respuestas y actualizar cada respuesta
+    foreach ($respuestas as $indice => $nuevaRespuesta) {
+        // Realizar la actualización para cada respuesta
+        $query = "UPDATE tbl_MS_Preguntas_X_Usuario SET respuesta = '$respuestas' WHERE Creado_Por = '$Usuario' AND id_Pregunta = '$idPregunta';";
+        $params = array($nuevaRespuesta, $Usuario, $indice);
 
-            // Realizar la actualización para cada respuesta
-            $query = "UPDATE tbl_MS_Preguntas_X_Usuario SET respuesta ='$respuestas'  WHERE Creado_Por = '$Usuario' AND id_Pregunta = '$idPregunta';";
-            $params = array($nuevaRespuesta, $Usuario, $idPregunta);
-
-            $stmt = sqlsrv_prepare($conexion, $query, $params);
-            if (sqlsrv_execute($stmt)) {
-                // Éxito: la respuesta se actualizó correctamente
-            } else {
-                // Manejar errores en la actualización
-                echo "Error en la actualización: " . sqlsrv_errors();
-            }
-
-            sqlsrv_free_stmt($stmt);
+        $stmt = sqlsrv_prepare($conexion, $query, $params);
+        if (sqlsrv_execute($stmt)) {
+            // Éxito: la respuesta se actualizó correctamente
+        } else {
+            // Manejar errores en la actualización
+            echo "Error en la actualización: " . sqlsrv_errors();
         }
 
-        sqlsrv_close($conexion);
+        sqlsrv_free_stmt($stmt);
     }
+
+    sqlsrv_close($conexion);
+}
 
     public static function obtenerPreguntasUsuarioPDF($buscar)
     {

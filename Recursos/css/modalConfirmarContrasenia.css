@@ -27,10 +27,18 @@ body{
    min-width: 50rem;
 }
 
+.mb-3{
+    margin: 0.5rem;
+}
+
+.form-control{
+    
+}
+
 
 .img{
     display: block;
-    margin: 0 auto; /* Centra horizontalmente */
+    margin:  auto; /* Centra horizontalmente */
     text-align: center; /* Centra verticalmente */
  }
  #form-ConfirmarContraseniaPerfil{
@@ -53,9 +61,9 @@ body{
     min-width: 50rem;
 }
 
-.grupoform {
-    width:25rem;
-   margin-right:0%;
+.grupo-form {
+    width:48rem;
+   margin-bottom:3rem;
     
  }
 

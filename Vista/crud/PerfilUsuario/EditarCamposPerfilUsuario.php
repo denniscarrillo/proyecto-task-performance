@@ -180,51 +180,44 @@ if (isset($_SESSION['usuario'])) {
           </form>
         </div>
         <div class="container">
-          <div class="title-form">
-            <div class="img-content">
-              <img class="img" src="https://cdn-icons-png.flaticon.com/128/7887/7887104.png" height="50px">
-            </div>
-            <h2 class="text-title-form">Editar Preguntas Del Usuario</h2>
-          </div>
-          <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" id="form-Edit-Preguntas">
-
-            <div class="mb-3">
-              <label for="preguntas">Preguntas:</label>
-              <?php
-              $preguntasArray = $preguntas['preguntas'];
-              $respuestasArray = $preguntas['respuestas'];
-              $totalPreguntas = count($preguntasArray);
-
-              for ($i = 0; $i < $totalPreguntas; $i++) {
-                $respuesta = $i; // El índice se utilizará como respuesta
-                $pregunta = $preguntasArray[$i];
-                $respuestaName = "respuestas $respuesta";
-                $respuestaId = "E_respuestas $respuesta";
-                $valorRespuesta = isset($respuestasArray[$respuesta]) ? $respuestasArray[$respuesta] : '';
-                ?>
-              <br>
-              <label>
-                <?php echo $pregunta; ?>
-              </label>
-              <input type="text" class="form-control" name="respuestas" <?php echo $respuestaName; ?>
-                id="<?php echo $respuestaId; ?>" value="<?php echo $valorRespuesta; ?>">
-              <?php
-              }
-              ?>
-              <p class="mensaje"></p>
-            </div>
-            <div class="btn-guardar">
-              <button type="button" class="btn btn-uno"><a class=" btn-uno"
-                  href="gestionPerfilUsuario.php">Cancelar</a></button>
-              <button type="submit" name="guardarRespuestas" class="btn btn-primary"><i
-                  class="fa-solid fa-floppy-disk"></i> Guardar</button>
-            </div>
+    <div class="title-form">
+        <div class="img-content">
+            <img class="img" src="https://cdn-icons-png.flaticon.com/128/7887/7887104.png" height="50px">
         </div>
-        </form>
-      </div>
+        <h2 class="text-title-form">Editar Preguntas Del Usuario</h2>
     </div>
-  </div>
-  </div>
+    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" id="form-Edit-Preguntas">
+
+        <div class="mb-3">
+            <label for="preguntas">Preguntas:</label>
+            <?php
+            $preguntasArray = $preguntas['preguntas'];
+            $respuestasArray = $preguntas['respuestas'];
+            $totalPreguntas = count($preguntasArray);
+
+            for ($i = 0; $i < $totalPreguntas; $i++) {
+                $pregunta = $preguntasArray[$i];
+                $respuestaName = "respuestas[$i]"; // Nombre único para cada campo de respuesta
+                $respuestaId = "E_respuestas_$i";
+                $valorRespuesta = isset($respuestasArray[$i]) ? $respuestasArray[$i] : '';
+                ?>
+                <br>
+                <label for="<?php echo $respuestaId; ?>">
+                    <?php echo $pregunta; ?>
+                </label>
+                <input type="text" class="form-control" name="<?php echo $respuestaName; ?>" id="<?php echo $respuestaId; ?>" value="<?php echo $valorRespuesta; ?>">
+            <?php
+            }
+            ?>
+            <p class="mensaje"></p>
+        </div>
+        <div class="btn-guardar">
+            <button type="button" class="btn btn-uno"><a class="btn-uno" href="gestionPerfilUsuario.php">Cancelar</a></button>
+            <button type="submit" name="guardarRespuestas" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+        </div>
+    </form>
+</div>
+
 
   <script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
