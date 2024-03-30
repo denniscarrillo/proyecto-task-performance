@@ -245,18 +245,6 @@
                 <span>Roles</span>
               </a>
             </li>
-            <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo $urlRoles; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Respaldo BD</span>
-              </a>
-            </li>
-            <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo $urlRoles; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Restauración</span>
-              </a>
-            </li>
           </ul>
         </div>
         <!-- Solicitud -->
