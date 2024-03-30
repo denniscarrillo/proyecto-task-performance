@@ -245,18 +245,6 @@
                 <span>Roles</span>
               </a>
             </li>
-            <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo $urlRoles; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Respaldo BD</span>
-              </a>
-            </li>
-            <li class="dropdown-menu__content__list__item">
-              <a href="<?php echo $urlRoles; ?>" class="dropdown-menu__content__secundario__link">
-                <i class=""></i>
-                <span>Restauración</span>
-              </a>
-            </li>
           </ul>
         </div>
         <!-- Solicitud -->
@@ -265,7 +253,7 @@
             <span class="check__conteiner dropdown__link__span"
               id="<?php echo ControladorBitacora::obtenerIdObjeto('gestionBackupRestore.php'); ?>">
               <div class="icon-menu-principal__conteiner">
-                <i class="icon-menu-principal fa-solid fa-envelopes-bulk icon-size"></i>
+                <i class="icon-menu-principal fa-solid fa-window-restore icon-size"></i>
               </div>
               <p class="list__menu__principal-text">Backup & Restore</p>
             </span>

@@ -122,6 +122,7 @@ if (isset($_SESSION['usuario'])) {
           $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
           $urlRazonSocial = '../RazonSocial/gestionRazonSocial.php';
           $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
+          $urlRestoreBackup = '../backupAndRestore/gestionBackupRestore.php';
           require_once '../../layout/sidebar.php';
         ?>
     </div>

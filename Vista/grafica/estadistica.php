@@ -70,7 +70,9 @@
         $urlPerfilContraseniaUsuarios = '../crud/PerfilUsuario/gestionPerfilContrasenia.php';
         $urlImg = '../../Recursos/' . ControladorParametro::obtenerUrlLogo();
         $urlRazonSocial = '../crud/razonSocial/gestionRazonSocial.php';
-        $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
+        $urlRubroComercial = '../crud/rubroComercial/gestionRubroComercial.php';
+        $urlArticulos = '../crud/gestionArticulo.php';
+        $urlRestoreBackup = '../crud/backupAndRestore/gestionBackupRestore.php';
         require_once '../layout/sidebar.php';
         ?>
       </div>
