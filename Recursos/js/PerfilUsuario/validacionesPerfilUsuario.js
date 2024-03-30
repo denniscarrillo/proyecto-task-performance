@@ -7,7 +7,7 @@ import * as funciones from '../funcionesValidaciones.js';
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ\s,])/,//Lentras, acentos y Ñ //Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
-    soloNumeros: /^[0-9]*$/
+    soloNumeros: /^[0-9 -]*$/
 }
 //VARIABLES GLOBALES
 
@@ -125,13 +125,16 @@ $form.addEventListener('submit', e => {
 });
 $name.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
-   funciones.limitarCantidadCaracteres("E_nombre", 30);
+   funciones.limitarCantidadCaracteres("E_nombre", 100);
 });
 $direccion.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasDireccion= funciones.validarSoloLetras($direccion, validaciones.soloLetras);
-   funciones.limitarCantidadCaracteres("E_direccion", 30);
+   funciones.limitarCantidadCaracteres("E_direccion", 50);
 });
-
+$correo.addEventListener('keyup', ()=>{
+    estadoMasdeUnEspacio.estadoMasEspacioDireccion= funciones.validarMasdeUnEspacio($correo, validaciones.correo);
+   funciones.limitarCantidadCaracteres("E_email", 50);
+});
 $name.addEventListener('focusout', ()=>{
     if(estadoMasdeUnEspacio.estadoMasEspacioName){
         funciones.validarMasdeUnEspacio($name);
@@ -176,10 +179,13 @@ $rtn.addEventListener('change', ()=>{
 });
 $telefono.addEventListener('keyup', ()=>{
     estadoSoloNumeros.estadoNumerotelefono = funciones.validarSoloNumeros($telefono, validaciones.soloNumeros);
-   funciones.limitarCantidadCaracteres("E_telefono", 14);
+   funciones.limitarCantidadCaracteres("E_telefono", 20);
 });
 
-$rtn.addEventListener('keyup', ()=>{
-    estadoSoloNumeros.estadoNumerortn = funciones.validarSoloNumeros($rtn, validaciones.soloNumeros);
-   funciones.limitarCantidadCaracteres("E_rtn", 14);
+$rtn.addEventListener('input', (event)=>{
+    if (!funciones.RTN_guion(event)) {
+        event.preventDefault();
+    }
+   funciones.limitarCantidadCaracteres("E_rtn", 20);
 });
+
