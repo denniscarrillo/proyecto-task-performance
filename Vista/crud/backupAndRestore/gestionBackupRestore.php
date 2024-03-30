@@ -105,7 +105,7 @@ if (isset($_SESSION['usuario'])) {
           //Consulta
           $urlClientes = '../cliente/gestionCliente.php';
           $urlVentas = '../Venta/gestionVenta.php';
-          $urlArticulos = './gestionArticulo.php';
+          $urlArticulos = '../../crud/Articulo/gestionArticulo.php';
           $urlObjetos = '../DataTableObjeto/gestionDataTableObjeto.php';
           $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
           //Mantenimiento

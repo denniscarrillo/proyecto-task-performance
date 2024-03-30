@@ -47,33 +47,6 @@ let $resumenCotizacion = {
   impuesto: document.getElementById("impuesto"),
   total: document.getElementById("total"),
 };
-// $btnAgregar.addEventListener("click", () => {
-//   let $newProduct = {
-//     descripcion: $addNewProduct.descripcion.value,
-//     marca: $addNewProduct.marca.value,
-//     precio: $addNewProduct.precio.value,
-//   };
-//   if (validoProd) {
-//     $.ajax({
-//       url: "../../../../Vista/rendimiento/cotizacion/agregarNuevoProducto.php",
-//       type: "POST",
-//       datatype: "JSON",
-//       data: {
-//         nuevoProducto: $newProduct,
-//       },
-//       success: () => {
-//         $addNewProduct.descripcion.value = "";
-//         $addNewProduct.marca.value = "";
-//         $addNewProduct.precio.value = "";
-//         Toast.fire({
-//           icon: "success",
-//           title: "¡Producto guardado!",
-//         });
-//       },
-//     });
-//   }
-// });
-
 $(document).on("click", ".btn_article", function () {
   selectArticulos(this.children[0]);
 });
@@ -482,18 +455,21 @@ $("#btn-productos").click(() => {
   if (document.getElementById("table-productos_wrapper") == null) {
     tableProductos = $("#table-productos").DataTable({
       ajax: {
-        url: "../../../../Vista/rendimiento/cotizacion/obtenerProductosCotizados.php",
+        url: "../../../../Vista/rendimiento/cotizacion/obtenerArticulos.php",
         dataSrc: "",
       },
       language: {
         url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
       },
+      fnCreatedRow: function(rowEl, data) {
+        $(rowEl).attr('id', data['idPrecio']);
+      },
       columns: [
-        { data: "idProducto" },
-        { data: "producto" },
-        { data: "marca" },
+        { data: "codigo" },
+        { data: "articulo" },
+        { data: "marcaArticulo" },
         { data: "precio" },
-        { data: "id_Precio" },
+        { data: "existencias" },
         {
           defaultContent: `<button class="btns btn btn_article" ><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>`,
         },
@@ -502,14 +478,6 @@ $("#btn-productos").click(() => {
   } else {
     tableProductos.ajax.reload(null, false);
   }
-  setTimeout(() => {
-    document.querySelectorAll(".sorting_1").forEach((td) => {
-      td.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.setAttribute(
-        "hidden",
-        "true"
-      );
-    });
-  }, 100);
 });
 
 document.getElementById("btn-nueva-cot").addEventListener("click", () => {

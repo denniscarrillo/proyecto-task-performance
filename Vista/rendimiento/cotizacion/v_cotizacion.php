@@ -156,23 +156,6 @@ $datosCotizacion = ControladorTarea::obtenerDatos(intval($_GET['idTarea']), $_GE
                   <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
                   Seleccionar artículos...
                 </button>
-                <!-- <div class="data-container">
-                  <input type="text" name="descripcion" id="descripcion" class="fila-producto new hidden"
-                    placeholder="Descripción">
-                  <p class="mensaje"></p>
-                </div>
-                <div class="data-container">
-                  <input type="text" name="marca" id="marca" class="fila-producto new hidden" placeholder="Marca">
-                  <p class="mensaje"></p>
-                </div>
-                <div class="data-container">
-                 <input type="number" name="precio" id="precio" class="fila-producto new hidden" placeholder="Precio" min="1" oninput="validarPrecio(event)">
-                 <p class="mensaje"></p>
-                </div> -->
-                <!-- <button type="button" class="btn-agregar-producto new hidden" id="btn-agregar-producto"><i
-                    class="fa-solid fa-plus"></i> Producto
-                </button> -->
-                <!-- <input type="number" name="cantidad" id="cantidad" class="fila-producto" placeholder="Cantidad"> -->
                 <div id="button-container"></div>
               </div>
               <table id="productos-cotizacion" class="table table-hover">

@@ -660,39 +660,6 @@ class Tarea
         sqlsrv_close($conexion);
         return intval($idProduct['id_Producto']);
     }
-    public static function obtenerProductosCotizados(){
-        try{
-            $productos = array();
-            $conn = new Conexion();
-            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $select = "SELECT pc.id_Producto, pc.descripcion, pc.marca, pp.precio, pp.id_Precio FROM tbl_ProductosCotizados pc
-            INNER JOIN tbl_PreciosProductos pp ON pc.id_Producto = pp.id_Producto
-            WHERE pp.estado_Precio = 'Activo';";
-            $listaProductos = sqlsrv_query($abrirConexion, $select);
-            while($fila = sqlsrv_fetch_array($listaProductos, SQLSRV_FETCH_ASSOC)){
-                $productos[] = [
-                    'idProducto' => $fila['id_Producto'],
-                    'producto' => $fila['descripcion'],
-                    'marca' =>$fila['marca'],
-                    'precio' => $fila['precio'],
-                    'id_Precio' => $fila['id_Precio']
-                ];
-            }
-            return $productos;
-        }catch(Exception $e){
-            echo 'Error SQL:' . $e;
-        }
-        sqlsrv_close($abrirConexion); //Cerrar conexion
-    }
-    public static function insertarPrecioProducto($idProducto, $precio){
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB();
-        if(!empty($idProducto)){
-            $insert = "INSERT INTO tbl_PreciosProductos (id_Producto, precio, estado_Precio) VALUES ('$idProducto', '$precio', 'Activo')";
-            sqlsrv_query($conexion, $insert);
-        }
-        sqlsrv_close($conexion);
-    }
     public static function anularCotizacion($idCotizacion, $moficadoPor){
         $estado = false;
         $conn = new Conexion();
@@ -922,13 +889,13 @@ class Tarea
         $productos = array();
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query = "SELECT pi.id_Articulo, va.ARTICULO AS descripcion, va.MARCA, pi.cantidad FROM tbl_ARTICULOS va 
-        INNER JOIN tbl_ProductoInteres pi ON pi.id_Articulo = va.CODARTICULO WHERE pi.id_Tarea = '$idTarea'";
+        $query = "SELECT pi.cod_Articulo, va.articulo AS descripcion, va.marca, pi.cantidad FROM tbl_Articulos va 
+            INNER JOIN tbl_Productos_Interes pi ON pi.cod_Articulo = va.cod_Articulo WHERE pi.id_Tarea = '$idTarea'";
         $result = sqlsrv_query($conexion, $query);
         if(sqlsrv_has_rows($result)) {
             while($fila = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)){
                 $productos [] = [
-                    'id' => $fila['id_Articulo'],
+                    'id' => $fila['cod_Articulo'],
                     'descripcion' => $fila['descripcion'],
                     'marca' => $fila['MARCA'],
                     'cantidad' => $fila['cantidad']
