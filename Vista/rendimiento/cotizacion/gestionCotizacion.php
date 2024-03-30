@@ -128,6 +128,7 @@ if (isset($_SESSION['usuario'])) {
         $urlPerfilContraseniaUsuarios = '../../crud/PerfilUsuario/gestionPerfilContrasenia.php';
         $urlRazonSocial = '../../crud/RazonSocial/gestionRazonSocial.php';
         $urlRubroComercial = '../../crud/RubroComercial/gestionRubroComercial.php';
+        $urlRestoreBackup = '../../crud/backupAndRestore/gestionBackupRestore.php';
         require_once '../../layout/sidebar.php';
         ?>
       </div>
