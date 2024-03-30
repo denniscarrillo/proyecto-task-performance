@@ -1,4 +1,5 @@
 <?php
+session_start(); //Reanudamos la sesion
 require_once("../db/Conexion.php");
 require_once("../Modelo/Usuario.php");
 require_once("../Modelo/Bitacora.php");
@@ -7,7 +8,6 @@ require_once("../Controlador/ControladorBitacora.php");
 require_once('../Modelo/Parametro.php');
 require_once('../Controlador/ControladorParametro.php');
 
-session_start(); //Reanudamos la sesion
 if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   if (isset($_SESSION['objetoAnterior'])) {
