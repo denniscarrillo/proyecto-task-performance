@@ -9,82 +9,103 @@ const validaciones = {
 }
 //VARIABLES GLOBALES
 
-
 let limiteContrasenia = true;
 
 let estadoEspacioInput = {
     estadoEspacioUser: true,
     estadoEspacioPassword: true, 
 } 
-
+let estadoSoloLetras = {
+    estadoLetrasUser: true,
+    estadoLetrasName: true,
+}
 let estadoPassword = {
     estadoPassword1: true,
     estadoPassword2: true
 }
+let estadoMasdeUnEspacio = {
+    estadoMasEspacioNombre: true
+}
+const Toast = Swal.mixin({
+    toast: true,
+    position: "top",
+    customClass: {
+      //Para agregar clases propias
+      popup: "customizable-toast",
+    },
+    showConfirmButton: false,
+    timer: 3500,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener("mouseenter", Swal.stopTimer);
+      toast.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+  });
 
-
-const $form = document.getElementById('modalConfirmarContrasenia');
+   
+const $form = document.getElementById('formPerfilContrasenia');
 
 const $password = document.getElementById('confirmPassword');
 const $confirmarContrasenia = document.getElementById('confirmPassword');
+
+let $toastRegistro = document.querySelector(".registro-exitoso");
+if ($toastRegistro.id == "1") {
+  Toast.fire({
+    icon: "success",
+    title: "Registro de cuenta exitoso",
+  });
+  $toastRegistro.id = "0"; //Esto para que el mensaje se muestre solo cuando viene de registro
+}
 
 
 //Funcion para mostrar contraseña
 $(document).ready(function () {
     $('#checkbox').click(function () {
         if ($(this).is(':checked')) {
-            $('#confirmPassword').attr('type', 'text');
-            $('#confirmPassword').attr('type', 'text');
+            $('#password').attr('type', 'text');
+            $('#password2').attr('type', 'text');
         } else {
-            $('#confirmPassword').attr('type', 'password');
-            $('#confirmPassword').attr('type', 'password');
-           
-
+            $('#password').attr('type', 'password');
+            $('#password2').attr('type', 'password');
         }
-        
     });
 });
 
+$form.addEventListener('submit', e => {   
+    //Validamos que algún campo no esté vacío.
 
-document.getElementById('submit').addEventListener('click', function() {
- 
-    $('#form-Edit_confirmarContra').submit(function (e) {
-        e.preventDefault(); // Evita el envío del formulario por defecto
-
-        // Obtiene la contraseña ingresada por el usuario
-        var password = $('#confirmPassword').val();
-
-        // Realiza la solicitud AJAX al servidor
-        $.ajax({
-            url: "../../../Vista/crud/PerfilUsuario/obtenerContraseniaPerfil.php",
-            type: 'POST',
-            data: {
-                password: password
-            },
-            success: function (response) {
-                if (response === 'valida') {
-                    showMessage("La contraseña es válida", 'success');
-                } else {
-                    showMessage("La contraseña no es válida", 'error');
-                }
-            }
-        });
-    });
-
-    function showMessage(message, type) {
-        $('#message').text(message).removeClass().addClass(type);
+    let estadoInputPassword = funciones.validarCampoVacio($password);
+    let estadoInputConfirmarContrasenia = funciones.validarCampoVacio($confirmarContrasenia);
+    
+    // Comprobamos que todas las validaciones se hayan cumplido 
+    if ( estadoInputPassword == false || estadoInputConfirmarContrasenia == false ) {
+        e.preventDefault();
+    } else {
+        if(estadoEspacioInput.estadoEspacioUser == false || estadoEspacioInput.estadoEspacioPassword == false){ 
+            e.preventDefault();
+            estadoEspacioInput.estadoEspacioPassword = funciones.validarEspacios($password); 
+            estadoEspacioInput.estadoEspacioUser = funciones.validarEspacios($user);
+        } else {
+            estadoMasdeUnEspacio.estadoMasEspacioNombre = funciones.validarMasdeUnEspacio($name);
+            console.log(estadoMasdeUnEspacio.estadoMasEspacioNombre);
+            if(estadoMasdeUnEspacio.estadoMasEspacioNombre == false){
+                e.preventDefault();
+                console.log(estadoMasdeUnEspacio.estadoMasEspacioNombre);
+            } else {
+                if( estadoPassword.estadoPassword1 == false || estadoPassword.estadoPassword2 == false){
+                    e.preventDefault();
+                    estadoPassword.estadoPassword1= funciones.validarPassword($password, validaciones.password);
+                    estadoPassword.estadoPassword2= funciones.validarCoincidirPassword($password, $confirmarContrasenia);
+                    } else {
+                            estadoValidado = true;
+                    }
+                
+             }
+            
+          
+        }
     }
 });
-
-
-// Function to display validation error messages
-function displayErrorMessage(message) {
-    const errorContainer = document.getElementById('errorContainer');
-    errorContainer.textContent = message;
-    errorContainer.style.display = 'block';
-}
-
-
 
 
 //Evento que llama a la función que valida espacios entre caracteres.
@@ -93,7 +114,7 @@ $password.addEventListener('keyup', () => {
     if(estadoEspacioInput.estadoEspacioPassword){
         estadoPassword.estadoPassword1 = funciones.validarPassword($password, validaciones.password);
     }
-    funciones.limitarCantidadCaracteres("confirmPassword", 20 );
+    funciones.limitarCantidadCaracteres("password", 20 );
 });
 //Evento que llama a la función para validar que la contraseña sea robusta.
 $password.addEventListener('focusout',() => {
@@ -108,6 +129,9 @@ $password.addEventListener('focusout',() => {
 $confirmarContrasenia.addEventListener('focusout', ()=>{
     estadoPassword.estadoPassword2 = funciones.validarCoincidirPassword($password, $confirmarContrasenia);
 });
+
+
+
 
 
  const cantidadParametrosContrasenia = ($password) => {
@@ -151,11 +175,4 @@ $form.addEventListener('submit', async e => {
             console.log(error);
         }
     });
-
-   
-
-
-// || estadoMasdeUnEspacio.estadoMasEspacioNombre == true
-
-
 

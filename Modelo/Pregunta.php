@@ -123,41 +123,23 @@ class Pregunta
         return $listaPreguntas;
     }
 
-    //  public static function actualizarRespuesta($Usuario, $respuestas) {
-    //       $conn = new Conexion();
-    //    $conexion = $conn->abrirConexionDB();
-    //       $respuesta=$Usuario->respuesta;
-    //       $idPregunta=$Usuario->idPregunta;
-    //       $query = "UPDATE tbl_MS_Preguntas_X_Usuario SET respuesta = '$respuesta' 
-    //       WHERE Creado_Por = '$Usuario' AND id_Pregunta = '$idPregunta';";
-    //       sqlsrv_query($conexion, $query);
-    //       sqlsrv_close($conexion);
-    //   }
-    public static function actualizarRespuesta($Usuario, $respuestas)
-{
-    $conn = new Conexion();
-    $conexion = $conn->abrirConexionDB();
-
-    // Recorrer la matriz de respuestas y actualizar cada respuesta
-    foreach ($respuestas as $indice => $nuevaRespuesta) {
-        // Realizar la actualización para cada respuesta
-        $query = "UPDATE tbl_MS_Preguntas_X_Usuario SET respuesta = '$respuestas' WHERE Creado_Por = '$Usuario' AND id_Pregunta = '$idPregunta';";
-        $params = array($nuevaRespuesta, $Usuario, $indice);
-
-        $stmt = sqlsrv_prepare($conexion, $query, $params);
-        if (sqlsrv_execute($stmt)) {
-            // Éxito: la respuesta se actualizó correctamente
-        } else {
-            // Manejar errores en la actualización
-            echo "Error en la actualización: " . sqlsrv_errors();
+    public static function actualizarRespuesta($respuestas) {
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $query = "UPDATE tbl_MS_Preguntas_X_Usuario SET respuesta = '$respuestas'->respuesta WHERE id_Pregunta = '$respuestas'->idPregunta";
+        $resultado = sqlsrv_query($consulta, $query);
+        $respuestaPregunta = array();
+        //Recorremos el resultado de tareas y almacenamos en el arreglo.
+        while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+            $respuestaPregunta[] = [
+                'respuesta' => $fila['respuesta'],
+            ];
         }
-
-        sqlsrv_free_stmt($stmt);
+        sqlsrv_close($consulta); #Cerramos la conexión.
+        return $respuestaPregunta;
     }
-
-    sqlsrv_close($conexion);
-}
-
+    
+    
     public static function obtenerPreguntasUsuarioPDF($buscar)
     {
         $conn = new Conexion();

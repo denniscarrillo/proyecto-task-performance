@@ -61,7 +61,6 @@ if (isset($_SESSION['usuario'])) {
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
   <!-- Estilos personalizados -->
   <link href="../../../Recursos/css/gestionPerfilUsuario.css" rel="stylesheet" />
-  <link href="../../../Recursos/css/modalConfirmarContrasenia.css" rel="stylesheet" />
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
@@ -124,10 +123,12 @@ if (isset($_SESSION['usuario'])) {
             <h2 class="text-title-form">Datos Del Usuario</h2>
           </div>
           <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" id="form-Edit-DatosPerfil">
-            <div class="btn-editar">
-              <a href="#" class="btn btn-secondary" data-bs-toggle="modal"
-                data-bs-target="#modalConfirmarContrasenia"><i class="fa-solid fa-pen-to-square"> </i>Editar Perfil</a>
-            </div>
+          <div class="btn-editar">
+              <a href="../PerfilUsuario/modalConfirmarContrasenia.php" class="btn btn-secondary">
+                  <i class="fa-solid fa-pen-to-square"></i>Editar Perfil
+              </a>
+           </div>
+
             <div class="grupo-form1">
               <div class="mb-3">
                 <label class="titulos">Usuario:</label>
@@ -197,22 +198,18 @@ if (isset($_SESSION['usuario'])) {
       </div>
     </div>
   </div>
-  <?php
-  require_once('modalConfirmarContrasenia.html');
-  ?>
 
-<script src="https://kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+<script src="../../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js" crossorigin="anonymous"></script>
+  <script src="../../../Recursos/js/librerias/Sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
+  <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <!-- Scripts propios -->
-
-  <script src="../../../Recursos/js/validacionesSidebar.js"></script>
-  <script src="../../../Recursos/js/PerfilUsuario/validacionesModalconfirmarContrasenia.js" type="module"></script>
+  <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
- 
+  <script src="../../../Recursos/js/PerfilUsuario/validacionesPerfilContrasenia.js" type="module"></script>
 </body>
 
 </html>

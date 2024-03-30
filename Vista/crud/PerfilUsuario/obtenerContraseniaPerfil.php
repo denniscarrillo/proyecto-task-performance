@@ -33,7 +33,7 @@
             header('location: EditarCamposPerfilUsuario.php');
           }else{
             
-            $mensaje = 'Su contraseña actual es incorrecta';
+            $mensaje = 'La contraseña ingresada es incorrecta';
           }
           
           /* ========================= Evento Cambiar Contraseña. ======================*/

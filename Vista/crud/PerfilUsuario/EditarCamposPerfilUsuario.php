@@ -188,34 +188,31 @@ if (isset($_SESSION['usuario'])) {
     </div>
     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" id="form-Edit-Preguntas">
 
-        <div class="mb-3">
-            <label for="preguntas">Preguntas:</label>
-            <?php
-            $preguntasArray = $preguntas['preguntas'];
-            $respuestasArray = $preguntas['respuestas'];
-            $totalPreguntas = count($preguntasArray);
+    <div class="mb-3">
+        <label for="preguntas">Por favor, responda las siguientes preguntas:</label>
+        <?php
+        $preguntasArray = $preguntas['preguntas'];
+        $respuestasArray = $preguntas['respuestas'];
+        $totalPreguntas = count($preguntasArray);
 
-            for ($i = 0; $i < $totalPreguntas; $i++) {
-                $pregunta = $preguntasArray[$i];
-                $respuestaName = "respuestas[$i]"; // Nombre único para cada campo de respuesta
-                $respuestaId = "E_respuestas_$i";
-                $valorRespuesta = isset($respuestasArray[$i]) ? $respuestasArray[$i] : '';
-                ?>
-                <br>
-                <label for="<?php echo $respuestaId; ?>">
-                    <?php echo $pregunta; ?>
-                </label>
+        foreach ($preguntasArray as $indice => $pregunta) {
+            $respuestaName = "respuestas[$indice]"; // Nombre único para cada campo de respuesta
+            $respuestaId = "E_respuestas_$indice";
+            $valorRespuesta = isset($respuestasArray[$indice]) ? $respuestasArray[$indice] : '';
+        ?>
+            <div class="pregunta">
+                <label for="<?php echo $respuestaId; ?>"><?php echo $pregunta; ?></label>
                 <input type="text" class="form-control" name="<?php echo $respuestaName; ?>" id="<?php echo $respuestaId; ?>" value="<?php echo $valorRespuesta; ?>">
-            <?php
-            }
-            ?>
-            <p class="mensaje"></p>
-        </div>
-        <div class="btn-guardar">
-            <button type="button" class="btn btn-uno"><a class="btn-uno" href="gestionPerfilUsuario.php">Cancelar</a></button>
-            <button type="submit" name="guardarRespuestas" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
-        </div>
-    </form>
+            </div>
+        <?php } ?>
+        <p class="mensaje"></p>
+    </div>
+    <div class="btn-guardar">
+        <button type="button" class="btn btn-secondary"><a href="gestionPerfilUsuario.php" style="text-decoration: none; color: white;">Cancelar</a></button>
+        <button type="submit" name="guardarRespuestas" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+    </div>
+</form>
+
 </div>
 
 
