@@ -29,7 +29,7 @@
               <div class="icon-menu-principal__conteiner">
                 <i class="icon-menu-principal fas fa-home icon-size"></i>
               </div>
-              <p class="list__menu__principal-text">HOME</p>
+              <p class="list__menu__principal-text">INICIO</p>
             </span>
           </a>
 
