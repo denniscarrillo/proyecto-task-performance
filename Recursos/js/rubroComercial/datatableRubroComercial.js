@@ -39,7 +39,7 @@ let procesarPermisoActualizar = (data) => {
   });
 };
 //Peticion  AJAX que trae los permisos
-/* let obtenerPermisos = function ($idObjeto, callback) {
+let obtenerPermisos = function ($idObjeto, callback) {
   $.ajax({
     url: "../../../Vista/crud/permiso/obtenerPermisos.php",
     type: "POST",
@@ -47,7 +47,7 @@ let procesarPermisoActualizar = (data) => {
     data: { idObjeto: $idObjeto },
     success: callback,
   });
-}; */
+};
 // Crear nueva Rubro Comercial
 $("#form_rubroComercial").submit(function (e) {
   e.preventDefault();
@@ -161,9 +161,7 @@ $("#formEdit_rubroComercial").submit(function (e) {
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
     idRubroComercial = $(this).closest("tr").attr("id"),
-    rubroComercial = fila.find("td:eq(1)").text(),
-    descripcion = fila.find("td:eq(2)").text();
-
+    rubroComercial = fila.find("td:eq(1)").text();
   Swal.fire({
     title:
       "¿Estás seguro de eliminar el rubro comercial " + rubroComercial + "?",
@@ -180,7 +178,10 @@ $(document).on("click", "#btn_eliminar", function () {
         url: "../../../Vista/crud/rubroComercial/eliminarRubroComercial.php",
         type: "POST",
         datatype: "JSON",
-        data: {id_RubroComercial: idRubroComercial},
+        data: {
+          id_RubroComercial: idRubroComercial,
+          rubro: rubroComercial
+        },
         success: function (data) {
           if (JSON.parse(data).estadoEliminado) {
             Swal.fire(
@@ -199,7 +200,23 @@ $(document).on("click", "#btn_eliminar", function () {
       });
     } //Fin del AJAX
   });
+  let filtro = document.querySelector('input[type=search]');
 });
+$(document).on("focusout", "input[type=search]", function (e) {
+  let filtro = $(this).val();
+  capturarFiltroDataTable(filtro);
+});
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim()){
+    $.ajax({
+      url: "../../../Vista/crud/rubroComercial/registrarBitacoraFiltroRubroComercial.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
 
 //Limpiar modal de crear
 // document.getElementById("btn-cerrar-Editar").addEventListener("click", () => {
