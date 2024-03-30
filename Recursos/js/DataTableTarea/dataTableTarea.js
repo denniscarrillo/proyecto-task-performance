@@ -153,13 +153,14 @@ $(document).on("click", "#btn-finalizar-tarea", function () {
   let estadoFinalizacion = $(this).closest("tr").find("td:eq(6)").text();
   if (estadoFinalizacion == "Pendiente" || estadoFinalizacion == "Reabierta") {
     Swal.fire({
-      title: "Estas seguro de finalizar la tarea # " + tarea + "?",
-      text: "No podras revertir esto!",
+      title: "¿Estás seguro de finalizar la tarea # " + tarea + "?",
+      text: "¡No podrás revertir esto!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Si, finalízala!",
+      cancelButtonColor: "#d33", 
+      confirmButtonText: "¡Si, finalízala!",
+      cancelButtonText: "Cancelar" 
     }).then((result) => {
       if (result.isConfirmed) {
         $.ajax({
@@ -173,14 +174,14 @@ $(document).on("click", "#btn-finalizar-tarea", function () {
             if (JSON.parse(data) == true) {
               tablaDataTableTarea.row(fila.parents("tr")).remove().draw();
               Swal.fire(
-                "Tarea Finalizada",
+                "¡Tarea Finalizada!",
                 "Ha sido finalizada la tarea #" + tarea,
                 "success"
               );
               tablaDataTableTarea.ajax.reload(null, false);
             } else {
               Swal.fire(
-                "Lo sentimos!",
+                "¡Lo sentimos!",
                 "La tarea no se puede finalizar.",
                 "error"
               );

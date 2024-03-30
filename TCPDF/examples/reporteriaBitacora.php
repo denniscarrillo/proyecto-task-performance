@@ -88,17 +88,26 @@ if(isset($_SESSION['usuario'])){
     </tr>
     ';
 
-    $bitacoras = ControladorBitacora::getBitacoraPdf($_GET['buscar']);
-    foreach($bitacoras as $bitacora){
-        // $IdBitacora = $bitacora['id_Bitacora'];
-        $fecha = $bitacora['fecha'];
-        $timestamp = $fecha->getTimestamp();
-        $fechaYHora = date('Y-m-d H:i:s', $timestamp);
-        $Usuario = $bitacora['Usuario'];
-        $Objeto = $bitacora['Objeto'];
-        $Accion = $bitacora['accion'];
-        $Descripcion = $bitacora['descripcion'];
-        $Cont++;
+
+    $fechaDesde = str_replace('T', ' ', $_GET['fechaDesde']);
+    $fechaHasta = str_replace('T', ' ', $_GET['fechaHasta']);
+    
+    $bitacoras = ControladorBitacora::getBitacoraPdf(trim($_GET['buscar']), $fechaDesde, $fechaHasta);
+    
+    
+
+
+foreach($bitacoras as $bitacora){
+    $Num= $bitacora['Num'];
+    $IdBitacora = $bitacora['id_Bitacora'];
+    $fecha = $bitacora['fecha'];
+    $timestamp = $fecha->getTimestamp();
+    $fechaYHora = date('Y-m-d H:i:s', $timestamp);
+    $Usuario = $bitacora['Usuario'];
+    $Objeto = $bitacora['Objeto'];
+    $Accion = $bitacora['accion'];
+    $Descripcion = $bitacora['descripcion'];
+    $Cont++;
 
         $html .= '
         <tr>

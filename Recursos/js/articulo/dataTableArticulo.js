@@ -58,7 +58,7 @@ $("#form_Articulo").submit(function (e) {
   let Articulo = $("#Articulo").val();
   let Detalle = $("#Detalle").val();
   let Marca = $("#Marca").val();
-
+console.log(estadoValidado);
   if (estadoValidado) {
     $.ajax({
       url: "../../../Vista/crud/articulo/nuevoArticulo.php",
@@ -121,8 +121,9 @@ $("#form_EditarArticulo").submit(function (e) {
     Detalle = $("#A_Detalle").val(),
     Marca = $("#A_Marca").val();
     let codigo = inputId.getAttribute("class");
-
+    console.log(estadoValido);
   if (estadoValido) {
+    
     $.ajax({
       url: "../../../Vista/crud/articulo/editarArticulo.php",
       type: "POST",
@@ -136,7 +137,7 @@ $("#form_EditarArticulo").submit(function (e) {
       success: function (res) {
         console.log(res);
         //Mostrar mensaje de exito
-        Swal.fire("Actualizado!", "El Articulo ha sido modificado!", "success");
+        Swal.fire("Actualizado!", "El Artículo ha sido modificado!", "success");
         tablaArticulo.ajax.reload(null, false);
       },
     });
@@ -149,26 +150,27 @@ $(document).on("click", "#btn_eliminar", function () {
   let codArticulo = $(this).closest("tr").attr('id');
   let nombreArticulo = $(this).closest("tr").find("td:eq(1)").text();
   Swal.fire({
-    title: "Estas seguro de eliminar el artículo " + nombreArticulo + "?",
-    text: "No podras revertir esto!",
+    title: "¿Estás seguro de eliminar el artículo" + nombreArticulo + "?",
+    text: "¡No podrás revertir esto!",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
     confirmButtonText: "Si, borralo!",
+    cancelButtonText: "Cancelar"
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
         url: "../../../Vista/crud/articulo/eliminarArticulo.php",
         type: "POST",
         datatype: "json",
-        data: { codArticulo: codArticulo },
+        data: { codArticulo: codArticulo},
         success: function (data) {
           if (JSON.parse(data).estadoEliminado) {
             Swal.fire("Eliminado!", "El artículo ha sido eliminado", "success");
           } else {
             Swal.fire(
-              "Lo sentimos!",
+              "¡Lo sentimos!",
               "El artículo no puede ser eliminado",
               "error"
             );

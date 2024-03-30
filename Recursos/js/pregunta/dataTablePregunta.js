@@ -83,7 +83,7 @@ $("#form-Pregunta").submit(function (e) {
       },
       success: function () {
         //Mostrar mensaje de exito
-        Swal.fire("Registrado!", "La pregunta ha sido registrada.", "success");
+        Swal.fire("¡Registrado!", "La pregunta ha sido registrada.", "success");
         tablaPregunta.ajax.reload(null, false);
       },
     });
@@ -156,7 +156,7 @@ $("#form-Pregunta-Editar").submit(function (e) {
       },
       success: function () {
         Swal.fire(
-          "Actualizado!",
+          "¡Actualizado!",
           "La pregunta ha sido actualizada.",
           "success"
         );
@@ -173,13 +173,14 @@ $(document).on("click", "#btn_eliminar", function () {
     idPregunta = $(this).closest("tr").attr('id'),
     pregunta = fila.find("td:eq(1)").text();
   Swal.fire({
-    title: "Estás seguro de eliminar la pregunta " + pregunta + "?",
-    text: "No podrás revertir esto!",
+    title: "¿Estás seguro de eliminar la pregunta " + pregunta + "?",
+    text: "¡No podrás revertir esto!",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Si, Borralo!",
+    confirmButtonText: "¡Sí, bórralo!",
+    cancelButtonText: "Cancelar"
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
@@ -193,13 +194,13 @@ $(document).on("click", "#btn_eliminar", function () {
         success: function (data) {
           if (JSON.parse(data).estadoEliminado) {
             Swal.fire(
-              "Eliminado!",
-              "La pregunta ha sido eliminado.",
+              "¡Eliminado!",
+              "La pregunta ha sido eliminada.",
               "success"
             );
           } else {
             Swal.fire(
-              "Lo sentimos!",
+              "¡Lo sentimos!",
               "La pregunta no puede ser eliminada.",
               "error"
             );

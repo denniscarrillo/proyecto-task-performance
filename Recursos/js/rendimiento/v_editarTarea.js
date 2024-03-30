@@ -79,8 +79,8 @@ $(document).ready(async function () {
       }
       if ($idTarea != null) {
         Swal.fire({
-          title: "Estas seguro de finalizar la tarea # " + $idTarea + "?",
-          text: "No podras revertir esto!",
+          title: "Estás seguro de finalizar la tarea # " + $idTarea + "?",
+          text: "No podrás revertir esto!",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
@@ -421,7 +421,7 @@ document
       document.getElementById("estados-tarea").value = $idEstadoTarea;
       Toast.fire({
         icon: "error",
-        title: "No puedes volver a un estado anterior",
+        title: "¡No puedes volver a un estado anterior!",
       });
     } else {
       cambiarEstado($newEstado, $idTarea);
@@ -540,7 +540,7 @@ let enviarProductosInteres = ($idTarea) => {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "La tarea " + $idTarea + " ha sido actualizada",
+        title: "¡La tarea " + $idTarea + " ha sido actualizada!",
         showConfirmButton: false,
         allowOutsideClick: false,
         allowEscapeKey: false,
@@ -887,13 +887,16 @@ let validarEvidencia = ($evidencia, $elemento) => {
 document.getElementById("btn-finalizar-tarea").addEventListener("click", () => {
   if ($idTarea != null) {
     Swal.fire({
-      title: "Estas seguro de finalizar la tarea # " + $idTarea + "?",
-      text: "No podras revertir esto!",
+      title: "¿Estás seguro de finalizar la tarea # " + $idTarea + "?",
+      text: "¡No podrás revertir esto!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Si, finalizalo!",
+      confirmButtonText: "¡Sí, finalizalo!",
+      cancelButtonText: "Cancelar"
+  
+     
     }).then((result) => {
       if (result.isConfirmed) {
         $.ajax({
@@ -921,14 +924,14 @@ document.getElementById("btn-finalizar-tarea").addEventListener("click", () => {
             // }
             if (!(JSON.parse(data) == true)) {
               Swal.fire(
-                "Lo sentimos!",
+                "¡Lo sentimos!",
                 "La tarea no ha sido finalizada.",
                 "error"
               );
               return;
             }
             Swal.fire(
-              "Tarea Finalizada!",
+              "¡Tarea Finalizada!",
               "La tarea ha sido finalizada.",
               "success"
             );

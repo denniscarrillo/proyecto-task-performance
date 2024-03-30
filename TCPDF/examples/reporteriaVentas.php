@@ -88,32 +88,32 @@ if(isset($_SESSION['usuario'])){
     <td style="background-color: #e54037;color: white; text-align: center; width: 120px;">CREADO POR</td>
     <td style="background-color: #e54037;color: white; text-align: center; width: 130px;">FECHA CREACIÓN</td>
 
+</tr>
+';
+$Ventas = ControladorVenta::obtenerlasventasPDF(trim($_GET['buscar']));
+foreach($Ventas as $Venta){
+    $numFactura = $Venta['numFactura'];
+    $nombre = $Venta['nombreCliente'];
+    $RTN  = $Venta['rtnCliente'];
+    $totalVenta = $Venta['totalVenta'];
+    $CreadoPor = $Venta['CreadoPor'];
+    $fechaEmision  = $Venta['FechaCreacion'];
+    $fechaFormateada = $fechaEmision->format('Y/m/d');
+    
+    $Cont++;
+    $html .= '
+    <tr>
+    <td style="text-align: center">'.$numFactura.'</td>
+    <td>'.$nombre.'</td>
+    <td style="text-align: center">'.$RTN.'</td>
+    <td style="text-align: center; background-color: #b7b7b7">'.'Lps.'.$totalVenta.'</td>
+    <td style="text-align: center">'.$CreadoPor.'</td>
+    <td style="text-align: center">'.$fechaFormateada.'</td>
+   
+    
     </tr>
     ';
-    $Ventas = ControladorVenta::obtenerlasventasPDF($_GET['buscar']);
-    foreach($Ventas as $Venta){
-        $numFactura = $Venta['numFactura'];
-        $nombre = $Venta['nombreCliente'];
-        $RTN  = $Venta['rtnCliente'];
-        $totalVenta = $Venta['totalVenta'];
-        $CreadoPor = $Venta['CreadoPor'];
-        $fechaEmision  = $Venta['FechaCreacion'];
-        $fechaFormateada = $fechaEmision->format('Y/m/d');
-        
-        $Cont++;
-        $html .= '
-        <tr>
-        <td style="text-align: center">'.$numFactura.'</td>
-        <td>'.$nombre.'</td>
-        <td style="text-align: center">'.$RTN.'</td>
-        <td style="text-align: center; background-color: #b7b7b7">'.'Lps.'.$totalVenta.'</td>
-        <td style="text-align: center">'.$CreadoPor.'</td>
-        <td style="text-align: center">'.$fechaFormateada.'</td>
-    
-        
-        </tr>
-        ';
-    }
+}
 
     $html.='
     </table>

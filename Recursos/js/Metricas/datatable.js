@@ -99,7 +99,7 @@ $("#form-Edit-Metrica").submit(function (e) {
       },
       success: function () {
         //Mostrar mensaje de exito
-        Swal.fire("Actualizado!", "La metrica ha sido modificada!", "success");
+        Swal.fire("Actualizado!", "La métrica ha sido modificada!", "success");
         tablaMetricas.ajax.reload(null, false);
       },
     });
@@ -131,13 +131,14 @@ $(document).on("click", "#btn_eliminar", function () {
     id_Metrica= $(this).closest("tr").attr('id'), //capturo el ID
     metrica = $(this).closest("tr").find("td:eq(1)").text();
   Swal.fire({
-    title: "Estas seguro de eliminar la metrica  " + metrica + "?",
-    text: "No podras revertir esto!",
+    title: "¿Estás seguro de eliminar la métrica  " + metrica + "?",
+    text: "¡No podrás revertir esto!",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Si, borralo!",
+    confirmButtonText: "¡Sí, bórralo!",
+    cancelButtonText: "Cancelar"
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
@@ -153,7 +154,7 @@ $(document).on("click", "#btn_eliminar", function () {
             Swal.fire("Eliminado!", "La métrica ha sido eliminado", "success");
           } else {
             Swal.fire(
-              "Lo sentimos!",
+              "¡Lo sentimos!",
               "La métrica no puede ser eliminada",
               "error"
             );
