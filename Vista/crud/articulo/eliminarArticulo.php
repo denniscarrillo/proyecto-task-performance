@@ -7,4 +7,4 @@ require_once("../../../Controlador/ControladorArticulo.php");
 
 $codArticulo = $_POST['codArticulo'];
 $estadoEliminado = ControladorArticulo::eliminarArticulo($codArticulo);
-print json_encode(['estadoEliminado' => $estadoEliminado], JSON_UNESCAPED_UNICODE);
+print json_encode($estadoEliminado, JSON_UNESCAPED_UNICODE);

@@ -10,13 +10,12 @@
     $user = '';
     session_start(); //Reanudamos session
     if(isset($_SESSION['usuario'])){
-        $user = $_SESSION['usuario'];
         $nuevoArticulo = new Articulo();
         $nuevoArticulo->Articulo = $_POST['Articulo'];
         $nuevoArticulo->Detalle = $_POST['Detalle'];
         $nuevoArticulo->Marca = $_POST['Marca'];
-        $nuevoArticulo->Creado_Por = $user;
+        $nuevoArticulo->Precio = $_POST['Precio'];
+        $nuevoArticulo->Existencias = $_POST['Existencias'];
+        $nuevoArticulo->Creado_Por = $_SESSION['usuario'];
         ControladorArticulo::registroNuevoArticulo($nuevoArticulo);
-   
     }
-?>

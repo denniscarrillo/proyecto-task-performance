@@ -10,13 +10,14 @@
     $user = '';
     session_start(); //Reanudamos session
     if(isset($_SESSION['usuario'])){
-        $user = $_SESSION['usuario'];
         $editarArticulo = new Articulo();
-        $editarArticulo->codArticulo = $_POST['CodArticulo'];
-        $editarArticulo->Articulo = $_POST['Articulo'];
-        $editarArticulo->Detalle = $_POST['Detalle'];
-        $editarArticulo->Marca = $_POST['Marca'];
-        $editarArticulo->Modificado_Por = $user;
+        $editarArticulo->codArticulo = $_POST['codArticulo'];
+        $editarArticulo->Articulo = $_POST['articulo'];
+        $editarArticulo->Detalle = $_POST['detalle'];
+        $editarArticulo->Marca = $_POST['marca'];
+        $editarArticulo->Precio = $_POST['precio'];
+        $editarArticulo->Existencias = $_POST['existencias'];
+        $editarArticulo->Modificado_Por = $_SESSION['usuario'];
         ControladorArticulo::editarArticulo($editarArticulo);
     }
 ?>

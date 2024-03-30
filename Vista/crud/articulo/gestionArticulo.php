@@ -157,9 +157,11 @@ if (isset($_SESSION['usuario'])) {
         <table class="display nowrap table" id="table-Articulos" style="width:100%">
           <thead>
             <tr>
-              <th scope="col"> CÓD ARTÍCULO</th>
+              <th scope="col"> COD. ARTÍCULO</th>
               <th scope="col"> ARTÍCULO </th>
               <th scope="col"> DETALLE </th>
+              <th scope="col"> PRECIO </th>
+              <th scope="col"> EXISTENCIAS </th>
               <th scope="col"> MARCA </th>
               <th scope="col"> CREADO POR </th>
               <th scope="col"> FECHA CREACIÓN </th>
@@ -192,7 +194,6 @@ if (isset($_SESSION['usuario'])) {
 <!-- scripts propios -->
   <script src="../../../Recursos/js/articulo/ValidacionesModalNuevoArticulo.js" type="module"></script>
   <script src="../../../Recursos/js/articulo/ValidacionesModalEditarArticulo.js" type="module"></script>
-  <script src="../../../Recursos/js/index.js"></script>
   <script src="../../../Recursos/js/articulo/dataTableArticulo.js" type="module"></script>
   <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
 </body>

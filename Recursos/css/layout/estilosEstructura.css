@@ -26,6 +26,38 @@
 .table {
   width: 100%;
 }
+
+.modal-header {
+  background-color: #4d4b4a !important;
+  height: 3rem !important;
+  border-top-right-radius: 0.4rem;
+  border-top-left-radius: 0.4rem;
+}
+.modal-title {
+  color: #ee9827 !important;
+
+}
+.btn-close {
+  background-color: red !important;
+  box-shadow: none;
+}
+.btn-close:active {
+  background-color: #c8bfbd !important;
+  box-shadow: none;
+}
+.modal-body {
+  background-color: #ddd9d9 !important;
+  font-weight: 400;
+  border-bottom-right-radius: 0.4rem;
+  border-bottom-left-radius: 0.4rem;
+}
+.form-label {
+  color: #4d4b4a !important;
+  font-weight: 600;
+}
+.dataTables_wrapper label {
+  color: #4d4b4a !important;
+}
 /* Estilos de paginacion DataTable boostrap */
 .active > .page-link,
 .page-link.active {
@@ -68,15 +100,15 @@ table.dataTable.no-footer {
 .dataTables_wrapper .dataTables_paginate {
   margin-top: 8px;
 }
-.modal-body {
+/* .modal-body {
   background-color: #9f9b97;
   color: white;
-}
-.modal-header {
+} */
+/* .modal-header {
   background-color: #4d4b4a !important;
   color: #ee9827;
   height: 3rem;
-}
+} */
 .btn-guardar .btn-primary {
   background-color: #f5971d;
   border: none;
@@ -84,6 +116,23 @@ table.dataTable.no-footer {
   left: 40%;
   right: 30%;
 }
+.btn-guardar .btn-primary:hover {
+  /* background-color: #ee9827; */
+  box-shadow: 0 0 0 .2rem #eeca54d0;
+}
+
+.btn-guardar .btn-secondary {
+  background-color: #534f4a;
+  border: none;
+  bottom: 0.2rem;
+  left: 40%;
+  right: 30%;
+}
+.btn-guardar .btn-secondary:hover {
+  background-color: #ff0000;
+  box-shadow: 0 0 0 .1rem #ff0000d7;
+}
+
 .check-permiso {
   border-color: #ee9827;
   background-color: #ee9827;
