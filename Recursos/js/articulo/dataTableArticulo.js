@@ -134,9 +134,6 @@ $("#form_EditarArticulo").submit(function (e) {
       marca = $("#A_Marca").val(),
       precio = $("#precios").val(),
       existencias = $("#A_Existencias").val();
-
-      console.log(estadoValido)
-      
   if (estadoValido) {
     $.ajax({
       url: "../../../Vista/crud/articulo/editarArticulo.php",
