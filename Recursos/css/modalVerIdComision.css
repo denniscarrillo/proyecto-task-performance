@@ -26,9 +26,9 @@
 .modal-body{
     position: relative;
 }
-.btn-guardar {
-    position: absolute;
-    margin-top: 3rem !important;
+.btn-guardar .btn-primary  {
+    background-color: rgb(153, 37, 5) !important;
+    border-color: rgb(255, 78, 47) !important; 
     bottom: 0.2rem;
     left: 7.5%;
     right:30%;
