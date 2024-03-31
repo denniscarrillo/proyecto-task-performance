@@ -5,6 +5,7 @@
     require_once ("../../Modelo/Comision.php");
     require_once("../../Controlador/ControladorComision.php");
 
+    $eliminar = '';
     $estadoEliminado = null;
     if(isset($_POST['idComision'])){
         $idComision = $_POST['idComision'];
@@ -18,6 +19,26 @@
             ControladorComision::SimularAnularComisionVendedor($idComision);
             print json_encode($data, JSON_UNESCAPED_UNICODE);
         }
+/* ========================= Evento Eliminar Comisión. ======================*/
+if ($estadoEliminado){
+    $eliminar = "eliminó";
+}else{
+    $eliminar = "intentó eliminar";
+}
+$newBitacora = new Bitacora();
+$accion = ControladorBitacora::accion_Evento();
+date_default_timezone_set('America/Tegucigalpa');
+$newBitacora->fecha = date("Y-m-d h:i:s");
+$newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionComision.php');
+$newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+$newBitacora->accion = $accion['Delete'];
+$newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' eliminó la comisión #'.$idComision;
+ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+
+
+
+
+
     }
 ?>
 

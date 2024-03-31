@@ -286,7 +286,6 @@ class Comision
     }
 
     $rowEstadoActual = sqlsrv_fetch_array($resultEstadoActual);
-    $estadoActual = $rowEstadoActual['estado_Cobro_venta'];
     $estadoActual2 = $rowEstadoActual['estado_Liquidacion'];
     // $fechaCobroActual = $rowEstadoActual['fecha_cobro'];
     $fechaLiquidacionActual = $rowEstadoActual['fecha_Liquidacion'];
@@ -294,8 +293,6 @@ class Comision
     // Actualizar tbl_comision
     $query1 = "UPDATE tbl_comision 
                SET estado_Liquidacion = '$nuevaComision->estadoLiquidacion', 
-                --    estado_Cobro_venta = '$nuevaComision->estadoCobro', 
-                --    metodo_de_Pago = '$nuevaComision->metodoPago', 
                    Modificado_Por ='$nuevaComision->ModificadoPor', 
                    Fecha_Modificacion = GETDATE()";
 

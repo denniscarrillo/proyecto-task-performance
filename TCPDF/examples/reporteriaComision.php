@@ -6,8 +6,14 @@ require_once("../../Modelo/Comision.php");
 require_once("../../Controlador/ControladorComision.php");
 require_once("../../Modelo/Parametro.php");
 require_once("../../Controlador/ControladorParametro.php");
-ob_start();
+require_once("../../Modelo/Usuario.php");
+require_once("../../Controlador/ControladorUsuario.php");
+require_once("../../Modelo/Bitacora.php");
+require_once("../../Controlador/ControladorBitacora.php");
 
+ob_start();
+session_start(); // Reanudamos Session
+if(isset($_SESSION['usuario'])){
 //cargar el encabezado
 $datosParametro = ControladorParametro::obtenerDatosReporte();
 foreach($datosParametro  as $datos){
@@ -116,15 +122,6 @@ foreach($Comisiones as $Comision){
         $fechaLiquidacion = ''; // Otra acción si $fechaLiquidacion no es un objeto DateTime
     }
     
-/*     if (isset($Comision['fechaCobro']) && $Comision['fechaCobro'] !== null) {
-        $fechaC = $Comision['fechaCobro'];
-        $timestamp = $fechaC->getTimestamp();
-        // Verificar si la fecha es no nula antes de formatearla
-        $fechaCobro = date('Y-m-d H:i:s', $timestamp);
-    } else {
-        $fechaCobro = ''; // Otra acción si $fechaCobro es nulo
-    } */
-
     $Cont++;
 
     $html .= '
@@ -152,3 +149,30 @@ $pdf->writeHTML($html, true, false, true, false);
 //Close and output PDF document
 ob_end_clean();
 $pdf->Output('Reporte Comisiones.pdf', 'I');
+
+if($_GET['buscar'] != ''){
+    /* ========================= Evento generar reporte por filtro. ==============================*/
+      $newBitacora = new Bitacora();
+      $accion = ControladorBitacora::accion_Evento();
+      date_default_timezone_set('America/Tegucigalpa');
+      $newBitacora->fecha = date("Y-m-d h:i:s"); 
+      $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('V_COMISION.PHP');
+      $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+      $newBitacora->accion = $accion['filterQuery'];
+      $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' generó el reporte de comisiones por el filtro "'.$_GET['buscar'].'"';
+      ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+      /* =======================================================================================*/  
+}else{
+    /* ========================= Evento generar reporte ====================================*/
+    $newBitacora = new Bitacora();
+    $accion = ControladorBitacora::accion_Evento();
+    date_default_timezone_set('America/Tegucigalpa');
+    $newBitacora->fecha = date("Y-m-d h:i:s"); 
+    $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('V_COMISION.PHP');
+    $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+    $newBitacora->accion = $accion['Report'];
+    $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' generó el reporte de comisiones';
+    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+    /* =======================================================================================*/
+}
+}

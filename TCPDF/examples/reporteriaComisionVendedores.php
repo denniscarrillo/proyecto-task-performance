@@ -6,8 +6,13 @@ require_once("../../Modelo/Comision.php");
 require_once("../../Controlador/ControladorComision.php");
 require_once("../../Modelo/Parametro.php");
 require_once("../../Controlador/ControladorParametro.php");
+require_once("../../Modelo/Usuario.php");
+require_once("../../Controlador/ControladorUsuario.php");
+require_once("../../Modelo/Bitacora.php");
+require_once("../../Controlador/ControladorBitacora.php");
 ob_start();
-
+session_start();
+if(isset($_SESSION['usuario'])){
 //cargar el encabezado
 $datosParametro = ControladorParametro::obtenerDatosReporte();
 foreach($datosParametro  as $datos){
@@ -152,3 +157,30 @@ $pdf->writeHTML($html, true, false, true, false);
 //Close and output PDF document
 ob_end_clean();
 $pdf->Output('Reporte Comisiones por vendedores.pdf', 'I');
+
+if($_GET['buscar'] != ''){
+    /* ========================= Evento generar reporte por filtro. ==============================*/
+      $newBitacora = new Bitacora();
+      $accion = ControladorBitacora::accion_Evento();
+      date_default_timezone_set('America/Tegucigalpa');
+      $newBitacora->fecha = date("Y-m-d h:i:s"); 
+      $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('COMISIONESVENDEDORES.PHP');
+      $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+      $newBitacora->accion = $accion['filterQuery'];
+      $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' generó el reporte de comisiones por vendedor en el filtro "'.$_GET['buscar'].'"';
+      ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+      /* =======================================================================================*/  
+}else{
+    /* ========================= Evento generar reporte ====================================*/
+    $newBitacora = new Bitacora();
+    $accion = ControladorBitacora::accion_Evento();
+    date_default_timezone_set('America/Tegucigalpa');
+    $newBitacora->fecha = date("Y-m-d h:i:s"); 
+    $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('COMISIONESVENDEDORES.PHP');
+    $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+    $newBitacora->accion = $accion['Report'];
+    $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' generó el reporte de comisiones por vendedor';
+    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+    /* =======================================================================================*/
+}
+}

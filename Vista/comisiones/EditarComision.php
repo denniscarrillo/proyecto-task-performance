@@ -32,7 +32,7 @@ if (isset($_SESSION['usuario'])) {
         $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionComision.php');
         $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
         $newBitacora->accion = $accion['Update'];
-        $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' modificó una comision ';
+        $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' modificó la comision #'. $_POST['idComision'];
         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     }
     // $data = [
