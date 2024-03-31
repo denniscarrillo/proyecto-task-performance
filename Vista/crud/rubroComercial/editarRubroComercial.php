@@ -19,14 +19,11 @@
         /* ========================= Evento Creacion nueva Razon Social. ======================*/
         $newBitacora = new Bitacora();
         $accion = ControladorBitacora::accion_Evento();
-        date_default_timezone_set('America/Tegucigalpa');
-        $newBitacora->fecha = date("Y-m-d h:i:s"); 
         $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionRubroComercial.php');
         $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
         $newBitacora->accion = $accion['Update'];
-        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' modifico la razon social '.'"'.$_POST['rubroComercial'].' - '.$_POST['descripcion'].'"';
+        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' actualizo la descripción del rubro comercial #'.$_POST['id_RubroComercial'].' '.$_POST['rubroComercial'];
         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
 
         /* =======================================================================================*/
     }
-?>

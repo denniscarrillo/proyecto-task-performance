@@ -55,7 +55,6 @@ const capturarFiltroDataTable = function(filtro){
   }
 }
 
-
 //Peticion  AJAX que trae los permisos
 let obtenerPermisos = function ($idObjeto, callback) {
   $.ajax({

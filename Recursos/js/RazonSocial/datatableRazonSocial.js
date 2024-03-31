@@ -37,9 +37,27 @@ let procesarPermisoActualizar = (data) => {
       },
     ],
   });
+  let filtro = document.querySelector('input[type=search]');
 };
+
+$(document).on("focusout", "input[type=search]", function (e) {
+  let filtro = $(this).val();
+  capturarFiltroDataTable(filtro);
+});
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim()){
+    $.ajax({
+      url: "../../../Vista/crud/razonSocial/registrarBitacoraFiltroRazonSocial.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
+
 //Peticion  AJAX que trae los permisos
-/* let obtenerPermisos = function ($idObjeto, callback) {
+let obtenerPermisos = function ($idObjeto, callback) {
   $.ajax({
     url: "../../../Vista/crud/permiso/obtenerPermisos.php",
     type: "POST",
@@ -47,7 +65,7 @@ let procesarPermisoActualizar = (data) => {
     data: { idObjeto: $idObjeto },
     success: callback,
   });
-}; */
+};
 // Crear nueva Razon Social
 $("#form-razonSocial").submit(function (e) {
   e.preventDefault();
@@ -161,8 +179,6 @@ $(document).on("click", "#btn_eliminar", function () {
     idRazonSocial = $(this).closest("tr").attr('id'),
     razonSocial = fila.find("td:eq(1)").text(),
     descripcion = fila.find("td:eq(2)").text();
-    console.log(idRazonSocial)
-
   Swal.fire({
     title: "¿Estás seguro de eliminar la razonSocial " + razonSocial + "?",
     text: "¡No podrás revertir esto!",
@@ -179,7 +195,8 @@ $(document).on("click", "#btn_eliminar", function () {
         type: "POST",
         datatype: "JSON",
         data: {
-          id_RazonSocial: idRazonSocial
+          id_RazonSocial: idRazonSocial,
+          razonSocial:razonSocial
         },
         success: function (data) {
           if (JSON.parse(data).estadoEliminado) {
