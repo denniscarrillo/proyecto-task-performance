@@ -29,7 +29,7 @@ if (isset($_SESSION['usuario'])) {
         $accion = ControladorBitacora::accion_Evento();
         date_default_timezone_set('America/Tegucigalpa');
         $newBitacora->fecha = date("Y-m-d h:i:s");
-        $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionComision.php');
+        $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('V_COMISION.php');
         $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
         $newBitacora->accion = $accion['Update'];
         $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' modificó la comision #'. $_POST['idComision'];

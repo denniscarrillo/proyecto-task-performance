@@ -81,8 +81,8 @@ $html = '
 <table border="1" cellpadding="4">
 <tr>
 <td style="background-color: #e54037;color: white; text-align: center; width: 50px">N°</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">ID COMISIÓN</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">ID VENDEDOR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">N° COMISIÓN</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">N° VENDEDOR</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 110px;">VENDEDOR</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 110px;">ESTADO COMISIÓN</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 130px;">COMISION TOTAL</td>
