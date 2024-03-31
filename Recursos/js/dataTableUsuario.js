@@ -67,17 +67,16 @@ $("#btn_nuevoRegistro").click(async function () {
   $(".modal-header").css("color", "white");
 });
 
-//Crear nuevo usuario
+// Crear nuevo usuario
 $("#form-usuario").submit(async function (e) {
-  e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
-  //Obtener datos del nuevo Usuario
+  e.preventDefault(); // Evita el comportamiento normal del submit, es decir, recarga total de la página
+  // Obtener datos del nuevo Usuario
   let nombre = $("#nombre").val();
   let usuario = $("#usuario").val();
   let password = $("#password").val();
   let correo = $("#correo").val();
   let rol = document.getElementById("rol").value;
-  //  let estado = document.getElementById('estado').value;
-  //cambio 1
+  // Cambio 1
   let fechaV = $("#fecha_V").val();
   if (validado) {
     $.ajax({
@@ -93,7 +92,7 @@ $("#form-usuario").submit(async function (e) {
         fechaV: fechaV,
       },
       success: function (res) {
-        //Mostrar mensaje de exito
+        // Mostrar mensaje de éxito
         console.log(res);
         Swal.fire(
           "Registrado!",
@@ -192,37 +191,41 @@ $(document).on("click", "#btn_editar", async function () {
   }
 });
 
-$("#form-Edit-Usuario").submit(function (e) {
-  e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
+// ...
+
+$("#form-Edit-Usuario").submit(async function (e) {
+  e.preventDefault(); //evita el comportamiento normal del submit, es decir, recarga total de la página
   //Obtener datos del nuevo Usuario
-  let nombre = $("#E_nombre").val(),
-    idUser = $("#E_IdUsuario").val(),
-    usuario = $("#E_usuario").val(),
-    correo = $("#E_correo").val(),
-    rol = document.getElementById("E_rol").value,
-    estado = document.getElementById("E_estado").value;
-  if (valido) {
-    $.ajax({
-      url: "../../../Vista/crud/usuario/editarUsuario.php",
-      type: "POST",
-      datatype: "JSON",
-      data: {
-        idUsuario: idUser,
-        nombre: nombre,
-        usuario: usuario,
-        correo: correo,
-        idRol: rol,
-        idEstado: estado,
-      },
-      success: function () {
-        //Mostrar mensaje de exito
-        Swal.fire("Actualizado!", "El usuario ha sido modificado!", "success");
-        tablaUsuarios.ajax.reload(null, false);
-      },
-    });
-    $("#modalEditarUsuario").modal("hide");
+  let nombre = $("#E_nombre").val();
+  let idUser = $("#E_IdUsuario").val();
+  let usuario = $("#E_usuario").val();
+  let correo = $("#E_correo").val();
+  let rol = document.getElementById("E_rol").value;
+  let estado = document.getElementById("E_estado").value;
+  // Cambio 1
+  if (valido) { 
+      $.ajax({
+          url: "../../../Vista/crud/usuario/editarUsuario.php",
+          type: "POST",
+          datatype: "JSON",
+          data: {
+              idUsuario: idUser,
+              nombre: nombre,
+              usuario: usuario,
+              correo: correo,
+              idRol: rol,
+              idEstado: estado,
+          },
+          success: function () {
+              //Mostrar mensaje de exito
+              Swal.fire("Actualizado!", "El usuario ha sido modificado!", "success");
+              tablaUsuarios.ajax.reload(null, false);
+          },
+      });
+      $("#modalEditarUsuario").modal("hide");
   }
 });
+
 
 //obtener datos para el modal editar
 let obtenerUsuariosPorId = async (idUsuario) => {
