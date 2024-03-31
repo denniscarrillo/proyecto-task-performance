@@ -966,6 +966,33 @@ class Usuario {
         sqlsrv_close($conexion); #Cerramos la conexión.
         return $rolUsuario;
     }
+    public static function fechaUltimaConexionUsuario($usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $query = "UPDATE tbl_MS_Usuario SET fecha_Ultima_Conexion = GETDATE() WHERE usuario = '$usuario'";
+        sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion); #Cerramos la conexión.
+    }
+    public static function obtenerIngresosUsuario($usuario){
+        $ingresos = null;
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+        $query="SELECT conteo_Ingresos FROM tbl_MS_Usuario WHERE usuario = '$usuario'";
+        $resultado = sqlsrv_query($conexion, $query);
+        $fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC);
+        if(isset( $fila['conteo_Ingresos'])){
+            $ingresos = $fila['conteo_Ingresos'];
+        }
+        sqlsrv_close($conexion); #Cerramos la conexión.
+        return $ingresos;
+    }
+    public static function contarIngresosUsuario($ingresos, $usuario){
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+        $query = "UPDATE tbl_MS_Usuario SET conteo_Ingresos = '$ingresos' WHERE usuario = '$usuario'";
+        sqlsrv_query($conexion, $query);
+        sqlsrv_close($conexion); #Cerramos la conexión.
+    }
 }#Fin de la clase
 
     
