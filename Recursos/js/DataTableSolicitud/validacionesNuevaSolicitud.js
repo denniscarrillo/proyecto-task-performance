@@ -190,7 +190,11 @@ $name.addEventListener('keyup', () => {
     
     funciones.limitarCantidadCaracteres("nombre", 50 );
 });
-
+$rtn.addEventListener('input', (event) => {
+    if (!funciones.RTN_guion(event)) {
+        event.preventDefault();
+    }
+});
 
  $direccion.addEventListener('keyup', ()=>{
     estadoLetrasRepetidas.estadoLetrasRepetidasDireccion = funciones.limiteMismoCaracter($direccion, validaciones.MismoCaracter);
