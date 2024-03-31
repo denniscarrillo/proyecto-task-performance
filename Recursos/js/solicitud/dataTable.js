@@ -199,30 +199,30 @@ $("#form-Edit-Solicitud").submit(function (e) {
   }
 });
 
-//Eliminar solicitud
-$(document).on("click", "#btn_eliminar", function () {
-  let fila = $(this);
-  let solicitud = $(this).closest("tr").find("td:eq(2)").text();
-  Swal.fire({
-    title: "Estás seguro de eliminar a " + solicitud + "?",
-    text: "No podrás revertir esto!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Si, borralo!",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      $.ajax({
-        url: "../../../Vista/crud/solicitud/eliminarSolicitud.php",
-        type: "POST",
-        datatype: "json",
-        data: { solicitud: solicitud },
-        success: function (data) {
-          tablaSolicitudes.row(fila.parents("tr")).remove().draw();
-          Swal.fire("Eliminada!", "La solicitud ha sido eliminada.", "success");
-        },
-      }); //Fin del AJAX
-    }
-  });
-});
+// //Eliminar solicitud
+// $(document).on("click", "#btn_eliminar", function () {
+//   let fila = $(this);
+//   let solicitud = $(this).closest("tr").find("td:eq(2)").text();
+//   Swal.fire({
+//     title: "Estás seguro de eliminar a " + solicitud + "?",
+//     text: "No podrás revertir esto!",
+//     icon: "warning",
+//     showCancelButton: true,
+//     confirmButtonColor: "#3085d6",
+//     cancelButtonColor: "#d33",
+//     confirmButtonText: "Si, borralo!",
+//   }).then((result) => {
+//     if (result.isConfirmed) {
+//       $.ajax({
+//         url: "../../../Vista/crud/solicitud/eliminarSolicitud.php",
+//         type: "POST",
+//         datatype: "json",
+//         data: { solicitud: solicitud },
+//         success: function (data) {
+//           tablaSolicitudes.row(fila.parents("tr")).remove().draw();
+//           Swal.fire("Eliminada!", "La solicitud ha sido eliminada.", "success");
+//         },
+//       }); //Fin del AJAX
+//     }
+//   });
+// });
