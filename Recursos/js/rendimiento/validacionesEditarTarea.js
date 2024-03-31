@@ -5,7 +5,7 @@ const validaciones = {
   soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
   correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
   soloMinisculas: /[A-Z]/g, //Valida cuando existen mayusculas en la cadena
-  soloNumeros: /^[0-9 ]*$/,
+  soloNumeros: /^[0-9 -]*$/,
   caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
   caracterMas5veces: /^(?=.*(...)\1)/,
   letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
@@ -97,7 +97,10 @@ inputsEditarTarea.titulo.addEventListener("input", () => {
   funciones.limitarCantidadCaracteres("input-titulo-tarea", 50);
   funciones.convertirAMayusculasVisualmente(inputsEditarTarea.titulo)
 });
-inputsEditarTarea.rtn.addEventListener("keyup", () => {
+inputsEditarTarea.rtn.addEventListener('input', (event) => {
+  if (!funciones.RTN_guion(event)) {
+    event.preventDefault();
+}
   validarInputRTN($tipoCliente);
   funciones.limitarCantidadCaracteres("rnt-cliente", 20);
 });
