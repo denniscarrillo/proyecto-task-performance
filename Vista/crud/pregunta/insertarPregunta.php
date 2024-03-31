@@ -17,13 +17,13 @@
         $insertarPregunta->ModificadoPor = $user;
         ControladorPregunta::agregarPregunta($insertarPregunta);
         /* ========================= Evento Creacion pregunta. ==================================*/
-       $newBitacora = new Bitacora();
-       $accion = ControladorBitacora::accion_Evento();
-       $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionPregunta.php');
-       $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($user);
-       $newBitacora->accion = $accion['Insert'];
-       $newBitacora->descripcion = 'El usuario '.$user.' creó la pregunta '.$_POST['pregunta'];
-       ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+        $newBitacora = new Bitacora();
+        $accion = ControladorBitacora::accion_Evento();
+        $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionPregunta.php');
+        $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($user);
+        $newBitacora->accion = $accion['Insert'];
+        $newBitacora->descripcion = 'El usuario '.$user.' creó la pregunta '.$_POST['pregunta'];
+        ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
        /* =======================================================================================*/
     }
 

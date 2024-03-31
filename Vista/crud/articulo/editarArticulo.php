@@ -1,9 +1,9 @@
 <?php
     require_once ("../../../db/Conexion.php");
     require_once ("../../../Modelo/Usuario.php");
-    require_once("../../../Controlador/ControladorUsuario.php");
     require_once ("../../../Modelo/Articulo.php");
     require_once ("../../../Modelo/Bitacora.php");
+    require_once("../../../Controlador/ControladorUsuario.php");
     require_once("../../../Controlador/ControladorArticulo.php");
     require_once("../../../Controlador/ControladorBitacora.php");
 
@@ -19,5 +19,13 @@
         $editarArticulo->Existencias = $_POST['existencias'];
         $editarArticulo->Modificado_Por = $_SESSION['usuario'];
         ControladorArticulo::editarArticulo($editarArticulo);
+        /* ========================= Evento Editar articulo. ====================================*/
+        $newBitacora = new Bitacora();
+        $accion = ControladorBitacora::accion_Evento();
+        $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('GESTIONARTICULO.PHP');
+        $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+        $newBitacora->accion = $accion['Update'];
+        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' actualizó el artículo #'.$_POST['codArticulo'].' '.$_POST['articulo'];
+        ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+        /* =======================================================================================*/
     }
-?>

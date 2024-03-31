@@ -97,7 +97,7 @@ class Articulo
       $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB
       $updatePrecio = "UPDATE tbl_Articulos SET id_Precio = '$idNuevoPrecio', Modificado_Por = '$CreadoPor', Fecha_Modificacion = GETDATE()
         WHERE cod_Articulo = '$codArticulo'";
-      sqlsrv_query($abrirConexion, $insertPrecio);
+      sqlsrv_query($abrirConexion, $updatePrecio);
       if(sqlsrv_errors() === null) {
         return true;
       } else {
@@ -140,7 +140,7 @@ class Articulo
       $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB
       $insertProducto = "INSERT INTO tbl_Articulos(articulo, detalle, marca, existencia, Creado_Por, Fecha_Creacion, Modificado_Por, Fecha_Modificacion) 
           VALUES('$nuevoArticulo->Articulo', '$nuevoArticulo->Detalle','$nuevoArticulo->Marca',  
-          '$nuevoArticulo->Existencias', '$nuevoArticulo->Creado_Por', GETDATE(), '$nuevoArticulo->Creado_Por', GETDATE())";
+          '$nuevoArticulo->Existencias', '$nuevoArticulo->Creado_Por', GETDATE(), '$nuevoArticulo->Modificado_Por', GETDATE())";
       sqlsrv_query($abrirConexion, $insertProducto);
 
       //Obtenemos el CODIGO del producto recien creado

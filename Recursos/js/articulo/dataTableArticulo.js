@@ -48,6 +48,33 @@ let procesarPermisoActualizar = (data) => {
       },
     ],
   });
+  let filtro = document.querySelector('input[type=search]');
+};
+
+$(document).on("focusout", "input[type=search]", function (e) {
+  let filtro = $(this).val();
+  capturarFiltroDataTable(filtro);
+});
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim()){
+    $.ajax({
+      url: "../../../Vista/crud/articulo/registrarBitacoraFiltroArticulo.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
+
+let obtenerPermisos = function ($idObjeto, callback) {
+  $.ajax({
+    url: "../../../Vista/crud/permiso/obtenerPermisos.php",
+    type: "POST",
+    datatype: "JSON",
+    data: { idObjeto: $idObjeto },
+    success: callback,
+  });
 };
 
 // registro de nuevo Articulo
@@ -170,7 +197,10 @@ $(document).on("click", "#btn_eliminar", function () {
         url: "../../../Vista/crud/articulo/eliminarArticulo.php",
         type: "POST",
         datatype: "JSON",
-        data: { codArticulo: codArticulo },
+        data: { 
+          codArticulo: codArticulo,
+          articulo: nombreArticulo
+        },
         success: function (data) {
           console.log(JSON.parse(data).estadoEliminado)
           if (JSON.parse(data).estadoEliminado) {
