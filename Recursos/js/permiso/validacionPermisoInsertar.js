@@ -2,7 +2,6 @@ let user = document.getElementById('username').textContent;
 let $objTarea = document.querySelector('.title-dashboard-task').getAttribute('name');
 let $objBacRestore = document.querySelector('.title-dashboard-task').getAttribute('name');
 $(document).ready(function () {
-    console.log(user)
     let $idObjetoSistema = document.querySelector('.title-dashboard-task').id;
     //Invocamos a la funcion que trae y valida el permiso Insertar
     if(user != 'SUPERADMIN'){

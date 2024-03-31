@@ -29,12 +29,11 @@ let inputseditarArticulo = {
     Marca: document.getElementById('A_Marca'),
 }
 let btnGuardar = document.getElementById('btn-editarsubmit');
-
 btnGuardar.addEventListener('click', () => {
     validarInputArticulo();
     validarInputDetalle();
     validarInputMarca();
-    
+
     if (document.querySelectorAll(".mensaje_error").length == 0) {
         estadoValido = true;
     }else{
@@ -45,6 +44,7 @@ btnGuardar.addEventListener('click', () => {
 $(document).on('click', '.btn-editar', async function(){
     const codArticulo = $(this).closest("tr").attr('id');
     await setearPreciosProducto(codArticulo);
+    restablecerEstadoModal();
 });
 $('#btn-nuevo-precio').click(function(){
     document.getElementById('container-input-nuevo-precio').removeAttribute('hidden')
@@ -72,20 +72,23 @@ $(document).on('click', '#btn-editar-estado-precios', async function(){
     renderTablaPrecios(preciosProducto);
     document.querySelector('.container-editar-precios').removeAttribute('hidden');
     document.getElementById('btn-editar-estado-precios').disabled = true;
-});
-document.getElementById("btn-cerrar-modal-editar").addEventListener("click", async () => {
-    const codArticulo = $('#A_CodArticulo').val();
-    let preciosProducto = await obtenerPreciosProducto(codArticulo);
-    renderTablaPrecios(preciosProducto);
-    ocultarTablaPrecios();
-});
-document.getElementById("btn-x-modal-editar").addEventListener("click", async () => {
-    const codArticulo = $('#A_CodArticulo').val();
-    let preciosProducto = await obtenerPreciosProducto(codArticulo);
-    renderTablaPrecios(preciosProducto);
-    ocultarTablaPrecios();
+    document.getElementById('btn-nuevo-precio').disabled = true;
 });
 
+const restablecerEstadoModal = () => {
+    //Para el componente de editar estado precios
+    document.querySelector('.container-editar-precios').setAttribute('hidden', 'true')
+    document.getElementById('btn-cerrar-table').setAttribute('hidden', 'true')
+    document.getElementById('btn-editar-estado-precios').disabled = false;
+    document.getElementById('btn-nuevo-precio').disabled = false;
+
+    //Para el componente Nuevo Precio
+    document.getElementById('container-input-nuevo-precio').setAttribute('hidden', 'true')
+    document.getElementById('btn-nuevo-precio').disabled = false;
+    document.getElementById('btn-editar-estado-precios').disabled = false;
+    document.getElementById('input-nuevo-precio').value = 1;
+    document.querySelector('.container-precios').classList.remove('edit');
+}
 $(document).on('click', '.btn-update-estado-precio', async function(){
     await enviarNuevoEstadoPrecio(this, 'ACTIVAR');
 });
@@ -151,12 +154,12 @@ const renderTablaPrecios = (preciosProducto) => {
     precios.innerHTML = listaPrecios;
 }
 
-let ocultarTablaPrecios = () => {
-    document.querySelector('.container-editar-precios').setAttribute('hidden', 'true')
-    document.getElementById('btn-cerrar-table').setAttribute('hidden', 'true')
-    document.getElementById('btn-editar-estado-precios').disabled = false;
-    document.getElementById('btn-nuevo-precio').disabled = false;
-}
+// let ocultarTablaPrecios = () => {
+//     document.querySelector('.container-editar-precios').setAttribute('hidden', 'true')
+//     document.getElementById('btn-cerrar-table').setAttribute('hidden', 'true')
+//     document.getElementById('btn-editar-estado-precios').disabled = false;
+//     document.getElementById('btn-nuevo-precio').disabled = false;
+// }
 
 const enviarNuevoEstadoPrecio = async (elemento, accion) => {
     const idPrecio = $(elemento).attr('id');
