@@ -18,8 +18,11 @@ let procesarPermisoActualizar = (data) => {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
     },
     scrollX: true,
+    fnCreatedRow: function(rowEl, data) {
+      $(rowEl).attr('id', data['IdUsuario']);
+    },
     columns: [
-      { data: "IdUsuario" },
+      { data: "item" },
       { data: "usuario" },
       { data: "nombreUsuario" },
       { data: "correo" },
@@ -129,7 +132,7 @@ $("#form-usuario").submit(async function (e) {
 //Eliminar usuario
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this);
-  let idUsuario = $(this).closest("tr").find("td:eq(0)").text();
+  let idUsuario = $(this).closest("tr").attr('id');
   let usuario = $(this).closest("tr").find("td:eq(1)").text();
   if (usuario == "SUPERADMIN") {
     Swal.fire(
@@ -183,7 +186,7 @@ $(document).on("click", "#btn_eliminar", function () {
 });
 
 $(document).on("click", "#btn_editar", async function () {
-  let idUsuario = $(this).closest("tr").find("td:eq(0)").text(); //capturo el ID
+  let idUsuario = $(this).closest("tr").attr('id'); //capturo el ID
   let usuario = await obtenerUsuariosPorId(idUsuario);
   let ROL = $(this).closest("tr").find("td:eq(5)").text();
   if (ROL == "Super Administrador") {
