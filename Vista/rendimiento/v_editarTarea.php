@@ -85,6 +85,7 @@ if (!isset($_SESSION['usuario'])) {
 			$urlImg = '../../Recursos/' . ControladorParametro::obtenerUrlLogo();
 			$urlRazonSocial = '../crud/razonSocial/gestionRazonSocial.php';
 			$urlRubroComercial = '../crud/rubroComercial/gestionRubroComercial.php';
+      $urlRestoreBackup = '../crud/backupAndRestore/gestionBackupRestore.php';
 			require_once '../layout/sidebar.php';
 			?>
     </div>
