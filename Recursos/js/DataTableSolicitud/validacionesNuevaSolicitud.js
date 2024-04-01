@@ -190,7 +190,17 @@ $name.addEventListener('keyup', () => {
     
     funciones.limitarCantidadCaracteres("nombre", 50 );
 });
-
+$rtn.addEventListener('input', (event) => {
+    if (!funciones.RTN_guion(event)) {
+        event.preventDefault();
+    }
+});
+$telefono.addEventListener('input', (event) => {
+    if (!funciones.telefono_guion(event)) {
+        event.preventDefault();
+    }
+    funciones.limitarCantidadCaracteres("telefono", 20 );
+});
 
  $direccion.addEventListener('keyup', ()=>{
     estadoLetrasRepetidas.estadoLetrasRepetidasDireccion = funciones.limiteMismoCaracter($direccion, validaciones.MismoCaracter);
@@ -206,6 +216,7 @@ $name.addEventListener('keyup', () => {
 
  $correoCliente.addEventListener('keyup', ()=>{
     estadoCorreo = funciones.validarCorreo($correoCliente, validaciones.correo);
+    funciones.limitarCantidadCaracteres("correoCliente", 45);
 });
 
  

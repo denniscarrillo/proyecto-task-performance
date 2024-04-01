@@ -4,12 +4,13 @@ export let estadoValidado = false;
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-Z\/ .ÑñáéíóúÁÉÍÓÚs])+$/, //Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
-    soloNumeros: /^[0-9 ]*$/,
+    soloNumeros: /^[0-9 -]*$/,
     caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
     caracterMas5veces: /^(?=.*(...)\1)/,
     letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
     direccion: /^[a-zA-Z0-9 #.,áéíóúÁÉÍÓÚñÑ]+$/,
   };
+
 let inputNuevoCliente = {
     nombre: document.getElementById('nombre'),
     rtn: document.getElementById('rtn'),
@@ -37,24 +38,29 @@ $(document).ready(function (){
 })
 inputNuevoCliente.nombre.addEventListener("keyup", ()=>{
     validarInputNombre();
-    funciones.limitarCantidadCaracteres("nombre", 40);
+    funciones.limitarCantidadCaracteres("nombre", 50);
 })
-inputNuevoCliente.rtn.addEventListener("keyup", ()=>{
-    validarInputRTN();
-    
-    funciones.limitarCantidadCaracteres("rtn", 20);
-})
-inputNuevoCliente.telefono.addEventListener("keyup", ()=>{
+inputNuevoCliente.rtn.addEventListener('input', (event) => {
+  if (!funciones.RTN_guion(event)) {
+      event.preventDefault();
+  }
+  validarInputRTN();
+  funciones.limitarCantidadCaracteres("rtn", 20);
+});
+inputNuevoCliente.telefono.addEventListener('input', (event)=>{
+  if (!funciones.telefono_guion(event)) {
+    event.preventDefault();
+}
     validarInputTelefono();
     funciones.limitarCantidadCaracteres("telefono", 20);
 })
 inputNuevoCliente.correo.addEventListener("keyup", ()=>{
     validarInputCorreo();
-    funciones.limitarCantidadCaracteres("correo", 30);
+    funciones.limitarCantidadCaracteres("correo", 50);
 })
 inputNuevoCliente.direccion.addEventListener("keyup", ()=>{
     validarInputDireccion();
-    funciones.limitarCantidadCaracteres("direccion", 45);
+    funciones.limitarCantidadCaracteres("direccion", 100);
 })
 let validarInputNombre = () =>{
     inputNuevoCliente.nombre.value = inputNuevoCliente.nombre.value.toUpperCase();
@@ -184,4 +190,3 @@ let validarInputDireccion = () =>{
   estadoValidacion.estMismoCaracter
     ? funciones.caracteresMinimo(inputNuevoCliente.direccion, 10):"";
 }
-
