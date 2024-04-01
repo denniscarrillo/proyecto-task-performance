@@ -154,8 +154,8 @@ $("#form-Edit-Porcentaje").submit(function (e) {
       success: function () {
         //Mostrar mensaje de exito
         Swal.fire(
-          "Actualizado!",
-          "El Porcentaje ha sido modificado!",
+          "¡Actualizado!",
+          "El Porcentaje ha sido modificado",
           "success"
         );
         tablaPorcentajes.ajax.reload(null, false);
@@ -213,13 +213,14 @@ $(document).on("click", "#btn_eliminar", function () {
     estado = "INACTIVO";
 
   Swal.fire({
-    title: "Estas seguro de eliminar el porcentaje " + porcentaje + "?",
-    text: "No podras revertir esto!",
+    title: "¿Estás seguro de eliminar el porcentaje " + porcentaje + "?",
+    text: "¡No podrás revertir esto!",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Si, Borralo!",
+    confirmButtonText: "¡Sí, bórralo!",
+    cancelButtonText: "Cancelar"
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
@@ -234,31 +235,30 @@ $(document).on("click", "#btn_eliminar", function () {
           console.log(data);
 
           // Verificar la respuesta del servidor
-          if (data === 'INACTIVO') {
+          if (data.includes('INACTIVO')) {
             Swal.fire(
-              "Porcentaje Inactivado!",
+              "¡Porcentaje Inactivado!",
               "El porcentaje no se ha podido eliminar, pero en su lugar ha sido inactivado.",
               "error"
             );
-          } else if (data === 'ELIMINADO') {
+          } else if(data.includes('ELIMINADO')) {
             Swal.fire(
-              "Porcentaje Eliminado!",
+              "¡Porcentaje Eliminado!",
               "El porcentaje ha sido eliminado.",
               "success"
             );
           } else {
             Swal.fire(
-              "Lo sentimos!",
+              "¡Lo sentimos!",
               "El porcentaje no puede ser eliminado.",
               "error"
             );
           }
-
           tablaPorcentajes.ajax.reload(null, false);
         },
         error: function () {
           Swal.fire(
-            "Error!",
+            "¡Error!",
             "Hubo un problema al procesar la solicitud.",
             "error"
           );
@@ -267,6 +267,7 @@ $(document).on("click", "#btn_eliminar", function () {
     } // Fin del AJAX
   });
 });
+
 
 
 

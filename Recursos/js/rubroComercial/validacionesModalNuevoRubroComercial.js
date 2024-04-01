@@ -1,9 +1,6 @@
 import * as funciones from '../funcionesValidaciones.js';
 export let estadoValidado = false;
 //Objeto con expresiones regulares para los inptus
-
-
-
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ\s,])/,//Lentras, acentos y Ñ //Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
@@ -13,28 +10,27 @@ const validaciones = {
     letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
     direccion: /^[a-zA-Z0-9 #.,-]+$/,
 };
-
-
 let inputsNuvoRubroC = {
     rubroC: document.getElementById('rubroComercial'),
     descripcion: document.getElementById('descripcion')
 }
-
-let btnGuardar = document.getElementById('btn-submit');
-
-
-btnGuardar.addEventListener('click', async () => {
-  
-    await ValidarInputRubroC();
+$(document).ready(function (){
+    //Evento clic para hacer todas las validaciones
+  document.getElementById("btnsubmit").addEventListener("click", () => {
+    ValidarInputRubroC();
     ValidarInputDescrip();
     console.log(document.querySelectorAll(".mensaje_error").length)
-    if (document.querySelectorAll(".mensaje_error").length == 0) {
-        estadoValidado = false;
+    console.log(document.querySelectorAll(".mensaje-existe-razonsocial").length)
+    if (
+        document.querySelectorAll(".mensaje_error").length == 0 &&
+      document.querySelectorAll(".mensaje-existe-razonsocial").length == 0
+    ){
+        estadoValidado = true;
     }else{
-        estadoValidado = true;   
+        estadoValidado = false;   
     }
-    
-});
+  });
+})
 
 inputsNuvoRubroC.rubroC.addEventListener('keyup', async()=>{
   
@@ -45,7 +41,7 @@ inputsNuvoRubroC.descripcion.addEventListener('keyup', ()=>{
     funciones.limitarCantidadCaracteres('descripcion', 300);
 });
 //Validar inputs
-let ValidarInputRubroC = async () =>{
+let ValidarInputRubroC =  function ()  {
     let rubroMayus = inputsNuvoRubroC.rubroC.value.toUpperCase();
     inputsNuvoRubroC.rubroC.value = rubroMayus;
     let estadoValidaciones = {
@@ -53,7 +49,7 @@ let ValidarInputRubroC = async () =>{
         estadoSoloLetras: false,
         estadoNoMasdeUnEspacios: false,
         estadoNoCaracteresSeguidos: false,
-        estadoRubroComercialExiste: false
+        //estadoRubroComercialExiste: false
 
     }
     estadoValidaciones.estadoCampoVacio = funciones.validarCampoVacio(inputsNuvoRubroC.rubroC);
@@ -66,19 +62,20 @@ let ValidarInputRubroC = async () =>{
     if(estadoValidaciones.estadoNoMasdeUnEspacios) {
         estadoValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter(inputsNuvoRubroC.rubroC, validaciones.caracterMas3veces);
     }
-    if(estadoValidaciones.estadoNoCaracteresSeguidos){
-        await obtenerRubroComercialExiste($('#rubroComercial').val());
-    }
-    
-};
+   /*  if(estadoValidaciones.estadoNoCaracteresSeguidos){
+       // await obtenerRubroComercialExiste($('#rubroComercial').val());
+    } */
+}
 
-let ValidarInputDescrip = () =>{
+let ValidarInputDescrip = function () {
     let descripcionMayus = inputsNuvoRubroC.descripcion.value.toUpperCase();
     inputsNuvoRubroC.descripcion.value = descripcionMayus;
+    
     let descripcionValidaciones = {
-        descripcionVacio: false,
-        descripcionMasEspacio: false,
-        descripcionLimiteCaracter: false,
+        estadoCampoVacio: false,
+        estadoSoloLetras: false,
+        estadoNoMasdeUnEspacios: false,
+        estadoNoCaracteresSeguidos: false
     }
     descripcionValidaciones.estadoCampoVacio = funciones.validarCampoVacio(inputsNuvoRubroC.descripcion);
     if(descripcionValidaciones.estadoCampoVacio) {
@@ -89,10 +86,9 @@ let ValidarInputDescrip = () =>{
     }
     if(descripcionValidaciones.estadoNoMasdeUnEspacios) {
         descripcionValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter(inputsNuvoRubroC.descripcion, 
-            validaciones.caracterMas3veces);
+        validaciones.caracterMas3veces);
     }
- 
-};
+}
 
 
 let obtenerRubroComercialExiste = async ($rubroComercial) => {
@@ -113,4 +109,4 @@ let obtenerRubroComercialExiste = async ($rubroComercial) => {
         document.getElementById('rubroComercial').parentElement.querySelector('p').innerText = '';
     }
     
-};
+}

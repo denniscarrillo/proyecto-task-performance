@@ -22,6 +22,7 @@ if (isset($_SESSION["usuario"])) {
     $newBitacora->accion = $accion['Logout'];
     $newBitacora->descripcion = 'El usuario '.$_SESSION["usuario"].' cerró sesión';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+    ControladorUsuario::fechaUltimaConexionUsuario($_SESSION["usuario"]);
     /* =======================================================================================*/
     session_unset(); // Limpia todas las variables de sesión
     session_destroy(); // Destruye la sesión
@@ -33,4 +34,3 @@ if (isset($_SESSION["usuario"])) {
     header("Location: ../Vista/login/login.php");
     exit();
 }
-?>

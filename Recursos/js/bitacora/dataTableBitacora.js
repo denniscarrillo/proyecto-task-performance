@@ -140,8 +140,12 @@ $(document).on("click", "#btn_depurar", function () {
 
 $(document).on("click", "#btn_Pdf", function () {
   let buscar = $("#table-Bitacora_filter > label > input[type=search]").val();
+  let fechaDesde= $("#fecha-desde").val();
+  let fechaHasta = $("#fecha-hasta").val();
   window.open(
-    "../../../TCPDF/examples/reporteriaBitacora.php?buscar=" + buscar,
+    "../../../TCPDF/examples/reporteriaBitacora.php?buscar=" + buscar + 
+    "&fechaDesde=" + fechaDesde +
+    "&fechaHasta=" + fechaHasta,
     "_blank"
   );
 });

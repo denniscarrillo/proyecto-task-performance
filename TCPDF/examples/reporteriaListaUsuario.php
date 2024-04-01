@@ -74,41 +74,41 @@ if(isset($_SESSION['usuario'])){
     // set font
     $pdf->setFont('Helvetica', '', 11);
 
-    // add a page
-    $pdf->AddPage();
-    // create some HTML content
-    $html = '
-    <P style="text-align: center; font-size: 18px;"><b>Reporte de Usuarios</b></P>
-    <table border="1" cellpadding="4">
+// add a page
+$pdf->AddPage();
+// create some HTML content
+$html = '
+<P style="text-align: center; font-size: 18px;"><b>Reporte de Usuarios</b></P>
+<table border="1" cellpadding="4">
+<tr>
+<td style="background-color: #e54037;color: white; text-align: center; width: 40px;">N°</td>
+<td style="background-color: #e54037;color: white; text-align: center">USUARIO</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 220px;">NOMBRE</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 210px;">CORREO</td>
+<td style="background-color: #e54037;color: white; text-align: center">ESTADO</td>
+<td style="background-color: #e54037;color: white; text-align: center">ROL</td>
+</tr>
+';
+$usuarios = ControladorUsuario::obtenerLosUsuariosPDF(trim($_GET['buscar']));
+foreach($usuarios as $usuario){
+    $IdUsuario = $usuario['IdUsuario'];
+    $nombreUsuario = $usuario['usuario'];
+    $nombre = $usuario['nombreUsuario'];
+    $correo = $usuario['correo'];
+    $Estado = $usuario['Estado'];
+    $Rol = $usuario['Rol'];
+    $Cont++;
+    $html .= '
     <tr>
-    <td style="background-color: #e54037;color: white; text-align: center; width: 40px;">N°</td>
-    <td style="background-color: #e54037;color: white; text-align: center">USUARIO</td>
-    <td style="background-color: #e54037;color: white; text-align: center; width: 220px;">NOMBRE</td>
-    <td style="background-color: #e54037;color: white; text-align: center; width: 210px;">CORREO</td>
-    <td style="background-color: #e54037;color: white; text-align: center">ESTADO</td>
-    <td style="background-color: #e54037;color: white; text-align: center">ROL</td>
+    <td style="text-align: center">'.$Cont.'</td>
+    <td >'.$nombreUsuario.'</td>
+    <td>'.$nombre.'</td>
+    <td>'.$correo.'</td>
+	<td style="text-align: center">'.$Estado.'</td>
+	<td style="text-align: center">'.$Rol.'</td>
     </tr>
     ';
-    $usuarios = ControladorUsuario::obtenerLosUsuariosPDF($_GET['buscar']);
-    foreach($usuarios as $usuario){
-        $IdUsuario = $usuario['IdUsuario'];
-        $nombreUsuario = $usuario['usuario'];
-        $nombre = $usuario['nombreUsuario'];
-        $correo = $usuario['correo'];
-        $Estado = $usuario['Estado'];
-        $Rol = $usuario['Rol'];
-        $Cont++;
-        $html .= '
-        <tr>
-        <td style="text-align: center">'.$Cont.'</td>
-        <td >'.$nombreUsuario.'</td>
-        <td>'.$nombre.'</td>
-        <td>'.$correo.'</td>
-        <td style="text-align: center">'.$Estado.'</td>
-        <td style="text-align: center">'.$Rol.'</td>
-        </tr>
-        ';
-        
+    
 
     }
 

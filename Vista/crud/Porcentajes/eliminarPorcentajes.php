@@ -25,11 +25,11 @@ if (isset($_SESSION['usuario'])) {
     if ($esUtilizado) {
         // Si el porcentaje ya se utilizó, inactivarlo
         ControladorPorcentajes::inactivarPorcentaje($eliminarPorcentaje);
-        echo 'INACTIVO';
+        echo json_encode('INACTIVO');
     } else {
         // Si el porcentaje no se ha utilizado, eliminarlo
         ControladorPorcentajes::eliminarPorcentaje($eliminarPorcentaje);
-        echo 'ELIMINADO';
+        echo json_encode('ELIMINADO');
     }
 
     // Resto de tu código para bitácora, etc.
