@@ -32,6 +32,21 @@ btnGuardar.addEventListener('click', () => {
     }
 });
 
+document.getElementById('precio').addEventListener('input', (event) => {
+    funciones.permitirSoloNumeros(event)
+    const cant = event.target.value;
+    if(parseFloat(cant) < 1 || cant === '') {
+        event.target.value = 1;
+    }
+})
+
+document.getElementById('existencias').addEventListener('input', (event) => {
+    funciones.permitirSoloNumeros(event)
+    const cant = event.target.value;
+    if(parseFloat(cant) < 1 || cant === '') {
+        event.target.value = 1;
+    }
+})
 
 let validarInputArticulo = function () {
     let ArticuloMayus = inputsNuevoArticulo.Articulo.value.toUpperCase();

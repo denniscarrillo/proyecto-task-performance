@@ -63,6 +63,7 @@ require_once('../../Controlador/ControladorParametro.php');
       $urlImg = '../../Recursos/' . ControladorParametro::obtenerUrlLogo();
       $urlRazonSocial = '../crud/RazonSocial/gestionRazonSocial.php';
       $urlRubroComercial = '../crud/rubroComercial/gestionRubroComercial.php';
+      $urlRestoreBackup = '../crud/backupAndRestore/gestionBackupRestore.php';
       require_once '../layout/sidebar.php';
       ?>
     </div>

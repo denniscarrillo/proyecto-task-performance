@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="nuevoModalLabel">Crear Nuevo Artículo</h1>
+                <h1 class="modal-title fs-5" id="nuevoModalLabel">Crear nuevo artículo</h1>
                 <button type="button" class="btn-close" id ="btn-x" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -21,6 +21,16 @@
                         <div class="mb-3">
                             <label for="Marca" class="form-label">Marca:</label>
                             <input type="text" name="Marca" id="Marca" class="form-control" placeholder="Marca">
+                            <p class="mensaje" id="mensaje"></p>
+                        </div> 
+                        <div class="mb-3">
+                            <label for="Marca" class="form-label">Precio:</label>
+                            <input type="number" name="Marca" id="precio" class="form-control" placeholder="Precio del artículo" step="0.01" value="1">
+                            <p class="mensaje" id="mensaje"></p>
+                        </div> 
+                        <div class="mb-3">
+                            <label for="Marca" class="form-label">Existencias:</label>
+                            <input type="number" name="Marca" id="existencias" class="form-control" placeholder="Cantidad disponible" value="1">
                             <p class="mensaje" id="mensaje"></p>
                         </div> 
                         <div class="btn-guardar">
