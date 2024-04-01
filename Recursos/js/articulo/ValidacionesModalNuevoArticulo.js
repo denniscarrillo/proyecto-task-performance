@@ -32,21 +32,21 @@ btnGuardar.addEventListener('click', () => {
     }
 });
 
-inputsNuevoArticulo.Articulo.addEventListener("keyup", ()=>{
-    validarInputArticulo();
-    funciones.limitarCantidadCaracteres("Articulo", 50);
+document.getElementById('precio').addEventListener('input', (event) => {
+    funciones.permitirSoloNumeros(event)
+    const cant = event.target.value;
+    if(parseFloat(cant) < 1 || cant === '') {
+        event.target.value = 1;
+    }
 })
 
-inputsNuevoArticulo.Detalle.addEventListener("keyup", ()=>{
-    validarInputDetalle();
-    funciones.limitarCantidadCaracteres("Detalle", 100);
+document.getElementById('existencias').addEventListener('input', (event) => {
+    funciones.permitirSoloNumeros(event)
+    const cant = event.target.value;
+    if(parseFloat(cant) < 1 || cant === '') {
+        event.target.value = 1;
+    }
 })
-
-inputsNuevoArticulo.Marca.addEventListener("keyup", ()=>{
-    validarInputMarca();
-    funciones.limitarCantidadCaracteres("Marca", 50);
-})
-
 
 let validarInputArticulo = function () {
     let ArticuloMayus = inputsNuevoArticulo.Articulo.value.toUpperCase();
