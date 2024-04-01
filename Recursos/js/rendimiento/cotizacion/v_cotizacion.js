@@ -47,32 +47,33 @@ let $resumenCotizacion = {
   impuesto: document.getElementById("impuesto"),
   total: document.getElementById("total"),
 };
-$btnAgregar.addEventListener("click", () => {
-  let $newProduct = {
-    descripcion: $addNewProduct.descripcion.value,
-    marca: $addNewProduct.marca.value,
-    precio: $addNewProduct.precio.value,
-  };
-  if (validoProd) {
-    $.ajax({
-      url: "../../../../Vista/rendimiento/cotizacion/agregarNuevoProducto.php",
-      type: "POST",
-      datatype: "JSON",
-      data: {
-        nuevoProducto: $newProduct,
-      },
-      success: () => {
-        $addNewProduct.descripcion.value = "";
-        $addNewProduct.marca.value = "";
-        $addNewProduct.precio.value = "";
-        Toast.fire({
-          icon: "success",
-          title: "¡Producto guardado!",
-        });
-      },
-    });
-  }
-});
+// $btnAgregar.addEventListener("click", () => {
+//   let $newProduct = {
+//     descripcion: $addNewProduct.descripcion.value,
+//     marca: $addNewProduct.marca.value,
+//     precio: $addNewProduct.precio.value,
+//   };
+//   if (validoProd) {
+//     $.ajax({
+//       url: "../../../../Vista/rendimiento/cotizacion/agregarNuevoProducto.php",
+//       type: "POST",
+//       datatype: "JSON",
+//       data: {
+//         nuevoProducto: $newProduct,
+//       },
+//       success: () => {
+//         $addNewProduct.descripcion.value = "";
+//         $addNewProduct.marca.value = "";
+//         $addNewProduct.precio.value = "";
+//         Toast.fire({
+//           icon: "success",
+//           title: "¡Producto guardado!",
+//         });
+//       },
+//     });
+//   }
+// });
+
 $(document).on("click", ".btn_article", function () {
   selectArticulos(this.children[0]);
 });
