@@ -1,51 +1,64 @@
 import * as funciones from '../funcionesValidaciones.js';
-export let estadoValidado = false;
+export let estadoValido = false;
 //Objeto con expresiones regulares para los inptus
 
-
-
-// const $form = document.getElementById('form-Edit_razonSocial');
-// const $razonSocial = document.getElementById('E_razonSocial');
-// const $descripcion = document.getElementById('E_descripcion');
 const validaciones = {
-    caracterMas3Veces: /^(?=.*(..)\1)/,
-}
-let inputsNuevaRazonSocial = {
+    soloLetras: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ\s,])/,//Lentras, acentos y Ñ //Solo letras
+    correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
+    soloNumeros: /^[0-9 ]*$/,
+    caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
+    caracterMas5veces: /^(?=.*(...)\1)/,
+    letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
+    direccion: /^[a-zA-Z0-9 #.,-]+$/,
+};
+
+let inputsEditarRazonSocial = {
     // razonSocial: document.getElementById('E_razonSocial'),
     descripcion: document.getElementById('E_descripcion')
 }
 
-// let btnGuardar = document.getElementById('btn-submit');
-$(document).ready(function(){
-    document.getElementById("btn-submit").addEventListener("click", () => {
-        // validarInputRazonSocial();
-        validarInputDescripcion();
-        if (
-          document.querySelectorAll(".mensaje_error").length == 0
-        ) {
-          estadoValidado = true;
-        }
-      });
-})
-inputsNuevaRazonSocial.descripcion.addEventListener('keyup', ()=>{
+inputsEditarRazonSocial.descripcion.addEventListener('keyup', ()=>{
+    funciones.limitarCantidadCaracteres('E_descripcion', 300);
+});
+
+let btnGuardar = document.getElementById('btnEditarsubmit');
+
+btnGuardar.addEventListener('click', () => {
+    console.log(document.querySelectorAll(".mensaje_error").length);
+    validarInputDescripcion();
+    if (document.querySelectorAll(".mensaje_error").length == 0) {
+        estadoValido = true;
+    }else{
+          estadoValido = false;
+    }
+    
+});
+
+
+inputsEditarRazonSocial.descripcion.addEventListener('keyup', ()=>{
     validarInputDescripcion();
     funciones.limitarCantidadCaracteres('E_descripcion', 300);
 });
 
-//Validar inputs
-let validarInputDescripcion = () => {
-    let descripcionMayus = inputsNuevaRazonSocial.descripcion.value.toUpperCase();
-    inputsNuevaRazonSocial.descripcion.value = descripcionMayus;
-    let descripcionValidaciones = {
-        descripcionVacio: false,
-        descripcionMasEspacio: false,
-        descripcionLimiteCaracter: false,
+let validarInputDescripcion = function () {
+    let descripcionMayus = inputsEditarRazonSocial.descripcion.value.toUpperCase();
+    inputsEditarRazonSocial.descripcion.value = descripcionMayus;
+    let estadoValidaciones = {
+        estadoCampoVacio: false,
+        estadoSoloLetras: false,
+        estadoNoMasdeUnEspacios: false,
+        estadoNoCaracteresSeguidos: false
     }
-    descripcionValidaciones.descripcionVacio = funciones.validarCampoVacio(inputsNuevaRazonSocial.descripcion);
-    descripcionValidaciones.descripcionVacio ? (descripcionValidaciones.descripcionMasEspacio =
-        funciones.validarMasdeUnEspacio(inputsNuevaRazonSocial.descripcion))
-        :'';
-        descripcionValidaciones.descripcionMasEspacio ? (descripcionValidaciones.descripcionLimiteCaracter =
-            funciones.limiteMismoCaracter(inputsNuevaRazonSocial.descripcion, validaciones.caracterMas3Veces))
-        :'';
+    estadoValidaciones.estadoCampoVacio = funciones.validarCampoVacio(inputsEditarRazonSocial.descripcion);
+    if(estadoValidaciones.estadoCampoVacio) {
+        estadoValidaciones.estadoSoloLetras = funciones.validarSoloLetras(inputsEditarRazonSocial.descripcion,
+             validaciones.soloLetras);
+    } 
+    if(estadoValidaciones.estadoSoloLetras) {
+        estadoValidaciones.estadoNoMasdeUnEspacios = funciones.validarMasdeUnEspacio(inputsEditarRazonSocial.descripcion);
+    }
+    if(estadoValidaciones.estadoNoMasdeUnEspacios) {
+        estadoValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter(inputsEditarRazonSocial.descripcion,
+             validaciones.caracterMas3veces);
+    }
 }

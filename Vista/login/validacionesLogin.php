@@ -16,10 +16,12 @@ if (isset($_SESSION['registro'])) { //Cuando venimos de registro capturamos el v
     session_unset();
     session_destroy();
 }
+if (isset($_SESSION['usuario'])) {session_unset(); session_destroy();}
 $mensaje = null;
 $usuario = false;
 $nuevoEstado = false;
 $estadoUsuario = null;
+$ingresos = null;
 if (isset($_POST["submit"])) {
     $nombreUsuario = $_POST["userName"];
     $intentosMax = ControladorUsuario::intentosLogin();
@@ -88,6 +90,9 @@ if (isset($_POST["submit"])) {
                                         //Cambia el estado del usuario de nuevo a Activo
                                         ControladorUsuario::desbloquearUsuario($_SESSION['usuario']);
                                         header('location: ../index.php');
+                                        $ingresos = ControladorUsuario::obtenerIngresosUsuario($_SESSION['usuario']);
+                                        $conteoIngresos = $ingresos + 1;
+                                        ControladorUsuario::contarIngresosUsuario($conteoIngresos, $_SESSION['usuario']);   
                                     }
                                     break;
                                 }
@@ -99,6 +104,9 @@ if (isset($_POST["submit"])) {
                                                         //Si el usuario es SUPERADMIN no necesitara de ningun ROL para poder interactuar con acceso a todos los modulos
                                                         || ($_POST["userName"] == 'SUPERADMIN') && ($cantPreguntasContestadas == $cantPreguntasParametro)) {
                                         header('location: ../index.php');
+                                        $ingresos = ControladorUsuario::obtenerIngresosUsuario($_SESSION['usuario']);
+                                        $conteoIngresos = $ingresos + 1;
+                                        ControladorUsuario::contarIngresosUsuario($conteoIngresos, $_SESSION['usuario']);  
                                     }else{
                                         header('location: configRespuestas.php');
                                     }

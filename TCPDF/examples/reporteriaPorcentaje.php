@@ -86,7 +86,7 @@ $html = '
 <td style="background-color: #e54037;color: white; text-align: center; width: 137px;">ESTADO</td>
 </tr>
 ';
-$porcentajes = ControladorPorcentajes::obtenerPorcentajePdf($_GET['buscar']);
+$porcentajes = ControladorPorcentajes::obtenerPorcentajePdf(trim($_GET['buscar']));
 foreach($porcentajes as $porcentaje){
     // $IdPorcentaje = $porcentaje['idPorcentaje'];
     $valorPorcentaje = $porcentaje['valorPorcentaje'] * 100;

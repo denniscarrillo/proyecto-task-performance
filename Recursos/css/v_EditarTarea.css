@@ -1,8 +1,7 @@
 /* ---------- Estilos par elementos propios de comentarios e historial de tarea del componente sidePanel ------------------*/
 #comment-history-container {
   position: relative;
-  /* background-color: #f6f8fb; */
-  background-color: #7c7e7e;
+  background-color: #ddd9d9;
 }
 .history-container {
   position: absolute;
@@ -11,7 +10,7 @@
   height: 100vh;
   z-index: -20;
   opacity: 0;
-  background-color: #7c7e7e;
+  background-color: #ddd9d9;
   color: #3b3b3a;
   padding: 0.8rem;
 }
@@ -191,7 +190,7 @@
   min-height: 6rem;
   max-height: 6rem;
   width: 80%;
-  background-color: #bec1c1;
+  background-color: #f3f3f3;
   outline: none;
   resize: none;
 }
@@ -219,9 +218,8 @@
   margin-bottom: 0.3rem;
   border-radius: 0.3rem;
   box-shadow: -7px 3px 2px 1px #67666614;
-  /* background-color: #ebe6e3; */
-  color: #e4ecec;
-  background-color: #6a6c6e;
+  color: #575959;
+  background-color: #f1f1f1;
 }
 .history-container {
   height: 95%;

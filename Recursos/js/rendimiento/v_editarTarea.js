@@ -79,8 +79,8 @@ $(document).ready(async function () {
       }
       if ($idTarea != null) {
         Swal.fire({
-          title: "Estas seguro de finalizar la tarea # " + $idTarea + "?",
-          text: "No podras revertir esto!",
+          title: "Estás seguro de finalizar la tarea # " + $idTarea + "?",
+          text: "No podrás revertir esto!",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
@@ -188,7 +188,7 @@ document
       obtenerDatosTarea($idTarea, $idEstadoTarea);
       setTimeout(() => {
         location.href = "../../../Vista/rendimiento/v_tarea.php";
-      }, 2000);
+      }, 1800);
     }
   });
 // CARGAR LOS ARTICULOS A AGREGAR A LA TAREA
@@ -202,12 +202,15 @@ $("#btn-articulos").click(() => {
       language: {
         url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
       },
+      fnCreatedRow: function(rowEl) {
+        $(rowEl).attr('class', 'addProduct')
+      },
       lengthMenu: [
         [2, 5, 10, 20], //Define la cantidad de rows a mostrar en el DataTable
         [2, 5, 10, 20], //Es lo que se muestra en el menu desplegable del DataTable
       ],
       columns: [
-        { data: "codArticulo" },
+        { data: "codArticulo" }, 
         { data: "articulo" },
         { data: "detalleArticulo" },
         { data: "marcaArticulo" },
@@ -219,7 +222,7 @@ $("#btn-articulos").click(() => {
     });
   }
 });
-$(document).on("click", "tbody tr", function (e) {
+$(document).on("click", ".addProduct", function (e) {
   $(this).find("button")[0].classList.toggle("select_articulo");
   e.currentTarget.classList.toggle("ArtSelec");
 });
@@ -287,7 +290,7 @@ let carritoArticulos = ($productos) => {
       <td><input type="text" value="${producto.id}" class="id-producto" name="id-producto"></td>
         <td>${producto.nombre}</td>
         <td>${producto.marca}</td>
-        <td><input type="text" id="${producto.id}" class="cant-producto"></td>
+        <td><input type="number" id="${producto.id}" class="cant-producto" value="1" min="1" pattern="^[1-9]+"></td>
       </tr>
     `;
   });
@@ -418,7 +421,7 @@ document
       document.getElementById("estados-tarea").value = $idEstadoTarea;
       Toast.fire({
         icon: "error",
-        title: "No puedes volver a un estado anterior",
+        title: "¡No puedes volver a un estado anterior!",
       });
     } else {
       cambiarEstado($newEstado, $idTarea);
@@ -537,7 +540,7 @@ let enviarProductosInteres = ($idTarea) => {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "La tarea " + $idTarea + " ha sido actualizada",
+        title: "¡La tarea " + $idTarea + " ha sido actualizada!",
         showConfirmButton: false,
         allowOutsideClick: false,
         allowEscapeKey: false,
@@ -563,6 +566,7 @@ let nuevoComentario = ($idTarea, $comentario) => {
     },
   }); //Fin AJAX
 };
+
 let obtenerComentarios = ($idTarea) => {
   //Enviamos el nuevo comentario a la base de datos
   $.ajax({
@@ -745,7 +749,6 @@ let setArticulosInteres = (productos) => {
 
 let validarCamposEnviar = (tipoCliente) => {
   let $datosTarea;
-  console.log($codCliente);
   if (document.getElementsByName("estadoEdicion")[0].id == "false") {
     if ($idEstadoTarea == "2") {
       $datosTarea = {
@@ -884,13 +887,16 @@ let validarEvidencia = ($evidencia, $elemento) => {
 document.getElementById("btn-finalizar-tarea").addEventListener("click", () => {
   if ($idTarea != null) {
     Swal.fire({
-      title: "Estas seguro de finalizar la tarea # " + $idTarea + "?",
-      text: "No podras revertir esto!",
+      title: "¿Estás seguro de finalizar la tarea # " + $idTarea + "?",
+      text: "¡No podrás revertir esto!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Si, finalizalo!",
+      confirmButtonText: "¡Sí, finalizalo!",
+      cancelButtonText: "Cancelar"
+  
+     
     }).then((result) => {
       if (result.isConfirmed) {
         $.ajax({
@@ -918,14 +924,14 @@ document.getElementById("btn-finalizar-tarea").addEventListener("click", () => {
             // }
             if (!(JSON.parse(data) == true)) {
               Swal.fire(
-                "Lo sentimos!",
+                "¡Lo sentimos!",
                 "La tarea no ha sido finalizada.",
                 "error"
               );
               return;
             }
             Swal.fire(
-              "Tarea Finalizada!",
+              "¡Tarea Finalizada!",
               "La tarea ha sido finalizada.",
               "success"
             );

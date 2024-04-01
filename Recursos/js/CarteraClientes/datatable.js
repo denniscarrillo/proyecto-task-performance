@@ -42,7 +42,24 @@ let procesarPermisoActualizar = (data) => {
       },
     ],
   });
+  let filtro = document.querySelector('input[type=search]');
 };
+
+$(document).on("focusout", "input[type=search]", function (e) {
+  let filtro = $(this).val();
+  capturarFiltroDataTable(filtro);
+});
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim()){
+    $.ajax({
+      url: "../../../Vista/crud/carteraCliente/registrarBitacoraFiltroCarteraCliente.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
 
 //Crear nuevo usuario
 $("#form-carteraCliente").submit(function (e) {
@@ -68,8 +85,8 @@ $("#form-carteraCliente").submit(function (e) {
       success: function () {
         //Mostrar mensaje de exito
         Swal.fire(
-          "Registrado!",
-          "Se le ha enviado un correo al usuario!",
+          "¡Registrado!",
+          "Se ha registrado un Nuevo Cliente",
           "success"
         );
         tablaCarteraClientes.ajax.reload(null, false);
@@ -172,7 +189,7 @@ $("#form-editar-carteraCliente").submit(function (e) {
       success: function (res) {
         // console.log(res);
         //Mostrar mensaje de exito
-        Swal.fire("Actualizado!", "El cliente ha sido modificado!", "success");
+        Swal.fire("¡Actualizado!", "El cliente ha sido modificado", "success");
         tablaCarteraClientes.ajax.reload(null, false);
       },
     });
@@ -231,15 +248,17 @@ let limpiarFormEdit = () => {
 $(document).on("click", "#btn_eliminar", function () {
   let fila = $(this).closest("tr"),
     carteraCliente = $(this).closest("tr").attr('id'),
+    nombreCliente = fila.find("td:eq(1)").text(),
     rtn = fila.find("td:eq(2)").text();
   Swal.fire({
-    title: "¿Estas seguro de eliminar a " + carteraCliente + "?",
-    text: "No podrá revertir esto",
+    title: "¿Estás seguro de eliminar a " + nombreCliente + "?",
+    text: "¡No podrás revertir esto!",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Si, Borralo!",
+    confirmButtonText: "¡Sí, bórralo!",
+    cancelButtonText: "Cancelar"
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
@@ -249,6 +268,7 @@ $(document).on("click", "#btn_eliminar", function () {
         data: {
           rtn: rtn,
           carteraCliente: carteraCliente,
+          nombreCliente: nombreCliente,
         },
         success: function (data) {
           if (!JSON.parse(data).estado) {

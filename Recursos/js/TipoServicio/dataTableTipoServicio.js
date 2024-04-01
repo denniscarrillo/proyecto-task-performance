@@ -36,7 +36,25 @@ let procesarPermisoActualizar = (data) => {
       },
     ],
   });
+  let filtro = document.querySelector('input[type=search]');
 };
+
+$(document).on("focusout", "input[type=search]", function (e) {
+  let filtro = $(this).val();
+  capturarFiltroDataTable(filtro);
+});
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim()){
+    $.ajax({
+      url: "../../../Vista/crud/estadoUsuario/registrarBitacoraFiltroEstadoUsuario.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
+
 //Peticion  AJAX que trae los permisos
 let obtenerPermisos = function ($idObjeto, callback) {
   $.ajax({
@@ -64,7 +82,7 @@ $("#form-TipoServicio").submit(function (e) {
         //Mostrar mensaje de exito
         Swal.fire(
           "Registrado!",
-          "Se ha registrado un nuevo servicio tecnico!",
+          "Se ha registrado un nuevo servicio técnico!",
           "success"
         );
         tablaTipoServicio.ajax.reload(null, false);
@@ -105,7 +123,7 @@ $("#form-Edit-TipoServicio").submit(function (e) {
       success: function () {
         //Mostrar mensaje de exito
         Swal.fire(
-          "Actualizado!",
+          "¡Actualizado!",
           "El Tipo de Servicio ha sido modificado!",
           "success"
         );
@@ -161,13 +179,14 @@ $(document).on("click", "#btn_eliminar", function () {
   let idTipoServico = $(this).closest("tr").attr('id');
   let Servicio = $(this).closest("tr").find("td:eq(1)").text();
   Swal.fire({
-    title: "Estas seguro de eliminar el servicio " + Servicio + "?",
-    text: "No podras revertir esto!",
+    title: "¿Estás seguro de eliminar el servicio " + Servicio + "?",
+    text: "¡No podrás revertir esto!",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Si, borralo!",
+    confirmButtonText: "¡Sí, bórralo!",
+    cancelButtonText: "Cancelar"
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
@@ -176,14 +195,15 @@ $(document).on("click", "#btn_eliminar", function () {
         datatype: "json",
         data: {
           idTipoServico: idTipoServico,
+          servicio: Servicio,
         },
         success: function (data) {
           console.log(JSON.parse(data).estadoEliminado);
           if (JSON.parse(data).estadoEliminado) {
-            Swal.fire("Eliminado!", "El servicio ha sido eliminado", "success");
+            Swal.fire("¡Eliminado!", "El servicio ha sido eliminado", "success");
           } else {
             Swal.fire(
-              "Lo sentimos!",
+              "¡Lo sentimos!",
               "El servicio no puede ser eliminado",
               "error"
             );

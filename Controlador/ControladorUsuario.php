@@ -187,4 +187,16 @@
         public static function obtenerRolUser($usuario){
             return Usuario::obtenerRolUser($usuario);
         }
+        public static function inactivarUsuario($usuario){
+            Usuario::inactivarUsuario($usuario);
+        }
+        public static function fechaUltimaConexionUsuario($usuario){
+            Usuario::fechaUltimaConexionUsuario($usuario);
+        }
+        public static function obtenerIngresosUsuario($usuario){
+            return Usuario::obtenerIngresosUsuario($usuario);
+        }
+        public static function contarIngresosUsuario($ingresos, $usuario){
+            Usuario::contarIngresosUsuario($ingresos, $usuario);
+        }
     }

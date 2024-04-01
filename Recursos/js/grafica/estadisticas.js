@@ -147,28 +147,7 @@ $(document).on("click", "#btn_seleccionar", function() {
     }
 });
 
-//////////Obtiene los datos para seleccionar las tareas de los vendedores
-// let obtenerEstadisticasVendedor =  function(idUsuario_Vendedor,fechaDesde,fechaHasta){   
-//      $.ajax({
-//         url: "../../Vista/grafica/obtenerEstadisticasVend.php",
-//         type: "POST",
-//         datatype: "JSON",
-//             data: {
-//              idUsuario:idUsuario_Vendedor,
-//              fechaDesde: fechaDesde,
-//              fechaHasta: fechaHasta
-//             },
-//             success: function (data) {
-//                 console.log(data); // Verificar los datos en la consola
-                
-//                     tablaEstadistica.clear().rows.add(data).draw();
-                
-//                 },
-//             error: function (xhr, status, error) {
-//                 console.error("Error al obtener datos: " + error);
-//             }
-//      }); 
-// };
+
 
 let obtenerEstadisticasVendedor = function(idUsuario_Vendedor, fechaDesde, fechaHasta) {
     $.ajax({
@@ -195,80 +174,21 @@ let obtenerEstadisticasVendedor = function(idUsuario_Vendedor, fechaDesde, fecha
 };
 
 
+$(document).on("click", "#btn_Pdf", function () {
+    let fechaDesdef = $("#fechaDesdef").val();
+    let fechaHastaf = $("#fechaHastaf").val();
+    let idVendedor = idUsuario_Vendedor !== undefined ? idUsuario_Vendedor : '';
 
+    // Mostrar valores en la consola
+    console.log("fechaDesdef:", fechaDesdef);
+    console.log("fechaHastaf:", fechaHastaf);
+    console.log("idVendedor:", idVendedor);
+    // Abrir la ventana con la URL y los parámetros
+    window.open(
+      "../../../TCPDF/examples/reporteriaEstadistica.php?fechaDesdef=" + fechaDesdef 
+      + "&fechaHastaf=" + fechaHastaf 
+      + "&idVendedor=" + idVendedor,
+      "_blank"
+    );
+});
 
-
-
-
-
-
-
-
-
-
-
-
-
-// Obtener datos Generales filtrados
-// let obtenerDatosEstadisticaG = function (fechaDesde, fechaHasta) {
-//     $.ajax({
-//         url: "../../../Vista/grafica/obtenerEstadisticaG.php",
-//         type: "POST",
-//         dataType: "json",
-//         data: {
-//             "fechaDesde": fechaDesde,
-//             "fechaHasta": fechaHasta
-//         },
-//         success: function (data) {
-//             // Limpiar y actualizar datos en la tabla existente
-//             tablaEstadistica.destroy();
-//             tablaEstadistica = $('#table-Estadistica').DataTable({
-//                 // Configuración de DataTables...
-//             });
-//             tablaEstadistica.rows.add(data).draw();
-//         },
-//         // success: function (data) {
-//         //     // Limpiar y actualizar datos en la tabla existente
-//         //     tablaEstadistica.clear().rows.add(data).draw();
-//         // },
-//         error: function (xhr, status, error) {
-//             console.error("Error al obtener datos: " + error);
-//         }
-//     });
-// };
-
-// // Obtener datos Generales filtrados
-// let obtenerDatosEstadisticaG = function (fechaDesde, fechaHasta) {
-//     $.ajax({
-//         url: "../../../Vista/grafica/obtenerEstadisticaG.php",
-//         type: "POST",
-//         dataType: "json",
-//         data: {
-//             "fechaDesde": fechaDesde,
-//             "fechaHasta": fechaHasta
-//         },
-//         success: function (data) {
-//             // Verificar si la DataTable ya existe
-//             if ($.fn.DataTable.isDataTable('#table-Estadistica')) {
-//                 // Limpiar y actualizar datos en la tabla existente
-//                 tablaEstadistica.clear().rows.add(data).draw();
-//             } else {
-//                 // Si la DataTable no existe, inicializarla
-//                 tablaEstadistica = $('#table-Estadistica').DataTable({
-//                     "language": {
-//                         "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
-//                     },
-//                     "columns": [
-//                         { "data": "Tarea" },
-//                         { "data": "Meta" },
-//                         { "data": "Alcance" },
-//                         { "data": "Porcentaje" }
-//                     ]
-//                 });
-//             }
-//         },
-//         error: function (xhr, status, error) {
-//             console.error("Error al obtener datos: " + error);
-//         }
-//     });
-// };

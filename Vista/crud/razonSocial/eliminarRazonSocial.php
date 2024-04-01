@@ -10,20 +10,24 @@
     session_start(); //Reanudamos session
     if(isset($_SESSION['usuario'])){
         $user = $_SESSION['usuario'];
-        $estadoEliminado = ControladorRazonSocial::eliminarRazonSocial(intval($_POST['id_RazonSocial']));
-        print json_encode($estadoEliminado, JSON_UNESCAPED_UNICODE);
+        $RazonSocial= $_POST['id_RazonSocial'];
+        $estadoEliminado = ControladorRazonSocial::eliminarRazonSocial( $RazonSocial);
+        print json_encode(['estadoEliminado' => $estadoEliminado], JSON_UNESCAPED_UNICODE);
         /* ========================= Evento Creacion nueva Razon Social. ======================*/
         if($estadoEliminado){
             $newBitacora = new Bitacora();
             $accion = ControladorBitacora::accion_Evento();
-            date_default_timezone_set('America/Tegucigalpa');
-            $newBitacora->fecha = date("Y-m-d h:i:s"); 
             $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionRazonSocial.php');
             $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-            $newBitacora->accion = $accion['Delete'];
-            $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' elimino la Razon Social '.'"'.$_POST['razonSocial'];
+            if($estadoEliminado){
+                $eliminar = " eliminó ";
+                $newBitacora->accion = $accion['Delete'];
+            }else{
+                $eliminar = " intentó eliminar ";
+                $newBitacora->accion = $accion['tryDelete'];
+            }
+            $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' elimino la Razon Social #'.$_POST['id_RazonSocial'].$_POST['razonSocial'];
             ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
         }
         /* =======================================================================================*/
     }
-?>
