@@ -282,7 +282,7 @@ if (!isset($_SESSION['usuario'])) {
                 <table id="table-articulos" class="table table-hover">
                   <thead>
                     <tr>
-                      <th scope="col" class="th-col-row">Id</th>
+                      <th scope="col" class="th-col-row">No.</th>
                       <th scope="col" class="th-col-row">Artículo</th>
                       <th scope="col" class="th-col-row">Marca</th>
                       <th scope="col" class="th-col-row">Cantidad</th>
