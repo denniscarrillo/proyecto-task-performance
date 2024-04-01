@@ -47,10 +47,16 @@ $(document).on('click', '.btn-editar', async function(){
     restablecerEstadoModal();
 });
 $('#btn-nuevo-precio').click(function(){
-    document.getElementById('container-input-nuevo-precio').removeAttribute('hidden')
-    document.getElementById('btn-nuevo-precio').disabled = true;
-    document.getElementById('btn-editar-estado-precios').disabled = true;
-    document.querySelector('.container-precios').classList.add('edit');
+    if(document.getElementById('btn-editar-estado-precios').disabled == true) {
+        Toast.fire({
+            icon: "warning",
+            title: "Deber cerrar editar estado precios"
+        });
+    } else {
+        document.getElementById('container-input-nuevo-precio').removeAttribute('hidden')
+        document.getElementById('btn-nuevo-precio').disabled = true;
+        document.querySelector('.container-precios').classList.add('edit');
+    }
 });
 $('#btn-cerrar-nuevo-precio').click(function(){
     document.getElementById('container-input-nuevo-precio').setAttribute('hidden', 'true')
@@ -66,13 +72,19 @@ $('#btn-cerrar-table').click(function(){
     document.getElementById('btn-nuevo-precio').disabled = false;
 });
 $(document).on('click', '#btn-editar-estado-precios', async function(){
-    document.getElementById('btn-cerrar-table').removeAttribute('hidden')
-    const codArticulo = $('#A_CodArticulo').val();
-    let preciosProducto = await obtenerPreciosProducto(codArticulo);
-    renderTablaPrecios(preciosProducto);
-    document.querySelector('.container-editar-precios').removeAttribute('hidden');
-    document.getElementById('btn-editar-estado-precios').disabled = true;
-    document.getElementById('btn-nuevo-precio').disabled = true;
+    if(document.getElementById('btn-nuevo-precio').disabled == true) {
+        Toast.fire({
+            icon: "warning",
+            title: "Deber cerrar agregar nuevo precio"
+        });
+    } else {
+        document.getElementById('btn-cerrar-table').removeAttribute('hidden')
+        const codArticulo = $('#A_CodArticulo').val();
+        let preciosProducto = await obtenerPreciosProducto(codArticulo);
+        renderTablaPrecios(preciosProducto);
+        document.querySelector('.container-editar-precios').removeAttribute('hidden');
+        document.getElementById('btn-editar-estado-precios').disabled = true;
+    }
 });
 
 const restablecerEstadoModal = () => {
@@ -94,7 +106,15 @@ $(document).on('click', '.btn-update-estado-precio', async function(){
 });
 
 $(document).on('click', '.btn-update-estado-precio-inactivar', async function(){
-    await enviarNuevoEstadoPrecio(this, 'INACTIVAR');
+    let buttonsInactivar = document.querySelectorAll('.btn-update-estado-precio-inactivar').length
+     if(buttonsInactivar > 1) {
+        await enviarNuevoEstadoPrecio(this, 'INACTIVAR');
+     } else {
+        Toast.fire({
+            icon: "error",
+            title: "Debe existir al menos un precio activo",
+        });
+     }
 });
 
 $('#btn-agregar-nuevo-precio').click(function(){
@@ -142,7 +162,7 @@ const renderTablaPrecios = (preciosProducto) => {
             <td>${precio.precio}</td>
             <td>${precio.estado}</td>
             <td>
-                <button id="${precio.idPrecio}" class="${precio.estado == 'INACTIVO'
+                <button type="button" id="${precio.idPrecio}" class="${precio.estado == 'INACTIVO'
                     ? 'btn-update-estado-precio' 
                     : 'btn-update-estado-precio-inactivar'}">
                     <i class="fa-solid fa-rotate-right"></i>
@@ -153,13 +173,6 @@ const renderTablaPrecios = (preciosProducto) => {
     });
     precios.innerHTML = listaPrecios;
 }
-
-// let ocultarTablaPrecios = () => {
-//     document.querySelector('.container-editar-precios').setAttribute('hidden', 'true')
-//     document.getElementById('btn-cerrar-table').setAttribute('hidden', 'true')
-//     document.getElementById('btn-editar-estado-precios').disabled = false;
-//     document.getElementById('btn-nuevo-precio').disabled = false;
-// }
 
 const enviarNuevoEstadoPrecio = async (elemento, accion) => {
     const idPrecio = $(elemento).attr('id');
