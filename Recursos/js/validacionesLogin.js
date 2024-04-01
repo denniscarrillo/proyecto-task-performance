@@ -41,6 +41,16 @@ $(document).ready(function () {
     });
     $toastRegistro.id = "0"; //Esto para que el mensaje se muestre solo cuando viene de registro
   }
+
+  //Detectar si viene de restore y mostrar un Toast de confirmacion
+  let $toastRestore = document.querySelector('.restore-exitoso');
+  if ($toastRestore.id == "1") {
+      Toast.fire({
+          icon: "success",
+          title: "Restauración exitosa",
+      });
+      $toastRestore.id = "0"; //Esto para que el mensaje se muestre solo cuando viene de restore
+  }
 });
 
 //Ocultar o mostrar contrasenia

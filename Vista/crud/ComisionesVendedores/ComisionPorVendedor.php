@@ -35,6 +35,7 @@
         $urlPorcentaje = '../Porcentajes/gestionPorcentajes.php';
         $urlMetricas = '../crud/Metricas/gestionMetricas.php';
         $urlImg = '../../../Recursos/imagenes/Logo-E&C.png';
+        $urlRestoreBackup = '../crud/backupAndRestore/gestionBackupRestore.php';
         require_once '../../layout/sidebar.php';
         ?>
       </div>
