@@ -72,6 +72,7 @@ function imprimirPermisos($permisos, $idObjetoActual){
 
     //Se imprimen los permisos con su validaciones ya hechas
     echo '<tr class="tr-permisos">'.
+      '<td class="td-permisos">'.$permiso['item'].'</td>'.
       '<td class="td-permisos">'.$permiso['rolUsuario'].'</td>'.
       '<td class="td-permisos">'.$permiso['objetoSistema'].'</td>'.
       '<td class="td-permisos"><input type="checkbox" class="check-permisos" '.$permisoConsultar.' '. $hidden.'></td>'.
