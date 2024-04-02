@@ -420,8 +420,59 @@ export const telefono_guion = (event) => {
     // Actualizar el valor del input con el formato aplicado
     event.target.value = formato;
 };
+export const soloLetrasYPuntos = (elemento) => {
+    elemento.setAttribute('onkeypress', 'return ((event.charCode >= 65 && event.charCode <= 90) || ' +
+        '(event.charCode >= 97 && event.charCode <= 122) || ' +
+        '(event.charCode == 46) || (event.charCode == 209) || ' + // "Ñ"
+        '(event.charCode == 241) || (event.charCode == 32) || ' + // espacio
+        '(event.charCode == 193) || (event.charCode == 201) || ' + // Á y É
+        '(event.charCode == 205) || (event.charCode == 211) || ' + // Í y Ó
+        '(event.charCode == 218) || (event.charCode == 225) || ' + // Ú y á
+        '(event.charCode == 233) || (event.charCode == 237) || ' + // é y í
+        '(event.charCode == 243) || (event.charCode == 250) || ' + // ó y ú
+        '(event.charCode == 209) || (event.charCode == 241))'); // "Ñ" y "ñ"
+};
+export const soloLetrasYPuntosYSignos = (elemento) => {
+    elemento.setAttribute('onkeypress', 'return ((event.charCode >= 65 && event.charCode <= 90) || ' +
+        '(event.charCode >= 97 && event.charCode <= 122) || ' +
+        '(event.charCode == 46) || (event.charCode == 209) || ' + // "Ñ"
+        '(event.charCode == 241) || (event.charCode == 32) || ' + // espacio
+        '(event.charCode == 193) || (event.charCode == 201) || ' + // Á y É
+        '(event.charCode == 205) || (event.charCode == 211) || ' + // Í y Ó
+        '(event.charCode == 218) || (event.charCode == 225) || ' + // Ú y á
+        '(event.charCode == 233) || (event.charCode == 237) || ' + // é y í
+        '(event.charCode == 243) || (event.charCode == 250) || ' + // ó y ú
+        '(event.charCode == 63) || (event.charCode == 191) || ' + // ? y ¿
+        '(event.charCode == 209) || (event.charCode == 241))'); // "Ñ" y "ñ"
+};
 
+export const soloLetrasYPuntosYComas = (elemento) => {
+    elemento.setAttribute('onkeypress', 'return ((event.charCode >= 65 && event.charCode <= 90) || ' +
+        '(event.charCode >= 97 && event.charCode <= 122) || ' +
+        '(event.charCode == 46) || (event.charCode == 209) || ' + // "Ñ"
+        '(event.charCode == 241) || (event.charCode == 32) || ' + // espacio
+        '(event.charCode == 193) || (event.charCode == 201) || ' + // Á y É
+        '(event.charCode == 205) || (event.charCode == 211) || ' + // Í y Ó
+        '(event.charCode == 218) || (event.charCode == 225) || ' + // Ú y á
+        '(event.charCode == 233) || (event.charCode == 237) || ' + // é y í
+        '(event.charCode == 243) || (event.charCode == 250) || ' + // ó y ú
+        '(event.charCode == 44) || (event.charCode == 209) || ' + // coma
+        '(event.charCode == 241))'); // "Ñ" y "ñ"
+};
 
+export const permitirLetrasNumerosPuntosComas = (elemento) => {
+    elemento.setAttribute('onkeypress', 'return ((event.charCode >= 65 && event.charCode <= 90) || ' +
+        '(event.charCode >= 97 && event.charCode <= 122) || ' +
+        '(event.charCode >= 48 && event.charCode <= 57) || ' + // números
+        '(event.charCode == 46) || (event.charCode == 44) || ' + // puntos y comas
+        '(event.charCode == 209) || (event.charCode == 241) || ' + // "Ñ" y "ñ"
+        '(event.charCode == 32) || ' + // espacio
+        '(event.charCode == 193) || (event.charCode == 201) || ' + // Á y É
+        '(event.charCode == 205) || (event.charCode == 211) || ' + // Í y Ó
+        '(event.charCode == 218) || (event.charCode == 225) || ' + // Ú y á
+        '(event.charCode == 233) || (event.charCode == 237) || ' + // é y í
+        '(event.charCode == 243) || (event.charCode == 250))'); // ó y ú
+};
 
 /**
  * @param {HTMLElement} elemento - input HTML al cual le queremos aplicar la validación

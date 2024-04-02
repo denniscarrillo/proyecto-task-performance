@@ -29,7 +29,7 @@ $(document).ready(async function () {
 const expresiones = {
     usuario: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
     user: /^(?=.*[^a-zA-Z\s])/, //Solo permite Letras
-    nombre: /^(?=.*[^a-zA-Z\s])/,
+    nombre: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ.\s.,])/, // Letras, acentos y Ñ, también permite punto // Solo letras
     password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])/,
     pass: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])./,
     correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
@@ -72,7 +72,7 @@ $nombre.addEventListener("input", () => {
     validacionInputNombre();
   });
   $nombre.addEventListener("keydown", () => {
-    funciones.soloLetrasConEspacios($nombre)
+    funciones.soloLetrasYPuntos($nombre)
   });
   $usuario.addEventListener("input", () => {
     funciones.limitarCantidadCaracteres("usuario", 25);

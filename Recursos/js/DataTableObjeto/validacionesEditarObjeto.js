@@ -1,55 +1,70 @@
 import * as funciones from '../funcionesValidaciones.js';
 export let estadoValido = false;
 
-const validaciones = {
-    soloLetras: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ.\s.,])/,// Letras, acentos y Ñ, también permite punto // Solo letras
-    correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
-    soloNumeros: /^[0-9 ]*$/,
-    caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
-    caracterMas5veces: /^(?=.*(...)\1)/,
-    letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
-    direccion: /^[a-zA-Z0-9 #.,-]+$/,
+const $form = document.getElementById("formEditarObjeto");
+
+const $descripcion = document.getElementById("A_descripcion");
+
+
+const expresiones = {
+    soloLetras: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ.\s.,])/, // Letras, acentos y Ñ, también permite punto // Solo letras
+    objeto: /^(?=.*(..)\1)/, // no permite escribir que se repita más de tres veces un carácter
+    descripcion: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ.\s.,])/, // Letras, acentos y Ñ, también permite punto // Solo letras
 };
-
-
-
-
-let inputseditarObjeto = {
-   
-    descripcionObjeto: document.getElementById('A_descripcion')
-}
-let btnGuardar = document.getElementById('btn-editarsubmit');
-
-btnGuardar.addEventListener('click', () => {
-  
-    validarInputDescripcionObjeto();
-    if (document.querySelectorAll(".mensaje_error").length == 0) {
-        estadoValido = true;
-    }
-});
-
-inputseditarObjeto.descripcionObjeto.addEventListener("keyup", ()=>{
-    validarInputDescripcionObjeto();
+  $descripcion.addEventListener("input", () => {
+    funciones.convertirAMayusculasVisualmente($descripcion);
     funciones.limitarCantidadCaracteres("A_descripcion", 100);
-})
+    validacionInputDescripcion();
+  });
+  $descripcion.addEventListener("keydown", () => {
+    funciones.soloLetrasYPuntosYComas($descripcion)
+  });
+  const aplicarValidacionesInputs = () => {
+    //Llamamos a todas las funciones que aplican sus respectivas validaciones a cada input
+    validacionInputDescripcion();
+  };
+  $form.addEventListener("submit", (e) => {
+    // Aplicar todas las validaciones a todos los campos
+    aplicarValidacionesInputs();
+    
+    // Transformar datos a mayúsculas
+    funciones.transformarAMayusculas($descripcion);
 
-let validarInputDescripcionObjeto = function () {
-    let descripcionObjetoMayus = inputseditarObjeto.descripcionObjeto.value.toUpperCase();
-    inputseditarObjeto.descripcionObjeto.value = descripcionObjetoMayus;
+    // Verificar si hay errores de validación
+    const estadoValidaciones = document.querySelectorAll(".mensaje_error").length;
+    
+    // Actualizar el estado de validación
+    estadoValido = estadoValidaciones === 0;
+    
+    // Si hay errores, prevenir el envío del formulario
+    if (!estadoValido) {
+        e.preventDefault();
+    }
+  });
+
+  const validacionInputDescripcion = () => {
     let estadoValidaciones = {
-        estadoCampoVacio: false,
-        estadoSoloLetras: false,
-        estadoNoMasdeUnEspacios: false,
-        estadoNoCaracteresSeguidos: false
-    }
-    estadoValidaciones.estadoCampoVacio = funciones.validarCampoVacio(inputseditarObjeto.descripcionObjeto);
-    if(estadoValidaciones.estadoCampoVacio) {
-        estadoValidaciones.estadoSoloLetras = funciones.validarSoloLetras(inputseditarObjeto.descripcionObjeto, validaciones.soloLetras);
-    } 
-    if(estadoValidaciones.estadoSoloLetras) {
-        estadoValidaciones.estadoNoMasdeUnEspacios = funciones.validarMasdeUnEspacio(inputseditarObjeto.descripcionObjeto);
-    }
-    if(estadoValidaciones.estadoNoMasdeUnEspacios) {
-        estadoValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter(inputseditarObjeto.descripcionObjeto, validaciones.caracterMas3veces);
-    }
-}
+      campoVacio: false,
+      soloLetras: false,
+      masDeUnEspacio: false,
+      caracteresMasTresVeces: false,
+    };
+    estadoValidaciones.campoVacio = funciones.validarCampoVacio($descripcion);
+    estadoValidaciones.campoVacio
+      ? (estadoValidaciones.soloLetras = funciones.validarSoloLetras(
+          $descripcion,
+          expresiones.descripcion
+        ))
+      : "";
+    estadoValidaciones.soloLetras
+      ? (estadoValidaciones.masDeUnEspacio =
+          funciones.validarMasdeUnEspacio($descripcion))
+      : "";
+    estadoValidaciones.masDeUnEspacio
+      ? (estadoValidaciones.caracteresMasTresVeces =
+          funciones.limiteMismoCaracter($descripcion, expresiones.objeto))
+      : "";
+    // estadoValidaciones.caracteresMasTresVeces
+    //   ? funciones.caracteresMinimo($descripcion, 10)
+    //   : "";
+  };

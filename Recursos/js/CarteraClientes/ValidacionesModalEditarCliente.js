@@ -8,8 +8,9 @@ const validaciones = {
     caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
     caracterMas5veces: /^(?=.*(...)\1)/,
     letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
-    direccion: /^[a-zA-Z0-9 #.,-]+$/,
+    direccion: /^[a-zA-Z0-9 #.,áéíóúÁÉÍÓÚñÑ]+$/,
   };
+const $direccion = document.getElementById("E_Direccion");
 let inputEditarCliente = {
     telefono: document.getElementById('E_Telefono'),
     correo: document.getElementById('E_Correo'),
@@ -44,6 +45,13 @@ inputEditarCliente.direccion.addEventListener("keyup", ()=>{
     validarInputEditarDireccion();
     funciones.limitarCantidadCaracteres("E_Direccion", 100);
 })
+$direccion.addEventListener("input", () => {
+  funciones.convertirAMayusculasVisualmente($direccion);
+  validarInputEditarDireccion();
+});
+$direccion.addEventListener("keydown", () => {
+  funciones.permitirLetrasNumerosPuntosComas($direccion)
+});
 let validarInputEditarTelefono = () =>{
   let estadoValidacion = {
       estCampoVacio: false,
