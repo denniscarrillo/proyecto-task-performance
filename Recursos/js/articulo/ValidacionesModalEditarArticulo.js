@@ -41,6 +41,11 @@ btnGuardar.addEventListener('click', () => {
     }
 });
 
+inputseditarArticulo.Articulo.addEventListener("keyup", ()=>{
+    validarInputArticulo();
+    funciones.limitarCantidadCaracteres("A_Articulo", 50);
+})
+
 $(document).on('click', '.btn-editar', async function(){
     const codArticulo = $(this).closest("tr").attr('id');
     await setearPreciosProducto(codArticulo);
@@ -303,6 +308,13 @@ let validarInputDetalle = function () {
     }
 }
 
+
+inputseditarArticulo.Detalle.addEventListener("keyup", ()=>{
+    validarInputDetalle();
+    funciones.limitarCantidadCaracteres("A_Detalle", 100);
+})
+
+
 let validarInputMarca = function () {
     let MarcaMayus =  inputseditarArticulo.Marca.value.toUpperCase();
      inputseditarArticulo.Marca.value = MarcaMayus;
@@ -323,3 +335,8 @@ let validarInputMarca = function () {
         estadoValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter( inputseditarArticulo.Marca, validaciones.caracterMas3veces);
     }
 }
+
+inputseditarArticulo.Marca.addEventListener("keyup", ()=>{
+    validarInputMarca();
+    funciones.limitarCantidadCaracteres("A_Marca", 50);
+})

@@ -219,7 +219,7 @@ if (isset($_SESSION['usuario'])) {
         </div>
         <div class="table-conteiner">
           <div class="mb-3 conteiner-id-articulo">
-            <p class="titulo-articulo">Productos Mantenimiento</p>
+            <p class="titulo-articulo">Productos</p>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
               data-bs-target="#modalArticulosSolicitud" id="btnarticulos">
               Seleccionar... <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>

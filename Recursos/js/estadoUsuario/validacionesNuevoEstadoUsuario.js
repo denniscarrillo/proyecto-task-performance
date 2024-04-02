@@ -2,12 +2,12 @@ import * as funciones from '../funcionesValidaciones.js';
 export let estadoValidado = false;
 
 const validaciones = {
-    soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
+    soloLetras: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚÑ\s])/, //Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
     soloNumeros: /^[0-9 ]*$/,
     caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
     caracterMas5veces: /^(?=.*(...)\1)/,
-    letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
+    letrasNumeros: /^[a-zA-Z0-9 áéíóúñÁÉÍÓÚÑ#-]+$/,
     direccion: /^[a-zA-Z0-9 #.,-]+$/,
 };
 
