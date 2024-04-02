@@ -81,7 +81,7 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de Permisos</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 30px;">N°</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 30px;">No.</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 130px;">ROL</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 260x;">OBJETO</td>   
 <td style="background-color: #e54037;color: white; text-align: center; width: 110px;">CONSULTAR</td>

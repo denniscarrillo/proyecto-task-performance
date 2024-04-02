@@ -81,7 +81,7 @@ if(isset($_SESSION['usuario'])){
     <P style="text-align: center; font-size: 18px;"><b>Reporte de Servicio Técnico</b></P>
     <table border="1" cellpadding="4">
     <tr>
-    <td style="background-color: #e54037;color: white; text-align: center; width: 80px;">N°</td>
+    <td style="background-color: #e54037;color: white; text-align: center; width: 80px;">No.</td>
     <td style="background-color: #e54037;color: white; text-align: center; width: 560px;">SERVICIO TÉCNICO</td>
     </tr>
     ';

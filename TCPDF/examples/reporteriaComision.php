@@ -81,7 +81,7 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de Comisiones</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 60px;">N°</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 60px;">No.</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 80px;">FACTURA</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 120px;">TOTAL VENTA</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 110px;">PORCENTAJE</td>

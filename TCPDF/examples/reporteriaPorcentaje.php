@@ -80,7 +80,7 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de Porcentajes</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 40px;">N°</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 40px;">No.</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 160px;">PORCENTAJE</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 300px;">DESCRIPCIÓN</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 137px;">ESTADO</td>
