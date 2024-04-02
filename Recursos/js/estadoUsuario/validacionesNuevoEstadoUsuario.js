@@ -25,6 +25,10 @@ btnGuardar.addEventListener('click', () => {
     }
 });
 
+inputsNuevoEstadoU.descripcionEstadoU.addEventListener("keyup", ()=>{
+    validarInputDescripcionEstadoUsuario();
+    funciones.limitarCantidadCaracteres("estado", 20);
+})
 
 let validarInputDescripcionEstadoUsuario = function () {
     let descripcionEstadoUMayus = inputsNuevoEstadoU.descripcionEstadoU.value.toUpperCase();

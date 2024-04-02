@@ -27,11 +27,11 @@ $(document).ready(function (){
 })
 inputEditarRol.rol.addEventListener("keyup", ()=>{
     validarInputRol();
-    funciones.limitarCantidadCaracteres("rol", 30);
+    funciones.limitarCantidadCaracteres("rol", 45);
 })
 inputEditarRol.descripcion.addEventListener("keyup", ()=>{
     validarInputDescripcion();
-    funciones.limitarCantidadCaracteres("descripcion", 70);
+    funciones.limitarCantidadCaracteres("descripcion", 45);
 })
 let validarInputRol = () =>{
   inputEditarRol.rol.value = inputEditarRol.rol.value.toUpperCase();

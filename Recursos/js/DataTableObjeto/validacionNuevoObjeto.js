@@ -28,6 +28,16 @@ btnGuardar.addEventListener('click', () => {
     }
 });
 
+inputsNuevoObjeto.nombreObjeto.addEventListener("keyup", ()=>{
+    validarInputNombreObjeto();
+    funciones.limitarCantidadCaracteres("objeto", 45);
+})
+
+inputsNuevoObjeto.descripcionObjeto.addEventListener("keyup", ()=>{
+    validarInputDescripcionObjeto();
+    funciones.limitarCantidadCaracteres("descripcion", 100);
+})
+
 let validarInputNombreObjeto = function () {
     let nombreObjetoMayus = inputsNuevoObjeto.nombreObjeto.value.toUpperCase();
     inputsNuevoObjeto.nombreObjeto.value = nombreObjetoMayus;

@@ -27,7 +27,7 @@
         $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionPorcentajes.php');
         $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
         $newBitacora->accion = $accion['Update'];
-        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' modificó el porcentaje '.'"'.$_POST['descripcionPorcentaje'].'"'.' a '.$_POST['valorPorcentaje'];
+        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' modificó el porcentaje # '.''.$_POST['idPorcentaje'].''.' a '.$_POST['estadoPorcentaje'];
         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
         /* =======================================================================================*/
     }

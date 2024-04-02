@@ -8,6 +8,7 @@ require_once("../../../Modelo/Bitacora.php");
 require_once("../../../Controlador/ControladorBitacora.php");
 
 $user = '';
+$eliminar = '';
 session_start();
 
 if (isset($_SESSION['usuario'])) {
@@ -31,17 +32,21 @@ if (isset($_SESSION['usuario'])) {
         ControladorPorcentajes::eliminarPorcentaje($eliminarPorcentaje);
         echo json_encode('ELIMINADO');
     }
-
-    // Resto de tu código para bitácora, etc.
-    // $newBitacora = new Bitacora();
-    // $accion = ControladorBitacora::accion_Evento();
-    // date_default_timezone_set('America/Tegucigalpa');
-    // $newBitacora->fecha = date("Y-m-d h:i:s");
-    // $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionPorcentajes.php');
-    // $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-    // $newBitacora->accion = $accion['Update'];
-    // $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' modificó el porcentaje ' . '"' . $_POST['descripcionPorcentaje'] . '"' . ' a ' . $_POST['valorPorcentaje'];
-    // ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+        /* ========================= Evento Eliminar porcentaje. ====================================*/  
+if($esUtilizado){
+    $eliminar = " eliminó ";
+}else{
+    $eliminar = " intentó eliminar ";
+}
+    $newBitacora = new Bitacora();
+    $accion = ControladorBitacora::accion_Evento();
+    date_default_timezone_set('America/Tegucigalpa');
+    $newBitacora->fecha = date("Y-m-d h:i:s");
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionPorcentajes.php');
+    $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+    $newBitacora->accion = $accion['Delete'];
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' eliminó el porcentaje #' . '' . $_POST['idPorcentaje'];
+    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
 }
 
 

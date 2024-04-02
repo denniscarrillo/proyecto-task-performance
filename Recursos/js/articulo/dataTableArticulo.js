@@ -47,6 +47,33 @@ let procesarPermisoActualizar = (data) => {
       },
     ],
   });
+  let filtro = document.querySelector('input[type=search]');
+};
+
+$(document).on("focusout", "input[type=search]", function (e) {
+  let filtro = $(this).val();
+  capturarFiltroDataTable(filtro);
+});
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim()){
+    $.ajax({
+      url: "../../../Vista/crud/articulo/registrarBitacoraFiltroArticulo.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
+
+let obtenerPermisos = function ($idObjeto, callback) {
+  $.ajax({
+    url: "../../../Vista/crud/permiso/obtenerPermisos.php",
+    type: "POST",
+    datatype: "JSON",
+    data: { idObjeto: $idObjeto },
+    success: callback,
+  });
 };
 
 // registro de nuevo Articulo
@@ -148,7 +175,7 @@ $("#form_EditarArticulo").submit(function (e) {
         existencias: existencias
       },
       success: function (res) {
-        if(Boolean(res)) {
+        if(Boolean(!res)) {
           Swal.fire("Actualizado", "El Artículo ha sido modificado", "success");
           tablaArticulo.ajax.reload(null, false);
         } else {
@@ -176,7 +203,28 @@ $(document).on("click", "#btn_eliminar", function () {
     cancelButtonText: "Cancelar"
   }).then((result) => {
     if (result.isConfirmed) {
-      eliminarArticulo(codArticulo);
+      $.ajax({
+        url: "../../../Vista/crud/articulo/eliminarArticulo.php",
+        type: "POST",
+        datatype: "JSON",
+        data: { 
+          codArticulo: codArticulo,
+          articulo: nombreArticulo
+        },
+        success: function (data) {
+          console.log(JSON.parse(data).estadoEliminado)
+          if (JSON.parse(data).estadoEliminado) {
+            Swal.fire("Eliminado!", "El artículo ha sido eliminado", "success");
+            tablaArticulo.ajax.reload(null, false);
+          } else {
+            Swal.fire(
+              "¡Lo sentimos!",
+              "El artículo no puede ser eliminado",
+              "error"
+            );
+          }
+        },
+      }); //Fin del AJAX
     }
   });
 });

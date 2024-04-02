@@ -68,7 +68,6 @@ require_once('../../../Controlador/ControladorParametro.php');
         $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
         $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
         $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
-        $urlRestoreBackup = '../backupAndRestore/gestionBackupRestore.php';
         require_once '../../layout/sidebar.php';
         ?>
       </div>
@@ -92,6 +91,7 @@ require_once('../../../Controlador/ControladorParametro.php');
           <table class="display nowrap table" id="table-Permisos" style="width:100%">
             <thead>
               <tr>
+                <th scope="col"> No. </th>
                 <th scope="col"> ROL</th>
                 <th scope="col"> OBJETO </th>
                 <th scope="col"> CONSULTAR </th>

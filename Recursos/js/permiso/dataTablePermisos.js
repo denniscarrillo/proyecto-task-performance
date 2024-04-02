@@ -29,18 +29,19 @@ const capturarFiltroDataTable = function(filtro){
 
 let actualizarPermisos = function (elementoFila) {
   let $fila = elementoFila.closest("tr");
-  let rol = $fila.find("td:eq(0)").text();
-  let objeto = $fila.find("td:eq(1)").text();
+  let item = $fila.find("td:eq(0)").text();
+  let rol = $fila.find("td:eq(1)").text();
+  let objeto = $fila.find("td:eq(2)").text();
   let consultar =
-    $fila.find("td:eq(2)").find("input")[0].checked == true ? "S" : "N";
-  let insertar =
     $fila.find("td:eq(3)").find("input")[0].checked == true ? "S" : "N";
-  let actualizar =
+  let insertar =
     $fila.find("td:eq(4)").find("input")[0].checked == true ? "S" : "N";
-  let eliminar =
+  let actualizar =
     $fila.find("td:eq(5)").find("input")[0].checked == true ? "S" : "N";
-  let reporte =
+  let eliminar =
     $fila.find("td:eq(6)").find("input")[0].checked == true ? "S" : "N";
+  let reporte =
+    $fila.find("td:eq(7)").find("input")[0].checked == true ? "S" : "N";
   Swal.fire({
     title: "¿Está seguro?",
     text: "¡Se actualizarán los permisos!",

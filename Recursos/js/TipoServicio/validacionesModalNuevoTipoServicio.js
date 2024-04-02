@@ -25,6 +25,11 @@ btnGuardar.addEventListener('click', () => {
     }
 });
 
+inputsNuevoServico.ServicioTecnico.addEventListener("keyup", ()=>{
+    validarInputServicioTecnico();
+    funciones.limitarCantidadCaracteres("servicio_Tecnico", 50);
+})
+
 let validarInputServicioTecnico = function () {
     let ServicioMayus = inputsNuevoServico.ServicioTecnico.value.toUpperCase();
     inputsNuevoServico.ServicioTecnico.value = ServicioMayus;

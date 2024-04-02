@@ -4,7 +4,7 @@ export let validarEditar = false;
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-Z\/ .ÑñáéíóúÁÉÍÓÚs])+$/, //Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
-    soloNumeros: /^[0-9 ]*$/,
+    soloNumeros: /^[0-9 -]*$/,
     caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
     caracterMas5veces: /^(?=.*(...)\1)/,
     letrasNumeros: /^[a-zA-Z0-9 #ñÑ-]+$/,
@@ -29,17 +29,20 @@ $(document).ready(function (){
     }
   });
 })
-inputEditarCliente.telefono.addEventListener("keyup", ()=>{
+inputEditarCliente.telefono.addEventListener('input', (event)=>{
+  if (!funciones.telefono_guion(event)) {
+    event.preventDefault();
+}
     validarInputEditarTelefono();
     funciones.limitarCantidadCaracteres("E_Telefono", 20);
 })
 inputEditarCliente.correo.addEventListener("keyup", ()=>{
     validarInputEditarCorreo();
-    funciones.limitarCantidadCaracteres("E_Correo", 30);
+    funciones.limitarCantidadCaracteres("E_Correo", 50);
 })
 inputEditarCliente.direccion.addEventListener("keyup", ()=>{
     validarInputEditarDireccion();
-    funciones.limitarCantidadCaracteres("E_Direccion", 45);
+    funciones.limitarCantidadCaracteres("E_Direccion", 100);
 })
 let validarInputEditarTelefono = () =>{
   let estadoValidacion = {

@@ -23,7 +23,7 @@ $(document).ready(function (){
 })
 inputEditarPregunta.addEventListener("keyup", ()=>{
     validarEditarPregunta();
-    funciones.limitarCantidadCaracteres("pregunta_E", 60);
+    funciones.limitarCantidadCaracteres("pregunta_E", 100);
 })
 let validarEditarPregunta = () =>{
   inputEditarPregunta.value = inputEditarPregunta.value.toUpperCase();
