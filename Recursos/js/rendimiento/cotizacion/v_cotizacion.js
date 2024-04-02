@@ -64,7 +64,7 @@ document.getElementById("btn_agregar").addEventListener("click", () => {
       precio: trProducto.children[3].textContent,
       idPrecio: trProducto.id,
     };
-    insertarNewProduct(contItem, productosCotizados, $tbody, 0);
+    insertarNewProduct(contItem, productosCotizados, $tbody, 0, false);
   });
   document.querySelectorAll(".fa-circle-xmark-new").forEach((xmark) => {
     agregarEventoBorrar(xmark);
@@ -209,6 +209,13 @@ let alternarHiddenBotones = () => {
     });
   }
 };
+// let recalcularTotales = () => {
+//   const producto = document.querySelectorAll('.new-product');
+//   const cantidad = producto.children[3]
+//   const precio = producto.children[3]
+//   console.log(cantidad)
+// }
+
 let calcularResumenCotizacion = (elementosSumar, acumTotalSuma) => {
   elementosSumar.forEach((total) => {
     let totalInt = parseFloat(total);
@@ -312,7 +319,7 @@ let validarDatosCotizacion = async () => {
     estadoCot = "Existente";
     data.productos.forEach((product, index) => {
       contItem = index + 1;
-      insertarNewProduct(contItem, product, $tbody, 1);
+      insertarNewProduct(contItem, product, $tbody, 1, true);
       itemProdDB.push(product.item);
     });
 
@@ -325,6 +332,13 @@ let validarDatosCotizacion = async () => {
     $resumenCotizacion.subdescuento.textContent = `Lps. ${data.detalle.subDescuento}`;
     $resumenCotizacion.impuesto.textContent = `Lps. ${data.detalle.isv}`;
     $resumenCotizacion.total.textContent = `Lps. ${data.detalle.total_Cotizacion}`;
+    //Recaulcular el resumen de cotizacion
+    let arrayTotales = [];
+    let totalSuma = 0;
+    document.querySelectorAll(".total-producto").forEach((element) => {
+      arrayTotales.push(element.textContent.split(" ")[1]);
+    });
+    calcularResumenCotizacion(arrayTotales, totalSuma);
     return data.detalle.id_Cotizacion;
   }
 };
@@ -396,7 +410,7 @@ let obtenerDatosCotizacion = async ($idTarea) => {
   return JSON.parse(dataCotizacion);
 };
 
-let insertarNewProduct = (contItem, $addProduct, $tbody, referencia) => {
+let insertarNewProduct = (contItem, $addProduct, $tbody, referencia, recalcularTotal) => {
   document.getElementById("row-temp") != null
     ? document.getElementById("row-temp").remove()
     : "";
@@ -447,7 +461,7 @@ let insertarNewProduct = (contItem, $addProduct, $tbody, referencia) => {
     cantidad.innerHTML = `<input type="number" class="input-cant new hidden" placeholder="Ingresar..." min="1" value=${$addProduct.cantidad}> 
         <label class="temp-label">${$addProduct.cantidad}</label>`;
     precio.textContent = `Lps. ${$addProduct.precio}`;
-    total.textContent = `Lps. ${$addProduct.total}`;
+    total.textContent = `Lps. ${recalcularTotal == true ? parseInt($addProduct.cantidad) * parseFloat($addProduct.precio) : $addProduct.total}`;
     $tbody.appendChild($fila);
   }
   let $inputs = document.querySelectorAll(".input-cant");
@@ -487,7 +501,7 @@ document.getElementById("btn-nueva-cot").addEventListener("click", () => {
   let estado = document.getElementById("estado-cot").textContent;
   let mensaje = "Se anulará la cotización actual, no podrás revertir esto";
   let btnCancel = document.getElementById("btn-salir-cotizacion");
-  if (estado == "ANULADA" || estado == "Vencida") {
+  if (estado == "ANULADA" || estado == "VENCIDA") {
     mensaje = "Ahora, podrás generar una nueva cotización";
   }
   Swal.fire({
