@@ -21,7 +21,7 @@ class Articulo
         try {
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $query = "SELECT ROW_NUMBER() OVER(ORDER BY a.cod_Articulo ASC) AS Num, a.cod_Articulo, a.articulo, a.marca, p.precio, 
+            $query = "SELECT ROW_NUMBER() OVER(ORDER BY a.cod_Articulo ASC) AS Num, a.cod_Articulo, p.id_Precio, a.articulo, a.marca, p.precio, 
                 a.detalle, a.existencia, a.Creado_Por, a.Fecha_Creacion FROM tbl_Articulos as a
                 INNER JOIN tbl_Precios_Producto AS p  ON p.id_Precio = a.id_Precio";
             $resultado = sqlsrv_query($abrirConexion, $query);
@@ -29,7 +29,7 @@ class Articulo
               //Recorremos el resultado de tareas y almacenamos en el arreglo.
               while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
                 $articulos[] = [
-                    'item' => $fila['Num'],
+                    'idPrecio' => $fila['id_Precio'],
                     'codigo' => $fila['cod_Articulo'],
                     'articulo' => $fila['articulo'],
                     'precio' => $fila['precio'],

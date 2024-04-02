@@ -328,7 +328,7 @@ let obtenerVendedores = function () {
         $(rowEl).attr('class', 'addVendedor')
       },
       language: {
-        "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+        url: "../../../Recursos/js/librerias/dataTableLanguage_es_ES.json",
       },
       columns: [
         { data: 'id' },

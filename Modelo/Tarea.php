@@ -320,10 +320,10 @@ class Tarea
             $conn = new Conexion();
             $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
             foreach($productos as $producto){
-                $idProducto = $producto['idProducto'];
-                $cantProd = $producto['CantProducto'];
-                $insert = "INSERT INTO tbl_productointeres (id_Tarea, id_Articulo, cantidad) 
-                VALUES ('$idTarea', '$idProducto', '$cantProd');";
+                $codArticulo = $producto['codProducto'];
+                $cantProd = $producto['cantidad'];
+                $insert = "INSERT INTO tbl_Productos_Interes (cod_Articulo, id_Tarea, cantidad) 
+                    VALUES ('$codArticulo', '$idTarea', '$cantProd');";
                 sqlsrv_query($abrirConexion, $insert);
             }
         }catch(Exception $e){
@@ -599,10 +599,11 @@ class Tarea
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
         foreach($productosCotizacion as $producto){
-            $idProducto = $producto['id']; $item = $producto['item'];
-            $idPrecio = $producto['idPrecio']; $cantidad = $producto['cantidad']; $total = $producto['total'];
-            $insert = "INSERT INTO tbl_ProductosCotizacion (id_Cotizacion, id_Producto, item, id_precio, cantidad, total, Creado_Por, Fecha_Creacion)
-                VALUES ('$idCotizacion', '$idProducto', '$item', '$idPrecio', '$cantidad', '$total', '$creadoPor', GETDATE());";
+            $codProducto = $producto['codArticulo']; 
+            $cantidad = $producto['cantidad']; 
+            $total = $producto['total'];
+            $insert = "INSERT INTO tbl_Productos_Cotizacion (id_Cotizacion, cod_Articulo, cantidad, total, Creado_Por, Fecha_Creacion)
+                VALUES ('$idCotizacion', '$codProducto', '$cantidad', '$total', '$creadoPor', GETDATE());";
             sqlsrv_query($conexion, $insert);
         }
         sqlsrv_close($conexion);
@@ -622,21 +623,22 @@ class Tarea
                 'detalle' => $fila
             ];
             $idCot = intval($fila['id_Cotizacion']);
-            $selectCotProductos = "SELECT pct.id_Producto ,pc.item, pct.descripcion, pct.marca, pc.cantidad, pp.id_Precio, pp.precio, pc.total FROM tbl_ProductosCotizacion pc 
-            INNER JOIN tbl_ProductosCotizados pct ON pc.id_Producto = pct.id_Producto
-            INNER JOIN tbl_PreciosProductos pp ON pct.id_Producto = pp.id_Producto
-            WHERE pp.estado_Precio = 'Activo' AND pc.id_Cotizacion = '$idCot';";
+            $selectCotProductos = "SELECT ROW_NUMBER() OVER(ORDER BY pct.cod_Articulo ASC) AS Num, pct.cod_Articulo, pct.articulo, pct.marca, pc.cantidad, pp.id_Precio, pp.precio, pc.total FROM tbl_Productos_Cotizacion pc 
+            INNER JOIN tbl_Articulos pct ON pc.cod_Articulo = pct.cod_Articulo
+            INNER JOIN tbl_precios_producto pp ON pc.cod_Articulo = pp.cod_Articulo
+			 INNER JOIN tbl_CotizacionTarea tc ON tc.id_Cotizacion = pc.id_Cotizacion
+            WHERE pc.id_Cotizacion = '$idCot' AND pp.estado_Precio = 'ACTIVO';";
             $resultCot = sqlsrv_query($conexion, $selectCotProductos);
             $productos = array();
             while($fila = sqlsrv_fetch_array($resultCot, SQLSRV_FETCH_ASSOC)){
                 $productos[] = [
-                    'id' => $fila['id_Producto'],
-                    'item' => $fila['item'],
-                    'descripcion' => $fila['descripcion'],
+                    'item' => $fila['Num'],
+                    'codArticulo' => $fila['cod_Articulo'],
+                    'descripcion' => $fila['articulo'],
                     'marca' => $fila['marca'],
                     'cantidad' => $fila['cantidad'],
-                    'precio' => $fila['precio'],
                     'idPrecio' => $fila['id_Precio'],
+                    'precio' => $fila['precio'],
                     'total' => $fila['total']
                 ];
             }
@@ -660,44 +662,11 @@ class Tarea
         sqlsrv_close($conexion);
         return intval($idProduct['id_Producto']);
     }
-    public static function obtenerProductosCotizados(){
-        try{
-            $productos = array();
-            $conn = new Conexion();
-            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $select = "SELECT pc.id_Producto, pc.descripcion, pc.marca, pp.precio, pp.id_Precio FROM tbl_ProductosCotizados pc
-            INNER JOIN tbl_PreciosProductos pp ON pc.id_Producto = pp.id_Producto
-            WHERE pp.estado_Precio = 'Activo';";
-            $listaProductos = sqlsrv_query($abrirConexion, $select);
-            while($fila = sqlsrv_fetch_array($listaProductos, SQLSRV_FETCH_ASSOC)){
-                $productos[] = [
-                    'idProducto' => $fila['id_Producto'],
-                    'producto' => $fila['descripcion'],
-                    'marca' =>$fila['marca'],
-                    'precio' => $fila['precio'],
-                    'id_Precio' => $fila['id_Precio']
-                ];
-            }
-            return $productos;
-        }catch(Exception $e){
-            echo 'Error SQL:' . $e;
-        }
-        sqlsrv_close($abrirConexion); //Cerrar conexion
-    }
-    public static function insertarPrecioProducto($idProducto, $precio){
-        $conn = new Conexion();
-        $conexion = $conn->abrirConexionDB();
-        if(!empty($idProducto)){
-            $insert = "INSERT INTO tbl_PreciosProductos (id_Producto, precio, estado_Precio) VALUES ('$idProducto', '$precio', 'Activo')";
-            sqlsrv_query($conexion, $insert);
-        }
-        sqlsrv_close($conexion);
-    }
     public static function anularCotizacion($idCotizacion, $moficadoPor){
         $estado = false;
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query = "UPDATE tbl_CotizacionTarea  SET estado_Cotizacion = 'Anulada', Modificado_Por = '$moficadoPor', 
+        $query = "UPDATE tbl_CotizacionTarea  SET estado_Cotizacion = 'ANULADA', Modificado_Por = '$moficadoPor', 
                 Fecha_Modificacion = GETDATE() WHERE id_Cotizacion = '$idCotizacion';";
         if(sqlsrv_rows_affected(sqlsrv_query($conexion, $query)) == 1) {
             $estado = true;
@@ -711,10 +680,14 @@ class Tarea
         $conexion = $conn->abrirConexionDB();
         $query = "SELECT DATEDIFF(day, Fecha_Creacion, GETDATE()) AS dias_Transcurridos, 
                     (SELECT valor FROM tbl_MS_Parametro WHERE parametro = 'DIAS VIGENCIA COTIZACION') AS vigencia
-                        FROM tbl_CotizacionTarea WHERE id_Cotizacion = '$idCotizacion';";
-        $fila = sqlsrv_fetch_array(sqlsrv_query($conexion, $query));
-        if(intval($fila['dias_Transcurridos']) > intval($fila['vigencia'])){
-            $estado = true;
+                        FROM tbl_CotizacionTarea WHERE id_Cotizacion = '$idCotizacion'";
+        $resultado = sqlsrv_query($conexion, $query);
+
+        if(sqlsrv_has_rows($resultado)) {
+            $fila = sqlsrv_fetch_array($resultado);
+            if(intval($fila['dias_Transcurridos']) > intval($fila['vigencia'])){
+                $estado = $resultado;
+            }
         }
         sqlsrv_close($conexion);
         return $estado;
@@ -922,15 +895,15 @@ class Tarea
         $productos = array();
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query = "SELECT pi.id_Articulo, va.ARTICULO AS descripcion, va.MARCA, pi.cantidad FROM tbl_ARTICULOS va 
-        INNER JOIN tbl_ProductoInteres pi ON pi.id_Articulo = va.CODARTICULO WHERE pi.id_Tarea = '$idTarea'";
+        $query = "SELECT pi.cod_Articulo, va.articulo AS descripcion, va.marca, pi.cantidad FROM tbl_Articulos va 
+            INNER JOIN tbl_Productos_Interes pi ON pi.cod_Articulo = va.cod_Articulo WHERE pi.id_Tarea = '$idTarea'";
         $result = sqlsrv_query($conexion, $query);
         if(sqlsrv_has_rows($result)) {
             while($fila = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)){
                 $productos [] = [
-                    'id' => $fila['id_Articulo'],
+                    'id' => $fila['cod_Articulo'],
                     'descripcion' => $fila['descripcion'],
-                    'marca' => $fila['MARCA'],
+                    'marca' => $fila['marca'],
                     'cantidad' => $fila['cantidad']
                 ];
             }

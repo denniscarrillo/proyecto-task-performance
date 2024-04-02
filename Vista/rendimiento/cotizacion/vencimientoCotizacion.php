@@ -9,16 +9,16 @@
     require_once("../../../Controlador/ControladorBitacoraTarea.php");
 
     if(isset($_SESSION['usuario'])){
-        $idCotizacion = $_POST['idCotizacion'];
+        $idCotizacion = trim($_POST['idCotizacion']);
         $estado = ControladorTarea::calcularVencimientoCotizacion($idCotizacion);
         $Tarea = ControladorBitacoraTarea::obtenerTareaCotizacion($idCotizacion);
-        if($estado && $Tarea['estado'] != 'Vencida'){
+        if($estado && $Tarea['estado'] != 'VENCIDA'){
             ControladorTarea::vencimientoEstadoCotizacion($idCotizacion);
             /* ====================== Evento, la cotizacion ha sido vencida. =====================*/
                 $idUsuario = intval(ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']));
                 $newBitacora = new BitacoraTarea();
                 $newBitacora->idTarea = intval($Tarea['id']);
-                $newBitacora->descripcionEvento = 'Ha vencido la vigencia de la cotización # '.$_POST['idCotizacion'];
+                $newBitacora->descripcionEvento = 'Ha vencido la vigencia de la cotización # '.$idCotizacion;
                 $idBitacora = ControladorBitacoraTarea::SAVE_EVENT_TASKS_BITACORA($newBitacora, $idUsuario);
             /* ===========================================================================================*/
         }

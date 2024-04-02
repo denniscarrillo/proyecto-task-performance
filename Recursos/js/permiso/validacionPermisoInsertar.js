@@ -37,7 +37,7 @@ let manejarPermisoInsertar = (permisos) => {
             document.getElementById('btn-restore').classList.remove('hidden');
         }
     }
-    if((objPermisos.Reporte == 'Y' && $objTarea != 'v_tarea.php' && $objBacRestore != 'GESTIONBACKUPRESTORE.PHP')){
+    if((objPermisos.Reporte == 'S' && $objTarea != 'v_tarea.php' && $objBacRestore != 'GESTIONBACKUPRESTORE.PHP')){
         document.getElementById('btn_Pdf').classList.remove('hidden');
     }
 }

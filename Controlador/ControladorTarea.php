@@ -80,12 +80,6 @@ class ControladorTarea {
     public static function almacenarProducto($producto) {
         return Tarea::almacenarProductoCotizacion($producto);
     }
-    public static function consultarProductosCotizados(){
-        return Tarea::obtenerProductosCotizados();
-    }
-    public static function insertarPrecioProducto($idProducto, $precio){
-        return Tarea::insertarPrecioProducto($idProducto, $precio);
-    }
     public static function anularCotizacion($idCotizacion, $modificadoPor){
         return Tarea::anularCotizacion($idCotizacion, $modificadoPor);
     }
@@ -107,9 +101,6 @@ class ControladorTarea {
     public static function obtenerProductosInteres($idTarea){
         return Tarea::obtenerProductosInteres($idTarea);
     }
-    // public static function obtenerHistorialEstadosTarea($idTarea){
-    //     return Tarea::obtenerHistorialEstadosTarea($idTarea);
-    // }
     public static function actualizarEstadoTarea($idTarea, $newEstado, $usuario){
         Tarea::cambiarEstadoTarea($idTarea, $newEstado, $usuario);
     }
