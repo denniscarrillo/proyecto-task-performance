@@ -50,7 +50,7 @@ $form.addEventListener("submit", (e) => {
 // Llamada a las validaciones en distintos eventos
 $nombre.addEventListener("input", () => {
   funciones.convertirAMayusculasVisualmente($nombre);
-  funciones.limitarCantidadCaracteres("nombre", 60);
+  funciones.limitarCantidadCaracteres("nombre", 100);
   validacionInputNombre();
 });
 $nombre.addEventListener("keydown", () => {
@@ -74,9 +74,11 @@ $correo.addEventListener("focusout", () => {
   validarInputCorreo();
 });
 $password.addEventListener("input", () => {
+  funciones.limitarCantidadCaracteres("password", 25);
   validarInputPassword();
 });
 $password2.addEventListener("focusout", () => {
+  funciones.limitarCantidadCaracteres("password2", 25);
   validarInputConfirmarPassword();
 });
 
