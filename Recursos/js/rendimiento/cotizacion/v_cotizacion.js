@@ -54,15 +54,15 @@ let selectArticulos = function ($elementoHtml) {
   $elementoHtml.classList.toggle("select-articulo");
 };
 document.getElementById("btn_agregar").addEventListener("click", () => {
-  document.querySelectorAll(".select-articulo").forEach((articulo, i) => {
+  document.querySelectorAll(".select-articulo").forEach((articulo) => {
     contItem += 1;
     let trProducto = articulo.parentElement.parentElement.parentElement;
     let productosCotizados = {
-      id: trProducto.children[0].textContent,
+      codArticulo: trProducto.children[0].textContent,
       descripcion: trProducto.children[1].textContent,
       marca: trProducto.children[2].textContent,
       precio: trProducto.children[3].textContent,
-      idPrecio: trProducto.children[4].textContent,
+      idPrecio: trProducto.id,
     };
     insertarNewProduct(contItem, productosCotizados, $tbody, 0);
   });
@@ -70,68 +70,61 @@ document.getElementById("btn_agregar").addEventListener("click", () => {
     agregarEventoBorrar(xmark);
   });
   $("#modalProductosCotizados").modal("hide");
-  let $inputs = document.querySelectorAll(".input-cant");
-  validarCantidad($inputs);
+  document.getElementById("estado-desc").removeAttribute("disabled");
 });
-$(document).on("keyup", ".input-cant", function () {
+
+$(document).on("input", ".input-cant", function () {
   let totalSuma = 0;
-  let cant = parseInt(this.value);
   let $inputs = document.querySelectorAll(".input-cant");
   validarCantidad($inputs);
+  let cant = parseInt(this.value);
   let precio = parseFloat(
     this.parentElement.nextSibling.textContent.split(" ")[1]
   );
-  this.parentElement.nextSibling.nextSibling.textContent =
-    isNaN(cant) || cant < 1
-      ? "Lps. 0.00"
-      : `Lps. ${parseFloat((cant * precio).toFixed(2))}`;
+  this.parentElement.nextSibling.nextSibling.textContent = `Lps. ${parseFloat((cant * precio).toFixed(2))}`;
   let arrayTotales = [];
   document.querySelectorAll(".total-producto").forEach((element) => {
     arrayTotales.push(element.textContent.split(" ")[1]);
   });
-  $optionDescuento[0].selected = true;
-  if (document.getElementById("valor-descuento") != null) {
-    document.querySelector(".container-input-cant-desc").innerHTML = "";
-    document.getElementById("input-descuento").classList.add("hidden");
-    document.getElementById("input-sub-descuento").classList.add("hidden");
-  }
   calcularResumenCotizacion(arrayTotales, totalSuma);
 });
+
+$(document).on('input', '#valor-descuento', function(){
+  let totalSuma = 0;
+  const desc = $(this).val();
+  if(parseInt(desc) < 1 || desc == "") {
+    $(this).val(1);
+
+  } else {
+    let arrayTotales = [];
+    document.querySelectorAll(".total-producto").forEach((element) => {
+      arrayTotales.push(element.textContent.split(" ")[1]);
+    });
+    calcularResumenCotizacion(arrayTotales, totalSuma);
+  }
+})
+
+
 let validarCantidad = function ($inputs) {
   let totalSuma = 0;
-  for (let i = 0; i < $inputs.length; i++) {
-    // $inputs[i].value = 1
-    if (parseInt($inputs[i].value) < 1 || $inputs[i].value == "") {
-      $optionDescuento[0].selected = true;
-      document.getElementById("estado-desc").setAttribute("disabled", "true");
-      document.querySelector(".container-input-cant-desc").innerHTML = "";
+  estadoCant = true;
+  $inputs.forEach($input => {
+    if (parseInt($input.value) < 1 || $input.value == "") {
+      $input.value = 1;
       let arrayTotales = [];
       document.querySelectorAll(".total-producto").forEach((element) => {
         arrayTotales.push(element.textContent.split(" ")[1]);
       });
-      document.getElementById("input-descuento").classList.add("hidden");
-      document.getElementById("input-sub-descuento").classList.add("hidden");
       calcularResumenCotizacion(arrayTotales, totalSuma);
-      estadoCant = false;
-      break;
-    } else {
-      document.getElementById("estado-desc").removeAttribute("disabled");
-      estadoCant = true;
-    }
-  }
+    } 
+  });
 };
+
 document
   .getElementById("form-cotizacion")
   .addEventListener("submit", async (event) => {
     event.preventDefault();
-    let estadoValidaciones = true;
-    if (document.getElementById("valor-descuento") != null) {
-      estadoValidaciones = validacionInputs(
-        document.getElementById("valor-descuento")
-      );
-    }
-    console.log(estadoValidaciones);
-    if (!estado || !estadoValidaciones) {
+    if (!estado) {
       event.preventDefault();
     } else {
       //Capturamos los datos de la cotizacion y producto a enviar
@@ -162,12 +155,12 @@ document
           .textContent.trim()
           .split(" ")[1],
       };
-      console.log($datosCotizacion.validez);
+
       let $productosCot = document.querySelectorAll(".new-product");
       let $arrayProductosCot = [];
       $productosCot.forEach((producto) => {
         let $newProduct = {
-          id: producto.getAttribute("class").split(" ")[1],
+          codArticulo: producto.getAttribute("class").split(" ")[1],
           item: producto.children[0].textContent,
           cantidad: producto.children[3].children[0].value,
           idPrecio: producto.children[4].id,
@@ -175,6 +168,7 @@ document
         };
         $arrayProductosCot.push($newProduct);
       });
+
       //Llamamos a la funcion que envia la cotizacion al servidor y recibe estos parametros
       if (estado) {
         enviarNuevaCotizacion($datosCotizacion, $arrayProductosCot);
@@ -199,7 +193,7 @@ document
           location.href =
             "../../../../Vista/rendimiento/v_editarTarea.php?idTarea=" +
             $idTarea;
-        }, 2500);
+        }, 2200);
       }
     }
   });
@@ -252,9 +246,6 @@ let calcularResumenCotizacion = (elementosSumar, acumTotalSuma) => {
   ).toFixed(2)}`;
 };
 
-let validacionInputs = (input) => {
-  return funciones.validarCampoVacio(input);
-};
 //nueva Cotizacion
 let enviarNuevaCotizacion = ($datosCotizacion, $productosCotizacion) => {
   console.log($datosCotizacion);
@@ -300,6 +291,14 @@ let agregarEventoBorrar = ($deleteButton) => {
         contItem = index + 1;
         item.textContent = contItem;
       });
+      if(document.querySelectorAll('.input-cant').length < 1) {
+        let inputsCant = document.getElementById('estado-desc');
+        inputsCant.disabled = true;
+        $optionDescuento[0].selected = true;
+        document.getElementById('t-body').innerHTML = `<tr id="row-temp">
+          <td colspan="6" style="text-align: center;">Debe seleccionar artículos para su nueva cotización</td>
+        </tr>`;
+      }
     });
   }
 };
@@ -330,27 +329,29 @@ let validarDatosCotizacion = async () => {
   }
 };
 $optionDescuento.addEventListener("click", () => {
+  let $inputs = document.querySelectorAll(".input-cant");
+  validarCantidad($inputs);
   if (estadoCant == false) {
     document.getElementById("estado-desc").setAttribute("disabled", "true");
   }
 });
 //Parte del descuento para que se aplique solo si se necesita
 $optionDescuento.addEventListener("change", () => {
-  // if(document.getElementById('valor-descuento') != null) {
-  //     let inputs = {
-  //         valorDescuento: document.getElementById('valor-descuento')
-  //     }
-  //     validacionInputs(inputs);
-  // }
   let totalSuma = 0;
   let container = document.querySelector(".container-input-cant-desc");
   if ($optionDescuento.value == "Aplica") {
     container.innerHTML = `
-        <input type="number" id="valor-descuento">
+        <input type="number" id="valor-descuento" min="1" value="1">
         <p class="mensaje"></p>`;
     document.getElementById("input-descuento").classList.remove("hidden");
     document.getElementById("input-sub-descuento").classList.remove("hidden");
     agregarEventoDescuento(totalSuma);
+    let arrayTotales = [];
+    document.querySelectorAll(".total-producto").forEach((element) => {
+      arrayTotales.push(element.textContent.split(" ")[1]);
+    });
+    calcularResumenCotizacion(arrayTotales, totalSuma);
+
   } else {
     document.getElementById("input-descuento").classList.add("hidden");
     document.getElementById("input-sub-descuento").classList.add("hidden");
@@ -362,6 +363,7 @@ $optionDescuento.addEventListener("change", () => {
     calcularResumenCotizacion(arrayTotales, totalSuma);
   }
 });
+
 let agregarEventoDescuento = (totalSuma) => {
   let arrayTotales = [];
   document.querySelectorAll(".total-producto").forEach((element) => {
@@ -401,8 +403,7 @@ let insertarNewProduct = (contItem, $addProduct, $tbody, referencia) => {
   //Creamos la fila para agregar los datos del neuvo producto
   let $fila = document.createElement("tr");
   $fila.setAttribute("class", "new-product");
-  // $fila.setAttribute('id', $addProduct.id);
-  $fila.classList.add($addProduct.id);
+  $fila.classList.add($addProduct.codArticulo);
   estadoCot == "Existente" && referencia == 0
     ? $fila.classList.add("addNewProduct")
     : "";
@@ -428,7 +429,7 @@ let insertarNewProduct = (contItem, $addProduct, $tbody, referencia) => {
     //Ahora agregamos los datos
     divIcons.innerHTML = `<i class="fa-regular fa-circle-xmark fa-circle-xmark-new icon"></i>`;
     label.append(document.createTextNode(contItem));
-    cantidad.innerHTML = `<input type="text" class="input-cant" placeholder="Ingresar...">`;
+    cantidad.innerHTML = `<input type="number" class="input-cant" placeholder="Ingresar..." min="1" value="1">`;
     descripcion.textContent = $addProduct.descripcion;
     marca.textContent = $addProduct.marca;
     precio.appendChild(
@@ -436,13 +437,14 @@ let insertarNewProduct = (contItem, $addProduct, $tbody, referencia) => {
         `Lps. ${parseFloat($addProduct.precio).toFixed(2)}`
       )
     );
+    total.textContent = `Lps. ${1 * parseFloat($addProduct.precio)}`;
     $tbody.appendChild($fila);
   } else {
     divIcons.innerHTML = `<i class="fa-regular fa-circle-xmark fa-circle-xmark-DB icon" hidden></i>`;
     label.append(document.createTextNode($addProduct.item));
     descripcion.textContent = $addProduct.descripcion;
     marca.textContent = $addProduct.marca;
-    cantidad.innerHTML = `<input type="text" class="input-cant new hidden" placeholder="Ingresar..." value=${$addProduct.cantidad}> 
+    cantidad.innerHTML = `<input type="number" class="input-cant new hidden" placeholder="Ingresar..." min="1" value=${$addProduct.cantidad}> 
         <label class="temp-label">${$addProduct.cantidad}</label>`;
     precio.textContent = `Lps. ${$addProduct.precio}`;
     total.textContent = `Lps. ${$addProduct.total}`;
@@ -451,6 +453,7 @@ let insertarNewProduct = (contItem, $addProduct, $tbody, referencia) => {
   let $inputs = document.querySelectorAll(".input-cant");
   validarCantidad($inputs);
 };
+
 $("#btn-productos").click(() => {
   if (document.getElementById("table-productos_wrapper") == null) {
     tableProductos = $("#table-productos").DataTable({
@@ -459,7 +462,7 @@ $("#btn-productos").click(() => {
         dataSrc: "",
       },
       language: {
-        url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
+        url: "../../../Recursos/js/librerias/dataTableLanguage_es_ES.json",
       },
       fnCreatedRow: function(rowEl, data) {
         $(rowEl).attr('id', data['idPrecio']);
@@ -484,7 +487,7 @@ document.getElementById("btn-nueva-cot").addEventListener("click", () => {
   let estado = document.getElementById("estado-cot").textContent;
   let mensaje = "Se anulará la cotización actual, no podrás revertir esto";
   let btnCancel = document.getElementById("btn-salir-cotizacion");
-  if (estado == "Anulada" || estado == "Vencida") {
+  if (estado == "ANULADA" || estado == "Vencida") {
     mensaje = "Ahora, podrás generar una nueva cotización";
   }
   Swal.fire({
@@ -503,7 +506,7 @@ document.getElementById("btn-nueva-cot").addEventListener("click", () => {
         e.preventDefault();
         location.reload();
       });
-      if (estado == "Vigente") {
+      if (estado == "VIGENTE") {
         estado = await anularCotizacion(
           document.getElementById("id-cotizacion").textContent
         );

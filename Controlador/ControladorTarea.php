@@ -101,9 +101,6 @@ class ControladorTarea {
     public static function obtenerProductosInteres($idTarea){
         return Tarea::obtenerProductosInteres($idTarea);
     }
-    // public static function obtenerHistorialEstadosTarea($idTarea){
-    //     return Tarea::obtenerHistorialEstadosTarea($idTarea);
-    // }
     public static function actualizarEstadoTarea($idTarea, $newEstado, $usuario){
         Tarea::cambiarEstadoTarea($idTarea, $newEstado, $usuario);
     }

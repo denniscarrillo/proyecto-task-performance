@@ -85,66 +85,61 @@ $datosCotizacion = ControladorTarea::obtenerDatos(intval($_GET['idTarea']), $_GE
               <?php echo ControladorTarea::obtenerIdCotizacionTarea($_GET['idTarea']); ?>
             </label>
           </div>
-          <div class="datos-cotizacion" id="<?php echo $_GET['estadoCliente'] ?>">
-            <div class="colum-horizontal">
 
+          <div class="colum-horizontal">
               <div id="input-fecha">
                 <label for="fecha" class="form-label bold" id="label-fecha">Fecha: </label>
                 <label for="fecha" class="form-label" id="fecha">
-                  <?php date_default_timezone_set('America/Tegucigalpa');
-                  setlocale(LC_TIME, "Spanish_Honduras");
-                  echo date('l jS \of F Y h:i:s A'); ?>
                 </label>
                 <p class="mensaje"></p>
               </div>
             </div>
-            <div class="mb-3" id="input-cotizacion">
+
+          <div class="datos-cotizacion" id="<?php echo $_GET['estadoCliente'] ?>">
+            <div class="labels-input">
               <label for="n-cotizacion" class="form-label bold" id="label-correo">RTN/DNI:</label>
-              <label for="n-cotizacion" class="form-label" id="nombre-cliente">
-                <?php echo $datosCotizacion['RTN'] ?>
-              </label>
-            </div>
-            <div class="mb-3" id="input-cotizacion">
               <label for="n-cotizacion" class="form-label bold" id="label-correo">Cliente:</label>
+              <label for="telefono" class="form-label bold" id="label-correo">Teléfono:</label>
+              <label for="vendedor" class="form-label bold" id="label-title-vendedor">Vendedor:</label>
+              <label for="validez" class="form-label bold" id="label-correo">Válidez:</label>
+              <label class="mb-3 form-label bold label-estado-cot exist hidden">Estado: </label>
+              <div class="container-desc bold new hidden">
+                <label class="form-label ">Descuento:</label>
+              </div>
+            </div>
+
+            <div class="inputs">
+              <label for="n-cotizacion" class="form-label" id="nombre-cliente">
+                  <?php echo $datosCotizacion['RTN'] ?>
+              </label>
               <label for="n-cotizacion" class="form-label" id="nombre-cliente">
                 <?php echo $datosCotizacion['NOMBRE'] ?>
               </label>
-            </div>
-            <div class="mb-3" id="input-telefono">
-              <label for="telefono" class="form-label bold" id="label-correo">Teléfono:</label>
               <label for="validez" class="form-label" id="correo-cliente">
-                <?php echo $datosCotizacion['TELEFONO'] ?>
-              </label>
-            </div>
-            <div class="mb-3" id="input-vendedor">
-              <label for="vendedor" class="form-label bold" id="label-title-vendedor">Vendedor:</label>
-              <label for="validez" class="form-label" id="nombre-vendedor">
-                <?php echo $datosCotizacion['VENDEDOR'] ?>
-              </label>
-            </div>
-            <div class="mb-3" id="input-validez">
-              <label for="validez" class="form-label bold" id="label-correo">Válidez:</label>
-              <label for="validez" class="form-label" id="validez-cotizacion">
-                <?php echo $datosCotizacion['vigencia'] . ' dias' ?>
-              </label>
-              <p class="mensaje"></p>
-            </div>
-            <label class="mb-3 form-label bold label-estado-cot exist hidden">Estado: </label><label
-              class="estado-cot exist hidden" id="estado-cot"></label>
-            <div class="container-desc bold new hidden">
-              <label class="form-label ">Descuento:</label>
-              <select title="Estado descuento" class="form-select" id="estado-desc" disabled>
-                <option selected>No aplica</option>
-                <option>Aplica</option>
-              </select>
-              <div class="container-input-cant-desc"></div>
+                  <?php echo $datosCotizacion['TELEFONO'] ?>
+                </label>
+                <label for="validez" class="form-label" id="nombre-vendedor">
+                  <?php echo $datosCotizacion['VENDEDOR'] ?>
+                </label>
+                <label for="validez" class="form-label" id="validez-cotizacion">
+                  <?php echo $datosCotizacion['vigencia'] . ' dias' ?>
+                </label>
+                <label class="estado-cot exist hidden" id="estado-cot"></label>
+
+                <div class="container-desc bold new hidden">
+                  <select title="Estado descuento" class="form-select" id="estado-desc" disabled>
+                    <option selected>No aplica</option>
+                    <option>Aplica</option>
+                  </select>
+                <div class="container-input-cant-desc"></div>
+              </div>
+              </div>
             </div>
           </div>
+            
           <div class="container-btns-cotizacion">
             <a href="#" class="btn_nuevoRegistro btn btn-primary exist hidden" id="btn-nueva-cot"><i
-                class="fa-solid fa-circle-plus"></i> Nueva Cotización</a>
-            <!-- <button id="btn-anular-cot" class="btn btn-primary">Nueva cotización</button> -->
-            <!-- <a href="../../../TCPDF/examples/reporteCotizacion.php" target="_blank" class="btn_Pdf btn btn-primary exist hidden" id="btn_Pdf"><i class="fas fa-file-pdf"> </i> Generar PDF</a> -->
+             class="fa-solid fa-circle-plus"></i> Nueva Cotización</a>
             <button class="btn_Pdf btn btn-primary exist hidden" id="btn_Pdf"> <i class="fas fa-file-pdf"></i> Generar
               PDF</button>
           </div>
@@ -171,12 +166,7 @@ $datosCotizacion = ControladorTarea::obtenerDatos(intval($_GET['idTarea']), $_GE
                 </thead>
                 <tbody id="t-body">
                   <tr id="row-temp">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td colspan="6" style="text-align: center;">Debe seleccionar artículos para su nueva cotización</td>
                   </tr>
                 </tbody>
               </table>
@@ -210,7 +200,9 @@ $datosCotizacion = ControladorTarea::obtenerDatos(intval($_GET['idTarea']), $_GE
               <i class="fa-solid fa-chevron-left"></i>
               <label> Regresar a tareas</label>
             </a>
-            <button type="submit" id="btn-submit-cotizacion" class="new hidden">Guardar</button>
+            <div class="container-button-save">
+              <button type="submit" id="btn-submit-cotizacion" class="new hidden">Guardar</button>
+            </div>
           </form>
         </div>
       </main>
@@ -219,6 +211,14 @@ $datosCotizacion = ControladorTarea::obtenerDatos(intval($_GET['idTarea']), $_GE
     require_once('modalProductosCotizados.html');
     ?>
   </div>
+  <script>
+    const fecha = new Date();
+    const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+    const fecha_formateada = fecha.toLocaleDateString('es-ES', opciones);
+    const opcionesHora = { hour: 'numeric', minute: 'numeric', hour12: true };
+    const tiempo = fecha.toLocaleTimeString('es-ES', opcionesHora);
+    document.getElementById('fecha').textContent = fecha_formateada+' '+tiempo;
+  </script>
   <script src="../../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js"></script>
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
