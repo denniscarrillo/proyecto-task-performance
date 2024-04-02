@@ -28,7 +28,10 @@ btnGuardar.addEventListener('click', () => {
     }
 });
 
-
+inputseditarObjeto.descripcionObjeto.addEventListener("keyup", ()=>{
+    validarInputDescripcionObjeto();
+    funciones.limitarCantidadCaracteres("A_descripcion", 100);
+})
 
 let validarInputDescripcionObjeto = function () {
     let descripcionObjetoMayus = inputseditarObjeto.descripcionObjeto.value.toUpperCase();

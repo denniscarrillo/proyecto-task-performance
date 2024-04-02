@@ -4,7 +4,7 @@ export let estadoValidado = false;
 const validaciones = {
   soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
   correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
-  soloNumeros: /^[0-9 ]*$/,
+  soloNumeros: /^[0-9 -]*$/,
   numerosDecimales: /^[0-9]+([.])?([0-9]+)?$/,
   caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
   caracterMas5veces: /^(?=.*(...)\1)/,
@@ -31,13 +31,16 @@ let inputsNuevaVentas = {
     totalVenta: document.getElementById('totalVenta')
 } 
 
-inputsNuevaVentas.rtn.addEventListener("keyup", ()=>{
+inputsNuevaVentas.rtn.addEventListener('input', (event) => {
+  if (!funciones.RTN_guion(event)) {
+      event.preventDefault();
+  }
   validarInputRTN();
   funciones.limitarCantidadCaracteres("rtn", 20);
 });
 inputsNuevaVentas.totalVenta.addEventListener("keyup", ()=>{
   validarInputTotalVenta();
-  funciones.limitarCantidadCaracteres("totalVenta", 30)
+  funciones.limitarCantidadCaracteres("totalVenta", 10)
 });
 let validarInputRTN = () => {
   let estadoValidaciones = {

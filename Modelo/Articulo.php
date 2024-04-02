@@ -17,20 +17,18 @@ class Articulo
     // Obtener todas las tareas que le pertenecen a un usuario.
     public static function obtenerArticulos()
     {
-        $articulo = null;
+        $articulos = array();
         try {
-            $articulo = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
             $query = "SELECT ROW_NUMBER() OVER(ORDER BY a.cod_Articulo ASC) AS Num, a.cod_Articulo, p.id_Precio, a.articulo, a.marca, p.precio, 
                 a.detalle, a.existencia, a.Creado_Por, a.Fecha_Creacion FROM tbl_Articulos as a
                 INNER JOIN tbl_Precios_Producto AS p  ON p.id_Precio = a.id_Precio";
             $resultado = sqlsrv_query($abrirConexion, $query);
-            $articulo = array();
-            //Recorremos el resultado de tareas y almacenamos en el arreglo.
-            while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
-                $articulo[] = [
-                    // 'item' => $fila['Num'],
+            if(sqlsrv_errors() == null) {
+              //Recorremos el resultado de tareas y almacenamos en el arreglo.
+              while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
+                $articulos[] = [
                     'idPrecio' => $fila['id_Precio'],
                     'codigo' => $fila['cod_Articulo'],
                     'articulo' => $fila['articulo'],
@@ -41,12 +39,13 @@ class Articulo
                     'creadoPor' => $fila['Creado_Por'],
                     'fechaCreacion' => $fila['Fecha_Creacion']
                 ];
+              }
             }
         } catch (Exception $e) {
-            $articulo = 'Error SQL:' . $e;
+            echo 'Error SQL:' . $e;
         }
         sqlsrv_close($abrirConexion); //Cerrar conexion
-        return $articulo;
+        return $articulos;
     }
 
     public static function obtenerPreciosProductoPorID($codArticulo)
@@ -98,7 +97,7 @@ class Articulo
       $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB
       $updatePrecio = "UPDATE tbl_Articulos SET id_Precio = '$idNuevoPrecio', Modificado_Por = '$CreadoPor', Fecha_Modificacion = GETDATE()
         WHERE cod_Articulo = '$codArticulo'";
-      sqlsrv_query($abrirConexion, $insertPrecio);
+      sqlsrv_query($abrirConexion, $updatePrecio);
       if(sqlsrv_errors() === null) {
         return true;
       } else {
@@ -141,7 +140,7 @@ class Articulo
       $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB
       $insertProducto = "INSERT INTO tbl_Articulos(articulo, detalle, marca, existencia, Creado_Por, Fecha_Creacion, Modificado_Por, Fecha_Modificacion) 
           VALUES('$nuevoArticulo->Articulo', '$nuevoArticulo->Detalle','$nuevoArticulo->Marca',  
-          '$nuevoArticulo->Existencias', '$nuevoArticulo->Creado_Por', GETDATE(), '$nuevoArticulo->Creado_Por', GETDATE())";
+          '$nuevoArticulo->Existencias', '$nuevoArticulo->Creado_Por', GETDATE(), '$nuevoArticulo->Modificado_Por', GETDATE())";
       sqlsrv_query($abrirConexion, $insertProducto);
 
       //Obtenemos el CODIGO del producto recien creado
@@ -162,17 +161,22 @@ class Articulo
     }
 
     public static function editarArticulo($editarArticulo){
-        try {
-            $conn = new Conexion();
-            $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-            $update = "UPDATE tbl_Articulos SET articulo ='$editarArticulo->Articulo', detalle ='$editarArticulo->Detalle',
-              marca ='$editarArticulo->Marca', existencia = '$editarArticulo->Existencias', id_Precio = '$editarArticulo->Precio', Modificado_Por='$editarArticulo->Modificado_Por', Fecha_Modificacion = GETDATE() 
-              WHERE cod_Articulo ='$editarArticulo->codArticulo'";
+      $estado = false;
+      try {
+          $conn = new Conexion();
+          $abrirConexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
+          $update = "UPDATE tbl_Articulos SET articulo ='$editarArticulo->Articulo', detalle ='$editarArticulo->Detalle',
+            marca ='$editarArticulo->Marca', existencia = '$editarArticulo->Existencias', id_Precio = '$editarArticulo->Precio', Modificado_Por='$editarArticulo->Modificado_Por', Fecha_Modificacion = GETDATE() 
+            WHERE cod_Articulo ='$editarArticulo->codArticulo'";
             sqlsrv_query($abrirConexion, $update);
-        } catch (Exception $e) {
-            echo 'Error SQL:' . $e;
-        }
-        sqlsrv_close($abrirConexion); //Cerrar conexion
+            if(sqlsrv_errors() == null) {
+              $estado = true;
+            }
+      } catch (Exception $e) {
+          echo 'Error SQL:' . $e;
+      }
+      sqlsrv_close($abrirConexion); //Cerrar conexion
+      return $estado;
     }
 
     public static function obtenerArticuloPdf($buscar)

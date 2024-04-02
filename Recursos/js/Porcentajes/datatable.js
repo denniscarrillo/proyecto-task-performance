@@ -235,13 +235,13 @@ $(document).on("click", "#btn_eliminar", function () {
           console.log(data);
 
           // Verificar la respuesta del servidor
-          if (data === 'INACTIVO') {
+          if (data.includes('INACTIVO')) {
             Swal.fire(
               "¡Porcentaje Inactivado!",
               "El porcentaje no se ha podido eliminar, pero en su lugar ha sido inactivado.",
               "error"
             );
-          } else if (data === 'ELIMINADO') {
+          } else if(data.includes('ELIMINADO')) {
             Swal.fire(
               "¡Porcentaje Eliminado!",
               "El porcentaje ha sido eliminado.",
@@ -254,7 +254,6 @@ $(document).on("click", "#btn_eliminar", function () {
               "error"
             );
           }
-
           tablaPorcentajes.ajax.reload(null, false);
         },
         error: function () {
@@ -268,6 +267,7 @@ $(document).on("click", "#btn_eliminar", function () {
     } // Fin del AJAX
   });
 });
+
 
 
 

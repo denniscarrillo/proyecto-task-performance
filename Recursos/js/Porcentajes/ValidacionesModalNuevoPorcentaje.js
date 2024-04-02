@@ -114,28 +114,42 @@ let obtenerPorcentajeExiste = ($valorPorcentaje) => {
 $valor.addEventListener('keyup', ()=>{
     estadoSoloNumeros.estadoNumerosValorPorcentaje = funciones.validarSoloNumeros($valor, validaciones.soloNumeros);
     $("#valorPorcentaje").inputlimiter({
-        limit: 14
+        limit: 10
     });
 });
 
 $valor.addEventListener('keyup', ()=>{
     estadoMayorCero.estadoMayorCeroMeta = funciones.MayorACero($valor);
     $("#valorPorcentaje").inputlimiter({
-        limit: 14
+        limit: 10
     });
 });
 
 $valor.addEventListener('focusout', ()=>{
     estadoMayorCero.estadoMayorCeroMeta = funciones.MayorACero($valor);
     $("#valorPorcentaje").inputlimiter({
-        limit: 14
+        limit: 10
     });
+});
+
+$(document).on("keydown", "#valorPorcentaje", function (e) {
+    let key = e.keyCode || e.which;
+    // Permitir solo números positivos (código ASCII del 48 al 57 es 0-9)
+    if ((key < 48 || key > 57) && key != 46 && key != 8) {
+        e.preventDefault();
+    } else {
+        let currentValue = parseFloat(this.value + String.fromCharCode(key));
+        // Evitar números negativos o cero
+        if (currentValue <= 0 || isNaN(currentValue)) {
+            e.preventDefault();
+        }
+    }
 });
 
 $descripcion.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasDescripcionPorcentaje = funciones.validarSoloLetras($descripcion, validaciones.soloLetras);
     $("#descripcionPorcentaje").inputlimiter({
-        limit: 50
+        limit: 150
     });
     let descripcionMayus = $descripcion.value.toUpperCase();
      $descripcion.value = descripcionMayus; 

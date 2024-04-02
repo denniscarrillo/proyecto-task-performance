@@ -15,12 +15,14 @@ const validaciones = {
 
 let inputseditarParametro = {
    
+    valorParametro: document.getElementById('E_valor'),
     descripcionParametro: document.getElementById('E_descripcion')
 }
 let btnGuardar = document.getElementById('btn-editarsubmit');
 
 btnGuardar.addEventListener('click', () => {
   
+    validarInputValorParametro();
     validarInputDescripcionParametro();
     if (document.querySelectorAll(".mensaje_error").length == 0) 
     {
@@ -30,7 +32,15 @@ btnGuardar.addEventListener('click', () => {
     }
 });
 
+inputseditarParametro.valorParametro.addEventListener("keyup", ()=>{
+    validarInputValorParametro();
+    funciones.limitarCantidadCaracteres("E_valor", 100);
+})
 
+inputseditarParametro.descripcionParametro.addEventListener("keyup", ()=>{
+    validarInputDescripcionParametro();
+    funciones.limitarCantidadCaracteres("E_descripcion", 100);
+})
 
 let validarInputDescripcionParametro = function () {
     let descripcionParametroMayus = inputseditarParametro.descripcionParametro.value.toUpperCase();
@@ -50,6 +60,27 @@ let validarInputDescripcionParametro = function () {
     }
     if(estadoValidaciones.estadoNoMasdeUnEspacios) {
         estadoValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter(inputseditarParametro.descripcionParametro, validaciones.caracterMas3veces);
+    }
+}
+
+let validarInputValorParametro = function () {
+    let valorParametroMayus = inputseditarParametro.valorParametro.value.toUpperCase();
+    inputseditarParametro.valorParametro.value = valorParametroMayus;
+    let estadoValidaciones = {
+        estadoCampoVacio: false,
+        estadoSoloLetras: false,
+        estadoNoMasdeUnEspacios: false,
+        estadoNoCaracteresSeguidos: false
+    }
+    estadoValidaciones.estadoCampoVacio = funciones.validarCampoVacio(inputseditarParametro.valorParametro);
+    if(estadoValidaciones.estadoCampoVacio) {
+        estadoValidaciones.estadoSoloLetras = funciones.validarSoloLetras(inputseditarParametro.valorParametro, validaciones.soloLetras);
+    } 
+    if(estadoValidaciones.estadoSoloLetras) {
+        estadoValidaciones.estadoNoMasdeUnEspacios = funciones.validarMasdeUnEspacio(inputseditarParametro.valorParametro);
+    }
+    if(estadoValidaciones.estadoNoMasdeUnEspacios) {
+        estadoValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter(inputseditarParametro.valorParametro, validaciones.caracterMas3veces);
     }
 }
 

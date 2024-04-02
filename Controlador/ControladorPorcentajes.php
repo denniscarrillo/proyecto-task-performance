@@ -38,6 +38,8 @@ class ControladorPorcentajes
    public static function obtenerPorcentajePdf($buscar){
     return Porcentajes::obtenerPorcentajesPdf($buscar);
    }
-   
+   public static function VerificarRelaciones($idPorcentaje){
+    return Porcentajes::verificandoRelaciones($idPorcentaje);
+   }
 
 }

@@ -43,8 +43,6 @@ let procesarPermisoActualizar = data => {
       { "data": "comisionTotal", "render": $.fn.dataTable.render.number(',', '.', 2, ' Lps. ') },
       { "data": "estadoComisionar" },
       { "data": "estadoLiquidacion" },
-      // { "data": "estadoCobro" },
-      // { "data": "metodoPago" },
       {
         "data": 'fechaComision.date',
         "render": function (data) {
@@ -57,12 +55,6 @@ let procesarPermisoActualizar = data => {
           return data ? data.slice(0, 19) : '';
         },
       },
-      // {
-      //   "data": 'fechaCobro.date',
-      //   "render": function (data) {
-      //     return data ? data.slice(0, 19) : '';
-      //   },
-      // },
       {
         "defaultContent":
           `<div>
@@ -102,11 +94,10 @@ let obtenerPermisos = function ($idObjeto, callback) {
       success: callback
     });
 }
-/* {"idComision":1,"factura":13,"totalVenta":-11360.61,"porcentaje":".04","comisionTotal":"6.99","estadoComisionar":"Activa","fechaComision":{"date":"2023-09-11 00:00:00.000000","timezone_type":3,"timezone":"Europe\/Berlin"}} */
+
 //Editar Comision
 $(document).on("click", "#btn_editar", function(){
   let fila = $(this).closest("tr"),
-    itemComision = $(this).closest("tr").find("td:eq(0)").text(),
     idComision = $(this).closest("tr").attr("id"),
     idVenta = fila.find("td:eq(1)").text(),
     monto = fila.find("td:eq(2)").text(),
@@ -114,15 +105,13 @@ $(document).on("click", "#btn_editar", function(){
     comisionTotal = fila.find("td:eq(4)").text(),
     estadoComisionar = fila.find("td:eq(5)").text(),
     estadoLiquidacion = fila.find("td:eq(6)").text(),
-    // estadoCobro = fila.find("td:eq(7)").text(),
-    // metodoPago = fila.find("td:eq(8)").text(),
     fechaComision = fila.find("td:eq(7)").text(),
     fechaLiquidacion = fila.find("td:eq(8)").text();
     // fechaCobro = fila.find("td:eq(11)").text(); // Agregar punto y coma aquí
 
-  let inputId = document.getElementById('comisionid');
-  inputId.setAttribute("class", idComision);
-  $("#idComision_E").val(itemComision);
+  // let inputId = document.getElementById('comisionid');
+  // inputId.setAttribute("class", idComision);
+  $("#idComision_E").val(idComision);
   $("#idVenta_E").val(idVenta);
   $("#monto_E").val(monto);
   $("#porcentaje-comision_E").val(porcentaje);
@@ -142,8 +131,6 @@ $(document).on("click", "#btn_editar", function(){
 $("#form-Edit-Comision").submit(function (e) {
   e.preventDefault();
   let idComision = $("#idComision_E").val();
-  // let estadoComision = document.getElementById("estadoComision_E").value;
-  // let estadoCobro = document.getElementById("estadoCobro_E").value;
   let estadoLiquidacion = document.getElementById("estadoLiquidacion_E").value;
   // let metodoPago = document.getElementById("metodoPago_E").value;
   $.ajax({
@@ -151,8 +138,8 @@ $("#form-Edit-Comision").submit(function (e) {
     type: "POST",
     datatype: "JSON",
     data: {
-      idComision: comisionid,
-      estadoLiquidacion: estadoLiquidacion,
+      idComision: idComision,
+      estadoLiquidacion: estadoLiquidacion
     },
     success: function (data) {
       console.log(data);

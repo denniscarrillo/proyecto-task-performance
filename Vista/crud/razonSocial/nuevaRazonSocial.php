@@ -17,16 +17,12 @@
         $nuevaRazonSocial->CreadoPor = $user;
         ControladorRazonSocial::crearRazonSocial($nuevaRazonSocial);
         /* ========================= Evento Creacion nueva Razon Social. ======================*/
-        // $newBitacora = new Bitacora();
-        // $accion = ControladorBitacora::accion_Evento();
-        // date_default_timezone_set('America/Tegucigalpa');
-        // $newBitacora->fecha = date("Y-m-d h:i:s"); 
-        // $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionRazonSocial.php');
-        // $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-        // $newBitacora->accion = $accion['Insert'];
-        // $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' creo la nueva Razon Social '.'"'.$_POST['razonSocial'].' - '.$_POST['descripcion'].'"';
-        // ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-
+        $newBitacora = new Bitacora();
+        $accion = ControladorBitacora::accion_Evento();
+        $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionRazonSocial.php');
+        $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+        $newBitacora->accion = $accion['Insert'];
+        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' creo la Razon Social '.'"'.$_POST['razonSocial'];
+        ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
         /* =======================================================================================*/
     }
-?>

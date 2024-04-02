@@ -5,7 +5,7 @@ const validaciones = {
   soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
   correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
   soloMinisculas: /[A-Z]/g, //Valida cuando existen mayusculas en la cadena
-  soloNumeros: /^[0-9 ]*$/,
+  soloNumeros: /^[0-9 -]*$/,
   caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
   caracterMas5veces: /^(?=.*(...)\1)/,
   letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
@@ -40,9 +40,6 @@ $(document).ready(function () {
   }
   //Evento clic para hacer todas las validaciones
   document.getElementById("btn-guardar").addEventListener("click", () => {
-    funciones.transformarAMayusculas(inputsEditarTarea.titulo)
-    funciones.transformarAMayusculas(inputsEditarTarea.nombre)
-    funciones.transformarAMayusculas(inputsEditarTarea.direccion)
     validarInputs(funciones, $tipoCliente);
     if (
       document.querySelectorAll(".mensaje_error").length == 0 &&
@@ -55,20 +52,7 @@ $(document).ready(function () {
   $(document).on("click", "#btn_select-cliente", function () {
     validarInputs(funciones, $tipoCliente);
   });
-
-  //Evento keypress que solo permite ingresar numeros entre 0-9
-  $(document).on('keypress', '.cant-producto', function(event){
-    return funciones.permitirSoloNumeros(event)
-  })
-  //Evento keyup que si el valor del input ingresado es 0 lo setea a 1 de inmediato
-  $(document).on('keyup', '.cant-producto', function(){
-  const value = $(this).val()
-  if(parseInt(value) < 1 || value === '') {
-    $(this).val(1)
-  }
-  });
 });
-
 let optionExistente = document.getElementById("cliente-existente");
 optionExistente.addEventListener("change", function () {
   $tipoCliente = $tipoCliente = $radioButton[1].checked
@@ -92,24 +76,26 @@ optionNuevo.addEventListener("change", function () {
   });
 });
 //VALIDACIONES EN LOS DISTINTOS EVENTOS MIENTRAS EDITA =====================================================
-inputsEditarTarea.titulo.addEventListener("input", () => {
+inputsEditarTarea.titulo.addEventListener("keyup", () => {
   validarInputTitulo();
-  funciones.limitarCantidadCaracteres("input-titulo-tarea", 45);
+  funciones.limitarCantidadCaracteres("input-titulo-tarea", 50);
   funciones.convertirAMayusculasVisualmente(inputsEditarTarea.titulo)
 });
-inputsEditarTarea.rtn.addEventListener("keyup", () => {
+inputsEditarTarea.rtn.addEventListener('input', (event) => {
+  if (!funciones.RTN_guion(event)) {
+    event.preventDefault();
+}
   validarInputRTN($tipoCliente);
   funciones.limitarCantidadCaracteres("rnt-cliente", 20);
 });
-inputsEditarTarea.nombre.addEventListener("input", () => {
+inputsEditarTarea.nombre.addEventListener("keyup", () => {
   validarInputNombreCliente($tipoCliente);
   funciones.limitarCantidadCaracteres("nombre-cliente", 50);
-  funciones.convertirAMayusculasVisualmente(inputsEditarTarea.nombre)
 });
-inputsEditarTarea.nombre.addEventListener("keydown", () => {
-  funciones.soloLetrasConEspacios(inputsEditarTarea.nombre)
-});
-inputsEditarTarea.telefono.addEventListener("keyup", () => {
+inputsEditarTarea.telefono.addEventListener('input', (event) => {
+  if (!funciones.telefono_guion(event)) {
+    event.preventDefault();
+}
   validarInputTelefono();
   funciones.limitarCantidadCaracteres("telefono-cliente", 20);
 });
@@ -117,10 +103,9 @@ inputsEditarTarea.correo.addEventListener("keyup", () => {
   validarInputCorreo();
   funciones.limitarCantidadCaracteres("correo-cliente", 50);
 });
-inputsEditarTarea.direccion.addEventListener("input", () => {
+inputsEditarTarea.direccion.addEventListener("keyup", () => {
   validarInputDireccion();
   funciones.limitarCantidadCaracteres("direccion-cliente", 100);
-  funciones.convertirAMayusculasVisualmente(inputsEditarTarea.direccion)
 });
 inputsEditarTarea.clasificacionLead.addEventListener("change", () => {
   funciones.validarCampoVacio(inputsEditarTarea.clasificacionLead);

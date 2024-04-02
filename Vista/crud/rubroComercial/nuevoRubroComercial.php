@@ -17,16 +17,12 @@
         $nuevoRubroComercial->CreadoPor = $user;
         ControladorRubroComercial::crearRubroComercial($nuevoRubroComercial);
         /* ========================= Evento Creacion nueva Razon Social. ======================*/
-        // $newBitacora = new Bitacora();
-        // $accion = ControladorBitacora::accion_Evento();
-        // date_default_timezone_set('America/Tegucigalpa');
-        // $newBitacora->fecha = date("Y-m-d h:i:s"); 
-        // $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionRazonSocial.php');
-        // $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-        // $newBitacora->accion = $accion['Insert'];
-        // $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' creo la nueva Razon Social '.'"'.$_POST['razonSocial'].' - '.$_POST['descripcion'].'"';
-        // ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-
+        $newBitacora = new Bitacora();
+        $accion = ControladorBitacora::accion_Evento();
+        $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('GESTIONRUBROCOMERCIAL.PHP');
+        $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+        $newBitacora->accion = $accion['Insert'];
+        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' creo el rubro comercial #'.$_POST['rubroComercial'];
+        ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
         /* =======================================================================================*/
     }
-?>

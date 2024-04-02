@@ -10,14 +10,13 @@ $(document).ready(function () {
 //Recibe la respuesta de la peticion AJAX y la procesa
 let procesarPermisoActualizar = (data) => {
   let permisos = JSON.parse(data);
-  // console.log(permisos);
   tablaArticulo = $("#table-Articulos").DataTable({
     ajax: {
       url: "../../../Vista/crud/articulo/obtenerArticulo.php",
       dataSrc: "",
     },
     language: {
-      url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
+      url: "../../../Recursos/js/librerias/dataTableLanguage_es_ES.json",
     },
     scrollX: true,
     fnCreatedRow: function(rowEl, data) {
@@ -47,6 +46,33 @@ let procesarPermisoActualizar = (data) => {
           }" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button>`,
       },
     ],
+  });
+  let filtro = document.querySelector('input[type=search]');
+};
+
+$(document).on("focusout", "input[type=search]", function (e) {
+  let filtro = $(this).val();
+  capturarFiltroDataTable(filtro);
+});
+const capturarFiltroDataTable = function(filtro){
+  if(filtro.trim()){
+    $.ajax({
+      url: "../../../Vista/crud/articulo/registrarBitacoraFiltroArticulo.php",
+      type: "POST",
+      data: {
+        filtro: filtro
+      }
+    })
+  }
+}
+
+let obtenerPermisos = function ($idObjeto, callback) {
+  $.ajax({
+    url: "../../../Vista/crud/permiso/obtenerPermisos.php",
+    type: "POST",
+    datatype: "JSON",
+    data: { idObjeto: $idObjeto },
+    success: callback,
   });
 };
 
@@ -95,6 +121,14 @@ $(document).on("click", "#btn_Pdf", function () {
   );
 });
 
+document.getElementById("btn-cerrar").addEventListener("click", () => {
+  limpiarForm();
+});
+
+document.getElementById("btn-x").addEventListener("click", () => {
+  limpiarForm();
+});
+
 $(document).on("click", "#btn_editar", function () {
   let fila = $(this).closest("tr"),
     itemArticulo = $(this).closest("tr").find("td:eq(0)").text(),
@@ -120,16 +154,14 @@ $(document).on("click", "#btn_editar", function () {
 
 $("#form_EditarArticulo").submit(function (e) {
   e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
-  //Obtener datos del nuevo Cliente
+  //Obtener datos del producto
   let codArticulo = $('#A_CodArticulo').val(),
       articulo = $("#A_Articulo").val(),
       detalle = $("#A_Detalle").val(),
       marca = $("#A_Marca").val(),
       precio = $("#precios").val(),
       existencias = $("#A_Existencias").val();
-
   if (estadoValido) {
-    
     $.ajax({
       url: "../../../Vista/crud/articulo/editarArticulo.php",
       type: "POST",
@@ -143,11 +175,16 @@ $("#form_EditarArticulo").submit(function (e) {
         existencias: existencias
       },
       success: function (res) {
-        //Mostrar mensaje de exito
-        Swal.fire("Actualizado!", "El Artículo ha sido modificado!", "success");
-        tablaArticulo.ajax.reload(null, false);
+        if(Boolean(!res)) {
+          Swal.fire("Actualizado", "El Artículo ha sido modificado", "success");
+          tablaArticulo.ajax.reload(null, false);
+        } else {
+          Swal.fire("Lo sentimos", "No fue posible actualizar el articulo", "error");
+          tablaArticulo.ajax.reload(null, false);
+        }
       },
     });
+    
     $("#modalEditarArticulo").modal("hide");
   }
 });
@@ -170,7 +207,10 @@ $(document).on("click", "#btn_eliminar", function () {
         url: "../../../Vista/crud/articulo/eliminarArticulo.php",
         type: "POST",
         datatype: "JSON",
-        data: { codArticulo: codArticulo },
+        data: { 
+          codArticulo: codArticulo,
+          articulo: nombreArticulo
+        },
         success: function (data) {
           console.log(JSON.parse(data).estadoEliminado)
           if (JSON.parse(data).estadoEliminado) {
@@ -178,7 +218,7 @@ $(document).on("click", "#btn_eliminar", function () {
             tablaArticulo.ajax.reload(null, false);
           } else {
             Swal.fire(
-              "Lo sentimos",
+              "¡Lo sentimos!",
               "El artículo no puede ser eliminado",
               "error"
             );
@@ -187,22 +227,6 @@ $(document).on("click", "#btn_eliminar", function () {
       }); //Fin del AJAX
     }
   });
-});
-
-document.getElementById("btn-cerrar").addEventListener("click", () => {
-  limpiarForm();
-});
-
-document.getElementById("btn-x").addEventListener("click", () => {
-  limpiarForm();
-});
-
-document.getElementById("btn-cerrar-modal-editar").addEventListener("click", () => {
-  limpiarForm();
-});
-
-document.getElementById("btn-x-modal-editar").addEventListener("click", () => {
-  limpiarForm();
 });
 
 let limpiarForm = () => {
@@ -215,27 +239,32 @@ let limpiarForm = () => {
     $mensaje.innerText = "";
   });
 
-  //Vaciar campos cliente
+  //Vaciar campos articulo
   $("#Articulo").val('')
   $("#Detalle").val('')
   $("#Marca").val('')
   $("#precio").val('')
   $("#existencias").val('')
 };
-//Limpiar modal de editar
-// document.getElementById('button-cerrar').addEventListener('click', ()=>{
-//   limpiarFormEdit();
-// })
-// document.getElementById('button-x').addEventListener('click', ()=>{
-//   limpiarFormEdit();
-// })
-// let limpiarFormEdit = () => {
-//   let $inputs = document.querySelectorAll('.mensaje_error');
-//   let $mensajes = document.querySelectorAll('.mensaje');
-//   $inputs.forEach($input => {
-//     $input.classList.remove('mensaje_error');
-//   });
-//   $mensajes.forEach($mensaje =>{
-//     $mensaje.innerText = '';
-//   });
-// }
+
+const eliminarArticulo = (codArticulo) => {
+  $.ajax({
+    url: "../../../Vista/crud/articulo/eliminarArticulo.php",
+    type: "POST",
+    datatype: "JSON",
+    data: { codArticulo: codArticulo},
+    success: function (data) {
+      console.log(JSON.parse(data).estadoEliminado)
+      if (JSON.parse(data).estadoEliminado) {
+        Swal.fire("Eliminado!", "El artículo ha sido eliminado", "success");
+        tablaArticulo.ajax.reload(null, false);
+      } else {
+        Swal.fire(
+          "Lo sentimos",
+          "El artículo no puede ser eliminado",
+          "error"
+        );
+      }
+    },
+  }); //Fin del AJAX
+}
