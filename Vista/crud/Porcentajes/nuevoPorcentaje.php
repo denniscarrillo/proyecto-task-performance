@@ -25,7 +25,7 @@
         $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionPorcentajes.php');
         $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
         $newBitacora->accion = $accion['Insert'];
-        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' creo el nuevo porcentaje '.'"'.$_POST['descripcionPorcentaje'].' - '.$_POST['valorPorcentaje'].'"';
+        $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' creo el nuevo porcentaje '.''.$_POST['descripcionPorcentaje'].'  '.$_POST['valorPorcentaje'].'';
         ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
 
         /* =======================================================================================*/

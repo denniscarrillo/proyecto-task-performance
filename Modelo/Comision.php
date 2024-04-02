@@ -38,9 +38,6 @@ class Comision
                 'estadoLiquidacion' => $fila["estado_Liquidacion"],
                 'fechaComision' => $fila["Fecha_Creacion"],
                 'fechaLiquidacion' => $fila["fecha_Liquidacion"]
-                // 'estadoCobro' => $fila["estado_Cobro_venta"],
-                // 'fechaCobro' => $fila["fecha_Cobro"],
-                // 'metodoPago' => $fila["metodo_de_Pago"]
             ];
         }
         sqlsrv_close($consulta); #Cerramos la conexión.
@@ -272,71 +269,51 @@ class Comision
         return $estadoVenta;
     }
 
-    public static function editarComision($nuevaComision)
-{
-    $conn = new Conexion();
-    $consulta = $conn->abrirConexionDB(); // Abrimos la conexión a la DB.
-
-    // Obtener el estado_Cobro_venta y fecha_cobro actual
-    $queryEstadoActual = "SELECT estado_Liquidacion, fecha_Liquidacion FROM tbl_comision WHERE id_Comision = '$nuevaComision->idComision';";
-    $resultEstadoActual = sqlsrv_query($consulta, $queryEstadoActual);
-
-    if ($resultEstadoActual === false) {
-        die(print_r(sqlsrv_errors(), true)); // Manejo de errores
-    }
-
-    $rowEstadoActual = sqlsrv_fetch_array($resultEstadoActual);
-    $estadoActual = $rowEstadoActual['estado_Cobro_venta'];
-    $estadoActual2 = $rowEstadoActual['estado_Liquidacion'];
-    // $fechaCobroActual = $rowEstadoActual['fecha_cobro'];
-    $fechaLiquidacionActual = $rowEstadoActual['fecha_Liquidacion'];
-
-    // Actualizar tbl_comision
-    $query1 = "UPDATE tbl_comision 
-               SET estado_Liquidacion = '$nuevaComision->estadoLiquidacion', 
-                --    estado_Cobro_venta = '$nuevaComision->estadoCobro', 
-                --    metodo_de_Pago = '$nuevaComision->metodoPago', 
-                   Modificado_Por ='$nuevaComision->ModificadoPor', 
-                   Fecha_Modificacion = GETDATE()";
-
-    // Agregar la condición para actualizar la fecha_Liquidacion solo si estado_Liquidacion cambia
-    if ($nuevaComision->estadoLiquidacion != $estadoActual2) {
-        $query1 .= ", fecha_Liquidacion = GETDATE()";
-    }
-
-    // // Agregar la condición para actualizar la fecha_cobro solo si estado_Cobro_venta cambia
-    // if ($estadoActual != $nuevaComision->estadoCobro) {
-    //     $query1 .= ", fecha_Cobro = GETDATE()";
-    // }
-
-    // $query1 .= " WHERE id_Comision = '$nuevaComision->idComision';";
-
-    // $result1 = sqlsrv_query($consulta, $query1);
-
-    // if ($result1 === false) {
-    //     die(print_r(sqlsrv_errors(), true)); // Manejo de errores
-    // }
-
-    // Actualizar tbl_comision_por_vendedor
-    $query2 = "UPDATE tbl_comision_por_vendedor 
-               SET 
-                   Modificado_Por ='$nuevaComision->ModificadoPor'";
-
-    // Agregar la condición para actualizar la fecha_cobro solo si estado_Cobro_venta cambia
-    // if ($estadoActual != $nuevaComision->estadoCobro) {
-    //     $query2 .= ", fecha_cobro = GETDATE()";
-    // }
-
-    // $query2 .= " WHERE id_Comision = '$nuevaComision->idComision';";
-
-    // $result2 = sqlsrv_query($consulta, $query2);
-
-    // if ($result2 === false) {
-    //     die(print_r(sqlsrv_errors(), true)); // Manejo de errores
-    // }
-
-    sqlsrv_close($consulta); // Cerramos la conexión.
-}
+    public static function editarComision($nuevaComision){
+        $conn = new Conexion();
+        $consulta = $conn->abrirConexionDB(); // Abrimos la conexión a la DB.
+    
+        // Obtener el estado_Liquidacion actual y fecha_Liquidacion actual de la comisión
+        $queryEstadoActual = "SELECT estado_Liquidacion, fecha_Liquidacion FROM tbl_comision WHERE id_Comision = '$nuevaComision->idComision';";
+        $resultEstadoActual = sqlsrv_query($consulta, $queryEstadoActual);
+    
+        if ($resultEstadoActual === false) {
+            die(print_r(sqlsrv_errors(), true)); // Manejo de errores
+        }
+    
+        $rowEstadoActual = sqlsrv_fetch_array($resultEstadoActual);
+        $estadoActual = $rowEstadoActual['estado_Liquidacion'];
+        $fechaLiquidacionActual = $rowEstadoActual['fecha_Liquidacion'];
+    
+        // Actualizar tbl_comision
+        $query1 = "UPDATE tbl_comision 
+                   SET estado_Liquidacion = '$nuevaComision->estadoLiquidacion', 
+                       Modificado_Por = '$nuevaComision->ModificadoPor', 
+                       Fecha_Modificacion = GETDATE()";
+    
+        // Agregar la condición para actualizar la fecha_Liquidacion solo si estado_Liquidacion cambia
+        if ($nuevaComision->estadoLiquidacion != $estadoActual) {
+            $query1 .= ", fecha_Liquidacion = GETDATE()";
+        }
+    
+        $query1 .= " WHERE id_Comision = '$nuevaComision->idComision';";
+    
+        // Actualizar tbl_comision_por_vendedor
+        $query2 = "UPDATE tbl_comision_por_vendedor 
+                   SET estado_Liquidacion = '$nuevaComision->estadoLiquidacion',
+                   fecha_Liquidacion = GETDATE()
+                   WHERE id_Comision = '$nuevaComision->idComision';";
+    
+        // Ejecutar las consultas
+        $result1 = sqlsrv_query($consulta, $query1);
+        $result2 = sqlsrv_query($consulta, $query2);
+    
+        if ($result1 === false || $result2 === false) {
+            die(print_r(sqlsrv_errors(), true)); // Manejo de errores
+        }
+    
+        sqlsrv_close($consulta); // Cerramos la conexión.
+    }    
 
     
 
