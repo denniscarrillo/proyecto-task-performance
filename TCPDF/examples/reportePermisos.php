@@ -81,13 +81,14 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de Permisos</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 50px;">N°</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 200px;">ROL</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 30px;">N°</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 130px;">ROL</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 260x;">OBJETO</td>   
 <td style="background-color: #e54037;color: white; text-align: center; width: 110px;">CONSULTAR</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 110px;">INSERTAR</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 110px;">ACTUALIZAR</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 110px;">ELIMINAR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 85px;">ELIMINAR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 85px;">REPORTE</td>
 </tr>
 ';
 $permisos = ControladorPermiso::obtenerPermisosPDF(trim($_GET['buscar']));
@@ -98,6 +99,7 @@ foreach($permisos as $permiso){
     $insertar = $permiso['insertar'];
     $actualizar = $permiso['actualizar'];
     $eliminar = $permiso['eliminar'];
+    $reporte = $permiso['reporte'];
     $Cont++;
     $html .= '
     <tr>
@@ -108,6 +110,7 @@ foreach($permisos as $permiso){
     <td style="text-align: center">'.$insertar.'</td>
 	<td style="text-align: center">'.$actualizar.'</td>
 	<td style="text-align: center">'.$eliminar.'</td>
+    <td style="text-align: center">'.$reporte.'</td>
     </tr>
     ';
     
