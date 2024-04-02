@@ -116,7 +116,7 @@ $form.addEventListener('submit', e => {
 
 $name.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
-    funciones.limitarCantidadCaracteres("nombre", 20 );
+    funciones.limitarCantidadCaracteres("nombre", 100 );
 });
 $name.addEventListener('focusout', ()=>{
     if(estadoMasdeUnEspacio.estadoMasEspacioNombre){
@@ -129,7 +129,7 @@ $name.addEventListener('focusout', ()=>{
 $user.addEventListener('keyup', () => {
     estadoEspacioInput.estadoEspacioUser = funciones.validarEspacios($user);
     //Validación con jQuery inputlimiter
-    funciones.limitarCantidadCaracteres("usuario", 15 );
+    funciones.limitarCantidadCaracteres("usuario", 25 );
 });
 // Convierte usuario en mayúsuculas antes de enviar.
 $user.addEventListener('focusout', () => {
@@ -149,7 +149,14 @@ $password.addEventListener('keyup', () => {
     if(estadoEspacioInput.estadoEspacioPassword){
         estadoPassword.estadoPassword1 = funciones.validarPassword($password, validaciones.password);
     }
-    funciones.limitarCantidadCaracteres("password", 20 );
+    funciones.limitarCantidadCaracteres("password", 25 );
+});
+$confirmarContrasenia.addEventListener('keyup', () => {
+    estadoEspacioInput.estadoEspacioPassword= funciones.validarEspacios($confirmarContrasenia);
+    if(estadoEspacioInput.estadoEspacioPassword){
+        estadoPassword.estadoPassword1 = funciones.validarPassword($confirmarContrasenia, validaciones.password);
+    }
+    funciones.limitarCantidadCaracteres("password2", 25 );
 });
 //Evento que llama a la función para validar que la contraseña sea robusta.
 $password.addEventListener('focusout',() => {
@@ -166,6 +173,7 @@ $confirmarContrasenia.addEventListener('focusout', ()=>{
 });
 $correo.addEventListener('keyup', ()=>{
     estadoCorreo = funciones.validarCorreo($correo, validaciones.correo);
+    funciones.limitarCantidadCaracteres("correo", 50 );
 });
 $correo.addEventListener('focusout', ()=>{
     if(estadoCorreo){

@@ -123,7 +123,7 @@ $ubicacion.addEventListener('keyup', ()=>{
 });
 $Avance.addEventListener('keyup', ()=>{
     estadoSoloLetras.estadoLetrasAvance= funciones.validarSoloLetras($Avance, validaciones.soloLetras);
-   funciones.limitarCantidadCaracteres("E_AvanceSolicitud", 30);
+   funciones.limitarCantidadCaracteres("E_AvanceSolicitud", 15);
 });
 // $descripcion.addEventListener('focusout', ()=>{
 //     if(estadoMasdeUnEspacio.estadoMasEspaciodescripcion){

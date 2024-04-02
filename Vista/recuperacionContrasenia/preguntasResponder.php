@@ -49,7 +49,7 @@ if (isset($_SESSION['usuario'])) {
           ?>
         </select>
         <div class="wrap-input mb-3">
-          <input type="text" class="form-control" name="Respuesta" id="Respuesta" maxlength="50"
+          <input type="text" class="form-control" name="Respuesta" id="Respuesta" maxlength="100"
             placeholder="Respuesta">
           <p class="mensaje"></p>
         </div>

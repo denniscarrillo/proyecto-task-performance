@@ -36,7 +36,7 @@ require_once('../../Controlador/ControladorParametro.php');
                     <span class="conteiner-icon">
                         <i class="icon fa-solid fa-user"></i>
                     </span>
-                    <input type="text" class="form-control" id="usuario" name="usuario" maxlength="15"
+                    <input type="text" class="form-control" id="usuario" name="usuario" maxlength="25"
                         placeholder="Usuario">
                     <p class="mensaje"></p>
                 </div>

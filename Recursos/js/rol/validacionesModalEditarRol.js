@@ -26,7 +26,7 @@ $(document).ready(function (){
 
 inputEditarRol.descripcion.addEventListener("keyup", ()=>{
     validarInputDescripcion();
-    funciones.limitarCantidadCaracteres("E_descripcion", 70);
+    funciones.limitarCantidadCaracteres("E_descripcion", 45);
 })
 let validarInputDescripcion = () =>{
     inputEditarRol.descripcion.value = inputEditarRol.descripcion.value.toUpperCase();

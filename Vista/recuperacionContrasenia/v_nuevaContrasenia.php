@@ -43,11 +43,11 @@ require_once('../../Controlador/ControladorParametro.php');
       }
       ?>
       <div class="wrap-input mt-1">
-        <input type="password" class="form-control" name="password" id="password" placeholder="Nueva contraseña">
+        <input type="password" class="form-control" name="password" id="password"  placeholder="Nueva contraseña" maxlength="25">
         <p class="mensaje mb-0"></p>
       </div>
       <div class="wrap-input mb-0">
-        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" maxlength="25"
           placeholder="Confirmar contraseña">
         <p class="mensaje mb-0"></p>
       </div>
