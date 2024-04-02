@@ -264,9 +264,7 @@ let limpiarFormEdit = () => {
 
 //Generar reporte PDF
 $(document).on("click", "#btn_Pdf", function () {
-  let buscar = $(
-    "#table-RubroComercial_filter > label > input[type=search]"
-  ).val();
+  let buscar = $("#table_RubroComercial_filter > label > input[type=search]").val();
   window.open(
     "../../../TCPDF/examples/reporteRubroComercial.php?buscar=" + buscar,
     "_blank"

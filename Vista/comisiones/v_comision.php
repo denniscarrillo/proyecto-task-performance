@@ -19,10 +19,11 @@ require_once('../../Controlador/ControladorParametro.php');
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <link href="../../Recursos/css/gestionComision.css" rel="stylesheet" />
   <link href='../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
+  <link href='../../Recursos/css/modalVerIdComision.css' rel='stylesheet'>
   <link href='../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href='../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <link href='../../Recursos/css/layout/footer.css' rel='stylesheet'>
-  <link href='../../Recursos/css/modalVerIdComision.css' rel='stylesheet'>
+  
   <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
   <title> Comision </title>
 </head>
@@ -65,6 +66,7 @@ require_once('../../Controlador/ControladorParametro.php');
         $urlImg = '../../Recursos/' . ControladorParametro::obtenerUrlLogo();
         $urlRazonSocial = '../crud/RazonSocial/gestionRazonSocial.php';
         $urlRubroComercial = '../crud/rubroComercial/gestionRubroComercial.php';
+        $urlRestoreBackup = '../crud/backupAndRestore/gestionBackupRestore.php';
         require_once '../layout/sidebar.php';
         ?>
       </div>

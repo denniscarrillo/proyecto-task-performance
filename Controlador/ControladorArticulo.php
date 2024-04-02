@@ -17,9 +17,8 @@ class ControladorArticulo {
         Articulo::registroNuevoArticulo($nuevoArticulo);
     }
 
-    
     public static function editarArticulo($editarArticulo){
-        Articulo::editarArticulo($editarArticulo);
+        return Articulo::editarArticulo($editarArticulo);
     }
 
     public static function eliminarArticulo($CodArticulo){
@@ -32,10 +31,6 @@ class ControladorArticulo {
 
     public static function nuevoPrecioArticulo($codArticulo,  $nuevoPrecio, $CreadoPor) {
         return Articulo::nuevoPrecioArticulo($codArticulo,  $nuevoPrecio, $CreadoPor);
-    }
-
-    public static function actualizarPrecioArticulo($codArticulo, $idNuevoPrecio, $CreadoPor) {
-        return Articulo::actualizarPrecioArticulo($codArticulo,  $idNuevoPrecio, $CreadoPor);
     }
 
     public static function actualizarEstadoPrecio($idPrecio, $CodArticulo, $nuevoEstado, $CreadoPor) {

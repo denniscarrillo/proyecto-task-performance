@@ -93,9 +93,9 @@ $(document).on("click", "#btn_PDFid", function () {
 //Reabrir una tarea finalizada
 $(document).on("click", "#btn-abrir-tarea", function () {
   let fila = $(this);
-  let tarea = $(this).closest("tr").find("td:eq(0)").text();
+  let tarea = $(this).closest("tr").attr('id');
   let estadoFinalizacion = $(this).closest("tr").find("td:eq(6)").text();
-  if (estadoFinalizacion == "Finalizada") {
+  if (estadoFinalizacion == "FINALIZADA") {
     Swal.fire({
       title: "Estas seguro de reabrir la tarea # " + tarea + "?",
       text: "No podras revertir esto!",
@@ -134,7 +134,7 @@ $(document).on("click", "#btn-abrir-tarea", function () {
         }); //Fin del AJAX
       }
     });
-  } else if (estadoFinalizacion == "Reabierta") {
+  } else if (estadoFinalizacion == "REABIERTA") {
     Toast.fire({
       icon: "error",
       title: "La tarea ya fue reabierta",
@@ -149,9 +149,9 @@ $(document).on("click", "#btn-abrir-tarea", function () {
 //Finalizar una tarea pendiente o reabierta, la acción solo la podrá realizar el SUPERADMIN
 $(document).on("click", "#btn-finalizar-tarea", function () {
   let fila = $(this);
-  let tarea = $(this).closest("tr").find("td:eq(0)").text();
+  let tarea = $(this).closest("tr").attr('id');
   let estadoFinalizacion = $(this).closest("tr").find("td:eq(6)").text();
-  if (estadoFinalizacion == "Pendiente" || estadoFinalizacion == "Reabierta") {
+  if (estadoFinalizacion == "PENDIENTE" || estadoFinalizacion == "REABIERTA") {
     Swal.fire({
       title: "¿Estás seguro de finalizar la tarea # " + tarea + "?",
       text: "¡No podrás revertir esto!",
@@ -191,7 +191,7 @@ $(document).on("click", "#btn-finalizar-tarea", function () {
         }); //Fin del AJAX
       }
     });
-  } else if (estadoFinalizacion == "Finalizada") {
+  } else if (estadoFinalizacion == "FINALIZADA") {
     Toast.fire({
       icon: "error",
       title: "La tarea ya fue finalizada",

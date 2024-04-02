@@ -168,4 +168,29 @@ class Porcentajes {
         sqlsrv_close($consulta); #Cerramos la conexión.
         return $Porcent;
     }
+    public static function verificandoRelaciones($idPorcentaje) {
+        $conn = new Conexion();
+        $conexion = $conn->abrirConexionDB();
+    
+        // Consulta para verificar si el porcentaje tiene relaciones en otras tablas
+        $query = "SELECT COUNT(*) AS num_relaciones FROM tbl_Comision WHERE idPorcentaje = '$idPorcentaje'";
+        $params = array($idPorcentaje);
+        $stmt = sqlsrv_query($conexion, $query, $params);
+    
+        if ($stmt === false) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+    
+        // Obtener el resultado de la consulta
+        $numRelaciones = 0;
+        if ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+            $numRelaciones = $row['num_relaciones'];
+        }
+    
+        // Cerrar la conexión
+        sqlsrv_close($conexion);
+    
+        // Devolver true si tiene relaciones, false si no tiene
+        return $numRelaciones > 0;
+    }
 }
