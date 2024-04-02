@@ -1,4 +1,3 @@
-
 /**
  * Valida que no se incluyan espacios entre palabras
  * @param {HTMLElement} elemento 
@@ -362,6 +361,21 @@ export const RTN_guion = (event) => {
         // Actualizar el valor del input con el formato aplicado
         event.target.value = formato;
 };
+
+export const telefono_guion = (event) => {
+    // Obtener el valor actual del input y eliminar caracteres no numéricos
+    var formato = event.target.value.replace(/\D/g, '');
+
+    // Aplicar formato a los dos primeros grupos de 4 números
+    if (formato.length > 8) {
+      formato = formato.slice(0, 4) + '-' + formato.slice(4, 8) + formato.slice(8);;
+    } else if (formato.length > 4) {
+      formato = formato.slice(0, 4) + '-' + formato.slice(4);
+    }
+    // Actualizar el valor del input con el formato aplicado
+    event.target.value = formato;
+};
+
 
 
 /**

@@ -196,6 +196,13 @@ $rtn.addEventListener('input', (event) => {
     }
 });
 
+$telefono.addEventListener('input', (event) => {
+    if (!funciones.telefono_guion(event)) {
+        event.preventDefault();
+    }
+    funciones.limitarCantidadCaracteres("telefono", 20 );
+});
+
  $direccion.addEventListener('keyup', ()=>{
     estadoLetrasRepetidas.estadoLetrasRepetidasDireccion = funciones.limiteMismoCaracter($direccion, validaciones.MismoCaracter);
     

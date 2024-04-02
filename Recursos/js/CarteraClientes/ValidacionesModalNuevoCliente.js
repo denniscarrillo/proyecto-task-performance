@@ -47,7 +47,10 @@ inputNuevoCliente.rtn.addEventListener('input', (event) => {
   validarInputRTN();
   funciones.limitarCantidadCaracteres("rtn", 20);
 });
-inputNuevoCliente.telefono.addEventListener("keyup", ()=>{
+inputNuevoCliente.telefono.addEventListener('input', (event)=>{
+  if (!funciones.telefono_guion(event)) {
+    event.preventDefault();
+}
     validarInputTelefono();
     funciones.limitarCantidadCaracteres("telefono", 20);
 })
@@ -187,4 +190,3 @@ let validarInputDireccion = () =>{
   estadoValidacion.estMismoCaracter
     ? funciones.caracteresMinimo(inputNuevoCliente.direccion, 10):"";
 }
-
