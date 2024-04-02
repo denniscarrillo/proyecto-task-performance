@@ -130,6 +130,7 @@ if (isset($_SESSION['usuario'])) {
                 $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
                 $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
                 $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
+                $urlRestoreBackup = '../backupAndRestore/gestionBackupRestore.php';
                 require_once '../../layout/sidebar.php';
                 ?>
       </div>
@@ -168,7 +169,7 @@ if (isset($_SESSION['usuario'])) {
               </div>
               <div class="form-element input-conteiner" id="containerrtncliente">
                 <label for="rtn-cliente" class="form-label" id="" name="codC"  >RTN:</label>
-                <input type="text" id="rtnCliente" name="rtnCliente" class="form-control" placeholder="RTN" disabled>
+                <input type="text" id="rtnCliente" name="rtnCliente" class="form-control" placeholder="RTN" maxlength="20">
                 <p class="mensaje"></p>
               </div>
               <div class="form-element input-conteiner">

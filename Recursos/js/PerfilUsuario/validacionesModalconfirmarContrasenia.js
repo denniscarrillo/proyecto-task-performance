@@ -57,41 +57,37 @@ $form.addEventListener('submit', e => {
     // Comprobamos que todas las validaciones se hayan cumplido 
     if ( estadoInputPassword == false || estadoInputConfirmarContrasenia == false ) {
         e.preventDefault();
-    } else {
-        if(estadoEspacioInput.estadoEspacioUser == false || estadoEspacioInput.estadoEspacioPassword == false){ 
-            e.preventDefault();
-            estadoEspacioInput.estadoEspacioPassword = funciones.validarEspacios($password); 
-            estadoEspacioInput.estadoEspacioUser = funciones.validarEspacios($user);
-        } else {
-            estadoMasdeUnEspacio.estadoMasEspacioNombre = funciones.validarMasdeUnEspacio($name);
-            console.log(estadoMasdeUnEspacio.estadoMasEspacioNombre);
-            if(estadoMasdeUnEspacio.estadoMasEspacioNombre == false){
-                e.preventDefault();
-                console.log(estadoMasdeUnEspacio.estadoMasEspacioNombre);
-            } else {
-                if( estadoPassword.estadoPassword1 == false || estadoPassword.estadoPassword2 == false){
-                    e.preventDefault();
-                    estadoPassword.estadoPassword1= funciones.validarPassword($password, validaciones.password);
-                    estadoPassword.estadoPassword2= funciones.validarCoincidirPassword($password, $confirmarContrasenia);
-                    } else {
-                            estadoValidado = true;
-                    }
-                
-             }
-            
-          
+    }else{
+        if (estadoPasswordSegura.estadoPassword == false ) {
+            estadoPasswordSegura.estadoPassword = funciones.validarPassword($password, expresiones.password);
+        }                
         }
+    });
+    $password2.addEventListener('keyup',() =>{
+        funciones.validarCoincidirPassword($password, $password2);
+        funciones.limitarCantidadCaracteres("confirmPassword", 15);
+    });
+    $password.addEventListener('keyup', () => {
+        funciones.validarPassword($password, expresiones.password);
+        funciones.limitarCantidadCaracteres("password", 15);
+    });
+        
+$form.addEventListener('submit', e =>{
+    let mensaje = '';
+    let div = '';
+    if($password.value != $password2.value){
+        div = $password2.parentElement 
+        mensaje = div.querySelector('p');
+        mensaje.innerText = '*Las Contraseñas no coinciden';
+        $password2.classList.add('mensaje_error');
+    } 
+    else {
+        $password2.classList.remove('mensaje_error');
+        mensaje.innerText = '';
     }
-});
-
-
-//Evento que llama a la función que valida espacios entre caracteres.
-$password.addEventListener('keyup', () => {
-    estadoEspacioInput.estadoEspacioPassword= funciones.validarEspacios($password);
-    if(estadoEspacioInput.estadoEspacioPassword){
-        estadoPassword.estadoPassword1 = funciones.validarPassword($password, validaciones.password);
+    if ($password.value != $password2.value) {
+        e.preventDefault();
     }
-    funciones.limitarCantidadCaracteres("password", 20 );
 });
 //Evento que llama a la función para validar que la contraseña sea robusta.
 $password.addEventListener('focusout',() => {

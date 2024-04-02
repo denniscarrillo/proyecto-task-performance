@@ -998,7 +998,7 @@ class Tarea
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
         $estadoReabierto = false;
-        $query ="UPDATE tbl_Tarea SET estado_Finalizacion = 'Reabierta', fecha_Finalizacion = GETDATE() WHERE id_Tarea = '$idTarea';";
+        $query ="UPDATE tbl_Tarea SET estado_Finalizacion = 'REABIERTA' WHERE id_Tarea = '$idTarea';";
         if(sqlsrv_rows_affected(sqlsrv_query($conexion, $query)) > 0){
             $estadoReabierto = true;
         }

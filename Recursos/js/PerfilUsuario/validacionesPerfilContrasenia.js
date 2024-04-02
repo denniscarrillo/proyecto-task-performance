@@ -42,11 +42,11 @@ $(document).ready(function () {
      });
      $password2.addEventListener('keyup',() =>{
          funciones.validarCoincidirPassword($password, $password2);
-         funciones.limitarCantidadCaracteres("confirmPassword", 15);
+         funciones.limitarCantidadCaracteres("confirmPassword", 25);
      });
      $password.addEventListener('keyup', () => {
          funciones.validarPassword($password, expresiones.password);
-         funciones.limitarCantidadCaracteres("password", 15);
+         funciones.limitarCantidadCaracteres("password", 25);
      });
         
  $form.addEventListener('submit', e =>{
