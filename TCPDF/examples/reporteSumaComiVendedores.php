@@ -85,7 +85,7 @@ $html = '
 <p style="text-align: left; font-size: 14px;"><b>Comisiones totales por vendedores del: '.$fechaDesdeR.' al: '.$fechaHastaR.'</b></p>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 110px">ID VENDEDOR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 110px">No. VENDEDOR</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 100px;">VENDEDOR</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 130px;">COMISIÓN TOTAL</td>
 </tr>

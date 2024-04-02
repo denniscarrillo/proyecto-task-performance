@@ -74,7 +74,7 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de Solicitudes</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 40px;">ID</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 40px;">No.</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 243px;">NOMBRE CLIENTE</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 190px;">SERVICIO TÉCNICO</td>
 <td style="background-color: #e54037;color: white; text-align: center">TELÉFONO</td>
