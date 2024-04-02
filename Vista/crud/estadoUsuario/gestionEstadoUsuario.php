@@ -126,6 +126,7 @@ if (isset($_SESSION['usuario'])) {
         $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
         $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
         $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
+        $urlRestoreBackup = '../backupAndRestore/gestionBackupRestore.php';
         require_once '../../layout/sidebar.php';
         ?>
       </div>

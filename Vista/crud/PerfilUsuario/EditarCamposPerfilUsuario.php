@@ -20,10 +20,30 @@ if (isset($_SESSION['usuario'])) {
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
-} else {
+  (!($_SESSION['usuario'] == 'SUPERADMIN'))
+    ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual)
+    :
+    $permisoConsulta = true;
+  ;
+  if (!$permisoConsulta) {
+    /* ==================== Evento intento de ingreso sin permiso a mantenimiento usuario. ==========================*/
+    $accion = ControladorBitacora::accion_Evento();
+    date_default_timezone_set('America/Tegucigalpa');
+    $newBitacora->fecha = date("Y-m-d h:i:s");
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
+    $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+    $newBitacora->accion = $accion['fallido'];
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a mantenimiento usuario';
+    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+    /* ===============================================================================================================*/
+    header('location: ../../v_errorSinPermiso.php');
+    die();
+  } else {
     if (isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])) {
       /* ====================== Evento salir. ================================================*/
       $accion = ControladorBitacora::accion_Evento();
+      date_default_timezone_set('America/Tegucigalpa');
+      $newBitacora->fecha = date("Y-m-d h:i:s");
       $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
       $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
       $newBitacora->accion = $accion['Exit'];
@@ -31,17 +51,23 @@ if (isset($_SESSION['usuario'])) {
       ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
       /* =======================================================================================*/
     }
-    /* =============================================== Evento ingreso. ========================*/
+    /* ====================== Evento ingreso a mantenimiento usuario. ========================*/
     $accion = ControladorBitacora::accion_Evento();
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('EDITARCAMPOSPERFILUSUARIO.PHP');
+    date_default_timezone_set('America/Tegucigalpa');
+    $newBitacora->fecha = date("Y-m-d h:i:s");
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['income'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a editar su perfil de usuario';
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a mantenimiento usuario';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-    $_SESSION['objetoAnterior'] = 'EDITARCAMPOSPERFILUSUARIO.PHP';
-    $_SESSION['descripcionObjeto'] = 'su perfil de usuario';
+    $_SESSION['objetoAnterior'] = 'gestionUsuario.php';
+    $_SESSION['descripcionObjeto'] = 'mantenimiento usuario';
     /* =======================================================================================*/
-} 
+  }
+} else {
+  header('location: ../../login/login.php');
+  die();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -104,6 +130,7 @@ if (isset($_SESSION['usuario'])) {
         $urlPerfilContraseniaUsuarios = '../PerfilUsuario/gestionPerfilContrasenia.php';
         $urlEditarCamposPerfil = '../PerfilUsuario/EditarCamposPerfilUsuario.php';
         $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
+        $urlRestoreBackup = '../backupAndRestore/gestionBackupRestore.php';
         require_once '../../layout/sidebar.php';
         ?>
       </div>
@@ -206,7 +233,7 @@ if (isset($_SESSION['usuario'])) {
               <label>
                 <?php echo $pregunta; ?>
               </label>
-              <input type="text" class="form-control" name="respuestas" <?php echo $respuestaName; ?>
+              <input type="text" class="form-control" name="respuestas" maxlength="100" <?php echo $respuestaName; ?>
                 id="<?php echo $respuestaId; ?>" value="<?php echo $valorRespuesta; ?>">
               <?php
               }

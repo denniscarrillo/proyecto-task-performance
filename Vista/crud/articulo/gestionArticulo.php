@@ -1,71 +1,70 @@
 <?php
-require_once("../../../db/Conexion.php");
-require_once("../../../Modelo/Articulo.php");
-require_once("../../../Controlador/ControladorArticulo.php");
-require_once('../../../Modelo/Usuario.php');
-require_once('../../../Controlador/ControladorUsuario.php');
-require_once("../../../Modelo/Bitacora.php");
-require_once("../../../Controlador/ControladorBitacora.php");
-require_once('../../../Modelo/Parametro.php');
-require_once('../../../Controlador/ControladorParametro.php');
+  require_once("../../../db/Conexion.php");
+  require_once("../../../Modelo/Articulo.php");
+  require_once("../../../Controlador/ControladorArticulo.php");
+  require_once('../../../Modelo/Usuario.php');
+  require_once('../../../Controlador/ControladorUsuario.php');
+  require_once("../../../Modelo/Bitacora.php");
+  require_once("../../../Controlador/ControladorBitacora.php");
+  require_once('../../../Modelo/Parametro.php');
+  require_once('../../../Controlador/ControladorParametro.php');
 
-session_start(); //Reanudamos la sesion
-if (isset($_SESSION['usuario'])) {
-  $newBitacora = new Bitacora();
-  $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
-  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionArticulo.php');
-  //Se valida el usuario, si es SUPERADMIN por defecto tiene permiso caso contrario se valida el permiso vrs base de datos
-  (!($_SESSION['usuario'] == 'SUPERADMIN')) 
-  ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
-  : 
-    $permisoConsulta = true;
-  ;
-  if(!$permisoConsulta){
-    /* ====================== Evento intento de ingreso sin permiso a vista de artículos. ===========================*/
-    $accion = ControladorBitacora::accion_Evento();
-    date_default_timezone_set('America/Tegucigalpa');
-    $newBitacora->fecha = date("Y-m-d h:i:s");
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionArticulo.php');
-    $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-    $newBitacora->accion = $accion['fallido'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a vista de artículos';
-    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-    /* ===============================================================================================================*/
-    header('location: ../../v_errorSinPermiso.php');
-    die();
-  }else{
-    if(isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])){
-      /* ====================== Evento salir. ================================================*/
+  session_start(); //Reanudamos la sesion
+  if (isset($_SESSION['usuario'])) {
+    $newBitacora = new Bitacora();
+    $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
+    $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionArticulo.php');
+    //Se valida el usuario, si es SUPERADMIN por defecto tiene permiso caso contrario se valida el permiso vrs base de datos
+    (!($_SESSION['usuario'] == 'SUPERADMIN')) 
+    ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
+    : 
+      $permisoConsulta = true;
+    ;
+    if(!$permisoConsulta){
+      /* ====================== Evento intento de ingreso sin permiso a vista de artículos. ===========================*/
       $accion = ControladorBitacora::accion_Evento();
       date_default_timezone_set('America/Tegucigalpa');
       $newBitacora->fecha = date("Y-m-d h:i:s");
-      $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
+      $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionArticulo.php');
       $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-      $newBitacora->accion = $accion['Exit'];
-      $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de '.$_SESSION['descripcionObjeto'];
+      $newBitacora->accion = $accion['fallido'];
+      $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a vista de artículos';
       ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-    /* =======================================================================================*/
+      /* ===============================================================================================================*/
+      header('location: ../../v_errorSinPermiso.php');
+      die();
+    }else{
+      if(isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])){
+        /* ====================== Evento salir. ================================================*/
+        $accion = ControladorBitacora::accion_Evento();
+        date_default_timezone_set('America/Tegucigalpa');
+        $newBitacora->fecha = date("Y-m-d h:i:s");
+        $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
+        $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+        $newBitacora->accion = $accion['Exit'];
+        $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de '.$_SESSION['descripcionObjeto'];
+        ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+      /* =======================================================================================*/
+      }
+      /* ====================== Evento ingreso avista de artículos. ===========================*/
+      $accion = ControladorBitacora::accion_Evento();
+      date_default_timezone_set('America/Tegucigalpa');
+      $newBitacora->fecha = date("Y-m-d h:i:s");
+      $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionArticulo.php');
+      $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+      $newBitacora->accion = $accion['income'];
+      $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a vista de artículos';
+      ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+      $_SESSION['objetoAnterior'] = 'gestionArticulo.php';
+      $_SESSION['descripcionObjeto'] = 'vista de artículos';
+      /* =======================================================================================*/
     }
-    /* ====================== Evento ingreso avista de artículos. ===========================*/
-    $accion = ControladorBitacora::accion_Evento();
-    date_default_timezone_set('America/Tegucigalpa');
-    $newBitacora->fecha = date("Y-m-d h:i:s");
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionArticulo.php');
-    $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-    $newBitacora->accion = $accion['income'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a vista de artículos';
-    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-    $_SESSION['objetoAnterior'] = 'gestionArticulo.php';
-    $_SESSION['descripcionObjeto'] = 'vista de artículos';
-    /* =======================================================================================*/
+  } else {
+    header('location: ../../login/login.php');
+    die();
   }
-} else {
-  header('location: ../../login/login.php');
-  die();
-}
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -128,6 +127,7 @@ if (isset($_SESSION['usuario'])) {
           $urlPerfilContraseniaUsuarios='../PerfilUsuario/gestionPerfilContrasenia.php';
           $urlRazonSocial = '../RazonSocial/gestionRazonSocial.php';
           $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
+          $urlRestoreBackup = '../backupAndRestore/gestionBackupRestore.php';
           require_once '../../layout/sidebar.php';
         ?>
     </div>
@@ -157,9 +157,11 @@ if (isset($_SESSION['usuario'])) {
         <table class="display nowrap table" id="table-Articulos" style="width:100%">
           <thead>
             <tr>
-              <th scope="col"> CÓD ARTÍCULO</th>
+              <th scope="col"> COD. ARTÍCULO</th>
               <th scope="col"> ARTÍCULO </th>
               <th scope="col"> DETALLE </th>
+              <th scope="col"> PRECIO </th>
+              <th scope="col"> EXISTENCIAS </th>
               <th scope="col"> MARCA </th>
               <th scope="col"> CREADO POR </th>
               <th scope="col"> FECHA CREACIÓN </th>
@@ -177,14 +179,13 @@ if (isset($_SESSION['usuario'])) {
   </div>
   </div>
   <?php
-  require_once('modalNuevoArticulo.html');
-  require_once('modalEditarArticulo.html');
-  
+    require_once('modalNuevoArticulo.html');
+    require_once('modalEditarArticulo.html'); 
   ?>
 
-<script src="../../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js" crossorigin="anonymous"></script>
-  <script src="../../../Recursos/js/librerias/Sweetalert2.all.min.js"></script>
+  <script src="../../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js"></script>
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
+  <script src="../../../Recursos/js/librerias/Sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
@@ -192,7 +193,6 @@ if (isset($_SESSION['usuario'])) {
 <!-- scripts propios -->
   <script src="../../../Recursos/js/articulo/ValidacionesModalNuevoArticulo.js" type="module"></script>
   <script src="../../../Recursos/js/articulo/ValidacionesModalEditarArticulo.js" type="module"></script>
-  <script src="../../../Recursos/js/index.js"></script>
   <script src="../../../Recursos/js/articulo/dataTableArticulo.js" type="module"></script>
   <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
 </body>

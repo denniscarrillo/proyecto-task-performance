@@ -195,6 +195,7 @@ $rtn.addEventListener('input', (event) => {
         event.preventDefault();
     }
 });
+
 $telefono.addEventListener('input', (event) => {
     if (!funciones.telefono_guion(event)) {
         event.preventDefault();

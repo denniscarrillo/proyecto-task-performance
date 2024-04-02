@@ -377,6 +377,7 @@ export const telefono_guion = (event) => {
 };
 
 
+
 /**
  * @param {HTMLElement} elemento - input HTML al cual le queremos aplicar la validación
  * @param {string} estadoUsuario espera el estado del usuario true o false como un string 
