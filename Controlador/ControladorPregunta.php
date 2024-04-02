@@ -24,9 +24,12 @@ class ControladorPregunta {
     public static function obtenerPreguntasXusuario($Usuario){
         return Pregunta::obtenerPreguntasXusuario($Usuario);
     }
-    public static function actualizarRespuesta($Usuario, $respuestas){
-        Pregunta::actualizarRespuesta($Usuario, $respuestas);
-    }
+
+
+    public static function actualizarRespuesta($respuestas,$user){
+        Pregunta::actualizarRespuesta($respuestas,$user);
+    }  
+
     public static function eliminarPregunta($pregunta){
          return Pregunta::eliminarPregunta($pregunta);
     }

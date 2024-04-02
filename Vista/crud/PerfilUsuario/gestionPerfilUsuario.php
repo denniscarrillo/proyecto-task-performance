@@ -1,5 +1,8 @@
 <?php
-session_start(); //Reanudamos la sesion
+if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+}
+//Reanudamos la sesion
 require_once("../../../db/Conexion.php");
 require_once("../../../Modelo/Usuario.php");
 require_once("../../../Modelo/Bitacora.php");
@@ -178,13 +181,11 @@ if (isset($_SESSION['usuario'])) {
               <div class="mb-3">
                 <label class="titulos" for="pregunta">Preguntas:</label>
                 <?php
-
-                $totalPreguntas = count($preguntas['preguntas']);
-                for ($i = 0; $i < $totalPreguntas; $i++) {
-                  $pregunta = $preguntas['preguntas'][$i];
+                foreach ($preguntas as $pregunta) {
+                  $valorPregunta= isset($pregunta['preguntas']) ? : '';
                   ?>
                   <label>
-                    <?php echo $pregunta; ?>
+                    <?php echo $pregunta['preguntas']; ?>
                   </label><br><br>
                   <?php
                 }
@@ -198,8 +199,7 @@ if (isset($_SESSION['usuario'])) {
       </div>
     </div>
   </div>
-
-<script src="../../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js" crossorigin="anonymous"></script>
+  <script src="../../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="../../../Recursos/js/librerias/Sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
@@ -208,8 +208,7 @@ if (isset($_SESSION['usuario'])) {
   <!-- Scripts propios -->
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
-  <script src="../../../Recursos/js/index.js"></script>
-  <script src="../../../Recursos/js/PerfilUsuario/validacionesPerfilContrasenia.js" type="module"></script>
+  <script src="../../../Recursos/js/index.js"></script> 
 </body>
 
 </html>

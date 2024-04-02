@@ -1,7 +1,9 @@
 
 
 <?php
-session_start(); //Reanudamos la sesion
+if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+}//Reanudamos la sesion
 require_once("../../../db/Conexion.php");
 require_once("../../../Modelo/Usuario.php");
 require_once("../../../Modelo/Bitacora.php");
@@ -145,7 +147,6 @@ if (isset($_SESSION['usuario'])) {
     </div>
   </div>
   </div>
-
   <script src="../../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js" crossorigin="anonymous"></script>
   <script src="../../../Recursos/js/librerias/Sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>

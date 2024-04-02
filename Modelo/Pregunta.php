@@ -108,37 +108,39 @@ class Pregunta
     {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB();
-        $query = "SELECT p.pregunta, pu.respuesta FROM tbl_MS_Preguntas AS p
+        $query = "SELECT p.id_Pregunta, p.pregunta, pu.respuesta FROM tbl_MS_Preguntas AS p
             INNER JOIN tbl_MS_Preguntas_X_Usuario AS pu ON p.id_Pregunta = pu.id_Pregunta
             INNER JOIN tbl_MS_Usuario AS u ON u.id_Usuario = pu.id_Usuario
             WHERE u.usuario = '$Usuario';";
         $listaP = sqlsrv_query($conexion, $query);
         $listaPreguntas = array();
-        while ($arrayPreguntas = sqlsrv_fetch_array($listaP, SQLSRV_FETCH_ASSOC)) {
-            $listaPreguntas['preguntas'][] = $arrayPreguntas['pregunta'];
-            $listaPreguntas['respuestas'][] = $arrayPreguntas['respuesta'];
-
+        while ($arrayPreguntas = sqlsrv_fetch_array($listaP, SQLSRV_FETCH_ASSOC)) { 
+            $listaPreguntas[]=[
+            'idpregunta' =>$arrayPreguntas['id_Pregunta'],
+            'preguntas' =>$arrayPreguntas['pregunta'],
+            'respuestas' =>$arrayPreguntas['respuesta'],
+            ];
         }
         sqlsrv_close($conexion); // Cerramos la conexión.
         return $listaPreguntas;
     }
 
-    public static function actualizarRespuesta($respuestas) {
+    public static function actualizarRespuesta($respuestas,$user) {
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $query = "UPDATE tbl_MS_Preguntas_X_Usuario SET respuesta = '$respuestas'->respuesta WHERE id_Pregunta = '$respuestas'->idPregunta";
-        $resultado = sqlsrv_query($consulta, $query);
-        $respuestaPregunta = array();
-        //Recorremos el resultado de tareas y almacenamos en el arreglo.
-        while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
-            $respuestaPregunta[] = [
-                'respuesta' => $fila['respuesta'],
-            ];
+        foreach ($respuestas as $respuesta) {
+            $idPreguntaRespuesta = $respuesta['idpregunta'];
+            $respuestaTexto = $respuesta['respuesta'];
+            // Construir la consulta SQL para actualizar la respuesta
+            $query = "UPDATE tbl_MS_Preguntas_X_Usuario SET respuesta = '$respuestaTexto', Modificado_Por = '$user', Fecha_Modificacion = GETDATE()  WHERE id_Pregunta = '$idPreguntaRespuesta'";
+            // Ejecutar la consulta SQL
+            $resultado = sqlsrv_query($consulta, $query);
         }
-        sqlsrv_close($consulta); #Cerramos la conexión.
-        return $respuestaPregunta;
+        sqlsrv_close($consulta); // Cerramos la conexión.
     }
     
+    
+      
     
     public static function obtenerPreguntasUsuarioPDF($buscar)
     {

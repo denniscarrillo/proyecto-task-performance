@@ -26,47 +26,24 @@ let estadoPassword = {
 let estadoMasdeUnEspacio = {
     estadoMasEspacioNombre: true
 }
-const Toast = Swal.mixin({
-    toast: true,
-    position: "top",
-    customClass: {
-      //Para agregar clases propias
-      popup: "customizable-toast",
-    },
-    showConfirmButton: false,
-    timer: 3500,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.addEventListener("mouseenter", Swal.stopTimer);
-      toast.addEventListener("mouseleave", Swal.resumeTimer);
-    },
-  });
 
-   
 const $form = document.getElementById('formPerfilContrasenia');
 
 const $password = document.getElementById('confirmPassword');
 const $confirmarContrasenia = document.getElementById('confirmPassword');
 
-let $toastRegistro = document.querySelector(".registro-exitoso");
-if ($toastRegistro.id == "1") {
-  Toast.fire({
-    icon: "success",
-    title: "Registro de cuenta exitoso",
-  });
-  $toastRegistro.id = "0"; //Esto para que el mensaje se muestre solo cuando viene de registro
-}
+
 
 
 //Funcion para mostrar contraseña
 $(document).ready(function () {
     $('#checkbox').click(function () {
         if ($(this).is(':checked')) {
-            $('#password').attr('type', 'text');
-            $('#password2').attr('type', 'text');
+            $('#confirmPassword').attr('type', 'text');
+         
         } else {
-            $('#password').attr('type', 'password');
-            $('#password2').attr('type', 'password');
+            $('#confirmPassword').attr('type', 'password');
+          
         }
     });
 });
