@@ -1,52 +1,70 @@
 import * as funciones from '../funcionesValidaciones.js';
 export let estadoValidado = false;
 
-const validaciones = {
+
+const $form = document.getElementById("form-estado");
+const $estado = document.getElementById("estado");
+
+const expresiones = {
     soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
-    correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
-    soloNumeros: /^[0-9 ]*$/,
-    caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
-    caracterMas5veces: /^(?=.*(...)\1)/,
-    letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
-    direccion: /^[a-zA-Z0-9 #.,-]+$/,
+    estado: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
+    
 };
-
-let inputsNuevoEstadoU = {
-    descripcionEstadoU: document.getElementById('estado')
-}
-let btnGuardar = document.getElementById('btn-submit');
-
-btnGuardar.addEventListener('click', () => {
-    validarInputDescripcionEstadoUsuario();
-    if (document.querySelectorAll(".mensaje_error").length == 0) {
-        estadoValidado = true;
-    }else{
-        estadoValidado = false;
-    }
-});
-
-inputsNuevoEstadoU.descripcionEstadoU.addEventListener("keyup", ()=>{
-    validarInputDescripcionEstadoUsuario();
+$estado.addEventListener("input", () => {
+    funciones.convertirAMayusculasVisualmente($estado);
     funciones.limitarCantidadCaracteres("estado", 20);
-})
+    validacionInputEstado();
+  });
+  $estado.addEventListener("keydown", () => {
+    funciones.soloLetrasConEspacios($estado)
+  });
+  const aplicarValidacionesInputs = () => {
+    //Llamamos a todas las funciones que aplican sus respectivas validaciones a cada input
+    validacionInputEstado();
+  };
+  $form.addEventListener("submit", (e) => {
+    // Aplicar todas las validaciones a todos los campos
+    aplicarValidacionesInputs();
+    
+    // Transformar datos a mayúsculas
+    funciones.transformarAMayusculas($estado);
 
-let validarInputDescripcionEstadoUsuario = function () {
-    let descripcionEstadoUMayus = inputsNuevoEstadoU.descripcionEstadoU.value.toUpperCase();
-    inputsNuevoEstadoU.descripcionEstadoU.value = descripcionEstadoUMayus;
+    // Verificar si hay errores de validación
+    const estadoValidaciones = document.querySelectorAll(".mensaje_error").length;
+    
+    // Actualizar el estado de validación
+    estadoValidado = estadoValidaciones === 0;
+    
+    // Si hay errores, prevenir el envío del formulario
+    if (!estadoValidado) {
+        e.preventDefault();
+    }
+  });
+
+
+  const validacionInputEstado = () => {
     let estadoValidaciones = {
-        estadoCampoVacio: false,
-        estadoSoloLetras: false,
-        estadoNoMasdeUnEspacios: false,
-        estadoNoCaracteresSeguidos: false
-    }
-    estadoValidaciones.estadoCampoVacio = funciones.validarCampoVacio(inputsNuevoEstadoU.descripcionEstadoU);
-    if(estadoValidaciones.estadoCampoVacio) {
-        estadoValidaciones.estadoSoloLetras = funciones.validarSoloLetras(inputsNuevoEstadoU.descripcionEstadoU, validaciones.soloLetras);
-    } 
-    if(estadoValidaciones.estadoSoloLetras) {
-        estadoValidaciones.estadoNoMasdeUnEspacios = funciones.validarMasdeUnEspacio(inputsNuevoEstadoU.descripcionEstadoU);
-    }
-    if(estadoValidaciones.estadoNoMasdeUnEspacios) {
-        estadoValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter(inputsNuevoEstadoU.descripcionEstadoU, validaciones.caracterMas3veces);
-    }
-}
+      campoVacio: false,
+      soloLetras: false,
+      masDeUnEspacio: false,
+      caracteresMasTresVeces: false,
+    };
+    estadoValidaciones.campoVacio = funciones.validarCampoVacio($estado);
+    estadoValidaciones.campoVacio
+      ? (estadoValidaciones.soloLetras = funciones.validarSoloLetras(
+          $estado,
+          expresiones.soloLetras
+        ))
+      : "";
+    estadoValidaciones.soloLetras
+      ? (estadoValidaciones.masDeUnEspacio =
+          funciones.validarMasdeUnEspacio($estado))
+      : "";
+    estadoValidaciones.masDeUnEspacio
+      ? (estadoValidaciones.caracteresMasTresVeces =
+          funciones.limiteMismoCaracter($estado, expresiones.estado))
+      : "";
+    estadoValidaciones.caracteresMasTresVeces
+      ? funciones.caracteresMinimo($estado, 4)
+      : "";
+  };
