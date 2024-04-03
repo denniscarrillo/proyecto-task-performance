@@ -106,6 +106,7 @@ foreach($Tareas as $tarea){
         $fechaFinal = $tarea['fechaFinalizacion']->format('Y-m-d');
     }
     $dias = $tarea['diasTranscurridos'];
+    $Cont++;
     $html .= '
     <tr>
     <!--<td style="text-align: center">'.$Cont.'</td>-->

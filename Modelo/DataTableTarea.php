@@ -209,18 +209,18 @@ class DataTableTarea
             'Modificado_Por' => $fila["Modificado_Por"],
             'Fecha_Modificacion' => $fila["Fecha_Modificacion"]
         ];
-        $query2= "SELECT id_ProductoInteres, cantidad, id_Articulo, a.ARTICULO, a.MARCA, a.DETALLE, id_Tarea
-        FROM tbl_ProductoInteres p
-        INNER JOIN tbl_ARTICULOS a ON p.id_Articulo = a.CODARTICULO 
+        $query2= "SELECT  cantidad, p.cod_Articulo, a.ARTICULO, a.MARCA, a.DETALLE, id_Tarea
+        FROM tbl_Productos_Interes p
+        INNER JOIN tbl_ARTICULOS a ON p.cod_Articulo = a.cod_Articulo 
         WHERE id_Tarea =  $idTarea";
         $listaArticulos = sqlsrv_query($conexion, $query2);
         $productos = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
         while($fila = sqlsrv_fetch_array($listaArticulos , SQLSRV_FETCH_ASSOC)){
             $productos [] = [
-                'id_ProductoInteres' => $fila["id_ProductoInteres"],
+                'id_ProductoInteres' => $fila["cod_Articulo"],
                 'cantidad' => $fila["cantidad"],
-                'id_Articulo' => $fila["id_Articulo"],
+                'id_Articulo' => $fila["cod_Articulo"],
                 'ARTICULO' => $fila["ARTICULO"],
                 'MARCA' => $fila["MARCA"],
                 'DETALLE' => $fila["DETALLE"],

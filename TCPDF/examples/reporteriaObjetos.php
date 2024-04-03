@@ -71,7 +71,7 @@ if(isset($_SESSION['usuario'])){
     <td style="background-color: #e54037;color: white; text-align: center; width: 40px">No.</td>
     <td style="background-color: #e54037;color: white; text-align: center; width: 230px;">OBJETO</td>
     <td style="background-color: #e54037;color: white; text-align: center; width: 270px;">DESCRIPCIÓN</td>
-    <td style="background-color: #e54037;color: white; text-align: center; width: 95px;">TIPO</td>
+    <td style="background-color: #e54037;color: white; text-align: center; width: 95px;">TIPO OBJETO</td>
     </tr>
     ';
     $objetos = ControladorDataTableObjeto:: obtenerObjetosPdf(trim($_GET['buscar']));
@@ -84,8 +84,8 @@ if(isset($_SESSION['usuario'])){
         $html .= '
         <tr>
         <td style="text-align: center">'.$Cont.'</td>
-        <td style="text-align: center">'.$nombreObjeto.'</td>
-        <td style="text-align: center">'.$Descripcion.'</td>
+        <td >'.$nombreObjeto.'</td>
+        <td >'.$Descripcion.'</td>
         <td style="text-align: center">'.$Tipo.'</td>
         </tr>
         ';

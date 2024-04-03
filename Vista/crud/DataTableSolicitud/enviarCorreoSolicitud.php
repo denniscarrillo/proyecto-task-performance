@@ -41,7 +41,7 @@ function enviarCorreoSolicitud($nuevaSolicitud, $productosSolicitud, $idSolicitu
     $PDF_HEADER_TITLE =  $nombreP;
     $PDF_HEADER_STRING = $direccionP . "\n"  .'Correo: ' . $correoP ."\nTeléfono: +" . $telefonoP.  ", +" . $telefono2P ;
     $PDF_HEADER_STRING .= str_repeat(' ', $width - strlen($fechaActual)) . $fechaActual;
-    $PDF_HEADER_LOGO = 'LOGO-reporte.jpg';
+    $PDF_HEADER_LOGO = '../../../Recursos/' . ControladorParametro::obtenerUrlLogoReporte();
     // set default header data
     $pdf->setHeaderData($PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, $PDF_HEADER_TITLE, $PDF_HEADER_STRING);
 
@@ -172,7 +172,7 @@ function enviarCorreoSolicitud($nuevaSolicitud, $productosSolicitud, $idSolicitu
                 <td style="background-color: #c9c9c9; text-align: center;width: 458px;">Descripción</td>
             </tr>
             ';
-            $ListaArticulos = ''; 
+            //$ListaArticulos = ''; 
             foreach ($productosSolicitud as $producto) {
                 $Cant = $producto['CantProducto']; 
                 $IdProducto = $producto['idProducto'];      

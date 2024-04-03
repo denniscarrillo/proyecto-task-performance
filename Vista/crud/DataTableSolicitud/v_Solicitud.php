@@ -85,9 +85,9 @@ if (isset($_SESSION['usuario'])) {
   <!-- Estilos personalizados -->
 
   <link href="../../../Recursos/css/modalClienteFrecuente.css" rel="stylesheet">
-  <!-- <link href="../../../Recursos/css/modalEditarTarea.css" rel="stylesheet"> -->
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/v_Solicitud.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <link href="../../../Recursos/css/ModalmenuClientes.css" rel="stylesheet">
@@ -223,26 +223,28 @@ if (isset($_SESSION['usuario'])) {
         </div>
         <div class="table-conteiner">
           <div class="mb-3 conteiner-id-articulo">
-            <p class="titulo-articulo">Productos Mantenimiento</p>
+            <p class="titulo-articulo">Productos</p>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
               data-bs-target="#modalArticulosSolicitud" id="btnarticulos">
               Seleccionar... <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
             </button>
           </div>
-          <table id="tablearticulos" class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Artículo</th>
-                <th scope="col">Marca</th>
-                <th scope="col">Cantidad</th>
-                <th scope="col"> Acciones </th>
-              </tr>
-            </thead>
-            <tbody id="listarticulos" class="table-group-divider">
-              <!-- Articulos de interes -->
-            </tbody>
-          </table>
+          <div id="table-container">
+            <table id="tablearticulos" class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col" class="th-col-row">Id</th>
+                  <th scope="col" class="th-col-row">Artículo</th>
+                  <th scope="col" class="th-col-row">Marca</th>
+                  <th scope="col" class="th-col-row">Cantidad</th>
+                </tr>
+              </thead>
+              <tbody id="listarticulos" class="table-group-divider">
+                <!-- Articulos de interes -->
+              </tbody>
+            </table>
+            <label for="" id="sin-productos-interes">Aún no se agregan productos de interés</label>
+          </div>
         </div>
         <!-- Botones -->
         <div class="btn-guardar">

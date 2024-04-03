@@ -21,24 +21,9 @@ $(document).ready(function () {
       type: "post",
       data: function (data){
           data.fechaDesde = $fechaDesde.value.replace('T', ' '),
-          data.fechaHasta = $fechaHasta.value.replace('T', ' ')
+          data.fechaHasta = obtenerfechaHasta()
       },
       dataSrc: ""
-      // function (data) {
-      //   if(data.length < 1) { 
-      //     // Swal.fire({
-      //     //   title: "¡Lo sentimos!",
-      //     //   text: "No se encontraron registros en el rango de fechas seleccionado",
-      //     //   icon: "info"
-      //     // }).then(() => {
-      //     //   setearRangoDeFechas();
-      //     //   tablaBitacora.ajax.reload();
-      //     // });
-      //     return data;
-      //   } else {
-      //     return data
-      //   }
-      // } 
     },
     language: {
       url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
@@ -116,7 +101,7 @@ $(document).on("click", "#btn_depurar", function () {
         datatype: "json",
         data: {
           fechaDesde: $fechaDesde.value.replace('T', ' '),
-          fechaHasta: $fechaHasta.value.replace('T', ' ')
+          fechaHasta: obtenerfechaHasta()
         },
         success: function (res) {
           if(res == 'true') {
@@ -140,27 +125,41 @@ $(document).on("click", "#btn_depurar", function () {
 
 $(document).on("click", "#btn_Pdf", function () {
   let buscar = $("#table-Bitacora_filter > label > input[type=search]").val();
-  let fechaDesde= $("#fecha-desde").val();
-  let fechaHasta = $("#fecha-hasta").val();
+  let fechaDesde= $fechaDesde.value.replace('T', ' ');
+  // let fechaHasta = $fechaHasta.value.replace('T', ' ');
+  console.log(fechaDesde);
   window.open(
     "../../../TCPDF/examples/reporteriaBitacora.php?buscar=" + buscar + 
     "&fechaDesde=" + fechaDesde +
-    "&fechaHasta=" + fechaHasta,
+    "&fechaHasta=" + obtenerfechaHasta(), 
     "_blank"
   );
 });
 
-// $fechaDesde.addEventListener('input', () => {
-//   console.log($fechaDesde.value)
-// });
+const obtenerfechaHasta = function(){
+  let fechaActual = new Date($fechaHasta.value);
+  return formatearFecha(fechaActual,1);
+}
 
 $fechaHasta.addEventListener('input', () => {
-  // if (event.keyCode === 13) {
+  if(!compararFechas()){
     tablaBitacora.ajax.reload();
-    // if(document.querySelector('.dataTables_empty') !== null) {
-    //   document.querySelector('.dataTables_empty').textContent = "No se encontron registros en el rango de fecha seleccionado"
-    // }
-  // }
+  }else{
+    Toast.fire({
+      icon: "error",
+      title: "Rango de fecha inválido",
+    });
+  }
+});
+$fechaDesde.addEventListener('input', () => {
+  if(!compararFechas()){
+    tablaBitacora.ajax.reload();
+  }else{
+    Toast.fire({
+      icon: "error",
+      title: "Rango de fecha inválido",
+    });
+  }
 });
 
 const setearRangoDeFechas = () => {
@@ -172,18 +171,32 @@ const setearRangoDeFechas = () => {
    */
   let desde = (ahora.getTime()) - diasDesde; //Realizamos la resta y obtenemos la nueva fecha en milisegundos
   //Convertimos a un objeto de tipo fecha(Date), la fecha(en milisegundos) obtenida anteriormente 
-  const fechaDesde = formatearFecha(new Date(desde))  //Esta funcion nos formatea la fecha Desde y nos la retorna como tipo String
-  const fechaHasta = formatearFecha(ahora)  //Esta funcion nos formatea la fecha Hasta y nos la retorna como tipo String
+  const fechaDesde = formatearFecha(new Date(desde),0)  //Esta funcion nos formatea la fecha Desde y nos la retorna como tipo String
+  const fechaHasta = formatearFecha(ahora,0)  //Esta funcion nos formatea la fecha Hasta y nos la retorna como tipo String
   //Ahora seteamos ambas fechas en los inputs segun correspondan
   $fechaDesde.value = fechaDesde;
   $fechaHasta.value = fechaHasta;
+  // console.log($fechaDesde.value);
+  // console.log($fechaHasta.value);
 }
 
-const formatearFecha = (date) => {
+const compararFechas = () => {
+  const fechaDesde = new Date($fechaDesde.value);
+  const fechaHasta = new Date($fechaHasta.value);
+  return (fechaDesde.getTime() > fechaHasta.getTime())? true : false;
+}
+
+const formatearFecha = (date, origen) => {
   const year = (date.getFullYear() < 10) ? `0${date.getFullYear()}`: date.getFullYear();
   const month = ((date.getMonth()+1) < 10) ? `0${date.getMonth()+1}`: date.getMonth()+1;
   const day = (date.getDate() < 10) ? `0${date.getDate()}` : date.getDate();
   const hour = (date.getHours() < 10) ? `0${date.getHours()}` : date.getHours();
-  const min = (date.getMinutes() < 10) ? `0${date.getMinutes()}`: date.getMinutes();
+  let min = null;
+  if(origen == 1){
+    min = (date.getMinutes() < 10) ? `0${date.getMinutes()+1}`: (date.getMinutes() == 59)?date.getMinutes():date.getMinutes()+1;
+  }else{
+    min = (date.getMinutes() < 10) ? `0${date.getMinutes()}`: date.getMinutes();
+  }
+  
   return `${year}-${month}-${day} ${hour}:${min}`
 }

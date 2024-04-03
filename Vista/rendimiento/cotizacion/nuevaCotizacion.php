@@ -19,4 +19,5 @@
         $newBitacora->descripcionEvento = 'Ha creado la Cotización # '.$idCotizacion['id_Cotizacion'];
         $idBitacora = ControladorBitacoraTarea::SAVE_EVENT_TASKS_BITACORA($newBitacora, $idUsuario);
         /* =======================================================================================*/
+        var_dump($_POST['productos']);
     }
