@@ -1,7 +1,12 @@
-
+import { estadoValidado } from "./validacionesPerfilUsuario.js";
 let $formRespuestas = document.getElementById('form-Edit-Preguntas');
-let $CamposPerfil = document.getElementById('form-Edit-PerfilUsuario');
 
+
+function redirigirADataTable() {
+  setTimeout(function () {
+      window.location.href = "../../../Vista/crud/PerfilUsuario/gestionPerfilUsuario.php";
+  }, 3000); // Redirige después de 3 segundos (ajusta el tiempo según tus necesidades)
+}
 $formRespuestas.addEventListener('submit', function(e){
     e.preventDefault();
     let respuestasActualizar = [];
@@ -28,14 +33,17 @@ const enviarRespuestasActualizar = function(respuestasActualizar){
         respuestas: respuestasActualizar
        },
        success: function(data){
+        console.log(data);
         Swal.fire(
             "¡Actualizado!",
             "¡Se ha modificado tu respuesta!",
             "success"
           );
+          redirigirADataTable();  
        }
     })
 }
+
 document.getElementById('btn-guardarActualizacion').addEventListener('click', function(e){
     e.preventDefault();
     enviarPerfil();
@@ -50,7 +58,7 @@ const enviarPerfil =function(){
     direccion = $("#E_direccion").val(),
     correo = $("#E_email").val();
 
-    
+    if (estadoValidado) {
     $.ajax({
         url: "../../../Vista/crud/PerfilUsuario/actualizarPerfilUsuario.php",
         type: "POST",
@@ -68,10 +76,14 @@ const enviarPerfil =function(){
           Swal.fire("¡Actualizado!", "¡El perfil del Usuario ha sido modificado!", "success");
           
         }
+        
        
       });  
+      redirigirADataTable(); 
+    }
 }
  
+
  
 
  

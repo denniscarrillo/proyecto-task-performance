@@ -177,7 +177,8 @@ if (isset($_SESSION['usuario'])) {
               <div class="mb-3">
               <span class="mensaje-rtn"></span>
                 <label for="nombre">RTN:</label>
-                <input type="text" class="form-control input-actualizacion" name="rtn" id="E_rtn" value="<?php echo $data['rtn'] ?>">
+                <input type="text" class="form-control input-actualizacion" name="rtn" id="E_rtn" 
+                value="<?php echo $data['rtn'] ?>">
                 <p class="mensaje"></p>
               </div>
 
@@ -187,6 +188,7 @@ if (isset($_SESSION['usuario'])) {
 
               <div class="mb-3">
                 <label for="email">Correo Electrónico:</label>
+                <span class="mensaje-razonsocial"></span>
                 <input type="email" class="form-control input-actualizacion" name="email" id="E_email"
                   value="<?php echo $data['correo'] ?>">
                 <p class="mensaje"></p>
@@ -234,7 +236,7 @@ if (isset($_SESSION['usuario'])) {
         ?>
             <div class="pregunta">
                 <label for="<?php echo $pregunta['idpregunta']; ?>"><?php echo $pregunta['preguntas']; ?></label>
-                <input type="text" class="form-control input-respuesta"  id="<?php echo $pregunta['idpregunta']; ?>" value="<?php echo $valorRespuesta; ?>">
+                <input type="text" class="form-control input-respuesta"  id=" <?php echo $pregunta['idpregunta']; ?>" value="<?php echo $valorRespuesta; ?>">
             </div>
             <div class="btn-guardar">
               <button type="button" class="btn btn-secondary"><a href="gestionPerfilUsuario.php" style="text-decoration: none; color: white;">Cancelar</a></button>
