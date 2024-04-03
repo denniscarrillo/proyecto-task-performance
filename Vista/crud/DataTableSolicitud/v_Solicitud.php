@@ -85,9 +85,9 @@ if (isset($_SESSION['usuario'])) {
   <!-- Estilos personalizados -->
 
   <link href="../../../Recursos/css/modalClienteFrecuente.css" rel="stylesheet">
-  <!-- <link href="../../../Recursos/css/modalEditarTarea.css" rel="stylesheet"> -->
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
+  <link href='../../../Recursos/css/v_Solicitud.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <link href="../../../Recursos/css/ModalmenuClientes.css" rel="stylesheet">
