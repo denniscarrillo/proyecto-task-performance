@@ -94,7 +94,7 @@ require_once('../../Controlador/ControladorParametro.php');
             <input type="text" class="form-control">
           </div> -->
           <div class="conteiner-id-venta form-element">
-            <label>Venta N°</label>
+            <label>Venta No.</label>
             <input type=" text" class="form-control" id="id-venta">
             <button type="button" class="btn-call-modal btn btn-primary" data-bs-toggle="modal"
               data-bs-target="#modalfiltroVenta">

@@ -10,6 +10,8 @@ const validaciones = {
     letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
     direccion: /^[a-zA-Z0-9 #.,áéíóúÁÉÍÓÚñÑ]+$/,
   };
+const $nombre = document.getElementById("nombre");
+const $direccion = document.getElementById("direccion");
 
 let inputNuevoCliente = {
     nombre: document.getElementById('nombre'),
@@ -40,6 +42,13 @@ inputNuevoCliente.nombre.addEventListener("keyup", ()=>{
     validarInputNombre();
     funciones.limitarCantidadCaracteres("nombre", 50);
 })
+$nombre.addEventListener("input", () => {
+  funciones.convertirAMayusculasVisualmente($nombre);
+  validarInputNombre();
+});
+$nombre.addEventListener("keydown", () => {
+  funciones.soloLetrasYPuntos($nombre)
+});
 inputNuevoCliente.rtn.addEventListener('input', (event) => {
   if (!funciones.RTN_guion(event)) {
       event.preventDefault();
@@ -62,6 +71,13 @@ inputNuevoCliente.direccion.addEventListener("keyup", ()=>{
     validarInputDireccion();
     funciones.limitarCantidadCaracteres("direccion", 100);
 })
+$direccion.addEventListener("input", () => {
+  funciones.convertirAMayusculasVisualmente($direccion);
+  validarInputDireccion();
+});
+$direccion.addEventListener("keydown", () => {
+  funciones.permitirLetrasNumerosPuntosComas($direccion)
+});
 let validarInputNombre = () =>{
     inputNuevoCliente.nombre.value = inputNuevoCliente.nombre.value.toUpperCase();
   let estadoValidacion = {

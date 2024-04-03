@@ -176,7 +176,7 @@ if (!isset($_SESSION['usuario'])) {
                   <!-- Aqui va el boton del filtro de clientes -->
                 </div>
                 <div class="mb-3 data-container" id="container-num-factura" hidden>
-                  <label for="num-factura" class="form-label">N° FACTURA: </label>
+                  <label for="num-factura" class="form-label">No. FACTURA: </label>
                   <p class="mensaje"></p>
                   <input type="text" name="num-factura" id="num-factura" class="form-control" disabled>
                 </div>

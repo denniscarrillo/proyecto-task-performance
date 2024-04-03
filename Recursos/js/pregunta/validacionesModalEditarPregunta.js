@@ -6,6 +6,7 @@ const validaciones = {
     caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
     caracterMas5veces: /^(?=.*(...)\1)/,
   };
+const $pregunta = document.getElementById("pregunta_E");
 let inputEditarPregunta = document.getElementById("pregunta_E");
 $(document).ready(function (){
     //Evento clic para hacer todas las validaciones
@@ -25,6 +26,13 @@ inputEditarPregunta.addEventListener("keyup", ()=>{
     validarEditarPregunta();
     funciones.limitarCantidadCaracteres("pregunta_E", 100);
 })
+$pregunta.addEventListener("input", () => {
+  funciones.convertirAMayusculasVisualmente($pregunta);
+  validarEditarPregunta();
+});
+$pregunta.addEventListener("keydown", () => {
+  funciones.soloLetrasYPuntosYSignos($pregunta)
+});
 let validarEditarPregunta = () =>{
   inputEditarPregunta.value = inputEditarPregunta.value.toUpperCase();
   let estadoValidacion = {

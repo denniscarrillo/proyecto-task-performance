@@ -10,6 +10,7 @@ const validaciones = {
     letrasNumeros: /^[a-zA-Z0-9 #ñÑ-]+$/,
     direccion: /^[a-zA-Z0-9 #áéíóúñÁÉÍÓÚüÜÑ.,-]+$/,
   };
+const $direccion = document.getElementById("E_Direccion");
 let inputEditarCliente = {
     telefono: document.getElementById('E_Telefono'),
     correo: document.getElementById('E_Correo'),
@@ -44,6 +45,13 @@ inputEditarCliente.direccion.addEventListener("keyup", ()=>{
     validarInputEditarDireccion();
     funciones.limitarCantidadCaracteres("E_Direccion", 100);
 })
+$direccion.addEventListener("input", () => {
+  funciones.convertirAMayusculasVisualmente($direccion);
+  validarInputEditarDireccion();
+});
+$direccion.addEventListener("keydown", () => {
+  funciones.permitirLetrasNumerosPuntosComas($direccion)
+});
 let validarInputEditarTelefono = () =>{
   let estadoValidacion = {
       estCampoVacio: false,

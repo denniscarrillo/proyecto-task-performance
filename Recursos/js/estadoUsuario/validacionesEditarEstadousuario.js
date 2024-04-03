@@ -1,56 +1,70 @@
 import * as funciones from '../funcionesValidaciones.js';
 export let estadoValido = false;
 
-const validaciones = {
+const $form = document.getElementById("formEditEstadoU");
+const $estado = document.getElementById("E_descripcion");
+
+const expresiones = {
     //soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
-    soloLetras: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ\s])/,//Lentras, acentos y Ñ
-    correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
-    soloNumeros: /^[0-9 ]*$/,
-    caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
-    caracterMas5veces: /^(?=.*(...)\1)/,
-    letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
-    direccion: /^[a-zA-Z0-9 #.,-]+$/,
+    soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
+    estado: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
 };
 
-let inputseditarEstado = {
-   
-    descripcionEstado: document.getElementById('E_descripcion')
-}
-let btnGuardar = document.getElementById('btn-editarsubmit');
-
-btnGuardar.addEventListener('click', () => {
-  
-    validarInputDescripcionEstado();
-    if (document.querySelectorAll(".mensaje_error").length == 0) {
-        estadoValido = true;
-    }else{
-        estadoValido = false;
-    }
-
-});
-
-inputseditarEstado.descripcionEstado.addEventListener("keyup", ()=>{
-    validarInputDescripcionEstado();
+$estado.addEventListener("input", () => {
+    funciones.convertirAMayusculasVisualmente($estado);
     funciones.limitarCantidadCaracteres("E_descripcion", 20);
-})
+    validacionInputEstado();
+  });
+  $estado.addEventListener("keydown", () => {
+    funciones.soloLetrasConEspacios($estado)
+  });
+  const aplicarValidacionesInputs = () => {
+    //Llamamos a todas las funciones que aplican sus respectivas validaciones a cada input
+    validacionInputEstado();
+  };
+  $form.addEventListener("submit", (e) => {
+    // Aplicar todas las validaciones a todos los campos
+    aplicarValidacionesInputs();
+    
+    // Transformar datos a mayúsculas
+    funciones.transformarAMayusculas($estado);
 
-let validarInputDescripcionEstado = function () {
-    let descripcionEstadoMayus = inputseditarEstado.descripcionEstado.value.toUpperCase();
-    inputseditarEstado.descripcionEstado.value = descripcionEstadoMayus;
+    // Verificar si hay errores de validación
+    const estadoValidaciones = document.querySelectorAll(".mensaje_error").length;
+    
+    // Actualizar el estado de validación
+    estadoValido = estadoValidaciones === 0;
+    
+    // Si hay errores, prevenir el envío del formulario
+    if (!estadoValido) {
+        e.preventDefault();
+    }
+  });
+
+
+  const validacionInputEstado = () => {
     let estadoValidaciones = {
-        estadoCampoVacio: false,
-        estadoSoloLetras: false,
-        estadoNoMasdeUnEspacios: false,
-        estadoNoCaracteresSeguidos: false
-    }
-    estadoValidaciones.estadoCampoVacio = funciones.validarCampoVacio(inputseditarEstado.descripcionEstado);
-    if(estadoValidaciones.estadoCampoVacio) {
-        estadoValidaciones.estadoSoloLetras = funciones.validarSoloLetras(inputseditarEstado.descripcionEstado, validaciones.soloLetras);
-    } 
-    if(estadoValidaciones.estadoSoloLetras) {
-        estadoValidaciones.estadoNoMasdeUnEspacios = funciones.validarMasdeUnEspacio(inputseditarEstado.descripcionEstado);
-    }
-    if(estadoValidaciones.estadoNoMasdeUnEspacios) {
-        estadoValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter(inputseditarEstado.descripcionEstado, validaciones.caracterMas3veces);
-    }
-}
+      campoVacio: false,
+      soloLetras: false,
+      masDeUnEspacio: false,
+      caracteresMasTresVeces: false,
+    };
+    estadoValidaciones.campoVacio = funciones.validarCampoVacio($estado);
+    estadoValidaciones.campoVacio
+      ? (estadoValidaciones.soloLetras = funciones.validarSoloLetras(
+          $estado,
+          expresiones.soloLetras
+        ))
+      : "";
+    estadoValidaciones.soloLetras
+      ? (estadoValidaciones.masDeUnEspacio =
+          funciones.validarMasdeUnEspacio($estado))
+      : "";
+    estadoValidaciones.masDeUnEspacio
+      ? (estadoValidaciones.caracteresMasTresVeces =
+          funciones.limiteMismoCaracter($estado, expresiones.estado))
+      : "";
+    estadoValidaciones.caracteresMasTresVeces
+      ? funciones.caracteresMinimo($estado, 4)
+      : "";
+  };

@@ -38,24 +38,7 @@ let procesarPermisoActualizar = (data) => {
       },
     ],
   });
-  let filtro = document.querySelector('input[type=search]');
 };
-
-$(document).on("focusout", "input[type=search]", function (e) {
-  let filtro = $(this).val();
-  capturarFiltroDataTable(filtro);
-});
-const capturarFiltroDataTable = function(filtro){
-  if(filtro.trim()){
-    $.ajax({
-      url: "../../../Vista/crud/parametro/registrarBitacoraFiltroParametro.php",
-      type: "POST",
-      data: {
-        filtro: filtro
-      }
-    })
-  }
-}
 //Peticion  AJAX que trae los permisos
 let obtenerPermisos = function ($idObjeto, callback) {
   $.ajax({
@@ -112,7 +95,7 @@ $("#form-Edit-Parametro").submit(function (e) {
         $("#modalEditarParametro").modal("hide");
         //Mostrar mensaje de exito
         Swal.fire(
-          "¡Actualizado!",
+          "Actualizado!",
           "El parámetro ha sido modificado!",
           "success"
         );
@@ -142,24 +125,26 @@ let limpiarFormEdit = () => {
 
 //Eliminar parametro
 $(document).on("click", "#btn_eliminar", function () {
-  let fila = $(this);
+  let fila = $(this).closest("tr");
   let parametro = $(this).closest("tr").attr('id');
+  let nombreParametro = fila.find("td:eq(1)").text();
   Swal.fire({
-    title: "¿Estás seguro de eliminar el parámetro " + parametro + "?",
-    text: "¡No podrás revertir esto!",
+    title: "Estas seguro de eliminar el parametro " + nombreParametro + "?",
+    text: "No podras revertir esto!",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "¡Sí, bórralo!",
-    cancelButtonText: "Cancelar",
+    confirmButtonText: "Si, Borralo!",
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
         url: "../../../Vista/crud/parametro/eliminarParametro.php",
         type: "POST",
         datatype: "json",
-        data: { parametro: parametro },
+        data: { parametro: parametro,
+                nombreParametro: nombreParametro,
+              },
         success: function (data) {
           let estadoEliminado = data[0].estadoEliminado;
           console.log(data);
@@ -167,13 +152,13 @@ $(document).on("click", "#btn_eliminar", function () {
             tablaParametro.row(fila.parents("tr")).remove().draw();
             Swal.fire(
               "Eliminado!",
-              "El parámetro ha sido eliminada.",
+              "El parametro ha sido eliminada.",
               "success"
             );
             tablaParametro.ajax.reload(null, false);
           } else {
             Swal.fire(
-              "¡Lo sentimos!",
+              "Lo sentimos!",
               "El parámetro no puede ser eliminado.",
               "error"
             );
@@ -189,7 +174,7 @@ $(document).on("click", "#btn_nuevoRegistro", function () {
   Swal.fire({
     icon: "error",
     title: "Oops...",
-    text: "¡No se pueden ingresar nuevos parámetros!",
+    text: "No se pueden ingresar nuevos parámetros!",
   });
 });
 

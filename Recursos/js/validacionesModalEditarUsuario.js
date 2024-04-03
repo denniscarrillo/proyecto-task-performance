@@ -10,7 +10,7 @@ const $estado = document.getElementById("E_estado");
 //Objeto con expresiones regulares para los inptus
 const expresiones = {
     usuario: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
-    nombre: /^(?=.*[^a-zA-Z\s])/,
+    nombre: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ.\s.,])/, // Letras, acentos y Ñ, también permite punto // Solo letras
     correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
 }
 /* ---------------- VALIDACIONES FORMULARIO GESTION EDITAR USUARIO ----------------------*/
@@ -26,9 +26,9 @@ $form.addEventListener("submit", async (e) => {
   funciones.transformarAMayusculas($nombre);
   
   // Esperar la finalización de las validaciones asincrónicas
-  await Promise.all([
-      validarInputCorreo()
-  ]);
+  // await Promise.all([
+  //     validarInputCorreo()
+  // ]);
   
   // Verificar si hay errores de validación
   const estadoValidaciones = document.querySelectorAll(".mensaje_error").length;
@@ -48,7 +48,7 @@ $form.addEventListener("submit", async (e) => {
     validacionInputNombre();
   });
   $nombre.addEventListener("keydown", () => {
-    funciones.soloLetrasConEspacios($nombre)
+    funciones.soloLetrasYPuntos($nombre)
   });
   $correo.addEventListener("input", () => {
     funciones.limitarCantidadCaracteres("E_correo", 50);
@@ -119,9 +119,9 @@ const aplicarValidacionesInputsEditar = () => {
     estadoValidaciones.caracteresMasTresVeces
         ? (estadoValidaciones.caracteresMinimo = funciones.caracteresMinimo($correo, 15))
         : "";
-    estadoValidaciones.caracteresMinimo
-        ? funciones.validarCorreoExistenteE(await obtenerCorreoExiste($correo.value))
-        : "";
+    // estadoValidaciones.caracteresMinimo
+    //     ? funciones.validarCorreoExistenteE(await obtenerCorreoExiste($correo.value))
+    //     : "";
 };
 
 

@@ -75,8 +75,8 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de las Tareas</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<!-- <td style="background-color: #e54037;color: white; text-align: center; width: 40px;">N°</td>-->
-<td style="background-color: #e54037;color: white; text-align: center; width: 50;">ID</td>
+<!-- <td style="background-color: #e54037;color: white; text-align: center; width: 40px;">No.</td>-->
+<td style="background-color: #e54037;color: white; text-align: center; width: 50;">No.</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 80px;">TIPO</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 200;">CLIENTE</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 140;">TITULO</td>

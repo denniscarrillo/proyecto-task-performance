@@ -81,7 +81,7 @@ if(isset($_SESSION['usuario'])){
     <P style="text-align: center; font-size: 18px;"><b>Reporte de Estado de Usuarios</b></P>
     <table border="1" cellpadding="4">
     <tr>
-    <td style="background-color: #e54037;color: white; text-align: center; width: 60px;">ID</td>
+    <td style="background-color: #e54037;color: white; text-align: center; width: 60px;">No.</td>
     <td style="background-color: #e54037;color: white; text-align: center; width: 220px;">ESTADO</td>
     <td style="background-color: #e54037;color: white; text-align: center; width: 180px;">CREADO POR</td>
     <td style="background-color: #e54037;color: white; text-align: center; width: 180px;">FECHA CREACIÓN</td>

@@ -68,7 +68,7 @@ if(isset($_SESSION['usuario'])){
     <P style="text-align: center; font-size: 18px;"><b>Reporte objetos del sistema</b></P>
     <table border="1" cellpadding="4">
     <tr>
-    <td style="background-color: #e54037;color: white; text-align: center; width: 40px">N°</td>
+    <td style="background-color: #e54037;color: white; text-align: center; width: 40px">No.</td>
     <td style="background-color: #e54037;color: white; text-align: center; width: 230px;">OBJETO</td>
     <td style="background-color: #e54037;color: white; text-align: center; width: 270px;">DESCRIPCIÓN</td>
     <td style="background-color: #e54037;color: white; text-align: center; width: 95px;">TIPO OBJETO</td>

@@ -2,7 +2,7 @@ import * as funciones from '../funcionesValidaciones.js';
 export let estadoValido = false;
 
 const validaciones = {
-    soloLetras: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ\s])/, //Solo letras
+    servicio: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ.\s.,])/, // Letras, acentos y Ñ, también permite punto // Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
     soloNumeros: /^[0-9 ]*$/,
     caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
@@ -10,7 +10,7 @@ const validaciones = {
     letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
     direccion: /^[a-zA-Z0-9 #.,-]+$/,
 };
-
+const $servicio = document.getElementById("E_servicio_Tecnico");
 let inputseditarServicioTecnico = {
    
     EServicioTecnico: document.getElementById('E_servicio_Tecnico')
@@ -30,7 +30,13 @@ inputseditarServicioTecnico.EServicioTecnico.addEventListener("keyup", ()=>{
     validarInputServicioTecnico();
     funciones.limitarCantidadCaracteres("E_servicio_Tecnico", 50);
 })
-
+$servicio.addEventListener("input", () => {
+    funciones.convertirAMayusculasVisualmente($servicio);
+    validarInputServicioTecnico();
+  });
+  $servicio.addEventListener("keydown", () => {
+    funciones.soloLetrasYPuntos($servicio)
+  });
 let validarInputServicioTecnico = function () {
     let EServicioTecnicoMayus = inputseditarServicioTecnico.EServicioTecnico.value.toUpperCase();
     inputseditarServicioTecnico.EServicioTecnico.value = EServicioTecnicoMayus;
@@ -42,7 +48,7 @@ let validarInputServicioTecnico = function () {
     }
     estadoValidaciones.estadoCampoVacio = funciones.validarCampoVacio(inputseditarServicioTecnico.EServicioTecnico);
     if(estadoValidaciones.estadoCampoVacio) {
-        estadoValidaciones.estadoSoloLetras = funciones.validarSoloLetras(inputseditarServicioTecnico.EServicioTecnico, validaciones.soloLetras);
+        estadoValidaciones.estadoSoloLetras = funciones.validarSoloLetras(inputseditarServicioTecnico.EServicioTecnico, validaciones.servicio);
     } 
     if(estadoValidaciones.estadoSoloLetras) {
         estadoValidaciones.estadoNoMasdeUnEspacios = funciones.validarMasdeUnEspacio(inputseditarServicioTecnico.EServicioTecnico);
