@@ -708,9 +708,9 @@ class Tarea
         if($usuario == 'SUPERADMIN'){
             $select = "SELECT ROW_NUMBER() OVER(ORDER BY ct.id_Cotizacion ASC) AS Num, ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
             FROM tbl_CotizacionTarea ct
-            INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
-            INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente
-            INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario;";
+            left join tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
+            left join tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente
+            left join tbl_MS_Usuario us ON ct.Creado_Por = us.usuario;";
                 $ejecutar = sqlsrv_query($conexion, $select);
                 if(sqlsrv_has_rows($ejecutar)){
                     while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
@@ -726,37 +726,39 @@ class Tarea
                         ];
                     }
                 }
-            $select = "  SELECT ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
-            FROM tbl_CotizacionTarea ct
-            INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
-            INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente COLLATE Latin1_General_CS_AI
-            INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario
-            WHERE cc.rtn_Cliente IN(SELECT rtn_Cliente FROM tbl_Tarea);";
-                $ejecutar = sqlsrv_query($conexion, $select);
-                if(sqlsrv_has_rows($ejecutar)){
-                    while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
-                        $cotizaciones[] = [
-                            'id' => $fila['id_Cotizacion'],
-                            'creadoPor' => $fila['nombre_Usuario'],
-                            'cliente' =>$fila['nombre_Cliente'],
-                            'subDescuento' => $fila['subDescuento'],
-                            'impuesto' => $fila['isv'],
-                            'total' => $fila['total_Cotizacion'],
-                            'estado' => $fila['estado_Cotizacion']
-                        ];
-                    }
-                }
+            // $select = "SELECT ROW_NUMBER() OVER(ORDER BY ct.id_Cotizacion ASC) AS Num, ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
+            // FROM tbl_CotizacionTarea ct
+            // left join tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
+            // left join tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente COLLATE Latin1_General_CS_AI
+            // left join tbl_MS_Usuario us ON ct.Creado_Por = us.usuario
+            // WHERE cc.rtn_Cliente IN(SELECT rtn_Cliente FROM tbl_Tarea);";
+            //     $ejecutar = sqlsrv_query($conexion, $select);
+            //     if(sqlsrv_has_rows($ejecutar)){
+            //         while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
+            //             $cotizaciones[] = [
+            //                 'item' => $fila['Num'],
+            //                 'id' => $fila['id_Cotizacion'],
+            //                 'creadoPor' => $fila['nombre_Usuario'],
+            //                 'cliente' =>$fila['nombre_Cliente'],
+            //                 'subDescuento' => $fila['subDescuento'],
+            //                 'impuesto' => $fila['isv'],
+            //                 'total' => $fila['total_Cotizacion'],
+            //                 'estado' => $fila['estado_Cotizacion']
+            //             ];
+            //         }
+            //     }
         }else{
-            $select = "SELECT ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
+            $select = "SELECT ROW_NUMBER() OVER(ORDER BY ct.id_Cotizacion ASC) AS Num, ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
                 FROM tbl_CotizacionTarea ct
-                INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
-                INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente
-                INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario
+                left join tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
+                left join tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente
+                left join tbl_MS_Usuario us ON ct.Creado_Por = us.usuario
                 WHERE ct.Creado_Por = '$usuario';";
                 $ejecutar = sqlsrv_query($conexion, $select);
                 if(sqlsrv_has_rows($ejecutar)){
                     while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
                         $cotizaciones[] = [
+                            'item' => $fila['Num'],
                             'id' => $fila['id_Cotizacion'],
                             'creadoPor' => $fila['nombre_Usuario'],
                             'cliente' =>$fila['nombre_Cliente'],
@@ -767,26 +769,27 @@ class Tarea
                         ];
                     }
                 }
-            $select = "SELECT ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
-            FROM tbl_CotizacionTarea ct
-            INNER JOIN tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
-            INNER JOIN tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente COLLATE Latin1_General_CS_AI
-            INNER JOIN tbl_MS_Usuario us ON ct.Creado_Por = us.usuario
-            WHERE ct.Creado_Por = '$usuario' AND cc.rtn_Cliente IN(SELECT cod_Cliente FROM tbl_Tarea);";
-                $ejecutar = sqlsrv_query($conexion, $select);
-                if(sqlsrv_has_rows($ejecutar)){
-                    while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
-                        $cotizaciones[] = [
-                            'id' => $fila['id_Cotizacion'],
-                            'creadoPor' => $fila['nombre_Usuario'],
-                            'cliente' =>$fila['nombre_Cliente'],
-                            'subDescuento' => $fila['subDescuento'],
-                            'impuesto' => $fila['isv'],
-                            'total' => $fila['total_Cotizacion'],
-                            'estado' => $fila['estado_Cotizacion']
-                        ];
-                    }
-                }
+            // $select = "SELECT ROW_NUMBER() OVER(ORDER BY ct.id_Cotizacion ASC) AS Num, ct.id_Cotizacion, us.nombre_Usuario, cc.nombre_Cliente AS nombre_Cliente, ct.subDescuento, ct.isv, ct.total_Cotizacion, ct.estado_Cotizacion 
+            // FROM tbl_CotizacionTarea ct
+            // left join tbl_Tarea ta ON ct.id_Tarea = ta.id_Tarea
+            // left join tbl_CarteraCliente cc ON ta.RTN_Cliente = cc.rtn_Cliente COLLATE Latin1_General_CS_AI
+            // left join tbl_MS_Usuario us ON ct.Creado_Por = us.usuario
+            // WHERE ct.Creado_Por = '$usuario' AND cc.rtn_Cliente IN(SELECT cod_Cliente FROM tbl_Tarea);";
+            //     $ejecutar = sqlsrv_query($conexion, $select);
+            //     if(sqlsrv_has_rows($ejecutar)){
+            //         while($fila = sqlsrv_fetch_array($ejecutar, SQLSRV_FETCH_ASSOC)){
+            //             $cotizaciones[] = [
+            //                 'item' => $fila['Num'],
+            //                 'id' => $fila['id_Cotizacion'],
+            //                 'creadoPor' => $fila['nombre_Usuario'],
+            //                 'cliente' =>$fila['nombre_Cliente'],
+            //                 'subDescuento' => $fila['subDescuento'],
+            //                 'impuesto' => $fila['isv'],
+            //                 'total' => $fila['total_Cotizacion'],
+            //                 'estado' => $fila['estado_Cotizacion']
+            //             ];
+            //         }
+            //     }
         }
         sqlsrv_close($conexion);
         return $cotizaciones;
@@ -864,18 +867,18 @@ class Tarea
             $datosCotizacion = [
                 'detalleC' => $fila
             ];
-            $selectCotProductos = "SELECT pc.id_Producto ,pc.item, pct.descripcion, pct.marca, pc.cantidad, pp.id_Precio, pp.precio, pc.total 
-            FROM tbl_ProductosCotizacion pc 
-            INNER JOIN tbl_ProductosCotizados pct ON pc.id_Producto = pct.id_Producto
-            INNER JOIN tbl_PreciosProductos pp ON pct.id_Producto = pp.id_Producto
+            $selectCotProductos = "SELECT pc.id_Cotizacion, pc.cod_Articulo, articulo, marca, pc.cantidad, pp.id_Precio, pp.precio, pc.total 
+            FROM tbl_Productos_Cotizacion pc 
+            INNER JOIN tbl_Articulos a ON a.cod_Articulo = pc.cod_Articulo
+            INNER JOIN tbl_precios_producto pp ON pc.cod_Articulo = pp.cod_Articulo
             WHERE  pc.id_Cotizacion = '$idCotizacion';";
             $resultCot = sqlsrv_query($conexion, $selectCotProductos);
             $productos = array();
             while($fila = sqlsrv_fetch_array($resultCot, SQLSRV_FETCH_ASSOC)){
                 $productos[] = [
-                    'id' => $fila['id_Producto'],
-                    'item' => $fila['item'],
-                    'descripcion' => $fila['descripcion'],
+                    'id' => $fila['id_Cotizacion'],
+                    'item' => $fila['cod_Articulo'],
+                    'descripcion' => $fila['articulo'],
                     'marca' => $fila['marca'],
                     'cantidad' => $fila['cantidad'],
                     'precio' => $fila['precio'],

@@ -99,10 +99,10 @@ $html .= '
     
     <table border="1" cellpadding="4">
     <tr>
-    <td style="background-color: #e54037;color: white; text-align: center; width: 50px;">ITEM</td>
+    <td style="background-color: #e54037;color: white; text-align: center; width: 80px;">CODIGO</td>
     <td style="background-color: #e54037;color: white; text-align: center; width: 150px;">DESCRIPCIÓN</td>
     <td style="background-color: #e54037;color: white; text-align: center; width: 120px;">MARCA</td>
-    <td style="background-color: #e54037;color: white; text-align: center; width: 80px;">CANT.</td>
+    <td style="background-color: #e54037;color: white; text-align: center; width: 50px;">CANT.</td>
     <td style="background-color: #e54037;color: white; text-align: center; width: 120px;">PRECIO UNIT.</td>
     <td style="background-color: #e54037;color: white; text-align: center; width: 120px;">TOTAL</td>
     </tr>
