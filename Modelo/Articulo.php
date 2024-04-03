@@ -194,7 +194,7 @@ class Articulo
             //Recorremos el resultado de tareas y almacenamos en el arreglo.
             while ($fila = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) {
                 $articulo[] = [
-                    'codigo' => $fila['CODARTICULO'],
+                    'codigo' => $fila['cod_Articulo'],
                     'articulo' => $fila['ARTICULO'],
                     'detalle' => $fila['DETALLE'],
                     'marcaArticulo' => $fila['MARCA'],
