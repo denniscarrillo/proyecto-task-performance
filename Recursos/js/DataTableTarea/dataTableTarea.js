@@ -42,7 +42,7 @@ let procesarPermisoActualizar = (data) => {
       {
         data: "fechaFinalizacion.date",
         render: function (data) {
-          return data ? data.split(" ")[0] : "Pendiente";
+          return data ? data.split(" ")[0] : " - ";
         },
       },
       { data: "diasTranscurridos" },
