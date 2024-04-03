@@ -54,6 +54,7 @@ let selectArticulos = function ($elementoHtml) {
   $elementoHtml.classList.toggle("select-articulo");
 };
 document.getElementById("btn_agregar").addEventListener("click", () => {
+  let totalSuma = 0;
   document.querySelectorAll(".select-articulo").forEach((articulo) => {
     contItem += 1;
     let trProducto = articulo.parentElement.parentElement.parentElement;
@@ -66,6 +67,11 @@ document.getElementById("btn_agregar").addEventListener("click", () => {
     };
     insertarNewProduct(contItem, productosCotizados, $tbody, 0, false);
   });
+  let arrayTotales = [];
+  document.querySelectorAll(".total-producto").forEach((element) => {
+    arrayTotales.push(element.textContent.split(" ")[1]);
+  });
+  calcularResumenCotizacion(arrayTotales, totalSuma);
   document.querySelectorAll(".fa-circle-xmark-new").forEach((xmark) => {
     agregarEventoBorrar(xmark);
   });
