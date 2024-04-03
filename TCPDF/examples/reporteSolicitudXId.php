@@ -116,11 +116,11 @@ $SolicitudesId = ControladorDataTableSolicitud::VerSolicitudesPorId($_GET['idSol
         
         $html .= '
         <tr>
-            <td style="background-color: #c9c9c9; width: 200px;"><b>ID:</b></td>
+            <td style="background-color: #c9c9c9; width: 200px;"><b>No.:</b></td>
             <td style="width: 440px;">'.$idSolicitud.'</td>       
         </tr>
         <tr>
-            <td style="background-color: #c9c9c9;"><b>ID FACTURA:</b></td>
+            <td style="background-color: #c9c9c9;"><b>No. FACTURA:</b></td>
             <td >'.$idFactura.'</td>
         </tr>
         <tr>

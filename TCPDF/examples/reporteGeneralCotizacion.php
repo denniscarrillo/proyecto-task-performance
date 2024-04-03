@@ -77,7 +77,7 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de Cotización</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 60px;">N°</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 60px;">No.</td>
 <td style="background-color: #e54037;color: white; text-align: center;width: 190px;">CREADO POR</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 295px;">CLIENTE</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 100px;">SUB TOTAL</td>

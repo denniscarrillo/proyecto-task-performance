@@ -80,9 +80,9 @@ $html = '
 <P style="text-align: center; font-size: 18px;"><b>Reporte de comisión por vendedores</b></P>
 <table border="1" cellpadding="4">
 <tr>
-<td style="background-color: #e54037;color: white; text-align: center; width: 50px">N°</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">N° COMISIÓN</td>
-<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">N° VENDEDOR</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 50px">No.</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 90px;">No. COMISIÓN</td>
+<td style="background-color: #e54037;color: white; text-align: center; width: 100px;">No. VENDEDOR</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 110px;">VENDEDOR</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 110px;">ESTADO COMISIÓN</td>
 <td style="background-color: #e54037;color: white; text-align: center; width: 130px;">COMISION TOTAL</td>
