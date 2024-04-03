@@ -340,7 +340,7 @@ $idProductos.forEach(id => {
               showConfirmButton: false // Esto oculta el botón "Aceptar" para que la notificación se cierre automáticamente
             }); 
             console.log(productos);             
-            //redirigirADataTable();  
+            redirigirADataTable();  
 
           }                      
       });
