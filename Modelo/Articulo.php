@@ -186,8 +186,8 @@ class Articulo
             $articulo = array();
             $con = new Conexion();
             $abrirConexion = $con->abrirConexionDB();
-            $query = "SELECT CODARTICULO, ARTICULO, DETALLE, MARCA, Creado_Por, Fecha_Creacion FROM tbl_ARTICULOS
-            WHERE CONCAT(CODARTICULO, ARTICULO, DETALLE, MARCA,Creado_Por, Fecha_Creacion) 
+            $query = "SELECT cod_Articulo, ARTICULO, DETALLE, MARCA, Creado_Por, Fecha_Creacion FROM tbl_ARTICULOS
+            WHERE CONCAT(cod_Articulo, ARTICULO, DETALLE, MARCA,Creado_Por, Fecha_Creacion)  
             LIKE '%' + '$buscar' + '%';";
             $resultado = sqlsrv_query($abrirConexion, $query);
             $articulo = array();
