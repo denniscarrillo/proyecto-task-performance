@@ -121,7 +121,7 @@ class Articulo
     public static function obtenerArticuloxId($CodArt){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $query = "SELECT ARTICULO FROM tbl_ARTICULOS where CODARTICULO = $CodArt;";
+        $query = "SELECT ARTICULO FROM tbl_ARTICULOS where cod_Articulo = $CodArt;";
         $resultado = sqlsrv_query($consulta, $query);
         $articulo = array();
         //Recorremos el resultado de tareas y almacenamos en el arreglo.

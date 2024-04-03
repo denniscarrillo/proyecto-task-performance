@@ -225,20 +225,22 @@ if (isset($_SESSION['usuario'])) {
               Seleccionar... <i class="btn-fa-solid fa-solid fa-magnifying-glass-plus"></i>
             </button>
           </div>
-          <table id="tablearticulos" class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Artículo</th>
-                <th scope="col">Marca</th>
-                <th scope="col">Cantidad</th>
-                <th scope="col"> Acciones </th>
-              </tr>
-            </thead>
-            <tbody id="listarticulos" class="table-group-divider">
-              <!-- Articulos de interes -->
-            </tbody>
-          </table>
+          <div id="table-container">
+            <table id="tablearticulos" class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col" class="th-col-row">Id</th>
+                  <th scope="col" class="th-col-row">Artículo</th>
+                  <th scope="col" class="th-col-row">Marca</th>
+                  <th scope="col" class="th-col-row">Cantidad</th>
+                </tr>
+              </thead>
+              <tbody id="listarticulos" class="table-group-divider">
+                <!-- Articulos de interes -->
+              </tbody>
+            </table>
+            <label for="" id="sin-productos-interes">Aún no se agregan productos de interés</label>
+          </div>
         </div>
         <!-- Botones -->
         <div class="btn-guardar">

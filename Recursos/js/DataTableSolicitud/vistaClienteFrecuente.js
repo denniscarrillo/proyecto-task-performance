@@ -115,58 +115,100 @@ $(document).on("click", "#btn_selectfactura", function () {
     });
   }
  
-
-////////////////MODAL DE ARTICULO  
-  $('#btnarticulos').click(() => {
-    if (document.getElementById('table-ArticuloSolicitud_wrapper') == null) {
-      let t = $('#table-ArticuloSolicitud').DataTable({
-        "ajax": {
-          "url": "../../../Vista/crud/DataTableSolicitud/obtenerArticulosSolicitud.php",
-          "dataSrc": ""
-        },
-        "language": {
-          "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
-        },
-        "columns": [
-          { "data": "codArticulo" },
-          { "data": 'articulo' },
-          { "data": 'detalleArticulo' },
-          { "data": 'marcaArticulo' },
-          {
-            "defaultContent":
-              '<div><button class="btns btn" id="btn_selectarticle"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>'
-          }
-        ]
-      });
-    }
+  $(document).ready(async function () {
+    obtenerArticulosDataTable();
   });
+////////////////MODAL DE ARTICULO 
+$("#btnarticulos").click(() => {
+  articulosTarea.ajax.reload()
+});
+
+const obtenerArticulosDataTable = () => {
+  articulosTarea = $("#table-ArticuloSolicitud").DataTable({
+    ajax: {
+      url: "../../../Vista/rendimiento/cotizacion/obtenerArticulos.php",
+      dataSrc: "",
+    },
+    language: {
+      url: "../../../Recursos/js/librerias/dataTableLanguage_es_ES.json",
+    },
+    fnCreatedRow: function(rowEl) {
+      $(rowEl).attr('class', 'addProduct')
+    },
+    lengthMenu: [
+      [5, 5, 10, 20], //Define la cantidad de rows a mostrar en el DataTable
+      [5, 5, 10, 20], //Es lo que se muestra en el menu desplegable del DataTable
+    ],
+    columns: [
+      { data: "codigo" },
+      { data: "articulo" },
+      { data: "marcaArticulo" },
+      { data: "precio" },
+      { data: "existencias" },
+      {
+        defaultContent:
+          '<div class="btn-select-container"><button class="btns btn" id="btn_select-article"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>',
+      },
+    ],
+  });
+}
+
+  // $('#btnarticulos').click(() => {
+  //   if (document.getElementById('table-ArticuloSolicitud_wrapper') == null) {
+  //     let t = $('#table-ArticuloSolicitud').DataTable({
+  //       "ajax": {
+  //         "url": "../../../Vista/crud/DataTableSolicitud/obtenerArticulosSolicitud.php",
+  //         "dataSrc": ""
+  //       },
+  //       "language": {
+  //         "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+  //       },
+  //       "columns": [
+  //         { "data": "codArticulo" },
+  //         { "data": 'articulo' },
+  //         { "data": 'detalleArticulo' },
+  //         { "data": 'marcaArticulo' },
+  //         {
+  //           "defaultContent":
+  //             '<div><button class="btns btn" id="btn_selectarticle"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>'
+  //         }
+  //       ]
+  //     });
+  //   }
+  // });
   
-  $(document).on("click", 'tbody tr', function (e) {
-    $(this).find("button")[0].classList.toggle('select_articulo')
-    e.currentTarget.classList.toggle('ArtSelec');
+  // $(document).on("click", 'tbody tr', function (e) {
+  //   $(this).find("button")[0].classList.toggle('select_articulo')
+  //   e.currentTarget.classList.toggle('ArtSelec');
+  // });
+
+  $(document).on("click", ".addProduct", function (e) {
+    $(this).find("button")[0].classList.toggle("select_articulo");
+    e.currentTarget.classList.toggle("ArtSelec");
   });
 
-
+//Evento al boton "Agregar"
   $('#btn_agregar').click(function () {
     agregarArticulos();
     $('#modalArticulosSolicitud').modal('hide');  
   });
   let agregarArticulos = function () {
     let $Articulos = [];
-    let productosSeleccionados = $('#table-ArticuloSolicitud').DataTable().rows(".ArtSelec").data()
-    for (let i=0; i<productosSeleccionados.length; i++) {
-      console.log(productosSeleccionados[i])
+    let productosSeleccionados = $('#table-ArticuloSolicitud')
+    .DataTable()
+    .rows(".ArtSelec")
+    .data()
+    for (let i = 0; i < productosSeleccionados.length; i++) {
+      console.log(productosSeleccionados)
       $Articulos.push({
-        id: productosSeleccionados[i].codArticulo,
+        id: productosSeleccionados[i].codigo,
         nombre: productosSeleccionados[i].articulo,
-        marca: productosSeleccionados[i].marcaArticulo
+        marca: productosSeleccionados[i].marcaArticulo,
       })
     }
-
     carritoArticulos($Articulos);
   };
-
-  
+ 
   let carritoArticulos = ($productos) => {
     let productos = '';
     let $tableArticulos = document.getElementById('listarticulos');
@@ -174,49 +216,50 @@ $(document).on("click", "#btn_selectfactura", function () {
     $productos.forEach((producto) => {
         productos += `
         <tr>
-            <td><input type="text" value="${producto.id}" class="idproducto" name="idproducto" disabled></td>
+            <td><input type="text" value="${producto.id}" 
+            class="idproducto" name="idproducto"></td>
             <td>${producto.nombre}</td>
             <td>${producto.marca}</td>
-            <td>
-                <input type="number" id="${producto.id}" class="cantproducto" name="cantProducto" min="1" max="50">
-                <p class="mensaje"></p>
-            </td>
-            <td><button class="btn_eliminar btns btn" id="btn_eliminar"><i class="fas fa-times"></i></button></td>
+            <td><input type="number" id="${producto.id}" 
+            class="cantproducto" value="1" min="1" pattern="^[1-9]+"></td>
         </tr>
         `;
     });
 
     $tableArticulos.innerHTML = productos;
-
     let idsProducto = document.querySelectorAll('.idproducto');
     idsProducto.forEach(function (idProducto) {
         idProducto.setAttribute('disabled', 'true');
     });
+    if ($productos.length > 0) {
+      document.getElementById("sin-productos-interes").hidden = true;
+    } else {
+      document.getElementById("sin-productos-interes").hidden = false;
+    }
+    // // Validación al inicializar
+    // validarCantidades();
 
-    // Validación al inicializar
-    validarCantidades();
-
-    // Agregar validación al evento change de los campos cantProducto
-    let cantProductos = document.querySelectorAll('.cantproducto');
-    cantProductos.forEach(function (cantProducto) {
-        cantProducto.addEventListener('change', validarCantidades);
-    });
+    // // Agregar validación al evento change de los campos cantProducto
+    // let cantProductos = document.querySelectorAll('.cantproducto');
+    // cantProductos.forEach(function (cantProducto) {
+    //     cantProducto.addEventListener('change', validarCantidades);
+    // });
 };
 
-function validarCantidades() {
-    let cantProductos = document.querySelectorAll('.cantproducto');
-    cantProductos.forEach(function (cantProducto) {
-        if (cantProducto.value.trim() === '' || isNaN(cantProducto.value) || parseInt(cantProducto.value) < 0) {
-            // Mostrar mensaje de error y agregar clase de estilo
-            cantProducto.nextElementSibling.textContent = 'Ingrese una cantidad válida';
-            cantProducto.nextElementSibling.classList.add('error-message');
-        } else {
-            // Limpiar mensaje de error si la cantidad es válida
-            cantProducto.nextElementSibling.textContent = '';
-            cantProducto.nextElementSibling.classList.remove('error-message');
-        }
-    });
-}
+// function validarCantidades() {
+//     let cantProductos = document.querySelectorAll('.cantproducto');
+//     cantProductos.forEach(function (cantProducto) {
+//         if (cantProducto.value.trim() === '' || isNaN(cantProducto.value) || parseInt(cantProducto.value) < 0) {
+//             // Mostrar mensaje de error y agregar clase de estilo
+//             cantProducto.nextElementSibling.textContent = 'Ingrese una cantidad válida';
+//             cantProducto.nextElementSibling.classList.add('error-message');
+//         } else {
+//             // Limpiar mensaje de error si la cantidad es válida
+//             cantProducto.nextElementSibling.textContent = '';
+//             cantProducto.nextElementSibling.classList.remove('error-message');
+//         }
+//     });
+// }
 
 
   $(document).on("click", "#btn_eliminar", function() {
@@ -261,8 +304,8 @@ let $idProductos = document.querySelectorAll('.idproducto');
 let $cantProducto = document.querySelectorAll('.cantproducto');
 let productos = [];
 $idProductos.forEach(id => {
-  $cantProducto.forEach(cant => {
-    if(id.value == cant.getAttribute('id')){
+  $cantProducto.forEach((cant) => {
+    if(id.value == cant.getAttribute("id")){
       let objProducto = {
         id: id.value,
         cant: cant.value
@@ -295,8 +338,10 @@ $idProductos.forEach(id => {
               icon: 'success',
               // El tiempo se especifica en milisegundos (en este caso, 3000 ms o 3 segundos)
               showConfirmButton: false // Esto oculta el botón "Aceptar" para que la notificación se cierre automáticamente
-            });               
-            redirigirADataTable();           
+            }); 
+            console.log(productos);             
+            //redirigirADataTable();  
+
           }                      
       });
   } else {
