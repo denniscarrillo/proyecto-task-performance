@@ -585,6 +585,7 @@ let mostrarElementosNuevaCotizacion = (estado) => {
     document.querySelectorAll(".exist").forEach((elemento) => {
       elemento.classList.add("hidden");
     });
+    document.getElementById("estado-desc").removeAttribute("disabled");
     document.querySelectorAll(".temp-label").forEach((label) => {
       label.remove();
     });
@@ -593,7 +594,7 @@ let mostrarElementosNuevaCotizacion = (estado) => {
       agregarEventoBorrar(xmark);
     });
     //Para que el Toast de anulacion solo se muestre cuando la cotizacion sea Vigente
-    if (document.getElementById("estado-cot").textContent == "Vigente") {
+    if (document.getElementById("estado-cot").textContent == "VIGENTE") {
       //Mostramos el toast
       Toast.fire({
         icon: "success",

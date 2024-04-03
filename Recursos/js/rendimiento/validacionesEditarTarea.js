@@ -40,6 +40,9 @@ $(document).ready(function () {
   }
   //Evento clic para hacer todas las validaciones
   document.getElementById("btn-guardar").addEventListener("click", () => {
+    funciones.transformarAMayusculas(inputsEditarTarea.titulo)
+    funciones.transformarAMayusculas(inputsEditarTarea.direccion)
+    funciones.transformarAMayusculas(inputsEditarTarea.nombre)
     validarInputs(funciones, $tipoCliente);
     if (
       document.querySelectorAll(".mensaje_error").length == 0 &&
@@ -76,7 +79,7 @@ optionNuevo.addEventListener("change", function () {
   });
 });
 //VALIDACIONES EN LOS DISTINTOS EVENTOS MIENTRAS EDITA =====================================================
-inputsEditarTarea.titulo.addEventListener("keyup", () => {
+inputsEditarTarea.titulo.addEventListener("input", () => {
   validarInputTitulo();
   funciones.limitarCantidadCaracteres("input-titulo-tarea", 50);
   funciones.convertirAMayusculasVisualmente(inputsEditarTarea.titulo)
@@ -88,7 +91,8 @@ inputsEditarTarea.rtn.addEventListener('input', (event) => {
   validarInputRTN($tipoCliente);
   funciones.limitarCantidadCaracteres("rnt-cliente", 20);
 });
-inputsEditarTarea.nombre.addEventListener("keyup", () => {
+inputsEditarTarea.nombre.addEventListener("input", () => {
+  funciones.convertirAMayusculasVisualmente(inputsEditarTarea.nombre)
   validarInputNombreCliente($tipoCliente);
   funciones.limitarCantidadCaracteres("nombre-cliente", 50);
 });
@@ -99,11 +103,12 @@ inputsEditarTarea.telefono.addEventListener('input', (event) => {
   validarInputTelefono();
   funciones.limitarCantidadCaracteres("telefono-cliente", 20);
 });
-inputsEditarTarea.correo.addEventListener("keyup", () => {
+inputsEditarTarea.correo.addEventListener("input", () => {
   validarInputCorreo();
   funciones.limitarCantidadCaracteres("correo-cliente", 50);
 });
-inputsEditarTarea.direccion.addEventListener("keyup", () => {
+inputsEditarTarea.direccion.addEventListener("input", () => {
+  funciones.convertirAMayusculasVisualmente(inputsEditarTarea.direccion)
   validarInputDireccion();
   funciones.limitarCantidadCaracteres("direccion-cliente", 100);
 });
@@ -196,8 +201,6 @@ let validarInputRTN = ($tipoCliente) => {
 };
 //Validaciones campo nombre cliente
 let validarInputNombreCliente = ($tipoCliente) => {
-  let usuarioMayus = inputsEditarTarea.nombre.value.toUpperCase();
-  inputsEditarTarea.nombre.value = usuarioMayus;
   let estadoValidaciones = {
     estadoSL: false,
     estadoCV: false,
@@ -320,7 +323,7 @@ let validarInputDireccion = () => {
       ))
     : "";
   estadoValidaciones.estadoMC
-    ? funciones.caracteresMinimo(inputsEditarTarea.direccion, 20)
+    ? funciones.caracteresMinimo(inputsEditarTarea.direccion, 10)
     : "";
 };
 let validarInputEvidenciaFactura = () => {
