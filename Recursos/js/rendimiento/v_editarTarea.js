@@ -12,6 +12,7 @@ let radioOption = document.getElementsByName("radioOption");
 let estadoRTN = "";
 let $codCliente = "";
 let $rtn_Cliente = document.getElementById("rnt-cliente");
+let userNameSession = document.getElementById('username');
 let articulosTarea = null;
 
 const Toast = Swal.mixin({
@@ -69,7 +70,15 @@ $(document).ready(async function () {
   //Evento para el boton de Finalizar una tarea
   document
     .getElementById("btn-finalizar-tarea")
-    .addEventListener("click", () => {
+    .addEventListener("click", (e) => {
+      if (JSON.parse(estadoRTN) == false) {
+        e.preventDefault();
+        Toast.fire({
+          icon: "warning",
+          title: "Debe tener los datos del cliente",
+        });
+        return;
+      }
       let estadoFinalizar = document
         .getElementById("estado-finalizacion")
         .textContent.trim();
@@ -80,15 +89,16 @@ $(document).ready(async function () {
         });
         return;
       }
-      if ($idTarea != null) {
+      if ($idTarea != null ) {
         Swal.fire({
-          title: "Estás seguro de finalizar la tarea # " + $idTarea + "?",
-          text: "No podrás revertir esto!",
+          title: "¿Estás seguro de finalizar la tarea N° " + $idTarea + "?",
+          text: "No podrás revertir esto",
           icon: "warning",
           showCancelButton: true,
+          cancelButtonText: "Cancelar",
           confirmButtonColor: "#3085d6",
           cancelButtonColor: "#d33",
-          confirmButtonText: "Si, finalizalo!",
+          confirmButtonText: "Si, finalizarla",
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
@@ -99,24 +109,33 @@ $(document).ready(async function () {
                 idTarea: $idTarea,
               },
               success: function (data) {
+                let mensaje = (userNameSession.textContent == "SUPERADMIN") 
+                  ? 'Puedes reabrirla desde el mantenimiento ver Tareas' 
+                  : "No se te permite editarla, salvo que sea reabierta por tu Administrador";
                 if (!JSON.parse(data) == true) {
                   Swal.fire(
-                    "Lo sentimos!",
-                    "La tarea no ha sido finalizada.",
+                    "Lo sentimos",
+                    "La tarea no ha sido finalizada",
                     "error"
                   );
                   return;
                 }
-                Swal.fire(
-                  "Tarea Finalizada!",
-                  "Ya no se te permite editarla, a menos que sea reabierta por tu Administrador",
-                  "success"
-                );
+                Swal.fire({
+                  position: "top-center",
+                  icon: "success",
+                  title: "Tarea Finalizada",
+                  text: mensaje,
+                  showConfirmButton: false,
+                  timer: 1800
+                });
                 document.getElementById("estado-finalizacion").textContent =
                   "FINALIZADA";
                 document.getElementById("btn-finalizar-tarea").textContent =
                   "Tarea finalizada";
                 document.getElementById("btn-guardar").disabled = true;
+                setTimeout(() => {
+                  location.href = "../../../Vista/rendimiento/v_tarea.php";
+                }, 1800);
               },
             }); //Fin del AJAX
           }
@@ -141,7 +160,6 @@ document
       });
     }
   });
-
 /* ----------- Función de que le da interacción del sidepanel -------------------------*/
 let $tabComments = document.getElementById("tab-comment");
 let $tabHistory = document.getElementById("tab-history");
@@ -898,88 +916,3 @@ let validarEvidencia = ($evidencia, $elemento) => {
     },
   });
 };
-document.getElementById("btn-finalizar-tarea").addEventListener("click", () => {
-  if ($idTarea != null) {
-    Swal.fire({
-      title: "¿Estás seguro de finalizar la tarea # " + $idTarea + "?",
-      text: "¡No podrás revertir esto!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "¡Sí, finalizalo!",
-      cancelButtonText: "Cancelar"
-  
-     
-    }).then((result) => {
-      if (result.isConfirmed) {
-        $.ajax({
-          url: "../../../Vista/rendimiento/finalizarTarea.php",
-          type: "POST",
-          datatype: "JSON",
-          data: {
-            idTarea: $idTarea,
-          },
-          success: function (data) {
-            console.log(JSON.parse(data));
-            // if(JSON.parse(data) == true){
-            //   Swal.fire(
-            //     'Tarea Finalizada!',
-            //     'La tarea ha sido finalizada.',
-            //     'success'
-            //   )
-            //   document.getElementById('btn-finalizar-tarea').setAttribute('disabled', 'true');
-            // } else{
-            //   Swal.fire(
-            //     'Lo sentimos!',
-            //     'La tarea no ha sido finalizada.',
-            //     'error'
-            //   )
-            // }
-            if (!(JSON.parse(data) == true)) {
-              Swal.fire(
-                "¡Lo sentimos!",
-                "La tarea no ha sido finalizada.",
-                "error"
-              );
-              return;
-            }
-            Swal.fire(
-              "¡Tarea Finalizada!",
-              "La tarea ha sido finalizada.",
-              "success"
-            );
-            document
-              .getElementById("btn-finalizar-tarea")
-              .setAttribute("disabled", "true");
-          },
-        }); //Fin del AJAX
-      }
-    });
-  }
-});
-// let obtenerEstadoTarea = ($newEstado, $idTarea) => {
-//   $.ajax({
-//     url: '../../../Vista/rendimiento/cambiarEstadoTarea.php',
-//     type: 'POST',
-//     datatype: 'JSON',
-//     data: {
-//       nuevoEstado: $newEstado,
-//       idTarea: $idTarea
-//     }
-//   });
-// }
-// let obtenerHistorialEstado = async ($idTarea) => {
-//   let estadosTarea = null;
-//   try {
-//       estadosTarea = await $.ajax({
-//       url: '../../../Vista/rendimiento/obtenerHistorialEstado.php',
-//       type: 'POST',
-//       datatype: 'JSON',
-//       data: {idTarea: $idTarea}
-//     });
-//   } catch (error) {
-//     console.error('Ha ocurrido un error: '+error);
-//   }
-//   return estadosTarea;
-// }

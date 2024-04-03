@@ -1,14 +1,15 @@
-import { validarCampoVacio, convertirAMayusculas, validarSiExisteUsuario } from "./funcionesValidaciones.js";
+import { validarCampoVacio, convertirAMayusculasVisualmente, transformarAMayusculas, validarSiExisteUsuario } from "./funcionesValidaciones.js";
 const $form = document.getElementById('formcorreo');
 const $usuario = document.getElementById('usuario');
 
 // Validar el formulario antes de enviar los datos
 $form.addEventListener('submit', e => {
+  transformarAMayusculas($usuario)
   (!validarCampoVacio($usuario)) ? e.preventDefault() : '';
 });
 
 $usuario.addEventListener('focusout', async () => validarSiExisteUsuario($usuario, await existeUsuario($usuario)));
-$usuario.addEventListener('input', () => convertirAMayusculas($usuario));
+$usuario.addEventListener('input', () => convertirAMayusculasVisualmente($usuario));
 
 /**
  * 
