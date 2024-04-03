@@ -2,7 +2,7 @@ import * as funciones from '../funcionesValidaciones.js';
 export let estadoValidado = false;
 //Objeto con expresiones regulares para los inptus
 const validaciones = {
-    soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
+    soloLetras: /^(?=.*[^a-zA-Z\/ .ÑñáéíóúÁÉÍÓÚs])+$/, //Solo letras
     descripcion: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ.\s.,])/, // Letras, acentos y Ñ, también permite punto // Solo letras
     caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
     caracterMas5veces: /^(?=.*(...)\1)/,
@@ -37,7 +37,7 @@ $rol.addEventListener("input", () => {
   validarInputRol();
 });
 $rol.addEventListener("keydown", () => {
-  funciones.soloLetrasConEspacios($rol)
+  funciones.soloLetrasYPuntos($rol)
 });
 inputEditarRol.descripcion.addEventListener("keyup", ()=>{
     validarInputDescripcion();
