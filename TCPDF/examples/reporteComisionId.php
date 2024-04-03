@@ -124,14 +124,14 @@ if (isset($ComisionId['FechaModificacion']) && $ComisionId['FechaModificacion'] 
     $fechaModificacion = 'Sin modificaciones'; // Otra acción si $fechaLiquidacion es nulo
 }
 $html = '
-<P style="text-align: center; font-size: 18px;"><b>Reporte de la Comision N° '.$idComision.'</b></P>
+<P style="text-align: center; font-size: 18px;"><b>Reporte de la Comision No. '.$idComision.'</b></P>
 ';
 
 $html .= '
 
 <dl>
-<div style="flex: 1; text-align: left;"> <b> ID COMISIÓN:  </b>' . $idComision . '</div>
-<div style="flex: 1; text-align: left;"> <b> N° FACTURA:  </b>' . $idFactura . '</div>
+<div style="flex: 1; text-align: left;"> <b> No. COMISIÓN:  </b>' . $idComision . '</div>
+<div style="flex: 1; text-align: left;"> <b> No. FACTURA:  </b>' . $idFactura . '</div>
 <div style="flex: 1; text-align: left;"> <b> VENTA TOTAL:  </b>' . $VentaTotal . '</div>
 <div style="flex: 1; text-align: left;"> <b> PORCENTAJE:  </b>' . $valorPorcentaje . '%</div>
 <div style="flex: 1; text-align: left;"> <b> COMISIÓN TOTAL:  </b>' . $ComisionT . '</div>
@@ -146,7 +146,7 @@ $html .= '
     <br>
     <table cellpadding="5"  border= "1" >
     <tr>
-        <th scope="col" style="background-color: #e54037; color: white;">ID VENDEDOR</th>
+        <th scope="col" style="background-color: #e54037; color: white;">No. VENDEDOR</th>
         <th scope="col" style="background-color: #e54037; color: white;">NOMBRE VENDEDOR</th>
         <th scope="col" style="background-color: #e54037; color: white;">COMISIÓN VENDEDOR</th>
     </tr>';

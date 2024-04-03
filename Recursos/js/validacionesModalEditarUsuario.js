@@ -1,89 +1,154 @@
-import * as funciones from './funcionesValidaciones.js';
+import * as funciones from "./funcionesValidaciones.js";
 export let estadoValidado = false;
+
+const $form = document.getElementById("form-Edit-Usuario");
+const $nombre = document.getElementById("E_nombre");
+const $correo = document.getElementById("E_correo");
+const $rol = document.getElementById("E_rol");
+const $estado = document.getElementById("E_estado");
+
 //Objeto con expresiones regulares para los inptus
-const validaciones = {
-    soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
-    correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/
+const expresiones = {
+    usuario: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
+    nombre: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ.\s.,])/, // Letras, acentos y Ñ, también permite punto // Solo letras
+    correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
 }
-//VARIABLES GLOBALES
-let estadoLetrasName = true;
-
-let estadoSelect = {
-    estadoSelectRol: true,
-    estadoSelectEstado: true,
-}
-let estadoMasdeUnEspacio = {
-    estadoMasEspacioNombre: true
-}
-
-let estadoCorreo = true;
-
-const $form = document.getElementById('form-Edit-Usuario');
-const $name = document.getElementById('E_nombre');
-const $correo = document.getElementById('E_correo');
-const $rol = document.getElementById('E_rol');
-const $estado = document.getElementById('E_estado');
-
-/* ---------------- VALIDACIONES FORMULARIO GESTION NUEVO USUARIO ----------------------*/
+/* ---------------- VALIDACIONES FORMULARIO GESTION EDITAR USUARIO ----------------------*/
 /* 
     Antes de enviar datos del formulario, se comprobara que todas  
     las validaciones se hayan cumplido.
 */
-$form.addEventListener('submit', e => {
-    //Validamos que algún campo no esté vacío.
-    let estadoInputNombre = funciones.validarCampoVacio($name);
-    let estadoInputCorreo = funciones.validarCampoVacio($correo);
-    let estadoInputRol = funciones.validarCampoVacio($rol);
-    let estadoInputEstado = funciones.validarCampoVacio($estado);
-    // Comprobamos que todas las validaciones se hayan cumplido 
-    if (estadoInputNombre == false || estadoInputCorreo == false || estadoInputRol == false || estadoInputEstado == false) {
-        e.preventDefault();
-    } else{
-        if(estadoLetrasName == false){
-            e.preventDefault();
-            estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
-        } else {
-            estadoMasdeUnEspacio.estadoMasEspacioNombre = funciones.validarMasdeUnEspacio($name);
-            if(estadoMasdeUnEspacio.estadoMasEspacioNombre == false){
-                e.preventDefault();
-            } else{
-
-            if(estadoCorreo == false || estadoSelect.estadoSelectEstado == false || estadoSelect.estadoSelectRol == false){
-                e.preventDefault();
-                estadoCorreo = funciones.validarCorreo($correo, validaciones.correo);
-                estadoSelect.estadoSelectEstado = funciones.validarCampoVacio($estado);
-                estadoSelect.estadoSelectRol = funciones.validarCampoVacio($rol);
-            } else {
-                estadoValidado = true; // 
-            }
-        }
-      }
-    }
+$form.addEventListener("submit", async (e) => {
+  // Aplicar todas las validaciones a todos los campos
+  aplicarValidacionesInputsEditar();
+  
+  // Transformar datos a mayúsculas
+  funciones.transformarAMayusculas($nombre);
+  
+  // Esperar la finalización de las validaciones asincrónicas
+  // await Promise.all([
+  //     validarInputCorreo()
+  // ]);
+  
+  // Verificar si hay errores de validación
+  const estadoValidaciones = document.querySelectorAll(".mensaje_error").length;
+  
+  // Actualizar el estado de validación
+  estadoValidado = estadoValidaciones === 0;
+  
+  // Si hay errores, prevenir el envío del formulario
+  if (!estadoValidado) {
+      e.preventDefault();
+  }
 });
-$name.addEventListener('keyup', ()=>{
-    estadoLetrasName = funciones.validarSoloLetras($name, validaciones.soloLetras);
-   funciones.limitarCantidadCaracteres("E_nombre", 100);
-});
-$name.addEventListener('focusout', ()=>{
-    if(estadoMasdeUnEspacio.estadoMasEspacioNombre){
-        funciones.validarMasdeUnEspacio($name);
-    }
-    let usuarioMayus = $name.value.toUpperCase();
-    $name.value = usuarioMayus;
-});
-$estado.addEventListener('focusout', ()=>{
-    
-    let usuarioMayus = $estado.value.toUpperCase();
-    $estado.value = usuarioMayus;
-});
-$correo.addEventListener('keyup', ()=>{
-    estadoCorreo = funciones.validarCorreo($correo, validaciones.correo);
+// Llamada a las validaciones en distintos eventos
+  $nombre.addEventListener("input", () => {
+    funciones.convertirAMayusculasVisualmente($nombre);
+    funciones.limitarCantidadCaracteres("E_nombre", 60);
+    validacionInputNombre();
+  });
+  $nombre.addEventListener("keydown", () => {
+    funciones.soloLetrasYPuntos($nombre)
+  });
+  $correo.addEventListener("input", () => {
     funciones.limitarCantidadCaracteres("E_correo", 50);
-});
-$rol.addEventListener('change', ()=>{
-    estadoSelect.estadoSelectRol = funciones.validarCampoVacio($rol);
-});
-$estado.addEventListener('change', ()=>{
-    estadoSelect.estadoSelectEstado = funciones.validarCampoVacio($estado);
-});
-// || estadoMasdeUnEspacio.estadoMasEspacioNombre == true
+    validarInputCorreo();
+  });
+  $correo.addEventListener("focusout", () => {
+    validarInputCorreo();
+  });
+  $rol.addEventListener("change", () => {
+    validarSelectRol();
+  });
+  $estado.addEventListener("change", () => {
+    validarSelectEstado();
+  });
+    //FUNCIONES VALIDACIONES PARA CADA INPUT DEL FORMULARIO
+const aplicarValidacionesInputsEditar = () => {
+    //Llamamos a todas las funciones que aplican sus respectivas validaciones a cada input
+    validacionInputNombre();
+    validarInputCorreo();
+    validarSelectRol();
+    validarSelectEstado();
+  };
+  const validacionInputNombre = () => {
+    let estadoValidaciones = {
+      campoVacio: false,
+      soloLetras: false,
+      masDeUnEspacio: false,
+      caracteresMasTresVeces: false,
+    };
+    estadoValidaciones.campoVacio = funciones.validarCampoVacio($nombre);
+    estadoValidaciones.campoVacio
+      ? (estadoValidaciones.soloLetras = funciones.validarSoloLetras(
+          $nombre,
+          expresiones.nombre
+        ))
+      : "";
+    estadoValidaciones.soloLetras
+      ? (estadoValidaciones.masDeUnEspacio =
+          funciones.validarMasdeUnEspacio($nombre))
+      : "";
+    estadoValidaciones.masDeUnEspacio
+      ? (estadoValidaciones.caracteresMasTresVeces =
+          funciones.limiteMismoCaracter($nombre, expresiones.usuario))
+      : "";
+    estadoValidaciones.caracteresMasTresVeces
+      ? funciones.caracteresMinimo($nombre, 10)
+      : "";
+  };
+
+  const validarInputCorreo = async () => {
+    let estadoValidaciones = {
+        campoVacio: false,
+        espacios: false,
+        correo: false,
+        caracteresMasTresVeces: false,
+        caracteresMinimo: false,
+    };
+    estadoValidaciones.campoVacio = funciones.validarCampoVacio($correo);
+    estadoValidaciones.campoVacio
+        ? (estadoValidaciones.espacios = funciones.validarEspacios($correo))
+        : "";
+    estadoValidaciones.espacios
+        ? (estadoValidaciones.correo = funciones.validarCorreo($correo, expresiones.correo))
+        : "";
+    estadoValidaciones.espacios
+        ? (estadoValidaciones.caracteresMasTresVeces = funciones.limiteMismoCaracter($correo, expresiones.usuario))
+        : "";
+    estadoValidaciones.caracteresMasTresVeces
+        ? (estadoValidaciones.caracteresMinimo = funciones.caracteresMinimo($correo, 15))
+        : "";
+    // estadoValidaciones.caracteresMinimo
+    //     ? funciones.validarCorreoExistenteE(await obtenerCorreoExiste($correo.value))
+    //     : "";
+};
+
+
+const validarSelectRol = () => {
+    let estadoValidaciones = {
+        estadoSelect: false,
+    };
+
+estadoValidaciones.estadoSelect = funciones.validarCampoVacio($rol);
+  };
+
+  const validarSelectEstado = () => {
+    let estadoValidaciones = {
+        estadoSelect: false,
+    };
+
+estadoValidaciones.estadoSelect = funciones.validarCampoVacio($estado);
+  };
+
+let obtenerCorreoExiste = async ($correo) => {
+    const existeEmail = await $.ajax({
+      url: "../../../Vista/crud/usuario/correoExiste.php",
+      type: "POST",
+      datatype: "JSON",
+      data: {
+        correo: $correo,
+      },
+    });
+    return JSON.parse(existeEmail).estado;
+  };

@@ -4,6 +4,7 @@ export let estadoValido = false;
 
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ\s,])/,//Lentras, acentos y Ñ //Solo letras
+    descripcion: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ.\s.,])/, // Letras, acentos y Ñ, también permite punto // Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
     soloNumeros: /^[0-9 ]*$/,
     caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
@@ -11,7 +12,7 @@ const validaciones = {
     letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
     direccion: /^[a-zA-Z0-9 #.,-]+$/,
 };
-
+const $descripcion = document.getElementById("E_descripcion");
 let inputsEditarRazonSocial = {
     // razonSocial: document.getElementById('E_razonSocial'),
     descripcion: document.getElementById('E_descripcion')
@@ -20,6 +21,13 @@ let inputsEditarRazonSocial = {
 inputsEditarRazonSocial.descripcion.addEventListener('keyup', ()=>{
     funciones.limitarCantidadCaracteres('E_descripcion', 300);
 });
+$descripcion.addEventListener("input", () => {
+    funciones.convertirAMayusculasVisualmente($descripcion);
+    validarInputDescripcion();
+  });
+  $descripcion.addEventListener("keydown", () => {
+    funciones.soloLetrasYPuntosYComas($descripcion)
+  });
 
 let btnGuardar = document.getElementById('btnEditarsubmit');
 
@@ -52,7 +60,7 @@ let validarInputDescripcion = function () {
     estadoValidaciones.estadoCampoVacio = funciones.validarCampoVacio(inputsEditarRazonSocial.descripcion);
     if(estadoValidaciones.estadoCampoVacio) {
         estadoValidaciones.estadoSoloLetras = funciones.validarSoloLetras(inputsEditarRazonSocial.descripcion,
-             validaciones.soloLetras);
+             validaciones.descripcion);
     } 
     if(estadoValidaciones.estadoSoloLetras) {
         estadoValidaciones.estadoNoMasdeUnEspacios = funciones.validarMasdeUnEspacio(inputsEditarRazonSocial.descripcion);

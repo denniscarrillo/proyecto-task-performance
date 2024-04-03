@@ -28,15 +28,16 @@ class Usuario {
     public static function obtenerTodosLosUsuarios(){
         $conn = new Conexion();
         $consulta = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $query = "SELECT u.id_Usuario, u.usuario, u.nombre_Usuario, u.correo_Electronico, e.descripcion, r.rol
-                FROM tbl_ms_usuario AS u
-                INNER JOIN tbl_estado_usuario AS e ON u.id_Estado_Usuario = e.id_Estado_Usuario 
-                INNER JOIN tbl_ms_roles AS r ON u.id_Rol = r.id_Rol;";
+        $query = "SELECT ROW_NUMBER() OVER (ORDER BY u.id_Usuario ASC) AS Num, u.id_Usuario, u.usuario, u.nombre_Usuario, u.correo_Electronico, e.descripcion, r.rol
+        FROM tbl_ms_usuario AS u
+        INNER JOIN tbl_estado_usuario AS e ON u.id_Estado_Usuario = e.id_Estado_Usuario 
+        INNER JOIN tbl_ms_roles AS r ON u.id_Rol = r.id_Rol;";
         $listaUsuarios = sqlsrv_query($consulta, $query);
         $usuarios = array();
         //Recorremos la consulta y obtenemos los registros en un arreglo asociativo
         while ($fila = sqlsrv_fetch_array($listaUsuarios, SQLSRV_FETCH_ASSOC)) {
             $usuarios[] = [
+                'item' => $fila["Num"],
                 'IdUsuario' => $fila["id_Usuario"],
                 'usuario' => $fila["usuario"],
                 'nombreUsuario' => $fila["nombre_Usuario"],

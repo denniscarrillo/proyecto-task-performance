@@ -189,3 +189,9 @@ $rtn.addEventListener('input', (event)=>{
    funciones.limitarCantidadCaracteres("E_rtn", 20);
 });
 
+$telefono.addEventListener('input', (event)=>{
+    if (!funciones.telefono_guion(event)) {
+        event.preventDefault();
+    }
+});
+

@@ -1,4 +1,3 @@
-
 /**
  * Valida que no se incluyan espacios entre palabras
  * @param {HTMLElement} elemento 
@@ -208,7 +207,21 @@ export const validarCorreoExistente = (estadoCorreo) => {
     }
     return estado;
 }
-
+export const validarCorreoExistenteE = (estadoCorreo) => {
+    let elemento = document.getElementById('E_correo');
+    let $mensaje = elemento.parentElement.querySelector('p');
+    let estado = false;
+    if (estadoCorreo === 'true') {
+        elemento.classList.add('mensaje_error');
+        $mensaje.innerText = 'Correo existente';
+        estado = false;
+    } else {
+        elemento.classList.remove('mensaje_error');
+        $mensaje.parentElement.querySelector('p').innerText = '';
+        estado = true;
+    }
+    return estado;
+}
 export const validarUsuarioExistente = (estadoUsuario) => {
     let elemento = document.getElementById('usuario');
     let $mensaje = elemento.parentElement.querySelector('p');
@@ -331,6 +344,37 @@ export const validarMinMaxCaracteresPassword = (input, minMaxCaracteres) => {
 }
 
 /**
+ * @param {HTMLElement} elemento - input HTML al cual le queremos aplicar la validación
+ * @returns {true|false}
+ */
+export const obtenerMinMaxCaracteresPasswordU = async () => {
+    let minMaxParametros = null;
+    try {
+        minMaxParametros = await $.ajax({
+            url: "../../../Vista/crud/usuario/validarParametrosContrasenia.php",
+            type: "POST",
+            dataType: "JSON",
+        });
+    } catch (error) {
+        console.log(error);
+    }
+    return minMaxParametros;
+};
+
+export const validarMinMaxCaracteresPasswordU = (input, minMaxCaracteres) => {
+    let estado = false;
+    let mensaje = input.parentElement.querySelector('p');
+    if (input.value.length < minMaxCaracteres.min || input.value.length > minMaxCaracteres.max) {
+        mensaje.innerText = '*Mínimo ' + minMaxCaracteres.min + ', máximo ' + minMaxCaracteres.max + ' caracteres';
+        input.classList.add('mensaje_error');
+    } else {
+        mensaje.innerText = '';
+        input.classList.remove('mensaje_error');
+        estado = true;
+    }
+    return estado;
+}
+/**
  * @param {HTMLElement} elemento - input HTML al cual le queremos convertir el texto a mayúsculas mientras se escribe él
  */
 export const convertirAMayusculasVisualmente = (elemento) => {
@@ -363,6 +407,72 @@ export const RTN_guion = (event) => {
         event.target.value = formato;
 };
 
+export const telefono_guion = (event) => {
+    // Obtener el valor actual del input y eliminar caracteres no numéricos
+    var formato = event.target.value.replace(/\D/g, '');
+
+    // Aplicar formato a los dos primeros grupos de 4 números
+    if (formato.length > 8) {
+      formato = formato.slice(0, 4) + '-' + formato.slice(4, 8) + formato.slice(8);;
+    } else if (formato.length > 4) {
+      formato = formato.slice(0, 4) + '-' + formato.slice(4);
+    }
+    // Actualizar el valor del input con el formato aplicado
+    event.target.value = formato;
+};
+export const soloLetrasYPuntos = (elemento) => {
+    elemento.setAttribute('onkeypress', 'return ((event.charCode >= 65 && event.charCode <= 90) || ' +
+        '(event.charCode >= 97 && event.charCode <= 122) || ' +
+        '(event.charCode == 46) || (event.charCode == 209) || ' + // "Ñ"
+        '(event.charCode == 241) || (event.charCode == 32) || ' + // espacio
+        '(event.charCode == 193) || (event.charCode == 201) || ' + // Á y É
+        '(event.charCode == 205) || (event.charCode == 211) || ' + // Í y Ó
+        '(event.charCode == 218) || (event.charCode == 225) || ' + // Ú y á
+        '(event.charCode == 233) || (event.charCode == 237) || ' + // é y í
+        '(event.charCode == 243) || (event.charCode == 250) || ' + // ó y ú
+        '(event.charCode == 209) || (event.charCode == 241))'); // "Ñ" y "ñ"
+};
+export const soloLetrasYPuntosYSignos = (elemento) => {
+    elemento.setAttribute('onkeypress', 'return ((event.charCode >= 65 && event.charCode <= 90) || ' +
+        '(event.charCode >= 97 && event.charCode <= 122) || ' +
+        '(event.charCode == 46) || (event.charCode == 209) || ' + // "Ñ"
+        '(event.charCode == 241) || (event.charCode == 32) || ' + // espacio
+        '(event.charCode == 193) || (event.charCode == 201) || ' + // Á y É
+        '(event.charCode == 205) || (event.charCode == 211) || ' + // Í y Ó
+        '(event.charCode == 218) || (event.charCode == 225) || ' + // Ú y á
+        '(event.charCode == 233) || (event.charCode == 237) || ' + // é y í
+        '(event.charCode == 243) || (event.charCode == 250) || ' + // ó y ú
+        '(event.charCode == 63) || (event.charCode == 191) || ' + // ? y ¿
+        '(event.charCode == 209) || (event.charCode == 241))'); // "Ñ" y "ñ"
+};
+
+export const soloLetrasYPuntosYComas = (elemento) => {
+    elemento.setAttribute('onkeypress', 'return ((event.charCode >= 65 && event.charCode <= 90) || ' +
+        '(event.charCode >= 97 && event.charCode <= 122) || ' +
+        '(event.charCode == 46) || (event.charCode == 209) || ' + // "Ñ"
+        '(event.charCode == 241) || (event.charCode == 32) || ' + // espacio
+        '(event.charCode == 193) || (event.charCode == 201) || ' + // Á y É
+        '(event.charCode == 205) || (event.charCode == 211) || ' + // Í y Ó
+        '(event.charCode == 218) || (event.charCode == 225) || ' + // Ú y á
+        '(event.charCode == 233) || (event.charCode == 237) || ' + // é y í
+        '(event.charCode == 243) || (event.charCode == 250) || ' + // ó y ú
+        '(event.charCode == 44) || (event.charCode == 209) || ' + // coma
+        '(event.charCode == 241))'); // "Ñ" y "ñ"
+};
+
+export const permitirLetrasNumerosPuntosComas = (elemento) => {
+    elemento.setAttribute('onkeypress', 'return ((event.charCode >= 65 && event.charCode <= 90) || ' +
+        '(event.charCode >= 97 && event.charCode <= 122) || ' +
+        '(event.charCode >= 48 && event.charCode <= 57) || ' + // números
+        '(event.charCode == 46) || (event.charCode == 44) || ' + // puntos y comas
+        '(event.charCode == 209) || (event.charCode == 241) || ' + // "Ñ" y "ñ"
+        '(event.charCode == 32) || ' + // espacio
+        '(event.charCode == 193) || (event.charCode == 201) || ' + // Á y É
+        '(event.charCode == 205) || (event.charCode == 211) || ' + // Í y Ó
+        '(event.charCode == 218) || (event.charCode == 225) || ' + // Ú y á
+        '(event.charCode == 233) || (event.charCode == 237) || ' + // é y í
+        '(event.charCode == 243) || (event.charCode == 250))'); // ó y ú
+};
 
 /**
  * @param {HTMLElement} elemento - input HTML al cual le queremos aplicar la validación

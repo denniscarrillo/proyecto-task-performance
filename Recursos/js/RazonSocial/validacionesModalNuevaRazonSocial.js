@@ -6,6 +6,7 @@ export let estadoValidado = false;
 
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ\s,])/,//Lentras, acentos y Ñ //Solo letras
+    descripcion: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ.\s.,])/, // Letras, acentos y Ñ, también permite punto // Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
     soloNumeros: /^[0-9 ]*$/,
     caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
@@ -14,6 +15,8 @@ const validaciones = {
     direccion: /^[a-zA-Z0-9 #.,-]+$/,
 };
 
+const $razon = document.getElementById("razonSocial");
+const $descripcion = document.getElementById("descripcion");
 
 let inputsNuevaRazonSocial = {
     RazonSocial: document.getElementById('razonSocial'),
@@ -62,10 +65,25 @@ inputsNuevaRazonSocial.RazonSocial.addEventListener('keyup', async()=>{
   
     funciones.limitarCantidadCaracteres('RazonSocial', 50);
 });
+$razon.addEventListener("input", () => {
+    funciones.convertirAMayusculasVisualmente($razon);
+    ValidarInputRazonSocial();
+  });
+  $razon.addEventListener("keydown", () => {
+    funciones.soloLetrasYPuntos($razon)
+  });
+  
 inputsNuevaRazonSocial.descripcion.addEventListener('keyup', ()=>{
  
     funciones.limitarCantidadCaracteres('descripcion', 300);
 });
+$descripcion.addEventListener("input", () => {
+    funciones.convertirAMayusculasVisualmente($descripcion);
+    ValidarInputDescrip();
+  });
+  $descripcion.addEventListener("keydown", () => {
+    funciones.soloLetrasYPuntosYComas($descripcion)
+  });
 //Validar inputs
 let ValidarInputRazonSocial =  function ()  {
     let rubroMayus = inputsNuevaRazonSocial.RazonSocial.value.toUpperCase();
@@ -110,7 +128,7 @@ let ValidarInputDescrip = function () {
 
     descripcionValidaciones.estadoCampoVacio = funciones.validarCampoVacio(inputsNuevaRazonSocial.descripcion);
     if(descripcionValidaciones.estadoCampoVacio) {
-        descripcionValidaciones.estadoSoloLetras = funciones.validarSoloLetras(inputsNuevaRazonSocial.descripcion, validaciones.soloLetras);
+        descripcionValidaciones.estadoSoloLetras = funciones.validarSoloLetras(inputsNuevaRazonSocial.descripcion, validaciones.descripcion);
     } 
     if(descripcionValidaciones.estadoSoloLetras) {
        descripcionValidaciones.estadoNoMasdeUnEspacios = funciones.validarMasdeUnEspacio(inputsNuevaRazonSocial.descripcion);

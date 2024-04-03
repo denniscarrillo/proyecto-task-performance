@@ -74,7 +74,7 @@ $pdf->AddPage();
 $Tareas = ControladorDataTableTarea::obtenerTareasId(intval($_GET['idTarea']));
 
 $html = '
-<p style="text-align: center; font-size: 18px;"><b>Reporte de la Tarea N° '.$Tareas['id'].'</b></p>
+<p style="text-align: center; font-size: 18px;"><b>Reporte de la Tarea No. '.$Tareas['id'].'</b></p>
 <p><b>Nombre del Cliente: </b>'.$Tareas['nombreCliente'].'</p>
 <p><b>RTN del Cliente:</b>'.$Tareas['rtnCliente'].'</p>
 <p><b>Tipo de Cliente:</b>'.$Tareas['TipoCliente'].'</p>

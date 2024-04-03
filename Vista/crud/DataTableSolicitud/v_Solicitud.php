@@ -163,7 +163,7 @@ if (isset($_SESSION['usuario'])) {
 
             <div class="group-form">
               <div class="form-element input-conteiner" id="containerFacturacliente">
-                <label for="id-factura" class="form-label">N° Factura:</label>
+                <label for="id-factura" class="form-label">No. Factura:</label>
                 <input type="text" id="idfactura" name="numeroFactura" class="form-control"  placeholder="N° Factura" disabled>
                 <p class="mensaje"></p>
               </div>

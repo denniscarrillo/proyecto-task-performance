@@ -3,6 +3,7 @@ export let estadoValidado = false;
 //Objeto con expresiones regulares para los inptus
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ\s,])/,//Lentras, acentos y Ñ //Solo letras
+    descripcion: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ.\s.,])/, // Letras, acentos y Ñ, también permite punto // Solo letras
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
     soloNumeros: /^[0-9 ]*$/,
     caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
@@ -10,6 +11,8 @@ const validaciones = {
     letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
     direccion: /^[a-zA-Z0-9 #.,-]+$/,
 };
+const $rubro = document.getElementById("rubroComercial");
+const $descripcion = document.getElementById("descripcion");
 let inputsNuvoRubroC = {
     rubroC: document.getElementById('rubroComercial'),
     descripcion: document.getElementById('descripcion')
@@ -36,10 +39,24 @@ inputsNuvoRubroC.rubroC.addEventListener('keyup', async()=>{
   
     funciones.limitarCantidadCaracteres('rubroComercial', 50);
 });
+$rubro.addEventListener("input", () => {
+    funciones.convertirAMayusculasVisualmente($rubro);
+    ValidarInputRubroC();
+  });
+  $rubro.addEventListener("keydown", () => {
+    funciones.soloLetrasYPuntos($rubro)
+  });
 inputsNuvoRubroC.descripcion.addEventListener('keyup', ()=>{
  
     funciones.limitarCantidadCaracteres('descripcion', 300);
 });
+$descripcion.addEventListener("input", () => {
+    funciones.convertirAMayusculasVisualmente($descripcion);
+    ValidarInputDescrip();
+  });
+  $descripcion.addEventListener("keydown", () => {
+    funciones.soloLetrasYPuntosYComas($descripcion)
+  });
 //Validar inputs
 let ValidarInputRubroC =  function ()  {
     let rubroMayus = inputsNuvoRubroC.rubroC.value.toUpperCase();
@@ -79,7 +96,7 @@ let ValidarInputDescrip = function () {
     }
     descripcionValidaciones.estadoCampoVacio = funciones.validarCampoVacio(inputsNuvoRubroC.descripcion);
     if(descripcionValidaciones.estadoCampoVacio) {
-        descripcionValidaciones.estadoSoloLetras = funciones.validarSoloLetras(inputsNuvoRubroC.descripcion, validaciones.soloLetras);
+        descripcionValidaciones.estadoSoloLetras = funciones.validarSoloLetras(inputsNuvoRubroC.descripcion, validaciones.descripcion);
     } 
     if(descripcionValidaciones.estadoSoloLetras) {
        descripcionValidaciones.estadoNoMasdeUnEspacios = funciones.validarMasdeUnEspacio(inputsNuvoRubroC.descripcion);
