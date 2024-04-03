@@ -17,7 +17,7 @@ if (session_status() == PHP_SESSION_NONE) {
       var_dump($Respuestas);
   } else {
       // Manejar el caso en que la sesión no está configurada correctamente
-      echo "La sesión de usuario no está configurada correctamente.";
+    
   }
   
 ?>

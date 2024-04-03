@@ -10,7 +10,7 @@ if (session_status() == PHP_SESSION_NONE) {
    require_once("../../../Controlador/ControladorPregunta.php");
    require_once("../../../Controlador/ControladorBitacora.php");
 
-   if(isset($_POST['guardar']) && isset($_SESSION['usuario'])){
+   if(isset($_POST['nombre']) && isset($_SESSION['usuario'])){
       $updateData=new Usuario();
       $updateData->usuario=$_SESSION['usuario'];
       $updateData->nombre=$_POST['nombre'];
@@ -20,6 +20,7 @@ if (session_status() == PHP_SESSION_NONE) {
       $updateData->correo=$_POST['email'];
       $updateData->modificadoPor=$_SESSION['usuario'];
       ControladorUsuario::editarPerfilUsuario($updateData);
+    
       /* ========================= Evento Editar tipo servicio. ====================================*/
       $newBitacora = new Bitacora();
       $accion = ControladorBitacora::accion_Evento();
@@ -32,3 +33,4 @@ if (session_status() == PHP_SESSION_NONE) {
       header("location:./gestionPerfilUsuario.php");
       exit();
    }
+ 

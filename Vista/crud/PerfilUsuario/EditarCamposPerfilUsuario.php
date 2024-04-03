@@ -101,7 +101,7 @@ if (isset($_SESSION['usuario'])) {
   <div class="conteiner">
     <div class="conteiner-global">
       <div class="sidebar-conteiner">
-        <?php
+      <?php
         $urlIndex = '../../index.php';
         // Rendimiento
         $urlMisTareas = '../../rendimiento/v_tarea.php';
@@ -113,6 +113,8 @@ if (isset($_SESSION['usuario'])) {
         $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
         //Comisión
         $urlComision = '../../comisiones/v_comision.php';
+        $comisionVendedor = '../ComisionesVendedores/ComisionesVendedores.php';
+        $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
         //Consulta
         $urlClientes = '../cliente/gestionCliente.php';
         $urlVentas = '../Venta/gestionVenta.php';
@@ -122,17 +124,18 @@ if (isset($_SESSION['usuario'])) {
         //Mantenimiento
         $urlUsuarios = '../usuario/gestionUsuario.php';
         $urlEstadoUsuario = '../estadoUsuario/gestionEstadoUsuario.php';
-        $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
+        $urlCarteraCliente = './gestionCarteraClientes.php';
         $urlPreguntas = '../pregunta/gestionPregunta.php';
+        $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
         $urlParametros = '../parametro/gestionParametro.php';
         $urlPermisos = '../permiso/gestionPermisos.php';
         $urlRoles = '../rol/gestionRol.php';
-        $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
         $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+        $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
         $urlPerfilUsuario = '../PerfilUsuario/gestionPerfilUsuario.php';
         $urlPerfilContraseniaUsuarios = '../PerfilUsuario/gestionPerfilContrasenia.php';
-        $urlEditarCamposPerfil = '../PerfilUsuario/EditarCamposPerfilUsuario.php';
-        $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
+        $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
+        $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
         $urlRestoreBackup = '../backupAndRestore/gestionBackupRestore.php';
         require_once '../../layout/sidebar.php';
         ?>
@@ -172,6 +175,7 @@ if (isset($_SESSION['usuario'])) {
                 <p class="mensaje"></p>
               </div>
               <div class="mb-3">
+              <span class="mensaje-rtn"></span>
                 <label for="nombre">RTN:</label>
                 <input type="text" class="form-control input-actualizacion" name="rtn" id="E_rtn" value="<?php echo $data['rtn'] ?>">
                 <p class="mensaje"></p>
@@ -255,8 +259,8 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
-  <script src="../../../Recursos/js/PerfilUsuario/validacionesPerfilUsuario.js" type="module"></script>
   <script src="../../../Recursos/js/PerfilUsuario/EditarCamposPerfilUsuario.js" type="module"></script>
+  <script src="../../../Recursos/js/PerfilUsuario/validacionesPerfilUsuario.js" type="module"></script>
 </body>
 
 </html>

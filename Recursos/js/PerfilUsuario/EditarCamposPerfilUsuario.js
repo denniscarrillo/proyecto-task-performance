@@ -1,5 +1,6 @@
-let $formRespuestas = document.getElementById('form-Edit-Preguntas');
 
+let $formRespuestas = document.getElementById('form-Edit-Preguntas');
+let $CamposPerfil = document.getElementById('form-Edit-PerfilUsuario');
 
 $formRespuestas.addEventListener('submit', function(e){
     e.preventDefault();
@@ -15,7 +16,7 @@ $formRespuestas.addEventListener('submit', function(e){
 
     })
     enviarRespuestasActualizar(respuestasActualizar);
-    console.log(enviarRespuestasActualizar);
+    console.log($inputsRespuestas);
 })
 
 const enviarRespuestasActualizar = function(respuestasActualizar){
@@ -27,49 +28,50 @@ const enviarRespuestasActualizar = function(respuestasActualizar){
         respuestas: respuestasActualizar
        },
        success: function(data){
-        console.log(data);
+        Swal.fire(
+            "¡Actualizado!",
+            "¡Se ha modificado tu respuesta!",
+            "success"
+          );
        }
-      
     })
- 
 }
+document.getElementById('btn-guardarActualizacion').addEventListener('click', function(e){
+    e.preventDefault();
+    enviarPerfil();
+   
+});
 
-// $CamposPerfil.addEventListener('submit', function(e){
-//     e.preventDefault();
-//     const $inputsRespuestas = document.querySelectorAll('.input-actualizacion')/*agregar una clase con el . usa selectores css*/ 
-//     console.log($inputsRespuestas);
-//     $inputsRespuestas(function(inputRespuesta){/*me muestra de uno a uno*/
-
-//     let respuestaActualizar = {
-//        idpregunta: inputRespuesta.getAttribute('id'),/*en js se habla de clave y valor despues de los dos puntos*/ 
-//        respuesta: inputRespuesta.value,
-//     }
-
-//    })
-//    enviarRespuestasActualizar(respuestasActualizar);
-//    console.log($formRespuestas);
+const enviarPerfil =function(){
+    let  
+    nombre = $("#E_nombre").val(),
+    rtn = $("#E_rtn").val(),
+    telefono = $("#E_telefono").val(),
+    direccion = $("#E_direccion").val(),
+    correo = $("#E_email").val();
 
     
-//   });
+    $.ajax({
+        url: "../../../Vista/crud/PerfilUsuario/actualizarPerfilUsuario.php",
+        type: "POST",
+        datatype: "JSON",
+        data: {
+          nombre: nombre,
+          rtn: rtn,
+          telefono:telefono,
+          direccion: direccion,
+          email: correo
+        },
+        success: function (data) {
+          //Mostrar mensaje de exito
+          
+          Swal.fire("¡Actualizado!", "¡El perfil del Usuario ha sido modificado!", "success");
+          
+        }
+       
+      });  
+}
  
-//   // Evento Submit que edita el Rubro Comercial
-//   $btnAgregar.addEventListener("click", () => {
-//     let $newProduct = {
-//       descripcion: $addNewProduct.descripcion.value,
-//       marca: $addNewProduct.marca.value,
-//       precio: $addNewProduct.precio.value,
-//     };
-//     if (validoProd) {
-//       $.ajax({
-//         url: "../../../Vista/crud/PerfilUsuario/actualizarPerfilUsuario.php",
-//         type: "POST",
-//         datatype: "JSON",
-//         data: {
-//           nuevoProducto: $newProduct,
-//         },
-//         success: () => {
-         
-//         },
-//       });
-//     }
-//   });
+ 
+
+ 

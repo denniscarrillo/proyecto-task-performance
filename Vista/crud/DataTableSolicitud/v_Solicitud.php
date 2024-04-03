@@ -99,40 +99,44 @@ if (isset($_SESSION['usuario'])) {
   <div class="conteiner">
     <div class="conteiner-global">
       <div class="sidebar-conteiner">
-        <?php
-                $urlIndex = '../../index.php';
-                // Rendimiento
-                $urlMisTareas = '../../rendimiento/v_tarea.php';
-                $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
-                $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
-                $urlMetricas = '../Metricas/gestionMetricas.php';
-                $urlEstadisticas = '../../grafica/estadistica.php';
-                //Solicitud
-                $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
-                //Comisión
-                $urlComision = '../../comisiones/v_comision.php';
-                $comisionVendedor = '../ComisionesVendedores/ComisionesVendedores.php';
-                $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
-                //Consulta
-                $urlClientes = '../cliente/gestionCliente.php';
-                $urlVentas = '../Venta/gestionVenta.php';
-                $urlArticulos = '../articulo/gestionArticulo.php';
-                //Mantenimiento
-                $urlUsuarios = '../usuario/gestionUsuario.php';
-                $urlEstadoUsuario = '../estadoUsuario/gestionEstadoUsuario.php';
-                $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
-                $urlPreguntas = '../pregunta/gestionPregunta.php';
-                $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
-                $urlParametros = '../parametro/gestionParametro.php';
-                $urlPermisos = '../permiso/gestionPermisos.php';
-                $urlRoles = '../rol/gestionRol.php';
-                $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
-                $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
-                $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
-                $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
-                $urlRestoreBackup = '../backupAndRestore/gestionBackupRestore.php';
-                require_once '../../layout/sidebar.php';
-                ?>
+      <?php
+        $urlIndex = '../../index.php';
+        // Rendimiento
+        $urlMisTareas = '../../rendimiento/v_tarea.php';
+        $urlCotizacion = '../../rendimiento/cotizacion/gestionCotizacion.php';
+        $urlConsultarTareas = '../DataTableTarea/gestionDataTableTarea.php';
+        $urlMetricas = '../Metricas/gestionMetricas.php';
+        $urlEstadisticas = '../../grafica/estadistica.php';
+        //Solicitud
+        $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
+        //Comisión
+        $urlComision = '../../comisiones/v_comision.php';
+        $comisionVendedor = '../ComisionesVendedores/ComisionesVendedores.php';
+        $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
+        //Consulta
+        $urlClientes = '../cliente/gestionCliente.php';
+        $urlVentas = '../Venta/gestionVenta.php';
+        $urlArticulos = '../articulo/gestionArticulo.php';
+        $urlObjetos = '../DataTableObjeto/gestionDataTableObjeto.php';
+        $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
+        //Mantenimiento
+        $urlUsuarios = '../usuario/gestionUsuario.php';
+        $urlEstadoUsuario = '../estadoUsuario/gestionEstadoUsuario.php';
+        $urlCarteraCliente = './gestionCarteraClientes.php';
+        $urlPreguntas = '../pregunta/gestionPregunta.php';
+        $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
+        $urlParametros = '../parametro/gestionParametro.php';
+        $urlPermisos = '../permiso/gestionPermisos.php';
+        $urlRoles = '../rol/gestionRol.php';
+        $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+        $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
+        $urlPerfilUsuario = '../PerfilUsuario/gestionPerfilUsuario.php';
+        $urlPerfilContraseniaUsuarios = '../PerfilUsuario/gestionPerfilContrasenia.php';
+        $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
+        $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
+        $urlRestoreBackup = '../backupAndRestore/gestionBackupRestore.php';
+        require_once '../../layout/sidebar.php';
+        ?>
       </div>
       <div class="conteiner-main">
         <div class="encabezado">

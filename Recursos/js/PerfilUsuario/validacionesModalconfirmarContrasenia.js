@@ -1,11 +1,14 @@
 import * as funciones from '../funcionesValidaciones.js';
 export let estadoValidado = false;
+let minMAxCaracteresPassword = null;
 //Objeto con expresiones regulares para los inptus
-const validaciones = {
-    soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
-    password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,16}$/,
-    pass: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])/,
-    correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/
+const expresiones = {
+    usuario: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
+    user: /^(?=.*[^a-zA-Z\s])/, //Solo permite Letras
+    nombre: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ.\s.,])/, // Letras, acentos y Ñ, también permite punto // Solo letras
+    password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])/,
+    pass: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])./,
+    correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
 }
 //VARIABLES GLOBALES
 
@@ -30,11 +33,23 @@ let estadoMasdeUnEspacio = {
 const $form = document.getElementById('formPerfilContrasenia');
 
 const $password = document.getElementById('confirmPassword');
-const $confirmarContrasenia = document.getElementById('confirmPassword');
+const  $password2 = document.getElementById('confirmPassword');
 
 
+$password.addEventListener("input", () => {
+    validarInputPassword();
+  });
+  $password2.addEventListener("focusout", () => {
+    validarInputConfirmarPassword();
+  });
 
-
+  const aplicarValidacionesInputs = () => {
+    //Llamamos a todas las funciones que aplican sus respectivas validaciones a cada input
+    
+    validarInputPassword();
+    validarInputConfirmarPassword();
+   
+  };
 //Funcion para mostrar contraseña
 $(document).ready(function () {
     $('#checkbox').click(function () {
@@ -48,104 +63,73 @@ $(document).ready(function () {
     });
 });
 
-$form.addEventListener('submit', e => {   
-    //Validamos que algún campo no esté vacío.
-
-    let estadoInputPassword = funciones.validarCampoVacio($password);
-    let estadoInputConfirmarContrasenia = funciones.validarCampoVacio($confirmarContrasenia);
+$form.addEventListener("submit", async (e) => {
+    // Aplicar todas las validaciones a todos los campos
+    aplicarValidacionesInputs();
     
-    // Comprobamos que todas las validaciones se hayan cumplido 
-    if ( estadoInputPassword == false || estadoInputConfirmarContrasenia == false ) {
-        e.preventDefault();
-    }else{
-        if (estadoPasswordSegura.estadoPassword == false ) {
-            estadoPasswordSegura.estadoPassword = funciones.validarPassword($password, expresiones.password);
-        }                
-        }
-    });
-    $password2.addEventListener('keyup',() =>{
-        funciones.validarCoincidirPassword($password, $password2);
-        funciones.limitarCantidadCaracteres("confirmPassword", 15);
-    });
-    $password.addEventListener('keyup', () => {
-        funciones.validarPassword($password, expresiones.password);
-        funciones.limitarCantidadCaracteres("password", 15);
-    });
-        
-$form.addEventListener('submit', e =>{
-    let mensaje = '';
-    let div = '';
-    if($password.value != $password2.value){
-        div = $password2.parentElement 
-        mensaje = div.querySelector('p');
-        mensaje.innerText = '*Las Contraseñas no coinciden';
-        $password2.classList.add('mensaje_error');
-    } 
-    else {
-        $password2.classList.remove('mensaje_error');
-        mensaje.innerText = '';
-    }
-    if ($password.value != $password2.value) {
+   
+    
+    const estadoValidaciones = document.querySelectorAll(".mensaje_error").length;
+    
+    // Actualizar el estado de validación
+    estadoValidado = estadoValidaciones === 0;
+    
+    // Si hay errores, prevenir el envío del formulario
+    if (!estadoValidado) {
         e.preventDefault();
     }
-});
-//Evento que llama a la función para validar que la contraseña sea robusta.
-$password.addEventListener('focusout',() => {
-    //Mientras no se haya cumplido la validación de espacios no se ejecutara la de validar Password
-    if(estadoEspacioInput.estadoEspacioPassword){
-       let contrasenia = funciones.validarEspacios($password);
-         if(contrasenia){
-                limiteContrasenia = cantidadParametrosContrasenia($password);
-         }
-    }
-});
-$confirmarContrasenia.addEventListener('focusout', ()=>{
-    estadoPassword.estadoPassword2 = funciones.validarCoincidirPassword($password, $confirmarContrasenia);
-});
+  });
 
-
-
-
-
- const cantidadParametrosContrasenia = ($password) => {
-    return new Promise(async (resolve, reject) => {
-        let mensaje = $password.parentElement.querySelector('p');
-        try {
-            const data = await $.ajax({
-                url: "../../../Vista/crud/usuario/validarParametrosContrasenia.php",
-                type: "POST",
-                dataType: "JSON",
-            });
-
-            let minLength = data[0];
-            let maxLength = data[1];
-
-            if ($password.value.length < minLength || $password.value.length > maxLength) {
-                mensaje.innerText = '*Mínimo ' + minLength + ', máximo ' + maxLength + ' caracteres.';
-                $password.classList.add('mensaje_error');
-                resolve(false); // Resolve the promise with false
-            } else {
-                mensaje.innerText = '';
-                $password.classList.remove('mensaje_error');
-                resolve(true); // Resolve the promise with true
-            }
-        } catch (error) {
-            console.log(error);
-            reject(error); // Reject the promise if there's an error
-        }
-    });
-};
-
-$form.addEventListener('submit', async e => {
-    try {
-        limiteContrasenia =  await cantidadParametrosContrasenia($password); 
-        console.log(limiteContrasenia);
-        if (limiteContrasenia == false) {
-           console.log(limiteContrasenia);
-        e.preventDefault();
-        }
-        } catch (error) {
-            console.log(error);
-        }
-    });
-
+    const validarInputPassword = () => {
+        let estadoValidaciones = {
+          campoVacio: false,
+          password: false,
+          espacios: false,
+        };
+      
+        const cantMinMax = {
+          min: minMAxCaracteresPassword[0],
+          max: minMAxCaracteresPassword[1],
+        };
+      
+        estadoValidaciones.campoVacio = funciones.validarCampoVacio($password);
+      
+        estadoValidaciones.campoVacio
+          ? (estadoValidaciones.espacios = funciones.validarEspacios($password))
+          : "";
+        estadoValidaciones.espacios
+          ? (estadoValidaciones.password = funciones.validarPassword(
+              $password,
+              expresiones.password
+            ))
+          : "";
+        estadoValidaciones.password
+          ? funciones.validarMinMaxCaracteresPasswordU($password, cantMinMax)
+          : "";
+      };
+      
+      const validarInputConfirmarPassword = () => {
+        let estadoValidaciones = {
+          campoVacio: false,
+          password: false,
+          coincidir: false,
+          espacios: false,
+        };
+      
+        estadoValidaciones.campoVacio = funciones.validarCampoVacio($password2);
+        estadoValidaciones.campoVacio
+          ? (estadoValidaciones.espacios = funciones.validarEspacios($password2))
+          : "";
+        estadoValidaciones.espacios
+          ? (estadoValidaciones.coincidir = funciones.validarCoincidirPassword(
+              $password,
+              $password2
+            ))
+          : "";
+        estadoValidaciones.coincidir
+          ? (estadoValidaciones.password = funciones.validarPassword(
+              $password2,
+              expresiones.password
+            ))
+          : "";
+      };
