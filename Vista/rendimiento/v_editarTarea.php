@@ -119,7 +119,7 @@ if (!isset($_SESSION['usuario'])) {
       </div>
       <!-- Cuerpo de la pagina -->
       <main class="main">
-        <button id="btn-comment" title="Comentarios"><i class="fa-solid fa-comment-dots"></i></button>
+        <button type="button" id="btn-comment" title="Comentarios"><i class="fa-solid fa-comment-dots"></i></button>
         <div class="conteiner-form">
           <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" id="form-Edit-Tarea">
             <div class="encabezado-tarea">
@@ -133,7 +133,7 @@ if (!isset($_SESSION['usuario'])) {
               </div>
               <div class="mb-3 data-container title_container">
                 <div class="data-container title_container">
-                  <label for="input-titulo-tarea" class="form-label label-title-task">Título de la tarea</label>
+                  <label for="input-titulo-tarea" class="label-title-task">Título de la tarea</label>
                   <input type="text" name="input-titulo-tarea" id="input-titulo-tarea" class="form-control"
                     value="<?php echo ControladorTarea::obtenerEstadoTarea(intval($_GET['idTarea']))['titulo'] ?>">
                   <p class="mensaje"></p>
@@ -262,10 +262,10 @@ if (!isset($_SESSION['usuario'])) {
                 </div>
                 <div hidden="true" id="btn-container-cotizacion">
                   <a href="./cotizacion/v_cotizacion.php?idTarea=" class="link-nueva-cotizacion"
-                    id="link-nueva-cotizacion">
+                    id="link-nueva-cotizacion" >
                     <img src="https://cdn-icons-png.flaticon.com/128/7164/7164888.png" alt="icono-cotizacion"
                       height="50px">
-                    Generar cotización
+                    Nueva cotización
                   </a>
                 </div>
               </div>

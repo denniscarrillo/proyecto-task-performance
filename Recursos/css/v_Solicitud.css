@@ -1,0 +1,23 @@
+#table-container {
+    position: relative;
+}
+#table-container {
+    height: 15rem;
+    overflow-y: auto;
+}
+.table {
+    border: 3px solid #efa173;
+    margin-bottom: 0;
+}
+.table {
+    width: 100%;
+}
+#sin-productos-interes {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    top: 50%;
+    color: #919696;
+    font-size: 1.5rem;
+}

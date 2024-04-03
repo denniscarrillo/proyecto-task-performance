@@ -4,7 +4,7 @@ export let estadoValidado = false;
 let estadoExistePorcentaje = false;
 //Objeto con expresiones regulares para los inptus
 const validaciones = {
-    soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
+    soloLetras: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ\s])/, //Solo letras
     soloNumeros: /^\d+(\.\d+)?$/
 }
 //VARIABLES GLOBALES

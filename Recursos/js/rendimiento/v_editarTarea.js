@@ -12,6 +12,8 @@ let radioOption = document.getElementsByName("radioOption");
 let estadoRTN = "";
 let $codCliente = "";
 let $rtn_Cliente = document.getElementById("rnt-cliente");
+let articulosTarea = null;
+
 const Toast = Swal.mixin({
   toast: true,
   position: "top",
@@ -35,6 +37,7 @@ let inputsEditarTarea = {
   origenLead: document.getElementById("origen-lead"),
 };
 $(document).ready(async function () {
+  obtenerArticulosDataTable();
   $idEstadoTarea == "3" ? $btnCotizacion.removeAttribute("hidden") : "";
   $idEstadoTarea == "4"
     ? document.getElementById("container-num-factura").removeAttribute("hidden")
@@ -188,40 +191,44 @@ document
       obtenerDatosTarea($idTarea, $idEstadoTarea);
       setTimeout(() => {
         location.href = "../../../Vista/rendimiento/v_tarea.php";
-      }, 1800);
+      }, 1300);
     }
   });
 // CARGAR LOS ARTICULOS A AGREGAR A LA TAREA
 $("#btn-articulos").click(() => {
-  if (document.getElementById("table-Articulos_wrapper") == null) {
-    let articulosTarea = $("#table-Articulos").DataTable({
-      ajax: {
-        url: "../../../Vista/rendimiento/obtenerArticulos.php",
-        dataSrc: "",
-      },
-      language: {
-        url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
-      },
-      fnCreatedRow: function(rowEl) {
-        $(rowEl).attr('class', 'addProduct')
-      },
-      lengthMenu: [
-        [2, 5, 10, 20], //Define la cantidad de rows a mostrar en el DataTable
-        [2, 5, 10, 20], //Es lo que se muestra en el menu desplegable del DataTable
-      ],
-      columns: [
-        { data: "codArticulo" }, 
-        { data: "articulo" },
-        { data: "detalleArticulo" },
-        { data: "marcaArticulo" },
-        {
-          defaultContent:
-            '<div class="btn-select-container"><button class="btns btn" id="btn_select-article"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>',
-        },
-      ],
-    });
-  }
+  articulosTarea.ajax.reload()
 });
+
+const obtenerArticulosDataTable = () => {
+  articulosTarea = $("#table-Articulos").DataTable({
+    ajax: {
+      url: "../../../Vista/rendimiento/cotizacion/obtenerArticulos.php",
+      dataSrc: "",
+    },
+    language: {
+      url: "../../../Recursos/js/librerias/dataTableLanguage_es_ES.json",
+    },
+    fnCreatedRow: function(rowEl) {
+      $(rowEl).attr('class', 'addProduct')
+    },
+    lengthMenu: [
+      [5, 5, 10, 20], //Define la cantidad de rows a mostrar en el DataTable
+      [5, 5, 10, 20], //Es lo que se muestra en el menu desplegable del DataTable
+    ],
+    columns: [
+      { data: "codigo" },
+      { data: "articulo" },
+      { data: "marcaArticulo" },
+      { data: "precio" },
+      { data: "existencias" },
+      {
+        defaultContent:
+          '<div class="btn-select-container"><button class="btns btn" id="btn_select-article"><i class="fa-solid-icon fa-solid fa-circle-check"></i></button>',
+      },
+    ],
+  });
+}
+
 $(document).on("click", ".addProduct", function (e) {
   $(this).find("button")[0].classList.toggle("select_articulo");
   e.currentTarget.classList.toggle("ArtSelec");
@@ -272,8 +279,9 @@ let agregarArticulos = function () {
     .rows(".ArtSelec")
     .data();
   for (let i = 0; i < productosSeleccionados.length; i++) {
+    console.log(productosSeleccionados)
     $Articulos.push({
-      id: productosSeleccionados[i].codArticulo,
+      id: productosSeleccionados[i].codigo,
       nombre: productosSeleccionados[i].articulo,
       marca: productosSeleccionados[i].marcaArticulo,
     });
@@ -396,7 +404,7 @@ let obtenerClientes = function () {
         dataSrc: "",
       },
       language: {
-        url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json",
+        url: "../../../Recursos/js/librerias/dataTableLanguage_es_ES.json",
       },
       columns: [
         { data: "codCliente" },
@@ -520,13 +528,16 @@ let enviarProductosInteres = ($idTarea) => {
     $cantProducto.forEach((cant) => {
       if (id.value == cant.getAttribute("id")) {
         let objProducto = {
-          id: id.value,
-          cant: cant.value,
-        };
+          codProducto: id.value,
+          cantidad: cant.value
+        }
         productos.push(objProducto);
       }
     });
   });
+
+  //validar si hay productos entonces ejecutar AJAX
+
   //AJAX para almacenar los productos y su cantidad
   $.ajax({
     url: "../../../Vista/rendimiento/almacenarProductosTarea.php",
@@ -536,7 +547,7 @@ let enviarProductosInteres = ($idTarea) => {
       idTarea: $idTarea,
       productos: JSON.stringify(productos),
     },
-    success: function (resp) {
+    success: function (res) {
       Swal.fire({
         position: "center",
         icon: "success",
@@ -551,6 +562,9 @@ let enviarProductosInteres = ($idTarea) => {
       });
     },
   }); //Fin AJAX
+
+
+
 };
 
 let nuevoComentario = ($idTarea, $comentario) => {

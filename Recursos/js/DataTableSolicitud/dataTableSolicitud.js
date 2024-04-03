@@ -42,7 +42,7 @@ let procesarPermisoActualizar = (data) => {
         }" id="btn_editar"><i class="fa-solid fa-pen-to-square"></i></button>  
         <button class="btn_eliminar btns btn ${
           permisos.Eliminar == "N" ? "hidden" : ""
-        }" id="btn_eliminar"><i class="fa-solid fa-trash"></i></button>`,
+        }" id="btn_eliminar"><i class="fa-solid fa-ban"></i></button>`,
       },
     ],
   });
@@ -87,9 +87,14 @@ $(document).on("click", "#btn_ver", async function () {
   ubicacionLabel.innerText = SolicitudXid.ubicacion;
   const AvanceSolicitudLabel = document.getElementById("V_AvanceSolicitud");
   AvanceSolicitudLabel.innerText = SolicitudXid.EstadoAvance;
+  if (SolicitudXid.EstadoAvance === "CANCELADA") {
+    AvanceSolicitudLabel.style.color = "red";
+  } else {
+    AvanceSolicitudLabel.style.color = "black";
+  }
   const EstadoSolicitudLabel = document.getElementById("V_EstadoSolicitud");
   EstadoSolicitudLabel.innerText = SolicitudXid.EstadoSolicitud;
-  if (SolicitudXid.EstadoSolicitud === "CANCELADO") {
+  if (SolicitudXid.EstadoSolicitud === "CANCELADA") {
     EstadoSolicitudLabel.style.color = "red";
   } else {
     EstadoSolicitudLabel.style.color = "black";
@@ -132,16 +137,6 @@ $(document).on("click", "#btn_ver", async function () {
       productos.appendChild(li);
     }
   }
-
-  //
-  //   ProductosS.forEach(producto => {
-  //     $articulos +=
-  //     `<tr>
-  //       <td>${producto.Cant}</td>
-  //       <td>${producto.CodArticulo}</td>
-  //       <td>${producto.Articulo}</td>
-  //     </tr>`;
-  //});
 
   // Estilizar el modal
   $(".modal-header").css("background-color", "#007bff");
@@ -236,7 +231,7 @@ $(document).on("click", "#btn_editar", async function () {
   let idSolicitud = $(this).closest("tr").attr("id");
   let Solicitudes = await obtenerSolicitudesPorId(idSolicitud);
 
-  if (Solicitudes.EstadoSolicitud === "CANCELADO") {
+  if (Solicitudes.EstadoSolicitud === "CANCELADA") {
     // Aquí puedes mostrar un mensaje o tomar alguna acción específica
     Swal.fire({
       icon: "error",
@@ -333,7 +328,7 @@ $(document).on("click", "#btn_eliminar", async function () {
   let idSolicitud = $(this).closest("tr").attr("id");
   let motivo = fila.find("td:eq(null)").text();
   let SolicitudesC = await obtenerSolicitudesPorId(idSolicitud);
-  if (SolicitudesC.EstadoSolicitud === "Cancelada") {
+  if (SolicitudesC.EstadoSolicitud === "CANCELADA") {
     // Aquí puedes mostrar un mensaje o tomar alguna acción específica
     Swal.fire({
       icon: "error",
@@ -343,7 +338,7 @@ $(document).on("click", "#btn_eliminar", async function () {
     return; // Detiene la ejecución si la solicitud está cancelada
   }
   // Establecer el estado de la solicitud
-  let EstadoSolicitud = "Cancelada";
+  let EstadoSolicitud = "CANCELADA";
   // Obtener el motivo de cancelación
   //let EstadoAvance = 'CANCELADO';
   // Establecer valores en los campos del modal
@@ -381,7 +376,7 @@ $("#form-Solicitud").submit(function (e) {
         dataType: "JSON",
         data: {
           idSolicitud: idSolicitud,
-          EstadoAvance: "Cancelada",
+          EstadoAvance: "CANCELADA",
           EstadoSolicitud: EstadoSolicitud,
           MotivoCancelacion: MotivoCancelacion,
         },

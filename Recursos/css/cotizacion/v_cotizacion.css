@@ -3,19 +3,18 @@
     top: 0;
     color: #f1d2c7;
     background-color: #615f5e;
-    margin: 1rem;
-    margin-left: 0.4rem;
+    margin: 1rem 5rem;
     margin-bottom: 1rem;
     border-radius: 1rem;
 }
 .title-dashboard-task {
-    text-align: left;
+    text-align: center;
     font-weight: 600;
     font-size: 1.5rem;
     text-transform: uppercase;
     padding: 0.6rem;
     padding-left: 1.5rem;
-    margin: 0;
+    margin: 0 5rem;
 }
 .container-cotizacion {
     position: relative;
@@ -25,8 +24,19 @@
     padding: 1rem;
     overflow: hidden;
 }
+.productos-cotizacion {
+    height: min-content;
+    padding: 0 5rem;
+    margin-bottom: 2rem;
+}
 .datos-cotizacion {
-    padding: 0.5rem;
+    display: flex;
+    column-gap: 3rem;
+    padding: 0 5rem;
+}
+.inputs {
+    display: flex;
+    flex-direction: column;
 }
 .container-input-cant-desc {
     display: inline-block;
@@ -149,10 +159,13 @@ input[type=number]::-webkit-inner-spin-button {
 .fa-circle-xmark:hover {
     color: #ee894f;
 }
+.container-button-save {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
 #btn-submit-cotizacion {
-    position: absolute;
-    bottom: 1rem;
-    left: 40%;
     border: none;
     width: 10rem;
     height: 2.5rem;
@@ -255,19 +268,22 @@ input[type=number]::-webkit-inner-spin-button {
     position: absolute;
     right: 10rem;
 }
-.estado-cot {
-    margin-left: 0.3rem;
-}
 .btn-pdf-cotizacion {
    position: relative;
 }
 .container-btns-cotizacion {
+    margin: 0 5rem;
     position: relative;
     height: 1rem;
+}
+.labels-input {
+    display: flex;
+    flex-direction: column;
 }
 .btn-salir-cotizacion {
     position: fixed;
     bottom: 1rem;
+    margin-left: 2rem;
     padding: 0.4rem;
     border-radius: 0.4rem;
     text-decoration: none;
@@ -310,6 +326,10 @@ input[type=number]::-webkit-inner-spin-button {
     flex-direction: column;
     justify-content: center;
 }
+.container-desc {
+    display: flex;
+    column-gap: 0.4rem;
+}
 #btn_agregar {
     display: inline-block;
     margin:  0 auto;
@@ -322,7 +342,6 @@ input[type=number]::-webkit-inner-spin-button {
 }
 #estado-desc {
     display: inline;
-    margin-left: 0.4rem;
     padding: 0.2rem 0.5rem 0.2rem 0.5rem;
     max-width: 7.5rem;
 }
