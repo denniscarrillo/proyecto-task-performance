@@ -33,7 +33,7 @@ if (isset($_SESSION['usuario'])) {
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
     $newBitacora->fecha = date("Y-m-d h:i:s");
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('EditarCamposPerfilUsuario.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['fallido'];
     $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' intentó ingresar sin permiso a mantenimiento usuario';
@@ -58,13 +58,13 @@ if (isset($_SESSION['usuario'])) {
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
     $newBitacora->fecha = date("Y-m-d h:i:s");
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
+    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('EditarCamposPerfilUsuario.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['income'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a mantenimiento usuario';
+    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a editar sus datos';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-    $_SESSION['objetoAnterior'] = 'gestionUsuario.php';
-    $_SESSION['descripcionObjeto'] = 'mantenimiento usuario';
+    $_SESSION['objetoAnterior'] = 'EditarCamposPerfilUsuario.php';
+    $_SESSION['descripcionObjeto'] = 'Modificar datos del Perfil del usuario.';
     /* =======================================================================================*/
   }
 } else {

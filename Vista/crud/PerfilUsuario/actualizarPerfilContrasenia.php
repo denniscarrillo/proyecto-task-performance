@@ -16,10 +16,10 @@
     $accion = ControladorBitacora::accion_Evento();
     date_default_timezone_set('America/Tegucigalpa');
     $newBitacora->fecha = date("Y-m-d h:i:s"); 
-    $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('v_nuevaContrasenia.php');
+    $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionPerfilContrasenia.php');
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['income'];
-    $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' ingreso a pantalla configuración contraseña';
+    $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' ingreso a la pantalla de configuración de una nuevacontraseña';
     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
     /* =======================================================================================*/
    
@@ -51,7 +51,7 @@
                       $accion = ControladorBitacora::accion_Evento();
                       date_default_timezone_set('America/Tegucigalpa');
                       $newBitacora->fecha = date("Y-m-d h:i:s"); 
-                      $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('v_nuevaContrasenia.php');
+                      $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('gestionPerfilContrasenia.php');
                       $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
                       $newBitacora->accion = $accion['Insert'];
                       $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' cambio su contraseña';

@@ -11,6 +11,17 @@ if (session_status() == PHP_SESSION_NONE) {
    require_once("../../../Controlador/ControladorBitacora.php");
 
    if(isset($_POST['nombre']) && isset($_SESSION['usuario'])){
+      $newBitacora = new Bitacora();
+      $accion = ControladorBitacora::accion_Evento();
+      date_default_timezone_set('America/Tegucigalpa');
+      $newBitacora->fecha = date("Y-m-d h:i:s"); 
+      $newBitacora->idObjeto = ControladorBitacora:: obtenerIdObjeto('EditarCamposPerfilUsuario.php');
+      $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+      $newBitacora->accion = $accion['income'];
+      $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' ingreso a pantalla de editar datos del usuario';
+      ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+      /* =======================================================================================*/
+     
       $updateData=new Usuario();
       $updateData->usuario=$_SESSION['usuario'];
       $updateData->nombre=$_POST['nombre'];
@@ -30,7 +41,6 @@ if (session_status() == PHP_SESSION_NONE) {
       $newBitacora->descripcion = 'El usuario '.$_SESSION['usuario'].' actualizó su perfil de usuario';
       ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
       /* =======================================================================================*/
-      header("location:./gestionPerfilUsuario.php");
-      exit();
+     
    }
  
