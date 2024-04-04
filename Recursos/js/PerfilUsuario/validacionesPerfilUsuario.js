@@ -1,5 +1,6 @@
 import * as funciones from '../funcionesValidaciones.js';
 export let estadoValidado = false;
+export let estadoValidoRespuestas = false;
 //Objeto con expresiones regulares para los inptus
 const validaciones = {
     soloLetras: /^(?=.*[^a-zA-Z\/ .ÑñáéíóúÁÉÍÓÚs])+$/, //Solo letras
@@ -37,7 +38,30 @@ $(document).ready(function (){
       estadoValidado = false;
     }
   });
+
+  $(document).on('click', "#btn-actualizar-respuestas", function(){
+    const inputsRespuesta = $('.input-respuesta')
+    for (const input of inputsRespuesta) {
+      funciones.validarCampoVacio(input)
+      console.log(input)
+    }
+    console.log(document.querySelectorAll('.mensaje_error').length)
+    funciones.transformarAMayusculas($('.input-respuesta'), false)
+    if (document.querySelectorAll('.mensaje_error').length == 0) {
+      estadoValidoRespuestas = true;
+    } else {
+      estadoValidoRespuestas = false;
+    }
+  });
+  
 })
+
+$(document).on('input', ".input-respuesta", function(){
+  funciones.convertirAMayusculasVisualmente(this)
+  funciones.validarCampoVacio(this)
+
+});
+
 inputNuevoCliente.nombre.addEventListener("keyup", ()=>{
     validarInputNombre();
     funciones.limitarCantidadCaracteres("E_nombre", 50);

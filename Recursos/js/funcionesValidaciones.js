@@ -381,8 +381,14 @@ export const convertirAMayusculasVisualmente = (elemento) => {
     elemento.style.textTransform = 'uppercase';
 }
 
-export const transformarAMayusculas = (elemento) => {
-    elemento.value = elemento.value.toUpperCase();
+export const transformarAMayusculas = (elemento, tipoSelector = true) => {
+    if(tipoSelector) {
+        elemento.value = elemento.value.toUpperCase();
+    } else {
+        for (const input of elemento) {
+            input.value = input.value.toUpperCase()
+        }
+    }
 }
 
 export const soloLetrasSinEspacios = (elemento) => {

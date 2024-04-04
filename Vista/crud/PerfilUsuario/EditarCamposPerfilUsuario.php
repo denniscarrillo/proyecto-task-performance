@@ -222,10 +222,10 @@ if (isset($_SESSION['usuario'])) {
         </div>
         <h2 class="text-title-form">Editar Preguntas Del Usuario</h2>
     </div>
-<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" id="form-Edit-Preguntas">
+<form action="" method="post" id="form-Edit-Preguntas">
 
-    <div class="mb-3">
-        <label for="preguntas">Por favor, responda las siguientes preguntas:</label>
+    <div class="mb-3 continer-form-respuestas">
+        <span id="titulo-respuestas">Puedes actualizar tus respuestas si lo deseas</span>
         <?php
         foreach ($preguntas as $pregunta) {/*verlos como tablas una sola dimesion tengo varias celdas, pueden tener multiples dimesnsiones
           cuando un select me devolvera mas de un registro: es un dato que tiene mas de un tipo, un idpregunta y respuesta.
@@ -237,15 +237,14 @@ if (isset($_SESSION['usuario'])) {
             <div class="pregunta">
                 <label for="<?php echo $pregunta['idpregunta']; ?>"><?php echo $pregunta['preguntas']; ?></label>
                 <input type="text" class="form-control input-respuesta"  id=" <?php echo $pregunta['idpregunta']; ?>" value="<?php echo $valorRespuesta; ?>">
-            </div>
-            <div class="btn-guardar">
-              <button type="button" class="btn btn-secondary"><a href="gestionPerfilUsuario.php" style="text-decoration: none; color: white;">Cancelar</a></button>
-              <button type="submit" name="guardarRespuestas" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
-            </div>
-        <p class="mensaje"></p>
+                <p class="mensaje"></p>
+              </div>
         <?php } ?>
-       
-    </div>
+        <div class="btn-guardar">
+              <button type="button" class="btn btn-secondary"><a href="gestionPerfilUsuario.php" style="text-decoration: none; color: white;">Cancelar</a></button>
+              <button type="submit" name="guardarRespuestas" id="btn-actualizar-respuestas" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+            </div>
+        </div>
     
 </form>
 
@@ -261,8 +260,8 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/index.js"></script>
-  <script src="../../../Recursos/js/PerfilUsuario/EditarCamposPerfilUsuario.js" type="module"></script>
   <script src="../../../Recursos/js/PerfilUsuario/validacionesPerfilUsuario.js" type="module"></script>
+  <script src="../../../Recursos/js/PerfilUsuario/EditarCamposPerfilUsuario.js" type="module"></script>
 </body>
 
 </html>

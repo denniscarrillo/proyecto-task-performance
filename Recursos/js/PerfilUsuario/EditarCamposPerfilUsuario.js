@@ -1,4 +1,4 @@
-import { estadoValidado } from "./validacionesPerfilUsuario.js";
+import { estadoValidado, estadoValidoRespuestas } from "./validacionesPerfilUsuario.js";
 let $formRespuestas = document.getElementById('form-Edit-Preguntas');
 
 
@@ -20,8 +20,10 @@ $formRespuestas.addEventListener('submit', function(e){
      respuestasActualizar.push(respuestaActualizar)/*push metodo de array*/
 
     })
-    enviarRespuestasActualizar(respuestasActualizar);
-    console.log($inputsRespuestas);
+    console.log(estadoValidoRespuestas)
+    if(estadoValidoRespuestas) {
+      enviarRespuestasActualizar(respuestasActualizar);
+    }
 })
 
 const enviarRespuestasActualizar = function(respuestasActualizar){
@@ -33,13 +35,13 @@ const enviarRespuestasActualizar = function(respuestasActualizar){
         respuestas: respuestasActualizar
        },
        success: function(data){
-        console.log(data);
+        // console.log(data);
         Swal.fire(
             "¡Actualizado!",
             "¡Se ha modificado tu respuesta!",
             "success"
           );
-          redirigirADataTable();  
+          // redirigirADataTable();  
        }
     })
 }
@@ -47,7 +49,6 @@ const enviarRespuestasActualizar = function(respuestasActualizar){
 document.getElementById('btn-guardarActualizacion').addEventListener('click', function(e){
     e.preventDefault();
     enviarPerfil();
-   
 });
 
 const enviarPerfil =function(){
