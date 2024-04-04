@@ -12,35 +12,55 @@ require_once('../../../Controlador/ControladorParametro.php');
 require_once("actualizarPerfilContrasenia.php");
 
 if (isset($_SESSION['usuario'])) {
-
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
-  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
-} else {
-  if (isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])) {
-    /* ====================== Evento salir. ================================================*/
-    $accion = ControladorBitacora::accion_Evento();
-    date_default_timezone_set('America/Tegucigalpa');
-    $newBitacora->fecha = date("Y-m-d h:i:s");
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
-    $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-    $newBitacora->accion = $accion['Exit'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de ' . $_SESSION['descripcionObjeto'];
-    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-    /* =======================================================================================*/
-  }
+  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionPerfilContrasenia.php');
+  (!($_SESSION['usuario'] == 'SUPERADMIN')) 
+  ? $permisoConsulta = ControladorUsuario::permisoConsultaRol($idRolUsuario, $idObjetoActual) 
+  : 
+    $permisoConsulta = true;
+  ;
+  if(!$permisoConsulta){
   /* ====================== Evento ingreso a mantenimiento usuario. ========================*/
   $accion = ControladorBitacora::accion_Evento();
   date_default_timezone_set('America/Tegucigalpa');
   $newBitacora->fecha = date("Y-m-d h:i:s");
-  $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
+  $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('GESTIONPERFILCONTRASENIA.PHP');
   $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-  $newBitacora->accion = $accion['income'];
-  $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a mantenimiento usuario';
+  $newBitacora->accion = $accion['fallido'];
+  $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a su configuración de nueva contraseña';
   ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-  $_SESSION['objetoAnterior'] = 'gestionUsuario.php';
-  $_SESSION['descripcionObjeto'] = 'mantenimiento usuario';
-  /* =======================================================================================*/
+   /* ===============================================================================================================*/
+   header('location: ../../v_errorSinPermiso.php');
+   die();
+ }else{
+   if(isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])){
+     /* ====================== Evento salir. ================================================*/
+     $accion = ControladorBitacora::accion_Evento();
+     date_default_timezone_set('America/Tegucigalpa');
+     $newBitacora->fecha = date("Y-m-d h:i:s");
+     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
+     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+     $newBitacora->accion = $accion['Exit'];
+     $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de '.$_SESSION['descripcionObjeto'];
+     ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+   }
+   /* =======================================================================================*/
+   $accion = ControladorBitacora::accion_Evento();
+   date_default_timezone_set('America/Tegucigalpa');
+   $newBitacora->fecha = date("Y-m-d h:i:s");
+   $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionPerfilContrasenia.php');
+   $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
+   $newBitacora->accion = $accion['income'];
+   $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a la vista de agregar nueva contraseña';
+   ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
+   $_SESSION['objetoAnterior'] = 'gestionPerfilContrasenia.php';
+   $_SESSION['descripcionObjeto'] = 'vista de la configuración de la nueva contraseña';
+   /* =======================================================================================*/
+ }
+} else {
+ header('location: ../../login/login.php');
+ die();
 }
 ?>
 <!DOCTYPE html>

@@ -13,32 +13,7 @@ require_once('../../../Modelo/Parametro.php');
 require_once('../../../Controlador/ControladorParametro.php');
 require_once("ObtenerContraseniaPerfil.php");
 
-if (isset($_SESSION['usuario'])) {
-  $newBitacora = new Bitacora();
-  $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
-  $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
-} else {
-  if (isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])) {
-    /* ====================== Evento salir. ================================================*/
-    $accion = ControladorBitacora::accion_Evento();
-    $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
-    $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-    $newBitacora->accion = $accion['Exit'];
-    $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' salió de ' . $_SESSION['descripcionObjeto'];
-    ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-    /* =======================================================================================*/
-  }
-  /* ====================== Evento ingreso a mantenimiento usuario. ========================*/
-  $accion = ControladorBitacora::accion_Evento();
-  $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('GESTIONPERFILCONTRASENIA.PHP');
-  $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
-  $newBitacora->accion = $accion['income'];
-  $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a configurar su nueva contraseña';
-  ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-  $_SESSION['objetoAnterior'] = 'GESTIONPERFILCONTRASENIA.PHP';
-  $_SESSION['descripcionObjeto'] = 'configurar su nueva contraseña';
-  /* =======================================================================================*/
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
