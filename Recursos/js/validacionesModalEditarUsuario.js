@@ -119,9 +119,9 @@ const aplicarValidacionesInputsEditar = () => {
     estadoValidaciones.caracteresMasTresVeces
         ? (estadoValidaciones.caracteresMinimo = funciones.caracteresMinimo($correo, 15))
         : "";
-    // estadoValidaciones.caracteresMinimo
-    //     ? funciones.validarCorreoExistenteE(await obtenerCorreoExiste($correo.value))
-    //     : "";
+    estadoValidaciones.caracteresMinimo
+        ? funciones.validarCorreoExistenteE(await obtenerCorreoExiste($correo.value))
+        : "";
 };
 
 
@@ -151,4 +151,4 @@ let obtenerCorreoExiste = async ($correo) => {
       },
     });
     return JSON.parse(existeEmail).estado;
-  };
+  }

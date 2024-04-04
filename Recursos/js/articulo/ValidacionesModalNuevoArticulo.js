@@ -10,7 +10,9 @@ const validaciones = {
     letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
     direccion: /^[a-zA-Z0-9 #.,-]+$/,
 };
-
+const $articulo = document.getElementById("Articulo");
+const $detalle = document.getElementById("Detalle");
+const $marca =  document.getElementById("Marca");
 let inputsNuevoArticulo = {
    
     Articulo: document.getElementById('Articulo'),
@@ -31,6 +33,19 @@ btnGuardar.addEventListener('click', () => {
         estadoValidado = false;
     }
 });
+$articulo.addEventListener("input", () =>{
+    funciones.convertirAMayusculasVisualmente($articulo);
+})
+$detalle.addEventListener("input", () =>{
+    funciones.convertirAMayusculasVisualmente($detalle);
+})
+$marca.addEventListener("input", () =>{
+    funciones.convertirAMayusculasVisualmente($marca);
+})
+inputsNuevoArticulo.Articulo.addEventListener('input', ()=>{
+    validarInputArticulo();
+    funciones.limitarCantidadCaracteres("Articulo", 50);
+})
 
 inputsNuevoArticulo.Articulo.addEventListener('input', ()=> {
     validarInputArticulo();

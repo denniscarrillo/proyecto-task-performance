@@ -114,12 +114,42 @@ $("#form_Articulo").submit(function (e) {
 });
 
 $(document).on("click", "#btn_Pdf", function () {
-  let buscar = $("#table-Articulos_filter > label > input[type=search]").val();
-  window.open(
-    "../../../TCPDF/examples/reporteriaArticulos.php?buscar=" + buscar,
-    "_blank"
-  );
+  // Obtener la cantidad de registros en el DataTable
+  let cantidadRegistros = tablaArticulo.rows().count();
+
+  // Obtener el valor del filtro de búsqueda
+  let buscar = $("#table-Articulos_filter > label > input[type=search]").val().trim();
+
+  // Verificar si hay datos en el DataTable y si el filtro de búsqueda no está vacío
+  if (cantidadRegistros > 0 && (buscar === '' || buscar !== '' && hayCoincidencias(buscar))) {
+    window.open(
+      "../../../TCPDF/examples/reporteriaArticulos.php?buscar=" + buscar,
+      "_blank"
+    );
+  } else {
+    // Mostrar mensaje de error específico
+    Swal.fire(
+      "¡Error!",
+      "No se puede generar el pdf si la tabla está vacía o si el filtro no coincide con ningún dato en la misma",
+      "error"
+    );
+  }
 });
+
+// Función para verificar si hay coincidencias con el término de búsqueda
+function hayCoincidencias(buscar) {
+  let datos = tablaArticulo.rows().data().toArray();
+  for (let i = 0; i < datos.length; i++) {
+    let valores = Object.values(datos[i]);
+    for (let j = 0; j < valores.length; j++) {
+      if (valores[j].toString().toLowerCase().includes(buscar.toLowerCase())) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 
 document.getElementById("btn-cerrar").addEventListener("click", () => {
   limpiarForm();
