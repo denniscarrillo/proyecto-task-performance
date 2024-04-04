@@ -51,7 +51,7 @@ class Parametro
             $descripcion = $nuevoParametro->descripcion;
             $usuario = $nuevoParametro->idUsuario;
             $ModificadoPor = $nuevoParametro->ModificadoPor;
-            $query = "UPDATE tbl_ms_parametro SET parametro='$parametro', valor='$valor', descripcion = '$descripcion', id_Usuario='$usuario', Modificado_Por='$ModificadoPor', GETDATE()  WHERE id_Parametro='$id' ";
+            $query = "UPDATE tbl_ms_parametro SET parametro='$parametro', valor='$valor', descripcion = '$descripcion', id_Usuario='$usuario', Modificado_Por='$ModificadoPor', Fecha_Modificacion = GETDATE()  WHERE id_Parametro='$id' ";
             $nuevoParametro = sqlsrv_query($abrirConexion, $query);
         } catch (Exception $e) {
             echo 'Error SQL:' . $e;

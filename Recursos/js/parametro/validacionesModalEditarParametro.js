@@ -4,7 +4,7 @@ export let estadoValido = false;
 
 const validaciones = {
     //soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
-    soloLetras: /^(?=.*[^a-zA-ZáéíóúñÁÉÍÓÚüÜÑ\s])/,
+    soloLetras: /^(?=.*[^()a-zA-ZáéíóúñÁÉÍÓÚüÜÑ\s])/,
     correo: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
     soloNumeros: /^[0-9 ]*$/,
     caracterMas3veces: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
@@ -64,23 +64,19 @@ let validarInputDescripcionParametro = function () {
 }
 
 let validarInputValorParametro = function () {
-    let valorParametroMayus = inputseditarParametro.valorParametro.value.toUpperCase();
-    inputseditarParametro.valorParametro.value = valorParametroMayus;
+   
     let estadoValidaciones = {
         estadoCampoVacio: false,
-        estadoSoloLetras: false,
         estadoNoMasdeUnEspacios: false,
         estadoNoCaracteresSeguidos: false
     }
     estadoValidaciones.estadoCampoVacio = funciones.validarCampoVacio(inputseditarParametro.valorParametro);
     if(estadoValidaciones.estadoCampoVacio) {
-        estadoValidaciones.estadoSoloLetras = funciones.validarSoloLetras(inputseditarParametro.valorParametro, validaciones.soloLetras);
-    } 
-    if(estadoValidaciones.estadoSoloLetras) {
         estadoValidaciones.estadoNoMasdeUnEspacios = funciones.validarMasdeUnEspacio(inputseditarParametro.valorParametro);
-    }
-    if(estadoValidaciones.estadoNoMasdeUnEspacios) {
+    } 
+    if( estadoValidaciones.estadoNoMasdeUnEspacios) {
         estadoValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter(inputseditarParametro.valorParametro, validaciones.caracterMas3veces);
     }
+    
 }
 

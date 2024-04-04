@@ -98,7 +98,7 @@ if (isset($_SESSION['usuario'])) {
   <div class="conteiner">
     <div class="conteiner-global">
       <div class="sidebar-conteiner">
-        <?php
+      <?php
         $urlIndex = '../../index.php';
         // Rendimiento
         $urlMisTareas = '../../rendimiento/v_tarea.php';
@@ -121,8 +121,9 @@ if (isset($_SESSION['usuario'])) {
         //Mantenimiento
         $urlUsuarios = '../usuario/gestionUsuario.php';
         $urlEstadoUsuario = '../estadoUsuario/gestionEstadoUsuario.php';
-        $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
+        $urlCarteraCliente = './gestionCarteraClientes.php';
         $urlPreguntas = '../pregunta/gestionPregunta.php';
+        $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
         $urlParametros = '../parametro/gestionParametro.php';
         $urlPermisos = '../permiso/gestionPermisos.php';
         $urlRoles = '../rol/gestionRol.php';
