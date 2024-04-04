@@ -22,7 +22,18 @@ const validaciones = {
     letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
     direccion: /^[a-zA-Z0-9 #.,-]+$/,
 };
-
+const $articulo = document.getElementById("A_Articulo");
+const $detalle = document.getElementById("A_Detalle");
+const $marca =  document.getElementById("A_Marca");
+$articulo.addEventListener("input", () =>{
+    funciones.convertirAMayusculasVisualmente($articulo);
+})
+$detalle.addEventListener("input", () =>{
+    funciones.convertirAMayusculasVisualmente($detalle);
+})
+$marca.addEventListener("input", () =>{
+    funciones.convertirAMayusculasVisualmente($marca);
+})
 let inputseditarArticulo = {
     Articulo: document.getElementById('A_Articulo'),
     Detalle: document.getElementById('A_Detalle'),

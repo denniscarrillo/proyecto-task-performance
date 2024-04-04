@@ -10,7 +10,9 @@ const validaciones = {
     letrasNumeros: /^[a-zA-Z0-9 #-]+$/,
     direccion: /^[a-zA-Z0-9 #.,-]+$/,
 };
-
+const $articulo = document.getElementById("Articulo");
+const $detalle = document.getElementById("Detalle");
+const $marca =  document.getElementById("Marca");
 let inputsNuevoArticulo = {
    
     Articulo: document.getElementById('Articulo'),
@@ -31,6 +33,19 @@ btnGuardar.addEventListener('click', () => {
         estadoValidado = false;
     }
 });
+$articulo.addEventListener("input", () =>{
+    funciones.convertirAMayusculasVisualmente($articulo);
+})
+$detalle.addEventListener("input", () =>{
+    funciones.convertirAMayusculasVisualmente($detalle);
+})
+$marca.addEventListener("input", () =>{
+    funciones.convertirAMayusculasVisualmente($marca);
+})
+inputsNuevoArticulo.Articulo.addEventListener('input', ()=>{
+    validarInputArticulo();
+    funciones.limitarCantidadCaracteres("Articulo", 50);
+})
 
 document.getElementById('precio').addEventListener('input', (event) => {
     funciones.permitirSoloNumeros(event)
@@ -85,6 +100,11 @@ let validarInputDetalle = function () {
     }
 }
 
+inputsNuevoArticulo.Detalle.addEventListener("keyup", ()=>{
+    validarInputDetalle();
+    funciones.limitarCantidadCaracteres("Detalle", 100);
+})
+
 let validarInputMarca = function () {
     let MarcaMayus =  inputsNuevoArticulo.Marca.value.toUpperCase();
      inputsNuevoArticulo.Marca.value = MarcaMayus;
@@ -105,3 +125,8 @@ let validarInputMarca = function () {
         estadoValidaciones.estadoNoCaracteresSeguidos = funciones.limiteMismoCaracter( inputsNuevoArticulo.Marca, validaciones.caracterMas3veces);
     }
 }
+
+inputsNuevoArticulo.Marca.addEventListener("keyup", ()=>{
+    validarInputMarca();
+    funciones.limitarCantidadCaracteres("Marca", 50);
+})
