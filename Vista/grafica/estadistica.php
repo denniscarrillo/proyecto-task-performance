@@ -42,7 +42,7 @@
         // Rendimiento
         $urlMisTareas = '../rendimiento/v_tarea.php';
         $urlCotizacion = '../rendimiento/cotizacion/gestionCotizacion.php';
-        $urlConsultarTareas = 'DataTableTarea/gestionDataTableTarea.php';
+        $urlConsultarTareas = '../crud/DataTableTarea/gestionDataTableTarea.php';
         $urlMetricas = '../crud/Metricas/gestionMetricas.php';
         $urlEstadisticas = '../grafica/estadistica.php';
         //Solicitud
