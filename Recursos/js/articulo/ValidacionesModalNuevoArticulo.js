@@ -32,13 +32,12 @@ btnGuardar.addEventListener('click', () => {
     }
 });
 
-inputsNuevoArticulo.Articulo.addEventListener('input', ()=>{
+inputsNuevoArticulo.Articulo.addEventListener('input', ()=> {
     validarInputArticulo();
     funciones.limitarCantidadCaracteres("Articulo", 50);
 })
 
 document.getElementById('precio').addEventListener('input', (event) => {
-    funciones.permitirSoloNumeros(event)
     const cant = event.target.value;
     if(parseFloat(cant) < 1 || cant === '') {
         event.target.value = 1;
@@ -46,7 +45,6 @@ document.getElementById('precio').addEventListener('input', (event) => {
 })
 
 document.getElementById('existencias').addEventListener('input', (event) => {
-    funciones.permitirSoloNumeros(event)
     const cant = event.target.value;
     if(parseFloat(cant) < 1 || cant === '') {
         event.target.value = 1;

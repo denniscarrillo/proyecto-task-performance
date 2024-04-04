@@ -80,7 +80,7 @@ if (!isset($_SESSION['usuario'])) {
 			$urlRoles = '../crud/rol/gestionRol.php';
 			$urlPorcentajes = '../crud/Porcentajes/gestionPorcentajes.php';
 			$urlServiciosTecnicos = '../crud/TipoServicio/gestionTipoServicio.php';
-			$urlPerfilUsuarios = '../crud/PerfilUsuario/gestionPerfilUsuario.php';
+			$urlPerfilUsuario = '../crud/PerfilUsuario/gestionPerfilUsuario.php';
 			$urlPerfilContraseniaUsuarios = '../crud/PerfilUsuario/gestionPerfilContrasenia.php';
 			$urlImg = '../../Recursos/' . ControladorParametro::obtenerUrlLogo();
 			$urlRazonSocial = '../crud/razonSocial/gestionRazonSocial.php';
