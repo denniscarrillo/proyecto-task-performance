@@ -78,11 +78,14 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
-  <!-- <link href="../../../Recursos/css/index.css" rel="stylesheet" /> -->
+  <link rel='stylesheet' href="../../../Recursos/components/css/loader.css">
   <title> Bitacora </title>
 </head>
 
 <body style="overflow: hidden;">
+  <div class="loader-section">
+    <span class="loader"></span>
+  </div>
   <div class="conteiner">
     <!-- Sidebar 1RA PARTE -->
     <div class="conteiner-global">
@@ -182,12 +185,11 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <!-- scripts propios -->
-    <script src="../../../Recursos/js/bitacora/dataTableBitacora.js" type="module"></script>
-    <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
-    <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-    <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
-
-    
+  <script src="../../../Recursos/components/js/loader.js"></script>
+  <script src="../../../Recursos/js/bitacora/dataTableBitacora.js" type="module"></script>
+  <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
+  <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
+  <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
 </body>
 
 </html>

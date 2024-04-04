@@ -80,11 +80,15 @@ if (isset($_SESSION['usuario'])) {
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/footer.css' rel='stylesheet'>
   <link rel="stylesheet" href="../../../Recursos/css/gestionBackupRestore.css">
+  <link rel='stylesheet' href="../../../Recursos/components/css/loader.css">
 
   <title>Backup & Restore</title>
 </head>
 
 <body style="overflow: hidden;">
+  <div class="loader-section">
+    <span class="loader"></span>
+  </div>
   <!-- Sidebar 1RA PARTE -->
   <div class="conteiner-global">
     <div class="sidebar-conteiner">
@@ -171,6 +175,7 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <script src="../../../Recursos/js/backupAndRestore/backup.js"></script>
+  <script src="../../../Recursos/components/js/loader.js"></script>
   <script src="../../../Recursos/js/permiso/validacionPermisoInsertar.js"></script>
 </body>
 </html>
