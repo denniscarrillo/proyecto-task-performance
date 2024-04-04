@@ -6,7 +6,7 @@ const $form = document.getElementById("form-estado");
 const $estado = document.getElementById("estado");
 
 const expresiones = {
-    soloLetras: /^(?=.*[^a-zA-Z\s])/, //Solo letras
+    soloLetras: /^(?=.*[^a-zA-Z\/ .ÑñáéíóúÁÉÍÓÚs])+$/, //Solo letras
     estado: /^(?=.*(..)\1)/, // no permite escribir que se repida mas de tres veces un caracter
     
 };
@@ -16,7 +16,7 @@ $estado.addEventListener("input", () => {
     validacionInputEstado();
   });
   $estado.addEventListener("keydown", () => {
-    funciones.soloLetrasConEspacios($estado)
+    funciones.soloLetrasYPuntos($estado)
   });
   const aplicarValidacionesInputs = () => {
     //Llamamos a todas las funciones que aplican sus respectivas validaciones a cada input
