@@ -717,7 +717,7 @@ class Usuario {
     {
         $conn = new Conexion();
         $conexion = $conn->abrirConexionDB(); #Abrimos la conexión a la DB.
-        $query = "SELECT  id_usuario, nombre_Usuario FROM tbl_MS_Usuario where id_Rol = 3";
+        $query = "SELECT  id_usuario, nombre_Usuario FROM tbl_MS_Usuario where id_Rol = 2";
         $listaVendedores = sqlsrv_query($conexion, $query);
         $vendedores = array();
         while ($fila = sqlsrv_fetch_array($listaVendedores, SQLSRV_FETCH_ASSOC)) {
