@@ -1,5 +1,8 @@
 <?php
-session_start(); //Reanudamos la sesion
+if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+}
+//Reanudamos la sesion
 require_once("../../../db/Conexion.php");
 require_once("../../../Modelo/Usuario.php");
 require_once("../../../Modelo/Bitacora.php");
@@ -61,7 +64,6 @@ if (isset($_SESSION['usuario'])) {
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
   <!-- Estilos personalizados -->
   <link href="../../../Recursos/css/gestionPerfilUsuario.css" rel="stylesheet" />
-  <link href="../../../Recursos/css/modalConfirmarContrasenia.css" rel="stylesheet" />
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
@@ -73,7 +75,7 @@ if (isset($_SESSION['usuario'])) {
   <div class="conteiner">
     <div class="conteiner-global">
       <div class="sidebar-conteiner">
-        <?php
+      <?php
         $urlIndex = '../../index.php';
         // Rendimiento
         $urlMisTareas = '../../rendimiento/v_tarea.php';
@@ -85,6 +87,8 @@ if (isset($_SESSION['usuario'])) {
         $urlSolicitud = '../DataTableSolicitud/gestionDataTableSolicitud.php';
         //Comisión
         $urlComision = '../../comisiones/v_comision.php';
+        $comisionVendedor = '../ComisionesVendedores/ComisionesVendedores.php';
+        $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
         //Consulta
         $urlClientes = '../cliente/gestionCliente.php';
         $urlVentas = '../Venta/gestionVenta.php';
@@ -94,17 +98,16 @@ if (isset($_SESSION['usuario'])) {
         //Mantenimiento
         $urlUsuarios = '../usuario/gestionUsuario.php';
         $urlEstadoUsuario = '../estadoUsuario/gestionEstadoUsuario.php';
-        $urlCarteraCliente = '../carteraCliente/gestionCarteraClientes.php';
+        $urlCarteraCliente = './gestionCarteraClientes.php';
         $urlPreguntas = '../pregunta/gestionPregunta.php';
+        $urlBitacoraSistema = '../bitacora/gestionBitacora.php';
         $urlParametros = '../parametro/gestionParametro.php';
         $urlPermisos = '../permiso/gestionPermisos.php';
         $urlRoles = '../rol/gestionRol.php';
-        $urlPorcentajes = '../Porcentajes/gestionPorcentajes.php';
         $urlServiciosTecnicos = '../TipoServicio/gestionTipoServicio.php';
+        $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
         $urlPerfilUsuario = '../PerfilUsuario/gestionPerfilUsuario.php';
         $urlPerfilContraseniaUsuarios = '../PerfilUsuario/gestionPerfilContrasenia.php';
-        $urlEditarCamposPerfil = '../PerfilUsuario/EditarCamposPerfilUsuario.php';
-        $urlImg = '../../../Recursos/' . ControladorParametro::obtenerUrlLogo();
         $urlRazonSocial = '../razonSocial/gestionRazonSocial.php';
         $urlRubroComercial = '../rubroComercial/gestionRubroComercial.php';
         $urlRestoreBackup = '../backupAndRestore/gestionBackupRestore.php';
@@ -125,10 +128,12 @@ if (isset($_SESSION['usuario'])) {
             <h2 class="text-title-form">Datos Del Usuario</h2>
           </div>
           <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" id="form-Edit-DatosPerfil">
-            <div class="btn-editar">
-              <a href="#" class="btn btn-secondary" data-bs-toggle="modal"
-                data-bs-target="#modalConfirmarContrasenia"><i class="fa-solid fa-pen-to-square"> </i>Editar Perfil</a>
-            </div>
+          <div class="btn-editar">
+              <a href="../PerfilUsuario/modalConfirmarContrasenia.php" class="btn btn-secondary">
+                  <i class="fa-solid fa-pen-to-square"></i>Editar Perfil
+              </a>
+           </div>
+
             <div class="grupo-form1">
               <div class="mb-3">
                 <label class="titulos">Usuario:</label>
@@ -178,13 +183,11 @@ if (isset($_SESSION['usuario'])) {
               <div class="mb-3">
                 <label class="titulos" for="pregunta">Preguntas:</label>
                 <?php
-
-                $totalPreguntas = count($preguntas['preguntas']);
-                for ($i = 0; $i < $totalPreguntas; $i++) {
-                  $pregunta = $preguntas['preguntas'][$i];
+                foreach ($preguntas as $pregunta) {
+                  $valorPregunta= isset($pregunta['preguntas']) ? : '';
                   ?>
                   <label>
-                    <?php echo $pregunta; ?>
+                    <?php echo $pregunta['preguntas']; ?>
                   </label><br><br>
                   <?php
                 }
@@ -198,19 +201,16 @@ if (isset($_SESSION['usuario'])) {
       </div>
     </div>
   </div>
-  <?php
-  require_once('modalConfirmarContrasenia.html');
-  ?>
-
-  <script src="../../../Recursos/js/librerias/Kit.fontawesome.com/2317ff25a4.js" crossorigin="anonymous"></script>
-  <script src="../../../Recursos/js/librerias/sweetalert2.all.min.js"></script>
+  <script src="../../../Recursos/js/librerias/Kit.fontawesome.com.2317ff25a4.js" crossorigin="anonymous"></script>
+  <script src="../../../Recursos/js/librerias/Sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
+  <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
+  <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
   <!-- Scripts propios -->
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
-  <script src="../../../Recursos/js/index.js"></script>
-  <script src="../../../Recursos/js/PerfilUsuario/validacionesModalconfirmarContrasenia.js" type="module"></script>
+  <script src="../../../Recursos/js/index.js"></script> 
 </body>
 
 </html>

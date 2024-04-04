@@ -1,7 +1,9 @@
+
+
 <?php
 if (session_status() == PHP_SESSION_NONE) {
   session_start();
-} //Reanudamos la sesion
+}//Reanudamos la sesion
 require_once("../../../db/Conexion.php");
 require_once("../../../Modelo/Usuario.php");
 require_once("../../../Modelo/Bitacora.php");
@@ -9,10 +11,9 @@ require_once("../../../Controlador/ControladorUsuario.php");
 require_once("../../../Controlador/ControladorBitacora.php");
 require_once('../../../Modelo/Parametro.php');
 require_once('../../../Controlador/ControladorParametro.php');
-require_once("actualizarPerfilContrasenia.php");
+require_once("ObtenerContraseniaPerfil.php");
 
 if (isset($_SESSION['usuario'])) {
-
   $newBitacora = new Bitacora();
   $idRolUsuario = ControladorUsuario::obRolUsuario($_SESSION['usuario']);
   $idObjetoActual = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
@@ -20,8 +21,6 @@ if (isset($_SESSION['usuario'])) {
   if (isset($_SESSION['objetoAnterior']) && !empty($_SESSION['objetoAnterior'])) {
     /* ====================== Evento salir. ================================================*/
     $accion = ControladorBitacora::accion_Evento();
-    date_default_timezone_set('America/Tegucigalpa');
-    $newBitacora->fecha = date("Y-m-d h:i:s");
     $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto($_SESSION['objetoAnterior']);
     $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
     $newBitacora->accion = $accion['Exit'];
@@ -31,15 +30,13 @@ if (isset($_SESSION['usuario'])) {
   }
   /* ====================== Evento ingreso a mantenimiento usuario. ========================*/
   $accion = ControladorBitacora::accion_Evento();
-  date_default_timezone_set('America/Tegucigalpa');
-  $newBitacora->fecha = date("Y-m-d h:i:s");
-  $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('gestionUsuario.php');
+  $newBitacora->idObjeto = ControladorBitacora::obtenerIdObjeto('GESTIONPERFILCONTRASENIA.PHP');
   $newBitacora->idUsuario = ControladorUsuario::obtenerIdUsuario($_SESSION['usuario']);
   $newBitacora->accion = $accion['income'];
-  $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a mantenimiento usuario';
+  $newBitacora->descripcion = 'El usuario ' . $_SESSION['usuario'] . ' ingresó a configurar su nueva contraseña';
   ControladorBitacora::SAVE_EVENT_BITACORA($newBitacora);
-  $_SESSION['objetoAnterior'] = 'gestionUsuario.php';
-  $_SESSION['descripcionObjeto'] = 'mantenimiento usuario';
+  $_SESSION['objetoAnterior'] = 'GESTIONPERFILCONTRASENIA.PHP';
+  $_SESSION['descripcionObjeto'] = 'configurar su nueva contraseña';
   /* =======================================================================================*/
 }
 ?>
@@ -60,7 +57,7 @@ if (isset($_SESSION['usuario'])) {
   <!-- <link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" rel="stylesheet"> -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
   <!-- Estilos personalizados -->
-  <link href="../../../Recursos/css/gestionPerfilContrasenia.css" rel="stylesheet" />
+  <link href="../../../Recursos/css/modalConfirmarContrasenia.css" rel="stylesheet" />
   <link href='../../../Recursos/css/layout/sidebar.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/estilosEstructura.css' rel='stylesheet'>
   <link href='../../../Recursos/css/layout/navbar.css' rel='stylesheet'>
@@ -122,33 +119,25 @@ if (isset($_SESSION['usuario'])) {
             <div class="img-content">
               <img class="img" src="https://cdn-icons-png.flaticon.com/128/6266/6266866.png" height="50px">
             </div>
-            <h2 class="text-title-form">Configura tu nueva contraseña</h2>
+            <h1 class="modal-title fs-5" id="editarModalLabel">Confirmar Contraseña</h1>
           </div>
-          <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" id="formContrasenia">
+          <div style="display: flex; justify-content: center;">
+    <img class="img" src="https://cdn-icons-png.flaticon.com/128/11530/11530802.png" height="80px">
+</div>
+          <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" id="formPerfilContrasenia">
             <div class="grupo-form">
               <div class="mb-3">
-                <input type="password" class="form-control" name="password" id="password" maxlength="25"
-                  placeholder="Contraseña Actual">
-                <p class="mensaje"></p>
-              </div>
-              <div class="mb-3">
-                <input type="password" class="form-control" id="newPassword" maxlength="25" name="newPassword"
-                  placeholder="Nueva Contraseña">
-                <p class="mensaje"></p>
-              </div>
-              <div class="mb-3">
-                <input type="password" class="form-control" id="confirmPassword" maxlength="25" name="confirmPassword" 
-                  placeholder="Confirmar Contraseña">
+                <input type="password" class="form-control" id="confirmPassword" maxlength="15" name="confirmPassword" placeholder="Confirmar Contraseña">
                 <p class="mensaje"></p>
               </div>
               <div class="mb-3">
                 <input type="checkbox" id="checkbox"> Mostrar Contraseñas
               </div>
-              <div class="btn-guardar">
-                <a href="../../index.php"><button type="button" class="btn btn-secondary">Cerrar</button>
-                  <button type="submit" name="submit" href="../PerfilUsuario/gestionPerfilUsuario.php"
-                    class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
-              </div>
+             <div class="btn-guardar">
+             <a href="../PerfilUsuario/gestionPerfilUsuario.php" class="btn btn-secondary btn-cancel">Cancelar</a>
+                        <button type="submit" class="btn btn-primary" name="submit" id="submit"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                    </div> 
+            
               <?php
               if (!empty($mensaje)) {
                 echo '<h2 class="mensaje-error" style="margin-top: 8px;">' . $mensaje . '</h2>';
@@ -164,15 +153,13 @@ if (isset($_SESSION['usuario'])) {
   <script src="../../../Recursos/js/librerias/Sweetalert2.all.min.js"></script>
   <script src="../../../Recursos/js/librerias/jQuery-3.7.0.min.js"></script>
   <script src="../../../Recursos/js/librerias/JQuery.dataTables.min.js"></script>
-  <!-- Scripts propios -->
-
   <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
   <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
-
-<!-- Otros scripts propios -->
-<script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
-<script src="../../../Recursos/js/index.js"></script>
-<script src="../../../Recursos/js/PerfilUsuario/validacionesPerfilContrasenia.js" type="module"></script>
-
+  <!-- Scripts propios -->
+  <script src="../../../Recursos/js/librerias/jquery.inputlimiter.1.3.1.min.js"></script>
+  <script src="../../../Recursos/bootstrap5/bootstrap.min.js"></script>
+  <script src="../../../Recursos/js/index.js"></script>
+  <script src="../../../Recursos/js/PerfilUsuario/validacionesModalConfirmarContrasenia.js" type="module"></script>
+</body>
 
 </html>

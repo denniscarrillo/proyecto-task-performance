@@ -1,6 +1,9 @@
 
 
 <?php
+ if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+}
  require_once("../../../db/Conexion.php");
  require_once("../../../Modelo/Usuario.php");
  require_once("../../../Modelo/Bitacora.php");
@@ -33,7 +36,7 @@
             header('location: EditarCamposPerfilUsuario.php');
           }else{
             
-            $mensaje = 'Su contraseña actual es incorrecta';
+            $mensaje = 'La contraseña ingresada es incorrecta';
           }
           
           /* ========================= Evento Cambiar Contraseña. ======================*/
