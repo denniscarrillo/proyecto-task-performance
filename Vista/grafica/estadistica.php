@@ -98,7 +98,7 @@
           <div class="filtro-Input">
             <form>
               <fieldset>
-                <legend>Elige el tipo de gráfico</legend>
+                <legend>Elige el tipo</legend>
                 <input type="radio" id="RadioGeneral" name="fav_language" value="General" checked>
                 <label for="RadioGeneral" class="radio-label">General</label><br>
                 <input type="radio" id="RadioPorVendedor" name="fav_language" value="Por Vendedor">
