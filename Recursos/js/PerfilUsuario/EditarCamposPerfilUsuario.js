@@ -41,7 +41,7 @@ const enviarRespuestasActualizar = function(respuestasActualizar){
             "¡Se ha modificado tu respuesta!",
             "success"
           );
-          // redirigirADataTable();  
+           redirigirADataTable();  
        }
     })
 }
